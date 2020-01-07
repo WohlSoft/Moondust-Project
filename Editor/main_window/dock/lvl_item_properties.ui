@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>491</height>
+    <width>294</width>
+    <height>477</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -57,9 +57,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-266</y>
-         <width>286</width>
-         <height>1849</height>
+         <y>-1100</y>
+         <width>280</width>
+         <height>1727</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,100">
@@ -1003,7 +1003,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
-             <layout class="QGridLayout" name="gridLayout_3">
+             <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1000,0">
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
@@ -1071,12 +1071,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                   <height>78</height>
                  </size>
                 </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="title">
                  <string>Direction</string>
                 </property>
@@ -1099,196 +1093,15 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                  <property name="spacing">
                   <number>0</number>
                  </property>
-                 <item row="2" column="4">
-                  <spacer name="horizontalSpacer_3">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="2" column="0">
-                  <spacer name="horizontalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="4" column="2">
-                  <spacer name="verticalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QLabel" name="label_2">
+                 <item row="0" column="0">
+                  <widget class="DirectionSwitchWidget" name="npcGeneratorDirection" native="true">
                    <property name="minimumSize">
                     <size>
-                     <width>16</width>
-                     <height>16</height>
+                     <width>60</width>
+                     <height>60</height>
                     </size>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="pixmap">
-                    <pixmap resource="../../_resources/editor.qrc">:/arrows/arrows/box.png</pixmap>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
-                 </item>
-                 <item row="2" column="3">
-                  <widget class="QPushButton" name="PROPS_NPCGenRight">
-                   <property name="minimumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Left</string>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../_resources/editor.qrc">
-                     <normaloff>:/arrows/arrows/black_right.png</normaloff>
-                     <normalon>:/arrows/arrows/green_right.png</normalon>:/arrows/arrows/black_right.png</iconset>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="autoExclusive">
-                    <bool>true</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QPushButton" name="PROPS_NPCGenUp">
-                   <property name="minimumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Up</string>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../_resources/editor.qrc">
-                     <normaloff>:/arrows/arrows/black_up.png</normaloff>
-                     <normalon>:/arrows/arrows/green_up.png</normalon>:/arrows/arrows/black_up.png</iconset>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="autoExclusive">
-                    <bool>true</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QPushButton" name="PROPS_NPCGenLeft">
-                   <property name="minimumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Right</string>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../_resources/editor.qrc">
-                     <normaloff>:/arrows/arrows/black_left.png</normaloff>
-                     <normalon>:/arrows/arrows/green_left.png</normalon>:/arrows/arrows/black_left.png</iconset>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="autoExclusive">
-                    <bool>true</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="2">
-                  <widget class="QPushButton" name="PROPS_NPCGenDown">
-                   <property name="minimumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Down</string>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../_resources/editor.qrc">
-                     <normaloff>:/arrows/arrows/black_down.png</normaloff>
-                     <normalon>:/arrows/arrows/green_down.png</normalon>:/arrows/arrows/black_down.png</iconset>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="autoExclusive">
-                    <bool>true</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <spacer name="verticalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -1506,6 +1319,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DirectionSwitchWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">common_features/direction_switch_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../_resources/editor.qrc"/>
  </resources>

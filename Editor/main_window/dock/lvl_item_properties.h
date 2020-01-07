@@ -43,6 +43,9 @@ class LvlItemProperties : public QDockWidget, public MWDock_Base
 private:
     explicit LvlItemProperties(QWidget *parent);
     ~LvlItemProperties();
+
+    void re_translate_widgets();
+
 public:
     long blockPtr;
     long bgoPtr;
@@ -119,10 +122,7 @@ private slots:
     void on_PROPS_NpcGenerator_clicked(bool checked);
     void on_PROPS_NPCGenType_currentIndexChanged(int index);
     void on_PROPS_NPCGenTime_valueChanged(double arg1);
-    void on_PROPS_NPCGenUp_clicked();
-    void on_PROPS_NPCGenLeft_clicked();
-    void on_PROPS_NPCGenDown_clicked();
-    void on_PROPS_NPCGenRight_clicked();
+    void npcGeneratorDirectionChange(int direction);
     void on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1);
     void on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1);
     void on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1);

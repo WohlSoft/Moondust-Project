@@ -25,6 +25,7 @@
 #include <editing/_scenes/level/lvl_item_placing.h>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <editing/_scenes/level/itemmsgbox.h>
+#include <common_features/direction_switch_widget.h>
 
 #include "lvl_item_properties.h"
 #include "ui_lvl_item_properties.h"
@@ -65,6 +66,23 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
 {
     setVisible(false);
     ui->setupUi(this);
+
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_CENTER, QPixmap(":/arrows/arrows/box.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/black_left.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/arrows/black_right.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/arrows/black_up.png"));
+    ui->npcGeneratorDirection->setPixmap(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/arrows/black_down.png"));
+    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/green_left.png"));
+    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_RIGHT, QPixmap(":/arrows/arrows/green_right.png"));
+    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_TOP, QPixmap(":/arrows/arrows/green_up.png"));
+    ui->npcGeneratorDirection->setPixmapOn(DirectionSwitchWidget::S_BOTTOM, QPixmap(":/arrows/arrows/green_down.png"));
+    ui->npcGeneratorDirection->mapValue(DirectionSwitchWidget::S_LEFT, LevelNPC::NPC_GEN_LEFT);
+    ui->npcGeneratorDirection->mapValue(DirectionSwitchWidget::S_RIGHT, LevelNPC::NPC_GEN_RIGHT);
+    ui->npcGeneratorDirection->mapValue(DirectionSwitchWidget::S_TOP, LevelNPC::NPC_GEN_UP);
+    ui->npcGeneratorDirection->mapValue(DirectionSwitchWidget::S_BOTTOM, LevelNPC::NPC_GEN_DOWN);
+
+    re_translate_widgets();
+
     m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
     setAttribute(Qt::WA_LayoutUsesWidgetRect);
     setAttribute(Qt::WA_ShowWithoutActivating);
@@ -99,6 +117,8 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     connect(this, &QDockWidget::visibilityChanged, mw()->ui->action_Placing_ShowProperties, &QAction::setChecked);
     mw()->ui->action_Placing_ShowProperties->setChecked(isVisible());
 
+    connect(ui->npcGeneratorDirection, &DirectionSwitchWidget::clicked, this, &LvlItemProperties::npcGeneratorDirectionChange);
+
     setFloating(true);
     setGeometry(
         mwg.right() - width() - GOffset,
@@ -119,6 +139,18 @@ LvlItemProperties::~LvlItemProperties()
     m_extraGlobalSettings.reset();
     m_extraSettingsSpacer.reset();
     delete ui;
+}
+
+void LvlItemProperties::re_translate_widgets()
+{
+    ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_LEFT, tr("Left", "Throwing direction of NPC, spawned via Generator object."));
+    ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_RIGHT, tr("Right", "Throwing direction of NPC, spawned via Generator object."));
+    ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_TOP, tr("Up", "Throwing direction of NPC, spawned via Generator object."));
+    ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_BOTTOM, tr("Down", "Throwing direction of NPC, spawned via Generator object."));
+    ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_TOP_LEFT, tr("Up-Left", "Throwing direction of NPC, spawned via Generator object."));
+    ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_TOP_RIGHT, tr("Up-Right", "Throwing direction of NPC, spawned via Generator object."));
+    ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_BOTTOM_LEFT, tr("Down-Left", "Throwing direction of NPC, spawned via Generator object."));
+    ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_BOTTOM_RIGHT, tr("Down-Right", "Throwing direction of NPC, spawned via Generator object."));
 }
 
 /******************Comobo boxes*********************************/
@@ -205,6 +237,7 @@ void LvlItemProperties::re_translate()
     int npcGenType = ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
 
     ui->retranslateUi(this);
+    re_translate_widgets();
 
     ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
     LvlItemPropsLock = false;
@@ -670,27 +703,11 @@ void LvlItemProperties::LvlItemProps(int Type,
 
             ui->PROPS_NPCGenTime->setValue((double)npc.generator_period / 10);
 
-            switch(npc.generator_direct)
-            {
-            case 2:
-                ui->PROPS_NPCGenLeft->setChecked(true);
-                break;
-            case 3:
-                ui->PROPS_NPCGenDown->setChecked(true);
-                break;
-            case 4:
-                ui->PROPS_NPCGenRight->setChecked(true);
-                break;
-            case 1:
-            default:
-                ui->PROPS_NPCGenUp->setChecked(true);
-                break;
-            }
-
+            ui->npcGeneratorDirection->setDirection(npc.generator_direct);
         }
         else
         {
-            ui->PROPS_NPCGenUp->setChecked(true);
+            ui->npcGeneratorDirection->setDirection(LevelNPC::NPC_GEN_UP);
             ui->PROPS_NPCGenType->setCurrentIndex(0);
         }
 
@@ -2161,30 +2178,14 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
         if(checked)
             LvlPlacingItems::gridSz = 16;
         else
-            LvlPlacingItems::gridSz = LvlPlacingItems::npcGrid;
-
+            LvlPlacingItems::gridSz = static_cast<int>(LvlPlacingItems::npcGrid);
 
         LvlItemPropsLock = true;
 
         ui->PROPS_NPCGenType->setCurrentIndex((LvlPlacingItems::npcSet.generator_type) - 1);
         ui->PROPS_NPCGenTime->setValue((double)(LvlPlacingItems::npcSet.generator_period) / 10);
+        ui->npcGeneratorDirection->setDirection(LvlPlacingItems::npcSet.generator_direct);
 
-        switch(LvlPlacingItems::npcSet.generator_direct)
-        {
-        case 2:
-            ui->PROPS_NPCGenLeft->setChecked(true);
-            break;
-        case 3:
-            ui->PROPS_NPCGenDown->setChecked(true);
-            break;
-        case 4:
-            ui->PROPS_NPCGenRight->setChecked(true);
-            break;
-        case 1:
-        default:
-            ui->PROPS_NPCGenUp->setChecked(true);
-            break;
-        }
         LvlItemPropsLock = false;
 
     }
@@ -2198,31 +2199,14 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
         {
             if(item->data(ITEM_TYPE).toString() == "NPC")
             {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->setGenerator(checked,
-                                                ((ItemNPC *)item)->m_data.generator_direct,
-                                                ((ItemNPC *)item)->m_data.generator_type
-                                               );
+                auto *it = qgraphicsitem_cast<ItemNPC *>(item);
+                Q_ASSERT(it);
+                modData.npc.push_back(it->m_data);
+                it->setGenerator(checked, it->m_data.generator_direct, it->m_data.generator_type);
                 LvlItemPropsLock = true;
-                ui->PROPS_NPCGenType->setCurrentIndex((((ItemNPC *)item)->m_data.generator_type) - 1);
-                ui->PROPS_NPCGenTime->setValue((double)(((ItemNPC *)item)->m_data.generator_period) / 10);
-
-                switch(((ItemNPC *)item)->m_data.generator_direct)
-                {
-                case 2:
-                    ui->PROPS_NPCGenLeft->setChecked(true);
-                    break;
-                case 3:
-                    ui->PROPS_NPCGenDown->setChecked(true);
-                    break;
-                case 4:
-                    ui->PROPS_NPCGenRight->setChecked(true);
-                    break;
-                case 1:
-                default:
-                    ui->PROPS_NPCGenUp->setChecked(true);
-                    break;
-                }
+                ui->PROPS_NPCGenType->setCurrentIndex(it->m_data.generator_type - 1);
+                ui->PROPS_NPCGenTime->setValue(double(it->m_data.generator_period / 10));
+                ui->npcGeneratorDirection->setDirection(it->m_data.generator_direct);
                 LvlItemPropsLock = false;
             }
         }
@@ -2272,131 +2256,49 @@ void LvlItemProperties::on_PROPS_NPCGenTime_valueChanged(double arg1)
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
+        for(QGraphicsItem *item : items)
         {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->m_data.generator_period = qRound(arg1 * 10);
-                ((ItemNPC *)item)->arrayApply();
-            }
+            if(item->data(ITEM_TYPE).toString() != "NPC")
+                continue;
+            auto *it = qgraphicsitem_cast<ItemNPC*>(item);
+            Q_ASSERT(it);
+            modData.npc.push_back(it->m_data);
+            it->m_data.generator_period = qRound(arg1 * 10);
+            it->arrayApply();
         }
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENTIME, QVariant(qRound(arg1 * 10)));
     }
-
 }
 
-void LvlItemProperties::on_PROPS_NPCGenUp_clicked()
+void LvlItemProperties::npcGeneratorDirectionChange(int direction)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(LvlItemPropsLock || LockItemProps)
+        return;
 
     if(npcPtr < 0)
-        LvlPlacingItems::npcSet.generator_direct = 1;
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->setGenerator(((ItemNPC *)item)->m_data.generator,
-                                                1,
-                                                ((ItemNPC *)item)->m_data.generator_type
-                                               );
-            }
-        }
-        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENDIR, QVariant(1));
+        LvlPlacingItems::npcSet.generator_direct = direction;
+        return;
     }
 
-}
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
 
-void LvlItemProperties::on_PROPS_NPCGenLeft_clicked()
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    LevelData modData;
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    QList<QGraphicsItem *> items = edit->scene->selectedItems();
+    edit->LvlData.meta.modified = true;
 
-    if(npcPtr < 0)
-        LvlPlacingItems::npcSet.generator_direct = 2;
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    for(QGraphicsItem *item : items)
     {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->setGenerator(((ItemNPC *)item)->m_data.generator,
-                                                2,
-                                                ((ItemNPC *)item)->m_data.generator_type
-                                               );
-            }
-        }
-        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENDIR, QVariant(2));
+        if(item->data(ITEM_TYPE).toString() != "NPC")
+            continue;
+        ItemNPC *it = qgraphicsitem_cast<ItemNPC*>(item);
+        Q_ASSERT(it);
+        modData.npc.push_back(it->m_data);
+        it->setGenerator(it->m_data.generator, direction, it->m_data.generator_type);
     }
-}
-
-void LvlItemProperties::on_PROPS_NPCGenDown_clicked()
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
-
-    if(npcPtr < 0)
-        LvlPlacingItems::npcSet.generator_direct = 3;
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
-    {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->setGenerator(((ItemNPC *)item)->m_data.generator,
-                                                3,
-                                                ((ItemNPC *)item)->m_data.generator_type
-                                               );
-            }
-        }
-        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENDIR, QVariant(3));
-    }
-}
-
-void LvlItemProperties::on_PROPS_NPCGenRight_clicked()
-{
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
-
-    if(npcPtr < 0)
-        LvlPlacingItems::npcSet.generator_direct = 4;
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
-    {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(ITEM_ARRAY_ID).toInt()==npcPtr))*/)
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->setGenerator(((ItemNPC *)item)->m_data.generator,
-                                                4,
-                                                ((ItemNPC *)item)->m_data.generator_type
-                                               );
-            }
-        }
-        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENDIR, QVariant(4));
-    }
+    edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENDIR, QVariant(direction));
 }
 
 void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1)
