@@ -43,11 +43,11 @@ public slots:
     void removeItemFromWarpList(int index);
 
 private slots:
-    void on_WarpList_currentIndexChanged(int index); //Door list
+    void on_warpsList_currentIndexChanged(int index); //Door list
     void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
     void on_WarpEnterEvent_currentIndexChanged(const QString &arg1);
-    void on_WarpAdd_clicked();
-    void on_WarpRemove_clicked();
+    void addWarpEntry();
+    void removeWarpEntry();
 
     void on_WarpSetEntrance_clicked();
     void on_WarpSetExit_clicked();
@@ -86,6 +86,7 @@ private slots:
     void on_WarpAllowNPC_IL_clicked(bool checked);
 
 private:
+    unsigned int getWarpId();
     QString doorTitle(LevelDoor &door);
     bool lockWarpSetSettings;
 

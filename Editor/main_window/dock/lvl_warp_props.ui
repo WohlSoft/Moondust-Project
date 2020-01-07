@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>338</width>
+    <width>285</width>
     <height>753</height>
    </rect>
   </property>
@@ -38,7 +38,7 @@
   <property name="windowTitle">
    <string>Warps and Doors</string>
   </property>
-  <widget class="QScrollArea" name="dockWidgetContents">
+  <widget class="QScrollArea" name="root">
    <property name="frameShape">
     <enum>QFrame::NoFrame</enum>
    </property>
@@ -48,12 +48,12 @@
    <property name="widgetResizable">
     <bool>true</bool>
    </property>
-   <widget class="QWidget" name="dockWidgetContentsScrollable">
+   <widget class="QWidget" name="warpsBoxScrollerRoot">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>338</width>
+      <width>285</width>
       <height>734</height>
      </rect>
     </property>
@@ -74,7 +74,7 @@
       <number>2</number>
      </property>
      <item row="0" column="0" colspan="2">
-      <widget class="QFrame" name="frame_4">
+      <widget class="QFrame" name="warpsListManage">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -104,7 +104,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QComboBox" name="WarpList">
+         <widget class="QComboBox" name="warpsList">
           <property name="toolTip">
            <string>Choose a warp entry to edit</string>
           </property>
@@ -117,7 +117,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="WarpAdd">
+         <widget class="QPushButton" name="entryAdd">
           <property name="minimumSize">
            <size>
             <width>25</width>
@@ -140,7 +140,7 @@ Every warp point pair requires a warp entry.</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="WarpRemove">
+         <widget class="QPushButton" name="entryRemove">
           <property name="minimumSize">
            <size>
             <width>25</width>
@@ -284,7 +284,7 @@ Every warp point pair requires a warp entry.</string>
       </widget>
      </item>
      <item row="6" column="0" colspan="2">
-      <spacer name="verticalSpacer_9">
+      <spacer name="bottomSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
