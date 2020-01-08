@@ -53,7 +53,7 @@ static obj_npc &getNpcProps(LevelNPC &npc, MainWindow *mw)
     obj_npc *findNPC;
     obj_npc &thisNPC = dataSource[tarNPC];
     if(thisNPC.setup.container && !thisNPC.setup.special_option)
-        findNPC = &dataSource[npc.contents];
+        findNPC = &dataSource[static_cast<int>(npc.contents)];
     else
         findNPC = &dataSource[tarNPC];
     return *findNPC;
@@ -89,25 +89,25 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
     setFocusPolicy(Qt::StrongFocus);
     setFocusProxy(mw());
     ui->scrollArea->setWidgetResizable(true);
-    npcSpecSpinOffset = 0;
-    npcSpecSpinOffset_2 = 0;
-    LockItemProps = true;
+    m_npcSpecSpinOffset = 0;
+    m_npcSpecSpinOffset_2 = 0;
+    m_internalLock = true;
 
-    curItemType = -1;
-    BlockEventDestroy = "";
-    BlockEventHit = "";
-    BlockEventLayerEmpty = "";
+    m_curItemType = -1;
+    m_recentBlockEventDestroy = "";
+    m_recentBlockEventHit = "";
+    m_recentBlockEventLayerEmpty = "";
 
-    NpcEventActivated = "";
-    NpcEventDeath = "";
-    NpcEventTalk = "";
-    NpcEventLayerEmpty = "";
+    m_recentNpcEventActivated = "";
+    m_recentNpcEventDeath = "";
+    m_recentNpcEventTalk = "";
+    m_recentNpcEventLayerEmpty = "";
 
-    LvlItemPropsLock = true;
+    m_externalLock = true;
 
-    blockPtr = -1;
-    bgoPtr = -1;
-    npcPtr = -1;
+    m_currentBlockArrayId = -1;
+    m_currentBgoArrayId = -1;
+    m_currentNpcArrayId = -1;
 
     QRect mwg = mw()->geometry();
     int GOffset = 10;
@@ -151,6 +151,11 @@ void LvlItemProperties::re_translate_widgets()
     ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_TOP_RIGHT, tr("Up-Right", "Throwing direction of NPC, spawned via Generator object."));
     ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_BOTTOM_LEFT, tr("Down-Left", "Throwing direction of NPC, spawned via Generator object."));
     ui->npcGeneratorDirection->mapToolTip(DirectionSwitchWidget::S_BOTTOM_RIGHT, tr("Down-Right", "Throwing direction of NPC, spawned via Generator object."));
+}
+
+void LvlItemProperties::setSettingsLock(bool locked)
+{
+    m_externalLock = locked;
 }
 
 /******************Comobo boxes*********************************/
@@ -233,23 +238,24 @@ void LvlItemProperties::setSMBX64Strict(bool en)
 
 void LvlItemProperties::re_translate()
 {
-    LvlItemPropsLock = true;
+    m_externalLock = true;
     int npcGenType = ui->PROPS_NPCGenType->currentIndex(); //backup combobox's index
 
     ui->retranslateUi(this);
     re_translate_widgets();
 
     ui->PROPS_NPCGenType->setCurrentIndex(npcGenType);
-    LvlItemPropsLock = false;
+    m_externalLock = false;
 }
 
+// Dummy objects
 static LevelBlock   dummyBlock = FileFormats::CreateLvlBlock();
 static LevelBGO     dummyBgo   = FileFormats::CreateLvlBgo();
 static LevelNPC     dummyNpc   = FileFormats::CreateLvlNpc();
 
 void LvlItemProperties::OpenBlock(LevelBlock &block, bool newItem, bool dont_reset_props, bool dontShow)
 {
-    LvlItemProps(ItemTypes::LVL_Block,
+    openPropertiesFor(ItemTypes::LVL_Block,
                  block,
                  dummyBgo,
                  dummyNpc,
@@ -260,7 +266,7 @@ void LvlItemProperties::OpenBlock(LevelBlock &block, bool newItem, bool dont_res
 
 void LvlItemProperties::OpenBGO(LevelBGO &bgo, bool newItem, bool dont_reset_props, bool dontShow)
 {
-    LvlItemProps(ItemTypes::LVL_BGO,
+    openPropertiesFor(ItemTypes::LVL_BGO,
                  dummyBlock,
                  bgo,
                  dummyNpc,
@@ -271,7 +277,7 @@ void LvlItemProperties::OpenBGO(LevelBGO &bgo, bool newItem, bool dont_reset_pro
 
 void LvlItemProperties::OpenNPC(LevelNPC &npc, bool newItem, bool dont_reset_props, bool dontShow)
 {
-    LvlItemProps(ItemTypes::LVL_NPC,
+    openPropertiesFor(ItemTypes::LVL_NPC,
                  dummyBlock,
                  dummyBgo,
                  npc,
@@ -287,12 +293,12 @@ void LvlItemProperties::CloseBox()
     ui->bgoProps->setVisible(false);
     ui->npcProps->setVisible(false);
 
-    LvlItemPropsLock = true;
-    LockItemProps = true;
+    m_externalLock = true;
+    m_internalLock = true;
     LvlPlacingItems::npcSpecialAutoIncrement = false;
 }
 
-void LvlItemProperties::LvlItemProps(int Type,
+void LvlItemProperties::openPropertiesFor(int Type,
                                      LevelBlock &block,
                                      LevelBGO &bgo,
                                      LevelNPC &npc,
@@ -307,8 +313,8 @@ void LvlItemProperties::LvlItemProps(int Type,
     ui->bgoProps->setVisible(false);
     ui->npcProps->setVisible(false);
 
-    LvlItemPropsLock = true;
-    LockItemProps = true;
+    m_externalLock = true;
+    m_internalLock = true;
 
     LvlPlacingItems::npcSpecialAutoIncrement = false;
 
@@ -339,18 +345,18 @@ void LvlItemProperties::LvlItemProps(int Type,
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
     */
-    LvlItemPropsLock = true;
+    m_externalLock = true;
 
-    curItemType = Type;
+    m_curItemType = Type;
 
     switch(Type)
     {
     case ItemTypes::LVL_Block:
     {
         if(isPlacingNew)
-            blockPtr = -1;
+            m_currentBlockArrayId = -1;
         else
-            blockPtr = block.meta.array_id;
+            m_currentBlockArrayId = block.meta.array_id;
 
         ui->PROPS_BlockID->setText(tr("Block ID: %1, Array ID: %2").arg(block.id).arg(block.meta.array_id));
 
@@ -379,19 +385,19 @@ void LvlItemProperties::LvlItemProps(int Type,
             LvlPlacingItems::layer = block.layer;
 
             if(ui->PROPS_BlkEventDestroyedLock->isChecked())
-                LvlPlacingItems::blockSet.event_destroy = BlockEventDestroy;
+                LvlPlacingItems::blockSet.event_destroy = m_recentBlockEventDestroy;
             else
                 LvlPlacingItems::blockSet.event_destroy = "";
             block.event_destroy = LvlPlacingItems::blockSet.event_destroy;
 
             if(ui->PROPS_BlkEventHitLock->isChecked())
-                LvlPlacingItems::blockSet.event_hit = BlockEventHit;
+                LvlPlacingItems::blockSet.event_hit = m_recentBlockEventHit;
             else
                 LvlPlacingItems::blockSet.event_hit = "";
             block.event_hit = LvlPlacingItems::blockSet.event_hit;
 
             if(ui->PROPS_BlkEventLEmptyLock->isChecked())
-                LvlPlacingItems::blockSet.event_emptylayer = BlockEventLayerEmpty;
+                LvlPlacingItems::blockSet.event_emptylayer = m_recentBlockEventLayerEmpty;
             else
                 LvlPlacingItems::blockSet.event_emptylayer = "";
             block.event_emptylayer = LvlPlacingItems::blockSet.event_emptylayer;
@@ -462,8 +468,8 @@ void LvlItemProperties::LvlItemProps(int Type,
                                 "global_block.json",
                                 block.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBlockChanged);
-        LvlItemPropsLock = false;
-        LockItemProps = false;
+        m_externalLock = false;
+        m_internalLock = false;
 
         ui->blockProp->show();
         ui->blockProp->adjustSize();
@@ -477,12 +483,12 @@ void LvlItemProperties::LvlItemProps(int Type,
     case ItemTypes::LVL_BGO:
     {
         if(isPlacingNew)
-            bgoPtr = -1;
+            m_currentBgoArrayId = -1;
         else
-            bgoPtr = bgo.meta.array_id;
+            m_currentBgoArrayId = bgo.meta.array_id;
 
 
-        if((bgoPtr < 0) && (!dontResetProps))
+        if((m_currentBgoArrayId < 0) && (!dontResetProps))
         {
             LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
             bgo.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
@@ -551,8 +557,8 @@ void LvlItemProperties::LvlItemProps(int Type,
                                 bgo.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsBGOChanged);
 
-        LvlItemPropsLock = false;
-        LockItemProps = false;
+        m_externalLock = false;
+        m_internalLock = false;
 
         ui->bgoProps->show();
         ui->bgoProps->adjustSize();
@@ -566,9 +572,9 @@ void LvlItemProperties::LvlItemProps(int Type,
     case ItemTypes::LVL_NPC:
     {
         if(isPlacingNew)
-            npcPtr = -1;
+            m_currentNpcArrayId = -1;
         else
-            npcPtr = npc.meta.array_id;
+            m_currentNpcArrayId = npc.meta.array_id;
 
         ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.meta.array_id));
 
@@ -595,7 +601,7 @@ void LvlItemProperties::LvlItemProps(int Type,
 
         ui->line_6->hide();
 
-        if((npcPtr < 0) && (!dontResetProps))
+        if((m_currentNpcArrayId < 0) && (!dontResetProps))
         {
             LvlPlacingItems::npcSet.msg = "";
             npc.msg = "";
@@ -627,16 +633,16 @@ void LvlItemProperties::LvlItemProps(int Type,
             npc.attach_layer = "";
             LvlPlacingItems::npcSet.attach_layer = "";
 
-            LvlPlacingItems::npcSet.event_activate = ui->PROPS_NpcEventActovateLock->isChecked() ? NpcEventActivated : "";
+            LvlPlacingItems::npcSet.event_activate = ui->PROPS_NpcEventActovateLock->isChecked() ? m_recentNpcEventActivated : "";
             npc.event_activate = LvlPlacingItems::npcSet.event_activate;
 
-            LvlPlacingItems::npcSet.event_die = ui->PROPS_NpcEventDeathLock->isChecked() ? NpcEventDeath : "";
+            LvlPlacingItems::npcSet.event_die = ui->PROPS_NpcEventDeathLock->isChecked() ? m_recentNpcEventDeath : "";
             npc.event_die = LvlPlacingItems::npcSet.event_die;
 
-            LvlPlacingItems::npcSet.event_talk = ui->PROPS_NpcEventTalkLock->isChecked() ? NpcEventTalk : "";
+            LvlPlacingItems::npcSet.event_talk = ui->PROPS_NpcEventTalkLock->isChecked() ? m_recentNpcEventTalk : "";
             npc.event_talk = LvlPlacingItems::npcSet.event_talk;
 
-            LvlPlacingItems::npcSet.event_emptylayer = ui->PROPS_NpcEventLEmptyLock->isChecked() ? NpcEventLayerEmpty : "";
+            LvlPlacingItems::npcSet.event_emptylayer = ui->PROPS_NpcEventLEmptyLock->isChecked() ? m_recentNpcEventLayerEmpty : "";
             npc.event_emptylayer = LvlPlacingItems::npcSet.event_emptylayer;
         }
 
@@ -777,8 +783,8 @@ void LvlItemProperties::LvlItemProps(int Type,
                                 npc.meta.custom_params,
                                 &LvlItemProperties::onExtraSettingsNPCChanged);
 
-        LvlItemPropsLock = false;
-        LockItemProps = false;
+        m_externalLock = false;
+        m_internalLock = false;
 
         ui->npcProps->show();
         ui->npcProps->adjustSize();
@@ -797,13 +803,13 @@ void LvlItemProperties::LvlItemProps(int Type,
 
 void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
 {
-    if(LvlItemPropsLock) return;
-    LvlItemPropsLock = true;
+    if(m_externalLock) return;
+    m_externalLock = true;
 
     if(lname.isEmpty())
         lname = LvlPlacingItems::layer;
 
-    switch(curItemType)
+    switch(m_curItemType)
     {
     case 0:
     {
@@ -844,7 +850,7 @@ void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
         }
     }
     }
-    LvlItemPropsLock = false;
+    m_externalLock = false;
 }
 
 void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
@@ -1016,7 +1022,7 @@ void LvlItemProperties::onExtraSettingsBlockChanged()
     QString custom_params = extraGetSettings(m_extraSettings.get(),
                                              m_extraGlobalSettings.get(),
                                              mw()->configs.isExtraSettingsLocalAtRoot());
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
         LvlPlacingItems::blockSet.meta.custom_params = custom_params;
     else
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
@@ -1045,7 +1051,7 @@ void LvlItemProperties::onExtraSettingsBGOChanged()
     QString custom_params = extraGetSettings(m_extraSettings.get(),
                                              m_extraGlobalSettings.get(),
                                              mw()->configs.isExtraSettingsLocalAtRoot());
-    if(bgoPtr < 0)
+    if(m_currentBgoArrayId < 0)
         LvlPlacingItems::bgoSet.meta.custom_params = custom_params;
     else
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
@@ -1074,7 +1080,7 @@ void LvlItemProperties::onExtraSettingsNPCChanged()
     QString custom_params = extraGetSettings(m_extraSettings.get(),
                                              m_extraGlobalSettings.get(),
                                              mw()->configs.isExtraSettingsLocalAtRoot());
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
         LvlPlacingItems::npcSet.meta.custom_params = custom_params;
     else
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
@@ -1105,17 +1111,17 @@ void LvlItemProperties::onExtraSettingsNPCChanged()
 
 void LvlItemProperties::on_PROPS_BlockResize_clicked()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(blockPtr < 0) return;
+    if(m_currentBlockArrayId < 0) return;
 
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         QList<QGraphicsItem *> items = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem *item, items)
         {
-            if((item->data(ITEM_TYPE).toString() == "Block") && ((item->data(ITEM_ARRAY_ID).toInt() == blockPtr)))
+            if((item->data(ITEM_TYPE).toString() == "Block") && ((item->data(ITEM_ARRAY_ID).toInt() == m_currentBlockArrayId)))
             {
                 mw()->activeLvlEditWin()->scene->setBlockResizer(item, true);
                 break;
@@ -1129,10 +1135,10 @@ void LvlItemProperties::on_PROPS_BlockResize_clicked()
 
 void LvlItemProperties::on_BLOCK_Width_editingFinished()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
         return;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1169,10 +1175,10 @@ void LvlItemProperties::on_BLOCK_Width_editingFinished()
 
 void LvlItemProperties::on_BLOCK_Height_editingFinished()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
         return;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1211,10 +1217,10 @@ void LvlItemProperties::on_BLOCK_Height_editingFinished()
 
 void LvlItemProperties::on_PROPS_BlockInvis_clicked(bool checked)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
         LvlPlacingItems::blockSet.invisible = checked;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1237,10 +1243,10 @@ void LvlItemProperties::on_PROPS_BlockInvis_clicked(bool checked)
 
 void LvlItemProperties::on_PROPS_BlkSlippery_clicked(bool checked)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
         LvlPlacingItems::blockSet.slippery = checked;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1263,19 +1269,19 @@ void LvlItemProperties::on_PROPS_BlkSlippery_clicked(bool checked)
 
 void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
     int npcID = 0;
 
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
         npcID = LvlPlacingItems::blockSet.npc_id;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         QList<QGraphicsItem *> items1 = mw()->activeLvlEditWin()->scene->selectedItems();
         foreach(QGraphicsItem *targetItem, items1)
         {
-            if((targetItem->data(ITEM_TYPE).toString() == "Block") && ((targetItem->data(ITEM_ARRAY_ID).toInt() == blockPtr)))
+            if((targetItem->data(ITEM_TYPE).toString() == "Block") && ((targetItem->data(ITEM_ARRAY_ID).toInt() == m_currentBlockArrayId)))
             {
                 npcID = ((ItemBlock *)targetItem)->m_data.npc_id;
                 break;
@@ -1309,7 +1315,7 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
              : tr("[empty]")
             ));
 
-        if(blockPtr < 1)
+        if(m_currentBlockArrayId < 1)
             LvlPlacingItems::blockSet.npc_id = selected_npc;
         else if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
@@ -1334,10 +1340,10 @@ void LvlItemProperties::on_PROPS_BlockIncludes_clicked()
 
 void LvlItemProperties::on_PROPS_BlockLayer_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
     {
         LvlPlacingItems::blockSet.layer = arg1;
         LvlPlacingItems::layer = arg1;
@@ -1363,18 +1369,17 @@ void LvlItemProperties::on_PROPS_BlockLayer_currentIndexChanged(const QString &a
 
 void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
     {
         if(ui->PROPS_BlkEventDestroy->currentIndex() > 0)
             LvlPlacingItems::blockSet.event_destroy = arg1;
         else
             LvlPlacingItems::blockSet.event_destroy = "";
 
-        BlockEventDestroy = LvlPlacingItems::blockSet.event_destroy;
+        m_recentBlockEventDestroy = LvlPlacingItems::blockSet.event_destroy;
     }
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1405,18 +1410,17 @@ void LvlItemProperties::on_PROPS_BlkEventDestroy_currentIndexChanged(const QStri
 
 void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
     {
         if(ui->PROPS_BlkEventHited->currentIndex() > 0)
             LvlPlacingItems::blockSet.event_hit = arg1;
         else
             LvlPlacingItems::blockSet.event_hit = "";
 
-        BlockEventHit = LvlPlacingItems::blockSet.event_hit;
+        m_recentBlockEventHit = LvlPlacingItems::blockSet.event_hit;
     }
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1447,17 +1451,16 @@ void LvlItemProperties::on_PROPS_BlkEventHited_currentIndexChanged(const QString
 
 void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-
-    if(blockPtr < 0)
+    if(m_currentBlockArrayId < 0)
     {
         if(ui->PROPS_BlkEventLayerEmpty->currentIndex() > 0)
             LvlPlacingItems::blockSet.event_emptylayer = arg1;
         else
             LvlPlacingItems::blockSet.event_emptylayer = "";
-        BlockEventLayerEmpty = LvlPlacingItems::blockSet.event_emptylayer;
+        m_recentBlockEventLayerEmpty = LvlPlacingItems::blockSet.event_emptylayer;
     }
 
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
@@ -1495,10 +1498,10 @@ void LvlItemProperties::on_PROPS_BlkEventLayerEmpty_currentIndexChanged(const QS
 
 void LvlItemProperties::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(bgoPtr < 0)
+    if(m_currentBgoArrayId < 0)
     {
         LvlPlacingItems::bgoSet.layer = arg1;
         LvlPlacingItems::layer = arg1;
@@ -1525,8 +1528,8 @@ void LvlItemProperties::on_PROPS_BGOLayer_currentIndexChanged(const QString &arg
 
 void LvlItemProperties::on_PROPS_BGO_Z_Layer_currentIndexChanged(int index)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
     int zMode = 0;
     switch(index)
@@ -1549,7 +1552,7 @@ void LvlItemProperties::on_PROPS_BGO_Z_Layer_currentIndexChanged(int index)
         break;
     }
 
-    if(bgoPtr < 0)
+    if(m_currentBgoArrayId < 0)
         LvlPlacingItems::bgoSet.z_mode = zMode;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1575,10 +1578,10 @@ void LvlItemProperties::on_PROPS_BGO_Z_Layer_currentIndexChanged(int index)
 
 void LvlItemProperties::on_PROPS_BGO_Z_Offset_valueChanged(double arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(bgoPtr < 0)
+    if(m_currentBgoArrayId < 0)
         LvlPlacingItems::bgoSet.z_offset = arg1;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1602,10 +1605,10 @@ void LvlItemProperties::on_PROPS_BGO_Z_Offset_valueChanged(double arg1)
 
 void LvlItemProperties::on_PROPS_BGO_smbx64_sp_valueChanged(int arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(bgoPtr < 0)
+    if(m_currentBgoArrayId < 0)
         LvlPlacingItems::bgoSet.smbx64_sp = arg1;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1684,7 +1687,7 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
             ui->PROPS_NpcSpinLabel->setText(t_npc.setup.special_name);
             ui->PROPS_NPCSpecialSpin->show();
 
-            if(npcPtr < 0)
+            if(m_currentNpcArrayId < 0)
             {
                 ui->PROPS_NPCSpecialSpin_Auto->setVisible(t_npc.setup.special_spin_allow_autoincrement);
                 if(!dont_reset_props)
@@ -1702,11 +1705,11 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
                 }
             }
 
-            npcSpecSpinOffset = t_npc.setup.special_spin_value_offset;
-            ui->PROPS_NPCSpecialSpin->setMinimum(t_npc.setup.special_spin_min + npcSpecSpinOffset);
-            ui->PROPS_NPCSpecialSpin->setMaximum(t_npc.setup.special_spin_max + npcSpecSpinOffset);
+            m_npcSpecSpinOffset = t_npc.setup.special_spin_value_offset;
+            ui->PROPS_NPCSpecialSpin->setMinimum(t_npc.setup.special_spin_min + m_npcSpecSpinOffset);
+            ui->PROPS_NPCSpecialSpin->setMaximum(t_npc.setup.special_spin_max + m_npcSpecSpinOffset);
 
-            ui->PROPS_NPCSpecialSpin->setValue(npc.special_data + npcSpecSpinOffset);
+            ui->PROPS_NPCSpecialSpin->setValue(npc.special_data + m_npcSpecSpinOffset);
             LvlPlacingItems::npcSpecialAutoIncrement_begin = npc.special_data;
 
             break;
@@ -1727,10 +1730,10 @@ void LvlItemProperties::refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem
 
 void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         LvlPlacingItems::npcSet.direct = -1;
 
@@ -1759,10 +1762,10 @@ void LvlItemProperties::on_PROPS_NPCDirLeft_clicked()
 
 void LvlItemProperties::on_PROPS_NPCDirRand_clicked()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         LvlPlacingItems::npcSet.direct = 0;
 
@@ -1775,7 +1778,7 @@ void LvlItemProperties::on_PROPS_NPCDirRand_clicked()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
+        for(QGraphicsItem *item : items)
         {
             if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
@@ -1791,10 +1794,10 @@ void LvlItemProperties::on_PROPS_NPCDirRand_clicked()
 
 void LvlItemProperties::on_PROPS_NPCDirRight_clicked()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         LvlPlacingItems::npcSet.direct = 1;
 
@@ -1808,7 +1811,7 @@ void LvlItemProperties::on_PROPS_NPCDirRight_clicked()
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
+        for(QGraphicsItem *item : items)
         {
             if((item->data(ITEM_TYPE).toString() == "NPC")/*&&((item->data(2).toInt()==npcPtr))*/)
             {
@@ -1823,10 +1826,10 @@ void LvlItemProperties::on_PROPS_NPCDirRight_clicked()
 
 void LvlItemProperties::on_PROPS_NpcFri_clicked(bool checked)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
         LvlPlacingItems::npcSet.friendly = checked;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1850,10 +1853,10 @@ void LvlItemProperties::on_PROPS_NpcFri_clicked(bool checked)
 
 void LvlItemProperties::on_PROPS_NPCNoMove_clicked(bool checked)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
         LvlPlacingItems::npcSet.nomove = checked;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1877,10 +1880,10 @@ void LvlItemProperties::on_PROPS_NPCNoMove_clicked(bool checked)
 
 void LvlItemProperties::on_PROPS_NpcBoss_clicked(bool checked)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
         LvlPlacingItems::npcSet.is_boss = checked;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -1903,8 +1906,8 @@ void LvlItemProperties::on_PROPS_NpcBoss_clicked(bool checked)
 
 void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
     //LevelData selData;
     //QList<QVariant> modText;
@@ -1912,7 +1915,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
 
     QString message;
     bool friendly = false;
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         message = LvlPlacingItems::npcSet.msg;
         friendly = LvlPlacingItems::npcSet.friendly;
@@ -1939,7 +1942,7 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
     if(msgBox->exec() == QDialog::Accepted)
     {
 
-        if(npcPtr < 1)
+        if(m_currentNpcArrayId < 1)
         {
             LvlPlacingItems::npcSet.msg = msgBox->currentText;
             LvlPlacingItems::npcSet.friendly = msgBox->isFriendlyChecked();
@@ -1978,48 +1981,51 @@ void LvlItemProperties::on_PROPS_NpcTMsg_clicked()
 
 void LvlItemProperties::on_PROPS_NPCSpecialSpin_valueChanged(int arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    LvlPlacingItems::npcSpecialAutoIncrement_begin = arg1 - npcSpecSpinOffset;
+    LvlPlacingItems::npcSpecialAutoIncrement_begin = arg1 - m_npcSpecSpinOffset;
 
-    if(npcPtr < 0)
-        LvlPlacingItems::npcSet.special_data = arg1 - npcSpecSpinOffset;
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    if(m_currentNpcArrayId < 0)
     {
-        LevelData selData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
-            {
-                LevelNPC npc = ((ItemNPC *)item)->m_data;
-
-                //Inherit preferences from contained NPC if this NPC a container
-                obj_npc &t_npc = getNpcProps(npc, mw());
-
-                if(t_npc.setup.special_type != 1) //wrong type, go to next one
-                    continue;
-
-                if(t_npc.setup.special_spin_value_offset != npcSpecSpinOffset) //wrong offset, go to next one
-                    continue;
-
-                selData.npc.push_back(((ItemNPC *)item)->m_data);
-                ((ItemNPC *)item)->m_data.special_data = arg1 - npcSpecSpinOffset;
-                ((ItemNPC *)item)->arrayApply();
-            }
-        }
-        edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_SPECIAL_DATA, QVariant(arg1 - npcSpecSpinOffset));
+        LvlPlacingItems::npcSet.special_data = arg1 - m_npcSpecSpinOffset;
+        return;
     }
 
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelData selData;
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    QList<QGraphicsItem *> items = edit->scene->selectedItems();
+    edit->LvlData.meta.modified = true;
+    for(QGraphicsItem *item : items)
+    {
+        if(item->data(ITEM_TYPE).toString() == "NPC")
+        {
+            LevelNPC npc = ((ItemNPC *)item)->m_data;
+
+            //Inherit preferences from contained NPC if this NPC a container
+            obj_npc &t_npc = getNpcProps(npc, mw());
+
+            if(t_npc.setup.special_type != 1) //wrong type, go to next one
+                continue;
+
+            if(t_npc.setup.special_spin_value_offset != m_npcSpecSpinOffset) //wrong offset, go to next one
+                continue;
+
+            selData.npc.push_back(((ItemNPC *)item)->m_data);
+            ((ItemNPC *)item)->m_data.special_data = arg1 - m_npcSpecSpinOffset;
+            ((ItemNPC *)item)->arrayApply();
+        }
+    }
+    edit->scene->m_history->addChangeSettings(selData, HistorySettings::SETTING_SPECIAL_DATA, QVariant(arg1 - m_npcSpecSpinOffset));
 }
 
 void LvlItemProperties::on_PROPS_NPCSpecialSpin_Auto_clicked(bool checked)
 {
     LvlPlacingItems::npcSpecialAutoIncrement = checked;
-    LvlPlacingItems::npcSet.special_data = ui->PROPS_NPCSpecialSpin->value() - npcSpecSpinOffset;
+    LvlPlacingItems::npcSet.special_data = ui->PROPS_NPCSpecialSpin->value() - m_npcSpecSpinOffset;
 
     switch(LvlPlacingItems::npcSet.direct)
     {
@@ -2044,7 +2050,7 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
 {
     int npcID = 0;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         npcID = LvlPlacingItems::npcSet.contents;
     }
@@ -2053,7 +2059,7 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
         QList<QGraphicsItem *> items1 = mw()->activeLvlEditWin()->scene->selectedItems();
         for(QGraphicsItem *targetItem : items1)
         {
-            if((targetItem->data(ITEM_TYPE).toString() == "NPC") && ((targetItem->data(ITEM_ARRAY_ID).toInt() == npcPtr)))
+            if((targetItem->data(ITEM_TYPE).toString() == "NPC") && ((targetItem->data(ITEM_ARRAY_ID).toInt() == m_currentNpcArrayId)))
             {
                 npcID = ((ItemNPC *)targetItem)->m_data.contents;
                 break;
@@ -2071,14 +2077,14 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
              : tr("[empty]")
             ));
 
-        if(npcPtr < 1)
+        if(m_currentNpcArrayId < 1)
         {
             if(ui->PROPS_NPCContaiter == btn)
             {
                 LvlPlacingItems::npcSet.contents = selected_npc;
-                LockItemProps = true;
+                m_internalLock = true;
                 refreshFirstNpcSpecialOption(LvlPlacingItems::npcSet);
-                LockItemProps = false;
+                m_internalLock = false;
             }
             else if(ui->PROPS_NPCSpecialNPC == btn)
                 LvlPlacingItems::npcSet.special_data = selected_npc;
@@ -2108,10 +2114,10 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
                      HistorySettings::SETTING_CHANGENPC :
                      HistorySettings::SETTING_SPECIAL_DATA),
                     QVariant(selected_npc));
-            LockItemProps = true;
+            m_internalLock = true;
             if(items.size() > 0)
                 refreshFirstNpcSpecialOption(npc);
-            LockItemProps = false;
+            m_internalLock = false;
         }
     }
     delete npcList;
@@ -2119,26 +2125,26 @@ void LvlItemProperties::processNpcContainerButton(QPushButton *btn)
 
 void LvlItemProperties::on_PROPS_NPCContaiter_clicked()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
     processNpcContainerButton(ui->PROPS_NPCContaiter);
 }
 
 void LvlItemProperties::on_PROPS_NPCSpecialNPC_clicked()
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
     processNpcContainerButton(ui->PROPS_NPCSpecialNPC);
 }
 
 void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
         LvlPlacingItems::npcSet.special_data = index;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -2169,10 +2175,10 @@ void LvlItemProperties::on_PROPS_NPCSpecialBox_currentIndexChanged(int index)
 
 void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         LvlPlacingItems::npcSet.generator = checked;
         if(checked)
@@ -2180,13 +2186,13 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
         else
             LvlPlacingItems::gridSz = static_cast<int>(LvlPlacingItems::npcGrid);
 
-        LvlItemPropsLock = true;
+        m_externalLock = true;
 
         ui->PROPS_NPCGenType->setCurrentIndex((LvlPlacingItems::npcSet.generator_type) - 1);
         ui->PROPS_NPCGenTime->setValue((double)(LvlPlacingItems::npcSet.generator_period) / 10);
         ui->npcGeneratorDirection->setDirection(LvlPlacingItems::npcSet.generator_direct);
 
-        LvlItemPropsLock = false;
+        m_externalLock = false;
 
     }
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
@@ -2203,11 +2209,11 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
                 Q_ASSERT(it);
                 modData.npc.push_back(it->m_data);
                 it->setGenerator(checked, it->m_data.generator_direct, it->m_data.generator_type);
-                LvlItemPropsLock = true;
+                m_externalLock = true;
                 ui->PROPS_NPCGenType->setCurrentIndex(it->m_data.generator_type - 1);
                 ui->PROPS_NPCGenTime->setValue(double(it->m_data.generator_period / 10));
                 ui->npcGeneratorDirection->setDirection(it->m_data.generator_direct);
-                LvlItemPropsLock = false;
+                m_externalLock = false;
             }
         }
         edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_GENACTIVATE, QVariant(checked));
@@ -2217,10 +2223,10 @@ void LvlItemProperties::on_PROPS_NpcGenerator_clicked(bool checked)
 
 void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
         LvlPlacingItems::npcSet.generator_type = index + 1;
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -2245,10 +2251,10 @@ void LvlItemProperties::on_PROPS_NPCGenType_currentIndexChanged(int index)
 
 void LvlItemProperties::on_PROPS_NPCGenTime_valueChanged(double arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
         LvlPlacingItems::npcSet.generator_period = qRound(arg1 * 10);
     else if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -2272,10 +2278,10 @@ void LvlItemProperties::on_PROPS_NPCGenTime_valueChanged(double arg1)
 
 void LvlItemProperties::npcGeneratorDirectionChange(int direction)
 {
-    if(LvlItemPropsLock || LockItemProps)
+    if(m_externalLock || m_internalLock)
         return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         LvlPlacingItems::npcSet.generator_direct = direction;
         return;
@@ -2303,10 +2309,10 @@ void LvlItemProperties::npcGeneratorDirectionChange(int direction)
 
 void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         LvlPlacingItems::npcSet.layer = arg1;
         LvlPlacingItems::layer = arg1;
@@ -2317,7 +2323,7 @@ void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg
         LevelEdit *edit = mw()->activeLvlEditWin();
         QList<QGraphicsItem *> items = edit->scene->selectedItems();
         edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
+        for(QGraphicsItem *item : items)
         {
             if(item->data(ITEM_TYPE).toString() == "NPC")
             {
@@ -2332,199 +2338,201 @@ void LvlItemProperties::on_PROPS_NpcLayer_currentIndexChanged(const QString &arg
 
 void LvlItemProperties::on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         if(ui->PROPS_NpcAttachLayer->currentIndex() > 0)
             LvlPlacingItems::npcSet.attach_layer = arg1;
         else
-            LvlPlacingItems::npcSet.attach_layer = "";
-    }
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
-    {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                if(ui->PROPS_NpcAttachLayer->currentIndex() > 0)
-                    ((ItemNPC *)item)->m_data.attach_layer = arg1;
-                else
-                    ((ItemNPC *)item)->m_data.attach_layer = "";
-                ((ItemNPC *)item)->arrayApply();
-            }
-        }
-        if(ui->PROPS_NpcAttachLayer->currentIndex() > 0)
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_ATTACHLAYER, QVariant(arg1));
-        else
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_ATTACHLAYER, QVariant(""));
+            LvlPlacingItems::npcSet.attach_layer.clear();
+        return;
     }
 
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelData modData;
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    QList<QGraphicsItem *> items = edit->scene->selectedItems();
+    edit->LvlData.meta.modified = true;
+    for(QGraphicsItem *item : items)
+    {
+        if(item->data(ITEM_TYPE).toString() == "NPC")
+        {
+            modData.npc.push_back(((ItemNPC *)item)->m_data);
+            if(ui->PROPS_NpcAttachLayer->currentIndex() > 0)
+                ((ItemNPC *)item)->m_data.attach_layer = arg1;
+            else
+                ((ItemNPC *)item)->m_data.attach_layer.clear();
+            ((ItemNPC *)item)->arrayApply();
+        }
+    }
+    if(ui->PROPS_NpcAttachLayer->currentIndex() > 0)
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_ATTACHLAYER, QVariant(arg1));
+    else
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_ATTACHLAYER, QVariant(""));
 }
 
 void LvlItemProperties::on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         if(ui->PROPS_NpcEventActivate->currentIndex() > 0)
             LvlPlacingItems::npcSet.event_activate = arg1;
         else
             LvlPlacingItems::npcSet.event_activate = "";
-        NpcEventActivated = LvlPlacingItems::npcSet.event_activate;
-    }
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
-    {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                if(ui->PROPS_NpcEventActivate->currentIndex() > 0)
-                    ((ItemNPC *)item)->m_data.event_activate = arg1;
-                else
-                    ((ItemNPC *)item)->m_data.event_activate = "";
-                ((ItemNPC *)item)->arrayApply();
-            }
-        }
-        if(ui->PROPS_NpcEventActivate->currentIndex() > 0)
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_ACTIVATE, QVariant(arg1));
-        else
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_ACTIVATE, QVariant(""));
+        m_recentNpcEventActivated = LvlPlacingItems::npcSet.event_activate;
+        return;
     }
 
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelData modData;
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    QList<QGraphicsItem *> items = edit->scene->selectedItems();
+    edit->LvlData.meta.modified = true;
+    for(QGraphicsItem *item : items)
+    {
+        if(item->data(ITEM_TYPE).toString() == "NPC")
+        {
+            modData.npc.push_back(((ItemNPC *)item)->m_data);
+            if(ui->PROPS_NpcEventActivate->currentIndex() > 0)
+                ((ItemNPC *)item)->m_data.event_activate = arg1;
+            else
+                ((ItemNPC *)item)->m_data.event_activate = "";
+            ((ItemNPC *)item)->arrayApply();
+        }
+    }
+    if(ui->PROPS_NpcEventActivate->currentIndex() > 0)
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_ACTIVATE, QVariant(arg1));
+    else
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_ACTIVATE, QVariant(""));
 }
 
 void LvlItemProperties::on_PROPS_NpcEventDeath_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         if(ui->PROPS_NpcEventDeath->currentIndex() > 0)
             LvlPlacingItems::npcSet.event_die = arg1;
         else
             LvlPlacingItems::npcSet.event_die = "";
-        NpcEventDeath = LvlPlacingItems::npcSet.event_die;
-    }
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
-    {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                if(ui->PROPS_NpcEventDeath->currentIndex() > 0)
-                    ((ItemNPC *)item)->m_data.event_die = arg1;
-                else
-                    ((ItemNPC *)item)->m_data.event_die = "";
-                ((ItemNPC *)item)->arrayApply();
-            }
-        }
-        if(ui->PROPS_NpcEventDeath->currentIndex() > 0)
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_DEATH, QVariant(arg1));
-        else
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_DEATH, QVariant(""));
+        m_recentNpcEventDeath = LvlPlacingItems::npcSet.event_die;
+        return;
     }
 
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelData modData;
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    QList<QGraphicsItem *> items = edit->scene->selectedItems();
+    edit->LvlData.meta.modified = true;
+    for(QGraphicsItem *item : items)
+    {
+        if(item->data(ITEM_TYPE).toString() == "NPC")
+        {
+            modData.npc.push_back(((ItemNPC *)item)->m_data);
+            if(ui->PROPS_NpcEventDeath->currentIndex() > 0)
+                ((ItemNPC *)item)->m_data.event_die = arg1;
+            else
+                ((ItemNPC *)item)->m_data.event_die = "";
+            ((ItemNPC *)item)->arrayApply();
+        }
+    }
+    if(ui->PROPS_NpcEventDeath->currentIndex() > 0)
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_DEATH, QVariant(arg1));
+    else
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_DEATH, QVariant(""));
 }
 
 void LvlItemProperties::on_PROPS_NpcEventTalk_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         if(ui->PROPS_NpcEventTalk->currentIndex() > 0)
             LvlPlacingItems::npcSet.event_talk = arg1;
         else
             LvlPlacingItems::npcSet.event_talk = "";
-        NpcEventTalk = LvlPlacingItems::npcSet.event_talk;
-    }
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
-    {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
-        {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                if(ui->PROPS_NpcEventTalk->currentIndex() > 0)
-                    ((ItemNPC *)item)->m_data.event_talk = arg1;
-                else
-                    ((ItemNPC *)item)->m_data.event_talk = "";
-                ((ItemNPC *)item)->arrayApply();
-            }
-        }
-        if(ui->PROPS_NpcEventTalk->currentIndex() > 0)
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_TALK, QVariant(arg1));
-        else
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_TALK, QVariant(""));
+        m_recentNpcEventTalk = LvlPlacingItems::npcSet.event_talk;
+        return;
     }
 
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelData modData;
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    QList<QGraphicsItem *> items = edit->scene->selectedItems();
+    edit->LvlData.meta.modified = true;
+    for(QGraphicsItem *item : items)
+    {
+        if(item->data(ITEM_TYPE).toString() == "NPC")
+        {
+            modData.npc.push_back(((ItemNPC *)item)->m_data);
+            if(ui->PROPS_NpcEventTalk->currentIndex() > 0)
+                ((ItemNPC *)item)->m_data.event_talk = arg1;
+            else
+                ((ItemNPC *)item)->m_data.event_talk = "";
+            ((ItemNPC *)item)->arrayApply();
+        }
+    }
+    if(ui->PROPS_NpcEventTalk->currentIndex() > 0)
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_TALK, QVariant(arg1));
+    else
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_TALK, QVariant(""));
 }
 
 void LvlItemProperties::on_PROPS_NpcEventEmptyLayer_currentIndexChanged(const QString &arg1)
 {
-    if(LvlItemPropsLock) return;
-    if(LockItemProps) return;
+    if(m_externalLock || m_internalLock)
+        return;
 
-
-    if(npcPtr < 0)
+    if(m_currentNpcArrayId < 0)
     {
         if(ui->PROPS_NpcEventEmptyLayer->currentIndex() > 0)
             LvlPlacingItems::npcSet.event_emptylayer = arg1;
         else
-            LvlPlacingItems::npcSet.event_emptylayer = "";
-        NpcEventLayerEmpty = LvlPlacingItems::npcSet.event_emptylayer;
+            LvlPlacingItems::npcSet.event_emptylayer.clear();
+        m_recentNpcEventLayerEmpty = LvlPlacingItems::npcSet.event_emptylayer;
+        return;
     }
-    else if(mw()->activeChildWindow() == MainWindow::WND_Level)
+
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelData modData;
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    QList<QGraphicsItem *> items = edit->scene->selectedItems();
+    edit->LvlData.meta.modified = true;
+    for(QGraphicsItem *item : items)
     {
-        LevelData modData;
-        LevelEdit *edit = mw()->activeLvlEditWin();
-        QList<QGraphicsItem *> items = edit->scene->selectedItems();
-        edit->LvlData.meta.modified = true;
-        foreach(QGraphicsItem *item, items)
+        if(item->data(ITEM_TYPE).toString() == "NPC")
         {
-            if(item->data(ITEM_TYPE).toString() == "NPC")
-            {
-                modData.npc.push_back(((ItemNPC *)item)->m_data);
-                if(ui->PROPS_NpcEventEmptyLayer->currentIndex() > 0)
-                    ((ItemNPC *)item)->m_data.event_emptylayer = arg1;
-                else
-                    ((ItemNPC *)item)->m_data.event_emptylayer = "";
-                ((ItemNPC *)item)->arrayApply();
-            }
+            modData.npc.push_back(((ItemNPC *)item)->m_data);
+            if(ui->PROPS_NpcEventEmptyLayer->currentIndex() > 0)
+                ((ItemNPC *)item)->m_data.event_emptylayer = arg1;
+            else
+                ((ItemNPC *)item)->m_data.event_emptylayer = "";
+            ((ItemNPC *)item)->arrayApply();
         }
-        if(ui->PROPS_NpcEventEmptyLayer->currentIndex() > 0)
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(arg1));
-        else
-            edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(""));
     }
+    if(ui->PROPS_NpcEventEmptyLayer->currentIndex() > 0)
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(arg1));
+    else
+        edit->scene->m_history->addChangeSettings(modData, HistorySettings::SETTING_EV_LAYER_EMP, QVariant(""));
 }
 
 void LvlItemProperties::keyPressEvent(QKeyEvent *event)

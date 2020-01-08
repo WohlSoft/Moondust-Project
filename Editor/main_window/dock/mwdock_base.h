@@ -26,13 +26,11 @@ class QObject;
 class MWDock_Base
 {
 public:
-    explicit MWDock_Base(QObject *parent = 0);
+    explicit MWDock_Base(QObject *parent = nullptr);
     virtual ~MWDock_Base();
     MainWindow *mw();
 
-//public slots:
-//    virtual void re_translate();
-    bool m_lastVisibilityState;
+    bool m_lastVisibilityState = false;
 
 protected:
     virtual void construct(MainWindow *ParentMW);

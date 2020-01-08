@@ -25,7 +25,7 @@
 
 void MainWindow::setCurrentLevelSection(int sectionId, int open)
 {
-    dock_LvlSectionProps->lockSctSettingsProps = true;
+    dock_LvlSectionProps->m_externalLock = true;
 
     int dstSectionId = sectionId;
     int winType = activeChildWindow();
@@ -61,7 +61,7 @@ void MainWindow::setCurrentLevelSection(int sectionId, int open)
         dock_LvlSectionProps->refreshFileData();
     }
 
-    dock_LvlSectionProps->lockSctSettingsProps = false;
+    dock_LvlSectionProps->m_externalLock = false;
 }
 
 

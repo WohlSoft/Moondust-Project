@@ -136,7 +136,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     progress.connect(&configs, SIGNAL(progressPartNumber(int)),
                      &progress, SLOT(setValue(int)), Qt::BlockingQueuedConnection);
     LogDebug("Lock tile item box...");
-    dock_TilesetBox->lockTilesetBox = true;
+    dock_TilesetBox->m_lockSettings = true;
     dock_TilesetBox->clearTilesetGroups();
     // Do the loading in a thread
     QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
@@ -148,7 +148,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     }
 
     LogDebug("Configuration feloading is finished, re-initializing toolboxes...");
-    dock_TilesetBox->lockTilesetBox = false;
+    dock_TilesetBox->m_lockSettings = false;
     dock_LvlItemBox->initItemLists(); //Apply item boxes from reloaded configs
     dock_WldItemBox->initItemLists();
     dock_LvlSectionProps->initDefaults();

@@ -29,6 +29,8 @@ public:
     QComboBox *cbox_layer();
     QComboBox *cbox_event_enter();
 
+    void setSettingsLock(bool locked);
+
 public slots:
     void setSMBX64Strict(bool en);
     void re_translate();
@@ -88,7 +90,8 @@ private slots:
 private:
     unsigned int getWarpId();
     QString doorTitle(LevelDoor &door);
-    bool lockWarpSetSettings;
+    //! Prevent any settings changed slots to write changed settings values
+    bool m_lockSettings = false;
 
     Ui::LvlWarpBox *ui;
 };

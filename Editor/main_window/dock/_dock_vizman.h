@@ -22,7 +22,7 @@ public:
     void showAll();
 
 private:
-    QList<VisiblyState > stateList;
+    QList<VisiblyState > m_stateList;
 };
 
 #endif // DOCKVIZIBILITYMANAGER_H

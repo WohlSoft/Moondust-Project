@@ -40,10 +40,10 @@ void WLD_ModeSetPoint::set()
 
     s->resetResizers();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=true;
-    s->m_disableMoveItems=false;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = true;
+    s->m_disableMoveItems = false;
 
     s->m_viewPort->setInteractive(true);
     s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
@@ -58,7 +58,7 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     WldScene *s = dynamic_cast<WldScene *>(scene);
     Q_ASSERT(s);
 
-    if( (!s->m_isSelectionDialog) && ((mouseEvent->buttons() & Qt::RightButton)!=0) )
+    if((!s->m_isSelectionDialog) && ((mouseEvent->buttons() & Qt::RightButton) != 0))
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
@@ -68,15 +68,15 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(s->m_cursorItemImg)
     {
-        s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
+        s->m_cursorItemImg->setPos(QPointF(s->applyGrid(mouseEvent->scenePos().toPoint() -
                                            QPoint(WldPlacingItems::c_offset_x,
-                                                  WldPlacingItems::c_offset_y),
+                                                   WldPlacingItems::c_offset_y),
                                            WldPlacingItems::gridSz,
                                            WldPlacingItems::gridOffset)));
         s->m_pointSelector.setPoint(s->m_cursorItemImg->scenePos().toPoint());
         emit s->m_pointSelector.pointSelected(s->m_pointSelector.m_pointCoord);
     }
-    dontCallEvent=true;
+    dontCallEvent = true;
 }
 
 void WLD_ModeSetPoint::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
@@ -87,45 +87,44 @@ void WLD_ModeSetPoint::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     if(s->m_cursorItemImg)
     {
 
-               s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
-                                                   QPoint(WldPlacingItems::c_offset_x,
-                                                          WldPlacingItems::c_offset_y),
-                                                 WldPlacingItems::gridSz,
-                                                 WldPlacingItems::gridOffset)));
-               s->m_cursorItemImg->show();
+        s->m_cursorItemImg->setPos(QPointF(s->applyGrid(mouseEvent->scenePos().toPoint() -
+                                           QPoint(WldPlacingItems::c_offset_x,
+                                                   WldPlacingItems::c_offset_y),
+                                           WldPlacingItems::gridSz,
+                                           WldPlacingItems::gridOffset)));
+        s->m_cursorItemImg->show();
 
-               s->setMessageBoxItem(true, mouseEvent->scenePos(),
-                                      (s->m_cursorItemImg?
-                                           (
-                                      QString::number( s->m_cursorItemImg->scenePos().toPoint().x() ) + "x" +
-                                      QString::number( s->m_cursorItemImg->scenePos().toPoint().y() )
-                                           )
-                                               :""));
+        s->setMessageBoxItem(true, mouseEvent->scenePos(),
+                             (s->m_cursorItemImg ?
+                              (
+                                  QString::number(s->m_cursorItemImg->scenePos().toPoint().x()) + "x" +
+                                  QString::number(s->m_cursorItemImg->scenePos().toPoint().y())
+                              )
+                              : ""));
 
     }
 }
 
-void WLD_ModeSetPoint::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
+void WLD_ModeSetPoint::mouseRelease(QGraphicsSceneMouseEvent *)
 {
-    Q_UNUSED(mouseEvent);
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
     if(!s->m_isSelectionDialog)
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
-        MainWinConnect::pMainWin->dock_WldItemProps->WLD_returnPointToLevelProperties(s->m_pointSelector.m_pointCoord);
+        MainWinConnect::pMainWin->dock_WldItemProps->acceptWarpToCoordinates(s->m_pointSelector.m_pointCoord);
         s->openProps();
         //s->MouseReleaseEventOnly = true;
         //s->mouseReleaseEvent(mouseEvent);
-        dontCallEvent=true;
+        dontCallEvent = true;
     }
 
 }
 
 void WLD_ModeSetPoint::keyPress(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }
 
 void WLD_ModeSetPoint::keyRelease(QKeyEvent *keyEvent)
@@ -135,13 +134,12 @@ void WLD_ModeSetPoint::keyRelease(QKeyEvent *keyEvent)
 
     switch(keyEvent->key())
     {
-        case (Qt::Key_Escape):
-            if(s->m_isSelectionDialog) break; //Disable this key in the point selection dialog
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
-            break;
-        default:
-            break;
+    case(Qt::Key_Escape):
+        if(s->m_isSelectionDialog) break; //Disable this key in the point selection dialog
+        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        break;
+    default:
+        break;
     }
-
 }
 

@@ -21,8 +21,9 @@ class LvlSectionProps : public QDockWidget, public MWDock_Base
 private:
     explicit LvlSectionProps(QWidget *parent);
     ~LvlSectionProps();
+
 public:
-    bool lockSctSettingsProps;
+    bool m_externalLock = false;
     QPushButton *getEditBackground2IniButton();
 
 public slots:

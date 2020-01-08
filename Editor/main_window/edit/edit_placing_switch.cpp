@@ -316,26 +316,26 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
             case ItemTypes::WLD_Tile:
             {
                 activeWldEditWin()->scene->setItemPlacer(0, itemID);
-                dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
+                dock_WldItemProps->openPropertiesFor(-1, FileFormats::CreateWldLevel(), true);
                 break;
             }
             case ItemTypes::WLD_Scenery:
             {
                 activeWldEditWin()->scene->setItemPlacer(1, itemID);
-                dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
+                dock_WldItemProps->openPropertiesFor(-1, FileFormats::CreateWldLevel(), true);
                 break;
             }
             case ItemTypes::WLD_Path:
             {
                 activeWldEditWin()->scene->setItemPlacer(2, itemID);
-                dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
+                dock_WldItemProps->openPropertiesFor(-1, FileFormats::CreateWldLevel(), true);
                 break;
             }
             case ItemTypes::WLD_Level:
             {
                 ui->action_Placing_ShowProperties->setEnabled(true);
                 activeWldEditWin()->scene->setItemPlacer(3, itemID);
-                dock_WldItemProps->WldItemProps(0,
+                dock_WldItemProps->openPropertiesFor(0,
                                                 WldPlacingItems::levelSet,
                                                 true,
                                                 GlobalSettings::Placing_dontShowPropertiesBox);
@@ -348,7 +348,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                 ui->actionLine->setEnabled(false);
                 ui->actionFill->setEnabled(false);
                 activeWldEditWin()->scene->setItemPlacer(4, itemID);
-                dock_WldItemProps->WldItemProps(-1, FileFormats::CreateWldLevel(), true);
+                dock_WldItemProps->openPropertiesFor(-1, FileFormats::CreateWldLevel(), true);
                 break;
             }
             }

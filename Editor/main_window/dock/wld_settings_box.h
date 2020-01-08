@@ -21,11 +21,13 @@ class WorldSettingsBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
 
     friend class MainWindow;
-    explicit WorldSettingsBox(QWidget *parent = 0);
+    explicit WorldSettingsBox(QWidget *parent = nullptr);
     ~WorldSettingsBox();
+
 public slots:
     void re_translate();
     void setCurrentWorldSettings();
+
 private slots:
     void on_WorldSettingsBox_visibilityChanged(bool visible);
 
@@ -42,15 +44,16 @@ private slots:
 
 signals:
     void countedStar(int);
+
 private:
     Ui::WorldSettingsBox *ui;
-    bool world_settings_lock_fields;
-    QMap<QCheckBox *, int> WLD_CharacterCheckBoxes;
+    bool m_lockSettings = false;
+    QMap<QCheckBox *, int> m_charactersCheckBoxes;
 
     //for star counter
     unsigned long doStarCount(QString dir, QList<WorldLevelTile > levels, QString introLevel);
-    unsigned long StarCounter_checkLevelFile(QString FilePath, QSet<QString> &exists);
-    bool StarCounter_canceled;
+    unsigned long starCounter_checkLevelFile(QString FilePath, QSet<QString> &exists);
+    bool m_starCounter_canceled = false;
 };
 
 #endif // WLD_SETTINGS_BOX_H

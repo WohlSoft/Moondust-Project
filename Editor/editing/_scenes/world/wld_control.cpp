@@ -121,7 +121,7 @@ void WldScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     { return; }
 
     if( (m_editMode==MODE_Selecting) || (m_editMode==MODE_SelectingOnly))
-        MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps_hide();
+        MainWinConnect::pMainWin->dock_WldItemProps->hideToolbox();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
     //haveSelected=(!selectedItems().isEmpty());
@@ -271,16 +271,16 @@ void WldScene::openProps()
     {
         if(items.first()->data(ITEM_TYPE).toString()=="LEVEL")
         {
-            MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps(0,
+            MainWinConnect::pMainWin->dock_WldItemProps->openPropertiesFor(0,
                           ((ItemLevel *)items.first())->m_data,
                           false);
         }
         else
-        MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps_hide();
+        MainWinConnect::pMainWin->dock_WldItemProps->hideToolbox();
     }
     else
     {
-        MainWinConnect::pMainWin->dock_WldItemProps->WldItemProps_hide();
+        MainWinConnect::pMainWin->dock_WldItemProps->hideToolbox();
     }
 
     QGraphicsScene::selectionChanged();

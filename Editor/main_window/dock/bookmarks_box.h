@@ -19,7 +19,7 @@ class BookmarksBox : public QDockWidget, public MWDock_Base
 
     friend class MainWindow;
 private:
-    explicit BookmarksBox(QWidget *parent = 0);
+    explicit BookmarksBox(QWidget *parent = nullptr);
     ~BookmarksBox();
 
 public:

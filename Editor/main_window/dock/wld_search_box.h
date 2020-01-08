@@ -39,7 +39,7 @@ class WldSearchBox : public QDockWidget, public MWDock_Base
 
     friend class MainWindow;
 private:
-    explicit WldSearchBox(QWidget *parent = 0);
+    explicit WldSearchBox(QWidget *parent = nullptr);
     ~WldSearchBox();
 
 public slots:
@@ -84,11 +84,11 @@ private:
         T               data;
     };
 
-    SearchMeta<WorldTerrainTile>    curTerrain;
-    SearchMeta<WorldScenery>        curScenery;
-    SearchMeta<WorldPathTile>       curPath;
-    SearchMeta<WorldLevelTile>      curLevel;
-    SearchMeta<WorldMusicBox>       curMusicBox;
+    SearchMeta<WorldTerrainTile>    m_curTerrain;
+    SearchMeta<WorldScenery>        m_curScenery;
+    SearchMeta<WorldPathTile>       m_curPath;
+    SearchMeta<WorldLevelTile>      m_curLevel;
+    SearchMeta<WorldMusicBox>       m_curMusicBox;
 
     bool doSearchTile(WorldEdit *edit);
     bool doSearchScenery(WorldEdit *edit);
@@ -97,7 +97,7 @@ private:
     bool doSearchMusic(WorldEdit *edit);
 
     Ui::WldSearchBox *ui;
-    bool lockResetWorld;
+    bool m_lockSettings = false;
 
     enum currentSearch
     {
@@ -110,7 +110,7 @@ private:
         SEARCH_LEVEL = 1 << 6,
         SEARCH_MUSICBOX = 1 << 7
     };
-    int currentSearches;
+    int m_currentSearches = 0;
 };
 
 #endif // WLD_SEARCH_BOX_H

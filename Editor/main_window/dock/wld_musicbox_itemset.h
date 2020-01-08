@@ -24,6 +24,7 @@
 #include "mwdock_base.h"
 
 class MainWindow;
+class QTabWidget;
 class ItemBoxListModel;
 
 namespace Ui {

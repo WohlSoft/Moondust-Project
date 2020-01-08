@@ -48,7 +48,7 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
     setVisible(false);
     setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
-    lockWarpSetSettings = false;
+    m_lockSettings = false;
 
     ui->entrance->setPixmap(DirectionSwitchWidget::S_CENTER, QPixmap(":/arrows/arrows/box.png"));
     ui->entrance->setPixmap(DirectionSwitchWidget::S_LEFT, QPixmap(":/arrows/arrows/black_right.png"));
@@ -135,6 +135,11 @@ QComboBox *LvlWarpBox::cbox_event_enter()
     return ui->WarpEnterEvent;
 }
 
+void LvlWarpBox::setSettingsLock(bool locked)
+{
+    m_lockSettings = locked;
+}
+
 void LvlWarpBox::setSMBX64Strict(bool en)
 {
     dataconfigs &c = mw()->configs;
@@ -181,12 +186,12 @@ void LvlWarpBox::setSMBX64Strict(bool en)
 
 void LvlWarpBox::re_translate()
 {
-    lockWarpSetSettings = true;
+    m_lockSettings = true;
     int doorType = ui->WarpType->currentIndex(); //backup combobox's index
     ui->retranslateUi(this);
     re_translate_widgets();
     ui->WarpType->setCurrentIndex(doorType); //restore combobox's index
-    lockWarpSetSettings = false;
+    m_lockSettings = false;
 }
 
 void LvlWarpBox::init()
@@ -245,7 +250,7 @@ void LvlWarpBox::setDoorData(long index)
 
     qDebug() << "Current warp indes is " << ui->warpsList->currentIndex();
 
-    lockWarpSetSettings = true;
+    m_lockSettings = true;
     LevelEdit *le = mw()->activeLvlEditWin();
     unsigned int warpId = getWarpId();
 
@@ -329,7 +334,7 @@ void LvlWarpBox::setDoorData(long index)
         ui->warpBoxCannon->setEnabled(false);
     }
 
-    lockWarpSetSettings = false;
+    m_lockSettings = false;
 }
 
 
@@ -496,7 +501,7 @@ void LvlWarpBox::on_WarpSetExit_clicked()
 
 void LvlWarpBox::on_WarpLayer_currentIndexChanged(const QString &arg1)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -524,7 +529,7 @@ void LvlWarpBox::on_WarpLayer_currentIndexChanged(const QString &arg1)
 
 void LvlWarpBox::on_WarpEnterEvent_currentIndexChanged(const QString &arg1)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -671,7 +676,7 @@ void LvlWarpBox::on_WarpSpecialStateOnly_clicked(bool checked)
 /////Door props
 void LvlWarpBox::on_WarpType_currentIndexChanged(int index)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -701,7 +706,7 @@ void LvlWarpBox::on_WarpType_currentIndexChanged(int index)
 
 void LvlWarpBox::on_WarpNeedAStars_valueChanged(int arg1)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -729,7 +734,7 @@ void LvlWarpBox::on_WarpNeedAStars_valueChanged(int arg1)
 
 void LvlWarpBox::on_WarpNeedAStarsMsg_editingFinished()
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -776,7 +781,7 @@ void LvlWarpBox::on_WarpHideStars_clicked(bool checked)
 
 void LvlWarpBox::entrance_clicked(int direction)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -803,7 +808,7 @@ void LvlWarpBox::entrance_clicked(int direction)
 
 void LvlWarpBox::exit_clicked(int direction)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -850,7 +855,7 @@ void LvlWarpBox::on_WarpEnableCannon_clicked(bool checked)
 
 void LvlWarpBox::on_WarpCannonSpeed_valueChanged(double arg1)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -878,7 +883,7 @@ void LvlWarpBox::on_WarpCannonSpeed_valueChanged(double arg1)
 
 void LvlWarpBox::on_WarpToMapX_editingFinished()//_textEdited(const QString &arg1)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(!ui->WarpToMapX->isModified())
@@ -909,7 +914,7 @@ void LvlWarpBox::on_WarpToMapX_editingFinished()//_textEdited(const QString &arg
 
 void LvlWarpBox::on_WarpToMapY_editingFinished()//_textEdited(const QString &arg1)
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(!ui->WarpToMapY->isModified())
@@ -939,7 +944,7 @@ void LvlWarpBox::on_WarpToMapY_editingFinished()//_textEdited(const QString &arg
 
 void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
 {
-    if(lockWarpSetSettings)
+    if(m_lockSettings)
         return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -1047,7 +1052,7 @@ void LvlWarpBox::on_WarpGetXYFromWorldMap_clicked()
 /////Door mode (Level Entrance / Level Exit)
 void LvlWarpBox::on_WarpLevelExit_clicked(bool checked)
 {
-    if(lockWarpSetSettings) return;
+    if(m_lockSettings) return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
@@ -1104,7 +1109,7 @@ void LvlWarpBox::on_WarpLevelExit_clicked(bool checked)
 
 void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
 {
-    if(lockWarpSetSettings) return;
+    if(m_lockSettings) return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
@@ -1161,7 +1166,7 @@ void LvlWarpBox::on_WarpLevelEntrance_clicked(bool checked)
 
 void LvlWarpBox::on_WarpBrowseLevels_clicked()
 {
-    if(lockWarpSetSettings) return;
+    if(m_lockSettings) return;
 
     QString dirPath;
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
@@ -1239,7 +1244,7 @@ unsigned int LvlWarpBox::getWarpId()
 
 void LvlWarpBox::on_WarpLevelFile_editingFinished()
 {
-    if(lockWarpSetSettings) return;
+    if(m_lockSettings) return;
 
     if(!ui->WarpLevelFile->isModified()) return;
     ui->WarpLevelFile->setModified(false);
@@ -1260,7 +1265,7 @@ void LvlWarpBox::on_WarpLevelFile_editingFinished()
 
 void LvlWarpBox::on_WarpToExitNu_valueChanged(int arg1)
 {
-    if(lockWarpSetSettings) return;
+    if(m_lockSettings) return;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;

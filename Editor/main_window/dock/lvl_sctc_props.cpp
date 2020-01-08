@@ -42,7 +42,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     switchResizeMode(false);
 
-    lockSctSettingsProps = false;
+    m_externalLock = false;
 
     QRect mwg = mw()->geometry();
     int GOffset = 10;
@@ -211,7 +211,7 @@ void MainWindow::on_actionSection_Settings_triggered(bool checked)
 // ////////////////Set LevelSection data//////////////////////////////////
 void LvlSectionProps::initDefaults()
 {
-    lockSctSettingsProps = true;
+    m_externalLock = true;
     mw()->dock_LvlEvents->setEventToolsLocked(true);
 
     LogDebug(QString("Set level Section Data"));
@@ -319,7 +319,7 @@ void LvlSectionProps::initDefaults()
     }
 
     mw()->dock_LvlEvents->setEventToolsLocked(false);
-    lockSctSettingsProps = false;
+    m_externalLock = false;
 
     //Set current data
     refreshFileData();
@@ -328,14 +328,14 @@ void LvlSectionProps::initDefaults()
 
 void LvlSectionProps::refreshFileData()
 {
-    lockSctSettingsProps = true;
+    m_externalLock = true;
     //Set current data
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit)
         {
-            lockSctSettingsProps = false;
+            m_externalLock = false;
             return;
         }
 
@@ -376,7 +376,7 @@ void LvlSectionProps::refreshFileData()
 
         loadMusic();
     }
-    lockSctSettingsProps = false;
+    m_externalLock = false;
 }
 
 
@@ -484,7 +484,7 @@ void LvlSectionProps::on_cancelResize_clicked()
 // ////////////////////////////////////////////////////////////////////////////////
 void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
-    if(lockSctSettingsProps) return;
+    if(m_externalLock) return;
 
     if(mw()->configs.main_bg.stored() == 0)
     {
@@ -604,7 +604,7 @@ void LvlSectionProps::loadMusic()
 
 void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
 {
-    if(lockSctSettingsProps) return;
+    if(m_externalLock) return;
 
     unsigned int test = index;
     ui->LVLPropsMusicCustomEn->setChecked(test == mw()->configs.music_custom_id);
@@ -626,7 +626,7 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
 
 void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
 {
-    if(lockSctSettingsProps) return;
+    if(m_externalLock) return;
 
     if(ui->LVLPropsMusicCustomEn->hasFocus())
     {
@@ -678,7 +678,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
 
 void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(const QString &arg1)
 {
-    if(lockSctSettingsProps) return;
+    if(m_externalLock) return;
     if(!ui->LVLPropsMusicCustom->isModified()) return;
     ui->LVLPropsMusicCustom->setModified(false);
 

@@ -6,7 +6,7 @@ DockVizibilityManager::DockVizibilityManager()
 
 DockVizibilityManager::~DockVizibilityManager()
 {
-    stateList.clear();
+    m_stateList.clear();
 }
 
 void DockVizibilityManager::addState(QDockWidget* _widget, bool *setting)
@@ -14,17 +14,17 @@ void DockVizibilityManager::addState(QDockWidget* _widget, bool *setting)
     VisiblyState _vState;
     _vState.setting = setting;
     _vState.widget = _widget;
-    stateList.push_back(_vState);
+    m_stateList.push_back(_vState);
 }
 
 QList<VisiblyState> DockVizibilityManager::list()
 {
-    return stateList;
+    return m_stateList;
 }
 
 void DockVizibilityManager::hideAll()
 {
-    foreach(VisiblyState s, stateList)
+    foreach(VisiblyState s, m_stateList)
     {
         *(s.setting) = s.widget->isVisible();
         s.widget->setVisible(false);
@@ -33,7 +33,7 @@ void DockVizibilityManager::hideAll()
 
 void DockVizibilityManager::showAll()
 {
-    foreach(VisiblyState s, stateList)
+    foreach(VisiblyState s, m_stateList)
     {
         s.widget->setVisible( *(s.setting) );
     }

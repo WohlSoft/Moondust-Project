@@ -171,7 +171,7 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         //dock_LvlItemBox->setLvlItemBoxes();
         //dock_WldItemBox->setWldItemBoxes();
         dock_LvlEvents->reloadSoundsList();
-        dock_WldItemProps->WldLvlExitTypeListReset();
+        dock_WldItemProps->resetExitTypesList();
         dock_TilesetBox->setTileSetBox(true);
 
         splash.progressTitle(tr("Initalizing plugins..."));

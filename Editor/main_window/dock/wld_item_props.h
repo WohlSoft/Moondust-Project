@@ -8,7 +8,8 @@
 class MainWindow;
 struct WorldLevelTile;
 
-namespace Ui {
+namespace Ui
+{
 class WLD_ItemProps;
 }
 
@@ -18,20 +19,19 @@ class WLD_ItemProps : public QDockWidget, public MWDock_Base
 
     friend class MainWindow;
 private:
-    explicit WLD_ItemProps(QWidget *parent = 0);
+    explicit WLD_ItemProps(QWidget *parent = nullptr);
     ~WLD_ItemProps();
 
 public:
-    void WldItemProps(int Type, WorldLevelTile level, bool newItem=false, bool dontShow=false);
-    void WldItemProps_hide();
-    long wlvlPtr;   //!< ArrayID of editing item
+    void openPropertiesFor(int Type, WorldLevelTile level, bool newItem = false, bool dontShow = false);
+    void hideToolbox();
+    void resetExitTypesList();
 
 public slots:
     void re_translate();
 
-    void WldLvlExitTypeListReset();
     // accept point from world map into a level properties
-    void WLD_returnPointToLevelProperties(QPoint p);
+    void acceptWarpToCoordinates(QPoint p);
 
 private slots:
     void on_WLD_PROPS_PathBG_clicked(bool checked);
@@ -52,7 +52,10 @@ private slots:
 
 private:
     Ui::WLD_ItemProps *ui;
-    bool wld_tools_lock;
+    //! ArrayID of editing item
+    long m_currentLevelArrayId = -1;
+    //! Prevent writing of settings on slots execution
+    bool m_lockSettings = false;
 };
 
 #endif // WLD_ITEM_PROPS_H

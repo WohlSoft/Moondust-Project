@@ -47,10 +47,11 @@ private:
     void re_translate_widgets();
 
 public:
-    long blockPtr;
-    long bgoPtr;
-    long npcPtr;
-    bool LvlItemPropsLock;
+    long m_currentBlockArrayId;
+    long m_currentBgoArrayId;
+    long m_currentNpcArrayId;
+
+    void setSettingsLock(bool locked);
 
     QComboBox *cbox_layer_block();
     QComboBox *cbox_layer_bgo();
@@ -76,7 +77,7 @@ public slots:
     void OpenNPC(LevelNPC& npc, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
     void CloseBox();
 
-    void LvlItemProps(int Type,
+    void openPropertiesFor(int Type,
                       LevelBlock& block,
                       LevelBGO& bgo,
                       LevelNPC& npc,
@@ -147,23 +148,28 @@ private:
     void onExtraSettingsBGOChanged();
     void onExtraSettingsNPCChanged();
 
-    int npcSpecSpinOffset;
-    int npcSpecSpinOffset_2;
-    bool LockItemProps;
+    int m_npcSpecSpinOffset;
+    int m_npcSpecSpinOffset_2;
+
+    //! A lock of item properties change events that was set externally
+    bool m_externalLock = true;
+    //! A lock of item properties change events that was set internally
+    bool m_internalLock = false;
 
     std::unique_ptr<JsonSettingsWidget> m_extraSettings;
     std::unique_ptr<JsonSettingsWidget> m_extraGlobalSettings;
     std::unique_ptr<QSpacerItem> m_extraSettingsSpacer;
 
-    int curItemType;
-    QString BlockEventDestroy;
-    QString BlockEventHit;
-    QString BlockEventLayerEmpty;
+    int m_curItemType;
 
-    QString NpcEventActivated;
-    QString NpcEventDeath;
-    QString NpcEventTalk;
-    QString NpcEventLayerEmpty;
+    QString m_recentBlockEventDestroy;
+    QString m_recentBlockEventHit;
+    QString m_recentBlockEventLayerEmpty;
+
+    QString m_recentNpcEventActivated;
+    QString m_recentNpcEventDeath;
+    QString m_recentNpcEventTalk;
+    QString m_recentNpcEventLayerEmpty;
 
     Ui::LvlItemProperties *ui;
 };

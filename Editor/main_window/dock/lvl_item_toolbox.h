@@ -22,8 +22,9 @@ class LevelItemBox : public QDockWidget, public MWDock_Base
 
     friend class MainWindow;
 private:
-    explicit LevelItemBox(QWidget *parent = 0);
+    explicit LevelItemBox(QWidget *parent = nullptr);
     ~LevelItemBox();
+
 public:
     QTabWidget *tabWidget();
 
@@ -65,10 +66,10 @@ private:
     QMenu   m_bgoFilterSetup;
     QMenu   m_npcFilterSetup;
 
-    QString m_allLabel = "[all]";
+    QString m_allLabelText = "[all]";
 
-    bool lock_grp = false;
-    bool lock_cat = false;
+    bool m_lockGroup = false;
+    bool m_lockCategory = false;
 };
 
 #endif // LVL_ITEM_TOOLBOX_H

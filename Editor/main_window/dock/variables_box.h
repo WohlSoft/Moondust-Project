@@ -17,7 +17,7 @@ class VariablesBox : public QDockWidget, public MWDock_Base
 
     friend class MainWindow;
 public:
-    explicit VariablesBox(QWidget *parent = 0);
+    explicit VariablesBox(QWidget *parent = nullptr);
     ~VariablesBox();
 
 public slots:
