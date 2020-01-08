@@ -1865,7 +1865,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation>Deny vehicles</translation>
+        <translation>No Mounts</translation>
     </message>
     <message>
         <source>No Yoshi</source>
