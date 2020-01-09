@@ -1625,7 +1625,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation>Ne pas autoriser les véhicules</translation>
+        <translation>Pas de véhicules</translation>
     </message>
     <message>
         <source>Allow NPC</source>
