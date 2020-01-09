@@ -41,7 +41,6 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      sudo: required
       compiler: gcc
       env:
         - QT_VER=5.10.1_static
@@ -103,7 +102,6 @@ matrix:
             - ninja-build
     - os: linux
       dist: xenial
-      sudo: required
       compiler: gcc
       env:
         - QT_VER=5.10.1_static
