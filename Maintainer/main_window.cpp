@@ -2,6 +2,7 @@
 #include "ui_main_window.h"
 
 #include <Music/audiocvt_sox_gui.h>
+#include <Graphics/gifs2png.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <QMessageBox>
 
@@ -21,10 +22,17 @@ void MaintainerMain::on_quitOut_clicked()
     this->close();
 }
 
+const Qt::WindowFlags g_dialogFlags =
+        Qt::Window |
+        Qt::WindowSystemMenuHint |
+        Qt::WindowTitleHint |
+        Qt::WindowCloseButtonHint |
+        Qt::WindowMinimizeButtonHint;
+
 void MaintainerMain::on_music_converter_batch_clicked()
 {
     AudioCvt_Sox_gui mus(nullptr);
-    mus.setWindowFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);
+    mus.setWindowFlags(g_dialogFlags);
     mus.setWindowModality(Qt::NonModal);
     this->hide();
     mus.exec();
@@ -34,7 +42,7 @@ void MaintainerMain::on_music_converter_batch_clicked()
 void MaintainerMain::on_episode_converter_clicked()
 {
     EpisodeConverter eps(nullptr);
-    eps.setWindowFlags(Qt::Window | Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowMinimizeButtonHint);
+    eps.setWindowFlags(g_dialogFlags);
     eps.setWindowModality(Qt::NonModal);
     this->hide();
     eps.exec();
@@ -43,7 +51,12 @@ void MaintainerMain::on_episode_converter_clicked()
 
 void MaintainerMain::on_gifs2png_converter_clicked()
 {
-    QMessageBox::information(this, "WIP", "This feature is in works!");
+    GIFs2PNG g2p(nullptr);
+    g2p.setWindowFlags(g_dialogFlags);
+    g2p.setWindowModality(Qt::NonModal);
+    this->hide();
+    g2p.exec();
+    this->show();
 }
 
 void MaintainerMain::on_png2gifs_converter_clicked()
