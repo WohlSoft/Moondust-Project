@@ -1361,7 +1361,7 @@ dlatego możesz użyć tego samego linku, aby pobrać najnowszą wersję.</trans
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Args: {engine commands} Wyślij komendę lub wiadomość do uruchomionego silnika</translation>
+        <translation type="unfinished">Args: {engine commands} Wyślij komendę lub wiadomość do uruchomionego silnika</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
