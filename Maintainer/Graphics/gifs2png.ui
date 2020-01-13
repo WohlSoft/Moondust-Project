@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>466</width>
-    <height>498</height>
+    <width>653</width>
+    <height>619</height>
    </rect>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>Convert masked GIFs into PNG</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0">
+  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,10000">
    <item row="2" column="0" colspan="4">
     <widget class="QTabWidget" name="whatToConvert">
      <property name="currentIndex">
@@ -37,7 +40,7 @@ color: black;
 border-radius: 15px;</string>
          </property>
          <property name="text">
-          <string>Drop your masked GIFs files here for a quick conversion</string>
+          <string>Drop your masked GIFs files into this window for a quick conversion</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -140,7 +143,7 @@ border-radius: 15px;</string>
     </spacer>
    </item>
    <item row="3" column="3">
-    <widget class="QPushButton" name="DoMadJob">
+    <widget class="QPushButton" name="doMadJob">
      <property name="text">
       <string>Start</string>
      </property>
@@ -181,7 +184,14 @@ border-radius: 15px;</string>
        <number>0</number>
       </property>
       <item row="0" column="0">
-       <widget class="QTextBrowser" name="textBrowser"/>
+       <widget class="QTextBrowser" name="outputLog">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
