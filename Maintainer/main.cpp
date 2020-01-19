@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    AppPathManager::initAppPath();
+    AppPathManager::initAppPath(argv[0]);
     LoadLogSettings();
 
     MaintainerMain w;

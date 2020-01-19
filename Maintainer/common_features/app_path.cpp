@@ -20,33 +20,32 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDir>
+#include <QFileInfo>
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
 #include <QUrl>
 #endif
 
 #include "app_path.h"
 #include "../version.h"
 
-
 QString ApplicationPath;
 QString ApplicationPath_x;
 
-QString AppPathManager::_settingsPath;
+QString AppPathManager::m_settingsPath;
+QString AppPathManager::m_userPath;
 
 #if defined(__ANDROID__) || defined(__APPLE__)
-#define UserDirName "/PGE Project"
+#   define UserDirName "/PGE Project"
 #else
-#define UserDirName "/.PGE_Project"
+#   define UserDirName "/.PGE_Project"
 #endif
 
-void AppPathManager::initAppPath()
+void AppPathManager::initAppPath(const char *argv0)
 {
-    QApplication::setOrganizationName(V_COMPANY);
-    QApplication::setOrganizationDomain(V_PGE_URL);
-    QApplication::setApplicationName("PGE Maintainer");
-
 #ifdef __APPLE__
+    Q_UNUSED(argv0);
     {
         CFURLRef appUrlRef;
         appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
@@ -70,71 +69,84 @@ void AppPathManager::initAppPath()
         }
     }
 #else
-    ApplicationPath = QApplication::applicationDirPath();
+    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).absoluteDir().absolutePath();
 #endif
     ApplicationPath_x = ApplicationPath;
 
-#ifdef __ANDROID__
-    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
-    //    QDir appPath(ApplicationPath);
-    //    if(!appPath.exists())
-    //        appPath.mkpath(ApplicationPath);
+    QApplication::addLibraryPath(".");
+    QApplication::addLibraryPath(ApplicationPath);
+    QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv0)).absoluteDir().absolutePath());
 
-    //    QDir languagesFolder(ApplicationPath+"/languages");
-    //    if(!languagesFolder.exists())
-    //    {
-    //        languagesFolder.mkpath(ApplicationPath+"/languages");
-    //        DirCopy::copy("assets:/languages", languagesFolder.absolutePath());
-    //    }
-#endif
+    QApplication::setOrganizationName(V_COMPANY);
+    QApplication::setOrganizationDomain(V_PGE_URL);
+    QApplication::setApplicationName("PGE Editor");
 
     if(isPortable())
         return;
 
-    bool userDir;
 #if defined(__ANDROID__) || defined(__APPLE__)
-    userDir = true;
+    QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
 #else
-    QSettings setup;
-    userDir = setup.value("EnableUserDir", false).toBool();
+    QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #endif
-    //openUserDir:
-
-    if(userDir)
+    if(!path.isEmpty())
     {
-#if defined(__ANDROID__) || defined(__APPLE__)
-        QString path = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-#else
-        QString path = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+        QDir appDir(path + UserDirName);
+        if(!appDir.exists())
+            if(!appDir.mkpath(path + UserDirName))
+                goto defaultSettingsPath;
+#ifdef __APPLE__
+        if(!QDir(ApplicationPath + "/Data directory").exists())
+            symlink((path + UserDirName).toUtf8().data(), (ApplicationPath + "/Data directory").toUtf8().data());
 #endif
-        if(!path.isEmpty())
-        {
-            QDir appDir(path + UserDirName);
-            if(!appDir.exists())
-                if(!appDir.mkpath(path + UserDirName))
-                    goto defaultSettingsPath;
-
-            _settingsPath = appDir.absolutePath();
-        }
-        else
-            goto defaultSettingsPath;
+        m_userPath = appDir.absolutePath();
+        initSettingsPath();
     }
     else
         goto defaultSettingsPath;
 
     return;
 defaultSettingsPath:
-    _settingsPath = ApplicationPath;
+    m_userPath = ApplicationPath;
+    initSettingsPath();
 }
 
 QString AppPathManager::settingsFile()
 {
-    return _settingsPath + "/pge_maintainer.ini";
+    return m_settingsPath + "/pge_maintainer.ini";
+}
+
+QString AppPathManager::settingsPath()
+{
+    return m_settingsPath;
 }
 
 QString AppPathManager::userAppDir()
 {
-    return _settingsPath;
+    return m_userPath;
+}
+
+QString AppPathManager::languagesDir()
+{
+#ifndef Q_OS_MAC
+    return ApplicationPath + "/languages";
+#else
+    CFURLRef appUrlRef;
+    appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
+    CFStringRef filePathRef = CFURLGetString(appUrlRef);
+    QString path = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
+    CFRelease(appUrlRef);
+    return path;
+#endif
+}
+
+QString AppPathManager::logsDir()
+{
+#ifndef Q_OS_MAC
+    return m_userPath + "/logs";
+#else
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Library/Logs/PGE Project";
+#endif
 }
 
 void AppPathManager::install()
@@ -148,30 +160,42 @@ void AppPathManager::install()
     {
         QDir appDir(path + UserDirName);
         if(!appDir.exists())
-            if(!appDir.mkpath(path + UserDirName))
-                return;
-
-        QSettings setup;
-        setup.setValue("EnableUserDir", true);
+            appDir.mkpath(path + UserDirName);
     }
 }
 
 bool AppPathManager::isPortable()
 {
-    if(_settingsPath.isNull())
-        _settingsPath = ApplicationPath;
+    if(m_settingsPath.isNull())
+        m_settingsPath = ApplicationPath;
+    if(m_userPath.isNull())
+        m_userPath = ApplicationPath;
     if(!QFile(settingsFile()).exists()) return false;
     bool forcePortable = false;
     QSettings checkForPort(settingsFile(), QSettings::IniFormat);
+
     checkForPort.beginGroup("Main");
     forcePortable = checkForPort.value("force-portable", false).toBool();
     checkForPort.endGroup();
+
+    if(forcePortable)
+        initSettingsPath();
 
     return forcePortable;
 }
 
 bool AppPathManager::userDirIsAvailable()
 {
-    return (_settingsPath != ApplicationPath);
+    return (m_userPath != ApplicationPath);
+}
+
+void AppPathManager::initSettingsPath()
+{
+    m_settingsPath = m_userPath + "/settings";
+    if(QFileInfo(m_settingsPath).isFile())
+        QFile::remove(m_settingsPath);//Just in case, avoid mad jokes with making same-named file as settings folder
+    QDir st(m_settingsPath);
+    if(!st.exists())
+        st.mkpath(m_settingsPath);
 }
 
