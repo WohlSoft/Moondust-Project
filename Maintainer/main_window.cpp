@@ -3,6 +3,7 @@
 
 #include <Music/audiocvt_sox_gui.h>
 #include <Graphics/gifs2png.h>
+#include <Graphics/png2gifs.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <QMessageBox>
 
@@ -61,7 +62,12 @@ void MaintainerMain::on_gifs2png_converter_clicked()
 
 void MaintainerMain::on_png2gifs_converter_clicked()
 {
-    QMessageBox::information(this, "WIP", "This feature is in works!");
+    PNG2GIFs p2g(nullptr);
+    p2g.setWindowFlags(g_dialogFlags);
+    p2g.setWindowModality(Qt::NonModal);
+    this->hide();
+    p2g.exec();
+    this->show();
 }
 
 void MaintainerMain::on_pathcase_fixer_clicked()

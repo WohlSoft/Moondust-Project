@@ -49,6 +49,7 @@ qt5_wrap_ui(UIS_HDRS
     EpisodeCvt/episode_converter.ui
     Music/audiocvt_sox_gui.ui
     Graphics/gifs2png.ui
+    Graphics/png2gifs.ui
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.qrc)
@@ -72,6 +73,7 @@ list(APPEND PGE_MAINTAINER_SRCS
     common_features/logger.cpp
     EpisodeCvt/episode_converter.cpp
     Graphics/gifs2png.cpp
+    Graphics/png2gifs.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
     ${QT_PLUGINS_CPP}
