@@ -25,12 +25,14 @@ protected:
 
 private slots:
     void on_doMadJob_clicked();
+    void on_configPackChoose_currentIndexChanged(int index);
     void on_configPackPathBrowse_clicked();
     void on_inPathBrowse_clicked();
     void processOutput();
     void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
 private:
+    void findConfigPacks();
     void toggleBusy(bool busy);
     Ui::GIFs2PNG *ui;
 };

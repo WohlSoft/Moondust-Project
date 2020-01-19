@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QCloseEvent>
 #include <QFileDialog>
+#include <QSettings>
 #include <signal.h>
 #include <common_features/app_path.h>
 
@@ -26,6 +27,7 @@ GIFs2PNG::GIFs2PNG(QWidget *parent) :
                      this, &GIFs2PNG::processOutput);
     QObject::connect(&m_gifs2png, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
                      this, &GIFs2PNG::processFinished);
+    findConfigPacks();
 }
 
 GIFs2PNG::~GIFs2PNG()
@@ -169,6 +171,14 @@ void GIFs2PNG::on_configPackPathBrowse_clicked()
     ui->configPackPath->setText(dir);
 }
 
+void GIFs2PNG::on_configPackChoose_currentIndexChanged(int)
+{
+    QVariant d = ui->configPackChoose->currentData();
+    if(d.isNull() || !d.isValid())
+        return;
+    ui->configPackPath->setText(d.toString());
+}
+
 void GIFs2PNG::on_inPathBrowse_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this,
@@ -216,6 +226,53 @@ void GIFs2PNG::processFinished(int exitCode, QProcess::ExitStatus exitStatus)
         }
     }
     toggleBusy(false);
+}
+
+void GIFs2PNG::findConfigPacks()
+{
+    QStringList possibleConfigPacks;
+    QString path;
+    if(AppPathManager::userDirIsAvailable())
+    {
+        path = AppPathManager::userAppDir() + "/configs";
+        QDir dp(path);
+        if(dp.exists())
+        {
+            for(QString &p : dp.entryList(QDir::Dirs|QDir::NoDotAndDotDot))
+            {
+                possibleConfigPacks.push_back(path + QStringLiteral("/") + p);
+            }
+        }
+    }
+
+    path = ApplicationPath + "/configs";
+    QDir dpa(ApplicationPath + "/configs");
+    if(dpa.exists())
+    {
+        for(QString &p : dpa.entryList(QDir::Dirs|QDir::NoDotAndDotDot))
+        {
+            possibleConfigPacks.push_back(path + QStringLiteral("/") + p);
+        }
+    }
+
+    for(const QString &p : possibleConfigPacks)
+    {
+        QString main_ini = p + "/main.ini";
+        if(!QFile::exists(main_ini))
+            continue;  // Is not a config pack
+        QSettings m(main_ini, QSettings::IniFormat);
+        if(m.status() != QSettings::NoError)
+            continue;  // Invalid main.ini
+
+        m.beginGroup("main");
+        QVariant title_v = m.value("config_name", QVariant());
+        m.endGroup();
+
+        if(title_v.isNull() || !title_v.isValid())
+            continue;  //Invalid data
+
+        ui->configPackChoose->addItem(title_v.toString(), p);
+    }
 }
 
 void GIFs2PNG::toggleBusy(bool busy)
