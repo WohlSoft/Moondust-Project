@@ -12,6 +12,7 @@ MaintainerMain::MaintainerMain(QWidget *parent) :
     ui(new Ui::MaintainerMain)
 {
     ui->setupUi(this);
+    setDefLang();
 }
 
 MaintainerMain::~MaintainerMain()

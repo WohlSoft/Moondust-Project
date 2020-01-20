@@ -39,6 +39,23 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
+
+# =============== Translations ===============
+set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
+set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
+
+FILE(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
+
+set_source_files_properties(${PGE_LANG_SRC_FILES} PROPERTIES OUTPUT_LOCATION ${PGE_LANG_OUTPUT_DIR})
+set(PGE_LANG_BIN_FILES)
+qt5_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
+add_custom_target(maintainer_translations DEPENDS ${PGE_LANG_BIN_FILES})
+
+if(NOT APPLE AND NOT EMSCRIPTEN)
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+endif()
+# ===========================================
 
 # Executables fail to build with Qt 5 in the default configuration
 # without -fPIE. We add that here.
@@ -67,6 +84,7 @@ set(PGE_MAINTAINER_SRCS)
 list(APPEND PGE_MAINTAINER_SRCS
     main.cpp
     main_window.cpp
+    translator.cpp
     Music/audiocvt_sox_gui.cpp
     common_features/app_path.cpp
     files/episode_box.cpp
@@ -83,6 +101,7 @@ if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
     list(APPEND PGE_MAINTAINER_SRCS
         _resources/maintainer.icns
+        ${PGE_LANG_BIN_FILES}
     )
 endif()
 
@@ -98,6 +117,7 @@ add_dependencies(pge_maintainer
     libpng_Local
     FREETYPE_Local
     PGE_FileFormatsQt
+    maintainer_translations
 ) # Needed for Qt to be linked
 
 add_library(PGE_Maintainer_QtLibs INTERFACE)
@@ -182,6 +202,7 @@ if(APPLE)
         MACOSX_BUNDLE_INFO_STRING "Game data maintaining utility"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
 
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     list(APPEND PGE_MAINTAINER_LINK_LIBS ${COREFOUNDATION_LIBRARY})

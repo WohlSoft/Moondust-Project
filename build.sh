@@ -379,6 +379,20 @@ do
 
             cd ..
 
+            printLine "Maintainer" "\E[0;42;37m" "\E[0;34m"
+            # ${QT_PATH}/lupdate -locations none -no-ui-lines Maintainer/pge_maintainer.pro
+
+            cd Maintainer
+
+            find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
+            find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
+            for lang in bg bs de en es fr "he-il" "id" it ja "nl" "nb-no" pl "pt-br" "pt-pt" ru sv sr uk zh; do
+                ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/maintainer_$lang.ts -I .
+            done
+            rm _lupdate_temp_list.tmp
+
+            cd ..
+
             printLine "Engine" "\E[0;42;37m" "\E[0;34m"
             # ${QT_PATH}/lupdate -locations none Engine/pge_engine.pro
 
