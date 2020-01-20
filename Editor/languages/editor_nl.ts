@@ -4478,7 +4478,7 @@ Wilt u toch doorgaan?</translation>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="737"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="761"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="957"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1308"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1121"/>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
         <translation>Event niet resetten naar &apos;none&apos;</translation>
     </message>
@@ -4593,14 +4593,12 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Vertraging (seconden):</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1199"/>
         <source>Up</source>
-        <translation>Boven</translation>
+        <translation type="vanished">Boven</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1259"/>
         <source>Down</source>
-        <translation>Onder</translation>
+        <translation type="vanished">Onder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="982"/>
@@ -4623,29 +4621,27 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Aan laag koppelen:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1081"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1358"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="611"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1075"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1171"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="650"/>
         <source>Direction</source>
         <translation>Richting</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1169"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1385"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="612"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1198"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="651"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1392"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="614"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1205"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="653"/>
         <source>Random</source>
         <translation>Willekeurig</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1229"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1399"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="615"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1212"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="654"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
@@ -4676,22 +4672,22 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Huidige blokinhoud</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1448"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1261"/>
         <source>Auto-increment</source>
         <translation>Automatisch incrementeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1332"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1145"/>
         <source>Talk message:</source>
         <translation>Praatbericht:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1441"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1254"/>
         <source>Friendly</source>
         <translation>Vriendelijk</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1339"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1152"/>
         <source>Doesn&apos;t move</source>
         <translation>Beweegt niet</translation>
     </message>
@@ -4701,51 +4697,99 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Instellen als Baas</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="322"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="146"/>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Links</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="147"/>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Rechts</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="148"/>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Boven</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="149"/>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Onder</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="150"/>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="151"/>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="152"/>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="153"/>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="361"/>
         <source>Block ID: %1, Array ID: %2</source>
         <translation>Blok ID: %1, Array ID: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="368"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="473"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="610"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="407"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="512"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="649"/>
         <source>Position: [%1, %2]</source>
         <translation>Positie: [%1,%2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="382"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1291"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="421"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1314"/>
         <source>%1 coins</source>
         <translation>%1 munt(en)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="383"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="637"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1292"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1702"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2054"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="422"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="676"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1315"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1722"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2077"/>
         <source>[empty]</source>
         <translation>[leeg]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="459"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="498"/>
         <source>BGO ID: %1, Array ID: %2</source>
         <translation>BGO ID: %1, Array ID: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="540"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="579"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation>NPC ID: %1, Array ID: %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="644"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1949"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="683"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1969"/>
         <source>[none]</source>
         <translation>[geen]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="889"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="939"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="912"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="962"/>
         <source>Error in the file %1:
 %2</source>
         <translation>Fout in het bestand %1:
@@ -4775,60 +4819,60 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Vergrendelen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="720"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="721"/>
         <source>Layers merge</source>
         <translation>Lagen samenvoegen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="721"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="722"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation>Laag met de naam &apos;%1&apos; bestaat al, wilt u de lagen samenvoegen?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="799"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="800"/>
         <source>New Layer %1</source>
         <translation>Nieuwe Laag %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="869"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="903"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="911"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="912"/>
         <source>Remove layer</source>
         <translation>Laag verwijderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="871"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
         <source>Remove Layer and keep items</source>
         <translation>Laag verwijderen en voorwerpen behouden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="905"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="912"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="913"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen zullen verdwijnen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="886"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
         <source>Rename layer</source>
         <translation>Laag hernoemen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="890"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
         <source>Remove layer with items</source>
         <translation>Laag samen met voorwerpen verwijderen</translation>
     </message>
@@ -5341,35 +5385,35 @@ Fysieke omgevingszones:	%6
         <translation>Portalen en deuren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="869"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="884"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="420"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="435"/>
         <source>Target coordinates of player on the world map
 when you exit from a level through this warp.</source>
         <translation>Bestemming co-ordinaten van de speler op de wereldkaart
 wanneer u vanuit dit portaal een niveau verlaat.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="892"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="443"/>
         <source>Browse the world map to set an exit point</source>
         <translation>Bladeren op de wereldkaart om een uitgangspunt te plaatsen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="911"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="462"/>
         <source>Main</source>
         <translation>Hoofd</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="974"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="525"/>
         <source>Place exit point or quickly jump to existing warp</source>
         <translation>Plaats het uitgangspunt of spring naar het bestaande uitgangspunt</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1024"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="575"/>
         <source>Layer:</source>
         <translation>Laag:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1098"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="649"/>
         <source>Defines the type of warp:
 0 - Instant, player will be teleported movement speed will be reset to 0.
 1 - Pipe, directional warp entrance and exit.
@@ -5382,38 +5426,38 @@ wanneer u vanuit dit portaal een niveau verlaat.</translation>
 3 - Portaal, de speler wordt geteleporteerd, maar met behoud van beweging (alleen PGE programma).</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1138"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="689"/>
         <source>Message which will be shown if the player
 does not have the required number of stars</source>
         <translation>Bericht dat getoond zal worden als
 de speler niet de nodige sterren bezit</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1166"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="717"/>
         <source>Required number of stars
 to enter this warp</source>
         <translation>Aantal sterren nodig
 om dit portaal te gebruiken</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1184"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="735"/>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
         <translation>Als deze instelling is ingeschakeld, zal zelfs als dit portaal naar een ander niveau leidt,
 het aantal bestaande en verzamelde sterren in het niveau niet worden weergegeven.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1188"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="739"/>
         <source>Don&apos;t show level completion amount</source>
         <translation>Toon geen voltooiingsstatus van het niveau</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1266"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="817"/>
         <source>Trigger event when he player enters this warp</source>
         <translation>Event triggeren bij het gebruiken van dit portaal</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1303"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="854"/>
         <source>Any mounted vehicles will be removed
 when player passes through this warp.
 They will be given back when player
@@ -5424,139 +5468,139 @@ De speler zal ze terug krijgen wanneer
 die het nieveau wint of verliest.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1309"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="860"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
         <translation>Vervoersmiddelen weigeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1316"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="867"/>
         <source>Player can carry items and NPCs through this warp.</source>
         <translation>Speler kan voorwerpen en voertuigen door portaal brengen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1319"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="870"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
         <translation>Voorwerpen toestaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1329"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="880"/>
         <source>Locked</source>
         <translation>Vergrendeld</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1560"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1111"/>
         <source>The speed at which the player will exit the warp.
 Measured in pixels per 1/65 seconds.</source>
         <translation>De snelheid waarmee de speler zal uitgeschoten worden.
 In pixels per 1/65 van een seconde.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1577"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1128"/>
         <source>The direction in which the player will exit the warp.</source>
         <translation>De richting waarin de speler het portaal zal verlaten.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="977"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="528"/>
         <source>Set Exit</source>
         <translation>Uitgang Plaatsen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="987"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1225"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="538"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="776"/>
         <source>Point already placed</source>
         <translation>Punt al geplaatst</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1115"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="666"/>
         <source>0 - Instant</source>
         <translation>0 - Onmiddelijk</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1120"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="671"/>
         <source>1 - Pipe</source>
         <translation>1 - Pijp</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1125"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="676"/>
         <source>2 - Door</source>
         <translation>2 - Deur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1130"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="681"/>
         <source>3 - Portal</source>
         <translation>3 - Portaal</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1146"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="697"/>
         <source>Need stars message</source>
         <translation>Onvoldoende sterren bericht</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1153"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="704"/>
         <source>Need stars</source>
         <translation>Nodige sterren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1177"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="728"/>
         <source>Warp type</source>
         <translation>Portaal type</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1205"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="756"/>
         <source>Place entrance point or quickly jump to already placed</source>
         <translation>Ingangspunt plaatsen of springen naar bestaande ingang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1208"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="759"/>
         <source>Set Entrance</source>
         <translation>Ingang plaatsen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1259"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="810"/>
         <source>On-Enter event:</source>
         <translation>Bij-Ingaan event:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1326"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="877"/>
         <source>Entrance closed with a lock. Need a key to open it.</source>
         <translation>Ingang op slot. Sleutel nodig om te gebruiken.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1339"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="890"/>
         <source>Bomb needed</source>
         <translation>Bom nodig</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1350"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="901"/>
         <source>Sp. State only</source>
         <translation>Enkel Sp. status</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1376"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="927"/>
         <source>Allow entering from both sides of this warp.</source>
         <translation>Laat toe om portaal van beiden kanten te gebruiken.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1379"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="930"/>
         <source>Two-way warp</source>
         <translation>Tweerichtingsportaal</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1425"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="976"/>
         <source>If this field is not empty, player will travel from the current level to the specified one.</source>
         <translation>Wanneer dit vakje ingevuld is, zal de speler van de huigide naar het gespecifieerde niveau reizen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1439"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="990"/>
         <source>Determines the warp through which the player will enter the target level.
 If set to zero, the player will start at the pre-defined level start point.</source>
         <translation>Bepaalt het portaal waarmee de speler het niveau zal binnenkomen.
 Op nul zal de speler beginnen op het gedifinieerde beginpunt.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1488"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1039"/>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
@@ -5565,27 +5609,27 @@ In het oorspronkelijk programma, toonde de laadscherm
 de huidige speelbare personage(s) en het aantal levens.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1510"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1061"/>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
         <translation>Brengt meegenomen voorwerpen mee naar het portaal bestemmingsniveau.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1529"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1080"/>
         <source>Cannon shoot exit</source>
         <translation>Kannonschot uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1553"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1104"/>
         <source>Projectile speed:</source>
         <translation>Projectiel snelheid:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1580"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1131"/>
         <source>Cannon exit</source>
         <translation>Kanon uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="182"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="176"/>
         <source>Pipe direction</source>
         <translation>Pijp richting</translation>
     </message>
@@ -5602,48 +5646,48 @@ Every warp point pair requires a warp entry.</source>
 Elk portaal is deel van een paar en vereist een ingang.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="212"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="200"/>
         <source>Entrance</source>
         <translation>Ingang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="267"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="536"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="120"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="125"/>
         <source>Down</source>
         <translation>Onder</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="303"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="585"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="119"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="339"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="683"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="118"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="400"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="634"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
         <source>Up</source>
         <translation>Boven</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="481"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="246"/>
         <source>Exit</source>
         <translation>Afsluiten</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="790"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="341"/>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
         <translation>DIt portaal eindigt het niveau
 wanneer dit vlag is aangevinkt, kan je enkel een ingangsportaal plaatsen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="801"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="352"/>
         <source>Prevents any in-level warp to exit at this warp.
 Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</source>
@@ -5652,80 +5696,80 @@ Wordt gebruikt om een portaal te maken vanuit een ander niveau.
 Als deze vlag is aangevinkt, kan enkel een uitgang geplaatst worden.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="838"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="389"/>
         <source>Warp to World map</source>
         <translation>Ga naar Wereldkaart Positie</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="862"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="413"/>
         <source>X:</source>
         <translation>X:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="877"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="428"/>
         <source>Y:</source>
         <translation>Y:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="895"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="446"/>
         <source>Set</source>
         <translation>Plaatsen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="766"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="317"/>
         <source>Level door</source>
         <translation>Niveau deur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="794"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="345"/>
         <source>To other level</source>
         <translation>Enkel uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="806"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="357"/>
         <source>From other level</source>
         <translation>Enkel ingang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1336"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="887"/>
         <source>Entrance closed with a lock. Need to blow up the lock to open it.</source>
         <translation>Ingang is dichtgetimmerd. Het moet opgeblazen worden om te kunnen gebruiken.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1346"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="897"/>
         <source>The player can only enter this warp under a special state.
 The special state is defined by the active configuration pack.</source>
         <translation>De speler kan dit portaal enkel gebruiken onder een specifieke status.
 Deze status is definieerd door het actieve configuratiepakket.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1401"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="952"/>
         <source>Warp to other level</source>
         <translation>Portaal naar niveau</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1432"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="983"/>
         <source>Level file:</source>
         <translation>Niveau bestand:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1475"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1026"/>
         <source>Browse for another level file</source>
         <translation>Bladeren voor een ander niveau bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1493"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1044"/>
         <source>Hide level enter screen</source>
         <translation>Verberg niveau inkom scherm</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1500"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1051"/>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
         <translation>Ingang aan portaal #</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1513"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1064"/>
         <source>Allow inter-level NPC</source>
         <translation>Inter-niveau NPC toelaten</translation>
     </message>
@@ -5735,12 +5779,12 @@ Deze status is definieerd door het actieve configuratiepakket.</translation>
         <translation>Huidig portaal verwijderen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1124"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="967"/>
         <source>World map files not found</source>
         <translation>Wereldkaart bestanden niet gevonden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1125"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="968"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -5749,34 +5793,34 @@ Gelieve een wereldkaart bestand te plaatsen of the maken in hetzelfde map as het
 Bestandspad: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1138"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="981"/>
         <source>Select world map file</source>
         <translation>Selecteer een wereldkaart bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1139"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="982"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Meer dan één wereldkaartbestand gevonden.
 Selecteer de wereldkaart die u wilt gebruiken:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1156"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="999"/>
         <source>File open error</source>
         <translation>Fout bij openen van het bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1157"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1000"/>
         <source>Can&apos;t open the file!</source>
         <translation>Kan het niveau bestand niet openen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1357"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1183"/>
         <source>Please save the file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1358"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1184"/>
         <source>Please save the file before selecting levels.</source>
         <translation>Gelieve het bestand op te slaan alvorens niveaus te selecteren.</translation>
     </message>
@@ -9853,72 +9897,72 @@ Data zou corrupt kunnen zijn!</translation>
         <translation>Positie: [%1, %2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="165"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="169"/>
         <source>* - Any</source>
         <translation>* - Elke</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="166"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="170"/>
         <source>0 - None</source>
         <translation>0 - Geen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="167"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="171"/>
         <source>1 - Card Roulette Exit</source>
         <translation>1 - Kaartroulette uitgang (SMB3)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="168"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="172"/>
         <source>2 - SMB3 Boss Exit</source>
         <translation>2 - Baas verslagen uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="169"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="173"/>
         <source>3 - Walked Offscreen</source>
         <translation>3 - Buiten Scherm Gelopen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="170"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="174"/>
         <source>4 - Secret Exit</source>
         <translation>4 - Geheime sleutelgat uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="171"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="175"/>
         <source>5 - Crystal Sphare Exit</source>
         <translation>5 - Kristallen Bol uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="172"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="176"/>
         <source>6 - Warp Exit</source>
         <translation>6 - Uitgang via portaal/deur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="173"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="177"/>
         <source>7 - Star Exit</source>
         <translation>7 - Ster opgepakt</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="174"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="178"/>
         <source>8 - Tape Exit</source>
         <translation>8 - Doel Stok uitgang (SMW)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="427"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="410"/>
         <source>Please save the file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="428"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="411"/>
         <source>Please save the file before selecting levels.</source>
         <translation>Gelieve het bestand op te slaan alvorens niveaus te selecteren.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="670"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="635"/>
         <source>Placement mode</source>
         <translation>Plaatsingsmodus</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="670"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="635"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Plaats eerst een vorwerp op de map en open het &apos;Eigenschappen&apos; context menu.</translation>
     </message>

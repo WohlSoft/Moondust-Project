@@ -240,15 +240,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekstra</translation>
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Uwaga: Niektóre zmiany w ustawieniach będą zastosowane dopiero po zrestartowaniu edytora</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished"></translation>
+        <translation>Uaktywnij automatyczne skalowanie na monitorach o wysokim współczynniku DPI (dots per inch)</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
@@ -324,15 +324,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Środowisko</translation>
     </message>
     <message>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Domyślne zbliżenie:</translation>
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Domyślne zbliżenie, które będzie zastosowane przy tworzeniu lub otwieraniu pliku.</translation>
     </message>
 </context>
 <context>
@@ -383,16 +383,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation>Ścieżka do SoX nie jest ustawiona. Najpierw ustaw ścieżkę do SoX</translation>
+        <translation>Ścieżka do SoX nie jest ustawiona.
+Najpierw ustaw ścieżkę do SoX</translation>
     </message>
     <message>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation>Ścieżka do SoX jest niepoprawna. Ustaw ścieżkę ponownie</translation>
+        <translation>Ścieżka do SoX jest niepoprawna.
+Ustaw ścieżkę ponownie</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation>Nic do zrobienia</translation>
+        <translation>Nic do zrobienia.</translation>
     </message>
     <message>
         <source>No files to convert</source>
@@ -428,7 +430,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>No tasks defined. Nothing to do.</source>
-        <translation>Zadania nie są zdefiniowane. Nic do zrobienia.</translation>
+        <translation>Nie ma zdefiniowanych zadań. Nic do zrobienia.</translation>
     </message>
     <message>
         <source>Open SoX executable path</source>
@@ -495,7 +497,8 @@ Please set SoX path first</source>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tu przekonwertujesz muzykę albo pliki dźwiękowe, które mają złe ustawienia&lt;/p&gt;&lt;p&gt;Ta funkcja używa &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; - konwertera audio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tu przekonwertujesz muzykę albo pliki dźwiękowe, które zostały źle przekonwertowane (zła wielkość sampla, zły kodek, itp.).&lt;/p&gt;
+&lt;p&gt;Ta funkcja używa &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; - konwertera audio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -506,19 +509,19 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Rozmiar bloku: </translation>
+        <translation>Rozmiar bloku:</translation>
     </message>
     <message>
         <source> blocks</source>
-        <translation>bloki</translation>
+        <translation> bloki</translation>
     </message>
     <message>
         <source>per </source>
-        <translation>na</translation>
+        <translation>na </translation>
     </message>
     <message>
         <source> second</source>
-        <translation>sekundę</translation>
+        <translation> sekundę</translation>
     </message>
 </context>
 <context>
@@ -576,7 +579,7 @@ Możesz także kliknąć podwójnie na przedmiot aby przenieść się do zapisan
     </message>
     <message>
         <source>No config packs were found</source>
-        <translation>Paczki nie zostały znalezione</translation>
+        <translation>Nie znaleziono paczek konfiguracyjnych</translation>
     </message>
     <message>
         <source>No configuration packages were found!&lt;br&gt;
@@ -585,7 +588,7 @@ Please download and install them into this directory&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
-        <translation>Dostępnepaczki konfiguracyjne nie znalezione!&lt;br&gt;
+        <translation>Nie znaleziono paczek konfiguracyjnych!&lt;br&gt;
 Proszę pobierz je i zainstaluj do folderu&lt;br&gt;
 &lt;br&gt;
 %1&lt;br&gt;
@@ -599,12 +602,12 @@ Pobierz paczki tutaj:&lt;br&gt;%2</translation>
     <message>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
-        <translation>Paczka konfiguracyjna %1 nie jes jeszcze skonfigurowana.
+        <translation>Paczka konfiguracyjna %1 nie jest jeszcze skonfigurowana.
 Czy chcesz ją skonfigurować?</translation>
     </message>
     <message>
         <source>Configuration script failed</source>
-        <translation>Błąd paczki konfiguracji</translation>
+        <translation>Błąd skryptu konfiguracyjnego</translation>
     </message>
     <message>
         <source>Configuring tool encountered an error: %1 at line %2.
@@ -618,7 +621,7 @@ File path: %3</source>
     </message>
     <message>
         <source>This config pack has no configuring tool.</source>
-        <translation>Ta paczka konfiguracyjna nie wymaga narzędzia konfiguracyjnego.</translation>
+        <translation>Ta paczka konfiguracyjna nie ma narzędzia konfiguracyjnego.</translation>
     </message>
 </context>
 <context>
@@ -633,7 +636,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Objects defined:</source>
-        <translation>Typy przedmiotu:</translation>
+        <translation>Zdefiniowane obiekty:</translation>
     </message>
     <message>
         <source>Configuration name:</source>
@@ -665,7 +668,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Configuration Loading Errors:</source>
-        <translation>Błędy konfiguracji ładując:</translation>
+        <translation>Błędy ładowania konfiguracji:</translation>
     </message>
     <message>
         <source>Music (level) (%1/%2)</source>
@@ -709,7 +712,7 @@ File path: %3</source>
     </message>
     <message>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation>Mapa świata:  Ścieżki (%1/%2)</translation>
+        <translation>Mapa świata: Ścieżki (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Level entrance tiles (%1/%2)</source>
@@ -729,7 +732,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Characters</source>
-        <translation>Postaci</translation>
+        <translation>Postacie</translation>
     </message>
     <message>
         <source>Game worlds</source>
@@ -749,7 +752,7 @@ File path: %3</source>
     </message>
     <message>
         <source>[Error list is empty, congratulations!]</source>
-        <translation>[Błąd. Lista jest pusta]</translation>
+        <translation>[Lista błędów jest pusta. Gratulację!]</translation>
     </message>
 </context>
 <context>
@@ -790,13 +793,13 @@ File path: %3</source>
     <message>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished">Zapis Crashu</translation>
+        <translation>Odzyskiwanie po crashu</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>Od czasu ostatniego crashu, edytor odzyskał parę plików.
-Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
+Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recorved some files.
@@ -821,7 +824,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Counter name:</source>
-        <translation>Nazwa obiektu</translation>
+        <translation>Nazwa obiektu:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -967,15 +970,15 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation>Arg: {String array} sprawdzanie PGE-X string array</translation>
+        <translation>Arg: {String array} sprawdza tablicę string PGE-X</translation>
     </message>
     <message>
         <source>Simulates crash signal</source>
-        <translation type="unfinished"></translation>
+        <translation>Symuluje sygnał crashu</translation>
     </message>
     <message>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
-        <translation>Arg: {Path to file} test formatu PGE-X</translation>
+        <translation>Arg: {Path to file} testuje, czy plik jest w formacie PGE-X</translation>
     </message>
     <message>
         <source>[WIP] Attempt to test the level in the SMBX Level Editor!</source>
@@ -983,11 +986,11 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
-        <translation>Args: {Music type (lvl wld spc), Music ID} Zagraj domyślną muzkę oznaczoną ID</translation>
+        <translation>Args: {Music type (lvl wld spc), Music ID} Zagraj domyślną muzykę oznaczoną ID</translation>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Args: {engine commands} Wyślij komendę lub wiadomośc do uruchomionego silnika</translation>
+        <translation>Args: {engine commands} Wyślij komendę lub wiadomość do uruchomionego silnika</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -995,11 +998,11 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
-        <translation>Args: {[Number] Gigabytes} | Konwertuje na megabajty</translation>
+        <translation>Args: {[Number] Megabytes} | Zapycha pamięć daną ilością danych (Uważaj z tym!)</translation>
     </message>
     <message>
         <source>Throws an unhandled exception to crash the editor</source>
-        <translation>Crashuje edytor</translation>
+        <translation>Rzuca nieobsługiwany wyjątek by scrashować edytor</translation>
     </message>
     <message>
         <source>Does a segmentation violation</source>
@@ -1007,7 +1010,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation>Tworzy i usuwa ItemSelectDialog by przeanalizować wyciek pamięci</translation>
     </message>
 </context>
 <context>
@@ -1018,7 +1021,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Force vertical background tiling</source>
-        <translation type="unfinished"></translation>
+        <translation>Wymuś wertykalny przechył tła</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1030,7 +1033,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Utrzymaj oryginalny współczynnik obrazu</translation>
     </message>
     <message>
         <source>Width</source>
@@ -1054,7 +1057,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Z tą opcją zostanie obliczona przeciwna wartość dla wyokości lub szerokości dla obrazka docelowego, aby stworzyć obrazek z odpowiednimi proporcjami.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Z tą opcją zostanie obliczona przeciwna wartość dla wysokości lub szerokości dla obrazka docelowego, aby stworzyć obrazek z odpowiednimi proporcjami.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Save proportion</source>
@@ -1066,15 +1069,15 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Hide warps and water markers (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj oznaczenia portali i wody (rekomendowane)</translation>
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj widoczne tylko w edytorze obrazki meta-znaków</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj siatkę (jeśli jest widoczna)</translation>
     </message>
     <message>
         <source>Tiled background</source>
@@ -1082,7 +1085,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Ukryj niewidzialne bloki i meta-obiekty</translation>
     </message>
 </context>
 <context>
@@ -1093,7 +1096,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Choose the workspace layout you want to use:</source>
-        <translation>Wybierz układ którego chcesz używać</translation>
+        <translation>Wybierz układ, z którego chcesz skorzystać:</translation>
     </message>
     <message>
         <source>Modern</source>
@@ -1109,7 +1112,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation>Klasyczny interfejs będzie podobny do edytora znanego z poprzenich wersji</translation>
+        <translation>Klasyczny interfejs będzie podobny do edytora znanego wielu użytkownikom edytora z SMBX z długim stażem.</translation>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
@@ -1123,13 +1126,12 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Wskazówka 1:&lt;/b&gt;Nadal możesz zmienić wygląd przez menu&lt;u&gt;Pomoc&lt;/u&gt; lub przełączenie wyglądu z menu &lt;u&gt;Wygląd&lt;/u&gt;i przełączenie
-trybu okien i kart z menu&lt;u&gt;Okna&lt;/u&gt; .&lt;br/&gt;
+        <translation>&lt;p&gt;&lt;b&gt;Wskazówka 1:&lt;/b&gt; Nadal możesz zmienić wygląd przez menu &lt;u&gt;Pomoc&lt;/u&gt;, zmienić przyborniki z menu &lt;u&gt;Wygląd&lt;/u&gt;, oraz opcji &quot;Wygląd Okna&quot; z menu &lt;u&gt;Okna&lt;/u&gt;.&lt;br/&gt;
 &lt;br/&gt;
-&lt;b&gt;Wskazówka 2:&lt;/b&gt;Większość opcji jest dostępna w menu, które możesz otworzyć klikając prawym przyciskiem myszy,
-pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze możesz używać zaznaczania i kopiowania!&lt;br/&gt;
+&lt;b&gt;Wskazówka 2:&lt;/b&gt; W przeciwieństwie do starszego edytora, większość opcji jest dostępna w menu, które możesz otworzyć klikając prawym przyciskiem myszy,
+a także z pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze możesz także zaznaczyć wiele obiektów na raz!&lt;br/&gt;
 &lt;br/&gt;
-&lt;b&gt;Wskazówka 3:&lt;/b&gt; Kliknij środkowym przyciskiem myszy aby przełączyć pomiędzy  umieszczaniem zaznaczonych elementów, lub kopiowaniem ich!&lt;/p&gt;</translation>
+&lt;b&gt;Wskazówka 3:&lt;/b&gt; Kliknij środkowym przyciskiem myszy aby przełączyć pomiędzy umieszczaniem zaznaczonych elementów, lub kopiowaniem ich!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1286,14 +1288,14 @@ pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze mo�
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished">Proszę czekać...</translation>
+        <translation>Proszę czekać...</translation>
     </message>
 </context>
 <context>
     <name>ItemBGO</name>
     <message>
         <source>Layer: </source>
-        <translation>Warstwa:</translation>
+        <translation>Warstwa: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1357,7 +1359,7 @@ pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze mo�
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation>Pozycja: X, Y, Szerokośc, Wysokość</translation>
+        <translation>Pozycja: X, Y, Szerokość, Wysokość</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
@@ -1401,7 +1403,7 @@ pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym edytorze mo�
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Proszę wybrać, jak daleko przedmioty mogą wyjść poza sekcję aby być usunięte (w pikselach)</translation>
+        <translation>Proszę wybrać, jak daleko przedmioty mogą wyjść poza sekcję aby być usunięte (w pikselach).</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -3696,11 +3698,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Up</source>
-        <translation>Góra</translation>
+        <translation type="vanished">Góra</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Dół</translation>
+        <translation type="vanished">Dół</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -3809,6 +3811,46 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Error in the file %1:
 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Lewo</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Prawo</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Góra</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Dół</translation>
+    </message>
+    <message>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8763,7 +8805,7 @@ Sprawdź czy folder config/SMBX istnieje i zwiera pliki *.ini z ustawieniami obi
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ukryj siatkę (jeśli jest widoczna)</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
@@ -8779,7 +8821,7 @@ Sprawdź czy folder config/SMBX istnieje i zwiera pliki *.ini z ustawieniami obi
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utrzymaj oryginalny współczynnik obrazu</translation>
     </message>
     <message>
         <source>Save proportion</source>
