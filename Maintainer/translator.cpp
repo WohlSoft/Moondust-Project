@@ -18,7 +18,9 @@
 
 #include <QMdiSubWindow>
 #include <QFile>
+#include <QDir>
 #include <QSettings>
+#include <QDebug>
 
 #include <common_features/app_path.h>
 #include <common_features/logger_sets.h>
@@ -64,6 +66,7 @@ static QString getStdLangName(const QString &fname)
 
 void MaintainerMain::setDefLang()
 {
+    ui->language->setMenu(&m_langsMenu);
     /*
      * //Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
      */
@@ -75,17 +78,21 @@ void MaintainerMain::setDefLang()
 
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
-    QString localeStr;
 
     settings.beginGroup("Main");
     {
-        localeStr = settings.value("language", defaultLocale).toString();
+        m_currLangSetup = settings.value("language", defaultLocale).toString();
     }
     settings.endGroup();
 
+    QObject::connect(&m_langsMenu, SIGNAL(triggered(QAction *)),
+                     this, SLOT(slotLanguageChanged(QAction *)));
+
     m_langPath = AppPathManager::languagesDir();
 
-    m_currLang = localeStr;
+    langListSync();
+
+    m_currLang = m_currLangSetup;
     QLocale locale = QLocale(m_currLang);
     QLocale::setDefault(locale);
 
@@ -100,6 +107,7 @@ void MaintainerMain::setDefLang()
         ok = m_translator.load(makeLangFilePath(m_langPath, m_currLang));
         if(ok)
             qApp->installTranslator(&m_translator);
+        langListSync();
     }
 
     ok = m_translatorQt.load(makeQtLangFilePath(m_langPath, m_currLang));
@@ -111,12 +119,68 @@ void MaintainerMain::setDefLang()
     ui->retranslateUi(this);
 }
 
-template<class T>
-static void reTranslateWidget(QWidget *w)
+void MaintainerMain::langListSync()
 {
-    T *wnd = qobject_cast<T *>(w);
-    Q_ASSERT(wnd);
-    wnd->reTranslate();
+    // format systems language
+    m_langsMenu.clear();
+
+    QDir dir(m_langPath);
+    QStringList fileNames = dir.entryList(QStringList("editor_*.qm"));
+    for(int i = 0; i < fileNames.size(); ++i)
+    {
+        // get locale extracted by filename
+        QString locale = getLangName(fileNames[i]);
+        QString localeStd = getStdLangName(fileNames[i]);
+        QString lang;
+        if(locale == "en")
+            lang = "English";
+        else
+        {
+            QLocale loc(localeStd);
+            lang = QString("%1 (%2)")
+                    .arg(loc.nativeLanguageName())
+                    .arg(loc.nativeCountryName());
+            if(!lang.isEmpty())
+                lang[0] = lang[0].toUpper();
+        }
+        QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
+
+        QAction *action = new QAction(ico, lang, this);
+        action->setCheckable(true);
+        action->setData(locale);
+
+        m_langsMenu.addAction(action);
+
+        if(m_currLangSetup == locale)
+        {
+            action->setChecked(true);
+        }
+    }
+
+    if(fileNames.size() == 0)
+    {
+        QAction *action = m_langsMenu.addAction("[translations not found]");
+        action->setCheckable(false);
+        action->setDisabled(true);
+    }
+}
+
+void MaintainerMain::slotLanguageChanged(QAction *action)
+{
+    if(nullptr != action)
+    {
+        // load the language depending on the action content
+        loadLanguage(action->data().toString());
+
+        QString inifile = AppPathManager::settingsFile();
+        QSettings settings(inifile, QSettings::IniFormat);
+        settings.beginGroup("Main");
+        {
+            settings.setValue("language", m_currLangSetup);
+        }
+        settings.endGroup();
+        settings.sync();
+    }
 }
 
 bool MaintainerMain::switchTranslator(QTranslator &translator, const QString &filename)
@@ -146,6 +210,14 @@ void MaintainerMain::loadLanguage(const QString &rLanguage)
         if(ok)
             qApp->installTranslator(&m_translatorQt);
         ok  = switchTranslator(m_translator, makeLangFilePath(m_langPath, m_currLang));
+
+        if(ok)
+        {
+            m_currLangSetup = m_currLang;
+            ui->retranslateUi(this);
+        }
+
+        langListSync();
     }
 }
 

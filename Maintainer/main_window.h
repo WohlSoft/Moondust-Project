@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QTranslator>
+#include <QMenu>
 
 namespace Ui
 {
@@ -29,6 +30,12 @@ private:
     Ui::MaintainerMain *ui;
 
 // //////////////////Miltilanguage///////////////////////////
+private slots:
+    /*!
+     * \brief Change language to selected in the language menu
+     * \param action Menuitem onject pointer
+     */
+    void slotLanguageChanged(QAction *action);
 private:
     /*!
      * \brief Load language by two-letter code (en, ru, de, it, es, etc.)
@@ -49,6 +56,10 @@ private:
     /*!
      * \brief Syncronize state of the languages menu
      */
+    void langListSync();
+    QMenu           m_langsMenu;
+    //! contains the currently loaded language setting
+    QString         m_currLangSetup;
     //! contains the translations for this application
     QTranslator     m_translator;
     //! contains the translations for qt
