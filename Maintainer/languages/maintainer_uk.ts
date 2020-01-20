@@ -59,12 +59,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="362"/>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="439"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="383"/>
         <source>Convert all music files of specific episode</source>
         <translation type="unfinished"></translation>
@@ -503,72 +497,77 @@ Supported formats:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="35"/>
+        <location filename="../main_window.ui" line="29"/>
         <source>Welcome to Maintainer toolset!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="51"/>
+        <location filename="../main_window.ui" line="46"/>
         <source>Converters</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="63"/>
+        <location filename="../main_window.ui" line="73"/>
         <source>Convert audio files between various formats and converting sample rates</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="66"/>
+        <location filename="../main_window.ui" line="76"/>
         <source>Batch conversion of musics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="79"/>
+        <location filename="../main_window.ui" line="89"/>
         <source>Converts levels and episodes between different formats and tries to fix old files with some damages.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="82"/>
+        <location filename="../main_window.ui" line="92"/>
         <source>Levels and Episodes format converting/fixing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="95"/>
+        <location filename="../main_window.ui" line="105"/>
         <source>Converts pair of GIF (frontend and mask) graphics into merged sprite in PNG format with semi-transparency support.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="98"/>
+        <location filename="../main_window.ui" line="108"/>
         <source>GIFs to PNG converter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="111"/>
+        <location filename="../main_window.ui" line="121"/>
         <source>Converts regular PNG graphics into pair of GIF files (frontend and it&apos;s mask) compatible with bitblit algorithm (required by SMBX legacy engine).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="114"/>
+        <location filename="../main_window.ui" line="124"/>
         <source>PNG to GIFs converter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="127"/>
+        <location filename="../main_window.ui" line="137"/>
         <source>Fixes case mismatches of the paths in file system and in the references in levels, world maps and some config files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="130"/>
+        <location filename="../main_window.ui" line="140"/>
         <source>Fix case sensitive paths compatibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="144"/>
+        <location filename="../main_window.ui" line="150"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window.ui" line="170"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="157"/>
+        <location filename="../main_window.ui" line="39"/>
         <source>Choice your action:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -801,6 +800,11 @@ The maximum number of Music Boxes is %2.</source>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../translator.cpp" line="117"/>
+        <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

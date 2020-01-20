@@ -6,115 +6,110 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать аудио (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Не менять формат</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="34"/>
         <source>Files will be in same format</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы будут в том же формате</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="57"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить битрейт</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="155"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы будут преобразованы в MP3</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="198"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы будут преобразованы в FLAC</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="215"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы будут преобразованы в OGG</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="231"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Установить качество</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="310"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Файлы будут преобразованы в WAV</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="324"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="362"/>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="439"/>
-        <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>Чего бы вы хотели сделать?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="383"/>
         <source>Convert all music files of specific episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать всю музыку в указанном эпизоде</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="406"/>
         <source>Convert music of specific level</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать музыку выбранного уровня</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="416"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать выбранные файлы</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="449"/>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>Пересэмплировать в</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="484"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Тут возможно быстро преобразовать музыку или звуковые эффекты, имеющих некорректные свойства.&lt;/p&gt;&lt;p&gt;Эта функция использует утилиту &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; для преобразования аудио.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="552"/>
         <source>Convert into new format
 (open necessary tab to choice target format)</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать в новый формат
+(откройте нужную вкладку, чтобы выбрать формат)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="574"/>
         <source>make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Резервная копия</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="581"/>
         <source>Sox binary path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Испольняемый файл SoX:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="588"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="184"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустить</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
@@ -149,7 +144,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="160"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="215"/>
@@ -212,7 +207,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="14"/>
         <source>Episode conversion tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразователь эпизодов</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
@@ -221,12 +216,16 @@ Supported formats:
 - PGE-X LVLX/WLDX
 - SMBX Version 1...64 LVL/WLD
 - SMBX-38A</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот мастер поможет преобразовать/починить файлы уровней и эпизодов между разными форматами
+Поддерживаемые форматы:
+- PGE-X LVLX/WLDX
+- SMBX версии 1...64 LVL/WLD
+- SMBX-38A</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="41"/>
         <source>Episode path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к эпизоду:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="51"/>
@@ -236,7 +235,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="58"/>
         <source>Target format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Целевой формат:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="66"/>
@@ -301,7 +300,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="310"/>
         <source>Open target episode path</source>
-        <translation type="unfinished"></translation>
+        <translation>Указать путь к целевому эпизоду</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="327"/>
@@ -393,7 +392,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="135"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Чего бы вы хотели сделать?</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="155"/>
@@ -409,12 +408,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="175"/>
         <source>Output log</source>
-        <translation type="unfinished"></translation>
+        <translation>Выводной отчёт</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="209"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="76"/>
@@ -503,72 +502,77 @@ Supported formats:
         <translation>Вспомогательный набор: главное меню</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="35"/>
+        <location filename="../main_window.ui" line="29"/>
         <source>Welcome to Maintainer toolset!</source>
         <translation>Добро пожаловать!</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="51"/>
+        <location filename="../main_window.ui" line="46"/>
         <source>Converters</source>
         <translation>Преобразователи</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="63"/>
+        <location filename="../main_window.ui" line="73"/>
         <source>Convert audio files between various formats and converting sample rates</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать аудио между разными форматами, а также преобразовывать частоты дискретизации</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="66"/>
+        <location filename="../main_window.ui" line="76"/>
         <source>Batch conversion of musics</source>
         <translation>Массовое преобзование музыки</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="79"/>
+        <location filename="../main_window.ui" line="89"/>
         <source>Converts levels and episodes between different formats and tries to fix old files with some damages.</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование уровней и эпизодов между разными форматами, а также попытка исправить старые файлы с некоторым повреждением.</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="82"/>
+        <location filename="../main_window.ui" line="92"/>
         <source>Levels and Episodes format converting/fixing</source>
         <translation>Преобразование и ремонт форматов Уровней и Эпизодов</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="95"/>
+        <location filename="../main_window.ui" line="105"/>
         <source>Converts pair of GIF (frontend and mask) graphics into merged sprite in PNG format with semi-transparency support.</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование графики из формата GIF-пары (перед и маска) в PNG с полупрозрачностью.</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="98"/>
+        <location filename="../main_window.ui" line="108"/>
         <source>GIFs to PNG converter</source>
         <translation>Преобразовать SMBX64-GIFы в PNG</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="111"/>
+        <location filename="../main_window.ui" line="121"/>
         <source>Converts regular PNG graphics into pair of GIF files (frontend and it&apos;s mask) compatible with bitblit algorithm (required by SMBX legacy engine).</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование обычных PNG-файлов в GIF-пару (перед и маска), совместимую с алгоритмом битовой маски (требуется для устаревшего движка SMBX).</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="114"/>
+        <location filename="../main_window.ui" line="124"/>
         <source>PNG to GIFs converter</source>
         <translation>Преобразовать PNG в SMBX64-GIFы</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="127"/>
+        <location filename="../main_window.ui" line="137"/>
         <source>Fixes case mismatches of the paths in file system and in the references in levels, world maps and some config files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Исправляет несоответствия регистра букв в путях в файловой системе и в упоминаниях в уровнях, картах мира, а также некоторых настроечных файлах.</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="130"/>
+        <location filename="../main_window.ui" line="140"/>
         <source>Fix case sensitive paths compatibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Починить совместимость регистрозависимых путей</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="144"/>
+        <location filename="../main_window.ui" line="150"/>
+        <source>Language</source>
+        <translation>Язык</translation>
+    </message>
+    <message>
+        <location filename="../main_window.ui" line="170"/>
         <source>Quit</source>
         <translation>Выйти</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="157"/>
+        <location filename="../main_window.ui" line="39"/>
         <source>Choice your action:</source>
         <translation>Выберите инструмент:</translation>
     </message>
@@ -623,7 +627,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="115"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Чего бы вы хотели сделать?</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="135"/>
@@ -715,93 +719,116 @@ Supported formats:
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 секций
+Максимальное число секций - %2.
+Все настройки и границы секций с номером старше 21 будут утеряны.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="39"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 блоков
+Максимальное число блоков -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="46"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 фоновых объектов
+Максимальное число фоновых объектов -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="53"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 неигровых персонажей
+Максимальное число неигровых персонажей -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="60"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 проходов
+Максимальное число проходов -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="67"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Водяных зон
+Максимальное число водяных зон -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="74"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Слоёв
+Максимальное число слоёв -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="81"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Событий
+Максимальное число событий -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="88"/>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Во время сохранения уровня в формат SMBX64 произошли неполадки:
+
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание уровень в формат LVLX.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="102"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Плиток
+Максимальное число плиток -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="109"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 декораций
+Максимальное число декораций -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="116"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 путей
+Максимальное число путей -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="123"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Уровней
+Максимальное число уровней -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="131"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 Музыкальных шкатулок
+Максимальное число музыкальных шкатулок -  %2.</translation>
     </message>
     <message>
         <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="138"/>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Во время сохранения карты мира в формат SMBX64 произошли неполадки:
+
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
+    </message>
+    <message>
+        <location filename="../translator.cpp" line="117"/>
+        <source>LTR</source>
+        <translation></translation>
     </message>
 </context>
 </TS>
