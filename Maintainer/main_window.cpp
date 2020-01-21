@@ -12,13 +12,24 @@ MaintainerMain::MaintainerMain(QWidget *parent) :
     ui(new Ui::MaintainerMain)
 {
     ui->setupUi(this);
-    setDefLang();
+
+    QObject::connect(&m_translator, &Translator::languageSwitched,
+                     this, &MaintainerMain::languageSwitched);
+    ui->language->setMenu(&m_langMenu);
+    m_translator.initWidget(&m_langMenu);
+    m_translator.initTranslator();
 }
 
 MaintainerMain::~MaintainerMain()
 {
     delete ui;
 }
+
+void MaintainerMain::languageSwitched()
+{
+    ui->retranslateUi(this);
+}
+
 void MaintainerMain::on_quitOut_clicked()
 {
     this->close();
