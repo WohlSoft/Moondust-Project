@@ -55,7 +55,10 @@ private:
     /*!
      * \brief Syncronize state of the languages menu
      */
-    void langListSync();
+    void reloadMenu();
+
+    void loadSettings();
+    void saveSettings();
 
 private slots:
     /*!
@@ -67,13 +70,11 @@ private slots:
 private:
     QMenu          *m_langsMenu = nullptr;
     //! contains the currently loaded language setting
-    QString         m_currLangSetup;
-    //! contains the translations for this application
-    QTranslator     m_translator;
-    //! contains the translations for qt
-    QTranslator     m_translatorQt;
-    //! contains the currently loaded language
     QString         m_currLang;
+    //! contains the translations for this application
+    QTranslator     m_trApp;
+    //! contains the translations for qt
+    QTranslator     m_trQt;
     //! Path of language files. This is always fixed to /languages
     QString         m_langPath;
 

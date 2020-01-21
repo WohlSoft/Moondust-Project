@@ -33,7 +33,16 @@
 
 Translator::Translator(QObject *parent) :
     QObject(parent)
-{}
+{
+    m_langPath = AppPathManager::languagesDir();
+}
+
+void Translator::initWidget(QMenu *menu)
+{
+    m_langsMenu = menu;
+    QObject::connect(m_langsMenu, SIGNAL(triggered(QAction *)),
+                     this, SLOT(slotLanguageChanged(QAction *)));
+}
 
 Translator::~Translator()
 {
@@ -43,13 +52,6 @@ Translator::~Translator()
                             this, SLOT(slotLanguageChanged(QAction *)));
         m_langsMenu = nullptr;
     }
-}
-
-void Translator::initWidget(QMenu *menu)
-{
-    m_langsMenu = menu;
-    QObject::connect(m_langsMenu, SIGNAL(triggered(QAction *)),
-                     this, SLOT(slotLanguageChanged(QAction *)));
 }
 
 
@@ -68,6 +70,38 @@ static bool langFileExists(const QString &langPath, const QString &lang)
     QString p = makeLangFilePath(langPath, lang);
     return QFile::exists(p);
 }
+
+void Translator::initTranslator()
+{
+    Q_ASSERT(m_langsMenu);  // Menu is required for translator's work
+
+    loadSettings();
+    reloadMenu();
+
+
+    bool ok = m_trApp.load(makeLangFilePath(m_langPath, m_currLang));
+    if(ok)
+        qApp->installTranslator(&m_trApp);
+    else
+    {
+        m_currLang = "en"; //set to English if no other translations are found
+        QLocale locale = QLocale(m_currLang);
+        QLocale::setDefault(locale);
+        ok = m_trApp.load(makeLangFilePath(m_langPath, m_currLang));
+        if(ok)
+            qApp->installTranslator(&m_trApp);
+        reloadMenu();
+    }
+
+    ok = m_trQt.load(makeQtLangFilePath(m_langPath, m_currLang));
+    if(ok)
+        qApp->installTranslator(&m_trQt);
+
+    qApp->setLayoutDirection(QObject::tr("LTR") == "RTL" ? Qt::RightToLeft : Qt::LeftToRight);
+
+    emit languageSwitched();
+}
+
 
 static QString getLangName(const QString &fname)
 {
@@ -88,72 +122,25 @@ static QString getStdLangName(const QString &fname)
     return locale;
 }
 
-void Translator::initTranslator()
-{
-    /*
-     * //Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
-     */
-    QString defaultLocale = QLocale::system().name();
-
-    defaultLocale = defaultLocale.replace('_', '-').toLower();
-    if(!langFileExists(m_langPath, defaultLocale))
-        defaultLocale.truncate(defaultLocale.lastIndexOf('-'));
-
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
-
-    settings.beginGroup("Main");
-    {
-        m_currLangSetup = settings.value("language", defaultLocale).toString();
-    }
-    settings.endGroup();
-
-    m_langPath = AppPathManager::languagesDir();
-
-    langListSync();
-
-    m_currLang = m_currLangSetup;
-    QLocale locale = QLocale(m_currLang);
-    QLocale::setDefault(locale);
-
-    bool ok = m_translator.load(makeLangFilePath(m_langPath, m_currLang));
-    if(ok)
-        qApp->installTranslator(&m_translator);
-    else
-    {
-        m_currLang = "en"; //set to English if no other translations are found
-        QLocale locale = QLocale(m_currLang);
-        QLocale::setDefault(locale);
-        ok = m_translator.load(makeLangFilePath(m_langPath, m_currLang));
-        if(ok)
-            qApp->installTranslator(&m_translator);
-        langListSync();
-    }
-
-    ok = m_translatorQt.load(makeQtLangFilePath(m_langPath, m_currLang));
-    if(ok)
-        qApp->installTranslator(&m_translatorQt);
-
-    qApp->setLayoutDirection(QObject::tr("LTR") == "RTL" ? Qt::RightToLeft : Qt::LeftToRight);
-
-    emit languageSwitched();
-}
-
-void Translator::langListSync()
+void Translator::reloadMenu()
 {
     // format systems language
     m_langsMenu->clear();
 
     QDir dir(m_langPath);
     QStringList fileNames = dir.entryList(QStringList("maintainer_*.qm"));
-    for(int i = 0; i < fileNames.size(); ++i)
+
+    for(QString &f : fileNames)
     {
         // get locale extracted by filename
-        QString locale = getLangName(fileNames[i]);
-        QString localeStd = getStdLangName(fileNames[i]);
+        QString locale = getLangName(f);
+        QString localeStd = getStdLangName(f);
         QString lang;
+
         if(locale == "en")
+        {
             lang = "English";
+        }
         else
         {
             QLocale loc(localeStd);
@@ -163,6 +150,7 @@ void Translator::langListSync()
             if(!lang.isEmpty())
                 lang[0] = lang[0].toUpper();
         }
+
         QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
 
         QAction *action = new QAction(ico, lang, this);
@@ -171,7 +159,7 @@ void Translator::langListSync()
 
         m_langsMenu->addAction(action);
 
-        if(m_currLangSetup == locale)
+        if(m_currLang == locale)
         {
             action->setChecked(true);
         }
@@ -185,21 +173,51 @@ void Translator::langListSync()
     }
 }
 
+void Translator::loadSettings()
+{
+    // Small test from https://qt-project.org/wiki/How_to_create_a_multi_language_application
+    QString defaultLocale = QLocale::system().name();
+
+    defaultLocale = defaultLocale.replace('_', '-').toLower();
+    if(!langFileExists(m_langPath, defaultLocale))
+        defaultLocale.truncate(defaultLocale.lastIndexOf('-'));
+
+    QString inifile = AppPathManager::settingsFile();
+    QSettings settings(inifile, QSettings::IniFormat);
+
+    settings.beginGroup("Main");
+    {
+        m_currLang = settings.value("language", defaultLocale).toString();
+    }
+    settings.endGroup();
+
+    QLocale locale = QLocale(m_currLang);
+    QLocale::setDefault(locale);
+}
+
+void Translator::saveSettings()
+{
+    QString inifile = AppPathManager::settingsFile();
+    QSettings settings(inifile, QSettings::IniFormat);
+    settings.beginGroup("Main");
+    {
+        settings.setValue("language", m_currLang);
+    }
+    settings.endGroup();
+    settings.sync();
+}
+
 void Translator::slotLanguageChanged(QAction *action)
 {
     if(nullptr != action)
     {
         // load the language depending on the action content
-        loadLanguage(action->data().toString());
-
-        QString inifile = AppPathManager::settingsFile();
-        QSettings settings(inifile, QSettings::IniFormat);
-        settings.beginGroup("Main");
+        QString lang = action->data().toString();
+        if(m_currLang != lang)
         {
-            settings.setValue("language", m_currLangSetup);
+            loadLanguage(lang);
+            saveSettings();
         }
-        settings.endGroup();
-        settings.sync();
     }
 }
 
@@ -209,34 +227,26 @@ bool Translator::switchTranslator(QTranslator &translator, const QString &filena
     qApp->removeTranslator(&translator);
     // load the new translator
     bool ok = translator.load(filename);
-
     if(ok)
-    {
         qApp->installTranslator(&translator);
-    }
     return ok;
 }
 
 void Translator::loadLanguage(const QString &rLanguage)
 {
-    if(m_currLang != rLanguage)
+    QLocale locale = QLocale(rLanguage);
+    QLocale::setDefault(locale);
+    QString languageName = QLocale::languageToString(locale.language());
+
+    bool ok  = switchTranslator(m_trQt, makeQtLangFilePath(m_langPath, rLanguage));
+    if(ok)
+        qApp->installTranslator(&m_trQt);
+    ok  = switchTranslator(m_trApp, makeLangFilePath(m_langPath, rLanguage));
+    if(ok)
     {
         m_currLang = rLanguage;
-        QLocale locale = QLocale(m_currLang);
-        QLocale::setDefault(locale);
-        QString languageName = QLocale::languageToString(locale.language());
-
-        bool ok  = switchTranslator(m_translatorQt, makeQtLangFilePath(m_langPath, m_currLang));
-        if(ok)
-            qApp->installTranslator(&m_translatorQt);
-        ok  = switchTranslator(m_translator, makeLangFilePath(m_langPath, m_currLang));
-
-        if(ok)
-        {
-            m_currLangSetup = m_currLang;
-            emit languageSwitched();
-        }
-
-        langListSync();
+        emit languageSwitched();
     }
+
+    reloadMenu();
 }
