@@ -116,30 +116,32 @@
         <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="215"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к исполняемому файлу SoX не уканан
+Пожалуйста, укажите путь к SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>Неверный путь к исполняемому файлу SoX.
+Пожалуйста, укажите путь к SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="156"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="456"/>
         <source>Nothing to do</source>
-        <translation type="unfinished"></translation>
+        <translation>Нечего делать</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="156"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Нету файлов для преобразования</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="160"/>
@@ -149,23 +151,24 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="215"/>
         <source>Operation cancaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Операция отменена</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="282"/>
         <source>SoX was crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX сломался</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="292"/>
         <source>SoX returned non-zero code: %1
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX завершился с ненулевым кодом: %1
+%2</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="322"/>
         <source>All works completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Вся работа выполнена</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="323"/>
@@ -174,32 +177,36 @@ Converted files: %1
 Overwritten levels: %2
 Overwritten worlds: %3
 %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Все файлы успешно преобразованы!
+Преобразовано файлов: %1
+Перезаписано уровней: %2
+Перезаписано карт мира: %3
+%4</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="456"/>
         <source>Tasks are not defined. Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Задачи не указаны, делать нечего.</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="517"/>
         <source>Open SoX binary path</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать путь к исполняемому файлу SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="529"/>
         <source>Add file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить файл для преобразования</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="567"/>
         <source>Selecting a level file to convert custom music</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор уровня для преобразования своей музыки</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="580"/>
         <source>Open episode path to convert entire music set</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть эпизод, чтобы преобразовать всю музыку</translation>
     </message>
 </context>
 <context>
@@ -238,21 +245,6 @@ Supported formats:
         <translation>Целевой формат:</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="66"/>
-        <source>PGE-X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="71"/>
-        <source>SMBX-1...64</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="76"/>
-        <source>SMBX-38A</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="84"/>
         <source>Version:</source>
         <translation>Версия:</translation>
@@ -280,22 +272,22 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="276"/>
         <source>Episode path error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка пути к эпизоду</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="277"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к эпизоду не указан. Пожалуйста, выберите целевой эпизод.</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="299"/>
         <source>Worker error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка обработчика</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="300"/>
         <source>Can&apos;t initialize job because %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно инициализировать задачу, потому что %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="310"/>
@@ -305,22 +297,22 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="327"/>
         <source>Work finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Работа выполнена</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="327"/>
         <source>Episode has been converted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Эпизод преобразован!</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
         <source>Error occouped while work process</source>
-        <translation type="unfinished"></translation>
+        <translation>Во время работы произошла ошибка</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="331"/>
         <source>Episode conversion aborted with error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование эпизода было прервано с ошибкой: %1</translation>
     </message>
 </context>
 <context>
@@ -328,12 +320,12 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="41"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно найти путь &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="49"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Нету файлов для преобразования</translation>
     </message>
 </context>
 <context>
@@ -341,22 +333,22 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="17"/>
         <source>Convert masked GIFs into PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать GIF с масками в PNG</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="31"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать файлы</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="47"/>
         <source>Drop your masked GIFs files into this window for a quick conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетащите сюда GIF-файлы с масками, чтобы преобразовать их в PNG</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="58"/>
         <source>Batch conversion for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Массовое преобразование всего уровня/эпизода</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="64"/>
@@ -367,22 +359,22 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="71"/>
         <source>Remove source images after conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить исходные файлы после преобразования</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="85"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished"></translation>
+        <translation>Входная директория (например, корень эпизода или польз.папка уровня):</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="92"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Также обработать содержимое всех поддиректорий</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="108"/>
         <source>Configuration package path (needed to find missing mask files):</source>
-        <translation type="unfinished"></translation>
+        <translation>Путь к конфигурационному пакету (нужно для поиска пропавших масок):</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="121"/>
@@ -392,7 +384,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="135"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Чего бы вы хотели сделать?</translation>
+        <translation>Чего бы вы хотели сделать?</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="155"/>
@@ -403,7 +395,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="162"/>
         <source>This wizard will help you to convert graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask), into PNG with a true transparency.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот мастер помошет Вам преобразовать графику, созданную для SMBX 1.3 (в формате GIF с применением битовых масок), в PNG с истинной полупрозрачностью.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="175"/>
@@ -418,12 +410,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="76"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Процесс занят</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="77"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно преобразовать эти файлы, пока предыдущая работа ещё не завершилась!</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="117"/>
@@ -431,62 +423,62 @@ Supported formats:
         <location filename="../Graphics/gifs2png.cpp" line="136"/>
         <location filename="../Graphics/gifs2png.cpp" line="145"/>
         <source>Incorrect input</source>
-        <translation type="unfinished"></translation>
+        <translation>Неправильный входной путь</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="118"/>
         <source>Given config pack directory doesn&apos;t exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Указанный путь к конфирурационному пакету не существует.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="126"/>
         <source>Given config pack directory path is not a config pack.</source>
-        <translation type="unfinished"></translation>
+        <translation>Указанный путь не является конфигурационным пакетом.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="137"/>
         <source>You should give an input directory to start the conversion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы начать преобразование, нужно указать путь ко входной директории.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="146"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Указанный путь ко входной директрии не сщуествует.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="167"/>
         <source>Select a config pack directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Указать директорию с конфигурационным пакетом</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="185"/>
         <source>Select an input directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Указать входную директорию</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="207"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Процесс завершился с кодом %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="217"/>
         <source>Process was terminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Процесс прерван</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="218"/>
         <source>Conversion has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование было прервано.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="223"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Безуспешное завершение</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="224"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование завершилось с ошибками. В выходном отчёте можно посмотреть все подробности.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="283"/>
@@ -582,32 +574,32 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="17"/>
         <source>Convert PNG into masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать PNG в GIF с масками</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="31"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразовать файлы</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="47"/>
         <source>Drop your PNG files into this window for a quick conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетащите сюда PNG-файлы, чтобы преобразовать их в GIFы с масками</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="58"/>
         <source>Batch conversion for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Массовое преобразование всего уровня/эпизода</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="64"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished"></translation>
+        <translation>Входная директория (например, корень эпизода или польз.папка уровня):</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="71"/>
         <source>Remove source images after conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить исходные файлы после преобразования</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="78"/>
@@ -622,12 +614,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="101"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Также обработать содержимое всех поддиректорий</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="115"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Чего бы вы хотели сделать?</translation>
+        <translation>Чего бы вы хотели сделать?</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="135"/>
@@ -638,7 +630,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="142"/>
         <source>This wizard will help you to convert PNG graphics with a true transparency into graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask).</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот мастер помошет Вам преобразовать PNG с истинной полупрозрачностью в графику, совместимую с SMBX 1.3 (в формате GIF с применением битовых масок).</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="155"/>
@@ -653,58 +645,58 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="75"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Процесс занят</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="76"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно преобразовать эти файлы, пока предыдущая работа ещё не завершилась!</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="112"/>
         <location filename="../Graphics/png2gifs.cpp" line="121"/>
         <source>Incorrect input</source>
-        <translation type="unfinished"></translation>
+        <translation>Неправильный входной путь</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="113"/>
         <source>You should give an input directory to start the conversion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы начать преобразование, нужно указать путь ко входной директории.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="122"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Указанный путь ко входной директрии не сщуествует.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="143"/>
         <source>Select an input directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Указать входную директорию</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="165"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Процесс завершился с кодом %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="175"/>
         <source>Process was terminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Процесс прерван</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="176"/>
         <source>Conversion has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование было прервано.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="181"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Безуспешное завершение</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="182"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразование завершилось с ошибками. В выходном отчёте можно посмотреть все подробности.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="194"/>

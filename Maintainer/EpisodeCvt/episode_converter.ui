@@ -63,17 +63,17 @@ Supported formats:
     <widget class="QComboBox" name="targetFormat">
      <item>
       <property name="text">
-       <string>PGE-X</string>
+       <string notr="true">PGE-X</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>SMBX-1...64</string>
+       <string notr="true">SMBX-1...64</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>SMBX-38A</string>
+       <string notr="true">SMBX-38A</string>
       </property>
      </item>
     </widget>

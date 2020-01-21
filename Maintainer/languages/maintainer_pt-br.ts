@@ -233,21 +233,6 @@ Supported formats:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="66"/>
-        <source>PGE-X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="71"/>
-        <source>SMBX-1...64</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../EpisodeCvt/episode_converter.ui" line="76"/>
-        <source>SMBX-38A</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="84"/>
         <source>Version:</source>
         <translation type="unfinished"></translation>
