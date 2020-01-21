@@ -3537,42 +3537,42 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>向左</translation>
     </message>
     <message>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>向右</translation>
     </message>
     <message>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>向上</translation>
     </message>
     <message>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>向下</translation>
     </message>
     <message>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>向左</translation>
     </message>
     <message>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>向右</translation>
     </message>
     <message>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>向左</translation>
     </message>
     <message>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>向右</translation>
     </message>
 </context>
 <context>
