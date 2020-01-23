@@ -12,3 +12,13 @@ CaseFixer::~CaseFixer()
 {
     delete ui;
 }
+
+void CaseFixer::on_episodeBrowse_clicked()
+{
+
+}
+
+void CaseFixer::on_configPackBrowse_clicked()
+{
+
+}

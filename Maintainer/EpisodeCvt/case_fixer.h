@@ -15,6 +15,10 @@ public:
     explicit CaseFixer(QWidget *parent = nullptr);
     ~CaseFixer();
 
+private slots:
+    void on_episodeBrowse_clicked();
+    void on_configPackBrowse_clicked();
+
 private:
     Ui::CaseFixer *ui;
 };
