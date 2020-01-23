@@ -5,6 +5,7 @@
 #include <Graphics/gifs2png.h>
 #include <Graphics/png2gifs.h>
 #include <EpisodeCvt/episode_converter.h>
+#include <EpisodeCvt/case_fixer.h>
 #include <QMessageBox>
 
 MaintainerMain::MaintainerMain(QWidget *parent) :
@@ -84,5 +85,10 @@ void MaintainerMain::on_png2gifs_converter_clicked()
 
 void MaintainerMain::on_pathcase_fixer_clicked()
 {
-    QMessageBox::information(this, "WIP", "This feature is in works!");
+    CaseFixer casefixer(nullptr);
+    casefixer.setWindowFlags(g_dialogFlags);
+    casefixer.setWindowModality(Qt::NonModal);
+    this->hide();
+    casefixer.exec();
+    this->show();
 }
