@@ -176,6 +176,7 @@ void PNG2GIFs::processFinished(int exitCode, QProcess::ExitStatus exitStatus)
 void PNG2GIFs::toggleBusy(bool busy)
 {
     ui->closeBox->setEnabled(!busy);
+    ui->whatToConvert->setEnabled(!busy);
     if(busy)
     {
         ui->doMadJob->setText(tr("Stop"));

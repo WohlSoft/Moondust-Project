@@ -265,6 +265,7 @@ void GIFs2PNG::findConfigPacks()
 void GIFs2PNG::toggleBusy(bool busy)
 {
     ui->closeBox->setEnabled(!busy);
+    ui->whatToConvert->setEnabled(!busy);
     if(busy)
     {
         ui->doMadJob->setText(tr("Stop"));
