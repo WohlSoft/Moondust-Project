@@ -97,10 +97,18 @@ border-radius: 15px;</string>
         </widget>
        </item>
        <item row="4" column="0">
-        <widget class="QLineEdit" name="inPath"/>
+        <widget class="QLineEdit" name="inPath">
+         <property name="placeholderText">
+          <string>Path to an input directory with a source data</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLineEdit" name="configPackPath"/>
+        <widget class="QLineEdit" name="configPackPath">
+         <property name="placeholderText">
+          <string>Path to a configuration package directory to use</string>
+         </property>
+        </widget>
        </item>
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="label_5">

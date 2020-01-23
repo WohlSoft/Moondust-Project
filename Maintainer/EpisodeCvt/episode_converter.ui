@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>273</height>
+    <height>282</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,7 +43,11 @@ Supported formats:
     </widget>
    </item>
    <item row="1" column="1" colspan="4">
-    <widget class="QLineEdit" name="episodePath"/>
+    <widget class="QLineEdit" name="episodePath">
+     <property name="placeholderText">
+      <string>Path to an episode directory to process</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="5">
     <widget class="QPushButton" name="browse">

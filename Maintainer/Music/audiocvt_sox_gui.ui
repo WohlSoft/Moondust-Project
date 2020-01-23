@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>564</width>
-    <height>614</height>
+    <height>644</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -368,6 +368,9 @@
         <property name="enabled">
          <bool>true</bool>
         </property>
+        <property name="placeholderText">
+         <string>Path to a level file to process</string>
+        </property>
        </widget>
       </item>
       <item row="5" column="0" rowspan="2">
@@ -421,6 +424,9 @@
        <widget class="QLineEdit" name="cvt_episode">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="placeholderText">
+         <string>Path to an episode directory to process</string>
         </property>
        </widget>
       </item>
