@@ -37,12 +37,12 @@
         <location filename="../main_window/tools/app_settings.ui" line="152"/>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Musikk vil avspilles automatisk når du åpner en nivåfil</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="155"/>
         <source>Autoplay music after opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>Spill av musikk automatisk etter åpning av fil</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="171"/>
@@ -125,7 +125,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="377"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Historikk</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="386"/>
@@ -145,32 +145,32 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="418"/>
         <source>Use custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk egendefinert:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="428"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Bredde:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="454"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Høyde:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="477"/>
         <source>Fit to window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilpass til vindusstørrelse</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="490"/>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Miljø</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="496"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Forvalgt forstørrelse:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="503"/>
@@ -180,7 +180,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="526"/>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Forvalg</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="538"/>
@@ -200,7 +200,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="558"/>
         <source>Layer visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagsynlighet</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="565"/>
@@ -210,7 +210,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="572"/>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation>Utløserhandling</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="579"/>
@@ -225,7 +225,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="618"/>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC-innstillinger</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="630"/>
@@ -290,22 +290,22 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="800"/>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation>1 - Rør</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="805"/>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation>2 - Dør</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="810"/>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation>3 - Portal</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="822"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="828"/>
@@ -334,7 +334,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="887"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Drakt</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="899"/>
@@ -349,22 +349,22 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="929"/>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggingsnivå</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="939"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Utforsk</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="946"/>
         <source>Log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggfil</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="970"/>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Ekstra</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="976"/>
@@ -387,12 +387,12 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="46"/>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Teller stjerner…</translation>
     </message>
 </context>
 <context>
@@ -400,22 +400,22 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Konverter lyd (SoX)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="24"/>
         <source>SoX executable path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kjørbar SoX-sti:</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="31"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utforsk…</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="45"/>
         <source>Make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Utfør sikkerhetskopi</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="52"/>
@@ -425,7 +425,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hva vil du?</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="132"/>
@@ -498,7 +498,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="22"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="170"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="120"/>
@@ -507,7 +507,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="218"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="233"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX-feil</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="121"/>
@@ -525,27 +525,27 @@ Please set SoX path first</source>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="418"/>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingenting å gjøre.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="153"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen filer å konvertere</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="157"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopp</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="206"/>
         <source>Operation canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Operasjon avbrutt</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="219"/>
         <source>Sorry, SoX has crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX har kræsjet</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="234"/>
@@ -556,7 +556,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="293"/>
         <source>Operation complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Operasjon fullført</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="294"/>
@@ -623,7 +623,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="60"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="73"/>
@@ -634,7 +634,7 @@ and store a bookmark.</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="77"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="90"/>
@@ -763,12 +763,12 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="201"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Sti</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="210"/>
         <source>Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Feil</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="223"/>
@@ -778,7 +778,7 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="108"/>
         <source>Level: Blocks (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivå: Blokker (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="110"/>
@@ -798,22 +798,22 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="116"/>
         <source>Music (level) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikk (nivå (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="117"/>
         <source>Music (world map) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikk (verden) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="118"/>
         <source>Music (special) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikk (spesiell) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="120"/>
         <source>Sounds (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyder (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="122"/>
@@ -843,7 +843,7 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="134"/>
         <source>Level data</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivådata</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="135"/>
@@ -863,17 +863,17 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="138"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikk</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="139"/>
         <source>Sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Lyder</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="140"/>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation>Egendefinert data</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="148"/>
@@ -886,7 +886,7 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="14"/>
         <source>Crash</source>
-        <translation type="unfinished"></translation>
+        <translation>Kræsj</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="33"/>
@@ -901,7 +901,7 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="77"/>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>PGE-forum (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="84"/>
@@ -946,18 +946,18 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="129"/>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="254"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="50"/>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokker</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="51"/>
@@ -982,17 +982,17 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="60"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Sti</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="61"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivå</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="62"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Musikk</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="253"/>
@@ -1025,7 +1025,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="181"/>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Innhold</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="255"/>
@@ -1050,7 +1050,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern</translation>
     </message>
 </context>
 <context>
@@ -1058,47 +1058,47 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../dev_console/devconsole.ui" line="14"/>
         <source>Developer Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Utviklerkonsoll</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="47"/>
         <source>Type commands here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv inn kommandoer her…</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="59"/>
         <source>Send Command</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Send kommando</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="78"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>System</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="153"/>
         <source>Clear All Logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Tøm alle logger</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="176"/>
         <source>Clear System Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Tøm systemlogg</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="191"/>
         <source>Clear %1 Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Tøm %1 logg</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="269"/>
         <source>Prints this help text</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriver ut denne hjelpeteksten</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="270"/>
         <source>Prints a test command</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriver ut en testkommando</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="271"/>
@@ -1108,12 +1108,12 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="272"/>
         <source>Quits the program</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutter programmet</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="273"/>
         <source>Saves the application settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagrer programinnstillingene</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="274"/>
