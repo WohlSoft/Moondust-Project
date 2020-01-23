@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Case fixer of episode resources</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/maintainer.qrc">
