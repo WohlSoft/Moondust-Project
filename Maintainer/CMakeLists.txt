@@ -206,6 +206,21 @@ if(APPLE)
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
 
+    # FIXME: Verify that this will work or fix this if broken!
+    if(TARGET GIFs2PNG)
+        add_dependencies(pge_maintainer GIFs2PNG)
+        set(GIFs2PNG_BINARY "${CMAKE_BINARY_DIR}/bin/GIFs2PNG")
+        target_sources(pge_maintainer PRIVATE ${GIFs2PNG_BINARY})
+        set_source_files_properties(${GIFs2PNG_BINARY} PROPERTIES MACOSX_PACKAGE_LOCATION "Contents/MacOS")
+    endif()
+
+    if(TARGET PNG2GIFs)
+        add_dependencies(pge_maintainer PNG2GIFs)
+        set(PNG2GIFs_BINARY "${CMAKE_BINARY_DIR}/bin/PNG2GIFs")
+        target_sources(pge_maintainer PRIVATE ${PNG2GIFs_BINARY})
+        set_source_files_properties(${PNG2GIFs_BINARY} PROPERTIES MACOSX_PACKAGE_LOCATION "Contents/MacOS")
+    endif()
+
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     list(APPEND PGE_MAINTAINER_LINK_LIBS ${COREFOUNDATION_LIBRARY})
 endif()

@@ -16,9 +16,9 @@ GIFs2PNG::GIFs2PNG(QWidget *parent) :
 {
     ui->setupUi(this);
 #ifdef _WIN32
-    m_gifs2png.setProgram(ApplicationPath + "/GIFs2PNG.exe");
+    m_gifs2png.setProgram(ApplicationPath_x + "/GIFs2PNG.exe");
 #else
-    m_gifs2png.setProgram(ApplicationPath + "/GIFs2PNG");
+    m_gifs2png.setProgram(ApplicationPath_x + "/GIFs2PNG");
 #endif
     m_gifs2png.setProcessChannelMode(QProcess::MergedChannels);
     QObject::connect(&m_gifs2png, &QProcess::readyReadStandardError,
@@ -41,19 +41,6 @@ void GIFs2PNG::closeEvent(QCloseEvent *e)
     {
         e->ignore();
         return;
-    }
-}
-
-void GIFs2PNG::changeEvent(QEvent *e)
-{
-    QDialog::changeEvent(e);
-    switch(e->type())
-    {
-    case QEvent::LanguageChange:
-        ui->retranslateUi(this);
-        break;
-    default:
-        break;
     }
 }
 
