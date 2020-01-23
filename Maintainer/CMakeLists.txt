@@ -64,6 +64,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} $
 qt5_wrap_ui(UIS_HDRS
     main_window.ui
     EpisodeCvt/episode_converter.ui
+    EpisodeCvt/case_fixer.ui
     Music/audiocvt_sox_gui.ui
     Graphics/gifs2png.ui
     Graphics/png2gifs.ui
@@ -90,6 +91,7 @@ list(APPEND PGE_MAINTAINER_SRCS
     files/episode_box.cpp
     common_features/logger.cpp
     EpisodeCvt/episode_converter.cpp
+    EpisodeCvt/case_fixer.cpp
     Graphics/gifs2png.cpp
     Graphics/png2gifs.cpp
     ${UIS_HDRS}
