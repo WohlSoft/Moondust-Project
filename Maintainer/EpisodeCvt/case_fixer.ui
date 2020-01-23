@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>506</width>
-    <height>600</height>
+    <width>553</width>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>This wizard will help to fix episode which works incorrectly because of resource filenames has a case missmatch. Shouldn't be a problem on Windows and on macOS with case insensitive HFS+ mode. On Linux, xBSD and like systems with Ext4/3 or XFS this come this comes into a big problem: files getting be missing up. To avoid any possible issues related to the case missmatch, all filenames should have the matched case with the requested filename.</string>
+      <string>This wizard will help to fix an episode which works incorrectly because resource file names has a case missmatch. This shouldn't be a problem on the Windows and on the macOS with a case insensitive HFS+ mode. On Linux, xBSD and like systems with Ext4/3 or XFS file systems, and on the macOS with a case-sensitive HFS+ mode this come this comes into a big problem: files getting be missing up. To avoid any possible issues related to the case missmatch, all filenames should have the matched case with the requested filename.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
