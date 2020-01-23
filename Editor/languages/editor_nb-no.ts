@@ -208,7 +208,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="562"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="569"/>
