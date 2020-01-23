@@ -151,9 +151,13 @@ void Translator::reloadMenu()
                 lang[0] = lang[0].toUpper();
         }
 
+#ifdef __APPLE__
+        QAction *action = new QAction(lang, this);
+#else
         QIcon ico(QString("%1/%2.png").arg(m_langPath).arg(locale));
-
         QAction *action = new QAction(ico, lang, this);
+#endif
+
         action->setCheckable(true);
         action->setData(locale);
 
