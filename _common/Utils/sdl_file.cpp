@@ -9,7 +9,7 @@
 #endif
 
 #ifdef SDL_FILE_RESOURCES_SUPPORT
-#include <_resources/resource.h>
+#include <common_features/engine_resources.h>
 
 static bool res2mem(std::string path, unsigned char *&memory, size_t &fileSize)
 {
@@ -24,7 +24,7 @@ static bool res2mem(std::string path, unsigned char *&memory, size_t &fileSize)
 
 struct SdlFile_private
 {
-    SDL_RWops*  m_rw = NULL;
+    SDL_RWops*  m_rw = nullptr;
     std::string m_mode;
     std::string m_fileName;
     std::string m_errorString;
@@ -68,7 +68,7 @@ SdlFile::SdlFile(const SdlFile &f)
     {
         #ifdef SDL_FILE_RESOURCES_SUPPORT
         if(p->m_isMem)
-            p->m_rw = SDL_RWFromMem(p->m_memory, p->m_memsize);
+            p->m_rw = SDL_RWFromMem(p->m_memory, static_cast<int>(p->m_memsize));
         else
         #endif
             p->m_rw = SDL_RWFromFile(p->m_fileName.c_str(), p->m_mode.c_str());
@@ -84,7 +84,7 @@ SdlFile::~SdlFile()
     if(p->m_rw)
     {
         SDL_RWclose(p->m_rw);
-        p->m_rw = NULL;
+        p->m_rw = nullptr;
     }
     delete p;
 }
@@ -130,7 +130,7 @@ bool SdlFile::open(int mode)
 
     #ifdef SDL_FILE_RESOURCES_SUPPORT
     if(p->m_isMem)
-        p->m_rw = SDL_RWFromMem(p->m_memory, p->m_memsize);
+        p->m_rw = SDL_RWFromMem(p->m_memory, static_cast<int>(p->m_memsize));
     else
     #endif
         p->m_rw = SDL_RWFromFile(p->m_fileName.c_str(), p->m_mode.c_str());
@@ -158,7 +158,7 @@ bool SdlFile::close()
     if(p->m_rw)
     {
         SDL_RWclose(p->m_rw);
-        p->m_rw = NULL;
+        p->m_rw = nullptr;
         return true;
     }
     return false;

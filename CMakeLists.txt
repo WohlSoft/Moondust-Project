@@ -63,6 +63,8 @@ option(USE_SYSTEM_LIBC "Don't link libc and libstdc++ statically and use directl
 
 # Unix2Dos utility to converyt and install text files for Windows platform
 include(_common/tool_unix2dos.cmake)
+# Resources generator (for non-Qt applications)
+include(_common/res_generator.cmake)
 # Dependent libraries
 include(_common/library_libpng.cmake)
 include(_common/library_sqlite.cmake)

@@ -28,7 +28,7 @@
 
 #include <ConfigPackManager/image_size.h>
 
-#include <_resources/resource.h>
+#include <common_features/engine_resources.h>
 
 #ifdef _WIN32
 #include <SDL2/SDL_syswm.h>
