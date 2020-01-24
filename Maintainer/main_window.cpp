@@ -6,6 +6,7 @@
 #include <Graphics/png2gifs.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <EpisodeCvt/case_fixer.h>
+#include <common_features/app_path.h>
 #include <QMessageBox>
 
 MaintainerMain::MaintainerMain(QWidget *parent) :
@@ -17,7 +18,10 @@ MaintainerMain::MaintainerMain(QWidget *parent) :
     QObject::connect(&m_translator, &Translator::languageSwitched,
                      this, &MaintainerMain::languageSwitched);
     ui->language->setMenu(&m_langMenu);
-    m_translator.initWidget(&m_langMenu);
+    m_translator.setSettings(&m_langMenu,
+                             "maintainer",
+                             AppPathManager::languagesDir(),
+                             AppPathManager::settingsFile());
     m_translator.initTranslator();
 }
 

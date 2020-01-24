@@ -32,7 +32,10 @@ public:
     explicit Translator(QObject *parent = nullptr);
     virtual ~Translator();
 
-    void initWidget(QMenu *menu);
+    void setSettings(QMenu *menu,
+                    const QString &fileNamePrefix,
+                    const QString &languagesDir,
+                    const QString &settingsFile);
 
     /*!
      * \brief Init settings of the translator and initialize default language
@@ -68,6 +71,11 @@ private slots:
     void slotLanguageChanged(QAction *action);
 
 private:
+    //! Translation filename prefix
+    QString         m_trFilePrefix = "app";
+    //! Path to settings file to remember language settings
+    QString         m_settingsFile;
+    //! Menu which should contain a list of languages to toggle
     QMenu          *m_langsMenu = nullptr;
     //! contains the currently loaded language setting
     QString         m_currLang;
