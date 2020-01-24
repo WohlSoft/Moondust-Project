@@ -33,7 +33,7 @@
 #include <IniProcessor/ini_processing.h>
 #include <fmt/fmt_format.h>
 
-#include <_resources/resource.h>
+#include <common_features/engine_resources.h>
 
 #include <vector>
 

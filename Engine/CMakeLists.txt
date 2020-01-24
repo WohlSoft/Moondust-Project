@@ -90,9 +90,26 @@ if(ANDROID)
     file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/android-project/moondust/src/main/assets/languages")
 endif()
 
+# ======= embedded resources =======
+add_res_generator(
+    "${CMAKE_CURRENT_SOURCE_DIR}/_resources/"
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/"
+    "engine_resource.h"
+    engine_resource_data
+)
+
+set(PGE_ENGINE_RESOURCES
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/resource.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/engine_resource.h"
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/resource_data.h"
+)
+set_source_files_properties(${PGE_ENGINE_RESOURCES} PROPERTIES GENERATED TRUE)
+# ======= embedded resources =======
+
 set(PGE_ENGINE_SRCS)
 
 list(APPEND PGE_ENGINE_SRCS
+    ${PGE_ENGINE_RESOURCES}
     audio/pge_audio.cpp
     audio/play_music.cpp
     audio/play_sfx.cpp
@@ -176,7 +193,6 @@ list(APPEND PGE_ENGINE_SRCS
     main.cpp
     networking/editor_pipe.cpp
     networking/intproc.cpp
-    _resources/resource.cpp
     scenes/_base/gfx_effect.cpp
     scenes/_base/msgbox_queue.cpp
     scenes/level/base/lvl_base_physics.cpp
@@ -407,6 +423,7 @@ add_dependencies(pge_engine
     SQLite_Local
     PGE_FileFormats
     FREETYPE_Local
+    engine_resource_data
 )
 
 if(NOT SDL2_USE_SYSTEM)
