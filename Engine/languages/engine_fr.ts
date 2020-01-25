@@ -155,7 +155,7 @@ Veuillez télécharger et installer la dernière version de paquet de configurat
 Télécharger : %1
 
 Remarque : La plupart des paquets de configuration sont mis à jour avec PGE.
-Cependant vous pouvez utiliser le même lien pour obtenir la version la plus récente.</translation>
+Cependant vous pouvez utiliser le même lien pour obtenir un version plus récente.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <location filename="../data_configs/config_manager.cpp" line="236"/>
