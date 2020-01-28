@@ -1869,7 +1869,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>No Yoshi</source>
-        <translation type="vanished">Deny vehicles</translation>
+        <translation type="vanished">No mounts</translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -4572,42 +4572,42 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     <message>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished">Left</translation>
+        <translation>Left</translation>
     </message>
     <message>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished">Right</translation>
+        <translation>Right</translation>
     </message>
     <message>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished">Up</translation>
+        <translation>Up</translation>
     </message>
     <message>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished">Down</translation>
+        <translation>Down</translation>
     </message>
     <message>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Up-Left</translation>
     </message>
     <message>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Up-Right</translation>
     </message>
     <message>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Down-Left</translation>
     </message>
     <message>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Down-Right</translation>
     </message>
 </context>
 <context>
@@ -5484,7 +5484,7 @@ Physical env. zones:	 %6
     <message>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation>Deny vehicles</translation>
+        <translation>No mounts</translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -6978,19 +6978,19 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>Open folder of current file</translation>
+        <translation>Open episode folder</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Opens the folder which contains the currently opened file</translation>
+        <translation>Opens the episode folder for the current file.</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>Open custom data folder</translation>
+        <translation>Open level folder</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Opens a custom folder: a folder with a name equal to the basename of the currently opened file.</translation>
+        <translation>Open the level data folder.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
