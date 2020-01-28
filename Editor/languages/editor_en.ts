@@ -1869,7 +1869,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>No Yoshi</source>
-        <translation type="vanished">Deny vehicles</translation>
+        <translation type="vanished">No mounts</translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -6978,19 +6978,19 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>Open folder of current file</translation>
+        <translation>Open episode folder</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Opens the folder which contains the currently opened file</translation>
+        <translation>Opens the episode folder for the current file.</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>Open custom data folder</translation>
+        <translation>Open level folder</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Opens a custom folder: a folder with a name equal to the basename of the currently opened file.</translation>
+        <translation>Open the level data folder.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
