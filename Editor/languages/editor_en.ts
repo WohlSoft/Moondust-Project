@@ -5484,7 +5484,7 @@ Physical env. zones:	 %6
     <message>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation>Deny vehicles</translation>
+        <translation>No mounts</translation>
     </message>
     <message>
         <source>Allow NPC</source>
