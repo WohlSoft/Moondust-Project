@@ -3553,22 +3553,22 @@ Ceci tire avantage du rendu bugué des objet d&apos;arrière-plan de SMBX. Pour 
     <message>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Haut-Gauche</translation>
     </message>
     <message>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Haut-Droit</translation>
     </message>
     <message>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bas-Gauche</translation>
     </message>
     <message>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bas-Droit</translation>
     </message>
 </context>
 <context>
@@ -4016,7 +4016,7 @@ Zones d&apos;env. physique : 			%6
     <message>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation>Ne pas autoriser les véhicules</translation>
+        <translation>Pas de véhicules</translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -5084,19 +5084,19 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>Ouvrir le dossier du fichier courant</translation>
+        <translation>Ouvrir le dossier de l&apos;épisode</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Ouvre le dossier contenant le fichier actuellement ouvert</translation>
+        <translation>Ouvre le dossier de l&apos;épisode pour le fichier actuellement ouvert.</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>Ouvrir le dossier des données personnalisées</translation>
+        <translation>Ouvrir le dossier de niveau</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Ouvre un dossier personnalisé : un dossier dont le nom est égal au nom de base du fichier actuellement ouvert.</translation>
+        <translation>Ouvre le dossier des données de niveau.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
@@ -7921,7 +7921,7 @@ Boîtes à musique :	%5
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type :</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>[empty]</source>
