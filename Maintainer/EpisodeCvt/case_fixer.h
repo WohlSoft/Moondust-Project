@@ -20,7 +20,7 @@ class CaseFixerWorker : public QObject
     Q_OBJECT
     QDir                m_episode;
     QString             m_errorString;
-    QQueue<QString >    m_filesToConvert;
+    QQueue<QString>     m_filesToConvert;
     int                 m_mode;
     EpisodeBox          m_episodeBox;
     QAtomicInteger<bool>m_jobRunning;
@@ -59,6 +59,9 @@ class CaseFixer : public QDialog
 public:
     explicit CaseFixer(QWidget *parent = nullptr);
     ~CaseFixer();
+
+private slots:
+    void on_start_clicked();
 
 private slots:
     void on_episodeBrowse_clicked();

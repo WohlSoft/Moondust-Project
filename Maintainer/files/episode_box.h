@@ -30,6 +30,8 @@ public:
     EpisodeBox_level(const EpisodeBox_level&e);
     ~EpisodeBox_level();
     bool open(QString filePath);
+    QString findFileAliasCaseInsensitive(QString file);
+    bool renameFile(QString oldFile, QString newFile);
     bool renameMusic(QString oldMus, QString newMus);
     bool renameLevel(QString oldLvl, QString newLvl);
     void save();
@@ -55,6 +57,8 @@ public:
     EpisodeBox_world(const EpisodeBox_world&w);
     ~EpisodeBox_world();
     bool open(QString filePath);
+    QString findFileAliasCaseInsensitive(QString file);
+    bool renameFile(QString oldFile, QString newFile);
     bool renameMusic(QString oldMus, QString newMus);
     bool renameLevel(QString oldLvl, QString newLvl);
     void save();
@@ -65,6 +69,8 @@ public:
     EpisodeBox();
     ~EpisodeBox();
     void openEpisode(QString dirPath, bool recursive);
+    QString findFileAliasCaseInsensitive(QString file);
+    void renameFile(QString oldFile, QString newFile);
     void renameMusic(QString oldMus, QString newMus);
     void renameLevel(QString oldLvl, QString newLvl);
     long overwrittenLevels();

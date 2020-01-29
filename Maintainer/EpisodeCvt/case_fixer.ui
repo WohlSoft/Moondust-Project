@@ -134,7 +134,7 @@
       <item>
        <widget class="QRadioButton" name="modeMatchFS">
         <property name="text">
-         <string>Match to to file system state (don't modify levels and worlds)</string>
+         <string>Match to file system state (don't rename files if possible)</string>
         </property>
         <property name="checked">
          <bool>true</bool>
@@ -144,7 +144,7 @@
       <item>
        <widget class="QRadioButton" name="modeMatchFields">
         <property name="text">
-         <string>Match to level/world file content (don't rename files)</string>
+         <string>Match to level/world file content (don't modify levels and worlds)</string>
         </property>
        </widget>
       </item>

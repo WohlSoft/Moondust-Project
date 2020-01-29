@@ -117,13 +117,38 @@ bool EpisodeBox_level::open(QString filePath)
     return d.meta.ReadFileValid;
 }
 
+QString EpisodeBox_level::findFileAliasCaseInsensitive(QString file)
+{
+    QDir fullPath(d.meta.path);
+    for(MusicField &mus : music_entries)
+    {
+        if(mus.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(mus.field);
+    }
+
+    for(MusicField &lvl : level_entries)
+    {
+        if(lvl.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(lvl.field);
+    }
+
+    return QString();
+}
+
+bool EpisodeBox_level::renameFile(QString oldFile, QString newFile)
+{
+    bool modified = false;
+    modified |= renameMusic(oldFile, newFile);
+    modified |= renameLevel(oldFile, newFile);
+    return modified;
+}
+
 bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
-    for(int i = 0; i < music_entries.size(); i++)
+    for(MusicField &mus : music_entries)
     {
-        MusicField &mus = music_entries[i];
         if(mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0)
         {
             *(mus.field) = fullPath.relativeFilePath(newMus);
@@ -142,9 +167,8 @@ bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
-    for(int i = 0; i < level_entries.size(); i++)
+    for(MusicField &lvl : level_entries)
     {
-        MusicField &lvl = level_entries[i];
         if(lvl.absolutePath.compare(oldLvl, Qt::CaseInsensitive) == 0)
         {
             *(lvl.field) = fullPath.relativeFilePath(newLvl);
@@ -271,13 +295,38 @@ bool EpisodeBox_world::open(QString filePath)
     return d.meta.ReadFileValid;
 }
 
+QString EpisodeBox_world::findFileAliasCaseInsensitive(QString file)
+{
+    QDir fullPath(d.meta.path);
+    for(MusicField &mus : music_entries)
+    {
+        if(mus.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(mus.field);
+    }
+
+    for(MusicField &lvl : level_entries)
+    {
+        if(lvl.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(lvl.field);
+    }
+
+    return QString();
+}
+
+bool EpisodeBox_world::renameFile(QString oldFile, QString newFile)
+{
+    bool modified = false;
+    modified |= renameMusic(oldFile, newFile);
+    modified |= renameLevel(oldFile, newFile);
+    return modified;
+}
+
 bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
-    for(int i = 0; i < music_entries.size(); i++)
+    for(MusicField &mus : music_entries)
     {
-        MusicField &mus = music_entries[i];
         if(mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0)
         {
             *(mus.field) = fullPath.relativeFilePath(newMus);
@@ -296,9 +345,8 @@ bool EpisodeBox_world::renameLevel(QString oldLvl, QString newLvl)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
-    for(int i = 0; i < level_entries.size(); i++)
+    for(MusicField &lvl : level_entries)
     {
-        MusicField &lvl = level_entries[i];
         if(lvl.absolutePath.compare(oldLvl, Qt::CaseInsensitive) == 0)
         {
             *(lvl.field) = fullPath.relativeFilePath(newLvl);
@@ -437,6 +485,32 @@ long EpisodeBox::overwrittenWorlds()
 int EpisodeBox::totalElements()
 {
     return d.size() + dw.size();
+}
+
+QString EpisodeBox::findFileAliasCaseInsensitive(QString file)
+{
+    for(int i = 0; i < d.size(); i++)
+    {
+        QString f = d[i].findFileAliasCaseInsensitive(file);
+        if(!f.isEmpty())
+            return f;
+    }
+
+    for(int i = 0; i < dw.size(); i++)
+    {
+        QString f = dw[i].findFileAliasCaseInsensitive(file);
+        if(!f.isEmpty())
+            return f;
+    }
+    return QString();
+}
+
+void EpisodeBox::renameFile(QString oldFile, QString newFile)
+{
+    for(int i = 0; i < d.size(); i++)
+        d[i].renameFile(oldFile, newFile);
+    for(int i = 0; i < dw.size(); i++)
+        dw[i].renameFile(oldFile, newFile);
 }
 
 void EpisodeBox::renameMusic(QString oldMus, QString newMus)

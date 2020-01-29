@@ -1,9 +1,52 @@
 #include "case_fixer.h"
 #include "ui_case_fixer.h"
 #include <QtConcurrent>
+#include <QDirIterator>
 #include <QMessageBox>
+#include <QEventLoop>
+#include <QCryptographicHash>
 
 
+// Returns empty QByteArray() on failure.
+static QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlgorithm)
+{
+    QFile f(fileName);
+    if(f.open(QFile::ReadOnly))
+    {
+        QCryptographicHash hash(hashAlgorithm);
+        if (hash.addData(&f))
+        {
+            return hash.result();
+        }
+    }
+    return QByteArray();
+}
+
+static bool renameFiles(const QString &oldFile, const QString &newFile)
+{
+    if(!QFile::rename(oldFile, newFile))
+    {
+        auto hashOld = fileChecksum(oldFile, QCryptographicHash::Sha256);
+        auto hashNew = fileChecksum(newFile, QCryptographicHash::Sha256);
+        if(hashOld == hashNew) // If two files of different case are matching, remove old
+        {
+            QFile::remove(oldFile);
+        }
+        else // Else, keep "new" file as "_old" file
+        {
+            QFileInfo o(newFile);
+            QString newOldFile = newFile;
+            {
+                int cutTo = (newOldFile.size() - 1) - o.suffix().size();
+                newOldFile.remove(cutTo, o.suffix().size());
+                newOldFile.append("_old." + o.suffix());
+            }
+            QFile::rename(newFile, newOldFile);
+            QFile::rename(oldFile, newFile);
+        }
+    }
+    return true;
+}
 
 CaseFixerWorker::CaseFixerWorker(QObject *parent):
     QObject(parent),
@@ -36,11 +79,9 @@ bool CaseFixerWorker::initJob(QString configPack, QString episodePath, bool recu
 
     if(m_episodeBox.totalElements()==0)
     {
-        m_errorString = tr("No files to convert");
+        m_errorString = tr("No files to scan");
         return false;
     }
-
-    emit totalElements(m_episodeBox.totalElements());
 
     return true;
 }
@@ -52,7 +93,65 @@ bool CaseFixerWorker::runJob()
 
     try
     {
-        // TODO: Put code HERE
+        emit totalElements(0);
+
+        // Find all files in the episode
+        QDirIterator it(m_episode.path(), QDir::Files, QDirIterator::Subdirectories);
+        QDir d(m_episode.path());
+        while (it.hasNext())
+        {
+            it.next();
+            QFileInfo q = it.fileInfo();
+            m_filesToConvert.append(q.absoluteFilePath());
+            qDebug() << d.relativeFilePath(q.absoluteFilePath());
+        }
+        emit totalElements(m_filesToConvert.size());
+        m_currentValue = 0;
+
+        // For each found file, check is it referred anywhere, if yes, do anything
+        for(const QString &p : m_filesToConvert)
+        {
+            qDebug() << "Trying to process " << p << "...";
+            switch(m_mode)
+            {
+            case MODE_TOLOWER:
+            {
+                QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
+                if(f.isEmpty())
+                    break; // Do nothing if no any usage alias found
+                QFileInfo pi(p);
+                QString fl = pi.absoluteDir().absolutePath() + QStringLiteral("/") + pi.fileName().toLower();
+                qDebug() << "Rename file: " << p << " => " << fl;
+                renameFiles(p, fl);
+                qDebug() << "Rename setup: " << p << " => " << fl;
+                m_episodeBox.renameFile(p, fl);
+                break;
+            }
+            default:
+            case MODE_MATCH_FS:
+            {
+                QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
+                if(f.isEmpty())
+                    break; // Do nothing if no any usage alias found
+                QString fAbs = d.absoluteFilePath(f);
+                qDebug() << "Rename setup: " << fAbs << " => " << p;
+                m_episodeBox.renameFile(fAbs, p);
+                break;
+            }
+            case MODE_MATCH_SETUP:
+            {
+                QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
+                if(f.isEmpty())
+                    break; // Do nothing if no any usage alias found
+                QString fAbs = d.absoluteFilePath(f);
+                qDebug() << "Rename file: " << p << " => " << fAbs;
+                renameFiles(p, d.absoluteFilePath(f));
+                break;
+            }
+            }
+
+            m_currentValue++;
+        }
     }
     catch(QString err)
     {
@@ -108,6 +207,50 @@ void CaseFixer::on_episodeBrowse_clicked()
 void CaseFixer::on_configPackBrowse_clicked()
 {
 
+}
+
+void CaseFixer::on_start_clicked()
+{
+    if(ui->episodeToFix->text().isEmpty() || !QDir(ui->episodeToFix->text()).exists())
+    {
+        QMessageBox::warning(this,
+                             tr("Episode path error"),
+                             tr("Episode path wasn't declared. Please choice target episode path first."));
+        return;
+    }
+    emit setLocked(true);
+
+    int mode = 0;
+
+    if(ui->modeMatchFields->isChecked())
+        mode = CaseFixerWorker::MODE_MATCH_SETUP;
+    else if(ui->modeMatchFS->isChecked())
+        mode = CaseFixerWorker::MODE_MATCH_FS;
+    else if(ui->modeAllLower->isChecked())
+        mode = CaseFixerWorker::MODE_TOLOWER;
+
+    m_process = QtConcurrent::run<bool>(&m_worker,
+                                        &CaseFixerWorker::initJob,
+                                        ui->configPackPath->text(),
+                                        ui->episodeToFix->text(),
+                                        true, mode);
+
+    while(m_process.isRunning())
+    {
+        qApp->processEvents();
+        QThread::msleep(10);
+    }
+
+    if(!m_process.result())
+    {
+        QMessageBox::warning(this,
+                             tr("Worker error"),
+                             tr("Can't initialize job because %1").arg(m_worker.errorString()));
+        return;
+    }
+
+    m_process = QtConcurrent::run<bool>(&m_worker, &CaseFixerWorker::runJob);
+    m_progressWatcher.start(100);
 }
 
 void CaseFixer::workFinished(bool isFine)
