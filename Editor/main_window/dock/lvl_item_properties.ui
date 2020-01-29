@@ -994,7 +994,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>54</height>
+               <height>97</height>
               </size>
              </property>
              <property name="title">
