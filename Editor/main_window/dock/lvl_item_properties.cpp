@@ -233,8 +233,8 @@ void LvlItemProperties::setSMBX64Strict(bool en)
 
     ui->smbx64SpGroup->setHidden(sp_hide);
     ui->smbx64SpGroup->setEnabled(sp_active);
-	
-	ui->extraSettings->setEnabled(!en);
+    
+    ui->extraSettings->setEnabled(!en);
 }
 /******************Combo boxes*********************************/
 
@@ -969,7 +969,7 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                 auto *widget = m_extraSettings->getWidget();
                 if(widget)
                 {
-					widget->layout()->setContentsMargins(0, 0, 0, 0);
+                    widget->layout()->setContentsMargins(0, 0, 0, 0);
                     ui->extraSettings->layout()->addWidget(widget);
                     JsonSettingsWidget::connect(m_extraSettings.get(),
                                                 &JsonSettingsWidget::settingsChanged,
