@@ -233,6 +233,8 @@ void LvlItemProperties::setSMBX64Strict(bool en)
 
     ui->smbx64SpGroup->setHidden(sp_hide);
     ui->smbx64SpGroup->setEnabled(sp_active);
+	
+	ui->extraSettings->setEnabled(!en);
 }
 /******************Combo boxes*********************************/
 
