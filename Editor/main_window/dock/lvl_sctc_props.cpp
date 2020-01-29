@@ -109,6 +109,8 @@ void LvlSectionProps::setSMBX64Strict(bool en)
     ui->LVLPropsWrapVertical->setHidden(wrap_vertical_hidden);
     mw()->ui->actionWrapVertically->setEnabled(wrap_vertical_enabled);
     mw()->ui->actionWrapVertically->setVisible(!wrap_vertical_hidden);
+    
+    ui->extraSettings->setEnabled(!en);
 }
 
 void LvlSectionProps::re_translate()
