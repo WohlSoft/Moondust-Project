@@ -18,37 +18,10 @@
     <normaloff>:/maintainer.ico</normaloff>:/maintainer.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="9" column="1">
-    <widget class="QPushButton" name="close">
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="3">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>485</width>
-       <height>61</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="8" column="0" colspan="3">
     <widget class="QProgressBar" name="progress">
      <property name="value">
       <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="2">
-    <widget class="QPushButton" name="start">
-     <property name="text">
-      <string>Start</string>
      </property>
     </widget>
    </item>
@@ -65,62 +38,25 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>313</width>
-       <height>22</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="7" column="0" colspan="3">
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="3">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="3">
-    <widget class="QGroupBox" name="configPack">
+   <item row="3" column="0" colspan="3">
+    <widget class="QGroupBox" name="settings">
      <property name="title">
-      <string>What configuration package to use?</string>
+      <string>What episode to fix?</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0" colspan="2">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>It's needed to verify filenames of customized resources</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLineEdit" name="configPackPath">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="episodeToFix">
         <property name="placeholderText">
-         <string>Path to a configuration package</string>
+         <string>Path to an episode directory to process</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="configPackBrowse">
+      <item>
+       <widget class="QPushButton" name="episodeBrowse">
         <property name="text">
          <string>Browse...</string>
         </property>
        </widget>
-      </item>
-      <item row="2" column="0" colspan="2">
-       <widget class="QComboBox" name="configPacksList"/>
       </item>
      </layout>
     </widget>
@@ -158,27 +94,101 @@
      </layout>
     </widget>
    </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QGroupBox" name="settings">
+   <item row="5" column="0" colspan="3">
+    <widget class="QGroupBox" name="configPack">
      <property name="title">
-      <string>What episode to fix?</string>
+      <string>What configuration package to use?</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLineEdit" name="episodeToFix">
-        <property name="placeholderText">
-         <string>Path to an episode directory to process</string>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>It's needed to verify filenames of customized resources</string>
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="episodeBrowse">
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="configPackPath">
+        <property name="placeholderText">
+         <string>Path to a configuration package</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="configPackBrowse">
         <property name="text">
          <string>Browse...</string>
         </property>
        </widget>
       </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QComboBox" name="configPacksList"/>
+      </item>
      </layout>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>313</width>
+       <height>22</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="0" colspan="3">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QPushButton" name="close">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="3">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>485</width>
+       <height>61</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="10" column="2">
+    <widget class="QPushButton" name="start">
+     <property name="text">
+      <string>Start</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="3">
+    <widget class="QLabel" name="statusMsg">
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignHCenter|Qt::AlignTop</set>
+     </property>
     </widget>
    </item>
   </layout>

@@ -48,6 +48,7 @@ public:
     QString errorString();
 
 signals:
+    void statusMessage(const QString &msg);
     void workFinished(bool isFine);
     void totalElements(int max);
 };
@@ -77,6 +78,8 @@ private:
     QFuture<bool>   m_process;
     CaseFixerWorker m_worker;
     QTimer          m_progressWatcher;
+    void loadSetup();
+    void saveSetup();
 };
 
 #endif // CASE_FIXER_H

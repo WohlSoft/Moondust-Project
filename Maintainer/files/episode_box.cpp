@@ -78,6 +78,7 @@ EpisodeBox_level::EpisodeBox_level(const EpisodeBox_level &e)
     ftype         = e.ftype;
     ftypeVer      = e.ftypeVer;
     fPath         = e.fPath;
+    dataPath      = e.dataPath;
     music_entries = e.music_entries;
     level_entries = e.level_entries;
     m_wasOverwritten = e.m_wasOverwritten;
@@ -114,6 +115,8 @@ bool EpisodeBox_level::open(QString filePath)
         qDebug() << "Opened level, is valid = " << d.meta.ReadFileValid << filePath;
     }
 
+    dataPath = d.meta.path + "/" + d.meta.filename;
+
     return d.meta.ReadFileValid;
 }
 
@@ -138,12 +141,46 @@ QString EpisodeBox_level::findFileAliasCaseInsensitive(QString file)
 bool EpisodeBox_level::renameFile(QString oldFile, QString newFile)
 {
     bool modified = false;
-    modified |= renameMusic(oldFile, newFile);
-    modified |= renameLevel(oldFile, newFile);
+    if(oldFile == fPath)
+    {
+        QFile::rename(fPath, newFile);
+        fPath = newFile;
+        QString newDataPath = newFile;
+        int dotPos = newFile.lastIndexOf(".");
+        if(dotPos > 0)
+            newDataPath.remove(dotPos, newDataPath.size() - dotPos);
+        QDir dDir(dataPath);
+        if(dDir.exists())
+        {
+            if(dataPath != newDataPath)
+                dDir.rename(dDir.path(), newDataPath);
+        }
+        else // Check if it's a possible case missmatch, fix it!
+        {
+            QDir parent = QFileInfo(fPath).absoluteDir();
+            auto dirs = parent.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+            for(auto &d : dirs)
+            {
+                QString dp = parent.path() + "/" + d;
+                if(dp.compare(dataPath, Qt::CaseInsensitive) == 0)
+                {
+                    dDir.setPath(dp);
+                    dDir.rename(dDir.path(), newDataPath);
+                }
+            }
+        }
+    }
+    modified |= renameMusic(oldFile, newFile, true);
+    modified |= renameLevel(oldFile, newFile, true);
+    if(modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
     return modified;
 }
 
-bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
+bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
@@ -155,7 +192,7 @@ bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
             modified = true;
         }
     }
-    if(modified)
+    if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;
@@ -163,7 +200,7 @@ bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
     return modified;
 }
 
-bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl)
+bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
@@ -175,7 +212,7 @@ bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl)
             modified = true;
         }
     }
-    if(modified)
+    if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;
@@ -262,6 +299,7 @@ EpisodeBox_world::EpisodeBox_world(const EpisodeBox_world &w)
 {
     d           = w.d;
     fPath       = w.fPath;
+    dataPath    = w.dataPath;
     ftype       = w.ftype;
     ftypeVer    = w.ftypeVer;
     music_entries = w.music_entries;
@@ -291,6 +329,8 @@ bool EpisodeBox_world::open(QString filePath)
         break;
     }
 
+    dataPath = d.meta.path + "/" + d.meta.filename;
+
     qDebug() << "Opened world, valud=" << d.meta.ReadFileValid << filePath;
     return d.meta.ReadFileValid;
 }
@@ -316,12 +356,46 @@ QString EpisodeBox_world::findFileAliasCaseInsensitive(QString file)
 bool EpisodeBox_world::renameFile(QString oldFile, QString newFile)
 {
     bool modified = false;
-    modified |= renameMusic(oldFile, newFile);
-    modified |= renameLevel(oldFile, newFile);
+    if(oldFile == fPath)
+    {
+        QFile::rename(fPath, newFile);
+        fPath = newFile;
+        QString newDataPath = newFile;
+        int dotPos = newFile.lastIndexOf(".");
+        if(dotPos > 0)
+            newDataPath.remove(dotPos, newDataPath.size() - dotPos);
+        QDir dDir(dataPath);
+        if(dDir.exists())
+        {
+            if(dataPath != newDataPath)
+                dDir.rename(dDir.path(), newDataPath);
+        }
+        else // Check if it's a possible case missmatch, fix it!
+        {
+            QDir parent = QFileInfo(fPath).absoluteDir();
+            auto dirs = parent.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+            for(auto &d : dirs)
+            {
+                QString dp = parent.path() + "/" + d;
+                if(dp.compare(dataPath, Qt::CaseInsensitive) == 0)
+                {
+                    dDir.setPath(dp);
+                    dDir.rename(dDir.path(), newDataPath);
+                }
+            }
+        }
+    }
+    modified |= renameMusic(oldFile, newFile, true);
+    modified |= renameLevel(oldFile, newFile, true);
+    if(modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
     return modified;
 }
 
-bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
+bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
@@ -333,7 +407,7 @@ bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
             modified = true;
         }
     }
-    if(modified)
+    if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;
@@ -341,7 +415,7 @@ bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
     return modified;
 }
 
-bool EpisodeBox_world::renameLevel(QString oldLvl, QString newLvl)
+bool EpisodeBox_world::renameLevel(QString oldLvl, QString newLvl, bool isBulk)
 {
     bool modified = false;
     QDir fullPath(d.meta.path);
@@ -353,7 +427,7 @@ bool EpisodeBox_world::renameLevel(QString oldLvl, QString newLvl)
             modified = true;
         }
     }
-    if(modified)
+    if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;

@@ -6,6 +6,7 @@
 #include <QEventLoop>
 #include <QCryptographicHash>
 
+#include <common_features/app_path.h>
 
 // Returns empty QByteArray() on failure.
 static QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algorithm hashAlgorithm)
@@ -24,6 +25,9 @@ static QByteArray fileChecksum(const QString &fileName, QCryptographicHash::Algo
 
 static bool renameFiles(const QString &oldFile, const QString &newFile)
 {
+    if(oldFile == newFile)
+        return false; // Do nothing, both names are equal
+
     if(!QFile::rename(oldFile, newFile))
     {
         auto hashOld = fileChecksum(oldFile, QCryptographicHash::Sha256);
@@ -59,9 +63,7 @@ CaseFixerWorker::CaseFixerWorker(QObject *parent):
 }
 
 CaseFixerWorker::~CaseFixerWorker()
-{
-
-}
+{}
 
 bool CaseFixerWorker::initJob(QString configPack, QString episodePath, bool recursive, int targetMode)
 {
@@ -75,15 +77,61 @@ bool CaseFixerWorker::initJob(QString configPack, QString episodePath, bool recu
         return false;
     }
 
+    emit statusMessage(tr("Initializing..."));
+    emit totalElements(0);
+
     m_episodeBox.openEpisode(episodePath, recursive);
 
     if(m_episodeBox.totalElements()==0)
     {
         m_errorString = tr("No files to scan");
+        emit statusMessage(QString());
         return false;
     }
 
     return true;
+}
+
+static void processEntry(QDir &d, const QString &p, int m_mode, EpisodeBox &m_episodeBox)
+{
+    qDebug() << "Trying to process " << p << "...";
+    switch(m_mode)
+    {
+    case CaseFixerWorker::MODE_TOLOWER:
+    {
+        QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
+        if(f.isEmpty())
+            break; // Do nothing if no any usage alias found
+        QFileInfo pi(p);
+        QString fl = pi.absoluteDir().absolutePath() + QStringLiteral("/") + pi.fileName().toLower();
+        qDebug() << "Rename file: " << p << " => " << fl;
+        renameFiles(p, fl);
+        qDebug() << "Rename setup: " << p << " => " << fl;
+        m_episodeBox.renameFile(p, fl);
+        break;
+    }
+    default:
+    case CaseFixerWorker::MODE_MATCH_FS:
+    {
+        QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
+        if(f.isEmpty())
+            break; // Do nothing if no any usage alias found
+        QString fAbs = d.absoluteFilePath(f);
+        qDebug() << "Rename setup: " << fAbs << " => " << p;
+        m_episodeBox.renameFile(fAbs, p);
+        break;
+    }
+    case CaseFixerWorker::MODE_MATCH_SETUP:
+    {
+        QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
+        if(f.isEmpty())
+            break; // Do nothing if no any usage alias found
+        QString fAbs = d.absoluteFilePath(f);
+        qDebug() << "Rename file: " << p << " => " << fAbs;
+        renameFiles(p, d.absoluteFilePath(f));
+        break;
+    }
+    }
 }
 
 bool CaseFixerWorker::runJob()
@@ -93,75 +141,74 @@ bool CaseFixerWorker::runJob()
 
     try
     {
-        emit totalElements(0);
-
-        // Find all files in the episode
-        QDirIterator it(m_episode.path(), QDir::Files, QDirIterator::Subdirectories);
-        QDir d(m_episode.path());
-        while (it.hasNext())
+        // Find all level and world map files in the episode (first off it's need to fix the case of custom folders)
         {
-            it.next();
-            QFileInfo q = it.fileInfo();
-            m_filesToConvert.append(q.absoluteFilePath());
-            qDebug() << d.relativeFilePath(q.absoluteFilePath());
+            emit statusMessage("(1 / 2) " + tr("Looking for levels and world maps..."));
+            m_currentValue = 0;
+            emit totalElements(0);
+            QDirIterator it(m_episode.path(), {"*.lvl", "*.wld", "*.lvlx", "*.wldx"}, QDir::Files, QDirIterator::Subdirectories);
+            QDir d(m_episode.path());
+            while (it.hasNext())
+            {
+                it.next();
+                QFileInfo q = it.fileInfo();
+                m_filesToConvert.append(q.absoluteFilePath());
+                qDebug() << d.relativeFilePath(q.absoluteFilePath());
+            }
+            emit totalElements(m_filesToConvert.size());
+            m_currentValue = 0;
+
+            emit statusMessage("(1 / 2) " + tr("Processing levels and world maps..."));
+            // For each found file, check is it referred anywhere, if yes, do anything
+            for(const QString &p : m_filesToConvert)
+            {
+                processEntry(d, p, m_mode, m_episodeBox);
+                m_currentValue++;
+            }
         }
-        emit totalElements(m_filesToConvert.size());
-        m_currentValue = 0;
 
-        // For each found file, check is it referred anywhere, if yes, do anything
-        for(const QString &p : m_filesToConvert)
+        // Then, process all resources
         {
-            qDebug() << "Trying to process " << p << "...";
-            switch(m_mode)
+            emit statusMessage("(2 / 2) " + tr("Looking for resources..."));
+            m_currentValue = 0;
+            emit totalElements(0);
+            QDirIterator it(m_episode.path(), QDir::Files, QDirIterator::Subdirectories);
+            QDir d(m_episode.path());
+            while (it.hasNext())
             {
-            case MODE_TOLOWER:
-            {
-                QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
-                if(f.isEmpty())
-                    break; // Do nothing if no any usage alias found
-                QFileInfo pi(p);
-                QString fl = pi.absoluteDir().absolutePath() + QStringLiteral("/") + pi.fileName().toLower();
-                qDebug() << "Rename file: " << p << " => " << fl;
-                renameFiles(p, fl);
-                qDebug() << "Rename setup: " << p << " => " << fl;
-                m_episodeBox.renameFile(p, fl);
-                break;
+                it.next();
+                QFileInfo q = it.fileInfo();
+                if(q.suffix().toLower() == "lvl" ||
+                   q.suffix().toLower() == "lvlx" ||
+                   q.suffix().toLower() == "wld" ||
+                   q.suffix().toLower() == "wldx")
+                    continue; //Skip levels and world maps
+                m_filesToConvert.append(q.absoluteFilePath());
+                qDebug() << d.relativeFilePath(q.absoluteFilePath());
             }
-            default:
-            case MODE_MATCH_FS:
-            {
-                QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
-                if(f.isEmpty())
-                    break; // Do nothing if no any usage alias found
-                QString fAbs = d.absoluteFilePath(f);
-                qDebug() << "Rename setup: " << fAbs << " => " << p;
-                m_episodeBox.renameFile(fAbs, p);
-                break;
-            }
-            case MODE_MATCH_SETUP:
-            {
-                QString f = m_episodeBox.findFileAliasCaseInsensitive(p);
-                if(f.isEmpty())
-                    break; // Do nothing if no any usage alias found
-                QString fAbs = d.absoluteFilePath(f);
-                qDebug() << "Rename file: " << p << " => " << fAbs;
-                renameFiles(p, d.absoluteFilePath(f));
-                break;
-            }
-            }
+            emit totalElements(m_filesToConvert.size());
+            m_currentValue = 0;
 
-            m_currentValue++;
+            emit statusMessage("(2 / 2) " + tr("Processing resources..."));
+            // For each found file, check is it referred anywhere, if yes, do anything
+            for(const QString &p : m_filesToConvert)
+            {
+                processEntry(d, p, m_mode, m_episodeBox);
+                m_currentValue++;
+            }
         }
     }
     catch(QString err)
     {
         m_errorString = "Error ocouped while conversion process: " + err;
+        emit statusMessage(QString());
         emit workFinished(false);
         m_isFine = false;
     }
 
     m_jobRunning = false;
     qDebug() << "Work done, exiting";
+    emit statusMessage(QString());
     emit workFinished(true);
     return m_isFine;
 }
@@ -192,10 +239,23 @@ CaseFixer::CaseFixer(QWidget *parent) :
 
     connect(&m_worker, &CaseFixerWorker::workFinished,
             this, &CaseFixer::workFinished, Qt::QueuedConnection);
+
+    connect(&m_worker, &CaseFixerWorker::statusMessage,
+            ui->statusMsg, &QLabel::setText, Qt::QueuedConnection);
+
+    connect(this, &CaseFixer::setLocked, ui->start, &QPushButton::setDisabled);
+    connect(this, &CaseFixer::setLocked, ui->close, &QPushButton::setDisabled);
+    connect(this, &CaseFixer::setLocked, ui->episodeToFix, &QLineEdit::setDisabled);
+    connect(this, &CaseFixer::setLocked, ui->episodeBrowse, &QPushButton::setDisabled);
+    connect(this, &CaseFixer::setLocked, ui->configPack, &QGroupBox::setDisabled);
+    connect(this, &CaseFixer::setLocked, ui->modeBox, &QGroupBox::setDisabled);
+
+    loadSetup();
 }
 
 CaseFixer::~CaseFixer()
 {
+    saveSetup();
     delete ui;
 }
 
@@ -272,4 +332,26 @@ void CaseFixer::workFinished(bool isFine)
 void CaseFixer::refreshProgressBar()
 {
     ui->progress->setValue(m_worker.m_currentValue);
+}
+
+void CaseFixer::loadSetup()
+{
+    QSettings settings(AppPathManager::settingsFile(), QSettings::IniFormat);
+
+    settings.beginGroup("CaseFixer");
+    {
+        ui->episodeToFix->setText(settings.value("inpath", "").toString());
+    }
+    settings.endGroup();
+}
+
+void CaseFixer::saveSetup()
+{
+    QSettings settings(AppPathManager::settingsFile(), QSettings::IniFormat);
+
+    settings.beginGroup("CaseFixer");
+    {
+        settings.setValue("inpath", ui->episodeToFix->text());
+    }
+    settings.endGroup();
 }

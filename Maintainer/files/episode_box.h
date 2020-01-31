@@ -22,6 +22,7 @@ public:
     int   ftypeVer;
     LevelData d;
     QString fPath;
+    QString dataPath;
     bool m_wasOverwritten;
     void buildEntriesCache();
     QList<MusicField> music_entries;
@@ -32,8 +33,8 @@ public:
     bool open(QString filePath);
     QString findFileAliasCaseInsensitive(QString file);
     bool renameFile(QString oldFile, QString newFile);
-    bool renameMusic(QString oldMus, QString newMus);
-    bool renameLevel(QString oldLvl, QString newLvl);
+    bool renameMusic(QString oldMus, QString newMus, bool isBulk = false);
+    bool renameLevel(QString oldLvl, QString newLvl, bool isBulk = false);
     void save();
 };
 
@@ -49,6 +50,7 @@ public:
     int   ftypeVer;
     WorldData d;
     QString fPath;
+    QString dataPath;
     bool m_wasOverwritten;
     void buildEntriesCache();
     QList<MusicField> music_entries;
@@ -59,8 +61,8 @@ public:
     bool open(QString filePath);
     QString findFileAliasCaseInsensitive(QString file);
     bool renameFile(QString oldFile, QString newFile);
-    bool renameMusic(QString oldMus, QString newMus);
-    bool renameLevel(QString oldLvl, QString newLvl);
+    bool renameMusic(QString oldMus, QString newMus, bool isBulk = false);
+    bool renameLevel(QString oldLvl, QString newLvl, bool isBulk = false);
     void save();
 };
 
