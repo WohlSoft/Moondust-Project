@@ -74,6 +74,9 @@ void LevelProps::initAdvancedSettings()
         return;
 
     QByteArray rawLayout = layoutFile.readAll();
+
+    ui->advancedSettings->setEnabled(!m_currentData->meta.smbx64strict);
+
     m_extraSettings = new JsonSettingsWidget(ui->advancedSettings);
     if(m_extraSettings)
     {
