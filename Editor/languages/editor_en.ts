@@ -56,7 +56,7 @@
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation>Separate sub-windows (Classic style)</translation>
+        <translation>Separate sub-windows (classic style)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
@@ -404,7 +404,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation>Counting stars...</translation>
+        <translation>Counting stars…</translation>
     </message>
 </context>
 <context>
@@ -673,7 +673,7 @@ You also can double-click an item to scroll to its bookmarked position.</transla
     </message>
     <message>
         <source>Go To...</source>
-        <translation>Go To...</translation>
+        <translation>Go to…</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
@@ -12213,7 +12213,7 @@ Music boxes:	%5
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>[empty]</source>
