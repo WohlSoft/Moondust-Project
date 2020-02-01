@@ -435,17 +435,17 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert all music files on current level</source>
-        <translation type="unfinished"></translation>
+        <translation>Konverter alle musikkfiler på nåværende nivå</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="149"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Konverter angitte filer</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="202"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke endre format</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="208"/>
@@ -455,32 +455,32 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="231"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sett bitrate</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="329"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Filene vil bli konvertert til MP3</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="372"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Filene vil bli konvertert til FLAC</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="389"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Filene vil bli konvertert til OGG</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="405"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Sett kvalitet</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="484"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Filene vil bli konvertert til WAV</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="505"/>
@@ -595,17 +595,17 @@ Please set SoX path first</source>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="57"/>
         <source> blocks</source>
-        <translation type="unfinished"></translation>
+        <translation> blokker</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="76"/>
         <source>per </source>
-        <translation type="unfinished"></translation>
+        <translation>per </translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="79"/>
         <source> second</source>
-        <translation type="unfinished"></translation>
+        <translation> sekund</translation>
     </message>
 </context>
 <context>
@@ -613,12 +613,12 @@ Please set SoX path first</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="29"/>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Posisjonsbokmerker</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="57"/>
         <source>Remove selected bookmark from list</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern valgt bokmerke fra listen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="60"/>
@@ -9767,7 +9767,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/wld_search_box.ui" line="512"/>
         <location filename="../main_window/dock/wld_search_box.ui" line="700"/>
         <source>Type:</source>
-        <translation type="unfinished">Type:</translation>
+        <translation type="unfinished">Type</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="126"/>
