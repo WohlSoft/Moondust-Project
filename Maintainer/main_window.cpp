@@ -9,6 +9,16 @@
 #include <common_features/app_path.h>
 #include <QMessageBox>
 
+void MaintainerMain::showWIP()
+{
+    QMessageBox::information(this,
+                             tr("Under construction"),
+                             tr("This feature is under construction, "
+                                "it doesn't work properly yet. It may damage some of your stuff you'll try to process. "
+                                "Therefore please, make a full backup of episode that you would to process by this thing."),
+                             QMessageBox::Ok);
+}
+
 MaintainerMain::MaintainerMain(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MaintainerMain)
@@ -89,6 +99,7 @@ void MaintainerMain::on_png2gifs_converter_clicked()
 
 void MaintainerMain::on_pathcase_fixer_clicked()
 {
+    showWIP();
     CaseFixer casefixer(nullptr);
     casefixer.setWindowFlags(g_dialogFlags);
     casefixer.setWindowModality(Qt::NonModal);
