@@ -25,7 +25,7 @@ GIFs2PNG::GIFs2PNG(QWidget *parent) :
                      this, &GIFs2PNG::processOutput);
     QObject::connect(&m_gifs2png, &QProcess::readyReadStandardOutput,
                      this, &GIFs2PNG::processOutput);
-    QObject::connect(&m_gifs2png, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+    QObject::connect(&m_gifs2png, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                      this, &GIFs2PNG::processFinished);
     findConfigPacks();
 }
