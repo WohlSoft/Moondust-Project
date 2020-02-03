@@ -3120,7 +3120,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>左端</translation>
+        <translation>左键</translation>
     </message>
     <message>
         <source>Top</source>
@@ -3136,7 +3136,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Right</source>
-        <translation>右端</translation>
+        <translation>右键</translation>
     </message>
     <message>
         <source>Set music</source>
@@ -3557,22 +3557,22 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation>向左</translation>
+        <translation>左上</translation>
     </message>
     <message>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation>向右</translation>
+        <translation>右上</translation>
     </message>
     <message>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation>向左</translation>
+        <translation>左下</translation>
     </message>
     <message>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation>向右</translation>
+        <translation>右下</translation>
     </message>
 </context>
 <context>
@@ -5358,19 +5358,19 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>打开当前关卡所在的目录</translation>
+        <translation>打开地图目录</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>打开当前已打开关卡所在的目录</translation>
+        <translation>打开当前关卡所在的地图目录。</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>打开自定义目录</translation>
+        <translation>打开关卡目录</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>打开自定义目录：打开与当前关卡同名的自定义目录。</translation>
+        <translation>打开关卡目录。</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
@@ -7118,7 +7118,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>PLSET_Character</source>
         <comment>Character</comment>
-        <translation>任务</translation>
+        <translation>人物</translation>
     </message>
     <message>
         <source>PLSET_State</source>
@@ -8298,7 +8298,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Type:</source>
-        <translation>类型：</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <source>[empty]</source>
