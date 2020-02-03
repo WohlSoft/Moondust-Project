@@ -32,60 +32,60 @@ extern QString ApplicationPath_x;
  */
 class AppPathManager
 {
-    public:
-        /**
-         * @brief Initialize path manager
-         */
-        static void initAppPath(const char* argv0);
-        /**
-         * @brief Returns application settings file
-         * @return path to settings INI file
-         */
-        static QString settingsFile();
-        /**
-         * @brief Returns generic folder for saving of various settings files
-         * @return path to settings folder
-         */
-        static QString settingsPath();
-        /**
-         * @brief Path to user profile application dir
-         * @return Path to user profile application dir
-         */
-        static QString userAppDir();
+public:
+    /**
+     * @brief Initialize path manager
+     */
+    static void initAppPath(const char *argv0);
+    /**
+     * @brief Returns application settings file
+     * @return path to settings INI file
+     */
+    static QString settingsFile();
+    /**
+     * @brief Returns generic folder for saving of various settings files
+     * @return path to settings folder
+     */
+    static QString settingsPath();
+    /**
+     * @brief Path to user profile application dir
+     * @return Path to user profile application dir
+     */
+    static QString userAppDir();
 
-        /**
-         * @brief Path to UI translation files
-         * @return Path to UI translation files
-         */
-        static QString languagesDir();
-        /**
-         * @brief Path to logs directory
-         * @return Path to logs directory
-         */
-        static QString logsDir();
-        /**
-         * @brief Process installation (make user directory, save properties to operating system registry)
-         */
-        static void install();
-        /**
-         * @brief Is this application portable
-         * @return true if this application works in portable mode, false in intergated mode
-         */
-        static bool isPortable();
-        /**
-         * @brief Is user profile directory available for writing
-         * @return true if user profile directory is available
-         */
-        static bool userDirIsAvailable();
+    /**
+     * @brief Path to UI translation files
+     * @return Path to UI translation files
+     */
+    static QString languagesDir();
+    /**
+     * @brief Path to logs directory
+     * @return Path to logs directory
+     */
+    static QString logsDir();
+    /**
+     * @brief Process installation (make user directory, save properties to operating system registry)
+     */
+    static void install();
+    /**
+     * @brief Is this application portable
+     * @return true if this application works in portable mode, false in intergated mode
+     */
+    static bool isPortable();
+    /**
+     * @brief Is user profile directory available for writing
+     * @return true if user profile directory is available
+     */
+    static bool userDirIsAvailable();
 
-    private:
-        /**
-         * @brief Makes settings path if not exists
-         */
-        static void initSettingsPath();
-        //! Full path to settings INI file
-        static QString m_settingsPath;
-        static QString m_userPath;
+private:
+    /**
+     * @brief Makes settings path if not exists
+     */
+    static void initSettingsPath();
+    //! Full path to settings INI file
+    static QString m_settingsPath;
+    static QString m_userPath;
 };
 
 #endif // APP_PATH_H

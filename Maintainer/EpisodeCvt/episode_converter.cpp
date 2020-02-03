@@ -44,7 +44,7 @@ bool EpisodeConverterWorker::initJob(QString path, bool recursive, int targetFor
 
     m_episodeBox.openEpisode(path, recursive);
 
-    if(m_episodeBox.totalElements()==0)
+    if(m_episodeBox.totalElements() == 0)
     {
         m_errorString = tr("No files to convert");
         return false;
@@ -121,7 +121,7 @@ bool EpisodeConverterWorker::runJob()
                 lvl.ftype = EpisodeBox_level::F_LVL;
                 lvl.ftypeVer = m_targetFormatVer;
                 renameExtension(lvl.fPath, ".lvl");
-                if(!FileFormats::SaveLevelFile(lvl.d, lvl.fPath, FileFormats::LVL_SMBX64, m_targetFormatVer))
+                if(!FileFormats::SaveLevelFile(lvl.d, lvl.fPath, FileFormats::LVL_SMBX64, static_cast<unsigned int>(m_targetFormatVer)))
                     throw(lvl.d.meta.ERROR_info);
                 break;
             case 2://SMBX-38A
@@ -175,7 +175,7 @@ bool EpisodeConverterWorker::runJob()
                 wld.ftype = EpisodeBox_world::F_WLD;
                 wld.ftypeVer = m_targetFormatVer;
                 renameExtension(wld.fPath, ".wld");
-                if(!FileFormats::SaveWorldFile(wld.d, wld.fPath, FileFormats::WLD_SMBX64, m_targetFormatVer))
+                if(!FileFormats::SaveWorldFile(wld.d, wld.fPath, FileFormats::WLD_SMBX64, static_cast<unsigned int>(m_targetFormatVer)))
                     throw(wld.d.meta.ERROR_info);
                 break;
             case 2://SMBX-38A
@@ -281,6 +281,8 @@ void EpisodeConverter::on_DoMadJob_clicked()
     m_worker.setBackup(ui->makeBacup->isChecked());
     emit setLocked(true);
 
+    QEventLoop loop;
+
     m_process = QtConcurrent::run<bool>(&m_worker,
                                         &EpisodeConverterWorker::initJob,
                                         ui->episodePath->text(),
@@ -290,7 +292,8 @@ void EpisodeConverter::on_DoMadJob_clicked()
 
     while(m_process.isRunning())
     {
-        qApp->processEvents(); QThread::msleep(10);
+        qApp->processEvents();
+        QThread::msleep(10);
     }
 
     if(!m_process.result())

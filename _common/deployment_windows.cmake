@@ -65,12 +65,6 @@ if(SevenZipProgram)
         "${ZIP_SRC_DIR}/help/"
     )
 
-    set(PGE_MaintainerFiles
-        ${PGE_CommonQtFiles}
-        "${ZIP_SRC_DIR}/tools"
-        "${ZIP_SRC_DIR}/pge_maintainer.exe"
-    )
-
     set(PGE_MusPlayFiles
         ${PGE_CommonQtFiles}
         "${ZIP_SRC_DIR}/SDL2${PGE_DLL_SUFFIX}.dll"
@@ -98,6 +92,14 @@ if(SevenZipProgram)
     set(PGE_LazyFixToolFiles
         "${ZIP_SRC_DIR}/LazyFixTool.exe"
         "${ZIP_SRC_DIR}/LazyFixTool.readme.txt"
+    )
+
+    set(PGE_MaintainerFiles
+        ${PGE_CommonQtFiles}
+        "${ZIP_SRC_DIR}/tools"
+        ${PGE_Gifs2PngFiles}
+        ${PGE_Png2GifsFiles}
+        "${ZIP_SRC_DIR}/pge_maintainer.exe"
     )
 
     set(PGE_InstallCommonFiles
