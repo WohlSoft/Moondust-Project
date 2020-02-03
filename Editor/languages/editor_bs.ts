@@ -3348,7 +3348,7 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.cpp" line="83"/>
+        <location filename="../editing/edit_level/levelprops.cpp" line="86"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
@@ -4238,19 +4238,19 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1075"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1171"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="650"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="652"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1198"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="651"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="653"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1212"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="654"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="656"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4266,7 +4266,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1205"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="653"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="655"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4329,51 +4329,51 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="361"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="363"/>
         <source>Block ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="407"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="512"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="649"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="409"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="514"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="651"/>
         <source>Position: [%1, %2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="421"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1314"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="423"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1317"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="422"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="676"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1315"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1722"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2077"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="424"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="678"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1318"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1725"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2080"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="498"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="500"/>
         <source>BGO ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="579"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="581"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="683"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1969"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="685"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1972"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="912"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="962"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="914"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="964"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
@@ -4887,64 +4887,64 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="163"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="165"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="227"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="228"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="229"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="230"/>
         <source>[No image]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="229"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="230"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="231"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="232"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="525"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="665"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="527"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="667"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="525"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="527"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="533"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="535"/>
         <source>Choose a background first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="534"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="536"/>
         <source>Please, choose the background image first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="561"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="563"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="565"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="567"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="570"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="572"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="665"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="667"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
