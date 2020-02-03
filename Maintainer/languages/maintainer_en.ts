@@ -229,7 +229,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="31"/>
         <source>This wizard will help to fix an episode which works incorrectly because resource file names has a case missmatch. This shouldn&apos;t be a problem on the Windows and on the macOS with a case insensitive HFS+ mode. On Linux, xBSD and like systems with Ext4/3 or XFS file systems, and on the macOS with a case-sensitive HFS+ mode this come this comes into a big problem: files getting be missing up. To avoid any possible issues related to the case missmatch, all filenames should have the matched case with the requested filename.</source>
-        <translation type="unfinished"></translation>
+        <translation>This wizard will help to fix an episode which works incorrectly because resource file names has a case missmatch. This shouldn&apos;t be a problem on the Windows and on the macOS with a case insensitive HFS+ mode. On Linux, xBSD and like systems with Ext4/3 or XFS file systems, and on the macOS with a case-sensitive HFS+ mode this come this comes into a big problem: files getting be missing up. To avoid any possible issues related to the case missmatch, all filenames should have the matched case with the requested filename.</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="44"/>
@@ -330,7 +330,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
         <source>Case fixer was aborted with an error: %1</source>
-        <translation type="unfinished">Case fixer was aborted with an error: %1</translation>
+        <translation>Case fixer was aborted with an error: %1</translation>
     </message>
 </context>
 <context>
