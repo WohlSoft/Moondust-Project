@@ -91,6 +91,9 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
 LvlSectionProps::~LvlSectionProps()
 {
+    if(m_extraSettings.get())
+        ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+    m_extraSettings.reset();
     delete ui;
 }
 
@@ -152,15 +155,12 @@ void LvlSectionProps::updateExtraSettingsWidget()
         ui->extraSettings->setToolTip("");
         ui->extraSettings->setMinimumHeight(0);
         ui->extraSettings->setStyleSheet("");
-        if(m_extraSettings)
-        {
-            delete m_extraSettings;
-            m_extraSettings = nullptr;
-        }
+        if(m_extraSettings.get())
+            m_extraSettings.reset();
 
         QByteArray rawLayout = layoutFile.readAll();
-        m_extraSettings = new JsonSettingsWidget(ui->extraSettings);
-        if(m_extraSettings)
+        m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
+        if(m_extraSettings.get())
         {
             if(!m_extraSettings->loadLayout(section.custom_params.toUtf8(), rawLayout))
             {
@@ -176,7 +176,7 @@ void LvlSectionProps::updateExtraSettingsWidget()
             {
                 widget->layout()->setContentsMargins(0, 0, 0, 0);
                 ui->extraSettings->layout()->addWidget(widget);
-                JsonSettingsWidget::connect(m_extraSettings,
+                JsonSettingsWidget::connect(m_extraSettings.get(),
                                             &JsonSettingsWidget::settingsChanged,
                                             this,
                                             &LvlSectionProps::onExtraSettingsChanged);

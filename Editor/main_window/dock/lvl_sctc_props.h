@@ -4,6 +4,7 @@
 
 #include <QDockWidget>
 #include <QMutex>
+#include <memory>
 #include "mwdock_base.h"
 
 class MainWindow;
@@ -67,7 +68,7 @@ private:
     void onExtraSettingsChanged();
 
     QMutex m_mutex;
-    JsonSettingsWidget *m_extraSettings = nullptr;
+    std::unique_ptr<JsonSettingsWidget> m_extraSettings;
 
     Ui::LvlSectionProps *ui;
 };
