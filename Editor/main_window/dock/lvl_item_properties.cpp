@@ -17,6 +17,7 @@
  */
 
 #include <QJsonObject>
+#include <QMutexLocker>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 #include <common_features/json_settings_widget.h>
@@ -867,6 +868,8 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
         (mw()->activeChildWindow() == MainWindow::WND_Level) &&
         (edit = mw()->activeLvlEditWin()))
     {
+        QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
+
         CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
 
         uLVL.setDefaultDir(defaultLocalDir);

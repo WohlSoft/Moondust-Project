@@ -21,6 +21,7 @@
 #define LVL_ITEM_PROPERTIES_H
 
 #include <QDockWidget>
+#include <QMutex>
 #include "mwdock_base.h"
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <memory>
@@ -156,6 +157,7 @@ private:
     //! A lock of item properties change events that was set internally
     bool m_internalLock = false;
 
+    QMutex m_mutex;
     std::unique_ptr<JsonSettingsWidget> m_extraSettings;
     std::unique_ptr<JsonSettingsWidget> m_extraGlobalSettings;
     std::unique_ptr<QSpacerItem> m_extraSettingsSpacer;
