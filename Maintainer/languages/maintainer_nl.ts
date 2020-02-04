@@ -980,8 +980,8 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../translator.cpp" line="98"/>
-        <location filename="../translator.cpp" line="249"/>
+        <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
+        <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
         <translation type="unfinished"></translation>
     </message>

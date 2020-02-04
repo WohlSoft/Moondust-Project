@@ -1010,8 +1010,8 @@ The maximum number of Music Boxes is %2.</translation>
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</translation>
     </message>
     <message>
-        <location filename="../translator.cpp" line="98"/>
-        <location filename="../translator.cpp" line="249"/>
+        <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
+        <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
         <translation></translation>
     </message>
