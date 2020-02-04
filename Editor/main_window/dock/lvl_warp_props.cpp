@@ -26,6 +26,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <main_window/dock/lvl_item_properties.h>
 #include <common_features/direction_switch_widget.h>
+#include <common_features/logger.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -409,31 +410,36 @@ void LvlWarpBox::on_WarpSetEntrance_clicked()
     unsigned int array_id = 0;
     unsigned int warpId = getWarpId();
 
+    LogDebugQD("Warp: Trying to find a warp " + QString::number(warpId));
     auto *w = findWarp(edit->LvlData, warpId);
     if(w)
     {
         placed = w->isSetIn;
         array_id = w->meta.array_id;
+        LogDebugQD("Warp: Placed warp found: " + QString::number(array_id));
     }
 
     if(placed)
     {
+        LogDebugQD("Warp: Go to location: " + QString::number(w->ix) + "x" + QString::number(w->iy));
         edit->goTo(w->ix, w->iy, true, QPoint(0, 0), true);
         //deselect all and select placed one
-        foreach(QGraphicsItem *i, edit->scene->selectedItems())
-            i->setSelected(false);
-        foreach(QGraphicsItem *item, edit->scene->items())
+        LogDebugQD("Warp: Clear scene selection");
+        edit->scene->clearSelection();
+        for(QGraphicsItem *item : edit->scene->items())
         {
             if(item->data(ITEM_TYPE).toString() == "Door_enter")
             {
                 if(item->data(ITEM_ARRAY_ID).toUInt() == array_id)
                 {
+                    LogDebugQD("Warp: Select the warp entry");
                     item->setSelected(true);
                     break;
                 }
             }
         }
 
+        LogDebugQD("Warp: found a placed warp entrance");
         return;
     }
 
@@ -460,30 +466,36 @@ void LvlWarpBox::on_WarpSetExit_clicked()
     unsigned int array_id = 0;
     unsigned int warpId = getWarpId();
 
+    LogDebugQD("Warp: Trying to find a warp " + QString::number(warpId));
     auto *w = findWarp(edit->LvlData, warpId);
     if(w)
     {
         placed = w->isSetOut;
         array_id = w->meta.array_id;
+        LogDebugQD("Warp: Placed warp found: " + QString::number(array_id));
     }
 
     if(placed)
     {
+        LogDebugQD("Warp: Go to location: " + QString::number(w->ox) + "x" + QString::number(w->oy));
         edit->goTo(w->ox, w->oy, true, QPoint(0, 0), true);
         //deselect all and select placed one
-        foreach(QGraphicsItem *i, edit->scene->selectedItems())
-            i->setSelected(false);
-        foreach(QGraphicsItem *item, edit->scene->items())
+        LogDebugQD("Warp: Clear scene selection");
+        edit->scene->clearSelection();
+        for(QGraphicsItem *item : edit->scene->items())
         {
             if(item->data(ITEM_TYPE).toString() == "Door_exit")
             {
                 if(item->data(ITEM_ARRAY_ID).toUInt() == array_id)
                 {
+                    LogDebugQD("Warp: Select the warp entry");
                     item->setSelected(true);
                     break;
                 }
             }
         }
+
+        LogDebugQD("Warp: found a placed warp exit");
         return;
     }
 
