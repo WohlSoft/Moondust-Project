@@ -5314,65 +5314,65 @@ Fysieke omgevingszones:	%6
         <translation>Muziekbestand:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="165"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="168"/>
         <source>Error in the file %1:
 %2</source>
         <translation>Fout in het bestand %1:
 %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="229"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="230"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="232"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="233"/>
         <source>[No image]</source>
         <translation>[Geen afbeelding]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="231"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="232"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="234"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="235"/>
         <source>[Silence]</source>
         <translation>[Stilte]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="527"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="667"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="530"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="670"/>
         <source>Please, save file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="527"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="530"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation>Gelieve het bestand eerst op te slaan, zodat u uw eigen achtergondsconfiguaratie bestanden kan wijzigen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="535"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="538"/>
         <source>Choose a background first</source>
         <translation>Kies eerst een achtergrond</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="536"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="539"/>
         <source>Please, choose the background image first.</source>
         <translation>Gelieve eerst een achtergrondsafbeelding te kiezen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="563"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="566"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Naam dat in het programma zal verschijnen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="567"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="570"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Achtergrond vulkleur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="572"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="575"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Voeg hier lagen toe, bijvoorbeeld:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="667"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="670"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>U moet eerst het bestand opslaan voordat u uw eigen muziekbestanden kan selecteren.</translation>
     </message>
@@ -5651,26 +5651,26 @@ Elk portaal is deel van een paar en vereist een ingang.</translation>
         <translation>Ingang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="120"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="125"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="126"/>
         <source>Down</source>
         <translation>Onder</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="119"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="120"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="118"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="119"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="125"/>
         <source>Up</source>
         <translation>Boven</translation>
     </message>
@@ -5779,12 +5779,12 @@ Deze status is definieerd door het actieve configuratiepakket.</translation>
         <translation>Huidig portaal verwijderen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="967"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="979"/>
         <source>World map files not found</source>
         <translation>Wereldkaart bestanden niet gevonden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="968"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="980"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -5793,34 +5793,34 @@ Gelieve een wereldkaart bestand te plaatsen of the maken in hetzelfde map as het
 Bestandspad: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="981"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="993"/>
         <source>Select world map file</source>
         <translation>Selecteer een wereldkaart bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="982"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="994"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Meer dan één wereldkaartbestand gevonden.
 Selecteer de wereldkaart die u wilt gebruiken:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="999"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1011"/>
         <source>File open error</source>
         <translation>Fout bij openen van het bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1000"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1012"/>
         <source>Can&apos;t open the file!</source>
         <translation>Kan het niveau bestand niet openen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1183"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1195"/>
         <source>Please save the file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1184"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1196"/>
         <source>Please save the file before selecting levels.</source>
         <translation>Gelieve het bestand op te slaan alvorens niveaus te selecteren.</translation>
     </message>
@@ -8932,6 +8932,8 @@ Het maximum aantal muziekdozen is %2.</translation>
     </message>
     <message>
         <location filename="../main_window/translator.cpp" line="136"/>
+        <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
+        <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
         <translation>LTR</translation>
     </message>
