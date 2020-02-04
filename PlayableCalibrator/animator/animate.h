@@ -37,7 +37,7 @@ class Animate : public QDialog
 public:
     explicit Animate(QWidget *parent = 0);
     ~Animate();
-    AnimationScene *AniScene;
+    AnimationScene *m_aniScene;
 
     QString aniStyle;
     int aniDir;

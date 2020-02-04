@@ -899,113 +899,98 @@ Supported formats:
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="30"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 секций
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 секций
 Максимальное число секций - %2.
 Все настройки и границы секций с номером старше 21 будут утеряны.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="39"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 блоков
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 блоков
 Максимальное число блоков -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="46"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 фоновых объектов
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 фоновых объектов
 Максимальное число фоновых объектов -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="53"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 неигровых персонажей
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 неигровых персонажей
 Максимальное число неигровых персонажей -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="60"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 проходов
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 проходов
 Максимальное число проходов -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="67"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Водяных зон
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Водяных зон
 Максимальное число водяных зон -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="74"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Слоёв
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Слоёв
 Максимальное число слоёв -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="81"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Событий
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Событий
 Максимальное число событий -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="88"/>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation>Во время сохранения уровня в формат SMBX64 произошли неполадки:
+        <translation type="vanished">Во время сохранения уровня в формат SMBX64 произошли неполадки:
 
 %1Пожалуйста, удалите лишние элементы (или настройки) или сохрание уровень в формат LVLX.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="102"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Плиток
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Плиток
 Максимальное число плиток -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="109"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 декораций
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 декораций
 Максимальное число декораций -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="116"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 путей
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 путей
 Максимальное число путей -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="123"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Уровней
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Уровней
 Максимальное число уровней -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="131"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 Музыкальных шкатулок
+        <translation type="vanished">Стандарт SMBX64 не позволяет сохранить %1 Музыкальных шкатулок
 Максимальное число музыкальных шкатулок -  %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="138"/>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation>Во время сохранения карты мира в формат SMBX64 произошли неполадки:
+        <translation type="vanished">Во время сохранения карты мира в формат SMBX64 произошли неполадки:
 
 %1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
     </message>

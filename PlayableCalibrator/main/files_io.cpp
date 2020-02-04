@@ -27,20 +27,20 @@ void CalibrationMain::OpenFile(QString fileName)
 {
     QString imgFileM;
     QFileInfo ourFile(fileName);
-    currentFile = fileName;
+    g_currentFile = fileName;
 
-    LastOpenDir = ourFile.absoluteDir().path() + "/";
+    g_lastOpenDir = ourFile.absoluteDir().path() + "/";
 
     QString errString;
-    if(!Graphics::loadMaskedImage(LastOpenDir, ourFile.fileName(), imgFileM, x_imageSprite, &errString))
+    if(!Graphics::loadMaskedImage(g_lastOpenDir, ourFile.fileName(), imgFileM, m_xImageSprite, &errString))
     {
-        x_imageSprite = QPixmap();
+        m_xImageSprite = QPixmap();
         QMessageBox::warning(this, "Image Loading error",
                              QString("Failed to load image file %1!\nError string: %2")
                              .arg(fileName)
                              .arg(errString),
                              QMessageBox::Ok);
-        currentFile = "";
+        g_currentFile = "";
         return;
     }
 
@@ -72,15 +72,15 @@ void CalibrationMain::on_MakeTemplateB_clicked()
     for(int i=0; i<10; i++)
         for(int j=0; j<10; j++)
         {
-            if(framesX[i][j].used)
+            if(g_framesX[i][j].used)
             {
-                pa.drawRect(framesX[i][j].offsetX + 100*i, framesX[i][j].offsetY + 100 * j,
-                            frameWidth-1, (framesX[i][j].isDuck?frameHeightDuck:frameHeight)-1);
+                pa.drawRect(g_framesX[i][j].offsetX + 100*i, g_framesX[i][j].offsetY + 100 * j,
+                            g_frameWidth-1, (g_framesX[i][j].isDuck?g_frameHeightDuck:g_frameHeight)-1);
             }
         }
     pa.end();
 
-    QFileInfo ourFile(currentFile);
+    QFileInfo ourFile(g_currentFile);
     QString targetFilePng =  ourFile.absoluteDir().absolutePath() + "/" + ourFile.baseName()+"_hitboxes.png";
     targetFilePng = QFileDialog::getSaveFileName(this, tr("Save hitbox map as image"), targetFilePng, "PNG Image (*.png)");
     if(targetFilePng.isEmpty()) return;

@@ -232,7 +232,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>This is an image calibrator. When you change offset values, you will physically move the frame on the image. Physical collision box will be statical.</string>
+         <string>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

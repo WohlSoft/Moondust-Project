@@ -271,10 +271,10 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
       </size>
      </property>
      <property name="toolTip">
-      <string>Useful for tests or for cration from scratch</string>
+      <string>Useful for tests or sprites creation from the scratch</string>
      </property>
      <property name="text">
-      <string>Save hitbox map as image...</string>
+      <string>Export a map of hitboxes as image...</string>
      </property>
     </widget>
    </item>
@@ -335,7 +335,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
       <string>Interactive selection of frame</string>
      </property>
      <property name="text">
-      <string>Select frame on matrix</string>
+      <string>Select frame on a sprite</string>
      </property>
     </widget>
    </item>
@@ -415,7 +415,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>Nornal height of player's collision box (hitbox)</string>
+      <string>Normal height of player's collision box (hitbox)</string>
      </property>
      <property name="maximum">
       <number>100</number>
@@ -539,7 +539,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
          <string>Copy this frame into internal clipboard</string>
         </property>
         <property name="text">
-         <string>copy</string>
+         <string>Copy</string>
         </property>
        </widget>
       </item>

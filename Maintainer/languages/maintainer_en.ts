@@ -899,113 +899,98 @@ Supported formats:
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="30"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 section
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="39"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 blocks
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="46"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Background Objects
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="53"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="60"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Warps
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="67"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="74"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Layers
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="81"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Events
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="88"/>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation>A some issues are found on preparing to save SMBX64 Level file format:
+        <translation type="vanished">A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="102"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Tiles
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="109"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Sceneries
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="116"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Paths
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="123"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Levels
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="131"/>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
+        <translation type="vanished">SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</translation>
     </message>
     <message>
-        <location filename="../../_common/data_functions/smbx64_validation_messages.cpp" line="138"/>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation>A some issues are found on preparing to save SMBX64 World map file format:
+        <translation type="vanished">A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</translation>
     </message>

@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    if(!w.wasCanceled)
+    if(!w.m_wasCanceled)
         w.show();
     else
     {

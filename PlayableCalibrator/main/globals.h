@@ -33,20 +33,20 @@ public:
     Globals();
 };
 
-extern QList<QVector<frameOpts > > imgOffsets; //!< Image offsets
-extern QList<QVector<frameOpts > > framesX;    //!< Collision boxes settings
-extern int frameWidth;
-extern int frameHeight;
-extern int frameHeightDuck;
-extern int frameGrabOffsetX;
-extern int frameGrabOffsetY;
-extern bool frameOverTopGrab;
-extern FrameSets AniFrames;                    //!< Animation settings
+extern QList<QVector<frameOpts > > g_imgOffsets; //!< Image offsets
+extern QList<QVector<frameOpts > > g_framesX;    //!< Collision boxes settings
+extern int g_frameWidth;
+extern int g_frameHeight;
+extern int g_frameHeightDuck;
+extern int g_frameGrabOffsetX;
+extern int g_frameGrabOffsetY;
+extern bool g_frameOverTopGrab;
+extern FrameSets g_aniFrames;                    //!< Animation settings
 
-extern frameOpts buffer;
+extern frameOpts g_buffer;
 
-extern QString LastOpenDir;
-extern QString currentFile;
-extern int CurFrame_X, CurFrame_Y;
+extern QString g_lastOpenDir;
+extern QString g_currentFile;
+extern int g_curFrameX, g_CurFrameY;
 
 #endif // GLOBALS_H

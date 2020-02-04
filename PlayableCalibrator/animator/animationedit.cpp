@@ -27,7 +27,7 @@ AnimationEdit::AnimationEdit(FrameSets &frmConfs, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AnimationEdit)
 {
-    SrcFrames = framesX;
+    SrcFrames = g_framesX;
     frameList = frmConfs;
     currentFrame = 0;
     direction = 1;

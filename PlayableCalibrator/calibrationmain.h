@@ -53,23 +53,28 @@ class CalibrationMain : public QWidget
     Q_OBJECT
 
 public:
-    explicit CalibrationMain(QWidget *parent = 0);
+    explicit CalibrationMain(QWidget *parent = nullptr);
     ~CalibrationMain();
-    QGraphicsScene * Scene;
-    FrameSets AnimationFrames;
+
+    void translateSaveMenu();
+
+    //! Scene for drawing of playable character preview
+    QGraphicsScene *m_scene;
+
+    FrameSets m_animationFrames;
     void getSpriteAniData(QSettings &set, QString name);
     void setSpriteAniData(QSettings &set);
 
-    QString currentConfig;
+    QString m_currentConfig;
     void loadConfig(QString fileName);
     void saveConfig(QString fileName, bool customPath=false);
     void OpenFile(QString fileName);
 
     void createDirs();
 
-    bool wasCanceled;
+    bool m_wasCanceled = false;
 
-    QPixmap x_imageSprite;
+    QPixmap m_xImageSprite;
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -111,7 +116,6 @@ private slots:
     void on_PasteButton_clicked();
 
     bool on_OpenSprite_clicked();
-    void on_SaveConfigButton_clicked();
 
     void on_applyToAll_clicked();
 
@@ -123,25 +127,28 @@ private slots:
 
 
 private:
-    int frmX;
-    int frmY;
+    int m_frmX = 0;
+    int m_frmY = 0;
 
-    bool lockControls;
+    bool m_lockControls = false;
 
     QPoint m_FramePos;
-    QGraphicsPixmapItem currentImageItem;
-    QPixmap             currentPixmap;
-    QGraphicsRectItem FrameBox_gray;
-    QGraphicsRectItem CollisionBox_green;
+    QGraphicsPixmapItem m_currentImageItem;
+    QPixmap             m_currentPixmap;
+    QGraphicsRectItem m_frameBox_gray;
+    QGraphicsRectItem m_hitBox_green;
 
-    QGraphicsLineItem grabLineX;
-    QGraphicsLineItem grabLineY;
+    QGraphicsLineItem m_grabLineX;
+    QGraphicsLineItem m_grabLineY;
 
     Ui::CalibrationMain *ui;
-    QString titleCache;
+    QString     m_titleCache;
 
-    QMenu      m_langMenu;
-    Translator m_translator;
+    QMenu       m_saveMenu;
+    QAction    *m_saveMenuQuickSave = nullptr;
+    QAction    *m_saveMenuSaveAs = nullptr;
+    QMenu       m_langMenu;
+    Translator  m_translator;
 };
 
 
