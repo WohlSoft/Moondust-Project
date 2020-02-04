@@ -120,6 +120,9 @@ qt_en.qm
 /_paths.bat
 /_paths.sh
 
+#A list of files for lupdate to run
+_lupdate_temp_list.tmp
+
 #Notepad++ Backup files
 *.bak
 
