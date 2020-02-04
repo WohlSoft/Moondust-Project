@@ -79,7 +79,7 @@ void AppPathManager::initAppPath(const char *argv0)
 
     QApplication::setOrganizationName(V_COMPANY);
     QApplication::setOrganizationDomain(V_PGE_URL);
-    QApplication::setApplicationName("PGE Editor");
+    QApplication::setApplicationName("PGE Maintainer");
 
     if(isPortable())
         return;
