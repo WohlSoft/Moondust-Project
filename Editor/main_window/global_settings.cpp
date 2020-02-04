@@ -47,7 +47,7 @@ SETTINGS_ScreenGrabSettings GlobalSettings::screenGrab;
 SETTINGS_Extra GlobalSettings::extra;
 
 bool GlobalSettings::autoPlayMusic  = false;
-int  GlobalSettings::musicVolume    = 64;
+int  GlobalSettings::musicVolume    = 54;
 bool GlobalSettings::recentMusicPlayingState = false;
 
 bool GlobalSettings::MidMouse_allowDuplicate    = true;
