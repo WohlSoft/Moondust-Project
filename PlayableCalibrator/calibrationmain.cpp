@@ -25,6 +25,8 @@
 #include "calibrationmain.h"
 #include <ui_calibrationmain.h>
 
+#include "main/app_path.h"
+
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
 #include "animator/animate.h"
@@ -58,6 +60,15 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     currentFile = "";
 
     ui->setupUi(this);
+
+    QObject::connect(&m_translator, &Translator::languageSwitched,
+                     this, &CalibrationMain::languageSwitched);
+    ui->language->setMenu(&m_langMenu);
+    m_translator.setSettings(&m_langMenu,
+                             "maintainer",
+                             AppPathManager::languagesDir(),
+                             AppPathManager::settingsFile());
+    m_translator.initTranslator();
 
     Graphics::init();
 
@@ -145,6 +156,11 @@ void CalibrationMain::closeEvent(QCloseEvent *event)
     opts.endGroup();
 
     event->accept();
+}
+
+void CalibrationMain::languageSwitched()
+{
+    ui->retranslateUi(this);
 }
 
 

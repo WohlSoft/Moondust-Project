@@ -365,14 +365,14 @@ do
             echo ""
             echo "Running translation refreshing...";
 
-            printLine "Editor" "\E[0;42;37m" "\E[0;34m"
-            # ${QT_PATH}/lupdate -locations none -no-ui-lines Editor/pge_editor.pro
+            LANGS_LIST="bg bs de en es fr he-il id it ja nl nb-no pl pt-br pt-pt ru sv sr uk zh"
 
+            printLine "Editor" "\E[0;42;37m" "\E[0;34m"
             cd Editor
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
             find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
-            for lang in bg bs de en es fr "he-il" "id" it ja "nl" "nb-no" pl "pt-br" "pt-pt" ru sv sr uk zh; do
+            for lang in ${LANGS_LIST}; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/editor_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp
@@ -380,26 +380,35 @@ do
             cd ..
 
             printLine "Maintainer" "\E[0;42;37m" "\E[0;34m"
-            # ${QT_PATH}/lupdate -locations none -no-ui-lines Maintainer/pge_maintainer.pro
-
             cd Maintainer
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
             find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
-            for lang in bg bs de en es fr "he-il" "id" it ja "nl" "nb-no" pl "pt-br" "pt-pt" ru sv sr uk zh; do
+            for lang in ${LANGS_LIST}; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/maintainer_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp
 
             cd ..
 
-            printLine "Engine" "\E[0;42;37m" "\E[0;34m"
-            # ${QT_PATH}/lupdate -locations none Engine/pge_engine.pro
+            printLine "PlayableCalibrator" "\E[0;42;37m" "\E[0;34m"
+            cd PlayableCalibrator
 
+            find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
+            find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
+            for lang in ${LANGS_LIST}; do
+                ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/calibrator_$lang.ts -I .
+            done
+            rm _lupdate_temp_list.tmp
+
+            cd ..
+
+
+            printLine "Engine" "\E[0;42;37m" "\E[0;34m"
             cd Engine
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
-            for lang in de bs en es fr "he-il" it ja "nl" "nb-no" pl "pt-br" "pt-pt" ru sv sr zh; do
+            for lang in ${LANGS_LIST}; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/engine_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp

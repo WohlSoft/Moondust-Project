@@ -21,10 +21,14 @@
 #ifndef CALIBRATIONMAIN_H
 #define CALIBRATIONMAIN_H
 
-#include <QWidget>
+#include <QMainWindow>
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QtWidgets>
+#include <QMenu>
+
+#include <translator-qt/translator.h>
+
 #include "animator/aniFrames.h"
 
 struct frameOpts
@@ -71,6 +75,8 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
+    void languageSwitched();
+
     void on_AboutButton_clicked();
     void on_Matrix_clicked();
     void on_AnimatorButton_clicked();
@@ -133,6 +139,9 @@ private:
 
     Ui::CalibrationMain *ui;
     QString titleCache;
+
+    QMenu      m_langMenu;
+    Translator m_translator;
 };
 
 

@@ -18,6 +18,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../_common/ # translator-qt
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
@@ -32,11 +33,30 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
+include(../_common/translator-qt/translator.cmake)
+
 pge_cxx_standard(14)
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5LinguistTools REQUIRED)
+
+# =============== Translations ===============
+set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
+set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
+
+file(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
+
+set_source_files_properties(${PGE_LANG_SRC_FILES} PROPERTIES OUTPUT_LOCATION ${PGE_LANG_OUTPUT_DIR})
+set(PGE_LANG_BIN_FILES)
+qt5_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
+add_custom_target(calibrator_translations DEPENDS ${PGE_LANG_BIN_FILES})
+
+if(NOT APPLE AND NOT EMSCRIPTEN)
+    install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
+endif()
+# ===========================================
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
@@ -62,6 +82,7 @@ endif()
 set(PGE_CALIBRATOR_SRCS)
 
 list(APPEND PGE_CALIBRATOR_SRCS
+    ${PGETRANSLATOR_SRCS}
     main.cpp
     calibrationmain.cpp
     frame_matrix/matrix.cpp
@@ -85,6 +106,7 @@ if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
     list(APPEND PGE_CALIBRATOR_SRCS
         _resources/calibrator.icns
+        ${PGE_LANG_BIN_FILES}
     )
 endif()
 
@@ -132,6 +154,7 @@ add_dependencies(pge_calibrator
     FreeImage_Local
     libpng_Local
     FREETYPE_Local
+    calibrator_translations
 )
 
 set(PGE_CALIBRATOR_LINK_LIBS)
@@ -182,13 +205,14 @@ if(APPLE)
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/calibrator.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_calibrator"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-calibrator"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "2.1.1"
-        MACOSX_BUNDLE_LONG_VERSION_STRING "2.1.1"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${CALIBRATOR_VERSION_STRING}"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "${CALIBRATOR_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "calibrator.icns"
         CPACK_BUNDLE_NAME "PGE Player Calibrator"
         MACOSX_BUNDLE_INFO_STRING "Calibrator of playable character hitbox preferences and animations for PGE Project"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/calibrator.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
 
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     list(APPEND PGE_CALIBRATOR_LINK_LIBS ${COREFOUNDATION_LIBRARY})

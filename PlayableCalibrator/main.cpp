@@ -37,19 +37,19 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    AppPathManager::initAppPath();
+    AppPathManager::initAppPath(argv[0]);
 
-    foreach(QString arg, a.arguments())
+    for(const QString &arg : a.arguments())
     {
-        if(arg=="--install")
+        if(arg == "--install")
         {
             AppPathManager::install();
-            AppPathManager::initAppPath();
+            AppPathManager::initAppPath(argv[0]);
 
             QApplication::quit();
             QApplication::exit();
             return 0;
-        } else if(arg=="--version") {
+        } else if(arg == "--version") {
             std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
             QApplication::quit();
             QApplication::exit();
