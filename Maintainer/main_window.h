@@ -2,10 +2,9 @@
 #define MAIN_WINDOW_H
 
 #include <QDialog>
-#include <QTranslator>
 #include <QMenu>
 
-#include "translator.h"
+#include <translator-qt/translator.h>
 
 namespace Ui
 {

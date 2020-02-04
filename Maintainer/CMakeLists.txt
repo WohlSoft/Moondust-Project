@@ -33,6 +33,8 @@ include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
 
+include(../_common/translator-qt/translator.cmake)
+
 pge_cxx_standard(14)
 
 find_package(Qt5Core REQUIRED)
@@ -83,9 +85,9 @@ endif()
 set(PGE_MAINTAINER_SRCS)
 
 list(APPEND PGE_MAINTAINER_SRCS
+    ${PGETRANSLATOR_SRCS}
     main.cpp
     main_window.cpp
-    translator.cpp
     Music/audiocvt_sox_gui.cpp
     common_features/app_path.cpp
     files/episode_box.cpp
