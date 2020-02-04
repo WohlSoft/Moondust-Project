@@ -3,6 +3,7 @@
 #define LVL_SCTC_PROPS_H
 
 #include <QDockWidget>
+#include <QMutex>
 #include "mwdock_base.h"
 
 class MainWindow;
@@ -65,6 +66,7 @@ private:
     void updateExtraSettingsWidget();
     void onExtraSettingsChanged();
 
+    QMutex m_mutex;
     JsonSettingsWidget *m_extraSettings = nullptr;
 
     Ui::LvlSectionProps *ui;

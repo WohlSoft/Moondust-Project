@@ -27,6 +27,7 @@
 
 #include <QDesktopServices>
 #include <QTextStream>
+#include <QMutexLocker>
 
 #include "lvl_sctc_props.h"
 #include "ui_lvl_sctc_props.h"
@@ -133,6 +134,8 @@ void LvlSectionProps::updateExtraSettingsWidget()
 
     if((mw()->activeChildWindow() == MainWindow::WND_Level) && (edit = mw()->activeLvlEditWin()))
     {
+        QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
+
         CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
         uLVL.setDefaultDir(defaultDir);
 
