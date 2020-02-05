@@ -303,14 +303,23 @@ void CalibrationMain::on_AboutButton_clicked()
 // Copy current sizes and offsets to ALL frames
 void CalibrationMain::on_applyToAll_clicked()
 {
-    g_buffer.H = ui->Height->value();
-    g_buffer.W = ui->Width->value();
+    int reply = QMessageBox::question(this,
+                                      tr("Warning"),
+                                      tr("This action will copy settings of current hitbox to all other frames. "
+                                         "Settings of all other frames will be overriden with settings of a current frame. "
+                                         "Do you want to continue?"),
+                                      QMessageBox::Yes|QMessageBox::No);
+    if(reply != QMessageBox::Yes)
+        return;
+
+    g_buffer.H = static_cast<unsigned>(ui->Height->value());
+    g_buffer.W = static_cast<unsigned>(ui->Width->value());
     g_buffer.offsetX = ui->OffsetX->value();
     g_buffer.offsetY = ui->OffsetY->value();
+
     for(int i = 0; i < 10; i++)
         for(int j = 0; j < 10; j++)
             g_framesX[i][j] = g_buffer;
-
 }
 
 //Set using this frame on template
