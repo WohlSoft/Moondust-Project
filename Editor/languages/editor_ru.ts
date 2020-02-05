@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation>Дочерние окна</translation>
+        <translation>Отдельные дочернии окна (классический стиль)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
@@ -404,7 +404,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation>Подсчёт звёзд...</translation>
+        <translation>Подсчёт звёзд…</translation>
     </message>
 </context>
 <context>
@@ -613,7 +613,7 @@ You also can double-click an item to scroll to its bookmarked position.</source>
     </message>
     <message>
         <source>Go To...</source>
-        <translation>Перейти к...</translation>
+        <translation>Перейти к…</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
@@ -6948,19 +6948,19 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>Открыть папку текущего файла</translation>
+        <translation>Открыть папку эпизода</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Открыть папку, которая содержит текущий файл</translation>
+        <translation>Открыть папку эпизода, который содержит текущий файл</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>Открыть папку польз. данных</translation>
+        <translation>Открыть папку уровня</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Открыть пользовательскую папку: папку, чьё имя совпадает с базовым именем текущего файла.</translation>
+        <translation>Открыть папку данных уровня.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
@@ -12202,7 +12202,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Type:</source>
-        <translation>Тип:</translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <source>[empty]</source>
