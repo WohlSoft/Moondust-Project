@@ -369,41 +369,6 @@ void CalibrationMain::on_AnimatorButton_clicked()
     this->raise();
 }
 
-void CalibrationMain::on_editSizes_clicked()
-{
-    QMessageBox::StandardButton reply;
-    reply = QMessageBox::question(this, tr("Warning"),
-                                  tr("There are physical settings for a sprite, "
-                                     "this need only for creation of new character sprite\n"
-                                     "If you want to use this sprite in vanilla SMBX, please, don't edit these settings.\n"
-                                     "Do you want to continue?"),
-                                  QMessageBox::Yes | QMessageBox::No);
-    if(reply == QMessageBox::Yes)
-    {
-
-        ui->Height->setEnabled(true);
-        ui->Height_duck->setEnabled(true);
-        ui->Width->setEnabled(true);
-        ui->grabOffsetX->setEnabled(true);
-        ui->grabOffsetY->setEnabled(true);
-
-        ui->EnableFrame->setEnabled(true);
-        ui->isDuckFrame->setEnabled(true);
-        ui->isRightDirect->setEnabled(true);
-        ui->showGrabItem->setEnabled(true);
-
-        ui->grabType->setEnabled(true);
-
-        ui->OffsetX->setEnabled(true);
-        ui->OffsetY->setEnabled(true);
-
-        ui->CopyButton->setEnabled(true);
-        ui->PasteButton->setEnabled(true);
-        ui->applyToAll->setEnabled(true);
-        ui->editSizes->setVisible(false);
-    }
-}
-
 
 void CalibrationMain::on_calibrateImage_clicked()
 {

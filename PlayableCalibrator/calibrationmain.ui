@@ -30,7 +30,7 @@
    <item row="20" column="1" colspan="2">
     <widget class="QSpinBox" name="OffsetY">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Vertical offset of hitbox relative to top side of frame</string>
@@ -46,7 +46,7 @@
    <item row="15" column="1" colspan="2">
     <widget class="QSpinBox" name="grabOffsetY">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Offset relative to middle of player's height</string>
@@ -68,7 +68,7 @@
    <item row="12" column="1" colspan="2">
     <widget class="QSpinBox" name="Height_duck">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Duck height of player's collision box (hitbox)</string>
@@ -84,7 +84,7 @@
    <item row="16" column="1" colspan="2">
     <widget class="QGroupBox" name="grabType">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="title">
       <string>Grab type</string>
@@ -123,7 +123,7 @@
    <item row="22" column="1" colspan="2">
     <widget class="QCheckBox" name="isRightDirect">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</string>
@@ -176,7 +176,7 @@
    <item row="21" column="1" colspan="2">
     <widget class="QCheckBox" name="isDuckFrame">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Apply duck height to this frame</string>
@@ -238,7 +238,7 @@
    <item row="14" column="1" colspan="2">
     <widget class="QSpinBox" name="grabOffsetX">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Offset relative to player's back (don't forget to set left or right direction to define source side)</string>
@@ -298,27 +298,6 @@
     <widget class="QLabel" name="label_6">
      <property name="text">
       <string>Frame Y</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="label_8">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>23</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Hitbox calibration:</string>
      </property>
     </widget>
    </item>
@@ -391,7 +370,7 @@
    <item row="23" column="1" colspan="2">
     <widget class="QCheckBox" name="showGrabItem">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Enable displaying of grabbed item corner</string>
@@ -411,7 +390,7 @@
    <item row="11" column="1" colspan="2">
     <widget class="QSpinBox" name="Height">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Normal height of player's collision box (hitbox)</string>
@@ -427,7 +406,7 @@
    <item row="10" column="1" colspan="2">
     <widget class="QSpinBox" name="Width">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Width of player's collision box (hitbox)</string>
@@ -443,7 +422,7 @@
    <item row="19" column="1" colspan="2">
     <widget class="QSpinBox" name="OffsetX">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="toolTip">
       <string>Horisontal offset of hitbox relative to left side of frame</string>
@@ -473,19 +452,6 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1" colspan="2">
-    <widget class="QPushButton" name="editSizes">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>23</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Edit</string>
-     </property>
-    </widget>
-   </item>
    <item row="27" column="0" rowspan="2" colspan="3">
     <widget class="QFrame" name="frame">
      <property name="frameShape">
@@ -510,7 +476,7 @@
       <item row="0" column="0">
        <widget class="QPushButton" name="applyToAll">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="minimumSize">
          <size>
@@ -526,7 +492,7 @@
       <item row="0" column="1">
        <widget class="QPushButton" name="CopyButton">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="minimumSize">
          <size>
@@ -545,7 +511,7 @@
       <item row="0" column="2">
        <widget class="QPushButton" name="PasteButton">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="minimumSize">
          <size>
@@ -614,6 +580,27 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="3">
+    <widget class="QLabel" name="label_8">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Hitbox setup:</string>
+     </property>
     </widget>
    </item>
   </layout>

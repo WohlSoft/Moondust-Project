@@ -88,8 +88,6 @@ private slots:
     void on_calibrateImage_clicked();
     void on_MakeTemplateB_clicked();
 
-    void on_editSizes_clicked();
-
     void on_EnableFrame_clicked(bool checked);
 
     void on_FrameX_valueChanged(int);
@@ -123,8 +121,6 @@ private slots:
     void updateControls();
     void initScene();
     void updateScene();
-
-
 
 private:
     int m_frmX = 0;
