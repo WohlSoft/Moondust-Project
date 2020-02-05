@@ -309,6 +309,8 @@ void LvlItemProperties::openPropertiesFor(int Type,
                                      bool dontResetProps,
                                      bool dontShowToolbox)
 {
+    QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
+
     mw()->LayerListsSync();
     mw()->EventListsSync();
 
@@ -868,8 +870,6 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
         (mw()->activeChildWindow() == MainWindow::WND_Level) &&
         (edit = mw()->activeLvlEditWin()))
     {
-        QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
-
         CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
 
         uLVL.setDefaultDir(defaultLocalDir);
