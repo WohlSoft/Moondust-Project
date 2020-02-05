@@ -118,12 +118,12 @@
         <translation>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="360"/>
+        <location filename="../calibrationmain.ui" line="339"/>
         <source>Width</source>
         <translation>Width</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="433"/>
+        <location filename="../calibrationmain.ui" line="412"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
         <translation>Width of player&apos;s collision box (hitbox)</translation>
     </message>
@@ -158,49 +158,54 @@
         <translation>Export a map of hitboxes as image...</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="337"/>
+        <location filename="../calibrationmain.ui" line="316"/>
         <source>Select frame on a sprite</source>
         <translation>Select frame on a sprite</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="380"/>
+        <location filename="../calibrationmain.ui" line="359"/>
         <source>Grab offset X</source>
         <translation>Grab offset X</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="387"/>
+        <location filename="../calibrationmain.ui" line="366"/>
         <source>Global:</source>
         <translation>Global:</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="417"/>
+        <location filename="../calibrationmain.ui" line="396"/>
         <source>Normal height of player&apos;s collision box (hitbox)</source>
         <translation>Normal height of player&apos;s collision box (hitbox)</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="468"/>
+        <location filename="../calibrationmain.ui" line="447"/>
         <source>Save config</source>
         <translation>Save config</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="541"/>
+        <location filename="../calibrationmain.ui" line="507"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="589"/>
+        <location filename="../calibrationmain.ui" line="555"/>
         <source>About</source>
         <translation>About</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="602"/>
+        <location filename="../calibrationmain.ui" line="568"/>
         <source>Calibrating frames relative to exists physics (useful for old SMBX where you can&apos;t edit physics)</source>
         <translation>Calibrating frames relative to exists physics (useful for old SMBX where you can&apos;t edit physics)</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="612"/>
+        <location filename="../calibrationmain.ui" line="578"/>
         <source>Language</source>
         <translation>Language</translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.ui" line="602"/>
+        <source>Hitbox setup:</source>
+        <translation>Hitbox setup:</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="155"/>
@@ -237,27 +242,26 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Calibrating frames relative to exists physics (useful for old SMBX where you can&apos;t edit physics)</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="605"/>
+        <location filename="../calibrationmain.ui" line="571"/>
         <source>Image frames calibration</source>
         <translation>Image frames calibration</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="334"/>
+        <location filename="../calibrationmain.ui" line="313"/>
         <source>Interactive selection of frame</source>
         <translation>Interactive selection of frame</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="485"/>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation type="vanished">Edit</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="397"/>
+        <location filename="../calibrationmain.ui" line="376"/>
         <source>Enable displaying of grabbed item corner</source>
         <translation>Enable displaying of grabbed item corner</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="400"/>
+        <location filename="../calibrationmain.ui" line="379"/>
         <source>Show carried item</source>
         <translation>Show carried item</translation>
     </message>
@@ -282,7 +286,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Vertical offset of hitbox relative to top side of frame</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="449"/>
+        <location filename="../calibrationmain.ui" line="428"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
         <translation>Horisontal offset of hitbox relative to left side of frame</translation>
     </message>
@@ -292,7 +296,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Frame X</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="407"/>
+        <location filename="../calibrationmain.ui" line="386"/>
         <source>Offset Y</source>
         <translation>Offset Y</translation>
     </message>
@@ -307,17 +311,16 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Offset relative to middle of player&apos;s height</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="538"/>
+        <location filename="../calibrationmain.ui" line="504"/>
         <source>Copy this frame into internal clipboard</source>
         <translation>Copy this frame into internal clipboard</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="321"/>
         <source>Hitbox calibration:</source>
-        <translation>Hitbox calibration:</translation>
+        <translation type="vanished">Hitbox calibration:</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="522"/>
+        <location filename="../calibrationmain.ui" line="488"/>
         <source>Apply to all</source>
         <translation>Apply to all</translation>
     </message>
@@ -327,22 +330,22 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Duck height of player&apos;s collision box (hitbox)</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="557"/>
+        <location filename="../calibrationmain.ui" line="523"/>
         <source>Paste from internal clipboard</source>
         <translation>Paste from internal clipboard</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="560"/>
+        <location filename="../calibrationmain.ui" line="526"/>
         <source>Paste</source>
         <translation>Paste</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="573"/>
+        <location filename="../calibrationmain.ui" line="539"/>
         <source>Edit animations set</source>
         <translation>Edit animations set</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="576"/>
+        <location filename="../calibrationmain.ui" line="542"/>
         <source>Animator</source>
         <translation>Animator</translation>
     </message>
@@ -422,16 +425,20 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>All Files</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="375"/>
+        <location filename="../calibrationmain.cpp" line="307"/>
         <source>Warning</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="376"/>
+        <location filename="../calibrationmain.cpp" line="308"/>
+        <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
+        <translation>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</translation>
+    </message>
+    <message>
         <source>There are physical settings for a sprite, this need only for creation of new character sprite
 If you want to use this sprite in vanilla SMBX, please, don&apos;t edit these settings.
 Do you want to continue?</source>
-        <translation>There are physical settings for a sprite, this need only for creation of new character sprite
+        <translation type="vanished">There are physical settings for a sprite, this need only for creation of new character sprite
 If you want to use this sprite in vanilla SMBX, please, don&apos;t edit these settings.
 Do you want to continue?</translation>
     </message>

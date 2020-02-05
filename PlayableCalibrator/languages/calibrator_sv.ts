@@ -118,12 +118,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="360"/>
+        <location filename="../calibrationmain.ui" line="339"/>
         <source>Width</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="433"/>
+        <location filename="../calibrationmain.ui" line="412"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -158,48 +158,53 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="337"/>
+        <location filename="../calibrationmain.ui" line="316"/>
         <source>Select frame on a sprite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="380"/>
+        <location filename="../calibrationmain.ui" line="359"/>
         <source>Grab offset X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="387"/>
+        <location filename="../calibrationmain.ui" line="366"/>
         <source>Global:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="417"/>
+        <location filename="../calibrationmain.ui" line="396"/>
         <source>Normal height of player&apos;s collision box (hitbox)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="468"/>
+        <location filename="../calibrationmain.ui" line="447"/>
         <source>Save config</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="541"/>
+        <location filename="../calibrationmain.ui" line="507"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="589"/>
+        <location filename="../calibrationmain.ui" line="555"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="602"/>
+        <location filename="../calibrationmain.ui" line="568"/>
         <source>Calibrating frames relative to exists physics (useful for old SMBX where you can&apos;t edit physics)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="612"/>
+        <location filename="../calibrationmain.ui" line="578"/>
         <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.ui" line="602"/>
+        <source>Hitbox setup:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -228,27 +233,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="605"/>
+        <location filename="../calibrationmain.ui" line="571"/>
         <source>Image frames calibration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="334"/>
+        <location filename="../calibrationmain.ui" line="313"/>
         <source>Interactive selection of frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="485"/>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibrationmain.ui" line="397"/>
+        <location filename="../calibrationmain.ui" line="376"/>
         <source>Enable displaying of grabbed item corner</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="400"/>
+        <location filename="../calibrationmain.ui" line="379"/>
         <source>Show carried item</source>
         <translation type="unfinished"></translation>
     </message>
@@ -273,7 +273,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="449"/>
+        <location filename="../calibrationmain.ui" line="428"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
         <translation type="unfinished"></translation>
     </message>
@@ -283,7 +283,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="407"/>
+        <location filename="../calibrationmain.ui" line="386"/>
         <source>Offset Y</source>
         <translation type="unfinished"></translation>
     </message>
@@ -298,17 +298,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="538"/>
+        <location filename="../calibrationmain.ui" line="504"/>
         <source>Copy this frame into internal clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="321"/>
-        <source>Hitbox calibration:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibrationmain.ui" line="522"/>
+        <location filename="../calibrationmain.ui" line="488"/>
         <source>Apply to all</source>
         <translation type="unfinished"></translation>
     </message>
@@ -318,22 +313,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="557"/>
+        <location filename="../calibrationmain.ui" line="523"/>
         <source>Paste from internal clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="560"/>
+        <location filename="../calibrationmain.ui" line="526"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="573"/>
+        <location filename="../calibrationmain.ui" line="539"/>
         <source>Edit animations set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="576"/>
+        <location filename="../calibrationmain.ui" line="542"/>
         <source>Animator</source>
         <translation type="unfinished"></translation>
     </message>
@@ -413,15 +408,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="375"/>
+        <location filename="../calibrationmain.cpp" line="307"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="376"/>
-        <source>There are physical settings for a sprite, this need only for creation of new character sprite
-If you want to use this sprite in vanilla SMBX, please, don&apos;t edit these settings.
-Do you want to continue?</source>
+        <location filename="../calibrationmain.cpp" line="308"/>
+        <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

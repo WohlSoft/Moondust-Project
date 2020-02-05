@@ -118,12 +118,12 @@
         <translation>Смещение относительно спины персонажа (нужно помнить о том, что нужно указать лево или право, чтобы определить исходную сторону)</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="360"/>
+        <location filename="../calibrationmain.ui" line="339"/>
         <source>Width</source>
         <translation>Ширина</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="433"/>
+        <location filename="../calibrationmain.ui" line="412"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
         <translation>Ширина коллизионного блока (хитбокса) персонажа</translation>
     </message>
@@ -158,49 +158,54 @@
         <translation>Экспортировать карту хитбоксов...</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="337"/>
+        <location filename="../calibrationmain.ui" line="316"/>
         <source>Select frame on a sprite</source>
         <translation>Выбрать кадр на спрайте</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="380"/>
+        <location filename="../calibrationmain.ui" line="359"/>
         <source>Grab offset X</source>
         <translation>Смещение захвата X</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="387"/>
+        <location filename="../calibrationmain.ui" line="366"/>
         <source>Global:</source>
         <translation>Глобальные опции:</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="417"/>
+        <location filename="../calibrationmain.ui" line="396"/>
         <source>Normal height of player&apos;s collision box (hitbox)</source>
         <translation>Обычная высота колизионного блока (хитбокса) стоящего персонажа</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="468"/>
+        <location filename="../calibrationmain.ui" line="447"/>
         <source>Save config</source>
         <translation>Сохранить конфиг</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="541"/>
+        <location filename="../calibrationmain.ui" line="507"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="589"/>
+        <location filename="../calibrationmain.ui" line="555"/>
         <source>About</source>
         <translation>О программе</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="602"/>
+        <location filename="../calibrationmain.ui" line="568"/>
         <source>Calibrating frames relative to exists physics (useful for old SMBX where you can&apos;t edit physics)</source>
         <translation>Калибровать кадры относительно существующих физических настроек (полезно для старого SMBX, где невозможно изменить физику)</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="612"/>
+        <location filename="../calibrationmain.ui" line="578"/>
         <source>Language</source>
         <translation>Язык</translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.ui" line="602"/>
+        <source>Hitbox setup:</source>
+        <translation>Настройки хитбокса:</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="155"/>
@@ -237,27 +242,26 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Калибровать кадры относительно существующих физических настроек (полезно для старого SMBX, где невозможно изменить физику)</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="605"/>
+        <location filename="../calibrationmain.ui" line="571"/>
         <source>Image frames calibration</source>
         <translation>Калибровка кадров на картинке</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="334"/>
+        <location filename="../calibrationmain.ui" line="313"/>
         <source>Interactive selection of frame</source>
         <translation>Интерактивный выбор кадра</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="485"/>
         <source>Edit</source>
-        <translation>Изменить</translation>
+        <translation type="vanished">Изменить</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="397"/>
+        <location filename="../calibrationmain.ui" line="376"/>
         <source>Enable displaying of grabbed item corner</source>
         <translation>Включить отображение угла захваченного предмета</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="400"/>
+        <location filename="../calibrationmain.ui" line="379"/>
         <source>Show carried item</source>
         <translation>Показать носимый объект</translation>
     </message>
@@ -282,7 +286,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Вертикальное смещение хитбокса, относительно верхней стороны кадра</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="449"/>
+        <location filename="../calibrationmain.ui" line="428"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
         <translation>Горизонтальное смещение хитбокса, относительно левой стороны кадра</translation>
     </message>
@@ -292,7 +296,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Кадр X</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="407"/>
+        <location filename="../calibrationmain.ui" line="386"/>
         <source>Offset Y</source>
         <translation>Смещение Y</translation>
     </message>
@@ -307,17 +311,16 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Смещение, относительно средней точки на высоте персонажа</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="538"/>
+        <location filename="../calibrationmain.ui" line="504"/>
         <source>Copy this frame into internal clipboard</source>
         <translation>Скопировать настройки кадра во внутренний буфер обмена</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="321"/>
         <source>Hitbox calibration:</source>
-        <translation>Калибровка хитбокса:</translation>
+        <translation type="vanished">Калибровка хитбокса:</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="522"/>
+        <location filename="../calibrationmain.ui" line="488"/>
         <source>Apply to all</source>
         <translation>Применить ко всем</translation>
     </message>
@@ -327,22 +330,22 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Высота колизионного блока (хитбокса) присевшего вниз персонажа</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="557"/>
+        <location filename="../calibrationmain.ui" line="523"/>
         <source>Paste from internal clipboard</source>
         <translation>Вставить из внутреннего буфера обмена</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="560"/>
+        <location filename="../calibrationmain.ui" line="526"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="573"/>
+        <location filename="../calibrationmain.ui" line="539"/>
         <source>Edit animations set</source>
         <translation>Изменить набор анимаций</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.ui" line="576"/>
+        <location filename="../calibrationmain.ui" line="542"/>
         <source>Animator</source>
         <translation>Аниматор</translation>
     </message>
@@ -422,16 +425,20 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Все файлы</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="375"/>
+        <location filename="../calibrationmain.cpp" line="307"/>
         <source>Warning</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="376"/>
+        <location filename="../calibrationmain.cpp" line="308"/>
+        <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
+        <translation>Это действие скопирует настройки хитбокса текущего кадра на все остальные. Настройки всех остальных кадров будут потеряны. Продолжить?</translation>
+    </message>
+    <message>
         <source>There are physical settings for a sprite, this need only for creation of new character sprite
 If you want to use this sprite in vanilla SMBX, please, don&apos;t edit these settings.
 Do you want to continue?</source>
-        <translation>Это - физические настройки спрайта. Они нужны для создания новых спрайтов персонажей.
+        <translation type="vanished">Это - физические настройки спрайта. Они нужны для создания новых спрайтов персонажей.
 Если вы хотите использовать спрайт в старом &quot;ванильном&quot; SMBX, пожалуйста, не меняйте эти настройки.
 Продолжить?</translation>
     </message>
