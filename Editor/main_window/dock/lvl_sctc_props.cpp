@@ -156,7 +156,8 @@ void LvlSectionProps::updateExtraSettingsWidget()
         ui->extraSettings->setMinimumHeight(0);
         ui->extraSettings->setStyleSheet("");
         if(m_extraSettings.get())
-            m_extraSettings.reset();
+            ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+        m_extraSettings.reset();
 
         QByteArray rawLayout = layoutFile.readAll();
         m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
