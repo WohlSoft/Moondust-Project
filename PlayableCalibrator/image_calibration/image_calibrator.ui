@@ -248,7 +248,7 @@
    <item row="3" column="0" colspan="2">
     <widget class="QPushButton" name="Matrix">
      <property name="text">
-      <string>Select frame on matrix</string>
+      <string>Select frame on a sprite</string>
      </property>
     </widget>
    </item>

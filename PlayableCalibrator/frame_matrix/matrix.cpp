@@ -46,6 +46,8 @@ Matrix::Matrix(QWidget *parent) :
     image.setPos(0.0, 0.0);
     MatrixS->addItem(&image);
     FrameConfig = g_framesX;
+    qDebug() << "Building a scene: " << ui->SpriteMatrix->width() << ui->SpriteMatrix->height();
+
     //Set data to matrix:
     // Set Y = 0
     ui->EnFrame_0_0->setChecked(g_framesX[0][0].used);

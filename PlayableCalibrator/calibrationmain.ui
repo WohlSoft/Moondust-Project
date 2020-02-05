@@ -126,8 +126,7 @@
       <bool>false</bool>
      </property>
      <property name="toolTip">
-      <string>If this flag enabled, grabbed item will be offseted relative to left side of hitbox.
-Else grabbed item will be offseted relative to right side of hitbix</string>
+      <string>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</string>
      </property>
      <property name="text">
       <string>Right direction</string>
@@ -600,7 +599,7 @@ Else grabbed item will be offseted relative to right side of hitbix</string>
          </size>
         </property>
         <property name="toolTip">
-         <string>Calibrating frames relative to exists physics (useful for SMBX where you can't edit physics)</string>
+         <string>Calibrating frames relative to exists physics (useful for old SMBX where you can't edit physics)</string>
         </property>
         <property name="text">
          <string>Image frames calibration</string>
