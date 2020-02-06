@@ -5255,7 +5255,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation>Izquierda</translation>
+        <translation type="unfinished">Izquierda</translation>
     </message>
     <message>
         <source>Right</source>
@@ -5270,7 +5270,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation>Abajo</translation>
+        <translation type="unfinished">Abajo</translation>
     </message>
     <message>
         <source>Up-Left</source>
