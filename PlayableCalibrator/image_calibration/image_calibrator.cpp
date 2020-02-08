@@ -31,7 +31,6 @@ ImageCalibrator::~ImageCalibrator()
 bool ImageCalibrator::init(QString imgPath)
 {
     QString imgFileM;
-    QString imgOrig;
     QFileInfo ourFile(imgPath);
     QString imgBaseName = ourFile.fileName();
     {
@@ -40,24 +39,20 @@ bool ImageCalibrator::init(QString imgPath)
     }
     QString dirPath = ourFile.absoluteDir().path() + "/";
 
-    imgOrig = dirPath + imgBaseName + "_orig.png";
-    bool createOrig = false;
+    m_backupPath = dirPath + imgBaseName + "_orig.png";
 
-    if(!QFile::exists(imgOrig))
-        createOrig = true;
-
-    if(createOrig)
+    if(!QFile::exists(m_backupPath))
     {
         if(!Graphics::loadMaskedImage(dirPath, ourFile.fileName(), imgFileM, m_sprite))
             return false;
-        // Generate a backup image
-        m_sprite.save(imgOrig, "PNG");
     }
     else
-        m_sprite = QPixmap(imgOrig); // load original sprite instead current
+        m_sprite = QPixmap(m_backupPath); // load an original sprite instead of current
 
     if(m_sprite.isNull())
         return false;
+
+    m_spriteOrig = m_sprite;
 
     m_targetPath = imgPath;
     m_pngPath =     dirPath + imgBaseName + ".png";
@@ -189,8 +184,15 @@ void ImageCalibrator::on_Reset_clicked()
     updateScene();
 }
 
+void ImageCalibrator::makeBackup()
+{
+    if(!QFile::exists(m_backupPath))
+        m_spriteOrig.save(m_backupPath, "PNG");
+}
+
 void ImageCalibrator::on_WritePNG_GIF_clicked()
 {
+    makeBackup();
     QPixmap target = generateTarget();
     target.save(m_pngPath, "PNG");
 
@@ -204,6 +206,7 @@ void ImageCalibrator::on_WritePNG_GIF_clicked()
 
 void ImageCalibrator::on_WritePNG_clicked()
 {
+    makeBackup();
     QPixmap target = generateTarget();
     target.save(m_pngPath, "PNG");
     saveCalibrates();
@@ -214,6 +217,7 @@ void ImageCalibrator::on_WritePNG_clicked()
 
 void ImageCalibrator::on_WriteGIF_clicked()
 {
+    makeBackup();
     QImage target = generateTarget().toImage();
     Graphics::toMaskedGif(target, m_gifPath);
     saveCalibrates();
