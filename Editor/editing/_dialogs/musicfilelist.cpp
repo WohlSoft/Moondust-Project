@@ -17,7 +17,6 @@
  */
 
 #include "musicfilelist.h"
-#include <ui_musicfilelist.h>
 
 MusicFileList::MusicFileList(QString searchDirectory, QString currentFile, QWidget *parent, bool sfxMode) :
     FileListBrowser(searchDirectory, currentFile, parent),
