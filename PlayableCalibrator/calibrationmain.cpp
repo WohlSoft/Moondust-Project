@@ -284,9 +284,10 @@ bool CalibrationMain::on_OpenSprite_clicked()
 {
     QString fileName_DATA = QFileDialog::getOpenFileName(this,
                             tr("Open sprite file"), (g_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : g_lastOpenDir),
-                            tr("SMBX playble sprite", "Type of image file to open") + " (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;" +
+                            tr("GIF and PNG images", "Type of image file to open") + " (*.png *.gif);;" +
                             tr("GIF images", "Type of image file to open") + " (*.gif);;" +
                             tr("PNG images", "Type of image file to open") + " (*.png);;" +
+                            tr("SMBX playble sprite", "Type of image file to open") + " (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;" +
                             tr("All Files", "Type of image file to open") + " (*.*)");
 
     if(fileName_DATA == nullptr)
