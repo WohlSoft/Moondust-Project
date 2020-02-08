@@ -67,7 +67,7 @@ public:
 
     QString m_currentConfig;
     void loadConfig(QString fileName);
-    void saveConfig(QString fileName, bool customPath=false);
+    bool saveConfig(QString fileName, bool customPath=false);
     void OpenFile(QString fileName);
 
     void createDirs();

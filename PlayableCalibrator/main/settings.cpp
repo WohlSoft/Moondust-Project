@@ -55,47 +55,61 @@ void CalibrationMain::loadConfig(QString fileName)
 
     conf.beginGroup("common");
     {
-        g_frameWidth = conf.value("width", "-1").toInt();
-        g_frameHeight = conf.value("height", "-1").toInt();
-        g_frameHeightDuck = conf.value("height-duck", "-1").toInt();
-        g_frameGrabOffsetX = conf.value("grab-offset-x", "0").toInt();
-        g_frameGrabOffsetY = conf.value("grab-offset-y", "0").toInt();
-        g_frameOverTopGrab = conf.value("over-top-grab", "false").toBool();
+        g_frameWidth = conf.value("width", -1).toInt();
+        g_frameHeight = conf.value("height", -1).toInt();
+        g_frameHeightDuck = conf.value("height-duck", -1).toInt();
+        g_frameGrabOffsetX = conf.value("grab-offset-x", 0).toInt();
+        g_frameGrabOffsetY = conf.value("grab-offset-y", 0).toInt();
+        g_frameOverTopGrab = conf.value("over-top-grab", false).toBool();
     }
     conf.endGroup();
-    int i, j;
+    int i, j, usedCount = 0;
 
     for(i = 0; i < 10; i++)
     {
         for(j = 0; j < 10; j++)
         {
-            conf.beginGroup("frame-" + QString::number(i) + "-" + QString::number(j));
-            g_framesX[i][j].H = conf.value("height", "100").toUInt();
-            g_framesX[i][j].W = conf.value("width", "100").toUInt();
-            g_framesX[i][j].offsetX = conf.value("offsetX", "0").toInt();
-            g_framesX[i][j].offsetY = conf.value("offsetY", "0").toInt();
-            g_framesX[i][j].used = conf.value("used", "false").toBool();
-            g_framesX[i][j].isDuck = conf.value("duck", "false").toBool();
-            g_framesX[i][j].isRightDir = conf.value("isRightDir", "false").toBool();
-            g_framesX[i][j].showGrabItem = conf.value("showGrabItem", "false").toBool();
+            QString q = "frame-" + QString::number(i) + "-" + QString::number(j);
+            auto &frame = g_framesX[i][j];
+            conf.beginGroup(q);
+            {
+                frame.used = !conf.allKeys().isEmpty();
+                frame.H = conf.value("height", 100).toUInt();
+                frame.W = conf.value("width", 100).toUInt();
+                frame.offsetX = conf.value("offsetX", 0).toInt();
+                frame.offsetY = conf.value("offsetY", 0).toInt();
+                frame.isDuck = conf.value("duck", false).toBool();
+                frame.isRightDir = conf.value("isRightDir", false).toBool();
+                frame.showGrabItem = conf.value("showGrabItem", false).toBool();
+            }
             conf.endGroup();
+
+            if(frame.used)
+                usedCount++;
 
             if(g_frameWidth < 0)
             {
-                if(g_framesX[i][j].used)
-                    g_frameWidth = g_framesX[i][j].W;
+                if(frame.used)
+                    g_frameWidth = static_cast<int>(frame.W);
             }
             if(g_frameHeight < 0)
             {
-                if(g_framesX[i][j].used)
-                    g_frameHeight = g_framesX[i][j].H;
+                if(frame.used)
+                    g_frameHeight = static_cast<int>(frame.H);
             }
             if(g_frameHeightDuck < 0)
             {
-                if(g_framesX[i][j].used)
-                    g_frameHeightDuck = g_framesX[i][j].H;
+                if(frame.used)
+                    g_frameHeightDuck = static_cast<int>(frame.H);
             }
         }
+    }
+
+    if(usedCount == 0) // Default config when nothing was before this
+    {
+        g_frameWidth = 25;
+        g_frameHeight = 50;
+        g_frameHeightDuck = 25;
     }
 
     g_aniFrames.set.clear();
@@ -198,7 +212,7 @@ void CalibrationMain::setSpriteAniData(QSettings &set)
 }
 
 
-void CalibrationMain::saveConfig(QString fileName, bool customPath)
+bool CalibrationMain::saveConfig(QString fileName, bool customPath)
 {
     createDirs();
     QFileInfo ourFile(fileName);
@@ -208,7 +222,8 @@ void CalibrationMain::saveConfig(QString fileName, bool customPath)
     if(customPath)
     {
         ini_sprite = QFileDialog::getSaveFileName(this, "Save calibration settings", ini_sprite, "*.ini");
-        if(ini_sprite.isEmpty()) return;
+        if(ini_sprite.isEmpty())
+            return false;
     }
 
     //ini_sprite = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
@@ -240,7 +255,8 @@ void CalibrationMain::saveConfig(QString fileName, bool customPath)
                 //conf.setValue("width", frameWidth);
                 conf.setValue("offsetX", g_framesX[x][y].offsetX);
                 conf.setValue("offsetY", g_framesX[x][y].offsetY);
-                conf.setValue("used", g_framesX[x][y].used);
+                // Don't write this field anymire, the "usage" logic will use presence of the field
+                // conf.setValue("used", g_framesX[x][y].used);
                 if(g_framesX[x][y].isDuck) conf.setValue("duck", g_framesX[x][y].isDuck);
                 if(g_framesX[x][y].isRightDir) conf.setValue("isRightDir", g_framesX[x][y].isRightDir);
                 if(g_framesX[x][y].showGrabItem) conf.setValue("showGrabItem", g_framesX[x][y].showGrabItem);
@@ -252,4 +268,6 @@ void CalibrationMain::saveConfig(QString fileName, bool customPath)
     setSpriteAniData(conf);
 
     QMessageBox::information(this, tr("Saved"), tr("Configuration saved in file") + "\n" + ini_sprite);
+
+    return true;
 }
