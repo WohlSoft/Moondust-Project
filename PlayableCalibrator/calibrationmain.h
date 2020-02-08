@@ -117,7 +117,7 @@ private slots:
 
     void on_applyToAll_clicked();
 
-
+    bool trySave();
     void updateControls();
     void initScene();
     void enableFrame();
@@ -128,6 +128,7 @@ private:
     int m_frmY = 0;
 
     bool m_lockControls = false;
+    bool m_wasModified = false;
 
     QPoint m_FramePos;
     QGraphicsPixmapItem m_currentImageItem;

@@ -74,11 +74,13 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
         QObject::connect(m_saveMenuQuickSave, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
             saveConfig(g_currentFile);
+            m_wasModified = false;
         });
 
         QObject::connect(m_saveMenuSaveAs, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            saveConfig(g_currentFile, true);
+            if(saveConfig(g_currentFile, true))
+                m_wasModified = false;
         });
     }
 
@@ -174,6 +176,12 @@ void CalibrationMain::closeEvent(QCloseEvent *event)
     }
     opts.endGroup();
 
+    if(!trySave())
+    {
+        event->ignore();
+        return;
+    }
+
     event->accept();
 }
 
@@ -213,7 +221,7 @@ void CalibrationMain::on_FrameY_valueChanged(int)
 void CalibrationMain::on_Height_valueChanged(int arg1)
 {
     if(m_lockControls) return;
-    g_framesX[m_frmX][m_frmY].H = arg1;
+    g_framesX[m_frmX][m_frmY].H = static_cast<unsigned>(arg1);
     g_frameHeight = arg1;
     enableFrame();
     updateScene();
@@ -232,7 +240,7 @@ void CalibrationMain::on_Height_duck_valueChanged(int arg1)
 void CalibrationMain::on_Width_valueChanged(int arg1)
 {
     if(m_lockControls) return;
-    g_framesX[m_frmX][m_frmY].W = arg1;
+    g_framesX[m_frmX][m_frmY].W = static_cast<unsigned>(arg1);
     g_frameWidth = arg1;
     enableFrame();
     updateScene();
@@ -269,6 +277,7 @@ void CalibrationMain::on_PasteButton_clicked()
 
     updateControls();
     updateScene();
+    m_wasModified = true;
 }
 
 void CalibrationMain::on_isDuckFrame_clicked(bool checked)
@@ -282,6 +291,9 @@ void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 
 bool CalibrationMain::on_OpenSprite_clicked()
 {
+    if(!trySave())
+        return false;
+
     QString fileName_DATA = QFileDialog::getOpenFileName(this,
                             tr("Open sprite file"), (g_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : g_lastOpenDir),
                             tr("GIF and PNG images", "Type of image file to open") + " (*.png *.gif);;" +
@@ -294,6 +306,7 @@ bool CalibrationMain::on_OpenSprite_clicked()
         return false;
 
     OpenFile(fileName_DATA);
+    m_wasModified = false;
     return true;
 }
 
@@ -327,6 +340,26 @@ void CalibrationMain::on_applyToAll_clicked()
     for(int i = 0; i < 10; i++)
         for(int j = 0; j < 10; j++)
             g_framesX[i][j] = g_buffer;
+    m_wasModified = true;
+}
+
+bool CalibrationMain::trySave()
+{
+    if(m_wasModified)
+    {
+        int ret = QMessageBox::question(this,
+                        tr("Calibration is not saved!"),
+                        tr("Configuration was modified and not saved. Do you want to save it?"),
+                        QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+        if(ret == QMessageBox::Cancel)
+            return false;
+        else if(ret == QMessageBox::Yes)
+        {
+            if(!saveConfig(g_currentFile, true))
+                return false;
+        }
+    }
+    return true;
 }
 
 //Set using this frame on template
@@ -334,6 +367,7 @@ void CalibrationMain::on_EnableFrame_clicked(bool checked)
 {
     if(ui->EnableFrame->hasFocus())
         g_framesX[m_frmX][m_frmY].used = checked;
+    m_wasModified = true;
 }
 
 void CalibrationMain::on_isRightDirect_clicked(bool checked)
@@ -427,6 +461,7 @@ void CalibrationMain::on_grabOffsetY_valueChanged(int arg1)
 
 void CalibrationMain::enableFrame()
 {
+    m_wasModified = true;
     g_framesX[m_frmX][m_frmY].used = true;
     if(!ui->EnableFrame->isChecked())
         ui->EnableFrame->setChecked(true);
