@@ -16,12 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDir>
-
 #include "levelfilelist.h"
-#include <ui_levelfilelist.h>
-
-#include <QtConcurrent>
 
 LevelFileList::LevelFileList(QString searchDirectory, QString currentFile, QWidget *parent) :
     FileListBrowser(searchDirectory, currentFile, parent)

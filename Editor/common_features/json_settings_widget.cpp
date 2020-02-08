@@ -672,7 +672,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         // Check box
         else if(!control.compare("checkBox", Qt::CaseInsensitive))
         {
-            bool valueDefault = o["value-default"].toBool();
+            bool valueDefault = o["value-default"].toBool(false);
             bool textAtLeft = false;
 
             if(o.keys().contains("text-at-left"))
@@ -708,6 +708,8 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             });
             row++;
         }
+
+        // Color box
         else if(!control.compare("color", Qt::CaseInsensitive))
         {
             QColor valueDefault = QColor(o["value-default"].toString());
