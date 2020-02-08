@@ -308,13 +308,14 @@ void ConfigManager::loadConfigPackList()
         guiset.endGroup();
 
         QPixmap cpSplashImg;
+        QString splashData = cpFullDirPath + "data/";
 
         //Default splash image
         if(splash_logo.isEmpty())
             splash_logo = ":/images/splash_editor.png";
         else
         {
-            splash_logo = data_dir + splash_logo;
+            splash_logo = splashData + splash_logo;
             if(QPixmap(splash_logo).isNull())
                 splash_logo = ":/images/splash_editor.png";
         }

@@ -296,7 +296,8 @@ bool dataconfigs::loadBasics()
 
     if(!splash_logo.isEmpty())
     {
-        splash_logo = data_dir + splash_logo;
+        QString config_data = config_dir + "data/";
+        splash_logo = config_data + splash_logo;
         if(QPixmap(splash_logo).isNull())
         {
             LogWarning(QString("Wrong splash image: %1, using internal default").arg(splash_logo));
@@ -313,7 +314,7 @@ bool dataconfigs::loadBasics()
                 QString img =   guiset.value("image", "").toQString();
                 if(img.isEmpty())
                     goto skip;
-                tempAni.img = QPixmap(data_dir + img);
+                tempAni.img = QPixmap(config_data + img);
                 if(tempAni.img.isNull())
                     goto skip;
                 guiset.read("frames", tempAni.frames, 1);
