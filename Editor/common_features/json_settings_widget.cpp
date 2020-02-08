@@ -1161,8 +1161,10 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             QString text = o["text"].toString();
             QLabel *label = new QLabel(target);
             label->setText(text);
+            label->setToolTip(tooltip);
             label->setWordWrap(true);
             label->setAlignment(Qt::AlignLeft|Qt::AlignTop);
+            label->setOpenExternalLinks(true);
             l->addWidget(label, row, 0, 1, 2);
             row++;
         }
