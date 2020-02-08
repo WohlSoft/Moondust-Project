@@ -448,6 +448,7 @@ static const QHash<QString, bool> loadPropertiesLoayout_requiredTypes =
     {"checkbox", false},
     {"spinbox", true},
     {"lineedit", false},
+    {"itemselect", true}
 };
 
 bool JsonSettingsWidget::entryHasType(const QString &type)
