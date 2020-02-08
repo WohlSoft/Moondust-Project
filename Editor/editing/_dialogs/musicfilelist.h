@@ -27,7 +27,7 @@ class MusicFileList : public FileListBrowser
     Q_OBJECT
 
 public:
-    explicit MusicFileList(QString searchDirectory, QString currentFile = QString(), QWidget *parent = nullptr, bool sfxMode = false);
+    explicit MusicFileList(QString searchDirectory, QString curFile = QString(), QWidget *parent = nullptr, bool sfxMode = false);
     ~MusicFileList();
 
 private:

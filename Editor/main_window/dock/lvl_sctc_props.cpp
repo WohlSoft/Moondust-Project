@@ -28,6 +28,7 @@
 #include <QDesktopServices>
 #include <QTextStream>
 #include <QMutexLocker>
+#include <QListView>
 
 #include "lvl_sctc_props.h"
 #include "ui_lvl_sctc_props.h"

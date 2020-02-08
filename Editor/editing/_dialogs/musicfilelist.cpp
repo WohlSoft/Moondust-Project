@@ -18,32 +18,32 @@
 
 #include "musicfilelist.h"
 
-MusicFileList::MusicFileList(QString searchDirectory, QString currentFile, QWidget *parent, bool sfxMode) :
-    FileListBrowser(searchDirectory, currentFile, parent),
+#include <QIcon>
+
+MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *parent, bool sfxMode) :
+    FileListBrowser(searchDirectory, curFile, parent),
     m_sfxMode(sfxMode)
 {
-    setIcon(QIcon(":/images/playmusic.png"));
-
     QStringList filters;
+
+    setIcon(QIcon(":/images/playmusic.png"));
 
     if(m_sfxMode)
     {
         setWindowTitle(tr("Select SFX file"));
-        setDescription(tr("Please select SFX file to use"));
         filters // MPEG 1 Layer III (LibMAD)
-                                   << "*.mp3"
-                                   // OGG Vorbis, FLAC, amd Opus (LibOGG, LibVorbis, LibFLAC, libOpus)
-                                   << "*.ogg" << "*.flac" << "*.opus"
-                                   // Uncompressed audio data
-                                   << "*.wav" << "*.voc" << "*.aiff"
-                                   // Some chiptunes can be used as SFX
-                                   << "*.spc";
-        setFilters(filters);
+               << "*.mp3"
+               // OGG Vorbis, FLAC, amd Opus (LibOGG, LibVorbis, LibFLAC, libOpus)
+               << "*.ogg" << "*.flac" << "*.opus"
+               // Uncompressed audio data
+               << "*.wav" << "*.voc" << "*.aiff"
+               // Some chiptunes can be used as SFX
+               << "*.spc";
+        setFilters(tr("Supported SFX formats"), filters);
     }
     else
     {
         setWindowTitle(tr("Select Custom music"));
-        setDescription(tr("Please select music file to use as custom"));
         filters // MPEG 1 Layer III (LibMAD)
                 << "*.mp3"
                 // OGG Vorbis, FLAC, amd Opus (LibOGG, LibVorbis, LibFLAC, libOpus)
@@ -61,10 +61,9 @@ MusicFileList::MusicFileList(QString searchDirectory, QString currentFile, QWidg
                 // GAME EMU (Chiptunes)
                 << "*.ay" << "*.gbs" << "*.gym" << "*.hes" << "*.kss" << "*.nsf"
                 << "*.nsfe" << "*.sap" << "*.spc" << "*.vgm" << "*.vgz";
-        setFilters(filters);
+        setFilters(tr("Supported music formats"), filters);
     }
 
-    startListBuilder();
 }
 
 MusicFileList::~MusicFileList()

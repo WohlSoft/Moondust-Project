@@ -1,4 +1,4 @@
-QT       += core gui widgets concurrent
+QT       += core gui widgets
 
 INCLUDEPATH += ../../../Editor
 
@@ -19,12 +19,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     ../../../Editor/common_features/json_settings_widget.cpp \
+    ../../../Editor/editing/_dialogs/file_list_browser.cpp \
     ../../../Editor/editing/_dialogs/levelfilelist.cpp \
     ../../../Editor/editing/_dialogs/musicfilelist.cpp \
     main.cpp
 
 HEADERS += \
     ../../../Editor/common_features/json_settings_widget.h \ \
+    ../../../Editor/editing/_dialogs/file_list_browser.h \
     ../../../Editor/editing/_dialogs/levelfilelist.h \
     ../../../Editor/editing/_dialogs/musicfilelist.h
 
@@ -33,7 +35,3 @@ HEADERS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-FORMS += \
-    ../../../Editor/editing/_dialogs/levelfilelist.ui \
-    ../../../Editor/editing/_dialogs/musicfilelist.ui
