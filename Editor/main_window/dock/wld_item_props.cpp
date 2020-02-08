@@ -416,7 +416,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
     LevelFileList levelList(dirPath, ui->WLD_PROPS_LVLFile->text());
     if(levelList.exec() == QDialog::Accepted)
     {
-        ui->WLD_PROPS_LVLFile->setText(levelList.SelectedFile);
+        ui->WLD_PROPS_LVLFile->setText(levelList.currentFile());
         ui->WLD_PROPS_LVLFile->setModified(true);
         on_WLD_PROPS_LVLFile_editingFinished();
 
@@ -425,7 +425,7 @@ void WLD_ItemProps::on_WLD_PROPS_LVLBrowse_clicked()
         lvlext.setCaseSensitivity(Qt::CaseInsensitive);
 
         //Attempt to read level title:
-        QString FilePath = dirPath + "/" + levelList.SelectedFile;
+        QString FilePath = dirPath + "/" + levelList.currentFile();
         QFile file(FilePath);
 
         if(!file.open(QIODevice::ReadOnly)) return;

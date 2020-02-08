@@ -1201,7 +1201,7 @@ void LvlWarpBox::on_WarpBrowseLevels_clicked()
     LevelFileList levelList(dirPath, ui->WarpLevelFile->text());
     if(levelList.exec() == QDialog::Accepted)
     {
-        ui->WarpLevelFile->setText(levelList.SelectedFile);
+        ui->WarpLevelFile->setText(levelList.currentFile());
         ui->WarpLevelFile->setModified(true);
         on_WarpLevelFile_editingFinished();
     }

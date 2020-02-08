@@ -163,6 +163,8 @@ void LvlSectionProps::updateExtraSettingsWidget()
         m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
         if(m_extraSettings.get())
         {
+            m_extraSettings->setSearchDirectories(edit->LvlData.meta.path, edit->LvlData.meta.filename);
+            m_extraSettings->setConfigPack(&mw()->configs);
             if(!m_extraSettings->loadLayout(section.custom_params.toUtf8(), rawLayout))
             {
                 LogWarning(m_extraSettings->errorString());
@@ -675,7 +677,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
     MusicFileList musicList(dirPath, ui->LVLPropsMusicCustom->text());
     if(musicList.exec() == QDialog::Accepted)
     {
-        ui->LVLPropsMusicCustom->setText(musicList.SelectedFile);
+        ui->LVLPropsMusicCustom->setText(musicList.currentFile());
         ui->LVLPropsMusicCustom->setModified(true);
         on_LVLPropsMusicCustom_editingFinished();
     }

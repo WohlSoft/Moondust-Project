@@ -40,11 +40,17 @@ LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
     m_currentData = &FileData;
     ui->setupUi(this);
     ui->LVLPropLevelTitle->setText(m_currentData->LevelName);
+    m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
     initAdvancedSettings();
 }
 
 LevelProps::~LevelProps()
 {
+    if(m_extraSettings.get())
+        ui->advancedSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+    ui->advancedSettings->layout()->removeItem(m_extraSettingsSpacer.get());
+    m_extraSettings.reset();
+    m_extraSettingsSpacer.reset();
     delete ui;
 }
 
@@ -77,9 +83,11 @@ void LevelProps::initAdvancedSettings()
 
     ui->advancedSettings->setEnabled(!m_currentData->meta.smbx64strict);
 
-    m_extraSettings = new JsonSettingsWidget(ui->advancedSettings);
+    m_extraSettings.reset(new JsonSettingsWidget(ui->advancedSettings));
     if(m_extraSettings)
     {
+        m_extraSettings->setSearchDirectories(m_currentData->meta.path, m_currentData->meta.filename);
+        m_extraSettings->setConfigPack(&m_mw->configs);
         if(!m_extraSettings->loadLayout(m_currentData->custom_params.toUtf8(), rawLayout))
         {
             LogWarning(m_extraSettings->errorString());
@@ -92,7 +100,9 @@ void LevelProps::initAdvancedSettings()
         if(widget)
         {
             ui->advancedSettings->layout()->addWidget(widget);
-            JsonSettingsWidget::connect(m_extraSettings, &JsonSettingsWidget::settingsChanged, this, &LevelProps::onExtraSettingsChanged);
+            if(m_extraSettings->spacerNeeded())
+                ui->advancedSettings->layout()->addItem(m_extraSettingsSpacer.get());
+            JsonSettingsWidget::connect(m_extraSettings.get(), &JsonSettingsWidget::settingsChanged, this, &LevelProps::onExtraSettingsChanged);
             ui->advancedNone->setVisible(false);
         }
     }

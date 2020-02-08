@@ -104,8 +104,7 @@ qt5_wrap_ui(UIS_HDRS
     data_configs/selection_dialog/config_manager.ui
     dev_console/devconsole.ui
     editing/_dialogs/itemselectdialog.ui
-    editing/_dialogs/levelfilelist.ui
-    editing/_dialogs/musicfilelist.ui
+    editing/_dialogs/file_list_browser.ui
     editing/_dialogs/savingnotificationdialog.ui
     editing/_dialogs/user_data_edit.ui
     editing/_dialogs/wld_setpoint.ui
@@ -242,6 +241,7 @@ list(APPEND PGE_EDITOR_SRCS
     editing/_components/history/ihistoryelement.cpp
     editing/_components/history/itemsearcher.cpp
     editing/_dialogs/itemselectdialog.cpp
+    editing/_dialogs/file_list_browser.cpp
     editing/_dialogs/levelfilelist.cpp
     editing/_dialogs/musicfilelist.cpp
     editing/_dialogs/savingnotificationdialog.cpp
@@ -473,7 +473,6 @@ add_library(PGE_QtLibs INTERFACE)
 
 target_link_libraries(PGE_QtLibs INTERFACE
     ${QT_EXTRA_LIBS_PRE}
-    PGE_QPropertyBrowser
     PGE_FileFormatsQt
     ${Qt5Qml_LIBRARIES}
     ${Qt5Concurrent_LIBRARIES}
@@ -554,7 +553,6 @@ add_dependencies(pge_editor
     libpng_Local
     FREETYPE_Local
     PGE_FileFormatsQt
-    QtPropertyBrowser_Local
     editor_translations
 )
 
@@ -567,7 +565,6 @@ list(APPEND PGE_EDITOR_INSTALLS
 
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
-    PGE_QPropertyBrowser
     PGE_QtLibs
     PGE_FreeImage
 )

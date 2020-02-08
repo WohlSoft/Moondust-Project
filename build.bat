@@ -229,7 +229,6 @@ rem ------------------------------------------------------------
 rem !!FIXME!! Implement parsing of submodules list and fill this array automatically
 rem NOTE: Don't use "git submodule foreach" because broken submodule will not shown in it's list!
 set SUBMODULES=_Libs\FreeImage
-set SUBMODULES=%SUBMODULES% _Libs\QtPropertyBrowser
 set SUBMODULES=%SUBMODULES% _Libs\sqlite3
 set SUBMODULES=%SUBMODULES% _Libs\AudioCodecs
 set SUBMODULES=%SUBMODULES% _Libs\SDL_Mixer_X

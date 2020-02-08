@@ -20,41 +20,18 @@
 #ifndef MUSICFILELIST_H
 #define MUSICFILELIST_H
 
-#include <QDialog>
-#include <QListWidgetItem>
-#include <QFuture>
+#include "file_list_browser.h"
 
-namespace Ui {
-class MusicFileList;
-}
-
-class MusicFileList : public QDialog
+class MusicFileList : public FileListBrowser
 {
     Q_OBJECT
 
 public:
-    QString SelectedFile;
-    explicit MusicFileList(QString Folder, QString current="", QWidget *parent = 0);
+    explicit MusicFileList(QString searchDirectory, QString currentFile = QString(), QWidget *parent = nullptr, bool sfxMode = false);
     ~MusicFileList();
-    void buildMusicList();
-    QString parentFolder;
-    QString lastCurrentFile;
-
-signals:
-    void itemAdded(QString item);
-    void digFinished();
-
-private slots:
-    void addItem(QString item);
-    void finalizeDig();
-
-    void on_FileList_itemDoubleClicked(QListWidgetItem *item);
-    void on_buttonBox_accepted();
-    void on_buttonBox_rejected();
 
 private:
-    QFuture<void> fileWalker;
-    Ui::MusicFileList *ui;
+    bool m_sfxMode = false;
 };
 
 #endif // MUSICFILELIST_H

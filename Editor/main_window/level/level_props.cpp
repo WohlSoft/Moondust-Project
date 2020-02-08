@@ -29,26 +29,26 @@
 //Open Level Properties
 void MainWindow::on_actionLevelProp_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() != WND_Level)
+        return;
+
+    LevelEdit * e=activeLvlEditWin();
+    if(!e) return;
+    LevelProps levelProps(e->LvlData, this);
+    levelProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    levelProps.setGeometry(util::alignToScreenCenter(levelProps.size()));
+    if(levelProps.exec() == QDialog::Accepted)
     {
-        LevelEdit * e=activeLvlEditWin();
-        if(!e) return;
-        LevelProps levelProps(e->LvlData, this);
-        levelProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        levelProps.setGeometry(util::alignToScreenCenter(levelProps.size()));
-        if(levelProps.exec() == QDialog::Accepted)
-        {
-            QList<QVariant> lvlsetData;
-            lvlsetData.push_back(e->LvlData.LevelName);
-            lvlsetData.push_back(e->LvlData.custom_params);
-            lvlsetData.push_back(levelProps.m_levelTitle);
-            lvlsetData.push_back(levelProps.m_customParams);
-            e->scene->m_history->addChangeLevelSettings(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
-            e->LvlData.LevelName = levelProps.m_levelTitle;
-            e->LvlData.custom_params = levelProps.m_customParams;
-            e->LvlData.meta.modified = true;
-            e->setWindowTitle( QString(levelProps.m_levelTitle.isEmpty() ? e->userFriendlyCurrentFile() : levelProps.m_levelTitle).replace("&", "&&&") );
-            updateWindowMenu();
-        }
+        QList<QVariant> lvlsetData;
+        lvlsetData.push_back(e->LvlData.LevelName);
+        lvlsetData.push_back(e->LvlData.custom_params);
+        lvlsetData.push_back(levelProps.m_levelTitle);
+        lvlsetData.push_back(levelProps.m_customParams);
+        e->scene->m_history->addChangeLevelSettings(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
+        e->LvlData.LevelName = levelProps.m_levelTitle;
+        e->LvlData.custom_params = levelProps.m_customParams;
+        e->LvlData.meta.modified = true;
+        e->setWindowTitle( QString(levelProps.m_levelTitle.isEmpty() ? e->userFriendlyCurrentFile() : levelProps.m_levelTitle).replace("&", "&&&") );
+        updateWindowMenu();
     }
 }

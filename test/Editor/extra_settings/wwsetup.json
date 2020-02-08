@@ -1,0 +1,15 @@
+{
+	"testNumber": 41,
+	"checkMe" : true,
+	"checkMeNot" : false,
+	"floatTest" : 3.444,
+	"choice" : 4,
+	"alienShit": {
+		"child1": 42,
+		"child2": "a sh3t",
+		"child3" : "hekof"
+	},
+	"someAnother" : {
+	    "kekVision" : 32
+	}
+}

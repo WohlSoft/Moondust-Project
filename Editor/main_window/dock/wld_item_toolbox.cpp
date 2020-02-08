@@ -374,7 +374,7 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
             QString dirPath = edit->WldData.meta.path;
             MusicFileList musicList(dirPath, "");
             if(musicList.exec() == QDialog::Accepted)
-                customMusicFile = musicList.SelectedFile;
+                customMusicFile = musicList.currentFile();
             else
                 return;
         }

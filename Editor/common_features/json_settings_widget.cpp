@@ -8,11 +8,33 @@
 #include <QJsonValue>
 #include <QJsonArray>
 
-#include <QtPropertyBrowser/qtpropertymanager.h>
-#include <QtPropertyBrowser/qtvariantproperty.h>
-#include <QtPropertyBrowser/qtgroupboxpropertybrowser.h>
-#include <QtPropertyBrowser/qtbuttonpropertybrowser.h>
-#include <QtPropertyBrowser/qttreepropertybrowser.h>
+#include <QGroupBox>
+#include <QFrame>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <QPlainTextEdit>
+#include <QColorDialog>
+#include <QFileDialog>
+#include <QDir>
+#include <QPainter>
+#include <QPixmap>
+#include <QColor>
+#include <QLineEdit>
+#include <QCheckBox>
+#include <QComboBox>
+#include <QSpinBox>
+
+#ifndef UNIT_TEST
+#include <editing/_dialogs/itemselectdialog.h>
+#include <common_features/util.h>
+#include <audio/sdl_music_player.h>
+#endif
+
+#include <editing/_dialogs/musicfilelist.h>
+#include <editing/_dialogs/levelfilelist.h>
 
 #ifdef DEBUG_BUILD
 #include <QDebug>
@@ -175,11 +197,18 @@ void JsonSettingsWidget::SetupStack::setValue(const QString &propertyId, QVarian
 
 JsonSettingsWidget::JsonSettingsWidget(QWidget *parent) :
     QObject(parent)
-{}
+{
+    QDir cur(".");
+    m_directoryEpisode = cur.absolutePath();
+    m_directoryData = m_directoryEpisode;
+}
 
 JsonSettingsWidget::JsonSettingsWidget(const QByteArray &layout, QWidget *parent) :
     QObject(parent)
 {
+    QDir cur(".");
+    m_directoryEpisode = cur.absolutePath();
+    m_directoryData = m_directoryEpisode;
     loadLayout(layout);
 }
 
@@ -188,6 +217,21 @@ JsonSettingsWidget::~JsonSettingsWidget()
     if(m_browser)
         delete m_browser;
     m_browser = nullptr;
+}
+
+void JsonSettingsWidget::setSearchDirectories(const QString &episode, const QString &data)
+{
+    m_directoryEpisode = episode;
+    if(!m_directoryEpisode.endsWith('/'))
+        m_directoryEpisode.append('/');
+    m_directoryData = m_directoryEpisode + data;
+    if(!m_directoryData.endsWith('/'))
+        m_directoryData.append('/');
+}
+
+void JsonSettingsWidget::setConfigPack(dataconfigs *config)
+{
+    m_configPack = config;
 }
 
 bool JsonSettingsWidget::loadSettingsFromFile(const QString &path)
@@ -414,13 +458,127 @@ bool JsonSettingsWidget::entryHasType(const QString &type)
     return loadPropertiesLoayout_requiredTypes[l];
 }
 
+static QPixmap brushValuePixmap(const QBrush &b, QSize fieldSizeHint = QSize())
+{
+    int w = 16, h = 16;
+    if(fieldSizeHint.isValid())
+    {
+        w = fieldSizeHint.height();
+        h = w;
+    }
+
+    QImage img(w, h, QImage::Format_ARGB32_Premultiplied);
+    img.fill(0);
+
+    QBrush lg = QBrush(Qt::lightGray);
+    QBrush dg = QBrush(Qt::darkGray);
+    QBrush bl = QBrush(Qt::black);
+    QPen noPen = QPen(Qt::NoPen);
+
+    QPainter painter(&img);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    painter.setPen(noPen);
+    painter.setBrush(dg);
+
+    painter.fillRect(0, 0, img.width(), img.height(), lg);
+    for(int i = 0; i < h / 4; i++)
+    {
+        for(int j = 0; j < w / 4; j++)
+        {
+            painter.drawRect(i * 8, j * 8, 4, 4);
+            painter.drawRect(i * 8 + 4, j * 8 + 4, 4, 4);
+        }
+    }
+
+    painter.fillRect(0, 0, img.width(), img.height(), b);
+
+    painter.setPen(QPen(Qt::black));
+    painter.setBrush(QBrush(Qt::NoBrush));
+    painter.drawRect(0, 0, img.width() - 1, img.height() - 1);
+
+    painter.end();
+    return QPixmap::fromImage(img);
+}
+
+static QString colorHexValueText(const QColor &c, bool alpha = true)
+{
+    if(alpha)
+        return QString("#%1%2%3%4")
+            .arg(c.red(), 2, 16, QChar('0'))
+            .arg(c.green(), 2, 16, QChar('0'))
+            .arg(c.blue(), 2, 16, QChar('0'))
+            .arg(c.alpha(), 2, 16, QChar('0'));
+    else
+        return QString("#%1%2%3")
+            .arg(c.red(), 2, 16, QChar('0'))
+            .arg(c.green(), 2, 16, QChar('0'))
+            .arg(c.blue(), 2, 16, QChar('0'));
+}
+
+static QColor colorFromHexValue(QString color)
+{
+    QColor newRgba;
+
+    if(color.size() < 7)
+        return QColor();
+
+    color.remove(0, 1);
+
+    if(color.size() >= 6)
+    {
+        newRgba.setRed(color.mid(0, 2).toInt(nullptr, 16));
+        newRgba.setGreen(color.mid(2, 2).toInt(nullptr, 16));
+        newRgba.setBlue(color.mid(4, 2).toInt(nullptr, 16));
+    }
+
+    if(color.size() == 8)
+        newRgba.setAlpha(color.mid(6, 2).toInt(nullptr, 16));
+    else
+        newRgba.setAlpha(255);
+
+    return newRgba;
+}
+
+static void setFlagBoxValue(QVector<QCheckBox *> &flagBox, unsigned int value)
+{
+    for(QCheckBox *b : flagBox)
+    {
+        b->setChecked(static_cast<bool>(value & 0x01));
+        value >>= 1;
+    }
+}
+
+static unsigned int getFlagBoxValue(const QVector<QCheckBox *> &flagBox)
+{
+    unsigned int value = 0;
+    for(auto it = flagBox.rbegin(); it != flagBox.rend(); it++)
+    {
+        auto b = *it;
+        value <<= 1;
+        value |= (b->isChecked() ? 1 : 0);
+    }
+    return value;
+}
+
 void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupTree,
                                            const QJsonArray &elements,
-                                           QtVariantPropertyManager *manager,
-                                           QtProperty *target,
+                                           QWidget *target,
                                            QString &err,
                                            QWidget *parent)
 {
+    int row = 0;
+    if(!target->layout())
+    {
+        target->setLayout(new QGridLayout(target));
+    }
+
+    QGridLayout *l = qobject_cast<QGridLayout *>(target->layout());
+    Q_ASSERT(l);
+
+    l->setColumnStretch(0, 0);
+    l->setColumnStretch(1, 1000);
+    l->setSizeConstraint(QLayout::SetMinimumSize);
+
     for(const QJsonValue &ov : elements)
     {
         QJsonObject o = ov.toObject();
@@ -429,7 +587,6 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         QString title = o["title"].toString(name);
         QString control = o["control"].toString();
         QString tooltip = o["tooltip"].toString();
-        QtVariantProperty *item = nullptr;
 
         if(control.isEmpty())
             continue;//invalid
@@ -442,6 +599,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         qDebug() << "property" << setupTree.getPropertyId(name);
 #endif
 
+        // Spin box
         if(!control.compare("spinBox", Qt::CaseInsensitive))
         {
             if(!type.compare("int", Qt::CaseInsensitive))
@@ -450,14 +608,30 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 int valueMin = o["value-min"].toInt(0);
                 int valueMax = o["value-max"].toInt(100);
                 int singleStep = o["single-step"].toInt(1);
-                item = manager->addProperty(QVariant::Int, title);
-                item->setValue(retrieve_property(setupTree, name, valueDefault));
-                item->setToolTip(tooltip);
-                item->setAttribute(QLatin1String("minimum"), valueMin);
-                item->setAttribute(QLatin1String("maximum"), valueMax);
-                item->setAttribute(QLatin1String("singleStep"), singleStep);
-                item->setPropertyId(setupTree.getPropertyId(name));
-                target->addSubProperty(item);
+
+                QLabel *label = new QLabel(target);
+                label->setText(title);
+                label->setToolTip(tooltip);
+                l->addWidget(label, row, 0);
+
+                QSpinBox *it = new QSpinBox(target);
+                it->setToolTip(tooltip);
+                it->setMinimum(valueMin);
+                it->setMaximum(valueMax);
+                it->setSingleStep(singleStep);
+                it->setValue(retrieve_property(setupTree, name, valueDefault).toInt());
+
+                const QString id = setupTree.getPropertyId(name);
+                l->addWidget(it, row, 1);
+                QObject::connect(it, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged), [id, this](int val)
+                {
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed:" << id << val;
+#endif
+                    m_setupStack.setValue(id, val);
+                    emit settingsChanged();
+                });
+                row++;
             }
             else if(!type.compare("double", Qt::CaseInsensitive) || !type.compare("float", Qt::CaseInsensitive))
             {
@@ -466,188 +640,1086 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 double valueMax = o["value-max"].toDouble(100.0);
                 double singleStep = o["single-step"].toDouble(1);
                 int decimals = o["decimals"].toInt(1);
-                item = manager->addProperty(QVariant::Double, title);
-                item->setValue(retrieve_property(setupTree, name, valueDefault));
-                item->setToolTip(tooltip);
-                item->setAttribute(QLatin1String("minimum"), valueMin);
-                item->setAttribute(QLatin1String("maximum"), valueMax);
-                item->setAttribute(QLatin1String("singleStep"), singleStep);
-                item->setAttribute(QLatin1String("decimals"), decimals);
-                item->setPropertyId(setupTree.getPropertyId(name));
-                target->addSubProperty(item);
+
+                QLabel *label = new QLabel(target);
+                label->setText(title);
+                label->setToolTip(tooltip);
+                l->addWidget(label, row, 0);
+
+                QDoubleSpinBox *it = new QDoubleSpinBox(target);
+                it->setToolTip(tooltip);
+                it->setMinimum(valueMin);
+                it->setMaximum(valueMax);
+                it->setSingleStep(singleStep);
+                it->setDecimals(decimals);
+                it->setValue(retrieve_property(setupTree, name, valueDefault).toDouble());
+
+                const QString id = setupTree.getPropertyId(name);
+                l->addWidget(it, row, 1);
+                QObject::connect(it, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, this](double val)
+                {
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed:" << id << val;
+#endif
+                    m_setupStack.setValue(id, val);
+                    emit settingsChanged();
+                });
+                row++;
             }
         }
+
+        // Check box
         else if(!control.compare("checkBox", Qt::CaseInsensitive))
         {
             bool valueDefault = o["value-default"].toBool();
-            bool textVisible = true;
-            if(o.keys().contains("text-visible"))
-                textVisible = o["text-visible"].toBool();
-            item = manager->addProperty(QVariant::Bool, title);
-            item->setValue(retrieve_property(setupTree, name, valueDefault));
-            item->setToolTip(tooltip);
-            item->setAttribute(QLatin1String("textVisible"), textVisible);
-            item->setPropertyId(setupTree.getPropertyId(name));
-            target->addSubProperty(item);
+            bool textAtLeft = false;
+
+            if(o.keys().contains("text-at-left"))
+                textAtLeft = o["text-at-left"].toBool();
+
+            if(textAtLeft)
+            {
+                QLabel *label = new QLabel(target);
+                label->setText(title);
+                label->setToolTip(tooltip);
+                l->addWidget(label, row, 0);
+            }
+
+            QCheckBox *it = new QCheckBox(target);
+            it->setToolTip(tooltip);
+            if(!textAtLeft)
+                it->setText(title);
+            it->setChecked(retrieve_property(setupTree, name, valueDefault).toBool());
+
+            const QString id = setupTree.getPropertyId(name);
+            if(!textAtLeft)
+                l->addWidget(it, row, 0, 1, 2);
+            else
+                l->addWidget(it, row, 1);
+            QObject::connect(it, static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::clicked),
+            [id, this](bool val)
+            {
+#ifdef DEBUG_BUILD
+                qDebug() << "changed:" << id << val;
+#endif
+                m_setupStack.setValue(id, val);
+                emit settingsChanged();
+            });
+            row++;
         }
         else if(!control.compare("color", Qt::CaseInsensitive))
         {
             QColor valueDefault = QColor(o["value-default"].toString());
-            item = manager->addProperty(QVariant::Color, title);
-            item->setValue(retrieve_property(setupTree, name, valueDefault));
-            item->setToolTip(tooltip);
-            item->setPropertyId(setupTree.getPropertyId(name));
-            target->addSubProperty(item);
+            QColor value = colorFromHexValue(retrieve_property(setupTree, name, valueDefault).toString());
+            bool useAlpha = true;
+            if(o.keys().contains("alpha-channel"))
+                useAlpha = o["alpha-channel"].toBool();
+
+            QLabel *label = new QLabel(target);
+            label->setText(title);
+            label->setToolTip(tooltip);
+            l->addWidget(label, row, 0);
+
+            QFrame *colorBox = new QFrame(target);
+            colorBox->setToolTip(tooltip);
+            l->addWidget(colorBox, row, 1);
+            QHBoxLayout *colorBoxL = new QHBoxLayout(colorBox);
+            colorBoxL->setMargin(0);
+            colorBox->setLayout(colorBoxL);
+
+            QLabel *colorPreview = new QLabel(colorBox);
+            colorBoxL->addWidget(colorPreview, 0);
+
+            QLineEdit *colorString = new QLineEdit(colorBox);
+            QString colorStringExpr = useAlpha ? "#[0-9a-fA-F]{6,8}" : "#[0-9a-fA-F]{6}";
+            colorString->setValidator(new QRegExpValidator(QRegExp(colorStringExpr), colorString));
+            colorBoxL->addWidget(colorString, 1000);
+
+            QPushButton *colorChoose = new QPushButton(colorBox);
+            colorChoose->setText("...");
+            colorChoose->setMaximumWidth(24);
+            colorBoxL->addWidget(colorChoose, 0);
+
+            colorPreview->setPixmap(brushValuePixmap(QBrush(value)));
+            colorString->setText(colorHexValueText(value, useAlpha));
+
+            const QString id = setupTree.getPropertyId(name);
+            QObject::connect(colorChoose, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+            [id, target, useAlpha, colorPreview, colorString, this](bool)
+            {
+                QColor oldRgba = colorFromHexValue(colorString->text());
+                QColorDialog::ColorDialogOption useAlphaFlag = (useAlpha ? QColorDialog::ShowAlphaChannel : QColorDialog::ColorDialogOption(0));
+                QColor newRgba = QColorDialog::getColor(oldRgba, target,
+                                                        QString(),
+                                                        useAlphaFlag | QColorDialog::DontUseNativeDialog);
+                if(newRgba.isValid() && newRgba != oldRgba)
+                {
+                    QString val = colorHexValueText(newRgba, useAlpha);
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed:" << id << colorString->text() << val;
+#endif
+                    colorString->setText(val);
+                    colorPreview->setPixmap(brushValuePixmap(QBrush(newRgba)));
+                    m_setupStack.setValue(id, val);
+                    emit settingsChanged();
+                }
+            });
+
+            QObject::connect(colorString, &QLineEdit::editingFinished,
+            [id, colorPreview, colorString, this]()
+            {
+                QString val = colorString->text();
+                QColor newRgba = colorFromHexValue(colorString->text());
+                if(newRgba.isValid())
+                {
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed:" << id << val;
+#endif
+                    colorPreview->setPixmap(brushValuePixmap(QBrush(newRgba)));
+                    m_setupStack.setValue(id, val);
+                    emit settingsChanged();
+                }
+            });
+
+            row++;
         }
+
+        // Line edit box
         else if(!control.compare("lineEdit", Qt::CaseInsensitive))
         {
             int maxLength = o["max-length"].toInt(-1);
             QString valueDefault = o["value-default"].toString();
             QString validator = o["validator"].toString();
-            item = manager->addProperty(QVariant::String, title);
-            item->setValue(retrieve_property(setupTree, name, valueDefault));
-            item->setToolTip(tooltip);
-            item->setAttribute(QLatin1String("maxlength"), maxLength);
+            QString placeholder = o["placeholder"].toString();
+            bool readOnly = false;
+
+            if(o.keys().contains("read-only"))
+                readOnly = o["read-only"].toBool();
+
+            QLabel *label = new QLabel(target);
+            label->setText(title);
+            label->setToolTip(tooltip);
+            l->addWidget(label, row, 0);
+
+            QLineEdit *it = new QLineEdit(target);
+
+            it->setText(retrieve_property(setupTree, name, valueDefault).toString());
+            it->setToolTip(tooltip);
+            it->setPlaceholderText(placeholder);
+            it->setMaxLength(maxLength);
             if(!validator.isEmpty())
-                item->setAttribute(QLatin1String("regExp"), QRegExp(validator));
-            item->setPropertyId(setupTree.getPropertyId(name));
-            target->addSubProperty(item);
+                it->setValidator(new QRegExpValidator(QRegExp(validator), it));
+            it->setReadOnly(readOnly);
+
+            const QString id = setupTree.getPropertyId(name);
+            l->addWidget(it, row, 1);
+            QObject::connect(it, static_cast<void(QLineEdit::*)(const QString &)>(&QLineEdit::textChanged),
+            [id, this](const QString &val)
+            {
+#ifdef DEBUG_BUILD
+                qDebug() << "changed:" << id << val;
+#endif
+                m_setupStack.setValue(id, val);
+                emit settingsChanged();
+            });
+            row++;
         }
+
+        // Line edit box
+        else if(!control.compare("multiLineEdit", Qt::CaseInsensitive))
+        {
+            QString valueDefault = o["value-default"].toString();
+            bool readOnly = false;
+
+            if(o.keys().contains("read-only"))
+                readOnly = o["read-only"].toBool();
+
+            QGroupBox *multiText = new QGroupBox(target);
+            multiText->setTitle(title);
+            multiText->setToolTip(tooltip);
+            l->addWidget(multiText, row, 0, 1, 2);
+            QVBoxLayout *multiTextL = new QVBoxLayout(multiText);
+            multiTextL->setMargin(0);
+            multiText->setLayout(multiTextL);
+
+            QPlainTextEdit *it = new QPlainTextEdit(target);
+
+            it->setPlainText(retrieve_property(setupTree, name, valueDefault).toString());
+            it->setToolTip(tooltip);
+            it->setReadOnly(readOnly);
+            multiTextL->addWidget(it, row);
+
+            const QString id = setupTree.getPropertyId(name);
+            QObject::connect(it, &QPlainTextEdit::textChanged,
+            [id, it, this]()
+            {
+                QString val = it->toPlainText();
+#ifdef DEBUG_BUILD
+                qDebug() << "changed:" << id << val;
+#endif
+                m_setupStack.setValue(id, val);
+                emit settingsChanged();
+            });
+            row++;
+        }
+
+        // Music/Sound/Level/Generic file
+        else if(
+            !control.compare("musicFile", Qt::CaseInsensitive) ||
+            !control.compare("soundFile", Qt::CaseInsensitive) ||
+            !control.compare("levelFile", Qt::CaseInsensitive) ||
+            !control.compare("file", Qt::CaseInsensitive)
+        )
+        {
+            QString valueDefault = o["value-default"].toString();
+            QString placeholder = o["placeholder"].toString();
+            QString dialogTitle = o["dialog-title"].toString();
+            QString dialogDescription = o["dialog-description"].toString();
+
+            QStringList filters;
+            QVariantList filtersList = o["filters"].toArray().toVariantList();
+            for(QVariant &j : filtersList)
+                filters.push_back(j.toString());
+
+            bool isMusic = !control.compare("musicFile", Qt::CaseInsensitive);
+            bool isSFX = !control.compare("soundFile", Qt::CaseInsensitive);
+            bool isLevel = !control.compare("levelFile", Qt::CaseInsensitive);
+            bool isGenericFile = !control.compare("file", Qt::CaseInsensitive);
+
+            bool lookAtEpisode = isLevel;
+
+            if(o.keys().contains("directory"))
+                lookAtEpisode = !o["directory"].toString(isLevel ? "data" : "episode").compare("episode", Qt::CaseInsensitive);
+
+            const QString id = setupTree.getPropertyId(name);
+
+            QLabel *label = new QLabel(target);
+            label->setText(title);
+            label->setToolTip(tooltip);
+            l->addWidget(label, row, 0);
+
+            QFrame *fileBox = new QFrame(target);
+            QHBoxLayout *fileBoxL = new QHBoxLayout(fileBox);
+            fileBoxL->setMargin(0);
+            fileBox->setLayout(fileBoxL);
+            fileBox->setToolTip(tooltip);
+
+            QLineEdit *it = new QLineEdit(fileBox);
+            it->setText(retrieve_property(setupTree, name, valueDefault).toString());
+            it->setToolTip(tooltip);
+            it->setPlaceholderText(placeholder);
+            fileBoxL->addWidget(it, 1000);
+
+            QPushButton *browse = new QPushButton(fileBox);
+            browse->setMaximumWidth(24);
+            browse->setText("...");
+            browse->setToolTip(tr("Browse"));
+            fileBoxL->addWidget(browse, 0);
+
+            if(isMusic || isSFX)
+            {
+                QPushButton *preview = new QPushButton(fileBox);
+                preview->setMaximumWidth(24);
+                preview->setText("▶️");
+                preview->setToolTip(tr("Play"));
+                fileBoxL->addWidget(preview, 0);
+
+                QObject::connect(preview, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+                [id, it, isSFX, lookAtEpisode, this](bool)
+                {
+                    QString root = lookAtEpisode ? m_directoryEpisode : m_directoryData;
+                    if(!root.endsWith('/'))
+                        root.append('/');
+                    QString file = it->text();
+                    QString fileNA = file.split('|').first();
+                    if(!file.isEmpty() && QFile::exists(root + fileNA))
+                    {
+                        qDebug() << "Trying to play music" << root + file;
+#ifndef UNIT_TEST
+                        if(isSFX)
+                            PGE_SfxPlayer::playFile(root + file);
+                        else
+                        {
+                            PGE_MusPlayer::openFile(root + file);
+                            PGE_MusPlayer::play();
+                        }
+#endif
+                    }
+                });
+            }
+
+            l->addWidget(fileBox, row, 1);
+
+            QObject::connect(browse, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+            [id, it, isSFX, isLevel, isGenericFile, target, lookAtEpisode, dialogTitle, dialogDescription, filters, this](bool)
+            {
+                if(isGenericFile)
+                {
+                    FileListBrowser file(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
+                    if(!dialogTitle.isEmpty())
+                        file.setWindowTitle(dialogTitle);
+                    if(!dialogDescription.isEmpty())
+                        file.setDescription(dialogDescription);
+                    if(!filters.isEmpty())
+                        file.setFilters(filters);
+                    file.startListBuilder();
+                    if(file.exec() == QDialog::Accepted)
+                    {
+                        it->setText(file.currentFile());
+                        m_setupStack.setValue(id, file.currentFile());
+                        emit settingsChanged();
+                    }
+                }
+                else if(isLevel)
+                {
+                    LevelFileList levels(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
+                    if(!dialogTitle.isEmpty())
+                        levels.setWindowTitle(dialogTitle);
+                    if(!dialogDescription.isEmpty())
+                        levels.setDescription(dialogDescription);
+                    if(levels.exec() == QDialog::Accepted)
+                    {
+                        it->setText(levels.currentFile());
+                        m_setupStack.setValue(id, levels.currentFile());
+                        emit settingsChanged();
+                    }
+                }
+                else
+                {
+                    MusicFileList muz(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target, isSFX);
+                    if(!dialogTitle.isEmpty())
+                        muz.setWindowTitle(dialogTitle);
+                    if(!dialogDescription.isEmpty())
+                        muz.setDescription(dialogDescription);
+                    if(muz.exec() == QDialog::Accepted)
+                    {
+                        it->setText(muz.currentFile());
+                        m_setupStack.setValue(id, muz.currentFile());
+                        emit settingsChanged();
+                    }
+                }
+            });
+
+            QObject::connect(it, static_cast<void(QLineEdit::*)(const QString &)>(&QLineEdit::textChanged),
+            [id, this](const QString &val)
+            {
+#ifdef DEBUG_BUILD
+                qDebug() << "changed:" << id << val;
+#endif
+                m_setupStack.setValue(id, val);
+                emit settingsChanged();
+            });
+            row++;
+        }
+
+        // Music/Sound/Level file
+        else if(!control.compare("itemSelect", Qt::CaseInsensitive))
+        {
+            int valueDefault = o["value-default"].toInt();
+            int value = retrieve_property(setupTree, name, valueDefault).toInt();
+            const QString id = setupTree.getPropertyId(name);
+            QString type = o["type"].toString("invalid");
+
+            QLabel *label = new QLabel(target);
+            label->setText(title);
+            label->setToolTip(tooltip);
+            l->addWidget(label, row, 0);
+
+            auto updateButton = [type](QPushButton *button, int value)
+            {
+                if(!type.compare("npc", Qt::CaseInsensitive))
+                    button->setText(value ? QString("NPC-%1").arg(value) : tr("[empty]"));
+                else if(!type.compare("block", Qt::CaseInsensitive))
+                    button->setText(value ? QString("BLOCK-%1").arg(value) : tr("[empty]"));
+                else if(!type.compare("bgo", Qt::CaseInsensitive))
+                    button->setText(value ? QString("BGO-%1").arg(value) : tr("[empty]"));
+                else if(!type.compare("tile", Qt::CaseInsensitive) || !type.compare("terrain", Qt::CaseInsensitive))
+                    button->setText(value ? QString("TERRAIN-%1").arg(value) : tr("[empty]"));
+                else if(!type.compare("scenery", Qt::CaseInsensitive))
+                    button->setText(value ? QString("SCENERY-%1").arg(value) : tr("[empty]"));
+                else if(!type.compare("path", Qt::CaseInsensitive))
+                    button->setText(value ? QString("PATH-%1").arg(value) : tr("[empty]"));
+                else if(!type.compare("level", Qt::CaseInsensitive))
+                    button->setText(value ? QString("LEVEL-%1").arg(value) : tr("[empty]"));
+                else
+                    button->setText("---------");
+            };
+
+            QPushButton *it = new QPushButton(target);
+            updateButton(it, value);
+            it->setToolTip(tooltip);
+            it->setDisabled(type == "invalid");
+            l->addWidget(it, row, 1);
+
+            QObject::connect(it, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
+            [id, it, target, type, valueDefault, updateButton, this](bool)
+            {
+#ifndef UNIT_TEST
+                int value = retrieve_property(m_setupStack, id, valueDefault).toInt();
+                if(!type.compare("block", Qt::CaseInsensitive))
+                {
+                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_BLOCK,
+                                                                     0, value, 0, 0, 0, 0, 0, 0, 0,
+                                                                     target, ItemSelectDialog::TAB_BLOCK);
+                    util::DialogToCenter(itemsList, true);
+                    if(itemsList->exec() == QDialog::Accepted)
+                    {
+                        updateButton(it, itemsList->blockID);
+                        m_setupStack.setValue(id, itemsList->blockID);
+                        emit settingsChanged();
+                    }
+                }
+                else if(!type.compare("bgo", Qt::CaseInsensitive))
+                {
+                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_BGO,
+                                                                     0, 0, value, 0, 0, 0, 0, 0, 0,
+                                                                     target, ItemSelectDialog::TAB_BGO);
+                    util::DialogToCenter(itemsList, true);
+                    if(itemsList->exec() == QDialog::Accepted)
+                    {
+                        updateButton(it, itemsList->bgoID);
+                        m_setupStack.setValue(id, itemsList->bgoID);
+                        emit settingsChanged();
+                    }
+                }
+                else if(!type.compare("npc", Qt::CaseInsensitive))
+                {
+                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_NPC,
+                                                                     0, 0, 0, value, 0, 0, 0, 0, 0,
+                                                                     target, ItemSelectDialog::TAB_NPC);
+                    util::DialogToCenter(itemsList, true);
+                    if(itemsList->exec() == QDialog::Accepted)
+                    {
+                        updateButton(it, itemsList->npcID);
+                        m_setupStack.setValue(id, itemsList->npcID);
+                        emit settingsChanged();
+                    }
+                }
+                else if(!type.compare("tile", Qt::CaseInsensitive) || !type.compare("terrain", Qt::CaseInsensitive))
+                {
+                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_TILE,
+                                                                     0, 0, 0, 0, value, 0, 0, 0, 0,
+                                                                     target, ItemSelectDialog::TAB_TILE);
+                    util::DialogToCenter(itemsList, true);
+                    if(itemsList->exec() == QDialog::Accepted)
+                    {
+                        updateButton(it, itemsList->tileID);
+                        m_setupStack.setValue(id, itemsList->tileID);
+                        emit settingsChanged();
+                    }
+                }
+                else if(!type.compare("scenery", Qt::CaseInsensitive))
+                {
+                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_SCENERY,
+                                                                     0, 0, 0, 0, 0, value, 0, 0, 0,
+                                                                     target, ItemSelectDialog::TAB_SCENERY);
+                    util::DialogToCenter(itemsList, true);
+                    if(itemsList->exec() == QDialog::Accepted)
+                    {
+                        updateButton(it, itemsList->sceneryID);
+                        m_setupStack.setValue(id, itemsList->sceneryID);
+                        emit settingsChanged();
+                    }
+                }
+                else if(!type.compare("path", Qt::CaseInsensitive))
+                {
+                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_PATH,
+                                                                     0, 0, 0, 0, 0, 0, value, 0, 0,
+                                                                     target, ItemSelectDialog::TAB_PATH);
+                    util::DialogToCenter(itemsList, true);
+                    if(itemsList->exec() == QDialog::Accepted)
+                    {
+                        updateButton(it, itemsList->pathID);
+                        m_setupStack.setValue(id, itemsList->pathID);
+                        emit settingsChanged();
+                    }
+                }
+                else if(!type.compare("level", Qt::CaseInsensitive))
+                {
+                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_LEVEL,
+                                                                     0, 0, 0, 0, 0, 0, 0, value, 0,
+                                                                     target, ItemSelectDialog::TAB_LEVEL);
+                    util::DialogToCenter(itemsList, true);
+                    if(itemsList->exec() == QDialog::Accepted)
+                    {
+                        updateButton(it, itemsList->levelID);
+                        m_setupStack.setValue(id, itemsList->levelID);
+                        emit settingsChanged();
+                    }
+                }
+#endif
+            });
+            row++;
+        }
+
+        // Description block
+        else if(!control.compare("description", Qt::CaseInsensitive))
+        {
+            QString text = o["text"].toString();
+            QLabel *label = new QLabel(target);
+            label->setText(text);
+            label->setWordWrap(true);
+            label->setAlignment(Qt::AlignLeft|Qt::AlignTop);
+            l->addWidget(label, row, 0, 1, 2);
+            row++;
+        }
+
+        // Combo-box
         else if(!control.compare("comboBox", Qt::CaseInsensitive))
         {
-            item = manager->addProperty(QtVariantPropertyManager::enumTypeId(), title);
             QStringList enumList;
             QVariantList children = o["elements"].toArray().toVariantList();
             for(QVariant &j : children)
                 enumList.push_back(j.toString());
             int valueDefault = o["value-default"].toInt();
-            item->setAttribute(QLatin1String("enumNames"), enumList);
-            item->setValue(retrieve_property(setupTree, name, valueDefault));
-            item->setToolTip(tooltip);
-            item->setPropertyId(setupTree.getPropertyId(name));
-            target->addSubProperty(item);
+
+            QLabel *label = new QLabel(target);
+            label->setText(title);
+            label->setToolTip(tooltip);
+            l->addWidget(label, row, 0);
+
+            QComboBox *it = new QComboBox(target);
+            it->addItems(enumList);
+            it->setCurrentIndex(retrieve_property(setupTree, name, valueDefault).toInt());
+            it->setToolTip(tooltip);
+
+            const QString id = setupTree.getPropertyId(name);
+            l->addWidget(it, row, 1);
+            QObject::connect(it, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            [id, this](int val)
+            {
+#ifdef DEBUG_BUILD
+                qDebug() << "changed:" << id << val;
+#endif
+                m_setupStack.setValue(id, val);
+                emit settingsChanged();
+            });
+            row++;
         }
+
+        // Flag box
         else if(!control.compare("flagBox", Qt::CaseInsensitive))
         {
-            item = manager->addProperty(QtVariantPropertyManager::flagTypeId(), title);
-            QStringList enumList;
             QVariantList children = o["elements"].toArray().toVariantList();
+            QVector<QCheckBox*> values;
+            unsigned int valueDefault = o["value-default"].toVariant().toUInt();
+
+            QGroupBox *sizeBox = new QGroupBox(target);
+            sizeBox->setTitle(title);
+            sizeBox->setToolTip(tooltip);
+            QVBoxLayout *sizeBoxL = new QVBoxLayout(sizeBox);
+            sizeBox->setLayout(sizeBoxL);
+
+            const QString id = setupTree.getPropertyId(name);
+
             for(QVariant &j : children)
-                enumList.push_back(j.toString());
-            int valueDefault = o["value-default"].toInt();
-            item->setAttribute(QLatin1String("flagNames"), enumList);
-            item->setValue(retrieve_property(setupTree, name, valueDefault));
-            item->setToolTip(tooltip);
-            item->setPropertyId(setupTree.getPropertyId(name));
-            target->addSubProperty(item);
+            {
+                QCheckBox *cb = new QCheckBox(sizeBox);
+                cb->setText(j.toString());
+                cb->setToolTip(tooltip);
+                sizeBoxL->addWidget(cb);
+                values.append(cb);
+            }
+
+            for(QCheckBox *cb : values)
+            {
+                QObject::connect(cb, static_cast<void(QCheckBox::*)(bool)>(&QCheckBox::clicked),
+                [id, values, this](bool)
+                {
+                    unsigned int val = getFlagBoxValue(values);
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed:" << id << val;
+#endif
+                    m_setupStack.setValue(id, val);
+                    emit settingsChanged();
+                });
+            }
+
+            setFlagBoxValue(values, retrieve_property(setupTree, name, valueDefault).toUInt());
+
+            l->addWidget(sizeBox, row, 0, 1, 2);
+            row++;
         }
+
+        // Size box
         else if(!control.compare("sizeBox", Qt::CaseInsensitive))
         {
             QJsonObject defArr = o["value-default"].toObject();
             QJsonObject defMin = o["value-min"].toObject();
             QJsonObject defMax = o["value-max"].toObject();
+
+            QGroupBox *sizeBox = new QGroupBox(target);
+            sizeBox->setTitle(title);
+            sizeBox->setToolTip(tooltip);
+            QHBoxLayout *sizeBoxL = new QHBoxLayout(sizeBox);
+            sizeBox->setLayout(sizeBoxL);
+
+            const QString id = setupTree.getPropertyId(name);
+
             if(!type.compare("double", Qt::CaseInsensitive))
             {
-                item = manager->addProperty(QVariant::SizeF, title);
                 QSizeF valueDefault = QSizeF(defArr["w"].toDouble(), defArr["h"].toDouble());
-                QSizeF valueMin = QSizeF(defMin["w"].toDouble(), defMin["h"].toDouble());
-                QSizeF valueMax = QSizeF(defMax["w"].toDouble(), defMax["h"].toDouble());
-                item->setValue(retrieve_property(setupTree, name, valueDefault));
-                item->setToolTip(tooltip);
-                item->setAttribute(QLatin1String("minimum"), valueMin);
-                item->setAttribute(QLatin1String("maximum"), valueMax);
+                QSizeF valueMin = QSizeF(defMin["w"].toDouble(INT_MIN), defMin["h"].toDouble(INT_MIN));
+                QSizeF valueMax = QSizeF(defMax["w"].toDouble(INT_MAX), defMax["h"].toDouble(INT_MAX));
                 int decimals = o["decimals"].toInt(2);
-                item->setAttribute(QLatin1String("decimals"), decimals);
+                QSizeF value = retrieve_property(setupTree, name, valueDefault).toSizeF();
+
+                QLabel *label = new QLabel(target);
+                label->setText(tr("W", "Width, shortly"));
+                sizeBoxL->addWidget(label, 0);
+
+                QDoubleSpinBox *w = new QDoubleSpinBox(sizeBox);
+                w->setToolTip(tooltip);
+                w->setMinimum(valueMin.width());
+                w->setMaximum(valueMax.width());
+                w->setDecimals(decimals);
+                w->setValue(value.width());
+                sizeBoxL->addWidget(w, 1000);
+
+                QLabel *labelH = new QLabel(target);
+                labelH->setText(tr("H", "Height, shortly"));
+                sizeBoxL->addWidget(labelH, 0);
+
+                QDoubleSpinBox *h = new QDoubleSpinBox(sizeBox);
+                h->setToolTip(tooltip);
+                h->setMinimum(valueMin.height());
+                h->setMaximum(valueMax.height());
+                h->setDecimals(decimals);
+                h->setValue(value.height());
+                sizeBoxL->addWidget(h, 1000);
+
+                QObject::connect(w, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, h, this](double val)
+                {
+                    QSizeF v(val, h->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed width:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(h, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, w, this](double val)
+                {
+                    QSizeF v(w->value(), val);
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed height:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
             }
             else
             {
-                item = manager->addProperty(QVariant::Size, title);
                 QSize valueDefault = QSize(defArr["w"].toInt(), defArr["h"].toInt());
-                QSize valueMin = QSize(defMin["w"].toInt(), defMin["h"].toInt());
-                QSize valueMax = QSize(defMax["w"].toInt(), defMax["h"].toInt());
-                item->setValue(retrieve_property(setupTree, name, valueDefault));
-                item->setToolTip(tooltip);
-                item->setAttribute(QLatin1String("minimum"), valueMin);
-                item->setAttribute(QLatin1String("maximum"), valueMax);
+                QSize valueMin = QSize(defMin["w"].toInt(INT_MIN), defMin["h"].toInt(INT_MIN));
+                QSize valueMax = QSize(defMax["w"].toInt(INT_MAX), defMax["h"].toInt(INT_MAX));
+                QSize value = retrieve_property(setupTree, name, valueDefault).toSize();
+
+                QLabel *label = new QLabel(target);
+                label->setText(tr("W", "Width, shortly"));
+                sizeBoxL->addWidget(label, 0);
+
+                QSpinBox *w = new QSpinBox(sizeBox);
+                w->setToolTip(tooltip);
+                w->setMinimum(valueMin.width());
+                w->setMaximum(valueMax.width());
+                w->setValue(value.width());
+                sizeBoxL->addWidget(w, 1000);
+
+                QLabel *labelH = new QLabel(target);
+                labelH->setText(tr("H", "Height, shortly"));
+                sizeBoxL->addWidget(labelH, 0);
+
+                QSpinBox *h = new QSpinBox(sizeBox);
+                h->setToolTip(tooltip);
+                h->setMinimum(valueMin.height());
+                h->setMaximum(valueMax.height());
+                h->setValue(value.height());
+                sizeBoxL->addWidget(h, 1000);
+
+                QObject::connect(w, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                [id, h, this](int val)
+                {
+                    QSize v(val, h->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed width:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(h, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                [id, w, this](int val)
+                {
+                    QSize v(w->value(), val);
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed height:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
             }
 
-            item->setPropertyId(setupTree.getPropertyId(name));
-            target->addSubProperty(item);
+            l->addWidget(sizeBox, row, 0, 1, 2);
+            row++;
         }
+
+
+        // Point box
         else if(!control.compare("pointbox", Qt::CaseInsensitive))
         {
             QJsonObject defArr = o["value-default"].toObject();
             QJsonObject defMin = o["value-min"].toObject();
             QJsonObject defMax = o["value-max"].toObject();
 
+            QGroupBox *pointBox = new QGroupBox(target);
+            pointBox->setTitle(title);
+            pointBox->setToolTip(tooltip);
+            QHBoxLayout *pointBoxL = new QHBoxLayout(pointBox);
+            pointBox->setLayout(pointBoxL);
+
+            const QString id = setupTree.getPropertyId(name);
+
             if(!type.compare("double", Qt::CaseInsensitive))
             {
-                item = manager->addProperty(QVariant::PointF, title);
                 QPointF valueDefault = QPointF(defArr["x"].toDouble(), defArr["y"].toDouble());
-                QPointF valueMin = QPointF(defMin["x"].toDouble(), defMin["y"].toDouble());
-                QPointF valueMax = QPointF(defMax["x"].toDouble(), defMax["y"].toDouble());
-                item->setValue(retrieve_property(setupTree, name, valueDefault));
-                item->setToolTip(tooltip);
-                item->setAttribute(QLatin1String("minimum"), valueMin);
-                item->setAttribute(QLatin1String("maximum"), valueMax);
+                QPointF valueMin = QPointF(defMin["x"].toDouble(INT_MIN), defMin["y"].toDouble(INT_MIN));
+                QPointF valueMax = QPointF(defMax["x"].toDouble(INT_MAX), defMax["y"].toDouble(INT_MAX));
                 int decimals = o["decimals"].toInt(2);
-                item->setAttribute(QLatin1String("decimals"), decimals);
+                QPointF value = retrieve_property(setupTree, name, valueDefault).toPointF();
+
+                QLabel *label = new QLabel(target);
+                label->setText("X");
+                pointBoxL->addWidget(label, 0);
+
+                QDoubleSpinBox *x = new QDoubleSpinBox(pointBox);
+                x->setToolTip(tooltip);
+                x->setMinimum(valueMin.x());
+                x->setMaximum(valueMax.x());
+                x->setDecimals(decimals);
+                x->setValue(value.x());
+                pointBoxL->addWidget(x, 1000);
+
+                QLabel *labelH = new QLabel(target);
+                labelH->setText("Y");
+                pointBoxL->addWidget(labelH, 0);
+
+                QDoubleSpinBox *y = new QDoubleSpinBox(pointBox);
+                y->setToolTip(tooltip);
+                y->setMinimum(valueMin.y());
+                y->setMaximum(valueMax.y());
+                y->setDecimals(decimals);
+                y->setValue(value.y());
+                pointBoxL->addWidget(y, 1000);
+
+                QObject::connect(x, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, y, this](double val)
+                {
+                    QPointF v(val, y->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed x:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(y, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, x, this](double val)
+                {
+                    QPointF v(x->value(), val);
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed y:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
             }
             else
             {
-                item = manager->addProperty(QVariant::Point, title);
                 QPoint valueDefault = QPoint(defArr["x"].toInt(), defArr["y"].toInt());
-                QPoint valueMin = QPoint(defMin["x"].toInt(), defMin["y"].toInt());
-                QPoint valueMax = QPoint(defMax["x"].toInt(), defMax["y"].toInt());
-                item->setValue(retrieve_property(setupTree, name, valueDefault));
-                item->setToolTip(tooltip);
-                item->setAttribute(QLatin1String("minimum"), valueMin);
-                item->setAttribute(QLatin1String("maximum"), valueMax);
+                QPoint valueMin = QPoint(defMin["x"].toInt(INT_MIN), defMin["y"].toInt(INT_MIN));
+                QPoint valueMax = QPoint(defMax["x"].toInt(INT_MAX), defMax["y"].toInt(INT_MAX));
+                QPoint value = retrieve_property(setupTree, name, valueDefault).toPoint();
+
+                QLabel *label = new QLabel(target);
+                label->setText("X");
+                pointBoxL->addWidget(label, 0);
+
+                QSpinBox *x = new QSpinBox(pointBox);
+                x->setToolTip(tooltip);
+                x->setMinimum(valueMin.x());
+                x->setMaximum(valueMax.x());
+                x->setValue(value.x());
+                pointBoxL->addWidget(x, 1000);
+
+                QLabel *labelH = new QLabel(target);
+                labelH->setText("Y");
+                pointBoxL->addWidget(labelH, 0);
+
+                QSpinBox *y = new QSpinBox(pointBox);
+                y->setToolTip(tooltip);
+                y->setMinimum(valueMin.y());
+                y->setMaximum(valueMax.y());
+                y->setValue(value.y());
+                pointBoxL->addWidget(y, 1000);
+
+                QObject::connect(x, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                [id, y, this](int val)
+                {
+                    QPoint v(val, y->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed x:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(y, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                [id, x, this](int val)
+                {
+                    QPoint v(x->value(), val);
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed y:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
             }
 
-            item->setPropertyId(setupTree.getPropertyId(name));
-            target->addSubProperty(item);
+            l->addWidget(pointBox, row, 0, 1, 2);
+            row++;
         }
+
+        // Rectangle
         else if(!control.compare("rectbox", Qt::CaseInsensitive))
         {
             QJsonObject defArr = o["value-default"].toObject();
             QJsonObject defMin = o["value-min"].toObject();
             QJsonObject defMax = o["value-max"].toObject();
 
+            QGroupBox *rectBox = new QGroupBox(target);
+            rectBox->setTitle(title);
+            rectBox->setToolTip(tooltip);
+            QGridLayout *rectBoxL = new QGridLayout(rectBox);
+            rectBox->setLayout(rectBoxL);
+
+            const QString id = setupTree.getPropertyId(name);
+
             if(!type.compare("double", Qt::CaseInsensitive))
             {
-                item = manager->addProperty(QVariant::RectF, title);
                 QRectF valueDefault = QRectF(defArr["x"].toDouble(), defArr["y"].toDouble(),
                         defArr["w"].toDouble(), defArr["h"].toDouble());
-                QRectF valueMin     = QRectF(defMin["x"].toDouble(), defMin["y"].toDouble(),
-                        defMin["w"].toDouble(), defMin["h"].toDouble());
-                QRectF valueMax     = QRectF(defMax["x"].toDouble(), defMax["y"].toDouble(),
-                        defMax["w"].toDouble(), defMax["h"].toDouble());
-                item->setValue(retrieve_property(setupTree, name, valueDefault));
-                item->setToolTip(tooltip);
-                item->setAttribute(QLatin1String("minimum"), valueMin);
-                item->setAttribute(QLatin1String("maximum"), valueMax);
+                QRectF valueMin     = QRectF(defMin["x"].toDouble(INT_MIN), defMin["y"].toDouble(INT_MIN),
+                        defMin["w"].toDouble(INT_MIN), defMin["h"].toDouble(INT_MIN));
+                QRectF valueMax     = QRectF(defMax["x"].toDouble(INT_MAX), defMax["y"].toDouble(INT_MAX),
+                        defMax["w"].toDouble(INT_MAX), defMax["h"].toDouble(INT_MAX));
                 int decimals = o["decimals"].toInt(2);
-                item->setAttribute(QLatin1String("decimals"), decimals);
+                QRectF value = retrieve_property(setupTree, name, valueDefault).toRectF();
+
+                QLabel *labelX = new QLabel(target);
+                labelX->setText("X");
+                rectBoxL->addWidget(labelX, 0, 0);
+
+                QDoubleSpinBox *x = new QDoubleSpinBox(rectBox);
+                x->setToolTip(tooltip);
+                x->setMinimum(valueMin.x());
+                x->setMaximum(valueMax.x());
+                x->setDecimals(decimals);
+                x->setValue(value.x());
+                rectBoxL->addWidget(x, 0, 1);
+
+                QLabel *labelY = new QLabel(target);
+                labelY->setText("Y");
+                rectBoxL->addWidget(labelY, 0, 2);
+
+                QDoubleSpinBox *y = new QDoubleSpinBox(rectBox);
+                y->setToolTip(tooltip);
+                y->setMinimum(valueMin.y());
+                y->setMaximum(valueMax.y());
+                y->setDecimals(decimals);
+                y->setValue(value.y());
+                rectBoxL->addWidget(y, 0, 3);
+
+                QLabel *labelW = new QLabel(target);
+                labelW->setText(tr("W", "Width, shortly"));
+                rectBoxL->addWidget(labelW, 1, 0);
+
+                QDoubleSpinBox *w = new QDoubleSpinBox(rectBox);
+                w->setToolTip(tooltip);
+                w->setMinimum(valueMin.width());
+                w->setMaximum(valueMax.width());
+                w->setDecimals(decimals);
+                w->setValue(value.width());
+                rectBoxL->addWidget(w, 1, 1);
+
+                QLabel *labelH = new QLabel(target);
+                labelH->setText(tr("H", "Height, shortly"));
+                rectBoxL->addWidget(labelH, 1, 2);
+
+                QDoubleSpinBox *h = new QDoubleSpinBox(rectBox);
+                h->setToolTip(tooltip);
+                h->setMinimum(valueMin.height());
+                h->setMaximum(valueMax.height());
+                h->setDecimals(decimals);
+                h->setValue(value.height());
+                rectBoxL->addWidget(h, 1, 3);
+
+                QObject::connect(x, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, y, w, h, this](double val)
+                {
+                    QRectF v(val, y->value(), w->value(), h->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed x:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(y, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, x, w, h, this](double val)
+                {
+                    QRectF v(x->value(), val, w->value(), h->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed y:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(w, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, x, y, h, this](double val)
+                {
+                    QRectF v(x->value(), y->value(), val, h->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed width:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(h, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [id, x, y, w, this](double val)
+                {
+                    QRectF v(x->value(), y->value(), w->value(), val);
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed height:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
             }
             else
             {
-                item = manager->addProperty(QVariant::Rect, title);
                 QRect valueDefault = QRect(defArr["x"].toInt(), defArr["y"].toInt(),
                         defArr["w"].toInt(), defArr["h"].toInt());
-                QRect valueMin     = QRect(defMin["x"].toInt(), defMin["y"].toInt(),
-                        defMin["w"].toInt(), defMin["h"].toInt());
-                QRect valueMax     = QRect(defMax["x"].toInt(), defMax["y"].toInt(),
-                        defMax["w"].toInt(), defMax["h"].toInt());
-                item->setValue(retrieve_property(setupTree, name, valueDefault));
-                item->setToolTip(tooltip);
-                item->setAttribute(QLatin1String("minimum"), valueMin);
-                item->setAttribute(QLatin1String("maximum"), valueMax);
+                QRect valueMin     = QRect(defMin["x"].toInt(INT_MIN), defMin["y"].toInt(INT_MIN),
+                        defMin["w"].toInt(INT_MIN), defMin["h"].toInt(INT_MIN));
+                QRect valueMax     = QRect(defMax["x"].toInt(INT_MAX), defMax["y"].toInt(INT_MAX),
+                        defMax["w"].toInt(INT_MAX), defMax["h"].toInt(INT_MAX));
+                QRect value = retrieve_property(setupTree, name, valueDefault).toRect();
+
+                QLabel *labelX = new QLabel(target);
+                labelX->setText("X");
+                rectBoxL->addWidget(labelX, 0, 0);
+
+                QSpinBox *x = new QSpinBox(rectBox);
+                x->setToolTip(tooltip);
+                x->setMinimum(valueMin.x());
+                x->setMaximum(valueMax.x());
+                x->setValue(value.x());
+                rectBoxL->addWidget(x, 0, 1);
+
+                QLabel *labelY = new QLabel(target);
+                labelY->setText("Y");
+                rectBoxL->addWidget(labelY, 0, 2);
+
+                QSpinBox *y = new QSpinBox(rectBox);
+                y->setToolTip(tooltip);
+                y->setMinimum(valueMin.y());
+                y->setMaximum(valueMax.y());
+                y->setValue(value.y());
+                rectBoxL->addWidget(y, 0, 3);
+
+                QLabel *labelW = new QLabel(target);
+                labelW->setText(tr("W", "Width, shortly"));
+                rectBoxL->addWidget(labelW, 1, 0);
+
+                QSpinBox *w = new QSpinBox(rectBox);
+                w->setToolTip(tooltip);
+                w->setMinimum(valueMin.width());
+                w->setMaximum(valueMax.width());
+                w->setValue(value.width());
+                rectBoxL->addWidget(w, 1, 1);
+
+                QLabel *labelH = new QLabel(target);
+                labelH->setText(tr("H", "Height, shortly"));
+                rectBoxL->addWidget(labelH, 1, 2);
+
+                QSpinBox *h = new QSpinBox(rectBox);
+                h->setToolTip(tooltip);
+                h->setMinimum(valueMin.height());
+                h->setMaximum(valueMax.height());
+                h->setValue(value.height());
+                rectBoxL->addWidget(h, 1, 3);
+
+                QObject::connect(x, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                [id, y, w, h, this](int val)
+                {
+                    QRect v(val, y->value(), w->value(), h->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed x:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(y, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                [id, x, w, h, this](int val)
+                {
+                    QRect v(x->value(), val, w->value(), h->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed y:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(w, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                [id, x, y, h, this](int val)
+                {
+                    QRect v(x->value(), y->value(), val, h->value());
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed width:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
+
+                QObject::connect(h, static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                [id, x, y, w, this](int val)
+                {
+                    QRect v(x->value(), y->value(), w->value(), val);
+#ifdef DEBUG_BUILD
+                    qDebug() << "changed height:" << id << v;
+#endif
+                    m_setupStack.setValue(id, v);
+                    emit settingsChanged();
+                });
             }
 
-            item->setPropertyId(setupTree.getPropertyId(name));
-            target->addSubProperty(item);
+            rectBoxL->setColumnStretch(0, 0);
+            rectBoxL->setColumnStretch(1, 1000);
+            rectBoxL->setColumnStretch(2, 0);
+            rectBoxL->setColumnStretch(3, 1000);
+
+            l->addWidget(rectBox, row, 0, 1, 2);
+            row++;
         }
+
+        // Children group
         else if(!control.compare("group", Qt::CaseInsensitive))
         {
             QJsonArray children = o["children"].toArray();
@@ -657,26 +1729,29 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 if(noBranch && title == name)
                     title.clear();
 
-                QtProperty *subGroup = manager->addProperty(QtVariantPropertyManager::groupTypeId(), title);
+                QGroupBox *subGroup = new QGroupBox(target);
+                subGroup->setTitle(title);
 
                 if(!noBranch)
                     setupTree.m_setupTree.push(name);
 
-                loadLayoutEntries(setupTree, children, manager, subGroup, err, parent);
+                l->addWidget(subGroup, row, 0, 1, 2);
+
+                loadLayoutEntries(setupTree, children, subGroup, err, parent);
 
                 if(!noBranch)
                     setupTree.m_setupTree.pop();
-                target->addSubProperty(subGroup);
+                row++;
             }
         }
     }
 }
 
-QtAbstractPropertyBrowser *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &stack,
+QWidget *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidget::SetupStack &stack,
                                                                 const QByteArray &layoutJson,
                                                                 QString &err)
 {
-    QtAbstractPropertyBrowser *gui = nullptr;
+    QWidget *widget = nullptr;
     QString style;
     QString title;
 
@@ -695,53 +1770,23 @@ QtAbstractPropertyBrowser *JsonSettingsWidget::loadLayoutDetail(JsonSettingsWidg
     title = layoutData["title"].toString();
     if(style == "groupbox")
     {
-        gui = new QtGroupBoxPropertyBrowser(qobject_cast<QWidget*>(parent()));
+        QGroupBox *gui_w = new QGroupBox(qobject_cast<QWidget*>(parent()));
+        gui_w->setTitle(title);
+        widget = gui_w;
         m_spacerNeeded = true;
     }
-    else if(style == "frame")
+    else
     {
-        gui = new QtGroupBoxPropertyBrowser(qobject_cast<QWidget*>(parent()), true);
+        widget = new QFrame(qobject_cast<QWidget*>(parent()));
         m_spacerNeeded = true;
     }
-    else if(style == "button")
-    {
-        gui = new QtButtonPropertyBrowser(qobject_cast<QWidget*>(parent()));
-        m_spacerNeeded = true;
-    }
-    else // "tree" is default
-    {
-        QtTreePropertyBrowser *gui_t = new QtTreePropertyBrowser(qobject_cast<QWidget*>(parent()));
-        gui_t->setPropertiesWithoutValueMarked(true);
-        gui = gui_t;
-        m_spacerNeeded = false;
-    }
-
-    QtVariantPropertyManager *variantManager = new QtVariantPropertyManager(gui);
-
-    QtProperty *topItem = variantManager->addProperty(QtVariantPropertyManager::groupTypeId(), title);
 
     QJsonArray layoutEntries = layoutData["layout"].toArray();
-    loadLayoutEntries(stack, layoutEntries, variantManager, topItem, err, qobject_cast<QWidget*>(parent()));
+    loadLayoutEntries(stack, layoutEntries, widget, err, qobject_cast<QWidget*>(parent()));
 
-    QtVariantPropertyManager::connect(variantManager, &QtVariantPropertyManager::valueChanged,
-                            [this](QtProperty *p,QVariant v)
-    {
-        QString pid = p->propertyId();
-#ifdef DEBUG_BUILD
-        qDebug() << "changed:" << pid << v;
-#endif
-        if(!pid.isEmpty())
-        {
-            m_setupStack.setValue(p->propertyId(), v);
-            emit settingsChanged();
-        }
-    }
-    );
+    widget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 
-    QtVariantEditorFactory *variantFactory = new QtVariantEditorFactory(gui);
+    m_browser = widget;
 
-    gui->setFactoryForManager(variantManager, variantFactory);
-    gui->addProperty(topItem);
-
-    return gui;
+    return widget;
 }

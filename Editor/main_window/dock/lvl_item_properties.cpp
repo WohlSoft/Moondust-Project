@@ -894,6 +894,9 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                 m_extraGlobalSettings.reset(new JsonSettingsWidget(ui->extraSettings));
                 Q_ASSERT(m_extraGlobalSettings.get());
 
+                m_extraGlobalSettings->setSearchDirectories(edit->LvlData.meta.path, edit->LvlData.meta.filename);
+                m_extraGlobalSettings->setConfigPack(&mw()->configs);
+
                 QJsonDocument branch = tree;
                 if(errCode.error == QJsonParseError::NoError)
                 {
@@ -944,6 +947,9 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                 QByteArray rawLayout = layoutFile.readAll();
                 m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
                 Q_ASSERT(m_extraSettings.get());
+
+                m_extraSettings->setSearchDirectories(edit->LvlData.meta.path, edit->LvlData.meta.filename);
+                m_extraSettings->setConfigPack(&mw()->configs);
 
                 QJsonDocument branch = tree;
                 if(errCode.error == QJsonParseError::NoError)

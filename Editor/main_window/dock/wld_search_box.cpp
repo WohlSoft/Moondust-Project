@@ -787,5 +787,5 @@ void WldSearchBox::selectLevelForSearch()
 
     LevelFileList levelList(dirPath, ui->Find_Edit_LevelFile->text());
     if(levelList.exec() == QDialog::Accepted)
-        ui->Find_Edit_LevelFile->setText(levelList.SelectedFile);
+        ui->Find_Edit_LevelFile->setText(levelList.currentFile());
 }

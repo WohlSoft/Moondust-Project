@@ -48,7 +48,7 @@ public:
     explicit ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData = 0,
                               int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0,
                               int curSelIDTile = 0, int curSelIDScenery = 0, int curSelIDPath = 0,
-                              int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = 0,
+                              int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = nullptr,
                               int noEmptyTypes = 0);
     ~ItemSelectDialog();
 

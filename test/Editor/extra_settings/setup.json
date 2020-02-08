@@ -1,0 +1,47 @@
+{
+    "alienShit": {
+        "child1": 23,
+        "child2": "a sh9t",
+        "child3": "52624"
+    },
+    "checkMe": false,
+    "checkMeNot": false,
+    "choice": 2,
+    "choice2": 21,
+    "colorness": "#5aff1445",
+    "colornessOfTea": "#349dff",
+    "fanSeeYou": {
+        "h": 4.11,
+        "w": 12.054,
+        "x": -10.05224,
+        "y": 31
+    },
+    "floatOfWhere": {
+        "x": -56.98,
+        "y": 18.896
+    },
+    "floatTest": 7.986999988555908,
+    "floatingBrick": {
+        "h": 8,
+        "w": 24.2
+    },
+    "iCanSeeYou": {
+        "h": 18,
+        "w": 11,
+        "x": 85,
+        "y": -44
+    },
+    "meinMuzik": "some/019_ChurchOrgan.mid",
+    "sizeOfMyAss": {
+        "h": 2778,
+        "w": 1306
+    },
+    "someAnother": {
+        "kekVision": -29
+    },
+    "testNumber": 30,
+    "whereIsMySombrero": {
+        "x": -33,
+        "y": -22
+    }
+}

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LevelFileList</class>
- <widget class="QDialog" name="LevelFileList">
+ <class>FileListBrowser</class>
+ <widget class="QDialog" name="FileListBrowser">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>278</width>
+    <width>320</width>
     <height>366</height>
    </rect>
   </property>
@@ -17,11 +17,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Level files list</string>
+   <string>Files list</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/lvl16.png</normaloff>:/lvl16.png</iconset>
+    <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -30,7 +30,7 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Please, select level file from list for use them:</string>
+      <string>Please select a file from the list:</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -72,7 +72,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>LevelFileList</receiver>
+   <receiver>FileListBrowser</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -88,7 +88,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>LevelFileList</receiver>
+   <receiver>FileListBrowser</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

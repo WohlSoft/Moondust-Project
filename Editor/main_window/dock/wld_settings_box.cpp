@@ -335,7 +335,7 @@ void WorldSettingsBox::on_WLD_AutostartLvlBrowse_clicked()
     {
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
-            ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
+            ui->WLD_AutostartLvl->setText(levelList.currentFile());
             ui->WLD_AutostartLvl->setModified(true);
             on_WLD_AutostartLvl_editingFinished();
         }
