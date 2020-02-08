@@ -27,6 +27,8 @@
 #include <QFileInfo>
 #include <QDir>
 
+#include <DirManager/dirman.h>
+#include <Utils/files.h>
 #include <common_features/app_path.h>
 #include <common_features/version_cmp.h>
 #include <main_window/global_settings.h>
@@ -633,7 +635,11 @@ QString dataconfigs::getBgoExtraSettingsPath()
     if(folderLvlBgo.extraSettings.isEmpty())
         return config_dir + "items/bgo";
     else
+    {
+        if(Files::isAbsolute(folderLvlBgo.extraSettings.toStdString()))
+            return folderLvlBgo.extraSettings;
         return config_dir + folderLvlBgo.extraSettings;
+    }
 }
 
 QString dataconfigs::getBlockExtraSettingsPath()
@@ -641,7 +647,11 @@ QString dataconfigs::getBlockExtraSettingsPath()
     if(folderLvlBlocks.extraSettings.isEmpty())
         return config_dir + "items/blocks";
     else
+    {
+        if(Files::isAbsolute(folderLvlBlocks.extraSettings.toStdString()))
+            return folderLvlBlocks.extraSettings;
         return config_dir + folderLvlBlocks.extraSettings;
+    }
 }
 
 QString dataconfigs::getNpcExtraSettingsPath()
@@ -649,7 +659,11 @@ QString dataconfigs::getNpcExtraSettingsPath()
     if(folderLvlNPC.extraSettings.isEmpty())
         return config_dir + "items/npc";
     else
+    {
+        if(Files::isAbsolute(folderLvlNPC.extraSettings.toStdString()))
+            return folderLvlNPC.extraSettings;
         return config_dir + folderLvlNPC.extraSettings;
+    }
 }
 
 QString dataconfigs::getTileExtraSettingsPath()
@@ -657,7 +671,11 @@ QString dataconfigs::getTileExtraSettingsPath()
     if(folderWldTerrain.extraSettings.isEmpty())
         return config_dir + "items/terrain";
     else
+    {
+        if(Files::isAbsolute(folderWldTerrain.extraSettings.toStdString()))
+            return folderWldTerrain.extraSettings;
         return config_dir + folderWldTerrain.extraSettings;
+    }
 }
 
 QString dataconfigs::getSceneExtraSettingsPath()
@@ -665,7 +683,11 @@ QString dataconfigs::getSceneExtraSettingsPath()
     if(folderWldScenery.extraSettings.isEmpty())
         return config_dir + "items/scenery";
     else
+    {
+        if(Files::isAbsolute(folderWldScenery.extraSettings.toStdString()))
+            return folderWldScenery.extraSettings;
         return config_dir + folderWldScenery.extraSettings;
+    }
 }
 
 QString dataconfigs::getPathExtraSettingsPath()
@@ -673,7 +695,11 @@ QString dataconfigs::getPathExtraSettingsPath()
     if(folderWldPaths.extraSettings.isEmpty())
         return config_dir + "items/paths";
     else
+    {
+        if(Files::isAbsolute(folderWldPaths.extraSettings.toStdString()))
+            return folderWldPaths.extraSettings;
         return config_dir + folderWldPaths.extraSettings;
+    }
 }
 
 QString dataconfigs::getWlvlExtraSettingsPath()
@@ -681,5 +707,9 @@ QString dataconfigs::getWlvlExtraSettingsPath()
     if(folderWldLevelPoints.extraSettings.isEmpty())
         return config_dir + "items/levels";
     else
+    {
+        if(Files::isAbsolute(folderWldLevelPoints.extraSettings.toStdString()))
+            return folderWldLevelPoints.extraSettings;
         return config_dir + folderWldLevelPoints.extraSettings;
+    }
 }
