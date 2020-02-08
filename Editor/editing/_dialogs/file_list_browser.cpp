@@ -17,7 +17,6 @@
  */
 
 #include "file_list_browser.h"
-#include <ui_file_list_browser.h>
 
 #include <QDir>
 #include <QListView>
