@@ -26,7 +26,7 @@ class LvlMusPlay
 {
 public:
     enum MusicType{
-        LevelMusic=0,
+        LevelMusic = 0,
         WorldMusic,
         SpecialMusic
     };
@@ -47,7 +47,7 @@ public:
     static void setMusic(MusicType mt, unsigned long id, QString cmus);
     static void setNoMusic();
     static void updateMusic();
-    static void updatePlayerState(bool playing=true);
+    static void updatePlayerState(bool playing = true);
     static void stopMusic();
 
 };

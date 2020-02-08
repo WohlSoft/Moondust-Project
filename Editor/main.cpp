@@ -96,7 +96,7 @@ static void pgeEditorQuit()
     {
 #ifdef USE_SDL_MIXER
         LogDebugNC("Free music buffer...");
-        PGE_MusPlayer::MUS_freeStream();
+        PGE_MusPlayer::closeFile();
         LogDebugNC("Free sound buffer...");
         PGE_SfxPlayer::freeBuffer();
         LogDebugNC("Closing audio...");
