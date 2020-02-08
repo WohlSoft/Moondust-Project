@@ -120,6 +120,7 @@ private slots:
 
     void updateControls();
     void initScene();
+    void enableFrame();
     void updateScene();
 
 private:

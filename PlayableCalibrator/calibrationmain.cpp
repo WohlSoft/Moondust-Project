@@ -215,6 +215,7 @@ void CalibrationMain::on_Height_valueChanged(int arg1)
     if(m_lockControls) return;
     g_framesX[m_frmX][m_frmY].H = arg1;
     g_frameHeight = arg1;
+    enableFrame();
     updateScene();
 }
 
@@ -223,6 +224,7 @@ void CalibrationMain::on_Height_duck_valueChanged(int arg1)
 {
     if(m_lockControls) return;
     g_frameHeightDuck = arg1;
+    enableFrame();
     updateScene();
 }
 
@@ -232,6 +234,7 @@ void CalibrationMain::on_Width_valueChanged(int arg1)
     if(m_lockControls) return;
     g_framesX[m_frmX][m_frmY].W = arg1;
     g_frameWidth = arg1;
+    enableFrame();
     updateScene();
 }
 
@@ -240,6 +243,7 @@ void CalibrationMain::on_OffsetX_valueChanged(int arg1)
 {
     if(m_lockControls) return;
     g_framesX[m_frmX][m_frmY].offsetX = arg1;
+    enableFrame();
     updateScene();
 }
 
@@ -248,6 +252,7 @@ void CalibrationMain::on_OffsetY_valueChanged(int arg1)
 {
     if(m_lockControls) return;
     g_framesX[m_frmX][m_frmY].offsetY = arg1;
+    enableFrame();
     updateScene();
 }
 
@@ -269,6 +274,7 @@ void CalibrationMain::on_PasteButton_clicked()
 void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 {
     g_framesX[m_frmX][m_frmY].isDuck = checked;
+    enableFrame();
     updateScene();
 }
 
@@ -333,6 +339,7 @@ void CalibrationMain::on_isRightDirect_clicked(bool checked)
 {
     if(m_lockControls) return;
     g_framesX[m_frmX][m_frmY].isRightDir = checked;
+    enableFrame();
     updateScene();
 }
 
@@ -340,6 +347,7 @@ void CalibrationMain::on_showGrabItem_clicked(bool checked)
 {
     if(m_lockControls) return;
     g_framesX[m_frmX][m_frmY].showGrabItem = checked;
+    enableFrame();
     updateScene();
 }
 
@@ -401,6 +409,7 @@ void CalibrationMain::on_grabOffsetX_valueChanged(int arg1)
     if(ui->grabOffsetX->hasFocus())
     {
         g_frameGrabOffsetX = arg1;
+        enableFrame();
         updateScene();
     }
 }
@@ -410,8 +419,16 @@ void CalibrationMain::on_grabOffsetY_valueChanged(int arg1)
     if(ui->grabOffsetY->hasFocus())
     {
         g_frameGrabOffsetY = arg1;
+        enableFrame();
         updateScene();
     }
+}
+
+void CalibrationMain::enableFrame()
+{
+    g_framesX[m_frmX][m_frmY].used = true;
+    if(!ui->EnableFrame->isChecked())
+        ui->EnableFrame->setChecked(true);
 }
 
 void CalibrationMain::updateControls()
@@ -512,16 +529,16 @@ void CalibrationMain::initScene()
     m_currentImageItem.setPos(m_frameBox_gray.scenePos().x(), m_frameBox_gray.scenePos().y());
 }
 
-
-
 void CalibrationMain::on_grabTop_clicked()
 {
     g_frameOverTopGrab = true;
+    enableFrame();
     updateScene();
 }
 
 void CalibrationMain::on_grabSide_clicked()
 {
     g_frameOverTopGrab = false;
+    enableFrame();
     updateScene();
 }
