@@ -104,7 +104,6 @@ qt5_wrap_ui(UIS_HDRS
     data_configs/selection_dialog/config_manager.ui
     dev_console/devconsole.ui
     editing/_dialogs/itemselectdialog.ui
-    editing/_dialogs/file_list_browser.ui
     editing/_dialogs/savingnotificationdialog.ui
     editing/_dialogs/user_data_edit.ui
     editing/_dialogs/wld_setpoint.ui

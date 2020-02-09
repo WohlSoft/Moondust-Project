@@ -1,4 +1,4 @@
-QT       += core gui widgets concurrent
+QT       += core gui widgets
 
 INCLUDEPATH += ../../../Editor
 
@@ -35,6 +35,3 @@ HEADERS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-FORMS += \
-    ../../../Editor/editing/_dialogs/file_list_browser.ui
