@@ -16,107 +16,52 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "file_list_browser.h"
-
 #include <QDir>
-#include <QListView>
-#include <QLabel>
-#include <QToolButton>
-#include <QComboBox>
 
-FileListBrowser::FileListBrowser(QString searchDirectory, QString curFile, QWidget *parent) :
-    QObject(parent),
-    m_dialog(parent)
+#include "file_list_browser.h"
+#include <ui_file_list_browser.h>
+
+#include <QtConcurrent>
+
+FileListBrowser::FileListBrowser(QString searchDirectory, QString currentFile, QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::FileListBrowser)
 {
-    m_dialog.setWindowIcon(QIcon(":/images/playmusic.png"));
-    QListView *sidebar = m_dialog.findChild<QListView *>("sidebar");
-    QComboBox *lookInCombo = m_dialog.findChild<QComboBox *>("lookInCombo");
-    m_upButton = m_dialog.findChild<QToolButton*>("toParentButton");
-    if(sidebar)
-        sidebar->setVisible(false);
-    if(lookInCombo)
-        lookInCombo->setEnabled(false);
-
-    m_dialog.setWindowIcon(QIcon(":/images/new.png"));
-    m_dialog.setFileMode(QFileDialog::ExistingFile);
-    m_dialog.setOption(QFileDialog::ReadOnly, true);
-    m_dialog.setOption(QFileDialog::DontUseSheet, true);
-    m_dialog.setOption(QFileDialog::DontUseNativeDialog, true);
-    m_dialog.setOption(QFileDialog::HideNameFilterDetails, true);
-    m_dialog.setViewMode(QFileDialog::List);
-    m_dialog.setAcceptMode(QFileDialog::AcceptOpen);
-
-    if(searchDirectory.endsWith('/'))
-        searchDirectory.remove(searchDirectory.size() - 1, 1);
-
-    m_currentFile = curFile;
-    setDirectoryRoot(searchDirectory);
-
-    QObject::connect(&m_dialog, &QFileDialog::directoryEntered,
-                     this, &FileListBrowser::directoryEntered);
+    m_filters.append("*.*");
+    m_parentDirectory = searchDirectory;
+    m_lastCurrentFile = currentFile;
+    ui->setupUi(this);
+    connect(this, &FileListBrowser::itemAdded, this, &FileListBrowser::addItem);
+    connect(this, &FileListBrowser::digFinished, this, &FileListBrowser::finalizeDig);
 }
 
 FileListBrowser::~FileListBrowser()
-{}
-
-void FileListBrowser::setDirectoryRoot(const QString &root)
 {
-    m_currentRoot = root;
-    m_currentRelation = root;
-
-    if(m_currentFile.isEmpty())
-    {
-        m_dialog.setDirectory(m_currentRoot);
-        if(m_upButton)
-            m_upButton->setEnabled(false);
-    }
-    else
-    {
-        QFileInfo fPath(root, m_currentFile);
-        m_dialog.setDirectory(fPath.absoluteDir());
-        m_dialog.selectFile(fPath.fileName());
-        if(m_upButton)
-            m_upButton->setEnabled(fPath.absoluteDir().absolutePath() != QDir(m_currentRoot).absolutePath());
-    }
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
+    fileWalker.waitForFinished();
+    delete ui;
 }
 
-void FileListBrowser::setDirectoryRelation(const QString &rel)
+void FileListBrowser::setDescription(const QString &description)
 {
-    QString r = rel;
-    if(r.endsWith('/'))
-        r.remove(rel.size() - 1, 1);
-    m_currentRelation = r;
-    if(m_currentFile.isEmpty())
-    {
-        m_dialog.setDirectory(r);
-        if(m_upButton)
-            m_upButton->setEnabled(QDir(r).absolutePath() != QDir(m_currentRoot).absolutePath());
-    }
-    else
-    {
-        QFileInfo fPath(r, m_currentFile);
-        m_dialog.setDirectory(fPath.absoluteDir());
-        m_dialog.selectFile(fPath.fileName());
-    }
+    ui->label->setText(description);
 }
 
-void FileListBrowser::setFilters(const QString &filterName, const QStringList &filters)
+void FileListBrowser::setFilters(const QStringList &filters)
 {
-    if(filters.isEmpty())
-        m_dialog.setNameFilter(QString("%1 (*.*)").arg(tr("All files")));
-    else
-        m_dialog.setNameFilter(QString("%1 (%2)").arg(filterName).arg(filters.join(" ")) + ";;" +
-                               QString("%1 (*.*)").arg(tr("All files")));
+    m_filters = filters;
 }
 
 void FileListBrowser::setIcon(const QIcon &icon)
 {
-    m_dialog.setWindowIcon(icon);
+    setWindowIcon(icon);
 }
 
-void FileListBrowser::setWindowTitle(const QString &title)
+void FileListBrowser::startListBuilder()
 {
-    m_dialog.setWindowTitle(title);
+    setCursor(Qt::BusyCursor);
+    fileWalker = QtConcurrent::run(this, &FileListBrowser::buildFileList);
 }
 
 QString FileListBrowser::currentFile()
@@ -124,25 +69,74 @@ QString FileListBrowser::currentFile()
     return m_currentFile;
 }
 
-int FileListBrowser::exec()
+void FileListBrowser::buildFileList()
 {
-    int ret = m_dialog.exec();
-    for(QString &f : m_dialog.selectedFiles())
+    QDir musicDir(m_parentDirectory);
+    musicDir.setSorting(QDir::Name);
+    musicDir.setNameFilters(m_filters);
+    QDirIterator dirsList(m_parentDirectory, m_filters,
+                          QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot,
+                          QDirIterator::Subdirectories);
+
+    while(dirsList.hasNext())
     {
-        QDir root(m_currentRelation);
-        m_currentFile = root.relativeFilePath(f);
+        dirsList.next();
+        emit itemAdded(musicDir.relativeFilePath(dirsList.filePath()));
+        if(fileWalker.isCanceled())
+            break;
     }
-    return ret;
+    digFinished();
 }
 
-void FileListBrowser::directoryEntered(const QString &directory)
+void FileListBrowser::addItem(QString item)
 {
-    QDir dir_o(directory);
-    QDir dir_r(m_currentRoot);
+    ui->FileList->addItem(item);
+    if(m_lastCurrentFile == item)
+    {
+        QList<QListWidgetItem *> list = ui->FileList->findItems(item, Qt::MatchFixedString);
+        if(!list.isEmpty())
+        {
+            list.first()->setSelected(true);
+            ui->FileList->scrollToItem(list.first());
+        }
+    }
+}
 
-    if(!dir_o.absolutePath().startsWith(dir_r.absolutePath()))
-        m_dialog.setDirectory(m_currentRoot);
+void FileListBrowser::finalizeDig()
+{
+    ui->FileList->sortItems(Qt::AscendingOrder);
+    QList<QListWidgetItem *> list = ui->FileList->findItems(m_lastCurrentFile, Qt::MatchFixedString);
+    if(!list.isEmpty())
+    {
+        list.first()->setSelected(true);
+        ui->FileList->scrollToItem(list.first());
+    }
+    setCursor(Qt::ArrowCursor);
+}
 
-    if(m_upButton)
-        m_upButton->setEnabled(dir_o.absolutePath() != dir_r.absolutePath());
+void FileListBrowser::on_FileList_itemDoubleClicked(QListWidgetItem *item)
+{
+    m_currentFile = item->text();
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
+    accept();
+}
+
+void FileListBrowser::on_buttonBox_accepted()
+{
+    foreach(QListWidgetItem *container, ui->FileList->selectedItems())
+        m_currentFile = container->text();
+    if(m_currentFile != "")
+    {
+        if(fileWalker.isRunning())
+            fileWalker.cancel();
+        accept();
+    }
+}
+
+void FileListBrowser::on_buttonBox_rejected()
+{
+    if(fileWalker.isRunning())
+        fileWalker.cancel();
+    reject();
 }

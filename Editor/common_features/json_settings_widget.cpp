@@ -878,12 +878,12 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             QString valueDefault = o["value-default"].toString();
             QString placeholder = o["placeholder"].toString();
             QString dialogTitle = o["dialog-title"].toString();
+            QString dialogDescription = o["dialog-description"].toString();
 
             QStringList filters;
             QVariantList filtersList = o["filters"].toArray().toVariantList();
             for(QVariant &j : filtersList)
                 filters.push_back(j.toString());
-            QString filtersDescription = o["filters-description"].toString("");
 
             bool isMusic = !control.compare("musicFile", Qt::CaseInsensitive);
             bool isSFX = !control.compare("soundFile", Qt::CaseInsensitive);
@@ -891,12 +891,9 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             bool isGenericFile = !control.compare("file", Qt::CaseInsensitive);
 
             bool lookAtEpisode = isLevel;
-            bool rootIsEpisode = true;
 
             if(o.keys().contains("directory"))
-                rootIsEpisode = !o["directory"].toString("episode").compare("episode", Qt::CaseInsensitive);
-            if(o.keys().contains("directory-relative"))
-                lookAtEpisode = !o["directory-relative"].toString(isLevel ? "episode" : "data").compare("episode", Qt::CaseInsensitive);
+                lookAtEpisode = !o["directory"].toString(isLevel ? "data" : "episode").compare("episode", Qt::CaseInsensitive);
 
             const QString id = setupTree.getPropertyId(name);
 
@@ -958,17 +955,18 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             l->addWidget(fileBox, row, 1);
 
             QObject::connect(browse, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
-            [id, it, isSFX, isLevel, isGenericFile, target, rootIsEpisode, lookAtEpisode, dialogTitle, filtersDescription, filters, this](bool)
+            [id, it, isSFX, isLevel, isGenericFile, target, lookAtEpisode, dialogTitle, dialogDescription, filters, this](bool)
             {
                 if(isGenericFile)
                 {
-                    FileListBrowser file(rootIsEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
+                    FileListBrowser file(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
                     if(!dialogTitle.isEmpty())
                         file.setWindowTitle(dialogTitle);
+                    if(!dialogDescription.isEmpty())
+                        file.setDescription(dialogDescription);
                     if(!filters.isEmpty())
-                        file.setFilters(filtersDescription, filters);
-                    if(lookAtEpisode != rootIsEpisode)
-                        file.setDirectoryRelation(lookAtEpisode ? m_directoryEpisode : m_directoryData);
+                        file.setFilters(filters);
+                    file.startListBuilder();
                     if(file.exec() == QDialog::Accepted)
                     {
                         it->setText(file.currentFile());
@@ -978,11 +976,11 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 }
                 else if(isLevel)
                 {
-                    LevelFileList levels(rootIsEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
+                    LevelFileList levels(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target);
                     if(!dialogTitle.isEmpty())
                         levels.setWindowTitle(dialogTitle);
-                    if(lookAtEpisode != rootIsEpisode)
-                        levels.setDirectoryRelation(lookAtEpisode ? m_directoryEpisode : m_directoryData);
+                    if(!dialogDescription.isEmpty())
+                        levels.setDescription(dialogDescription);
                     if(levels.exec() == QDialog::Accepted)
                     {
                         it->setText(levels.currentFile());
@@ -992,11 +990,11 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                 }
                 else
                 {
-                    MusicFileList muz(rootIsEpisode ? m_directoryEpisode : m_directoryData, it->text(), target, isSFX);
+                    MusicFileList muz(lookAtEpisode ? m_directoryEpisode : m_directoryData, it->text(), target, isSFX);
                     if(!dialogTitle.isEmpty())
                         muz.setWindowTitle(dialogTitle);
-                    if(lookAtEpisode != rootIsEpisode)
-                        muz.setDirectoryRelation(lookAtEpisode ? m_directoryEpisode : m_directoryData);
+                    if(!dialogDescription.isEmpty())
+                        muz.setDescription(dialogDescription);
                     if(muz.exec() == QDialog::Accepted)
                     {
                         it->setText(muz.currentFile());

@@ -2,11 +2,15 @@
 #ifndef FILE_LIST_BROWSER_H
 #define FILE_LIST_BROWSER_H
 
-#include <QFileDialog>
+#include <QDialog>
+#include <QListWidgetItem>
+#include <QFuture>
 
-class QToolButton;
+namespace Ui {
+class FileListBrowser;
+}
 
-class FileListBrowser : public QObject
+class FileListBrowser : public QDialog
 {
     Q_OBJECT
 
@@ -15,27 +19,35 @@ public:
     explicit FileListBrowser(QString searchDirectory, QString currentFile = QString(), QWidget *parent = nullptr);
     ~FileListBrowser();
 
-    void setDirectoryRoot(const QString &root);
-    void setDirectoryRelation(const QString &rel);
-
-    void setFilters(const QString &filterName, const QStringList &filters);
+    void setDescription(const QString &description);
+    void setFilters(const QStringList &filters);
     void setIcon(const QIcon &icon);
-    void setWindowTitle(const QString &title);
+    void startListBuilder();
 
     QString currentFile();
 
-    int exec();
+signals:
+    void itemAdded(QString item);
+    void digFinished();
 
 private slots:
-    void directoryEntered(const QString& directory);
+    void addItem(QString item);
+    void finalizeDig();
+
+    void on_FileList_itemDoubleClicked(QListWidgetItem *item);
+
+    void on_buttonBox_accepted();
+    void on_buttonBox_rejected();
 
 private:
+    Ui::FileListBrowser *ui = nullptr;
+
+    QFuture<void> fileWalker;
+    QStringList m_filters;
+
     QString m_currentFile;
-    QString m_currentRoot;
-    QString m_currentRelation;
-    QFileDialog m_dialog;
-    QToolButton *m_upButton;
-    bool m_sfxMode = false;
+    QString m_parentDirectory;
+    QString m_lastCurrentFile;
 };
 
 #endif // FILE_LIST_BROWSER_H

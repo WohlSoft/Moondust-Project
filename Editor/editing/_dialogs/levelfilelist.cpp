@@ -24,10 +24,13 @@ LevelFileList::LevelFileList(QString searchDirectory, QString currentFile, QWidg
 {
     setIcon(QIcon(":/lvl16.png"));
     setWindowTitle(tr("Level files list"));
+    setDescription(tr("Please, select level file from list for use them:"));
 
     QStringList filters;
     filters << "*.lvl" << "*.lvlx" << "*.lvlb" << "*.lvlz";
-    setFilters(tr("Supported level file formats"), filters);
+    setFilters(filters);
+
+    startListBuilder();
 }
 
 LevelFileList::~LevelFileList()
