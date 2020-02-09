@@ -57,6 +57,7 @@ ExternalProject_Add(
         ${AudioCodecs_SDL2Flag}
         $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
         "-DCMAKE_DEBUG_POSTFIX=d"
+        "-DBUILD_MIKMOD=OFF"
         ${ANDROID_CMAKE_FLAGS}
         $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DADLMIDI_USE_DOSBOX_EMULATOR=ON>
     DEPENDS ${AudioCodecs_Deps}
