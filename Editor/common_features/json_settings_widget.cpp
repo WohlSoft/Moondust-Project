@@ -781,7 +781,8 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
 
             QPushButton *colorChoose = new QPushButton(colorBox);
             colorChoose->setText("...");
-            colorChoose->setMaximumWidth(24);
+            colorChoose->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Ignored);
+            colorChoose->setFixedWidth(24);
             colorBoxL->addWidget(colorChoose, 0);
 
             colorPreview->setColor(value);
@@ -957,7 +958,8 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             fileBoxL->addWidget(it, 1000);
 
             QPushButton *browse = new QPushButton(fileBox);
-            browse->setMaximumWidth(24);
+            browse->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Ignored);
+            browse->setFixedWidth(24);
             browse->setText("...");
             browse->setToolTip(tr("Browse"));
             fileBoxL->addWidget(browse, 0);
@@ -965,7 +967,8 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             if(isMusic || isSFX)
             {
                 QPushButton *preview = new QPushButton(fileBox);
-                preview->setMaximumWidth(24);
+                preview->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Ignored);
+                preview->setFixedWidth(24);
                 preview->setText("▶️");
                 preview->setToolTip(tr("Play"));
                 fileBoxL->addWidget(preview, 0);
