@@ -114,6 +114,7 @@ protected:
     void leaveEvent(QEvent *event);
     void paintEvent(QPaintEvent *);
     bool event(QEvent *event);
+    QSize sizeHint() const;
 
 signals:
     /**

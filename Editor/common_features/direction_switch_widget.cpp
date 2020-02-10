@@ -327,6 +327,11 @@ bool DirectionSwitchWidget::event(QEvent *event)
     return QWidget::event(event);
 }
 
+QSize DirectionSwitchWidget::sizeHint() const
+{
+    return QSize(60, 60);
+}
+
 DirectionSwitchWidget::Sides DirectionSwitchWidget::findSide(int x, int y)
 {
     QRect r = rect();
