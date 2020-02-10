@@ -26,6 +26,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QSpinBox>
+#include <QResizeEvent>
 
 #ifndef UNIT_TEST
 #include <editing/_dialogs/itemselectdialog.h>
@@ -39,6 +40,87 @@
 #ifdef DEBUG_BUILD
 #include <QDebug>
 #endif
+
+
+ColorPreview::ColorPreview(QWidget *parent) :
+    QWidget(parent)
+{
+    setMinimumSize(16, 16);
+}
+
+ColorPreview::~ColorPreview()
+{}
+
+void ColorPreview::setColor(QColor color)
+{
+    m_color = color;
+    repaint();
+}
+
+QColor ColorPreview::color() const
+{
+    return m_color;
+}
+
+QSize ColorPreview::sizeHint() const
+{
+    QSize s_new = size();
+    s_new.setWidth(s_new.height());
+    return s_new;
+}
+
+void ColorPreview::resizeEvent(QResizeEvent *event)
+{
+    QSize s_old = event->oldSize();
+    QSize s_new = event->size();
+    if(s_old != s_new)
+    {
+        s_new.setWidth(s_new.height());
+        resize(s_new);
+    }
+
+    QWidget::resizeEvent(event);
+}
+
+void ColorPreview::paintEvent(QPaintEvent *)
+{
+    QSize size = this->size();
+    int w = size.width(), h = size.height();
+
+    QBrush b = QBrush(m_color);
+
+    QImage img(w, h, QImage::Format_ARGB32_Premultiplied);
+    img.fill(0);
+
+    QBrush lg = QBrush(Qt::lightGray);
+    QBrush dg = QBrush(Qt::darkGray);
+    QBrush bl = QBrush(Qt::black);
+    QPen noPen = QPen(Qt::NoPen);
+
+    QPainter painter(this);
+    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+    painter.setPen(noPen);
+    painter.setBrush(dg);
+
+    painter.fillRect(0, 0, w, h, lg);
+    for(int i = 0; i < h / 4; i++)
+    {
+        for(int j = 0; j < w / 4; j++)
+        {
+            painter.drawRect(i * 8, j * 8, 4, 4);
+            painter.drawRect(i * 8 + 4, j * 8 + 4, 4, 4);
+        }
+    }
+
+    painter.fillRect(0, 0, w, h, b);
+
+    painter.setPen(QPen(Qt::black));
+    painter.setBrush(QBrush(Qt::NoBrush));
+    painter.drawRect(0, 0, w - 1, h - 1);
+
+    painter.end();
+}
+
 
 QJsonObject JsonSettingsWidget::SetupStack::rectToArray(QVariant r)
 {
@@ -459,48 +541,6 @@ bool JsonSettingsWidget::entryHasType(const QString &type)
     return loadPropertiesLoayout_requiredTypes[l];
 }
 
-static QPixmap brushValuePixmap(const QBrush &b, QSize fieldSizeHint = QSize())
-{
-    int w = 16, h = 16;
-    if(fieldSizeHint.isValid())
-    {
-        w = fieldSizeHint.height();
-        h = w;
-    }
-
-    QImage img(w, h, QImage::Format_ARGB32_Premultiplied);
-    img.fill(0);
-
-    QBrush lg = QBrush(Qt::lightGray);
-    QBrush dg = QBrush(Qt::darkGray);
-    QBrush bl = QBrush(Qt::black);
-    QPen noPen = QPen(Qt::NoPen);
-
-    QPainter painter(&img);
-    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    painter.setPen(noPen);
-    painter.setBrush(dg);
-
-    painter.fillRect(0, 0, img.width(), img.height(), lg);
-    for(int i = 0; i < h / 4; i++)
-    {
-        for(int j = 0; j < w / 4; j++)
-        {
-            painter.drawRect(i * 8, j * 8, 4, 4);
-            painter.drawRect(i * 8 + 4, j * 8 + 4, 4, 4);
-        }
-    }
-
-    painter.fillRect(0, 0, img.width(), img.height(), b);
-
-    painter.setPen(QPen(Qt::black));
-    painter.setBrush(QBrush(Qt::NoBrush));
-    painter.drawRect(0, 0, img.width() - 1, img.height() - 1);
-
-    painter.end();
-    return QPixmap::fromImage(img);
-}
-
 static QString colorHexValueText(const QColor &c, bool alpha = true)
 {
     if(alpha)
@@ -731,7 +771,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             colorBoxL->setMargin(0);
             colorBox->setLayout(colorBoxL);
 
-            QLabel *colorPreview = new QLabel(colorBox);
+            ColorPreview *colorPreview = new ColorPreview(colorBox);
             colorBoxL->addWidget(colorPreview, 0);
 
             QLineEdit *colorString = new QLineEdit(colorBox);
@@ -744,10 +784,11 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             colorChoose->setMaximumWidth(24);
             colorBoxL->addWidget(colorChoose, 0);
 
-            colorPreview->setPixmap(brushValuePixmap(QBrush(value)));
+            colorPreview->setColor(value);
             colorString->setText(colorHexValueText(value, useAlpha));
 
             const QString id = setupTree.getPropertyId(name);
+
             QObject::connect(colorChoose, static_cast<void(QPushButton::*)(bool)>(&QPushButton::clicked),
             [id, target, useAlpha, colorPreview, colorString, this](bool)
             {
@@ -763,23 +804,24 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
                     qDebug() << "changed:" << id << colorString->text() << val;
 #endif
                     colorString->setText(val);
-                    colorPreview->setPixmap(brushValuePixmap(QBrush(newRgba)));
+                    colorPreview->setColor(newRgba);
                     m_setupStack.setValue(id, val);
                     emit settingsChanged();
                 }
             });
 
             QObject::connect(colorString, &QLineEdit::editingFinished,
-            [id, colorPreview, colorString, this]()
+            [id, colorPreview, colorString, valueDefault, this]()
             {
                 QString val = colorString->text();
                 QColor newRgba = colorFromHexValue(colorString->text());
-                if(newRgba.isValid())
+                QColor oldRgna = colorPreview->color();
+                if(newRgba.isValid() && (oldRgna != newRgba))
                 {
 #ifdef DEBUG_BUILD
                     qDebug() << "changed:" << id << val;
 #endif
-                    colorPreview->setPixmap(brushValuePixmap(QBrush(newRgba)));
+                    colorPreview->setColor(newRgba);
                     m_setupStack.setValue(id, val);
                     emit settingsChanged();
                 }

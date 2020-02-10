@@ -4,7 +4,30 @@
 #include <QObject>
 #include <QStack>
 #include <QWidget>
+#include <QLabel>
 #include <QJsonDocument>
+
+class ColorPreview : public QWidget
+{
+    Q_OBJECT
+
+    QColor m_color;
+public:
+    explicit ColorPreview(QWidget *parent);
+    ~ColorPreview() override;
+
+    void setColor(QColor color);
+    QColor color() const;
+
+    virtual QSize sizeHint() const override;
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
+
+signals:
+    void sizeChanged(QSize newSize);
+};
 
 class dataconfigs;
 class JsonSettingsWidget : public QObject
