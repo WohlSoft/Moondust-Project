@@ -58,6 +58,8 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
         height()
     );
 
+    m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    
     connect(mw()->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
             this, SLOT(switchResizeMode(bool)));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionSection_Settings, SLOT(setChecked(bool)));
@@ -94,7 +96,9 @@ LvlSectionProps::~LvlSectionProps()
 {
     if(m_extraSettings.get())
         ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+    ui->extraSettings->layout()->removeItem(m_extraSettingsSpacer.get());
     m_extraSettings.reset();
+    m_extraSettingsSpacer.reset();
     delete ui;
 }
 
@@ -139,7 +143,8 @@ void LvlSectionProps::updateExtraSettingsWidget()
     if((mw()->activeChildWindow() == MainWindow::WND_Level) && (edit = mw()->activeLvlEditWin()))
     {
         QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
-
+        bool spacerNeeded = false;
+        
         CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
         uLVL.setDefaultDir(defaultDir);
 
@@ -158,6 +163,7 @@ void LvlSectionProps::updateExtraSettingsWidget()
         ui->extraSettings->setStyleSheet("");
         if(m_extraSettings.get())
             ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+        ui->extraSettings->layout()->removeItem(m_extraSettingsSpacer.get());
         m_extraSettings.reset();
 
         QByteArray rawLayout = layoutFile.readAll();
@@ -184,9 +190,14 @@ void LvlSectionProps::updateExtraSettingsWidget()
                                             &JsonSettingsWidget::settingsChanged,
                                             this,
                                             &LvlSectionProps::onExtraSettingsChanged);
+                spacerNeeded = spacerNeeded || m_extraSettings->spacerNeeded();
             }
         }
         layoutFile.close();
+        
+        ui->extraSettings->setMinimumHeight(spacerNeeded ? 0 : 150);
+        if(spacerNeeded)
+            ui->extraSettings->layout()->addItem(m_extraSettingsSpacer.get());
     }
 }
 

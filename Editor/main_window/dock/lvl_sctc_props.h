@@ -9,6 +9,7 @@
 
 class MainWindow;
 class QPushButton;
+class QSpacerItem;
 class JsonSettingsWidget;
 
 namespace Ui {
@@ -69,6 +70,7 @@ private:
 
     QMutex m_mutex;
     std::unique_ptr<JsonSettingsWidget> m_extraSettings;
+    std::unique_ptr<QSpacerItem> m_extraSettingsSpacer;
 
     Ui::LvlSectionProps *ui;
 };

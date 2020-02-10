@@ -57,6 +57,9 @@
       <property name="lineWidth">
        <number>0</number>
       </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
       <property name="widgetResizable">
        <bool>true</bool>
       </property>
@@ -70,23 +73,26 @@
         </rect>
        </property>
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,1000">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,100">
+        <property name="spacing">
+         <number>1</number>
+        </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="topMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <property name="bottomMargin">
-         <number>0</number>
+         <number>2</number>
         </property>
         <item>
          <widget class="QWidget" name="LVLSectionTopSettings" native="true">
@@ -526,7 +532,7 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>6</height>
+            <height>200</height>
            </size>
           </property>
           <property name="frameShape">
