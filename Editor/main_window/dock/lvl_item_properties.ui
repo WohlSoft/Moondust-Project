@@ -94,19 +94,19 @@
             <enum>QLayout::SetMinimumSize</enum>
            </property>
            <property name="leftMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="topMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="rightMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="bottomMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="spacing">
-            <number>1</number>
+            <number>2</number>
            </property>
            <item row="4" column="0" colspan="2">
             <widget class="QCheckBox" name="PROPS_BlockInvis">
@@ -487,19 +487,19 @@
             <enum>QLayout::SetMinimumSize</enum>
            </property>
            <property name="leftMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="topMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="rightMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="bottomMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="spacing">
-            <number>1</number>
+            <number>2</number>
            </property>
            <item row="4" column="0" colspan="2">
             <widget class="Line" name="line_4">
@@ -687,19 +687,19 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <enum>QLayout::SetMinimumSize</enum>
            </property>
            <property name="leftMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="topMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="rightMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="bottomMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="spacing">
-            <number>1</number>
+            <number>2</number>
            </property>
            <item row="14" column="0" colspan="3">
             <widget class="QSpinBox" name="PROPS_NPCSpecialSpin"/>

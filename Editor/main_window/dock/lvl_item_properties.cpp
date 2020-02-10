@@ -978,7 +978,6 @@ void LvlItemProperties::initExtraSettingsWidget(const QString &defaultLocalDir,
                 auto *widget = m_extraSettings->getWidget();
                 if(widget)
                 {
-                    widget->layout()->setContentsMargins(0, 0, 0, 0);
                     ui->extraSettings->layout()->addWidget(widget);
                     JsonSettingsWidget::connect(m_extraSettings.get(),
                                                 &JsonSettingsWidget::settingsChanged,
