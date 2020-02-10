@@ -674,7 +674,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
         else if(!control.compare("checkBox", Qt::CaseInsensitive))
         {
             bool valueDefault = o["value-default"].toBool(false);
-            bool textAtLeft = false;
+            bool textAtLeft = true;
 
             if(o.keys().contains("text-at-left"))
                 textAtLeft = o["text-at-left"].toBool();
