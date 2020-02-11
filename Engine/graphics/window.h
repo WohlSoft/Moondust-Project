@@ -94,7 +94,7 @@ void setCursorVisibly(bool viz);
 void clean();
 
 int setFullScreen(bool fs);
-int SDL_ToggleFS(SDL_Window *win = NULL);
+int SDL_ToggleFS(SDL_Window *win = nullptr);
 
 int processEvents(SDL_Event &event);
 

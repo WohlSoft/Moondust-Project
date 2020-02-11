@@ -121,29 +121,29 @@ static bool GetStackWalk(std::string &outWalk)
 #ifdef __ANDROID__
 namespace AndroidStackTrace
 {
-    struct BacktraceState
-    {
-        void** current;
-        void** end;
-    };
+struct BacktraceState
+{
+    void **current;
+    void **end;
+};
 
-    static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context* context, void* arg)
+static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context *context, void *arg)
+{
+    BacktraceState *state = static_cast<BacktraceState *>(arg);
+    uintptr_t pc = _Unwind_GetIP(context);
+    if(pc)
     {
-        BacktraceState* state = static_cast<BacktraceState*>(arg);
-        uintptr_t pc = _Unwind_GetIP(context);
-        if (pc) {
-            if (state->current == state->end) {
-                return _URC_END_OF_STACK;
-            } else {
-                *state->current++ = reinterpret_cast<void*>(pc);
-            }
-        }
-        return _URC_NO_REASON;
+        if(state->current == state->end)
+            return _URC_END_OF_STACK;
+        else
+            *state->current++ = reinterpret_cast<void *>(pc);
     }
+    return _URC_NO_REASON;
+}
 
 }
 
-static size_t captureBacktrace(void** buffer, size_t max)
+static size_t captureBacktrace(void **buffer, size_t max)
 {
     AndroidStackTrace::BacktraceState state = {buffer, buffer + max};
     _Unwind_Backtrace(AndroidStackTrace::unwindCallback, &state);
@@ -153,14 +153,14 @@ static size_t captureBacktrace(void** buffer, size_t max)
 
 static void androidDumpBacktrace(std::ostringstream &os, void **buffer, size_t count)
 {
-    for (size_t idx = 0; idx < count; ++idx) {
-        const void* addr = buffer[idx];
-        const char* symbol = "";
+    for(size_t idx = 0; idx < count; ++idx)
+    {
+        const void *addr = buffer[idx];
+        const char *symbol = "";
 
         Dl_info info;
-        if (dladdr(addr, &info) && info.dli_sname) {
+        if(dladdr(addr, &info) && info.dli_sname)
             symbol = info.dli_sname;
-        }
 
         os << "  #" << std::setw(2) << idx << ": " << addr << "  " << symbol << "\n";
     }
@@ -222,7 +222,7 @@ static void replaceStr(std::string &data, std::string toSearch, std::string repl
     while(pos != std::string::npos)
     {
         data.replace(pos, toSearch.size(), replaceStr);
-        pos =data.find(toSearch, pos + replaceStr.size());
+        pos = data.find(toSearch, pos + replaceStr.size());
     }
 }
 
@@ -271,7 +271,7 @@ static std::string getStacktrace()
 
 #elif defined(__ANDROID__)
     const size_t max = 400;
-    void* buffer[max];
+    void *buffer[max];
     std::ostringstream oss;
     androidDumpBacktrace(oss, buffer, captureBacktrace(buffer, max));
     D_pLogDebugNA("DONE!");

@@ -178,8 +178,8 @@ void GameUserDataManager::clear()
 }
 
 GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManager::DataType dataType,
-                                                              const std::string &sectionName,
-                                                              const std::string &fileName) const
+        const std::string &sectionName,
+        const std::string &fileName) const
 {
     switch(dataType)
     {
@@ -214,8 +214,8 @@ GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManage
 }
 
 GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDataManager::DataType dataType,
-                                                                      const std::string &sectionName,
-                                                                      const std::string &fileName) const
+        const std::string &sectionName,
+        const std::string &fileName) const
 {
     switch(dataType)
     {
@@ -250,9 +250,9 @@ GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDa
 }
 
 void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
-                                                              const GameUserDataManager::DataList &list,
-                                                              const std::string &sectionName,
-                                                              const std::string &fileName)
+                                     const GameUserDataManager::DataList &list,
+                                     const std::string &sectionName,
+                                     const std::string &fileName)
 {
     switch(dataType)
     {
@@ -270,9 +270,9 @@ void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
 }
 
 void GameUserDataManager::setVolatileSection(GameUserDataManager::DataType dataType,
-                                                                      const GameUserDataManager::DataList &list,
-                                                                      const std::string &sectionName,
-                                                                      const std::string &fileName)
+        const GameUserDataManager::DataList &list,
+        const std::string &sectionName,
+        const std::string &fileName)
 {
     switch(dataType)
     {

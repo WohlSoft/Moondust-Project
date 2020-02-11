@@ -126,10 +126,10 @@ qmTrConversionResult qmTr_ConvertUTF32toUTF16(
 /* --------------------------------------------------------------------- */
 
 qmTrConversionResult qmTr_ConvertUTF16toUTF32(
-        const UTF16 **sourceStart, const UTF16 *sourceEnd,
-        UTF32 **targetStart, UTF32 *targetEnd,
-        qmTrConversionFlags flags,
-        unsigned long *targetStrLength)
+    const UTF16 **sourceStart, const UTF16 *sourceEnd,
+    UTF32 **targetStart, UTF32 *targetEnd,
+    qmTrConversionFlags flags,
+    unsigned long *targetStrLength)
 {
     qmTrConversionResult result = conversionOK;
     const UTF16 *source = *sourceStart;
@@ -257,10 +257,10 @@ static const UTF8 firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC 
 /* --------------------------------------------------------------------- */
 
 qmTrConversionResult qmTr_ConvertUTF16toUTF8(
-        const UTF16 **sourceStart, const UTF16 *sourceEnd,
-        UTF8 **targetStart, UTF8 *targetEnd,
-        qmTrConversionFlags flags,
-        unsigned long *targetByteLength)
+    const UTF16 **sourceStart, const UTF16 *sourceEnd,
+    UTF8 **targetStart, UTF8 *targetEnd,
+    qmTrConversionFlags flags,
+    unsigned long *targetByteLength)
 {
     qmTrConversionResult result = conversionOK;
     const UTF16 *source = *sourceStart;
@@ -341,10 +341,17 @@ qmTrConversionResult qmTr_ConvertUTF16toUTF8(
         }
         switch(bytesToWrite)    /* note: everything falls through. */
         {
-        case 4: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
-        case 3: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
-        case 2: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
-        case 1: *--target = (UTF8)(ch | firstByteMark[bytesToWrite]);  /*fallthrough*/
+        case 4:
+            *--target = (UTF8)((ch | byteMark) & byteMask);
+            ch >>= 6; /*fallthrough*/
+        case 3:
+            *--target = (UTF8)((ch | byteMark) & byteMask);
+            ch >>= 6; /*fallthrough*/
+        case 2:
+            *--target = (UTF8)((ch | byteMark) & byteMask);
+            ch >>= 6; /*fallthrough*/
+        case 1:
+            *--target = (UTF8)(ch | firstByteMark[bytesToWrite]);  /*fallthrough*/
         }
         target += bytesToWrite;
         assert(writeLength <= (unsigned long)(target - *targetStart));
@@ -390,11 +397,21 @@ static Boolean isLegalUTF8(const UTF8 *source, int length)
         switch(*source)
         {
         /* no fall-through in this inner switch */
-        case 0xE0: if(a < 0xA0) return false; break;
-        case 0xED: if(a > 0x9F) return false; break;
-        case 0xF0: if(a < 0x90) return false; break;
-        case 0xF4: if(a > 0x8F) return false; break;
-        default:   if(a < 0x80) return false; break;
+        case 0xE0:
+            if(a < 0xA0) return false;
+            break;
+        case 0xED:
+            if(a > 0x9F) return false;
+            break;
+        case 0xF0:
+            if(a < 0x90) return false;
+            break;
+        case 0xF4:
+            if(a > 0x8F) return false;
+            break;
+        default:
+            if(a < 0x80) return false;
+            break;
         }/*fallthrough*/
 
     case 1:
@@ -449,12 +466,23 @@ qmTrConversionResult qmTr_ConvertUTF8toUTF16(
          */
         switch(extraBytesToRead)
         {
-        case 5: ch += *source++; ch <<= 6; /*fallthrough*/ /* remember, illegal UTF-8 */
-        case 4: ch += *source++; ch <<= 6; /*fallthrough*/ /* remember, illegal UTF-8 */
-        case 3: ch += *source++; ch <<= 6; /*fallthrough*/
-        case 2: ch += *source++; ch <<= 6; /*fallthrough*/
-        case 1: ch += *source++; ch <<= 6; /*fallthrough*/
-        case 0: ch += *source++;
+        case 5:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/ /* remember, illegal UTF-8 */
+        case 4:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/ /* remember, illegal UTF-8 */
+        case 3:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/
+        case 2:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/
+        case 1:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/
+        case 0:
+            ch += *source++;
         }
         ch -= offsetsFromUTF8[extraBytesToRead];
 
@@ -572,10 +600,17 @@ qmTrConversionResult qmTr_ConvertUTF32toUTF8(
         }
         switch(bytesToWrite)    /* note: everything falls through. */
         {
-        case 4: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
-        case 3: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
-        case 2: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
-        case 1: *--target = (UTF8)(ch | firstByteMark[bytesToWrite]);
+        case 4:
+            *--target = (UTF8)((ch | byteMark) & byteMask);
+            ch >>= 6; /*fallthrough*/
+        case 3:
+            *--target = (UTF8)((ch | byteMark) & byteMask);
+            ch >>= 6; /*fallthrough*/
+        case 2:
+            *--target = (UTF8)((ch | byteMark) & byteMask);
+            ch >>= 6; /*fallthrough*/
+        case 1:
+            *--target = (UTF8)(ch | firstByteMark[bytesToWrite]);
         }
         target += bytesToWrite;
     }
@@ -617,12 +652,23 @@ qmTrConversionResult qmTr_ConvertUTF8toUTF32(
          */
         switch(extraBytesToRead)
         {
-        case 5: ch += *source++; ch <<= 6; /*fallthrough*/
-        case 4: ch += *source++; ch <<= 6; /*fallthrough*/
-        case 3: ch += *source++; ch <<= 6; /*fallthrough*/
-        case 2: ch += *source++; ch <<= 6; /*fallthrough*/
-        case 1: ch += *source++; ch <<= 6; /*fallthrough*/
-        case 0: ch += *source++;
+        case 5:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/
+        case 4:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/
+        case 3:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/
+        case 2:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/
+        case 1:
+            ch += *source++;
+            ch <<= 6; /*fallthrough*/
+        case 0:
+            ch += *source++;
         }
         ch -= offsetsFromUTF8[extraBytesToRead];
 

@@ -58,32 +58,32 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     FileMapper fileMap;
 
     if(!fileMap.open_file(file.c_str()))
-        return NULL;
+        return nullptr;
 
     FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
                                             static_cast<unsigned int>(fileMap.size()));
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 
     if(formato  == FIF_UNKNOWN)
-        return NULL;
+        return nullptr;
 
     FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
     FreeImage_CloseMemory(imgMEM);
     fileMap.close_file();
 
     if(!img)
-        return NULL;
+        return nullptr;
 
 #else
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
 
     if(formato  == FIF_UNKNOWN)
-        return NULL;
+        return nullptr;
 
     FIBITMAP *img = FreeImage_Load(formato, file.c_str());
 
     if(!img)
-        return NULL;
+        return nullptr;
 
 #endif
 #ifdef DEBUG_BUILD
@@ -100,7 +100,7 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
         temp = FreeImage_ConvertTo32Bits(img);
 
         if(!temp)
-            return NULL;
+            return nullptr;
 
         FreeImage_Unload(img);
         img = temp;
@@ -123,8 +123,8 @@ FIBITMAP *GraphicsHelps::loadImageRC(const char *file)
     size_t fileSize = 0;
     SDL_assert_release(RES_getMem(file, memory, fileSize));
     //{
-        //pLogCritical("Resource file \"%s\" is not found!", file);
-        //return nullptr;
+    //pLogCritical("Resource file \"%s\" is not found!", file);
+    //return nullptr;
     //}
 
     FIMEMORY *imgMEM = FreeImage_OpenMemory(memory, static_cast<FI_DWORD>(fileSize));
@@ -260,7 +260,7 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::
     FreeImage_Unload(mask);
 }
 
-bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size* imgSize)
+bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size *imgSize)
 {
 
     if(!imgSize)
@@ -276,7 +276,7 @@ bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size* imgSize)
     return true;
 }
 
-void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgName, std::string& out_maskName, std::string& out_errStr, PGE_Size* imgSize)
+void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgName, std::string &out_maskName, std::string &out_errStr, PGE_Size *imgSize)
 {
     if(in_imgName.empty())
     {

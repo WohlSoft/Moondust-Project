@@ -30,11 +30,11 @@ namespace fmt
     Exception-less fmt::format version. Instead of exception, the error message will be logged into file
 */
 template <typename... Args>
-std::string format_ne(CStringRef format_str, const Args & ... args)
+std::string format_ne(CStringRef format_str, const Args &... args)
 {
     try
     {
-        return format(format_str, std::forward<const Args&>(args)...);
+        return format(format_str, std::forward<const Args &>(args)...);
     }
     catch(const FormatError &e)
     {
@@ -56,11 +56,11 @@ std::string format_ne(CStringRef format_str, const Args & ... args)
 }
 
 template <typename... Args>
-std::string sprintf_ne(CStringRef format_str, const Args & ... args)
+std::string sprintf_ne(CStringRef format_str, const Args &... args)
 {
     try
     {
-        return sprintf(format_str, std::forward<const Args&>(args)...);
+        return sprintf(format_str, std::forward<const Args &>(args)...);
     }
     catch(const FormatError &e)
     {

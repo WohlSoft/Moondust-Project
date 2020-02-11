@@ -45,18 +45,14 @@ void PGE_MusPlayer::play()
             Mix_PlayMusic(p_playingMus, -1);
         }
         else if(Mix_PausedMusicStream(p_playingMus) == 1)
-        {
             Mix_ResumeMusicStream(p_playingMus);
-        }
     }
 }
 
 std::string PGE_MusPlayer::getTitle()
 {
     if(p_playingMus)
-    {
         return Mix_GetMusicTitle(p_playingMus);
-    }
     return std::string();
 }
 
@@ -74,18 +70,14 @@ void  PGE_MusPlayer::fadeIn(int ms)
 
             if((Mix_FadingMusicStream(p_playingMus) != MIX_FADING_IN) &&
                (Mix_FadeInMusic(p_playingMus, -1, ms) == -1))
-            {
                 PGE_MsgBox::warn(std::string("Mix_FadeInMusic:") + Mix_GetError());
-            }
         }
         else
             Mix_ResumeMusicStream(p_playingMus);
 
     }
     else
-    {
         PGE_MsgBox::warn(std::string("Play nothing:") + Mix_GetError());
-    }
 }
 
 void PGE_MusPlayer::pause()

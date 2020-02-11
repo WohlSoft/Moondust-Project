@@ -27,7 +27,7 @@ static struct AudioState
     bool        isLoaded;
     int         sRate;
 
-    SDL_mutex*  sampleCountMutex;
+    SDL_mutex  *sampleCountMutex;
     Uint64      sCount;
     Uint64      musSCount;
 } p_audioState = {false, 44100, nullptr, 0, 0};
@@ -44,13 +44,11 @@ static void postMixCallback(void *udata,
     if(SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
     {
         // This post mix callback has a simple purpose: count audio samples.
-        p_audioState.sCount += len/4;
+        p_audioState.sCount += len / 4;
 
         // (Approximate) sample count for only when music is playing
         if(PGE_MusPlayer::isPlaying() && !PGE_MusPlayer::isPaused())
-        {
-            p_audioState.musSCount += len/4;
-        }
+            p_audioState.musSCount += len / 4;
         SDL_UnlockMutex(p_audioState.sampleCountMutex);
     }
 }
@@ -77,12 +75,10 @@ int PGE_Audio::init(Uint32 sampleRate,
 
     // Reset the audio sample count and set the post mix callback
     if(p_audioState.sampleCountMutex == nullptr)
-    {
         p_audioState.sampleCountMutex = SDL_CreateMutex();
-    }
 
     // Reset music sample count
-    if (SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
+    if(SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
     {
         p_audioState.sCount = 0;
         p_audioState.musSCount = 0;
@@ -115,7 +111,7 @@ const bool &PGE_Audio::isLoaded()
 
 void PGE_Audio::resetMusicSampleCounter()
 {
-    if (SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
+    if(SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
     {
         p_audioState.musSCount = 0;
         SDL_UnlockMutex(p_audioState.sampleCountMutex);

@@ -109,6 +109,9 @@ qt_en.qm
 *.db
 *_plugin_import.cpp
 
+# Some tools like astyle may leave these files
+*.orig
+
 #unpacked libraries sources
 /_Libs/_sources/_build_cache*/*
 !/_Libs/_sources

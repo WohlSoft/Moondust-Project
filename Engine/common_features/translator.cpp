@@ -72,11 +72,9 @@ void PGE_Translator::init()
     CFIndex maxSize = CFStringGetMaximumSizeForEncoding(length, kCFStringEncodingUTF8) + 1;
     char *buffer = (char *)malloc(maxSize);
     if(CFStringGetCString(value, buffer, maxSize, kCFStringEncodingUTF8))
-    {
         defaultLocale = std::string(buffer);
-    } else {
+    else
         pLogWarning("COCOA: Failed to retreive language code");
-    }
     free(buffer);
     CFRelease(cflocale);
 #elif defined(__EMSCRIPTEN__)
@@ -194,7 +192,7 @@ void PGE_Translator::toggleLanguage(std::string lang, std::string region)
     }
 }
 
-std::string qtTrId(const char* string)
+std::string qtTrId(const char *string)
 {
     if(!g_translator)
         return string;

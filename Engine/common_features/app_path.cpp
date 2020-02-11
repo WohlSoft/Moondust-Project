@@ -90,7 +90,7 @@ static std::string getPgeUserDirectory()
     path = "/sdcard/";
 #elif defined(__gnu_linux__)
     {
-        passwd* pw = getpwuid(getuid());
+        passwd *pw = getpwuid(getuid());
         path.append(pw->pw_dir);
     }
 #endif
@@ -130,7 +130,7 @@ void AppPathManager::initAppPath()
         CFRelease(appUrlRef);
     }
 #else //__APPLE__
-    char* path = SDL_GetBasePath();//DirMan(Files::dirname(argv0)).absolutePath();
+    char *path = SDL_GetBasePath();//DirMan(Files::dirname(argv0)).absolutePath();
     if(!path)
     {
         std::fprintf(stderr, "== Failed to recogonize application path by using of SDL_GetBasePath! Using current working directory \"./\" instead.\n");
@@ -162,7 +162,7 @@ void AppPathManager::initAppPath()
         std::string noMediaFile = userDirPath + "/.nomedia";
         if(!Files::fileExists(noMediaFile))
         {
-            SDL_RWops* noMediaRWops = SDL_RWFromFile(noMediaFile.c_str(), "wb");
+            SDL_RWops *noMediaRWops = SDL_RWFromFile(noMediaFile.c_str(), "wb");
             if(noMediaRWops)
                 SDL_RWclose(noMediaRWops);
         }
@@ -172,9 +172,7 @@ void AppPathManager::initAppPath()
         initSettingsPath();
     }
     else
-    {
         goto defaultSettingsPath;
-    }
 
     return;
 defaultSettingsPath:

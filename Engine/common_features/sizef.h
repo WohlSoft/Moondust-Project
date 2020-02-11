@@ -23,22 +23,22 @@
 class PGE_Size;
 class PGE_SizeF
 {
-        friend class PGE_Size;
-    public:
-        PGE_SizeF();
-        PGE_SizeF(const PGE_SizeF &p) = default;
-        PGE_SizeF(const PGE_Size &p);
-        PGE_SizeF(double w, double h);
-        ~PGE_SizeF();
-        void setSize(double w, double h);
-        void setWidth(double w);
-        void setHeight(double h);
-        bool isNull() const;
-        double w() const;
-        double h() const;
-    private:
-        double m_w;
-        double m_h;
+    friend class PGE_Size;
+public:
+    PGE_SizeF();
+    PGE_SizeF(const PGE_SizeF &p) = default;
+    PGE_SizeF(const PGE_Size &p);
+    PGE_SizeF(double w, double h);
+    ~PGE_SizeF();
+    void setSize(double w, double h);
+    void setWidth(double w);
+    void setHeight(double h);
+    bool isNull() const;
+    double w() const;
+    double h() const;
+private:
+    double m_w;
+    double m_h;
 };
 
 #endif // PGE_SizeF_H

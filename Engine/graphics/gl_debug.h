@@ -73,7 +73,7 @@ static inline void _GLErrorCheck(const char* fn, int line, const char* func)
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error",
                                  errMsg.str().c_str(),
-                                 NULL);
+                                 nullptr);
         abort();
     }
 }
@@ -97,7 +97,7 @@ static inline void _GLShowError(const std::string &msg, const char* fn, int line
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error",
                                  errMsg.str().c_str(),
-                                 NULL);
+                                 nullptr);
         abort();
     }
 }

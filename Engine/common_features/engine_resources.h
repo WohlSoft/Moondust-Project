@@ -8,5 +8,5 @@
  * @param [OUT] mem reference to null pointer
  * @param [OUT] size reference to size variable
  */
-extern bool RES_getMem(const char* file, unsigned char* &mem, size_t &size);
+extern bool RES_getMem(const char *file, unsigned char *&mem, size_t &size);
 

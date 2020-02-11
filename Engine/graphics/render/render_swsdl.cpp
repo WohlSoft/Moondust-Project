@@ -112,7 +112,7 @@ void Render_SW_SDL::initDummyTexture()
     if(!image)
     {
         std::string msg = fmt::format_ne("Can't initialize dummy texture!\n"
-                                      "In file: {0}:{1}", __FILE__, __LINE__);
+                                         "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error", msg.c_str(), nullptr);
         abort();
@@ -440,12 +440,12 @@ void Render_SW_SDL::renderTexture(PGE_Texture *texture, float x, float y, float 
     auto texH = static_cast<float>(texture->h);
 
     unsigned int flip = SDL_FLIP_NONE;
-    if( ani_left > ani_right )
+    if(ani_left > ani_right)
     {
         std::swap(ani_left, ani_right);
         flip |= SDL_FLIP_HORIZONTAL;
     }
-    if( ani_top > ani_bottom )
+    if(ani_top > ani_bottom)
     {
         std::swap(ani_top, ani_bottom);
         flip |= SDL_FLIP_HORIZONTAL;
@@ -487,12 +487,12 @@ void Render_SW_SDL::renderTextureCur(float x, float y, float w, float h,
     auto texH = static_cast<float>(m_currentTextureRect.height());
 
     unsigned int flip = SDL_FLIP_NONE;
-    if( ani_left > ani_right )
+    if(ani_left > ani_right)
     {
         std::swap(ani_left, ani_right);
         flip |= SDL_FLIP_HORIZONTAL;
     }
-    if( ani_top > ani_bottom )
+    if(ani_top > ani_bottom)
     {
         std::swap(ani_top, ani_bottom);
         flip |= SDL_FLIP_HORIZONTAL;
@@ -579,8 +579,8 @@ PGE_Point Render_SW_SDL::MapToScr(PGE_Point point)
 PGE_Point Render_SW_SDL::MapToScr(int x, int y)
 {
     return PGE_Point(
-               static_cast<int>( (static_cast<float>(x) - offset_x) / viewport_scale_x),
-               static_cast<int>( (static_cast<float>(y) - offset_y) / viewport_scale_y)
+               static_cast<int>((static_cast<float>(x) - offset_x) / viewport_scale_x),
+               static_cast<int>((static_cast<float>(y) - offset_y) / viewport_scale_y)
            );
 }
 

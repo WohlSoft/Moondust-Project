@@ -47,17 +47,17 @@ static char       g_outputBuffer[OUT_BUFFER_SIZE];
 
 class MutexLocker
 {
-        std::mutex *m_mutex;
-    public:
-        MutexLocker(std::mutex *mutex)
-        {
-            m_mutex = mutex;
-            m_mutex->lock();
-        }
-        ~MutexLocker()
-        {
-            m_mutex->unlock();
-        }
+    std::mutex *m_mutex;
+public:
+    MutexLocker(std::mutex *mutex)
+    {
+        m_mutex = mutex;
+        m_mutex->lock();
+    }
+    ~MutexLocker()
+    {
+        m_mutex->unlock();
+    }
 };
 
 std::string     LogWriter::m_logFilePath;
@@ -132,9 +132,7 @@ void LogWriter::LoadLogSettings(bool disableStdOut)
     {
         m_logout = SDL_RWFromFile(m_logFilePath.c_str(), "a");
         if(m_logout)
-        {
             m_logIsOpened = true;
-        }
         else
         {
             std::fprintf(stderr, "Impossible to open %s for write, log printing is disabled!\n", m_logFilePath.c_str());

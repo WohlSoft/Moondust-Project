@@ -32,7 +32,7 @@ public:
     static Mix_Chunk *openSFX(std::string sndFile);
 
 private:
-    typedef std::unordered_map<std::string, Mix_Chunk* > sfxHash;
+    typedef std::unordered_map<std::string, Mix_Chunk * > sfxHash;
     static  sfxHash chunksBuffer;
 };
 

@@ -26,24 +26,24 @@ extern std::string  ApplicationPathSTD;
 
 class AppPathManager
 {
-    public:
-        static void initAppPath();
-        static std::string settingsFileSTD();
-        static std::string userAppDirSTD();
-        static std::string languagesDir();
-        static std::string screenshotsDir();
-        static void install();
-        static bool isPortable();
-        static bool userDirIsAvailable();
+public:
+    static void initAppPath();
+    static std::string settingsFileSTD();
+    static std::string userAppDirSTD();
+    static std::string languagesDir();
+    static std::string screenshotsDir();
+    static void install();
+    static bool isPortable();
+    static bool userDirIsAvailable();
 
 private:
-        /**
-         * @brief Makes settings path if not exists
-         */
-        static void initSettingsPath();
-        //! Full path to settings INI file
-        static std::string m_settingsPath;
-        static std::string m_userPath;
+    /**
+     * @brief Makes settings path if not exists
+     */
+    static void initSettingsPath();
+    //! Full path to settings INI file
+    static std::string m_settingsPath;
+    static std::string m_userPath;
 };
 
 #endif // APP_PATH_H

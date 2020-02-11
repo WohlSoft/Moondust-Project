@@ -200,7 +200,7 @@ private:
     VPtrList<WldMusicBoxItem >      m_itemsMusicBoxes;
     EventQueue<WorldScene >         m_events;
 
-    std::vector<WorldNode*>         m_itemsToRender;
+    std::vector<WorldNode *>         m_itemsToRender;
 
 
     /*****************Pause Menu*******************/

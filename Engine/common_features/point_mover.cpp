@@ -41,7 +41,7 @@ void PointMover::setSpeed(double speed)
 void PointMover::setTarget(double toPosX, double toPosY, double speed)
 {
     if(speed <= 0.0)
-         speed = m_speed;
+        speed = m_speed;
     start(m_posX, m_posY, toPosX, toPosY, speed);
 }
 

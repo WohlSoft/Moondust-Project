@@ -228,8 +228,8 @@ public:
      */
     static void renderTextureCur(float x, float y,
                                  float w, float h,
-                                 float ani_top=0.0f, float ani_bottom=1.0f,
-                                 float ani_left=0.0f, float ani_right=1.0f);
+                                 float ani_top = 0.0f, float ani_bottom = 1.0f,
+                                 float ani_left = 0.0f, float ani_right = 1.0f);
 
     /**
      * @brief Bind the texture
@@ -365,7 +365,7 @@ public:
      * @param tx Texture context
      * @param pixelData Pointer to array to write raw pixel data
      */
-    static void getPixelData(const PGE_Texture *tx, unsigned char* pixelData);
+    static void getPixelData(const PGE_Texture *tx, unsigned char *pixelData);
 
 private:
     //Virtual resolution of renderable zone
@@ -386,7 +386,7 @@ private:
     //! Keep aspect ratio vertical offset of virtual zone
     static float m_offset_y;
 
-    static SDL_Thread*  m_screenshot_thread;
+    static SDL_Thread  *m_screenshot_thread;
     //! Is rendering engine is ready for work?
     static bool         m_isReady;
 };

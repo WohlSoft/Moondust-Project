@@ -46,21 +46,21 @@ namespace Maths
 
     inline void clearPrecision(double &n)
     {
-        n = float(n);
+        n = double(float(n));
     }
 
     inline double clearPrecisionRet(double n)
     {
-        return float(n);
+        return double(float(n));
     }
 
     inline double roundToUp(double numToRound, double multiple)
     {
-        if (multiple == 0)
+        if (multiple == 0.0)
             return numToRound;
 
         double remainder = std::fmod(std::fabs(numToRound), multiple);
-        if (remainder == 0)
+        if (remainder == 0.0)
             return numToRound;
 
         if (numToRound < 0)

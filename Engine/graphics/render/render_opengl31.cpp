@@ -145,7 +145,7 @@ void Render_OpenGL31::initDummyTexture()
     if(!image)
     {
         std::string msg = fmt::format_ne("Can't initialize dummy texture!\n"
-                                      "In file: {0}:{1}", __FILE__, __LINE__);
+                                         "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error", msg.c_str(), NULL);
         abort();
@@ -595,8 +595,8 @@ PGE_Point Render_OpenGL31::MapToScr(PGE_Point point)
 PGE_Point Render_OpenGL31::MapToScr(int x, int y)
 {
     return PGE_Point(
-               static_cast<int>( (static_cast<float>(x) - offset_x) / viewport_scale_x),
-               static_cast<int>( (static_cast<float>(y) - offset_y) / viewport_scale_y)
+               static_cast<int>((static_cast<float>(x) - offset_x) / viewport_scale_x),
+               static_cast<int>((static_cast<float>(y) - offset_y) / viewport_scale_y)
            );
 }
 

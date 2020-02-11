@@ -29,7 +29,7 @@ public:
     void init();
     void toggleLanguage(std::string lang, std::string region = std::string());
 private:
-    friend std::string qtTrId(const char* string);
+    friend std::string qtTrId(const char *string);
 
     bool            m_isInit;
     //QTranslator     m_translator;   /**< contains the translations for this application */
