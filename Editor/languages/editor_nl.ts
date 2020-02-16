@@ -21,7 +21,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="111"/>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation>Aparte subvensters (Klassieke stijl)</translation>
+        <translation>Aparte subvensters (klassieke stijl)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="124"/>
@@ -366,7 +366,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="899"/>
         <source>Tileset Item toolbox</source>
-        <translation>Voorwerpen Gereedschapskist</translation>
+        <translation>Voorwerpen Gereedschapsvenster</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="923"/>
@@ -496,7 +496,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="46"/>
         <source>Counting stars...</source>
-        <translation>Sterren aan het tellen...</translation>
+        <translation>Sterren aan het tellen…</translation>
     </message>
 </context>
 <context>
@@ -841,7 +841,7 @@ Je kan ook het voorwerp dubbelklikken om terug naar de bladwijzer te gaan.</tran
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="94"/>
         <source>Go To...</source>
-        <translation>Ga Naar...</translation>
+        <translation>Ga naar…</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.cpp" line="247"/>
@@ -4700,49 +4700,49 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="147"/>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished">Links</translation>
+        <translation>Links</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="148"/>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished">Rechts</translation>
+        <translation>Rechts</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="149"/>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished">Boven</translation>
+        <translation>Boven</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="150"/>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished">Onder</translation>
+        <translation>Onder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="151"/>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linksboven</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="152"/>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rechtsboven</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="153"/>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Linksonder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="154"/>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Rechtsonder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="366"/>
@@ -5471,7 +5471,7 @@ die het nieveau wint of verliest.</translation>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="860"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation>Vervoersmiddelen weigeren</translation>
+        <translation>Geen vervoersmiddelen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="867"/>
@@ -6643,7 +6643,7 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
     <message>
         <location filename="../mainwindow.ui" line="2776"/>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Opent een episode map: Het heeft dezelfde naam als dat van het huidig bestand.</translation>
+        <translation>Opent het datamapje van dit niveau.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2799"/>
@@ -6959,17 +6959,17 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
     <message>
         <location filename="../mainwindow.ui" line="2765"/>
         <source>Open folder of current file</source>
-        <translation>Open de map van het huidig bestand</translation>
+        <translation>Open het episodemapje</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2768"/>
         <source>Open folder which contains currently opened file</source>
-        <translation>Opent de map waar het huidig bestand zich in bevindt</translation>
+        <translation>Opent het episodemapje van het huidig bestand.</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2773"/>
         <source>Open custom data folder</source>
-        <translation>Open zelfgemaakte data-map</translation>
+        <translation>Episodemapje openen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2784"/>
@@ -10317,7 +10317,7 @@ Muziekdozen:	%5
         <location filename="../main_window/dock/wld_search_box.ui" line="512"/>
         <location filename="../main_window/dock/wld_search_box.ui" line="700"/>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="126"/>
