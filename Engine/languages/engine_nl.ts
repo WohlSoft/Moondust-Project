@@ -72,8 +72,8 @@ Run debugging with a built in debug mode application
 and retry your recent action to take more detail info.</oldsource>
         <translatorcomment>Feels a bit iffy</translatorcomment>
         <translation>Het programma is gecrasht door een segmentatie-fout.
-Run het debug-programma binnen deze applicatie
-en doe je laatste stappen opnieuw om meer info te krijgen.</translation>
+Run het ingebouwde debug-programma
+en doe je laatste stappen opnieuw om meer gedetailleerde info te krijgen.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
         <source>Interrupt</source>
@@ -99,11 +99,11 @@ Software renderer wordt opgestart.</translation>
     </message>
     <message id="WINDOW_ICON_INIT_ERROR">
         <source>Unable to setup window icon!</source>
-        <translation>Kan geen window icoontje maken!</translation>
+        <translation>Kan geen venster-icoontje maken!</translation>
     </message>
     <message id="RENDERER_CONTEXT_INIT_ERROR">
         <source>Unable to initialize renderer context!</source>
-        <translation>Kan renderaar context niet initialiseren!</translation>
+        <translation>Kan renderer context niet initialiseren!</translation>
     </message>
     <message id="MSGBOX_INFO">
         <source>Information</source>
@@ -197,7 +197,7 @@ Ingangspunt #: %2</translation>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Fatale fout: onmogelijk om startpositie te vinden.
-Heeft u de startpositie of het startpunt te ver buiten de sectie gezet?</translation>
+Heeft u de startpositie of het startpunt (of ingangsportaal) te ver buiten de sectie(s) gezet?</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <source>Pause</source>
@@ -462,15 +462,15 @@ Please download and install latest version of a configuration package:
 Download: %1
 Note: most of config packs are updates togeter with PGE,
 therefore you can use same link to get updated version.</oldsource>
-        <translation>Je hebt een ouder configuratiepakket
-Het spel zal opnieuw opstarten, maar het zou kunnen dat je problemen krijgt tijdens het spelen.
+        <translation>U heeft een ouder configuratiepakket
+Het spel zal opnieuw opstarten, maar het zou kunnen dat u problemen krijgt tijdens het spelen.
 
 Gelieve de laatste versie van het configuratiepakket te downloaderen en installeren:
 
 Download: %1
 
-Opmerking: De meeste configuratiepaketten worden samen met PGE geüpdate,
-je kan dus dezelfde link gebruiken om een nieuwe versie te downloaderen.</translation>
+Opmerking: De meeste configuratiepaketten zijn gekoppeld aan PGE updates,
+u kunt dus dezelfde link gebruiken om een nieuwe versie te downloaderen.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <source>main.ini is invalid</source>
