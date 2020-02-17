@@ -211,8 +211,7 @@ bool JoystickController::bindJoystickKey(SDL_Joystick *joy, KM_Key &k)
     for(int i = 0; i < axes; i++)
     {
         val = 0;
-        //Note: SDL_JoystickGetAxisInitialState is a new API function added into dev version
-        //      and doesn't available in already released assemblies
+        //Note: The SDL 2.0.6 and higher is requires to support this function
         if(SDL_JoystickGetAxisInitialState(joy, i, &val_initial) == SDL_FALSE)
             break;
 
