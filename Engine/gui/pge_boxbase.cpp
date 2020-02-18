@@ -23,6 +23,7 @@
 #include <Utils/maths.h>
 #include <graphics/gl_renderer.h>
 #include <graphics/window.h>
+#include <common_features/pge_delay.h>
 
 // Scenes
 #include <data_configs/config_select_scene/scene_config_select.h>
@@ -219,7 +220,7 @@ void PGE_BoxBase::exec()
         {
             Uint32 delay = static_cast<Uint32>(m_uTick) - (SDL_GetTicks() - start_render);
             SDL_assert(delay < 2000u);
-            SDL_Delay(delay);
+            PGE_Delay(delay);
         }
     }
 }

@@ -240,7 +240,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     GraphicsHelps::initFreeImage();
 
-#ifdef _WIN32
+#if defined(_WIN32)
     FIBITMAP *img[2];
     img[0] = GraphicsHelps::loadImageRC("cat_16.png");
     img[1] = GraphicsHelps::loadImageRC("cat_32.png");
@@ -261,7 +261,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     GraphicsHelps::closeImage(img[0]);
     GraphicsHelps::closeImage(img[1]);
-#else//IF _WIN32
+#elif !defined __EMSCRIPTEN__ //IF _WIN32
 
     FIBITMAP *img;
 #   ifdef __APPLE__

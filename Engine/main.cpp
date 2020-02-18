@@ -25,6 +25,7 @@
 #include <audio/play_music.h>
 #include <common_features/logger.h>
 #include <common_features/tr.h>
+#include <common_features/pge_delay.h>
 
 #include <PGE_File_Formats/pge_x.h>
 
@@ -87,10 +88,6 @@ int main(int argc, char *argv[])
     std::vector<std::string> args;
     for(int i = 0; i < argc; i++)
         args.emplace_back(argv[i]);
-
-#ifdef __EMSCRIPTEN__
-    args.emplace_back(PGE_RUN_SINGLE_LEVEL);
-#endif
 
     // Parse --version or --install low args
     if(!PGEEngineApp::parseLowArgs(args))
@@ -545,7 +542,7 @@ PlayLevel:
 
                     if((!sceneResult) && (!lScene->isExiting()))
                     {
-                        //SDL_Delay(50);
+                        //PGE_Delay(50);
                         levelExitCode = LvlExit::EXIT_Error;
                         PGE_MsgBox msgBox(nullptr, fmt::format_ne("ERROR:\nFail to start level\n\n{0}",
                                                 lScene->getLastError()),
@@ -567,7 +564,7 @@ PlayLevel:
 
                 if(!sceneResult)
                 {
-                    SDL_Delay(50);
+                    PGE_Delay(50);
                     PGE_MsgBox msgBox(nullptr,
                                       fmt::format_ne("ERROR:\nFail to start level\n\n"
                                                      "{0}", lScene->getLastError()),

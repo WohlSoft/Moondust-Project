@@ -171,7 +171,7 @@ static std::string getCurrentUserName()
 {
     std::string user;
 
-#ifdef _WIN32
+#if defined(_WIN32)
     char    userName[256];
     wchar_t userNameW[256];
     DWORD usernameLen = 256;
@@ -180,13 +180,13 @@ static std::string getCurrentUserName()
     size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, userNameW, usernameLen, userName, 256, 0, 0);
     userName[nCnt] = '\0';
     user = std::string(userName);
-
+#elif defined(__EMSCRIPTEN__)
+    user = "user"; // No way to get user, here is SINGLE generic user
 #else
     struct passwd *pwd = getpwuid(getuid());
     if(pwd == nullptr)
         return "UnknownUser"; // Failed to get a user name!
     user = std::string(pwd->pw_name);
-
 #endif
 
     return user;
@@ -203,7 +203,8 @@ static std::string getCurrentHomePath()
     size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, homeDirW, -1, homeDir, MAX_PATH * 4, 0, 0);
     homeDir[nCnt] = '\0';
     homedir = std::string(homeDir);
-
+#elif defined(__EMSCRIPTEN__)
+    homedir = "/"; // No way to get user, here is SINGLE generic user
 #else
     struct passwd *pwd = getpwuid(getuid());
     if(pwd == nullptr)
