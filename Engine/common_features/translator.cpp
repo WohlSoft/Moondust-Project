@@ -195,7 +195,7 @@ void PGE_Translator::toggleLanguage(std::string lang, std::string region)
 std::string qtTrId(const char *string)
 {
     if(!g_translator)
-        return string;
+        return std::string(string);
 
     std::string out;
 
@@ -206,7 +206,7 @@ std::string qtTrId(const char *string)
             return out;
     }
 
-    if(g_translator->m_translatorEn.isEmpty())
+    if(!g_translator->m_translatorEn.isEmpty())
     {
         out = g_translator->m_translatorEn.do_translate8(nullptr, string, nullptr, -1);
         if(!out.empty())
