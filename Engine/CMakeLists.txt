@@ -362,6 +362,7 @@ if(ANDROID)
     add_library(pge_engine SHARED
         ${PGE_ENGINE_SRC_ARGS}
     )
+    target_compile_options(pge_engine PRIVATE -fPIC)
     add_library(SDL2 SHARED IMPORTED DEPENDS SDL2_Local)
     set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libSDL2.so)
 
