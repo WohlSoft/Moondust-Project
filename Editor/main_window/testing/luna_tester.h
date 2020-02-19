@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,18 +20,61 @@
 #ifndef LUNA_TESTER_H
 #define LUNA_TESTER_H
 
-#ifdef _WIN32
 #include <QFuture>
 #include <QMutex>
-#include <windows.h>
+#include <QProcess>
+#include <QSharedPointer>
+#include <QThread>
+#ifndef _WIN32
+#   include <QHash>
+#endif
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <common_features/safe_msg_box.h>
 class QMenu;
 class QAction;
 class MainWindow;
-#else
-#include <QObject>
-#endif
+
+
+class LunaWorker : public QObject
+{
+    Q_OBJECT
+    QString m_workingPath;
+    QProcess *m_process = nullptr;
+    QProcess::ProcessState m_lastStatus = QProcess::NotRunning;
+    bool m_isRunning = false;
+    void init();
+public:
+    explicit LunaWorker(QObject *parent = nullptr);
+    ~LunaWorker() override;
+
+public slots:
+    void setEnv(const QHash<QString, QString> &env);
+    void setWorkPath(const QString &wDir);
+    void start(const QString &command, const QStringList &args, bool *ok, QString *errString);
+
+    void write(const QString &out, bool *ok);
+    void read(QString *in, bool *ok);
+
+    void writeStd(const std::string &out, bool *ok);
+    void readStd(std::string *in, bool *ok);
+
+    void processLoop();
+    void quitLoop();
+
+public:
+    void terminate();
+    void unInit();
+    bool isActive();
+
+private slots:
+    void errorOccurred(QProcess::ProcessError error);
+    void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
+
+signals:
+    void loopFinished();
+    void stopLoop();
+};
+
 
 /**
  * @brief Provides IPC layer with LunaLUA to manipulate legacy engine.
@@ -41,7 +84,6 @@ class LunaTester : public QObject
     Q_OBJECT
 
 public:
-    #ifdef Q_OS_WIN
     /**
      * @brief LunaLoader result code
      */
@@ -53,7 +95,15 @@ public:
     };
 
     LunaTester();
-    ~LunaTester();
+    ~LunaTester() override;
+    /**
+     * \brief Initialize LunaTester's runtime
+     */
+    void initRuntime();
+    /**
+     * @brief De-Initialize LunaTester's runtime and prelare to destruction
+     */
+    void unInitRuntime();
     //! Pointer to main window
     MainWindow *m_mw = nullptr;
     //! List of registered menu items
@@ -61,14 +111,14 @@ public:
     /**
      * @brief Initialize menu of the LunaTester
      * @param mw pointer to the Main Window
-     * @param mainmenu Menu where insert LunaTester
+     * @param mainMenu Menu where insert LunaTester
      * @param insert_before Action where is need to insert LunaTester menu
      * @param defaultTestAction pointer to default test launcher (run interprocessing test)
      * @param secondaryTestAction pointer to second test launcher (run test of saved file)
      * @param startEngineAction pointer to engine launcher
      */
     void initLunaMenu(MainWindow   *mw,
-                      QMenu        *mainmenu,
+                      QMenu        *mainMenu,
                       QAction      *insert_before,
                       QAction      *defaultTestAction,
                       QAction      *secondaryTestAction,
@@ -77,16 +127,10 @@ public:
      * @brief Refresh menu text
      */
     void retranslateMenu();
-    //! LunaLoader process information
-    PROCESS_INFORMATION m_pi;
-    //! LunaLUA IPC Out pipe
-    HANDLE              m_ipc_pipe_out = 0;
-    //! LunaLUA IPC Out pipe backend
-    HANDLE              m_ipc_pipe_out_i = 0;
-    //! LunaLUA IPC In pipe
-    HANDLE              m_ipc_pipe_in = 0;
-    //! LunaLUA IPC In pipe backend
-    HANDLE              m_ipc_pipe_in_o = 0;
+    //! LunaTester process handler
+    QSharedPointer<LunaWorker> m_worker;
+    //! LunaTester process handler's thread
+    QSharedPointer<QThread> m_thread;
     //! Helper which protects from editor freezing
     QFuture<void>       m_helper;
     //! Ranner thread
@@ -96,9 +140,26 @@ public:
     //! Disable OpenGL on LunaLua side
     bool                m_noGL = false;
     bool                m_killPreviousSession = false;
+
+#ifndef _WIN32
+    QString                 m_wineBinDir;
+    QHash<QString, QString> m_wineEnv;
+#endif
+    void useWine(QString &command, QStringList &args);
+    QString pathUnixToWine(const QString &unixPath);
+
+    bool isEngineActive();
+    bool isInPipeOpen();
+    bool isOutPipeOpen();
+
+    bool writeToIPC(const std::string &out);
+    bool writeToIPC(const QString &out);
+    std::string readFromIPC();
+    QString readFromIPCQ();
+
 public slots:
-    /********Menu items*******/
     void killEngine();
+    /********Menu items*******/
     /**
      * @brief Start testing of currently opened level
      */
@@ -124,7 +185,7 @@ private:
      * @param levelPath Full path to the level file
      * @param isUntitled Is untitled level (just created but not saved)
      */
-    void lunaRunnerThread(LevelData in_levelData, QString levelPath, bool isUntitled);
+    void lunaRunnerThread(LevelData in_levelData, const QString &levelPath, bool isUntitled);
 
     /**
      * @brief Start legacy engine in game mode
@@ -137,10 +198,9 @@ private:
     void lunaChkResetThread();
     /**
      * @brief Try to close SMBX's window
-     * @param msg Safe message box interface (to spawn message boxes at main window in main thread)
      * @return true if window successfully switched, false on failure
      */
-    bool closeSmbxWindow(SafeMsgBoxInterface &msg);
+    bool closeSmbxWindow();
     /**
      * @brief Switch to active LunaLUA testing window
      * @param msg Safe message box interface (to spawn message boxes at main window in main thread)
@@ -156,27 +216,13 @@ private:
      */
     bool sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled);
 
-    /**
-     * @brief Starts legacy engine with attaching LunaLUA library by hexing way
-     * @param pathToLegacyEngine full path to legacy engine executive
-     * @param cmdLineArgs full list of arguments to start legacy engine
-     * @param workingDir working directory (must be equal to legacy engine executable!)
-     * @return Result code
-     */
-    LunaLoaderResult LunaHexerRun(const wchar_t *pathToLegacyEngine,
-                                  const wchar_t *cmdLineArgs,
-                                  const wchar_t *workingDir);
-
-    /**
-     * @brief Starts legacy engine with attaching LunaLUA library by in-memory patching way
-     * @param pathToLegacyEngine full path to legacy engine executive
-     * @param cmdLineArgs full list of arguments to start legacy engine
-     * @param workingDir working directory (must be equal to legacy engine executable!)
-     * @return Result code
-     */
-    LunaLoaderResult LunaLoaderRun(const wchar_t *pathToLegacyEngine,
-                                   const wchar_t *cmdLineArgs,
-                                   const wchar_t *workingDir);
-    #endif
+signals:
+    void engineSetEnv(const QHash<QString, QString> &env);
+    void engineSetWorkPath(const QString &wPath);
+    void engineStart(const QString &command, const QStringList &args, bool *ok, QString *errString);
+    void engineWrite(const QString &out, bool *ok);
+    void engineRead(QString *in, bool *ok);
+    void engineWriteStd(const std::string &out, bool *ok);
+    void engineReadStd(std::string *in, bool *ok);
 };
 #endif // LUNA_TESTER_H

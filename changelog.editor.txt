@@ -1,3 +1,30 @@
+Editor 0.3.2-dev
+- Added support for element (Block, BGO, NPC), section, and level-wide Extra Settings
+- Config pack is able to specify the default file format
+- When SMBX64 formats are default, the strict mode is turned on in untitled files
+- Added Chinese translation by 快乐爱的小精灵
+- Added safer file saving strategy
+- Fixed imperfection that allows to use level file selector in the untitled world map file
+- Added an ability to hide or disable certain field or feature from the config pack
+- Added Dutch translation by Gameinsky
+- LunaTester now is cross-platform and no more needs 32-bit Editor on Windows for a work (`LunaLoader-exec.exe` module is required)
+- Fixed unneeded special values reset for NPCs
+- Fixed incorrect animation setup after height change via user's NPC.txt configs
+- Fixed a clumping of elements inside the Tileset Editor
+- Added separated music boxes toolbox for world map
+- On Linux and macOS is no more need to try restart Editor twice after crash: single try should start Editor normally
+- Added NPC config pack option to disable "Auto-Increment" support for custom value of spin-box type
+- Fixed inability to change special value by level/episode custom NPC INI config file
+- Added hot keys for "Create New": Ctrl+N for levels; Alt+N, M for world maps; and Alt+N, N for NPC configs; Ctrl+Shift+N will spawn a menu to select a type of file to create
+- Fixed an incorrect NPC frame shown as the new-placing cursor phantom
+- Improved UI of Tileset Editor
+- Added scroll area into Tileset Editor's scene to allow use it on smaller monitors
+- Added a grid drawing in the Tileset Editor's scene
+- Fixed confusion of world map scenery order while going through editing history or copy-pasting
+- Fixed unnecessary music enabling bug on a world map
+- Added "is-meta-object" element option in a config pack to hide elements from exported images or from the game entirely
+- Added French translation by NathanBnm
+
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
 - Added weight order factor for tileset groups

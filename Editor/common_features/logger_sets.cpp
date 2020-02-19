@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,11 @@
 
 #include "app_path.h"
 #include "logger_sets.h"
+
+#ifdef DEBUG_BUILD
+#define ONSCREEN_LOGGING
+#endif
+
 
 QString         LogWriter::DebugLogFile;
 PGE_LogLevel    LogWriter::logLevel;
@@ -70,9 +75,8 @@ static QString PgeLL2Str(PGE_LogLevel type)
         return "System";
     case PGE_LogLevel::NoLog:
         return "NoLog";
-    default:
-        return "Unknown";
     }
+    return "Unknown";
 }
 
 
@@ -97,20 +101,18 @@ LogWriterSignal::LogWriterSignal(DevConsole *console, QObject *parent) : QObject
 
 void LogWriterSignal::setup(DevConsole *console)
 {
-    connect(this, SIGNAL(logToConsole(QString, QString)), console, SLOT(logMessage(QString,QString)));
+    connect(this, SIGNAL(logToConsole(const QString&, const QString&)),
+            console, SLOT(logMessage(const QString&, const QString&)));
 }
 
-LogWriterSignal::~LogWriterSignal()
-{}
-
-void LogWriterSignal::log(QString msg, QString chan)
+void LogWriterSignal::log(const QString &msg, const QString &chan)
 {
     emit logToConsole(msg, chan);
 }
 
 
 
-LogWriterSignal *LogWriter::consoleConnector=nullptr;
+LogWriterSignal *LogWriter::consoleConnector = nullptr;
 
 void LogWriter::LoadLogSettings()
 {
@@ -152,15 +154,36 @@ void LogWriter::LoadLogSettings()
 
 }
 
-void LogWriter::writeLog(PGE_LogLevel type, QString msg)
+static void writeToFile(const QString &txt)
+{
+    QFile outFile(LogWriter::DebugLogFile);
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+    ts << txt << endl;
+    outFile.close();
+}
+
+
+#ifdef ONSCREEN_LOGGING
+static void writeToScreen(const QString &txt)
+{
+    QTextStream ts(stdout);
+    ts << txt << endl;
+    ts.flush();
+}
+#endif
+
+
+void LogWriter::writeLog(PGE_LogLevel type, const QString &msg)
 {
     QString txt;
 
+#ifndef ONSCREEN_LOGGING
     if(type == PGE_LogLevel::NoLog)
         return;
-
     if(type > logLevel)
         return;
+#endif
 
     switch(type)
     {
@@ -179,19 +202,19 @@ void LogWriter::writeLog(PGE_LogLevel type, QString msg)
         case PGE_LogLevel::System:
             txt = QString("System: %1").arg(msg);
         break;
-        case PGE_LogLevel::NoLog:
-            return;
-        break;
         default:
             txt = QString("Info: %1").arg(msg);
         break;
     }
 
-    QFile outFile(DebugLogFile);
-    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-    QTextStream ts(&outFile);
-    ts << txt << endl;
-    outFile.close();
+#ifdef ONSCREEN_LOGGING
+    writeToScreen(txt);
+    if(type == PGE_LogLevel::NoLog)
+        return;
+    if(type > logLevel)
+        return;
+#endif
+    writeToFile(txt);
 }
 
 void LogWriter::logMessageHandler(QtMsgType type,
@@ -201,11 +224,12 @@ void LogWriter::logMessageHandler(QtMsgType type,
 
     PGE_LogLevel ptype = qMsg2PgeLL(type);
 
-    if( ptype == PGE_LogLevel::NoLog )
+#ifndef ONSCREEN_LOGGING
+    if(ptype == PGE_LogLevel::NoLog)
         return;
-
-    if( ptype > logLevel )
+    if(ptype > logLevel)
         return;
+#endif
 
     QByteArray lMessage = msg.toLocal8Bit();
     QString txt;
@@ -248,14 +272,14 @@ void LogWriter::logMessageHandler(QtMsgType type,
                 .arg(lMessage.constData());
     }
 
-    QFile outFile(DebugLogFile);
-    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-    QTextStream ts(&outFile);
-    ts << txt << endl;
-    outFile.close();
-
-    if(type == QtFatalMsg)
-        abort();
+#ifdef ONSCREEN_LOGGING
+    writeToScreen(txt);
+    if(ptype == PGE_LogLevel::NoLog)
+        return;
+    if(ptype > logLevel)
+        return;
+#endif
+    writeToFile(txt);
 
     if(!LogWriter::consoleConnector)
         return;
@@ -292,7 +316,7 @@ void LogWriter::uninstallConsole()
 {
     if(consoleConnector)
         delete consoleConnector;
-    consoleConnector=nullptr;
+    consoleConnector = nullptr;
 }
 
 void LoadLogSettings()
@@ -300,11 +324,12 @@ void LoadLogSettings()
     LogWriter::LoadLogSettings();
 }
 
-static  QMutex logger_mutex;
+static QMutex logger_mutex;
 
-void WriteToLog(PGE_LogLevel type, QString msg, bool noConsole)
+void WriteToLog(PGE_LogLevel type, const QString &msg, bool noConsole)
 {
-    QMutexLocker muLocker(&logger_mutex); Q_UNUSED(muLocker);
+    QMutexLocker muLocker(&logger_mutex);
+    Q_UNUSED(muLocker)
     LogWriter::writeLog(type, msg);
 
     if(noConsole)

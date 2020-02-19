@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,20 +24,12 @@
 
 
 NpcEdit::NpcEdit(MainWindow *mw,
-                 dataconfigs * configs,
+                 dataconfigs *configs,
                  QWidget *parent) :
     EditBase(mw, parent),
     ui(new Ui::NpcEdit)
 {
-    pConfigs = configs;
-    PreviewScene=NULL;
-    physics=NULL;
-    npcPreview=NULL;
-    npc_id = 0;
-    FileType = 2;
-    direction = -1;
-    m_isUntitled = true;
-    m_isModyfied  = false;
+    m_configPack = configs;
     ui->setupUi(this);
 }
 
@@ -55,17 +47,13 @@ void NpcEdit::reTranslate()
 
 void NpcEdit::closeEvent(QCloseEvent *event)
 {
-    if (maybeSave()) {
-        if(physics) delete physics;
-        if(npcPreview) delete npcPreview;
-        if(PreviewScene)
-        {
-            delete PreviewScene;
-        }
+    if(maybeSave())
+    {
+        m_npcPreviewHitBox.reset();
+        m_npcPreviewBody.reset();
+        m_previewScene.reset();
         event->accept();
-    } else {
-        event->ignore();
     }
+    else
+        event->ignore();
 }
-
-

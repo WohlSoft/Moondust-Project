@@ -1,24 +1,26 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "scene.h"
 #include <graphics/window.h>
 #include <graphics/gl_renderer.h>
+#include <graphics/vsync_validator.h>
 #include <Utils/maths.h>
 
 #include <script/lua_event.h>
@@ -40,14 +42,31 @@ void Scene::construct()
 
 void Scene::updateTickValue()
 {
-    uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.4875);//Experimentally
-            //static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
-    uTick  = Maths::uRound(uTickf);
+    //uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.4875);//Experimentally
+    uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.03125);
+    Maths::clearPrecision(uTickf);
+    //static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
+    uTick  = static_cast<uint32_t>(std::ceil(uTickf));
+
+    if(uTickf > 15.6)
+    {
+        uTick = static_cast<Uint32>(PGE_Window::frameDelay);
+        while(uTickf > 15.6)
+            uTickf /= 2.0;
+        uTickf = Maths::roundToDown(uTickf, 0.03125);
+        Maths::clearPrecision(uTickf);
+    }
+
     if(uTick == 0)
         uTick = 1;
     if(uTickf <= 0.0)
         uTickf = 1.0;
     SDL_assert(uTick < 2000u);//"uTick Must be less than two seconds!!!"
+}
+
+double Scene::frameDelay()
+{
+    return uTickf;
 }
 
 Scene::Scene()
@@ -104,7 +123,8 @@ void Scene::processEvents()
 
     while(SDL_PollEvent(&event))
     {
-        if(PGE_Window::processEvents(event) != 0) continue;
+        if(PGE_Window::processEvents(event) != 0)
+            continue;
 
         switch(event.type)
         {
@@ -190,6 +210,26 @@ void Scene::renderMouse()
 int Scene::exec()
 {
     return 0;
+}
+
+void Scene::runVsyncValidator()
+{
+    if(!PGE_Window::vsync)
+        return; // Do nothing, VSync is disabled
+
+    auto vSyncProbe = VSyncValidator(this, PGE_Window::frameDelay);
+    while(!vSyncProbe.isComplete())
+    {
+        GlRenderer::clearScreen();
+        for(int i = 0; i < 10000; i++)
+        {
+            GlRenderer::renderRect(1.0f * float(i), 1.0f * float(i), 12.0f, 12.0f,
+                                   0.0f, 0.0f, 0.0f, 1.0f * float(i)/100.0f);
+        }
+        GlRenderer::flush();
+        GlRenderer::repaint();
+        vSyncProbe.update();
+    }
 }
 
 Scene::TypeOfScene Scene::type()

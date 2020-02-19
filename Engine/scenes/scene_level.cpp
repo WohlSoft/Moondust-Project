@@ -1,25 +1,27 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "scene_level.h"
 
 #include <common_features/app_path.h>
 #include <common_features/graphics_funcs.h>
+#include <common_features/pge_delay.h>
 #include <settings/debugger.h>
 
 #include <graphics/gl_renderer.h>
@@ -44,6 +46,7 @@
 #include <script/bindings/core/events/luaevents_core_engine.h>
 #include <common_features/fmt_format_ne.h>
 #include <Utils/files.h>
+#include <Utils/maths.h>
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -103,6 +106,7 @@ LevelScene::LevelScene()
     /*********Controller********/
     m_player1Controller = g_AppSettings.openController(1);
     m_player2Controller = g_AppSettings.openController(2);
+    SDL_assert_release(m_player1Controller);//At least one controller must be defined
     /*********Controller********/
     /*********Pause menu*************/
     initPauseMenu1();
@@ -110,7 +114,7 @@ LevelScene::LevelScene()
     m_frameSkip = g_AppSettings.frameSkip;
     m_messages.m_scene = this;
     m_errorMsg = "";
-    m_gameState = NULL;
+    m_gameState = nullptr;
     m_debug_player_jumping = false;
     m_debug_player_onground = false;
     m_debug_player_foots = 0;
@@ -122,21 +126,15 @@ LevelScene::LevelScene()
 void LevelScene::processPhysics(double ticks)
 {
     //Iterate layer movement
-    m_layers.processMoving(uTickf);
+    m_layers.processMoving(ticks);
 
     //Iterate playable characters
-    for(LVL_PlayersArray::iterator it = m_itemsPlayers.begin(); it != m_itemsPlayers.end(); it++)
-    {
-        LVL_Player *plr = (*it);
+    for(auto plr : m_itemsPlayers)
         plr->iterateStep(ticks);
-    }
 
     //Iterate activated NPCs
-    for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); ++i)
-    {
-        LVL_Npc *n = *i;
+    for(auto n : m_npcActive)
         n->iterateStep(ticks);
-    }
 }
 
 static bool comparePosY(PGE_Phys_Object *i, PGE_Phys_Object *j)
@@ -149,26 +147,23 @@ void LevelScene::processAllCollisions()
     std::vector<PGE_Phys_Object *> toCheck;
 
     //Reset events first
-    for(LVL_PlayersArray::iterator it = m_itemsPlayers.begin(); it != m_itemsPlayers.end(); it++)
+    for(auto plr : m_itemsPlayers)
     {
-        LVL_Player *plr = (*it);
         plr->resetEvents();
         toCheck.push_back(plr);
     }
 
     //Process collision check and resolving for activated NPC's
-    for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end(); ++i)
+    for(auto n : m_npcActive)
     {
-        LVL_Npc *n = *i;
         n->resetEvents();
         toCheck.push_back(n);
     }
 
     std::stable_sort(toCheck.begin(), toCheck.end(), comparePosY);
 
-    for(std::vector<PGE_Phys_Object *>::iterator it = toCheck.begin(); it != toCheck.end(); it++)
+    for(auto obj : toCheck)
     {
-        PGE_Phys_Object *obj = *it;
         obj->updateCollisions();
     }
 }
@@ -207,9 +202,8 @@ LevelScene::~LevelScene()
     }
 
     D_pLogDebugNA("Destroy blocks");
-    for(LVL_BlocksArray::iterator i = m_itemsBlocks.begin(); i != m_itemsBlocks.end(); ++i)
+    for(auto tmp : m_itemsBlocks)
     {
-        LVL_Block *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -220,9 +214,8 @@ LevelScene::~LevelScene()
     m_itemsBlocks.clear();
 
     D_pLogDebugNA("Destroy BGO");
-    for(LVL_BgosArray::iterator i = m_itemsBgo.begin(); i != m_itemsBgo.end(); ++i)
+    for(auto tmp : m_itemsBgo)
     {
-        LVL_Bgo *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -233,9 +226,8 @@ LevelScene::~LevelScene()
     m_itemsBlocks.clear();
 
     D_pLogDebugNA("Destroy NPC");
-    for(LVL_NpcsArray::iterator i = m_itemsNpc.begin(); i != m_itemsNpc.end(); ++i)
+    for(auto tmp : m_itemsNpc)
     {
-        LVL_Npc *tmp = *i;
         if(tmp)
         {
             tmp->unregisterFromTree();
@@ -246,9 +238,8 @@ LevelScene::~LevelScene()
     m_itemsNpc.clear();
 
     D_pLogDebugNA("Destroy Warps");
-    for(LVL_WarpsArray::iterator i = m_itemsWarps.begin(); i != m_itemsWarps.end(); ++i)
+    for(auto tmp : m_itemsWarps)
     {
-        LVL_Warp *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -259,9 +250,8 @@ LevelScene::~LevelScene()
     m_itemsWarps.clear();
 
     D_pLogDebugNA("Destroy Physical Environment zones");
-    for(LVL_PhysEnvsArray::iterator i = m_itemsPhysEnvs.begin(); i != m_itemsPhysEnvs.end(); ++i)
+    for(auto tmp : m_itemsPhysEnvs)
     {
-        LVL_PhysEnv *tmp = *i;
         if(tmp)
         {
             m_layers.removeRegItem(tmp->data.layer, tmp);
@@ -315,7 +305,9 @@ void LevelScene::update()
     }
 
     Scene::update();
-    tickAnimations(uTickf);
+
+    if(!m_isPauseMenu)
+        tickAnimations(uTickf);
 
     if(!m_isLevelContinues)
     {
@@ -377,7 +369,7 @@ void LevelScene::update()
             m_blockTransforms.pop_front();
         }
 
-        //Update controllers
+        // Send controller states to controllable objects
         m_player1Controller->sendControls();
         m_player2Controller->sendControls();
 
@@ -405,7 +397,7 @@ void LevelScene::update()
 
         //Process activated NPCs
         //for(size_t i = 0; i < m_npcActive.size(); i++)
-        for(LVL_NpcActiveSet::iterator i = m_npcActive.begin(); i != m_npcActive.end();)
+        for(auto i = m_npcActive.begin(); i != m_npcActive.end();)
         {
             LVL_Npc *n = *i;
             n->update(uTickf);
@@ -473,7 +465,7 @@ void LevelScene::update()
         //Add effects into the render table
         for(Scene_Effect &item : WorkingEffects)
         {
-            renderArrayAddFunction([this, &item](double camPosX, double camPosY)
+            renderArrayAddFunction([&item](double camPosX, double camPosY)
             {
                 item.render(camPosX, camPosY);
             },  item.m_zIndex);
@@ -494,8 +486,13 @@ void LevelScene::update()
 void LevelScene::processEvents()
 {
     Scene::processEvents();
-    m_player1Controller->update();
-    m_player2Controller->update();
+    if(!m_isPauseMenu)// Don't process controllers from the pause menu
+    {
+        m_player1Controller->update();
+        m_player2Controller->update();
+    }
+    if(m_player1Controller->keys.start_pressed)
+        onKeyboardPressedSDL(SDLK_ESCAPE, 0);
 }
 
 void LevelScene::render()
@@ -580,10 +577,10 @@ void LevelScene::render()
 
                 if(obj->type == PGE_Phys_Object::LVLNPC)
                 {
-                    LVL_Npc *npc = static_cast<LVL_Npc *>(obj);
-                    for(size_t i = 0; i < npc->detectors_inarea.size(); i++)
+                    auto *npc = dynamic_cast<LVL_Npc *>(obj);
+                    for(auto &i : npc->detectors_inarea)
                     {
-                        PGE_RectF trapZone = npc->detectors_inarea[i].trapZone();
+                        PGE_RectF trapZone = i.trapZone();
                         GlRenderer::renderRect(static_cast<float>(trapZone.x() - camPosX),
                                                static_cast<float>(trapZone.y() - camPosY),
                                                static_cast<float>(trapZone.width()),
@@ -672,9 +669,10 @@ renderBlack:
 
 void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 {
-    if(m_doExit || isExit()) return;
+    if(m_doExit || isExit())
+        return;
 
-    if(m_isPauseMenu)
+    if(m_isPauseMenu && (m_player1Controller->type() != Controller::type_keyboard))
         m_pauseMenu.processKeyEvent(sdl_key);
 
     switch(sdl_key)
@@ -682,8 +680,13 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
     // Check which
     case SDLK_ESCAPE:
     case SDLK_RETURN:   // Toggle pause mode
+    case SDLK_AC_BACK:
     {
-        if(m_doExit || m_isPauseMenu) break;
+        if(m_isPauseMenu && (m_player1Controller->type() == Controller::type_keyboard))
+            m_pauseMenu.processKeyEvent(sdl_key);
+
+        if(m_doExit || m_isPauseMenu)
+            break;
 
         m_isPauseMenu = true;
         break;
@@ -756,7 +759,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 
             case SDLK_7:
             {
-                if(m_itemsPlayers.size() >= 1)
+                if(!m_itemsPlayers.empty())
                     m_itemsPlayers[0]->setCharacterSafe(m_itemsPlayers[0]->characterID - 1, m_itemsPlayers[0]->stateID);
 
                 break;
@@ -764,7 +767,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
 
             case SDLK_8:
             {
-                if(m_itemsPlayers.size() >= 1)
+                if(!m_itemsPlayers.empty())
                     m_itemsPlayers[0]->setCharacterSafe(m_itemsPlayers[0]->characterID + 1, m_itemsPlayers[0]->stateID);
 
                 break;
@@ -775,7 +778,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
                 if(m_itemsPlayers.size() >= 2)
                     m_itemsPlayers[1]->setCharacterSafe(2, 1);
 
-                if(m_itemsPlayers.size() >= 1)
+                if(!m_itemsPlayers.empty())
                     m_itemsPlayers[0]->setCharacterSafe(m_itemsPlayers[0]->characterID, m_itemsPlayers[0]->stateID - 1);
 
                 break;
@@ -785,7 +788,7 @@ void LevelScene::onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16)
             {
                 if(m_itemsPlayers.size() >= 2)
                     m_itemsPlayers[1]->setCharacterSafe(2, 2);
-                else if(m_itemsPlayers.size() >= 1)
+                else if(!m_itemsPlayers.empty())
                     m_itemsPlayers[0]->setCharacterSafe(m_itemsPlayers[0]->characterID, m_itemsPlayers[0]->stateID + 1);
 
                 break;
@@ -838,34 +841,50 @@ LuaEngine *LevelScene::getLuaEngine()
 
 void levelSceneLoopStep(void *scene)
 {
-    LevelScene* s = reinterpret_cast<LevelScene*>(scene);
+    auto * s = reinterpret_cast<LevelScene*>(scene);
     s->times.start_common = SDL_GetTicks();
-    s->debug_TimeCounted += s->uTickf;
 
     if(PGE_Window::showDebugInfo)
-        s->times.start_events = SDL_GetTicks();
-
-    /**********************Update common events and controllers******************/
-    s->processEvents();
-
-    /****************************************************************************/
-    if(PGE_Window::showDebugInfo)
-        s->times.stop_events = SDL_GetTicks();
-
-    if(PGE_Window::showDebugInfo)
-        s->m_debug_event_delay = static_cast<int>(s->times.stop_events - s->times.start_events);
-
-    s->times.start_physics = SDL_GetTicks();
-
-    /**********************Update physics and game progess***********************/
-    if(!s->m_debug_oneStepMode || s->m_debug_oneStepMode_doStep)
     {
-        s->update();
-        s->m_debug_oneStepMode_doStep = false;
+        s->times.start_physics = 0;
+        s->times.start_events = 0;
     }
 
-    /****************************************************************************/
-    s->times.stop_physics = SDL_GetTicks();
+    while(s->times.doUpdate_physics < static_cast<double>(s->uTick))
+    {
+        s->debug_TimeCounted += static_cast<int>(s->uTickf);
+        if(PGE_Window::showDebugInfo && s->times.start_events == 0)
+            s->times.start_events = SDL_GetTicks();
+
+        /**********************Update common events and controllers******************/
+        s->processEvents();
+
+        /****************************************************************************/
+        if(PGE_Window::showDebugInfo)
+            s->times.stop_events = SDL_GetTicks();
+
+        if(PGE_Window::showDebugInfo)
+            s->m_debug_event_delay = static_cast<int>(s->times.stop_events - s->times.start_events);
+
+        if(PGE_Window::showDebugInfo && s->times.start_physics == 0)
+            s->times.start_physics = SDL_GetTicks();
+
+        /**********************Update physics and game progess***********************/
+        if(!s->m_debug_oneStepMode || s->m_debug_oneStepMode_doStep)
+        {
+            s->update();
+            s->m_debug_oneStepMode_doStep = false;
+        }
+
+        /****************************************************************************/
+        s->times.stop_physics = SDL_GetTicks();
+
+        s->times.doUpdate_physics += s->uTickf;
+        Maths::clearPrecision(s->times.doUpdate_physics);
+    }
+
+    s->times.doUpdate_physics -= static_cast<double>(s->uTick);
+    Maths::clearPrecision(s->times.doUpdate_physics);
 
     if(PGE_Window::showDebugInfo)
         s->m_debug_phys_delay  = static_cast<int>(s->times.stop_physics - s->times.start_physics);
@@ -882,13 +901,15 @@ void levelSceneLoopStep(void *scene)
         GlRenderer::flush();
         GlRenderer::repaint();
         s->times.stop_render = SDL_GetTicks();
-        s->times.doUpdate_render = s->m_frameSkip ? s->uTickf + (s->times.stop_render - s->times.start_render) : 0;
-
+        s->times.doUpdate_render = s->m_frameSkip ?
+                static_cast<double>(s->uTick) + (s->times.stop_render - s->times.start_render) : 0;
         if(PGE_Window::showDebugInfo)
             s->m_debug_render_delay = static_cast<int>(s->times.stop_render - s->times.start_render);
+        Maths::clearPrecision(s->times.doUpdate_render);
     }
 
-    s->times.doUpdate_render -= s->uTickf;
+    s->times.doUpdate_render -= static_cast<double>(s->uTick);
+    Maths::clearPrecision(s->times.doUpdate_render);
 
     if(s->times.stop_render < s->times.start_render)
     {
@@ -897,22 +918,24 @@ void levelSceneLoopStep(void *scene)
     }
 
     /****************************************************************************/
-    #ifndef __EMSCRIPTEN__
+#if 1//ndef __EMSCRIPTEN__
     if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
     {
         if(!s->m_debug_slowTimeMode)
-            SDL_Delay(s->uTick - s->times.passedCommonTime());
+            PGE_Delay(s->uTick - s->times.passedCommonTime());
         else
-            SDL_Delay(s->uTick - s->times.passedCommonTime() + 300);
+            PGE_Delay(s->uTick - s->times.passedCommonTime() + 300);
     }
     else if(s->m_debug_slowTimeMode) {
-        SDL_Delay(s->uTick - s->times.passedCommonTime() + 300);
+        PGE_Delay(s->uTick - s->times.passedCommonTime() + 300);
     }
-    #endif
+#endif
 }
 
 int LevelScene::exec()
 {
+    runVsyncValidator();
+
     m_isLevelContinues = true;
     m_doExit = false;
     m_isRunning = true;
@@ -931,7 +954,7 @@ int LevelScene::exec()
         m_cameras[i].cur_section->initBG();
     }
 
-    //(Need to prevent accidental spawn of messagebox or pause menu with empty screen)
+    //(Need to prevent accidental spawn of message box or pause menu with empty screen)
     m_player1Controller->resetControls();
     m_player2Controller->resetControls();
 
@@ -942,12 +965,12 @@ int LevelScene::exec()
     debug_TimeReal.restart();
     /*****************************************************/
 
-    #ifndef __EMSCRIPTEN__
+#if 1 //ndef __EMSCRIPTEN__
     while(m_isRunning)
         levelSceneLoopStep(this);
-    #else
+#else
     emscripten_set_main_loop_arg(levelSceneLoopStep, this, (int)PGE_Window::frameRate, 1);
-    #endif
+#endif
 
     return m_exitLevelCode;
 }
@@ -1006,11 +1029,11 @@ void LevelScene::setGameState(EpisodeState *_gameState)
 
     if(m_gameState)
     {
-        m_numberOfPlayers = m_gameState->numOfPlayers;
+        m_numberOfPlayers = m_gameState->m_numOfPlayers;
 
-        if((m_gameState->isEpisode) && (!m_gameState->isHubLevel))
+        if((m_gameState->m_isEpisode) && (!m_gameState->m_isHubLevel))
             initPauseMenu2();
-        else if(m_gameState->isTestingModeL)
+        else if(m_gameState->m_isTestingModeL)
             initPauseMenu3();
         else
             initPauseMenu1();

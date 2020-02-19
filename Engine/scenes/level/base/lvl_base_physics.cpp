@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "lvl_base_physics.h"
@@ -35,8 +36,6 @@
 #include <audio/pge_audio.h>
 #include <vector>
 
-PGE_physBody::PGE_physBody()
-{}
     /*****Physical engine locals*******/
 //    m_shape(SL_Rect),
 //    m_momentum(0.0, 0.0),
@@ -99,7 +98,7 @@ static inline void processCharacterSwitchBlock(LVL_Player *player, LVL_Block *ne
     if(nearest->setup->setup.plSwitch_Button && (player->characterID != nearest->setup->setup.plSwitch_Button_id))
     {
         size_t target_id = static_cast<size_t>(nearest->setup->setup.plSwitch_Button_id - 1);
-        std::vector<saveCharState> &states = player->m_scene->getGameState()->game_state.characterStates;
+        std::vector<saveCharState> &states = player->m_scene->getGameState()->m_gameSave.characterStates;
         if(target_id >= states.size())
         {
             PlayerState x = player->m_scene->getGameState()->getPlayerState(player->playerID);
@@ -230,28 +229,39 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     if(!m_stand)
         m_momentum.velX = m_momentum.velXsrc;
 
-    double iterateX = (m_momentum.velX) * (ticks / m_smbxTickTime);
-    double iterateY = (m_momentum.velY) * (ticks / m_smbxTickTime);
+    double moveStepRatio = ticks / 15.6;
+
+    double iterateX = m_momentum.velX * moveStepRatio;
+    double iterateY = m_momentum.velY * moveStepRatio;
 
     if(m_slopeFloor.has)
-        iterateY += (m_onSlopeYAdd) * (ticks / m_smbxTickTime);
+        iterateY += m_onSlopeYAdd * moveStepRatio;
 
     // Iterate movement
     m_momentum.saveOld();
     m_momentum.x += iterateX;
     m_momentum.y += iterateY;
 
+    Maths::clearPrecision(m_momentum.x);
+    Maths::clearPrecision(m_momentum.y);
+
 //FIXME: Fix the missing in-area detector's trap position
-    if(m_parent && (m_bodytype == Body_DYNAMIC))
+    if(m_parent)
     {
-        //m_momentum_relative.saveOld();
-        m_momentum_relative.velX    = m_momentum.velX;
-        m_momentum_relative.velXsrc = m_momentum.velXsrc;
-        m_momentum_relative.velY    = m_momentum.velY;
+        if(m_bodytype == Body_DYNAMIC)
+        {
+            m_momentum_relative.velX    = m_momentum.velX;
+            m_momentum_relative.velXsrc = m_momentum.velXsrc;
+            m_momentum_relative.velY    = m_momentum.velY;
+        }
+        // Iterate relative movement if needed
+        m_momentum_relative.saveOld();
         m_momentum_relative.x += iterateX;
         m_momentum_relative.y += iterateY;
-    }
 
+        Maths::clearPrecision(m_momentum_relative.x);
+        Maths::clearPrecision(m_momentum_relative.y);
+    }
     m_treemap.updatePos();
 }
 
@@ -675,6 +685,7 @@ void PGE_Phys_Object::updateCollisions()
 
     std::vector<PGE_Phys_Object *> objs;
     objs.reserve(25);
+    bool hasSlopes = false;
     PGE_RectF posRectC = m_momentum.rectF().withMargin(m_momentum.w / 2.0);
 
     if(m_slopeFloor.has || m_slopeFloor.hasOld)
@@ -684,15 +695,56 @@ void PGE_Phys_Object::updateCollisions()
         posRectC.setBottom(posRectC.bottom() + m_slopeFloor.rect.h * 1.5);
     }
 
-    std::function<bool(PGE_Phys_Object*)> itemValidator = [this](PGE_Phys_Object *CUR)->bool
+    std::function<bool(PGE_Phys_Object*)> itemValidator = [this, &hasSlopes](PGE_Phys_Object *CUR)->bool
     {
-        return (CUR) &&
-               (dynamic_cast<PGE_Phys_Object*>(CUR) != dynamic_cast<PGE_Phys_Object*>(this)) &&
-               (!CUR->m_paused) &&
-               (CUR->m_is_visible);
+        bool isValid = (CUR) &&
+                        (dynamic_cast<PGE_Phys_Object*>(CUR) != dynamic_cast<PGE_Phys_Object*>(this)) &&
+                        (!CUR->m_paused) &&
+                        (CUR->m_is_visible);
+        if(isValid)
+            hasSlopes |= (CUR->m_shape != PhysObject::SL_Rect);
+        return isValid;
     };
 
     m_scene->queryItems(posRectC, &objs, &itemValidator);
+
+    // Put slopes into the top of order
+    // This will avoid nearest rectangular blocks to confuse alignment of object at the slope top
+    if(hasSlopes) // Order the array for only case when slope blocks are found
+    {
+        bool moveLeft = m_momentum.velX < 0.0;
+
+        std::sort( objs.begin( ), objs.end( ), [moveLeft](PGE_Phys_Object * &lhs, PGE_Phys_Object * &rhs)->bool
+        {
+            int l = 0, r = 0;
+            if(moveLeft)
+            {
+                if(lhs->m_shape == PhysObject::SL_Rect)
+                    l = 2;
+                else if(lhs->m_shape == PhysObject::SL_RightBottom || lhs->m_shape == PhysObject::SL_RightTop || lhs->m_shape == PhysObject::SL_LeftTop)
+                    l = 1;
+
+                if(rhs->m_shape == PhysObject::SL_Rect)
+                    r = 2;
+                else if(rhs->m_shape == PhysObject::SL_RightBottom || rhs->m_shape == PhysObject::SL_RightTop || rhs->m_shape == PhysObject::SL_LeftTop)
+                    r = 1;
+            }
+            else
+            {
+                if(lhs->m_shape == PhysObject::SL_Rect)
+                    l = 2;
+                else if(lhs->m_shape == PhysObject::SL_LeftBottom || lhs->m_shape == PhysObject::SL_LeftTop || lhs->m_shape == PhysObject::SL_RightTop)
+                    l = 1;
+
+                if(rhs->m_shape == PhysObject::SL_Rect)
+                    r = 2;
+                else if(rhs->m_shape == PhysObject::SL_LeftBottom || rhs->m_shape == PhysObject::SL_LeftTop || rhs->m_shape == PhysObject::SL_RightTop)
+                    r = 1;
+            }
+            return l < r;
+        });
+    }
+
     double k = 0;
     int tm = -1, td = 0;
     PhysObject::ContactAt contactAt = PhysObject::Contact_None;
@@ -823,14 +875,16 @@ tipRectShape://Recheck rectangular collision
         if(pt(m_momentum.x, m_momentum.y, m_momentum.w, m_momentum.h,
               CUR->m_momentum.x, CUR->m_momentum.y, CUR->m_momentum.w, CUR->m_momentum.h))
         {
-            colH = pt(m_momentum.x,     m_momentum.oldy,  m_momentum.w, m_momentum.oldh,     CUR->m_momentum.x,    CUR->m_momentum.oldy, CUR->m_momentum.w, CUR->m_momentum.oldh);
-            colV = pt(m_momentum.oldx,  m_momentum.y,     m_momentum.oldw, m_momentum.h,     CUR->m_momentum.oldx, CUR->m_momentum.y,    CUR->m_momentum.oldw, CUR->m_momentum.h);
+            colH = pt(m_momentum.x,     m_momentum.oldy,  m_momentum.w, m_momentum.oldh,
+                    CUR->m_momentum.x,    CUR->m_momentum.oldy, CUR->m_momentum.w, CUR->m_momentum.oldh);
+            colV = pt(m_momentum.oldx,  m_momentum.y,     m_momentum.oldw, m_momentum.h,
+                    CUR->m_momentum.oldx, CUR->m_momentum.y,    CUR->m_momentum.oldw, CUR->m_momentum.h);
 
             if(colH ^ colV)
             {
                 if(!colH)
                 {
-tipRectV://Check vertical sides colllisions
+tipRectV://Check vertical sides collisions
 
                     if(m_momentum.centerY() < CUR->m_momentum.centerY())
                     {
@@ -944,7 +998,7 @@ tipRectB_Skip:
                 }
                 else
                 {
-tipRectH://Check horisontal sides collision
+tipRectH://Check horizontal sides collision
 
                     if(m_momentum.centerX() < CUR->m_momentum.centerX())
                     {
@@ -1094,6 +1148,7 @@ tipTriangleShape://Check triangular collision
                     //Avoid infinite loop for case of skipped collision resolving
                     contactAt = PhysObject::Contact_Skipped;
                     k = CUR->m_momentum.h / CUR->m_momentum.w;
+                    Maths::clearPrecision(k);
 
                     switch(CUR->m_shape)
                     {
@@ -1151,8 +1206,11 @@ tipTriangleShape://Check triangular collision
                             }
                         }
                         /* ********************* Resolve collision with top slope surface *************************** */
-                        else if(m_momentum.bottom() > CUR->m_momentum.y + ((m_momentum.x - CUR->m_momentum.x) * k) - 1)
+                        else if(m_momentum.bottom() > CUR->m_momentum.y + ((m_momentum.left() - CUR->m_momentum.left()) * k) - 1.0)
                         {
+                            if((CUR->m_blocked[m_filterID] & PhysObject::Block_TOP) == 0)
+                                goto skipTriangleResolving;
+
                             if((CUR->m_blocked[m_filterID] != PhysObject::Block_ALL) && (!m_slopeFloor.hasOld))
                             {
                                 if((CUR->m_blocked[m_filterID]&PhysObject::Block_TOP) == 0)
@@ -1163,12 +1221,12 @@ tipTriangleShape://Check triangular collision
                                     if(m_momentum.velY < CUR->m_momentum.velY)
                                         goto skipTriangleResolving;
 
-                                    if((m_momentum.bottomOld() > CUR->m_momentum.oldy + ((m_momentum.oldx - CUR->m_momentum.oldx) * k) - 0))
+                                    if((m_momentum.bottomOld() > CUR->m_momentum.oldy + ((m_momentum.leftOld() - CUR->m_momentum.leftOld()) * k) - 0))
                                         goto skipTriangleResolving;
                                 }
                             }
 
-                            m_momentum.y = CUR->m_momentum.y + ((m_momentum.x - CUR->m_momentum.x) * k) - m_momentum.h;
+                            m_momentum.y = CUR->m_momentum.y + ((m_momentum.left() - CUR->m_momentum.left()) * k) - m_momentum.h;
 
                             if(CUR->m_momentum.velY <= m_momentum.velY)
                                 m_momentum.velY = CUR->m_momentum.velY;
@@ -1180,13 +1238,13 @@ tipTriangleShape://Check triangular collision
                             if((m_momentum.velX > 0.0) || !m_onSlopeFloorTopAlign)
                             {
                                 if(CUR->m_momentum.velY <= m_momentum.velY)
-                                    m_momentum.velY = CUR->m_momentum.velY + m_momentum.velX * k;
+                                    m_momentum.velY = CUR->m_momentum.velY + (m_momentum.velX * k);
 
                                 m_onSlopeYAdd = 0.0;
                             }
                             else
                             {
-                                m_onSlopeYAdd = m_momentum.velX * k;
+                                m_onSlopeYAdd = (m_momentum.velX * k);
 
                                 if((m_onSlopeYAdd < 0.0) && (m_momentum.bottom() + m_onSlopeYAdd < CUR->m_momentum.y))
                                     m_onSlopeYAdd = -std::fabs(m_momentum.bottom() - CUR->m_momentum.y);
@@ -1278,7 +1336,7 @@ tipTriangleShape://Check triangular collision
                             }
                         }
                         /* ********************* Resolve collision with top slope surface *************************** */
-                        else if(m_momentum.bottom() > CUR->m_momentum.y + ((CUR->m_momentum.right() - m_momentum.x - m_momentum.w) * k) - 1)
+                        else if(m_momentum.bottom() > CUR->m_momentum.y + ((CUR->m_momentum.right() - m_momentum.right()) * k) - 1.0)
                         {
                             if((CUR->m_blocked[m_filterID] & PhysObject::Block_TOP) == 0)
                                 goto skipTriangleResolving;
@@ -1293,12 +1351,12 @@ tipTriangleShape://Check triangular collision
                                     if(m_momentum.velY < CUR->m_momentum.velY)
                                         goto skipTriangleResolving;
 
-                                    if((m_momentum.bottomOld() > CUR->m_momentum.oldy + ((CUR->m_momentum.rightOld() - m_momentum.oldx - m_momentum.oldw) * k) - 0))
+                                    if((m_momentum.bottomOld() > CUR->m_momentum.oldy + ((CUR->m_momentum.rightOld() - m_momentum.rightOld()) * k) - 0))
                                         goto skipTriangleResolving;
                                 }
                             }
 
-                            m_momentum.y = CUR->m_momentum.y + ((CUR->m_momentum.right() - m_momentum.x - m_momentum.w) * k) - m_momentum.h;
+                            m_momentum.y = CUR->m_momentum.y + ((CUR->m_momentum.right() - m_momentum.right()) * k) - m_momentum.h;
 
                             if(CUR->m_momentum.velY <= m_momentum.velY)
                                 m_momentum.velY = CUR->m_momentum.velY;
@@ -1310,13 +1368,13 @@ tipTriangleShape://Check triangular collision
                             if((m_momentum.velX < 0.0) || !m_onSlopeFloorTopAlign)
                             {
                                 if(CUR->m_momentum.velY <= m_momentum.velY)
-                                    m_momentum.velY = CUR->m_momentum.velY - m_momentum.velX * k;
+                                    m_momentum.velY = CUR->m_momentum.velY - (m_momentum.velX * k);
 
                                 m_onSlopeYAdd = 0.0;
                             }
                             else
                             {
-                                m_onSlopeYAdd = -m_momentum.velX * k;
+                                m_onSlopeYAdd = -(m_momentum.velX * k);
 
                                 if((m_onSlopeYAdd < 0.0) && (m_momentum.bottom() + m_onSlopeYAdd < CUR->m_momentum.y))
                                     m_onSlopeYAdd = -std::fabs(m_momentum.bottom() - CUR->m_momentum.y);
@@ -1737,8 +1795,7 @@ skipTriangleResolving:
 
     /* *********************** Check all collided sides ***************************** */
     {
-        ObjectCollidersIt it = l_contactL.begin();
-
+        auto it = l_contactL.begin();
         while(it != l_contactL.end())
         {
             PhysObject *cEL = *it;
@@ -1749,8 +1806,7 @@ skipTriangleResolving:
         }
     }
     {
-        ObjectCollidersIt it = l_contactR.begin();
-
+        auto it = l_contactR.begin();
         while(it != l_contactR.end())
         {
             PhysObject *cEL = *it;
@@ -1761,8 +1817,7 @@ skipTriangleResolving:
         }
     }
     {
-        ObjectCollidersIt it = l_contactT.begin();
-
+        auto it = l_contactT.begin();
         while(it != l_contactT.end())
         {
             PhysObject *cEL = *it;
@@ -1773,8 +1828,7 @@ skipTriangleResolving:
         }
     }
     {
-        ObjectCollidersIt it = l_contactB.begin();
-
+        auto it = l_contactB.begin();
         while(it != l_contactB.end())
         {
             PhysObject *cEL = *it;
@@ -1856,6 +1910,12 @@ skipTriangleResolving:
             m_momentum.velX = m_momentum.velXsrc + (speedSum / speedNum);
         m_treemap.updatePos();
     }
+
+    Maths::clearPrecision(m_momentum.x);
+    Maths::clearPrecision(m_momentum.y);
+    Maths::clearPrecision(m_momentum.velX);
+    Maths::clearPrecision(m_momentum.velY);
+    Maths::clearPrecision(m_momentum.velXsrc);
 
     processContacts();
     postCollision();

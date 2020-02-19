@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "render_opengl31.h"
@@ -28,13 +29,13 @@
 
 #include <SDL2/SDL.h> // SDL 2 Library
 #include <SDL2/SDL_opengl.h>
+#ifdef __ANDROID__
+#include <SDL2/SDL_opengles.h>
+#endif
 #include <SDL2/SDL_thread.h>
 
 #include "../gl_debug.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB
-#endif
 #include <FreeImageLite.h>
 
 Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),
@@ -45,20 +46,28 @@ Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),
                          1.0f, 1.0f, 1.0f, 1.0f}
 {}
 
-Render_OpenGL31::~Render_OpenGL31()
-{}
-
 void Render_OpenGL31::set_SDL_settings()
 {
     SDL_GL_ResetAttributes();
     // Enabling double buffer, setting up colors...
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            8);
+
+#ifdef __ANDROID__ //Android specific
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,            5);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          6);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           5);
+#else //Generic
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,          8);
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,           8);
     SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,          8);
+#endif
+
+#ifndef __ANDROID__
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);//3
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);//1
+#endif
+
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);  //for GL 3.1
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
@@ -106,7 +115,7 @@ bool Render_OpenGL31::init()
         return false;
     }
 
-    glViewport(0.f, 0.f, PGE_Window::Width, PGE_Window::Height);
+    glViewport(static_cast<GLint>(0), static_cast<GLint>(0), PGE_Window::Width, PGE_Window::Height);
     GLERRORCHECK();
     //Initialize clear color
     glClearColor(0.f, 0.f, 0.f, 1.f);
@@ -136,7 +145,7 @@ void Render_OpenGL31::initDummyTexture()
     if(!image)
     {
         std::string msg = fmt::format_ne("Can't initialize dummy texture!\n"
-                                      "In file: {0}:{1}", __FILE__, __LINE__);
+                                         "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error", msg.c_str(), NULL);
         abort();
@@ -358,9 +367,13 @@ void Render_OpenGL31::getPixelData(const PGE_Texture *tx, unsigned char *pixelDa
     if(!tx)
         return;
 
+#ifndef __ANDROID__ // OpenGL 3.1
     setRenderTexture(const_cast<PGE_Texture *>(tx)->texture);
     glGetTexImage(GL_TEXTURE_2D, 0, GL_BGRA, GL_UNSIGNED_BYTE, pixelData);
     setUnbindTexture();
+#else //OpenGL ES
+    //FIXME: Implement correct texture pixel data capture!!!
+#endif
 }
 
 void Render_OpenGL31::renderRect(float x, float y, float w, float h, GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha, bool filled)
@@ -582,8 +595,8 @@ PGE_Point Render_OpenGL31::MapToScr(PGE_Point point)
 PGE_Point Render_OpenGL31::MapToScr(int x, int y)
 {
     return PGE_Point(
-               static_cast<int>( (static_cast<float>(x) - offset_x) / viewport_scale_x),
-               static_cast<int>( (static_cast<float>(y) - offset_y) / viewport_scale_y)
+               static_cast<int>((static_cast<float>(x) - offset_x) / viewport_scale_x),
+               static_cast<int>((static_cast<float>(y) - offset_y) / viewport_scale_y)
            );
 }
 

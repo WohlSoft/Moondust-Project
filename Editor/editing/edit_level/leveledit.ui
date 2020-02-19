@@ -32,7 +32,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Level edit</string>
+   <string notr="true">--level--</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">

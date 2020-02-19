@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "lvl_event_engine.h"
@@ -22,17 +23,13 @@
 #include <gui/pge_msgbox.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
+#include <Utils/maths.h>
 
 #include <unordered_set>
 
 LVL_EventAction::LVL_EventAction():
     m_timeDelayLeft(0.0)
 {}
-
-LVL_EventAction::~LVL_EventAction()
-{}
-
-
 
 LVL_EventEngine::LVL_EventEngine() :
     m_scene(nullptr)
@@ -68,11 +65,11 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         PGEStringList   layers  = evt.layers_show;
         bool            smoke   = !evt.nosmoke;
         // Detect "Destroyed blocks" layer and replace it with special command
-        for(PGEStringList::iterator it = layers.begin(); it != layers.end(); )
+        for(auto it = layers.begin(); it != layers.end(); )
         {
             std::string *lyr = &(*it);
-            // Undestroy destroyed blocks
-            if(lyr->compare(DESTROYED_LAYER_NAME) == 0)
+            // UnDestroy destroyed blocks
+            if(*lyr == DESTROYED_LAYER_NAME)
             {
                 EventQueueEntry<LVL_EventAction> undestroyBlocks;
                 undestroyBlocks.makeCaller([this, smoke]()->void
@@ -110,9 +107,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
     {
         EventQueueEntry<LVL_EventAction> playsnd;
         long soundID = evt.sound_id;
-        playsnd.makeCaller([this, soundID]()->void
+        playsnd.makeCaller([soundID]()->void
         {
-            PGE_Audio::playSound(soundID);
+            PGE_Audio::playSound(static_cast<size_t>(soundID));
         }, 0);
         evntAct.m_action.events.push_back(playsnd);
     }
@@ -131,9 +128,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     {
                         m_scene->m_sections[i].resetBG();
 
-                        for(size_t j = 0; j < m_scene->m_cameras.size(); j++)
+                        for(auto &m_camera : m_scene->m_cameras)
                         {
-                            if(m_scene->m_cameras[j].cur_section == &m_scene->m_sections[i])
+                            if(m_camera.cur_section == &m_scene->m_sections[i])
                                 m_scene->m_sections[i].initBG();
                         }
                     }
@@ -142,16 +139,16 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             }
             else
             {
-                unsigned long bgID = static_cast<unsigned long>(evt.sets[i].background_id);
+                auto bgID = static_cast<unsigned long>(evt.sets[i].background_id);
                 bgToggle.makeCaller([this, bgID, i]()->void
                 {
                     if(i < m_scene->m_sections.size())
                     {
                         m_scene->m_sections[i].setBG(bgID);
 
-                        for(size_t j = 0; j < m_scene->m_cameras.size(); j++)
+                        for(auto &m_camera : m_scene->m_cameras)
                         {
-                            if(m_scene->m_cameras[j].cur_section == &m_scene->m_sections[i])
+                            if(m_camera.cur_section == &m_scene->m_sections[i])
                                 m_scene->m_sections[i].initBG();
                         }
                     }
@@ -173,9 +170,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     {
                         m_scene->m_sections[i].resetMusic();
 
-                        for(size_t j = 0; j < m_scene->m_cameras.size(); j++)
+                        for(auto &m_camera : m_scene->m_cameras)
                         {
-                            if(m_scene->m_cameras[j].cur_section == &m_scene->m_sections[i])
+                            if(m_camera.cur_section == &m_scene->m_sections[i])
                                 m_scene->m_sections[i].playMusic();
                         }
                     }
@@ -190,9 +187,9 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
                     {
                         m_scene->m_sections[i].setMusic(static_cast<unsigned int>(musID));
 
-                        for(size_t j = 0; j < m_scene->m_cameras.size(); j++)
+                        for(auto &m_camera : m_scene->m_cameras)
                         {
-                            if(m_scene->m_cameras[j].cur_section == &m_scene->m_sections[i])
+                            if(m_camera.cur_section == &m_scene->m_sections[i])
                                 m_scene->m_sections[i].playMusic();
                         }
                     }
@@ -251,12 +248,12 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
             section.m_autoscrollVelocityX = evt.move_camera_x;
             section.m_autoscrollVelocityY = evt.move_camera_y;
 
-            for(size_t j = 0; j < m_scene->m_cameras.size(); j++)
+            for(auto &m_camera : m_scene->m_cameras)
             {
-                if(m_scene->m_cameras[j].cur_section == &section)
+                if(m_camera.cur_section == &section)
                 {
-                    m_scene->m_cameras[j].m_autoScrool.enabled = true;
-                    m_scene->m_cameras[j].m_autoScrool.resetAutoscroll();
+                    m_camera.m_autoScrool.enabled = true;
+                    m_camera.m_autoScrool.resetAutoscroll();
                 }
             }
         }, 0);
@@ -269,10 +266,10 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         message.makeCaller([this, evt]()->void
         {
             EventQueueEntry<LevelScene > msgBox;
-            std::string message = evt.msg;
+            const std::string &msg = evt.msg;
             msgBox.makeCaller(
-            [this, message]()->void{
-                m_scene->m_messages.showMsg(message);
+            [this, msg]()->void{
+                m_scene->m_messages.showMsg(msg);
                 //                                   PGE_MsgBox box(_scene, evt.msg,
                 //                                   PGE_MsgBox::msg_info, PGE_Point(-1,-1), -1,
                 //                                   ConfigManager::setup_message_box.sprite);
@@ -302,11 +299,15 @@ void LVL_EventEngine::addSMBX64Event(LevelSMBX64Event &evt)
         trigger.m_eventName = evt.name;
         EventQueueEntry<LVL_EventAction> triggerEvent;
         std::string trgr = evt.trigger;
+        double triggerDelay = static_cast<double>(evt.trigger_timer) * 100.0;
+        //FIXME: put the correct milliseconds to SMBX ticks convert formula
+        triggerDelay = (std::round(triggerDelay * 2.5 / 39.0) * 39.6) / 2.5;
+        Maths::clearPrecision(triggerDelay);
         triggerEvent.makeCaller([this, trgr]()->void
         {
             m_scene->m_events.triggerEvent(trgr);
         },
-        static_cast<double>(evt.trigger_timer) * 100.0
+        triggerDelay
         //                ((double(evt.trigger_timer) / 10.0) * 65.0)
                                );
         trigger.m_action.events.push_back(triggerEvent);
@@ -322,7 +323,7 @@ void LVL_EventEngine::processTimers(double tickTime)
 {
     std::unordered_set<std::string> triggered;
 
-    //static double smbxTimeUnit = 65.0 / 1000.0;
+    // const double smbxTimeUnit = 15.6;
     for(size_t i = 0; i < workingEvents.size(); i++)
     {
         EventActList *ea = &workingEvents[i];
@@ -335,7 +336,7 @@ void LVL_EventEngine::processTimers(double tickTime)
         for(size_t j = 0; j < ea->size(); j++)
         {
             LVL_EventAction *ee = &(*ea)[j];
-            if(ee->m_timeDelayLeft <= 0.0)
+            if(ee->m_timeDelayLeft < 0.0)
             {
                 ee->m_action.processEvents(tickTime /* *smbxTimeUnit*/);
 
@@ -352,9 +353,9 @@ void LVL_EventEngine::processTimers(double tickTime)
                     j--;
                     continue;
                 }
-            }
-            else
+            } else
                 ee->m_timeDelayLeft -= tickTime;
+            Maths::clearPrecision(ee->m_timeDelayLeft);
         }
     }
 }
@@ -364,7 +365,7 @@ void LVL_EventEngine::triggerEvent(std::string event)
     if(event.empty())
         return;
 
-    EventsTable::iterator e = events.find(event);
+    auto e = events.find(event);
     if(e != events.end())
         workingEvents.push_back(e->second);
 }

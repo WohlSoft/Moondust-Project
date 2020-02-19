@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -126,7 +126,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
 
         zoom->setText(QString::number(lvlWin->getZoom()));
 
-        SetCurrentLevelSection(0, 1);
+        setCurrentLevelSection(0, 1);
 
         dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();
@@ -260,18 +260,22 @@ void MainWindow::updateWindowMenu()
 
     QAction * empty = ui->menuWindow->addAction( tr("[No files open]") );
         empty->setDisabled(1);
-
         empty->setVisible( windows.isEmpty() );
 
-    for (int i = 0; i < windows.size(); ++i) {
+    for(auto *window : windows)
+    {
         QString text;
-        text = QString("%1").arg( windows.at(i)->windowTitle() ) ;
+        text = QString("%1").arg(window->windowTitle());
         QAction *action  = ui->menuWindow->addAction(text);
         action->setCheckable(true);
-        action->setChecked( windows[i] == LastActiveSubWindow );
+        action->setChecked(window == LastActiveSubWindow);
 
-        connect(action, SIGNAL(triggered()), windowMapper, SLOT(map()));
-        windowMapper->setMapping(action, windows.at(i));
+        QObject::connect(action, &QAction::triggered,
+        [this, window]()->void
+        {
+            LogDebug(QString("Toggling window '%1' [lambda-signal]").arg(window->windowTitle()));
+            setActiveSubWindow(window);
+        });
     }
 }
 
@@ -280,4 +284,5 @@ void MainWindow::UpdateCustomItems()
 {
     dock_LvlItemBox->initItemLists();
     dock_WldItemBox->initItemLists();
+    dock_WldMusicBoxes->initItemLists();
 }

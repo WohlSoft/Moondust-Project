@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation>Дочерние окна</translation>
+        <translation>Отдельные дочернии окна (классический стиль)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
@@ -404,7 +404,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation>Подсчёт звёзд...</translation>
+        <translation>Подсчёт звёзд…</translation>
     </message>
 </context>
 <context>
@@ -613,7 +613,7 @@ You also can double-click an item to scroll to its bookmarked position.</source>
     </message>
     <message>
         <source>Go To...</source>
-        <translation>Перейти к...</translation>
+        <translation>Перейти к…</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
@@ -1241,7 +1241,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Hide invisible blocks</source>
-        <translation>Спрятать невидимые блоки</translation>
+        <translation type="vanished">Спрятать невидимые блоки</translation>
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
@@ -1254,6 +1254,10 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Замостить фон</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation>Спрятать невидимые блоки и мета-объекты</translation>
     </message>
 </context>
 <context>
@@ -1294,10 +1298,10 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Совет 1:&lt;/b&gt; Вы сможете переключить интерфейс через меню &lt;u&gt;Справка&lt;/u&gt;, или переключая панели инструментов через меню &lt;u&gt;Вид&lt;/u&gt; и переключение режимов дочерних окон или вкладок в меню &lt;u&gt;Окно&lt;/u&gt;.&lt;br&gt;
-&lt;br&gt;
-&lt;b&gt;Совет 2:&lt;/b&gt; В отличии от старого редактора, большинство возможностей доступно через контекстное меню (открывается нажатием правой кнопки мыши), окна инструментов из панелей значков (перетаскиваемые панели со значками в верхней части окна) и меню. Этот редактор использует мульти-выбор!&lt;br&gt;
-&lt;br&gt;
+        <translation>&lt;p&gt;&lt;b&gt;Совет 1:&lt;/b&gt; Вы сможете переключить интерфейс через меню &lt;u&gt;Справка&lt;/u&gt;, или переключая панели инструментов через меню &lt;u&gt;Вид&lt;/u&gt; и переключение режимов дочерних окон или вкладок в меню &lt;u&gt;Окно&lt;/u&gt;.&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;Совет 2:&lt;/b&gt; В отличии от старого редактора, большинство возможностей доступно через контекстное меню (открывается нажатием правой кнопки мыши), окна инструментов из панелей значков (перетаскиваемые панели со значками в верхней части окна) и меню. Этот редактор использует мульти-выбор!&lt;br/&gt;
+&lt;br/&gt;
 &lt;b&gt;Совет 3:&lt;/b&gt; Используйте среднюю кнопку мыши чтобы включать размещение выбранного элемента, или дублировать группу!&lt;/p&gt;</translation>
     </message>
 </context>
@@ -1333,7 +1337,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation>Объединить Слой</translation>
+        <translation>Объединение слоёв</translation>
     </message>
 </context>
 <context>
@@ -1452,6 +1456,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>Карта мира SMBX</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translation>Пожалуйста, подождите...</translation>
     </message>
 </context>
 <context>
@@ -2305,7 +2313,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation>Повреждающее поле для нИП</translation>
+        <translation>Поле урона для нИП</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2458,7 +2466,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>[Empty]</source>
-        <translation></translation>
+        <translation>[Пусто]</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -2777,7 +2785,7 @@ Please, check the application directory and make sure it is installed properly.<
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Редактирование уровня</translation>
+        <translation type="vanished">Редактирование уровня</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -3072,6 +3080,10 @@ Do you want to save your changes?</source>
         <source>6/%1 Loading Doors...</source>
         <translation>6/%1 Загрузка дверей...</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Не удалось создать временный файл</translation>
+    </message>
 </context>
 <context>
     <name>LevelFileList</name>
@@ -3092,7 +3104,7 @@ Do you want to save your changes?</source>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Панель элементов Уровня</translation>
+        <translation type="vanished">Панель элементов Уровня</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3148,7 +3160,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation>&lt;Сперва сохрание файл&gt;</translation>
+        <translation>&lt;Сначала сохраните файл&gt;</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation>Обозреватель элементов</translation>
     </message>
 </context>
 <context>
@@ -3256,6 +3272,20 @@ Do you want to save your changes?</source>
     <message>
         <source>Trigger event</source>
         <translation>Триггер события</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Основное</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation>Отсутствуют доступные настройки</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Ошибка в файле %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -3457,14 +3487,13 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation>Превышены ограничения SMBX64!</translation>
     </message>
     <message>
-        <source>Violation of SMBX64 standard has beeen found!
+        <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
         <translation>Обнаружено нарушение стандарта SMBX64!
-%1
-, устаревший движок может не заработать!
+%1, устаревший движок может не заработать!
 Рекомендуется удалить все лишние элементы.
 Хотите продолжить процесс?</translation>
     </message>
@@ -3490,7 +3519,7 @@ Do you want to abort current testing process?</source>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation>Обнаружен старый SMBX (Vanilla SMBX)!</translation>
+        <translation>Обнаружена устаревшая сборка SMBX!</translation>
     </message>
     <message>
         <source>%2 not found!
@@ -3504,12 +3533,12 @@ Are you still want to launch a test?&lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
         <translation>%2 не найден!
-Вы имеете Vanilla SMBX!&lt;br&gt;
-Это значит, что автозапуск теста уровня невозможен. Чтобы запустить тест уровня, будет сгенерирован временный эпизод, который вы можете запустить и выбрать вручную.&lt;br&gt;
+Обнаружен устаревшая сборка SMBX (&quot;ванильный&quot;, &quot;vanilla&quot;)!&lt;br&gt;
+Это значит, что автозапуск теста уровня невозможен. Из-за чего для возможности запустить тестовый уровень, будет сгенерирован временный эпизод, который вы сможете запустить, выбрав вручную.&lt;br&gt;
 &lt;br&gt;
 Имя генерируемого эпизода: %1&lt;br&gt;
 &lt;br&gt;
-Вы уверены, что хотите запустить тест?&lt;br&gt;
+Вы уверены, что всё ещё хотите запустить тест?&lt;br&gt;
 &lt;br&gt;
 Если вы хотите полноценный тест уровней, вам нужно загрузить LunaLUA здесь:&lt;br&gt;
 %3</translation>
@@ -3530,11 +3559,11 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>process execution is failed.</source>
-        <translation>не удалось запустить процесс.</translation>
+        <translation type="vanished">не удалось запустить процесс.</translation>
     </message>
     <message>
         <source>patching has failed.</source>
-        <translation>не удалось применить патч.</translation>
+        <translation type="vanished">не удалось применить патч.</translation>
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
@@ -3582,7 +3611,7 @@ To use LunaTester you should have right Integration configuration package!</sour
     </message>
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation>Невозможно запустить устаревший движок, потому что %1</translation>
+        <translation>Невозможно запустить SMBX-движок, потому что %1</translation>
     </message>
     <message>
         <source>SMBX Level test</source>
@@ -3618,7 +3647,7 @@ To use LunaTester you should have right Integration configuration package!</sour
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Прервать запущенный процесс</translation>
+        <translation type="vanished">Прервать запущенный процесс</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
@@ -3635,6 +3664,20 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>LunaTester is not running.</source>
         <translation>LunaTester не запущен.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>Прервать запущенный процесс</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation>%2 не найден!
+У Вас устаревшая сборка SMBX (&quot;ванильная&quot;, &quot;Vanilla&quot;)&lt;br&gt;!
+Это значит, что с данной сборкой невозможно запустить тестовый уровень на вашей операционной системе. LunaLua требуется для возможности запуска тестов через SMBX на не-Windows операционных системах.</translation>
     </message>
 </context>
 <context>
@@ -4103,7 +4146,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
     </message>
     <message>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation>Конец игры &quot;Боузер побеждён&quot;</translation>
+        <translation>Конец игры &quot;Поражение финального босса&quot;</translation>
     </message>
     <message>
         <source>Player Control hold keys</source>
@@ -4341,11 +4384,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Up</source>
-        <translation>Вверх</translation>
+        <translation type="vanished">Вверх</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Вниз</translation>
+        <translation type="vanished">Вниз</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -4450,6 +4493,52 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>[none]</source>
         <translation>[нет]</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Ошибка в файле %1:
+%2</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>Влево</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>Вправо</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>Вверх</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>Вниз</translation>
+    </message>
+    <message>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>Вверх-Влево</translation>
+    </message>
+    <message>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>Вверх-Вправо</translation>
+    </message>
+    <message>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>Вниз-Влево</translation>
+    </message>
+    <message>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>Вниз-Вправо</translation>
     </message>
 </context>
 <context>
@@ -5051,7 +5140,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>Сб. Стукнут</translation>
+        <translation>Сб. Стукнут:</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
@@ -5278,7 +5367,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation>Файл нужно сохранить, чтобы можно было работать с пользовательскими конфигами фонов.</translation>
+        <translation>Чтобы можно было работать с конфигами фонов, файл нужно сохранить.</translation>
     </message>
     <message>
         <source>Choose a background first</source>
@@ -5291,12 +5380,12 @@ Physical env. zones:	%6
     <message>
         <source>Custom background name which will be shown in the editor</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Имя пользовательского фона, который будет показан в редакторе</translation>
+        <translation type="vanished">Имя пользовательского фона, который будет показан в редакторе</translation>
     </message>
     <message>
         <source>Create your background layers setup here...</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Делайте слои фоновой композиции здесь...</translation>
+        <translation type="vanished">Делайте слои фоновой композиции здесь...</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -5305,7 +5394,28 @@ Physical env. zones:	%6
     <message>
         <source>Default screen fill color</source>
         <comment>A comment in the template if Background2 INI file.</comment>
-        <translation>Цвет заливки экрана по-умолчанию</translation>
+        <translation type="vanished">Цвет заливки экрана по-умолчанию</translation>
+    </message>
+    <message>
+        <source>Name that will appear in the editor</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Имя, которое отобразится в редакторе</translation>
+    </message>
+    <message>
+        <source>Backdrop fill color</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Цвет заливки фона</translation>
+    </message>
+    <message>
+        <source>Add layers here, for example:</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation>Добавлять слои здесь, например:</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>Ошибка в файле %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -5562,7 +5672,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 Если этот флаг включён, возможно разместить только одну входную точку.</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>Только выход</translation>
     </message>
     <message>
@@ -5575,7 +5685,7 @@ If this flag is enabled, you can only place a warp exit.</source>
 Если этот флаг включён, возможно размещение только одной выходной точки.</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>Только вход</translation>
     </message>
     <message>
@@ -5605,7 +5715,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
-        <translation>Показать пустой экран вместо загрузочного экрана.
+        <translation type="vanished">Показать пустой экран вместо загрузочного экрана.
 В старом SMBX-движке загрузочный экран уровня показывает
 текущего игрового персонажа(ей) и остаток жизней.</translation>
     </message>
@@ -5679,6 +5789,22 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>Невозможно открыть файл!</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation>Показать пустой экран вместо экрана загрузки.
+Инчае, на экране загрузки в устеревшем движке будет показан 
+действующий игровой персонаж(и) и остаток жизней.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation>Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation>Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
     </message>
 </context>
 <context>
@@ -6202,7 +6328,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <extracomment>Edit from the editor</extracomment>
+        <extracomment>Exit from the editor</extracomment>
         <translation>Выйти</translation>
     </message>
     <message>
@@ -6263,7 +6389,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation>Секция 0 (Ctrl+1)</translation>
+        <translation type="vanished">Секция 0 (Ctrl+1)</translation>
     </message>
     <message>
         <source>Section 1</source>
@@ -6435,83 +6561,83 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation>Секция 1 (Ctrl+2)</translation>
+        <translation type="vanished">Секция 1 (Ctrl+2)</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation>Секция 2 (Ctrl+3)</translation>
+        <translation type="vanished">Секция 2 (Ctrl+3)</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation>Секция 3 (Ctrl+4)</translation>
+        <translation type="vanished">Секция 3 (Ctrl+4)</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation>Секция 4 (Ctrl+5)</translation>
+        <translation type="vanished">Секция 4 (Ctrl+5)</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation>Секция 5 (Ctrl+6)</translation>
+        <translation type="vanished">Секция 5 (Ctrl+6)</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation>Секция 6 (Ctrl+7)</translation>
+        <translation type="vanished">Секция 6 (Ctrl+7)</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation>Секция 7 (Ctrl+8)</translation>
+        <translation type="vanished">Секция 7 (Ctrl+8)</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation>Секция 8 (Ctrl+9)</translation>
+        <translation type="vanished">Секция 8 (Ctrl+9)</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation>Секция 9 (Ctrl+0)</translation>
+        <translation type="vanished">Секция 9 (Ctrl+0)</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation>Секция 10 (Ctrl+Alt+1)</translation>
+        <translation type="vanished">Секция 10 (Ctrl+Alt+1)</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation>Секция 11 (Ctrl+Alt+2)</translation>
+        <translation type="vanished">Секция 11 (Ctrl+Alt+2)</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation>Секция 12 (Ctrl+Alt+3)</translation>
+        <translation type="vanished">Секция 12 (Ctrl+Alt+3)</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation>Секция 13 (Ctrl+Alt+4)</translation>
+        <translation type="vanished">Секция 13 (Ctrl+Alt+4)</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation>Секция 14 (Ctrl+Alt+5)</translation>
+        <translation type="vanished">Секция 14 (Ctrl+Alt+5)</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation>Секция 15 (Ctrl+Alt+6)</translation>
+        <translation type="vanished">Секция 15 (Ctrl+Alt+6)</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation>Секция 16 (Ctrl+Alt+7)</translation>
+        <translation type="vanished">Секция 16 (Ctrl+Alt+7)</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation>Секция 17 (Ctrl+Alt+8)</translation>
+        <translation type="vanished">Секция 17 (Ctrl+Alt+8)</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation>Секция 18 (Ctrl+Alt+9)</translation>
+        <translation type="vanished">Секция 18 (Ctrl+Alt+9)</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation>Секция 19 (Ctrl+Alt+0)</translation>
+        <translation type="vanished">Секция 19 (Ctrl+Alt+0)</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation>Секция 20 (Alt+1)</translation>
+        <translation type="vanished">Секция 20 (Alt+1)</translation>
     </message>
     <message>
         <source>Wrap Horizontally</source>
@@ -6543,11 +6669,11 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Go to left-bottom of the section</source>
-        <translation>Перейти к лево-нижнему углу секции</translation>
+        <translation>Перейти к нижне-левому углу секции</translation>
     </message>
     <message>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Вернуться к лево-нижнему углу Секции Уровня или к координате x=0:y=0 на Карте Мира</translation>
+        <translation>Вернуться к нижне-левому углу секции уровня или к координатам x=0:y=0 на карте мира</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6565,11 +6691,11 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Go to the left-top of the section</source>
-        <translation>Перейти к лево-верхнему углу секции</translation>
+        <translation>Перейти к верхне-левому углу секции</translation>
     </message>
     <message>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Вернуться к лево-верхнему углу Секции Уровня или к координате x=0:y=0 на Карте Мира</translation>
+        <translation>Вернуться к верхне-левому углу секции уровня или к координатам x=0:y=0 на карте мира</translation>
     </message>
     <message>
         <source>Level Search</source>
@@ -6637,7 +6763,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Go to right-bottom of the section</source>
-        <translation>Перейти к право-нижнему углу секции</translation>
+        <translation>Перейти к нижне-правому углу секции</translation>
     </message>
     <message>
         <source>Script Editor</source>
@@ -6653,7 +6779,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
-        <translation>Открыть локальный сценарий уровня / карты мира. Будет создан если не существует.</translation>
+        <translation>Открыть локальный сценарий уровня / карты мира. Если файл не существует, то будет создван новый, с нуля.</translation>
     </message>
     <message>
         <source>Open episode script</source>
@@ -6661,7 +6787,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open the episode common script. If it does not exist, a file will be created.</source>
-        <translation>Открыть общий сценарий эпизода. Будет создан если не существует.</translation>
+        <translation>Открыть общий сценарий эпизода. Если файл не существует, будет создан новый, с нуля.</translation>
     </message>
     <message>
         <source>Level local (%1)</source>
@@ -6701,7 +6827,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Item default</source>
-        <translation>По-умолчанию</translation>
+        <translation type="vanished">По-умолчанию</translation>
     </message>
     <message>
         <source>Lock tiles</source>
@@ -6822,19 +6948,19 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>Открыть папку текущего файла</translation>
+        <translation>Открыть папку эпизода</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Открыть папку, которая содержит текущий файл</translation>
+        <translation>Открыть папку эпизода, который содержит текущий файл</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>Открыть папку польз. данных</translation>
+        <translation>Открыть папку уровня</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Открыть пользовательскую папку: папка с именем, совпадающая с базовым именем текущего файла.</translation>
+        <translation>Открыть папку данных уровня.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
@@ -6922,19 +7048,19 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Дополнительные настройки</translation>
+        <translation type="vanished">Дополнительные настройки</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Скомпилировать в: </translation>
+        <translation type="vanished">Скомпилировать в: </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Автокод [Оригинальный язык LunaDLL]</translation>
+        <translation type="vanished">Автокод [Оригинальный язык LunaDLL]</translation>
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
@@ -6958,7 +7084,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Запустить тест через SMBX (Необходим LunaDLL)</translation>
+        <translation type="vanished">Запустить тест через SMBX (Необходим LunaDLL)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -7018,7 +7144,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Объекты уровня</translation>
+        <translation type="vanished">Объекты уровня</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7120,7 +7246,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Панель элементов Уровня</translation>
+        <translation type="vanished">Панель элементов Уровня</translation>
     </message>
     <message>
         <source>Filter:</source>
@@ -7697,7 +7823,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Панель объектов Карты Мира</translation>
+        <translation type="vanished">Панель объектов Карты Мира</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -8020,7 +8146,7 @@ File not exist.</source>
     </message>
     <message>
         <source>Untitled file</source>
-        <translation>Untitled file</translation>
+        <translation>Безымянный файл</translation>
     </message>
     <message>
         <source>Please save file to the disk first.</source>
@@ -8444,7 +8570,7 @@ The PGE Engine is still at an early stage in development, and there are several 
         <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
-        <translation>Движок не найден:
+        <translation type="vanished">Движок не найден:
 %1
 Пожалуйста, выбери приложение движка сам!</translation>
     </message>
@@ -8460,7 +8586,7 @@ Please, choose the engine application yourself!</source>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>Файл не сохранён!
-Хотите сохранить файл или хотите запустить тест сохранённой копии на диске?</translation>
+Хотите сохранить файл или же хотите запустить тест сохранённой копии с диска?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
@@ -8900,6 +9026,38 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <translation>Конфигурация переключена!
 Чтобы начать работу с новой конфигурацией, нужно перезапустить редактор. Хотите продолжить?</translation>
     </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation>Невозможно запустить тест, движок не найден:
+%1
+Пожалуйста, укажите приложение движка самостоятельно!</translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
+        <translation>Обозреватель элементов Уровня</translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation>Оборзеватель элементов с поиском</translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
+        <translation>Обозреватель элементов Карты Мира</translation>
+    </message>
+    <message>
+        <source>Music change points</source>
+        <translation>Точки смены музыки</translation>
+    </message>
+    <message>
+        <source>Configuration can&apos;t be loaded:
+%1.
+See %2 for more information.</source>
+        <translation>Невозможно загрузить конфигурацию:
+%1.
+Для подробностей, смотрите %2.</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -8971,7 +9129,7 @@ Do you want to continue?</source>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Редактирование настройки НИП</translation>
+        <translation type="vanished">Редактирование настройки НИП</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -9202,6 +9360,10 @@ Do you want to continue?</source>
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; был изменён.
 Вы хотите сохранить изменения?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Не удалось создать временный файл</translation>
     </message>
 </context>
 <context>
@@ -9737,7 +9899,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Имя уровня</translation>
+        <translation type="vanished">Имя уровня</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -9824,7 +9986,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Мы извиняемся, но редактор сломался.
+        <translation type="vanished">Мы извиняемся, но редактор сломался.
 Причина: Недостаточно памяти!
 
 Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
@@ -9836,7 +9998,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Извините, но PGE Editor сломался.
+        <translation type="vanished">Извините, но PGE Editor сломался.
 Причина: необработанное исключение
 
 Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
@@ -9857,7 +10019,7 @@ Forum link: wohlsoft.ru/forum</source>
     </message>
     <message>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
-        <translation>Работа редактора прервана, поскольку время alarm() истекло! [SIGALRM]</translation>
+        <translation>Работа редактора прервана, поскольку время &quot;alarm()&quot; истекло! [SIGALRM]</translation>
     </message>
     <message>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
@@ -9892,7 +10054,7 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation>Мы извиняется, но Редактор PGE аварийно завершился. Этому послужила причина: %1
+        <translation type="vanished">Мы извиняется, но Редактор PGE аварийно завершился. Этому послужила причина: %1
 
 </translation>
     </message>
@@ -10027,9 +10189,8 @@ File: %1
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 секций
-Максимальное число секций -  %2.
-
-Все границы и настройки секций с номером старше 21 будут утеряны.</translation>
+Максимальное число секций - %2.
+Все настройки и границы секций с номером старше 21 будут утеряны.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
@@ -10178,6 +10339,48 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>NPC user data change</source>
         <translation>Изменение пользовательских настроек НеИгрового Персонажа</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>Мы извиняемся, но редактор сломался.
+Причина: Недостаточно памяти!
+
+Чтобы предотвратить это, попробуйте закрыть другие ненужные программы чтобы освободить память.</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation>Извините, но PGE Editor сломался.
+Причина: необработанное исключение
+
+Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
+
+Ссылка форума: wohlsoft.ru/forum</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation>Мы извиняется, но Редактор PGE аварийно завершился. 
+Этому послужила причина: %1
+
+</translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation>Настройки уровня</translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
+        <translation>Расширенные настройки секции</translation>
     </message>
 </context>
 <context>
@@ -10553,7 +10756,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>2 Player settings</source>
-        <translation>Настройка 2-го игрока</translation>
+        <translation>Настройки 2-го игрока</translation>
     </message>
     <message>
         <source>PLSET_Character</source>
@@ -10580,7 +10783,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Chuck Norris</source>
-        <translation>&quot;Чак Норрис&quot;</translation>
+        <translation type="vanished">&quot;Чак Норрис&quot;</translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
@@ -10643,7 +10846,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>1 Player settings</source>
-        <translation>Настройка 1-го игрока</translation>
+        <translation>Настройки 1-го игрока</translation>
     </message>
     <message>
         <source>WIP</source>
@@ -10657,6 +10860,10 @@ Those preferences will makes no effect on a testing process before it will be fi
 Этот диалог ещё не доработан!
 Эти настройки никак не повлияют на процесс тестирования до тех пор, пока работа не будет закончена.
 Извините.</translation>
+    </message>
+    <message>
+        <source>Bulldozer mode</source>
+        <translation>Режим бульдозера</translation>
     </message>
 </context>
 <context>
@@ -11439,7 +11646,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Выход босса SMB3</translation>
+        <translation>2 - Победа над боссом</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
@@ -11472,6 +11679,14 @@ Data may be corrupted!</source>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Сперва разместите объект на карту мира и вызовите &quot;Свойства&quot; через контекстное меню.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation>Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation>Пожалуйста, сохраните файл прежде чем выбирать уровни.</translation>
     </message>
 </context>
 <context>
@@ -11522,23 +11737,23 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Ошибка чтения файла</translation>
+        <translation type="vanished">Ошибка чтения файла</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Невозможно прочитать файл %1:
+        <translation type="vanished">Невозможно прочитать файл %1:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Конфигурации не загружены</translation>
+        <translation type="vanished">Конфигурации не загружены</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Невозможно открыть файл %1:
+        <translation type="vanished">Невозможно открыть файл %1:
 Поскольку конфигурации объектов не загружены.
 Пожалуйста, проверьте папку &quot;config/SMBX&quot; и содержащиеся в ней *.INI файлы с настройками объектов.</translation>
     </message>
@@ -11581,6 +11796,14 @@ because object configurations are not loaded
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Сначала укажите точку на карте мира.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation>Конфигурационный пакет содержит ошибки</translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation>Невозможно загрузить карту мира &quot;%1&quot;, потому что конфигурационный пакет содержит ошибки.</translation>
     </message>
 </context>
 <context>
@@ -11785,12 +12008,16 @@ Bottom:	%4</source>
 Право:	%3
 Низ:	%4</translation>
     </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation>Спрятать мета-объекты</translation>
+    </message>
 </context>
 <context>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation>Поиск польз. Плиток %1</translation>
+        <translation>Поиск польз. Ландшафтных Плиток %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
@@ -11975,7 +12202,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Type:</source>
-        <translation>Тип:</translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -12110,7 +12337,7 @@ Music boxes:		%5
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Карта Мира</translation>
+        <translation type="vanished">Карта Мира</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -12358,12 +12585,16 @@ Do you want to save your changes?</source>
         <translation>&apos;%1&apos; был изменён.
 Вы хотите сохранить изменения?</translation>
     </message>
+    <message>
+        <source>Can&apos;t create a temporary backup file</source>
+        <translation type="vanished">Не удалось создать временный файл</translation>
+    </message>
 </context>
 <context>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Панель объектов карты мира</translation>
+        <translation type="vanished">Панель объектов карты мира</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -12400,6 +12631,29 @@ Do you want to save your changes?</source>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Пожалуйста, сначала сохраните файл, если вы хотите выбрать файл пользовательской музыки.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation>Обозреватель элементов Карты Мира</translation>
+    </message>
+</context>
+<context>
+    <name>WorldMusicBoxItemBox</name>
+    <message>
+        <source>Music boxes</source>
+        <translation>Музыкальные шкатулки</translation>
+    </message>
+    <message>
+        <source>Music Box</source>
+        <translation>Муз.Шкатулка</translation>
+    </message>
+    <message>
+        <source>Please, save file</source>
+        <translation>Пожалуйста, сохраните файл</translation>
+    </message>
+    <message>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation>Чтобы можно было выбирать пользовательскую музыку, файл нужно сохранить.</translation>
     </message>
 </context>
 <context>
@@ -12467,6 +12721,14 @@ Do you want to save your changes?</source>
     <message>
         <source>Counting stars...</source>
         <translation>Подсчёт звёзд...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation>Имя уровня, который будет загружен при первом запуске игры.</translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation>Уровень главного корридора:</translation>
     </message>
 </context>
 <context>
@@ -12572,7 +12834,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation>Не конвертировать фоны (не конвертировать background2-*.gif из-за бага в LunaLua)</translation>
+        <translation type="vanished">Не конвертировать фоны (не конвертировать background2-*.gif из-за бага в LunaLua)</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
@@ -12649,6 +12911,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Невозможно запустить приложение:
 %1
 Пожалуйста, проверьте папку с приложением.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation>Не конвертировать фоны (не конвертировать background2-*.gif)</translation>
     </message>
 </context>
 <context>
@@ -13185,7 +13451,7 @@ Right-click to remove!</source>
         <translation>Перетащи объекты
 в эту область!
 Клик правой кнопкой
-мыши чтобы удалить!</translation>
+мыши чтобы удалить.</translation>
     </message>
 </context>
 </TS>

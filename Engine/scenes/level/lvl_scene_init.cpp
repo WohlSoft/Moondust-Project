@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "../scene_level.h"
@@ -21,6 +22,7 @@
 #include <settings/global_settings.h>
 #include <common_features/logger.h>
 #include <common_features/tr.h>
+#include <common_features/pge_delay.h>
 #include <Utils/maths.h>
 #include <gui/pge_msgbox.h>
 
@@ -33,17 +35,19 @@ bool LevelScene::setEntrance(unsigned long entr)
     player_defs.clear();
     unsigned int plr = 1;
 
-    for(unsigned long &xxx : m_gameState->game_state.currentCharacter)
+    auto &gameState = m_gameState->m_gameSave;
+
+    for(unsigned long &xxx : gameState.currentCharacter)
     {
         LVL_PlayerDef def;
         def.setPlayerID(static_cast<int>(plr));
         def.setCharacterID(xxx);
 
-        for(size_t j = 0; j < m_gameState->game_state.characterStates.size(); j++)
+        for(size_t j = 0; j < gameState.characterStates.size(); j++)
         {
-            if(m_gameState->game_state.characterStates[j].id == xxx)
+            if(gameState.characterStates[j].id == xxx)
             {
-                def.setState(m_gameState->game_state.characterStates[j].state);
+                def.setState(gameState.characterStates[j].state);
                 break;
             }
         }
@@ -230,15 +234,17 @@ bool LevelScene::loadConfigs()
     //Set paths
     std::string metaPath  = m_data.meta.path;
     std::string metaFName = m_data.meta.filename;
-    ConfigManager::Dir_Blocks.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBlock());
-    ConfigManager::Dir_BGO.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBGO());
-    ConfigManager::Dir_NPC.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPC());
-    ConfigManager::Dir_NPCScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPCScript());
-    ConfigManager::Dir_PlayerScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerScript());
-    ConfigManager::Dir_PlayerCalibrations.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerCalibrations());
-    ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable());
-    ConfigManager::Dir_BG.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBG());
-    ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect());
+    std::vector<std::string> extraPaths;
+    ConfigManager::loadExtraFoldersList(metaPath, extraPaths);
+    ConfigManager::Dir_Blocks.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBlock(), extraPaths);
+    ConfigManager::Dir_BGO.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBGO(), extraPaths);
+    ConfigManager::Dir_NPC.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPC(), extraPaths);
+    ConfigManager::Dir_NPCScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelNPCScript(), extraPaths);
+    ConfigManager::Dir_PlayerScript.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerScript(), extraPaths);
+    ConfigManager::Dir_PlayerCalibrations.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayerCalibrations(), extraPaths);
+    ConfigManager::Dir_PlayerLvl.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelPlayable(), extraPaths);
+    ConfigManager::Dir_BG.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelBG(), extraPaths);
+    ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect(), extraPaths);
 
     //Load INI-files
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
@@ -575,7 +581,7 @@ bool LevelScene::init()
 {
     m_isInitFinished = false;
     m_isInitFailed = false;
-    #if 0
+#if 0
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext_background);
     initializer_thread = SDL_CreateThread(init_thread, "LevelInitializer", this);
     setLoaderAnimation(62);
@@ -585,16 +591,16 @@ bool LevelScene::init()
         drawLoader();
         PGE_Window::rePaint();
         //SDL_PumpEvents();
-        SDL_Delay(20);
+        PGE_Delay(20);
     }
 
     stopLoaderAnimation();
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
-    #else
+#else
     //Load everything without loading animation, in the main thread
     //(because in the threaded loading some issues are appearence)
     init_thread(this);
-    #endif
+#endif
 
     if(m_isInitFailed)
         PGE_MsgBox::error(_errorString);

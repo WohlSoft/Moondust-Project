@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,11 +29,11 @@
 class WldPlacingItems
 {
 public:
-    static WorldTerrainTile TileSet;
-    static WorldScenery SceneSet;
-    static WorldPathTile PathSet;
-    static WorldLevelTile LevelSet;
-    static WorldMusicBox MusicSet;
+    static WorldTerrainTile terrainSet;
+    static WorldScenery sceneSet;
+    static WorldPathTile pathSet;
+    static WorldLevelTile levelSet;
+    static WorldMusicBox musicSet;
 
     enum PlaceMode
     {

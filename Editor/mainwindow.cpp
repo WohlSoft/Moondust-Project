@@ -1,8 +1,6 @@
-#include <utility>
-
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +17,8 @@
  */
 
 #include <QtConcurrent>
+#include <utility>
+#include <stdexcept>
 
 #include <common_features/app_path.h>
 #include <common_features/themes.h>
@@ -27,9 +27,7 @@
 #include <common_features/logger_sets.h>
 #include <common_features/main_window_ptr.h>
 
-#ifdef Q_OS_WIN
 #include <main_window/testing/luna_tester.h>
-#endif
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
@@ -54,9 +52,7 @@ MainWindow::MainWindow(QMdiArea *parent) :
     LogDebug(QString("Setting Lang..."));
     setDefLang();
 
-#ifdef Q_OS_WIN
     m_luna = new LunaTester;
-#endif
 
     LogDebug(QString("Setting UI Defaults..."));
     setUiDefults(); //Apply default UI settings
@@ -161,14 +157,12 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
 
         applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
 
-        #ifdef Q_OS_WIN
         m_luna->initLunaMenu(this,
                              ui->menuTest,
                              ui->action_Start_Engine,
                              ui->action_doTest,
                              ui->action_doSafeTest,
                              ui->action_Start_Engine);
-        #endif
 
         splash.progressTitle(tr("Initializing dock widgets..."));
 
@@ -177,7 +171,7 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         //dock_LvlItemBox->setLvlItemBoxes();
         //dock_WldItemBox->setWldItemBoxes();
         dock_LvlEvents->reloadSoundsList();
-        dock_WldItemProps->WldLvlExitTypeListReset();
+        dock_WldItemProps->resetExitTypesList();
         dock_TilesetBox->setTileSetBox(true);
 
         splash.progressTitle(tr("Initalizing plugins..."));
@@ -186,6 +180,21 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         splash.progressTitle(tr("Finishing loading..."));
 
         m_isAppInited = true;
+    }
+    catch(const char *e)
+    {
+        LogWriter::logLevel = PGE_LogLevel::Debug; //Force debug log
+        QMessageBox::critical(this, tr("Configuration error"),
+                              tr("Configuration can't be loaded:\n"
+                                 "%1.\n"
+                                 "See %2 for more information.")
+                              .arg(e)
+                              .arg(LogWriter::DebugLogFile),
+                              QMessageBox::Ok);
+        LogFatal(QString("Initialization failure: %1").arg(e));
+        LogFatal("<Error, application closed>");
+        m_isAppInited = false;
+        return false;
     }
     catch(...)
     {
@@ -222,9 +231,13 @@ MainWindow::~MainWindow()
 #ifdef Q_OS_WIN
     if(pge_thumbbar)
         delete pge_thumbbar;
-    if(m_luna)
-        delete m_luna;
 #endif
+    m_messageBoxer.disconnectAll();
+    if(m_luna)
+    {
+        m_luna->unInitRuntime();
+        delete m_luna;
+    }
     delete ui;
 
     MainWinConnect::pMainWin = nullptr;

@@ -2,7 +2,7 @@
  * A small crossplatform set of file manipulation functions.
  * All input/output strings are UTF-8 encoded, even on Windows!
  *
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -34,7 +34,7 @@ static std::wstring Str2WStr(const std::string &path)
 {
     std::wstring wpath;
     wpath.resize(path.size());
-    int newlen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), path.length(), &wpath[0], path.length());
+    int newlen = MultiByteToWideChar(CP_UTF8, 0, path.c_str(), static_cast<int>(path.length()), &wpath[0], static_cast<int>(path.length()));
     wpath.resize(newlen);
     return wpath;
 }

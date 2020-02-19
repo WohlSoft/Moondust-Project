@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@
 #include <QMdiArea>
 #include <QPixmap>
 #include <QAbstractListModel>
-#include <QSignalMapper>
 #include <QProcess>
 #include <QList>
 #include <QPoint>
@@ -40,8 +39,8 @@
 #ifdef Q_OS_WIN
 #include <windows.h>
 #include <QWinThumbnailToolBar>
-struct LunaTester;
 #endif
+class LunaTester;
 
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <PGE_File_Formats/wld_filedata.h>
@@ -176,7 +175,7 @@ public:
         bool m_isAppInited;
 
         //! When application will be closed, restart it
-        bool m_isAppRestartRequested;
+        bool m_isAppRestartRequested = false;
 
         bool isAppRestartRequested();
 
@@ -302,6 +301,10 @@ public:
         void on_actionSwitch_to_Fullscreen_triggered(bool checked);
 
         //New file
+        /*!
+         * \brief Dialog to choice what new format to create
+         */
+        void on_actionNewFile_triggered();
         /*!
          * \brief Open level editing sub-window with a blank file
          */
@@ -615,10 +618,6 @@ public:
         /// \return pointer to subWindow which case with target file
         ///
         QMdiSubWindow *findOpenedFileWin(const QString &fileName);
-        /*!
-         * \brief Sub-windows mapper
-         */
-        QSignalMapper *windowMapper;
         // //////////////////////////////////////////////////////
 
         // /////////////// Latest Active Window ///////////////////
@@ -841,9 +840,13 @@ public:
 
 
 // ///////////////////Section toobar///////////////////////
+    public:
+        const size_t m_sectionButtonsCount = 21;
+        QAction *m_sectionButtons[21] = {0};
+
     public slots:
         //Switch section
-        void SetCurrentLevelSection(int SctId, int open=0);
+        void setCurrentLevelSection(int sectionId, int open = 0);
         void on_actionGotoLeftBottom_triggered();
         void on_actionGotoLeftTop_triggered();
         void on_actionGotoTopRight_triggered();
@@ -1017,6 +1020,15 @@ public:
         void on_actionWLDToolBox_triggered(bool checked);
 // ////////////////////////////////////////////////////////
 
+// ////////////////////World MusicBoxes toolbox /////////////////
+    public:
+        //! World map music boxes toolbox
+        WorldMusicBoxItemBox * dock_WldMusicBoxes;
+
+    private slots:
+        void on_actionMusicBoxes_triggered(bool checked);
+// ////////////////////////////////////////////////////////
+
 // ///////////////World Item Properties box //////////////////
     public:
         //! World map item properties box
@@ -1090,9 +1102,8 @@ public:
         QProcess engine_proc;
         //! Mutex which helps to avoid multiple launches of engine
         QMutex   engine_mutex;
-        #ifdef _WIN32
+        //! LunaTester sub-system
         LunaTester * m_luna;
-        #endif
 
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Plugins////////////////////////////////////////
@@ -1109,7 +1120,6 @@ public:
 public slots:
     protected:
     private slots:
-
 
 signals:
     void closeEditor();

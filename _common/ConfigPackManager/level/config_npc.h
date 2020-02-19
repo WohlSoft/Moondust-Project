@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -182,6 +183,14 @@ struct NpcSetup
     int32_t         special_spin_max = 0;
     //! Special option Spinbox: spining value step
     int32_t         special_spin_value_offset = 0;
+    //! Special option Spinbox: allow "auto-increment" feature to be used with line drawing tool, otherwise, hide it for this NPC
+    bool            special_spin_allow_autoincrement = true;
+
+    //! Extra Settings JSON layout file name
+    PGEString       extra_settings = "";
+
+    //! Is this a meta-object that should be never shown in game or exported images (screenshots)
+    bool            is_meta_object = false;
 
     //;game process
     //! [Gameplay] Scores code are will be added to player on beating this NPC
@@ -193,8 +202,10 @@ struct NpcSetup
     double          speed = 0.0;
     //! Let NPC simply moving right/left
     bool            movement = false;
-    //! Make NPC be statical body as blocks
+    //! Make NPC be statical body as blocks, also enables "sticked_on_layer" option by default
     bool            scenery = false;
+    //! NPC will use internal coordinates of parent layer, will follow motion of the parent layer
+    bool            sticked_on_layer = false;
     //! NPC can't be destroyed
     bool            immortal = false;
     //! NPC will keep it's position after deactivation and will not be returned back on re-activation
@@ -249,6 +260,8 @@ struct NpcSetup
     PGEString       direct_alt_rand;
     //! [In-Editor] Disable support for "Random" face direction value
     bool            direct_disable_random = false;
+    //! [In-Editor] Default value for direction field
+    int32_t         direct_default_value = -1;
 
 //    ; Physics
     //! Physical height of NPC hitbox

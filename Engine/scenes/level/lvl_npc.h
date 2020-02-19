@@ -24,7 +24,7 @@ class LVL_Npc : public PGE_Phys_Object
 {
 public:
     LVL_Npc(LevelScene *_parent = NULL);
-    LVL_Npc(const LVL_Npc &) = default;
+    LVL_Npc(const LVL_Npc &) = delete;
     virtual ~LVL_Npc();
     void init();
 

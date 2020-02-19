@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ public:
     explicit ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData = 0,
                               int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0,
                               int curSelIDTile = 0, int curSelIDScenery = 0, int curSelIDPath = 0,
-                              int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = 0,
+                              int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = nullptr,
                               int noEmptyTypes = 0);
     ~ItemSelectDialog();
 

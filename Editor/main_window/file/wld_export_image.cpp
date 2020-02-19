@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,10 @@
 #include <common_features/util.h>
 #include <common_features/main_window_ptr.h>
 #include <editing/edit_world/world_edit.h>
+#include <editing/_scenes/world/items/item_tile.h>
+#include <editing/_scenes/world/items/item_scene.h>
+#include <editing/_scenes/world/items/item_path.h>
+#include <editing/_scenes/world/items/item_level.h>
 #include <ui_world_edit.h>
 
 #include "wld_export_image.h"
@@ -64,6 +68,7 @@ void WorldEdit::ExportingReady() //slot
         bool hideMusic = false;
         bool hidePathLevels = false;
         bool hideGrid = false;
+        bool hideMetas = false;
         bool gridWasShown = false;
         QString inifile = AppPathManager::settingsFile();
         QSettings settings(inifile, QSettings::IniFormat);
@@ -78,7 +83,7 @@ void WorldEdit::ExportingReady() //slot
                                  scene->captutedSize.size().toSize(),
                                  keepAspectRatio, MainWinConnect::pMainWin);
         imageExportDialog.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        imageExportDialog.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, imageExportDialog.size(), qApp->desktop()->availableGeometry()));
+        imageExportDialog.setGeometry(util::alignToScreenCenter(imageExportDialog.size()));
         if(imageExportDialog.exec()!=QDialog::Rejected)
         {
             LogDebug("ImageExport -> accepted");
@@ -94,8 +99,9 @@ void WorldEdit::ExportingReady() //slot
         hideMusic       = imageExportDialog.hideMusBoxes;
         hidePathLevels  = imageExportDialog.hidePaths;
         hideGrid        = imageExportDialog.hideGrid;
+        hideMetas       = imageExportDialog.hideMetas;
 
-        if((imgSize.width()<0)||(imgSize.height()<0))
+        if((imgSize.width() < 0) || (imgSize.height() < 0))
             return;
 
         LogDebug("ImageExport -> Open file dialog");
@@ -118,7 +124,7 @@ void WorldEdit::ExportingReady() //slot
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
         progress.setFixedSize(progress.size());
-        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+        progress.setGeometry(util::alignToScreenCenter(progress.size()));
         progress.setCancelButton(0);
         progress.setMinimumDuration(0);
 
@@ -132,6 +138,62 @@ void WorldEdit::ExportingReady() //slot
             scene->hideMusicBoxes(false);
         if(hidePathLevels)
             scene->hidePathAndLevels(false);
+
+        QList<QGraphicsItem*> invisibleMetas;
+        if(hideMetas)
+        {
+            QList<QGraphicsItem*> allBlocks = scene->items();
+            for(QGraphicsItem* it : allBlocks)
+            {
+                if(it->data(ITEM_TYPE).toString() != "TILE" &&
+                   it->data(ITEM_TYPE).toString() != "SCENERY" &&
+                   it->data(ITEM_TYPE).toString() != "PATH" &&
+                   it->data(ITEM_TYPE).toString() != "LEVEL")
+                    continue;
+
+                //Exclude already hidden elements
+                if(!it->isVisible())
+                    continue;
+
+                if(it->data(ITEM_TYPE).toString() == "TILE")
+                {
+                    auto *blk = dynamic_cast<ItemTile*>(it);
+                    if(blk && blk->data(ITEM_IS_META).toBool())
+                    {
+                        it->setVisible(false);
+                        invisibleMetas.push_back(it);
+                    }
+                }
+                else if(it->data(ITEM_TYPE).toString() == "SCENERY")
+                {
+                    auto *blk = dynamic_cast<ItemScene*>(it);
+                    if(blk && blk->data(ITEM_IS_META).toBool())
+                    {
+                        it->setVisible(false);
+                        invisibleMetas.push_back(it);
+                    }
+                }
+                else if(it->data(ITEM_TYPE).toString() == "PATH")
+                {
+                    auto *blk = dynamic_cast<ItemPath*>(it);
+                    if(blk && blk->data(ITEM_IS_META).toBool())
+                    {
+                        it->setVisible(false);
+                        invisibleMetas.push_back(it);
+                    }
+                }
+                else if(it->data(ITEM_TYPE).toString() == "LEVEL")
+                {
+                    auto *blk = dynamic_cast<ItemLevel*>(it);
+                    if(blk && blk->data(ITEM_IS_META).toBool())
+                    {
+                        it->setVisible(false);
+                        invisibleMetas.push_back(it);
+                    }
+                }
+            }
+        }
+
         if(hideGrid)
         {
             gridWasShown = scene->m_opts.grid_show;
@@ -182,6 +244,11 @@ void WorldEdit::ExportingReady() //slot
             scene->hidePathAndLevels(true);
         if(gridWasShown)
             scene->m_opts.grid_show = true;
+        if(hideMetas)
+        {
+            for(QGraphicsItem *it : invisibleMetas)
+                it->setVisible(true);
+        }
         scene->invalidate();
         scene->update();
 
@@ -284,6 +351,11 @@ void WldSaveImage::on_buttonBox_rejected()
 void WldSaveImage::on_HideMusBoxes_clicked(bool checked)
 {
     hideMusBoxes = checked;
+}
+
+void WldSaveImage::on_hideMetaObjects_clicked(bool checked)
+{
+    hideMetas = checked;
 }
 
 void WldSaveImage::on_size1x_clicked()

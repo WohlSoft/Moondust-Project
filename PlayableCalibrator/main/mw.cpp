@@ -1,12 +1,12 @@
 #include "mw.h"
 
-CalibrationMain * MW::p = NULL;
+CalibrationMain * MW::p = nullptr;
 
 
 QPixmap MW::sprite()
 {
     if(p)
-        return p->x_imageSprite;
+        return p->m_xImageSprite;
     else
         return QPixmap();
 }

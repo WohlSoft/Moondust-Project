@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ QString AppPathManager::m_userPath;
 #   define UserDirName "/.PGE_Project"
 #endif
 
-void AppPathManager::initAppPath(const char* argv0)
+void AppPathManager::initAppPath(const char *argv0)
 {
 #ifdef __APPLE__
     Q_UNUSED(argv0);
@@ -66,9 +66,7 @@ void AppPathManager::initAppPath(const char* argv0)
         {
             QString realAppPath("/Applications/PGE Project");
             if(QDir(realAppPath).exists())
-            {
                 ApplicationPath = realAppPath;
-            }
         }
     }
 #else
@@ -85,22 +83,22 @@ void AppPathManager::initAppPath(const char* argv0)
     QApplication::setApplicationName("PGE Editor");
 
 #ifdef __ANDROID__
-    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation)+"/PGE Project Data";
+    ApplicationPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + "/PGE Project Data";
     QDir appPath(ApplicationPath);
     if(!appPath.exists())
         appPath.mkpath(ApplicationPath);
 
-    QDir languagesFolder(ApplicationPath+"/languages");
+    QDir languagesFolder(ApplicationPath + "/languages");
     if(!languagesFolder.exists())
     {
-        languagesFolder.mkpath(ApplicationPath+"/languages");
+        languagesFolder.mkpath(ApplicationPath + "/languages");
         DirCopy::copy("assets:/languages", languagesFolder.absolutePath());
     }
 
-    QDir themesFolder(ApplicationPath+"/themes");
+    QDir themesFolder(ApplicationPath + "/themes");
     if(!themesFolder.exists())
     {
-        themesFolder.mkpath(ApplicationPath+"/themes");
+        themesFolder.mkpath(ApplicationPath + "/themes");
         DirCopy::copy("assets:/themes", themesFolder.absolutePath());
     }
 #endif
@@ -119,18 +117,15 @@ void AppPathManager::initAppPath(const char* argv0)
         if(!appDir.exists())
             if(!appDir.mkpath(path + UserDirName))
                 goto defaultSettingsPath;
-        #ifdef __APPLE__
-            if(!QDir(ApplicationPath + "/Data directory").exists()) {
-                symlink((path + UserDirName).toUtf8().data(), (ApplicationPath + "/Data directory").toUtf8().data());
-            }
-        #endif
+#ifdef __APPLE__
+        if(!QDir(ApplicationPath + "/Data directory").exists())
+            symlink((path + UserDirName).toUtf8().data(), (ApplicationPath + "/Data directory").toUtf8().data());
+#endif
         m_userPath = appDir.absolutePath();
         initSettingsPath();
     }
     else
-    {
         goto defaultSettingsPath;
-    }
 
     return;
 defaultSettingsPath:
@@ -198,11 +193,11 @@ bool AppPathManager::isPortable()
     if(m_userPath.isNull())
         m_userPath = ApplicationPath;
     if(!QFile(settingsFile()).exists()) return false;
-    bool forcePortable=false;
+    bool forcePortable = false;
     QSettings checkForPort(settingsFile(), QSettings::IniFormat);
 
     checkForPort.beginGroup("Main");
-        forcePortable= checkForPort.value("force-portable", false).toBool();
+    forcePortable = checkForPort.value("force-portable", false).toBool();
     checkForPort.endGroup();
 
     if(forcePortable)

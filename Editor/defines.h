@@ -161,6 +161,7 @@ public:
         SETTING_SECBACKGROUNDIMG,   //extraData: QList<QVariant[int]> [old background id, new background id]
         SETTING_SECMUSIC,           //extraData: QList<QVariant[int]> [old music id, new music id]
         SETTING_SECCUSTOMMUSIC,     //extraData: QList<QVariant[String]> [old custom music name, new custom music name]
+        SETTING_SEC_XTRA,           //extraData: String
         SETTING_LEVELNAME,          //extraData: QList<QVariant[String]> [old level name, new level name]
         SETTING_BGOSORTING,
         SETTING_LVL_CUSTOM
@@ -252,7 +253,8 @@ public:
         case SETTING_SECBACKGROUNDIMG: return QObject::tr("Background Image");
         case SETTING_SECMUSIC: return QObject::tr("Music");
         case SETTING_SECCUSTOMMUSIC: return QObject::tr("Custom Music");
-        case SETTING_LEVELNAME: return QObject::tr("Level Name");
+        case SETTING_LEVELNAME: return QObject::tr("Level Settings");
+        case SETTING_SEC_XTRA: return QObject::tr("Section extra settings");
         case SETTING_BGOSORTING: return QObject::tr("BGO Sorting Priority");
         case SETTING_LVL_CUSTOM: return QObject::tr("Unknown");
         default:

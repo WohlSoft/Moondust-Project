@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,6 +68,7 @@ struct EditorSetup
         bool lvl_search = false;
 
         bool wld_itembox = true;
+        bool wld_musicboxes = false;
         bool wld_settings = false;
         bool wld_search = false;
 
@@ -75,7 +76,52 @@ struct EditorSetup
         bool debugger_box = false;
         bool bookmarks_box = false;
         bool variables_box = false;
-    } default_visibility;
+    };
+
+    //! Inital visibiltiy of toolboxes
+    WidgetVisiblity default_visibility;
+    //! Enforce default toolbox visibility and ignore last state
+    WidgetVisiblity default_visibility_enforce = {0};
+
+    struct DefaultFileFormats
+    {
+        enum Format
+        {
+            SMBX64 = 0,
+            PGEX,
+            SMBX38A
+        };
+        Format level = SMBX64;
+        Format world = SMBX64;
+    } default_file_formats;
+
+    struct FeaturesSupport
+    {
+        enum State
+        {
+            F_DISABLED = 0,
+            F_ENABLED,
+            F_HIDDEN
+        };
+        State level_section_vertical_wrap = F_ENABLED;
+
+        State level_phys_ez_new_types = F_ENABLED;
+
+        State level_bgo_z_layer = F_ENABLED;
+        State level_bgo_z_position = F_ENABLED;
+        State level_bgo_smbx64_sp = F_ENABLED;
+
+        State level_warp_two_way = F_ENABLED;
+        State level_warp_portal = F_ENABLED;
+        State level_warp_bomb_exit = F_ENABLED;
+        State level_warp_allow_sp_state_only = F_ENABLED;
+        State level_warp_hide_interlevel_scene = F_ENABLED;
+        State level_warp_allow_interlevel_npc = F_ENABLED;
+        State level_warp_hide_stars = F_ENABLED;
+        State level_warp_needstars_message = F_ENABLED;
+        State level_warp_on_enter_event = F_ENABLED;
+        State level_warp_cannon_exit = F_ENABLED;
+    } supported_features;
 };
 
 struct EngineSetup
@@ -135,10 +181,9 @@ struct obj_blockGlobalSetup
 class dataconfigs : public QObject
 {
     Q_OBJECT
-    bool    m_isValid;
 public:
     dataconfigs();
-    virtual ~dataconfigs();
+    ~dataconfigs() override = default;
 
     bool loadconfigs();
     DataFolders dirs;
@@ -263,15 +308,26 @@ public:
     bool loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
     bool loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with=nullptr, QString iniFile="", IniProcessing *setup=nullptr);
 
-    inline QString getBgoPath()  {return bgoPath;}
-    inline QString getBGPath()   {return BGPath;}
-    inline QString getBlockPath(){return blockPath;}
-    inline QString getNpcPath()  {return npcPath;}
+    QString getBgoPath();
+    QString getBGPath();
+    QString getBlockPath();
+    QString getNpcPath();
 
-    inline QString getTilePath() {return tilePath;}
-    inline QString getScenePath(){return scenePath;}
-    inline QString getPathPath() {return pathPath;}
-    inline QString getWlvlPath() {return wlvlPath;}
+    QString getTilePath();
+    QString getScenePath();
+    QString getPathPath();
+    QString getWlvlPath();
+
+    bool isExtraSettingsLocalAtRoot();
+
+    QString getBgoExtraSettingsPath();
+    QString getBlockExtraSettingsPath();
+    QString getNpcExtraSettingsPath();
+
+    QString getTileExtraSettingsPath();
+    QString getSceneExtraSettingsPath();
+    QString getPathExtraSettingsPath();
+    QString getWlvlExtraSettingsPath();
 
 signals:
     void progressValue(int);
@@ -281,24 +337,26 @@ signals:
     void progressPartNumber(int);
 
 private:
-
-    //Buffers
-    QPixmap mask;
-    //QPixmap image;
-    QString imgFile, imgFileM;
-    QString tmpstr;
-    QStringList tmp;
-
     unsigned long total_data;
-    QString bgoPath;
-    QString BGPath;
-    QString blockPath;
-    QString npcPath;
 
-    QString tilePath;
-    QString scenePath;
-    QString pathPath;
-    QString wlvlPath;
+    struct ResourceFolder
+    {
+        QString graphics;
+        QString items;
+        QString extraSettings;
+    };
+
+    bool m_extraSettingsLocalAtRoot = true;
+
+    ResourceFolder folderLvlBgo;
+    ResourceFolder folderLvlBG;
+    ResourceFolder folderLvlBlocks;
+    ResourceFolder folderLvlNPC;
+
+    ResourceFolder folderWldTerrain;
+    ResourceFolder folderWldScenery;
+    ResourceFolder folderWldPaths;
+    ResourceFolder folderWldLevelPoints;
 
     void loadPlayers();
 

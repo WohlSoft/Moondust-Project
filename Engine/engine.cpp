@@ -1,23 +1,27 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <ctime>
 #include <iostream>
+#include <utility>
+#include <locale.h>
+
 #ifdef _WIN32
 #include <windows.h>
 #include <io.h>
@@ -70,7 +74,7 @@ PGEEngineCmdArgs::PGEEngineCmdArgs() :
 
 void PGEEngineCmdArgs::applyTestSettings(EpisodeState &state)
 {
-    state.numOfPlayers = test_NumPlayers;
+    state.m_numOfPlayers = test_NumPlayers;
 
     for(int i = 0; i < 4; i++)
     {
@@ -92,7 +96,7 @@ PGEEngineApp::PGEEngineApp() :
     m_tr(nullptr)
 {
     CrashHandler::initSigs();
-    srand(static_cast<unsigned int>(std::time(NULL)));
+    srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 PGEEngineApp::~PGEEngineApp()
@@ -252,6 +256,9 @@ bool PGEEngineApp::initSDL()
     if(!res)
         enable(LIBSDL);
 
+    // Workaround: https://discourse.libsdl.org/t/26995
+    setlocale(LC_NUMERIC, "C");
+
     const char *error = SDL_GetError();
     if(*error != '\0')
         pLogWarning("Error while SDL Initialization: %s", error);
@@ -297,7 +304,7 @@ bool PGEEngineApp::initWindow(std::string title, int renderType)
 {
     bool ret = true;
     pLogDebug("Init main window...");
-    ret = PGE_Window::init(title, renderType);
+    ret = PGE_Window::init(std::move(title), renderType);
 
     if(ret)
         enable(PGE_WINDOW);
@@ -328,7 +335,7 @@ void PGEEngineApp::loadSettings()
 
 void PGEEngineApp::loadJoysticks()
 {
-    pLogDebug("Init joystics...");
+    pLogDebug("Init joysticks...");
     g_AppSettings.initJoysticks();
     g_AppSettings.loadJoystickSettings();
     enable(JOYSTICKS);
@@ -336,7 +343,7 @@ void PGEEngineApp::loadJoysticks()
 
 void PGEEngineApp::loadLogger()
 {
-    LoadLogSettings();
+    LoadLogSettings(g_AppSettings.interprocessing);
     //Write into log the application start event
     pLogDebug("<Application started>");
     enable(LOGGER);
@@ -351,11 +358,11 @@ static void printUsage(const char *arg0)
         "=================================================\n"
         "\n";
 
-    #ifndef _WIN32
-#define OPTIONAL_BREAK "\n"
-    #else
-#define OPTIONAL_BREAK " "
-    #endif
+#ifndef _WIN32
+#   define OPTIONAL_BREAK "\n"
+#else
+#   define OPTIONAL_BREAK " "
+#endif
 
     std::string msg(
         "Command line syntax:\n"
@@ -366,39 +373,39 @@ static void printUsage(const char *arg0)
         "Play single level or episode:\n"
         "   " + arg0s + " [options] <path to level or world map file>\n"
         "\n"
-        #ifndef _WIN32
+#ifndef _WIN32
         "Show application version:\n"
         "   " + arg0s + " --version\n"
         "\n"
-        #endif
+#endif
         "Copy settings into "
-        #if defined(_WIN32)
+#if defined(_WIN32)
         "%UserProfile%/.PGE_Project/"
-        #elif defined(__APPLE__)
+#elif defined(__APPLE__)
         "/Library/Application Support/PGE_Project/"
-        #else
+#else
         "~/.PGE_Project/"
-        #endif
+#endif
         " folder and use it as" OPTIONAL_BREAK
         "placement of config packs, episodes, for screenshots store, etc.:\n"
         "   " + arg0s + " --install\n"
         "\n"
-        #ifndef _WIN32
+#ifndef _WIN32
         "Show this help:\n"
         "   " + arg0s + " --help\n"
         "\n\n"
-        #endif
+#endif
         "Options:\n\n"
         "  --config=\"{path}\"          - Use a specific configuration package\n"
-        #if defined(__APPLE__)
+#if defined(__APPLE__)
         "  --render-[auto|sw|gl2] - Choose a graphical sub-system\n"
-        #else
+#else
         "  --render-[auto|sw|gl2|gl3] - Choose a graphical sub-system\n"
-        #endif
+#endif
         "             auto - Automatically detect it (DEFAULT)\n"
-        #if !defined(__APPLE__)
+#if !defined(__APPLE__)
         "             gl3  - Use OpenGL 3.1 renderer\n"
-        #endif
+#endif
         "             gl2  - Use OpenGL 2.1 renderer\n"
         "             sw   - Use software renderer (may overload CPU)\n"
         "  --render-vsync             - Toggle on VSync if supported on your hardware\n"
@@ -448,13 +455,13 @@ bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
         //Check only first argument
         const std::string &arg = args[1];
 
-        if(arg.compare("--version") == 0)
+        if(arg == "--version")
         {
             std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
             std::cout.flush();
             return false;
         }
-        else if(arg.compare("--install") == 0)
+        else if(arg == "--install")
         {
             //PGEEngineApp  lib;
             //lib.loadQApp(argc, argv);
@@ -463,17 +470,25 @@ bool PGEEngineApp::parseLowArgs(const std::vector<std::string> &args)
             AppPathManager::initAppPath();
             return false;
         }
-        else if(arg.compare("--help") == 0)
+        else if(arg == "--help")
         {
             printUsage(args[0].c_str());
             return false;
         }
     }
 
-    #ifdef _WIN32
+    for(const std::string &arg : args)
+    {
+        if(arg == "--interprocessing") // Disable `stdout` logging for safe InterProcess
+        {
+            g_AppSettings.interprocessing = true;
+        }
+    }
+
+#ifdef _WIN32
     //Close console which is no more needed
     FreeConsole();
-    #endif
+#endif
 
     return true;
 }
@@ -530,7 +545,7 @@ static int takeIntFromArg(std::string &arg, bool &ok)
 
     ok = (len > 0);
 
-    return atoi(s);
+    return SDL_atoi(s);
 }
 
 void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
@@ -605,37 +620,37 @@ void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
             //1 or 2 players until 4-players mode will be implemented!
             NumberLimiter::applyD(g_flags.test_NumPlayers, 1, 1, 2);
         }
-        else if(param_s.compare("--debug") == 0)
+        else if(param_s == "--debug")
         {
             g_AppSettings.debugMode = true;
             g_flags.debugMode = true;
         }
-        else if(param_s.compare("--debug-pagan-god") == 0)
+        else if(param_s == "--debug-pagan-god")
         {
             if(g_flags.debugMode)
                 PGE_Debugger::cheat_pagangod = true;
         }
-        else if(param_s.compare("--debug-superman") == 0)
+        else if(param_s == "--debug-superman")
         {
             if(g_flags.debugMode)
                 PGE_Debugger::cheat_superman = true;
         }
-        else if(param_s.compare("--debug-chucknorris") == 0)
+        else if(param_s == "--debug-chucknorris")
         {
             if(g_flags.debugMode)
                 PGE_Debugger::cheat_chucknorris = true;
         }
-        else if(param_s.compare("--debug-worldfreedom") == 0)
+        else if(param_s == "--debug-worldfreedom")
         {
             if(g_flags.debugMode)
                 PGE_Debugger::cheat_worldfreedom = true;
         }
-        else if(param_s.compare("--debug-physics") == 0)
+        else if(param_s == "--debug-physics")
         {
             if(g_flags.debugMode)
                 PGE_Window::showPhysicsDebug = true;
         }
-        else if(param_s.compare("--debug-print=yes") == 0)
+        else if(param_s == "--debug-print=yes")
         {
             if(g_flags.debugMode)
             {
@@ -643,12 +658,12 @@ void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
                 PGE_Window::showDebugInfo = true;
             }
         }
-        else if(param_s.compare("--debug-print=no") == 0)
+        else if(param_s == "--debug-print=no")
         {
             PGE_Window::showDebugInfo = false;
             g_AppSettings.showDebugInfo = false;
         }
-        else if(param_s.compare("--interprocessing") == 0)
+        else if(param_s == "--interprocessing")
         {
             initInterprocessor();
             g_AppSettings.interprocessing = true;
@@ -662,15 +677,15 @@ void PGEEngineApp::parseHighArgs(const std::vector<std::string> &args)
             if(ok)
                 m_tr->toggleLanguage(tmp);
         }
-        else if(param_s.compare("--render-auto") == 0)
+        else if(param_s == "--render-auto")
             g_flags.rendererType = GlRenderer::RENDER_AUTO;
-        else if(param_s.compare("--render-gl2") == 0)
+        else if(param_s == "--render-gl2")
             g_flags.rendererType = GlRenderer::RENDER_OPENGL_2_1;
-        else if(param_s.compare("--render-gl3") == 0)
+        else if(param_s == "--render-gl3")
             g_flags.rendererType = GlRenderer::RENDER_OPENGL_3_1;
-        else if(param_s.compare("--render-sw") == 0)
+        else if(param_s == "--render-sw")
             g_flags.rendererType = GlRenderer::RENDER_SW_SDL;
-        else if(param_s.compare("--render-vsync") == 0)
+        else if(param_s == "--render-vsync")
         {
             g_AppSettings.vsync = true;
             PGE_Window::vsync = true;

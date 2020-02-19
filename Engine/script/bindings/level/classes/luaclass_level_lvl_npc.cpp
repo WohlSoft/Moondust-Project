@@ -1,3 +1,25 @@
+/*
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
+ */
+
+#include <luabind/luabind.hpp>
+#include <luabind/detail/primitives.hpp> // for null_type
+
 #include "luaclass_level_lvl_npc.h"
 #include "luaclass_level_lvl_player.h"
 
@@ -188,9 +210,10 @@ void Binding_Level_ClassWrapper_LVL_NPC::lua_onTransform(unsigned long id)
 luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
 {
     using namespace luabind;
+    using namespace luabind::detail;
     return class_<LVL_Npc,
                   PGE_Phys_Object,
-                  detail::null_type,
+                  null_type,
                   Binding_Level_ClassWrapper_LVL_NPC>("BaseNPC")
             /***
             Damage reasons enumeration (DamageReason)
@@ -390,6 +413,12 @@ luabind::scope Binding_Level_ClassWrapper_LVL_NPC::bindToLua()
             @tfield int frameDelay
             */
             .property("frameDelay", &LVL_Npc::lua_frameDelay, &LVL_Npc::lua_setFrameDelay)
+
+            /***
+            Enable activity of NPC: NPC will be awake until offscreen timeout out
+            @tfield bool activity
+            */
+            .property("activity", &LVL_Npc::activity, &LVL_Npc::setActivity)
 
             //Parameters
 

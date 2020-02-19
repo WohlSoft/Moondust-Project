@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef PGE_MSGBOX_H
@@ -33,29 +34,25 @@
 #include <controls/control_keys.h>
 #include <string>
 
+class Controller;
+
 class PGE_MsgBox : public PGE_BoxBase
 {
 public:
     PGE_MsgBox();
-    PGE_MsgBox(Scene *_parentScene = nullptr,
+    explicit PGE_MsgBox(Scene *_parentScene = nullptr,
                std::string msg = "Message box is works!",
                msgType _type = msg_info,
                PGE_Point boxCenterPos = PGE_Point(-1, -1),
                double _padding = -1,
                std::string texture = std::string());
     PGE_MsgBox(const PGE_MsgBox &mb);
-    ~PGE_MsgBox();
+    ~PGE_MsgBox() override = default;
 
-    void setBoxSize(double _Width, double _Height, double _padding);
-    void update(double ticks);
-    void render();
-    void restart();
-    bool isRunning();
-    void exec();
+    void render() override;
+    void restart() override;
 
-    void processLoader(double ticks);
-    void processBox(double);
-    void processUnLoader(double ticks);
+    void processBox(double tickTime) override;
 
     static void info(std::string msg);
     //static void info(std::string msg);
@@ -70,23 +67,10 @@ private:
     void construct(std::string msg = "Message box is works!",
                    msgType _type = msg_info, PGE_Point pos = PGE_Point(-1, -1),
                    double _padding = -1, std::string texture = "");
-    int     m_page;
-    bool    m_running;
-    int     fontID;
-    GlColor fontRgba;
-    int     m_borderWidth = 32;
 
-    controller_keys keys;
-    bool   m_exitKeyLock; //Don't close message box if exiting key already holden (for example, 'Run' key)
+    bool    m_exitKeyLock = false; //Don't close message box if exiting key already held (for example, 'Run' key)
 
-    msgType m_type;
-    PGE_Rect m_sizeRect;
     std::string m_message;
-    double  width;
-    double  height;
-    double  padding;
-    GlColor bg_color;
-    void updateControllers();
 };
 
 #endif // PGE_MSGBOX_H

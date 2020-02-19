@@ -14,6 +14,3 @@ add_executable(res_generator
     ${UTF8MAIN_SRCS}
 )
 
-install(TARGETS res_generator
-    RUNTIME DESTINATION "bin/"
-)

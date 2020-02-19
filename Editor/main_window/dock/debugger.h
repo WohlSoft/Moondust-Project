@@ -19,7 +19,7 @@ class DebuggerBox : public QDockWidget, public MWDock_Base
 
     friend class MainWindow;
 private:
-    explicit DebuggerBox(QWidget *parent = 0);
+    explicit DebuggerBox(QWidget *parent = nullptr);
     ~DebuggerBox();
 
 public slots:
@@ -40,8 +40,8 @@ private slots:
     void on_DEBUG_CustomCountersList_customContextMenuRequested(const QPoint &pos);
 
 private:
-    QVector<CustomCounter > customCounters;
-    bool isLoaded;
+    QVector<CustomCounter > m_customCounters;
+    bool m_isLoaded = false;
     Ui::DebuggerBox *ui;
 };
 

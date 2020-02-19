@@ -161,7 +161,7 @@ void AudioCvt_Sox_gui::start()
     lastOutput.clear();
     inWork = true;
     madeJob = 0;
-    PGE_MusPlayer::MUS_freeStream();
+    PGE_MusPlayer::closeFile();
     nextStep(0, QProcess::NormalExit);
 }
 
@@ -198,9 +198,9 @@ void AudioCvt_Sox_gui::stop(bool do_abort)
                 QFile(current_musFileNew).remove();
         }
 
-        PGE_MusPlayer::MUS_openFile(LvlMusPlay::currentMusicPath);
-        PGE_MusPlayer::MUS_changeVolume(m_mw ? m_mw->musicVolume() : MIX_MAX_VOLUME);
-        PGE_MusPlayer::MUS_playMusic();
+        PGE_MusPlayer::openFile(LvlMusPlay::currentMusicPath);
+        PGE_MusPlayer::changeVolume(m_mw ? m_mw->musicVolume() : MIX_MAX_VOLUME);
+        PGE_MusPlayer::play();
         QMessageBox::warning(this,
                              tr("SoX error"),
                              tr("Operation canceled"));
@@ -279,9 +279,9 @@ retry_queue:
                 LvlMusPlay::currentMusicPath = ledit->LvlData.meta.path + "/" + ledit->LvlData.sections[ledit->LvlData.CurSection].music_file;
         }
 
-        PGE_MusPlayer::MUS_openFile(LvlMusPlay::currentMusicPath);
-        PGE_MusPlayer::MUS_changeVolume(m_mw ? m_mw->musicVolume() : MIX_MAX_VOLUME);
-        PGE_MusPlayer::MUS_playMusic();
+        PGE_MusPlayer::openFile(LvlMusPlay::currentMusicPath);
+        PGE_MusPlayer::changeVolume(m_mw ? m_mw->musicVolume() : MIX_MAX_VOLUME);
+        PGE_MusPlayer::play();
         QString warns = lastOutput;
         if(warns.size() > 200)
         {

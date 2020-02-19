@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,11 +36,8 @@ static QString grp_npc = "";
 static bool lock_grp = false;
 static bool lock_cat = false;
 
-QString allWLabel_F = "[all]";
-QString customWLabel_F = "[custom]";
-
-bool lock_Wgrp_F = false;
-bool lock_Wcat_F = false;
+static QString allWLabel_F = "[all]";
+static QString customWLabel_F = "[custom]";
 
 static QString grp_tiles = "";
 static QString grp_paths = "";
@@ -78,16 +75,14 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
 
     LvlScene *scene_lvl = nullptr;
     WldScene *scene_wld = nullptr;
+
     LevelEdit *edit_lvl = MainWinConnect::pMainWin->activeLvlEditWin();
     if(edit_lvl)
-    {
-        scene_lvl = edit_lvl->sceneCreated ? edit_lvl->scene : 0;
-    }
+        scene_lvl = edit_lvl->sceneCreated ? edit_lvl->scene : nullptr;
+
     WorldEdit *edit_wld = MainWinConnect::pMainWin->activeWldEditWin();
     if(edit_wld)
-    {
-        scene_wld = edit_wld->sceneCreated ? edit_wld->scene : 0;
-    }
+        scene_wld = edit_wld->sceneCreated ? edit_wld->scene : nullptr;
 
     m_blockModel = new ItemBoxListModel(this);
     m_blockModel->setCategoryAllKey(m_allLabel);
@@ -271,9 +266,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
     }
     else
     {
-        npcFromList = 0;
-        npcCoins = 0;
-        npcCoinsSel = 0;
+        npcFromList = nullptr;
+        npcCoins = nullptr;
+        npcCoinsSel = nullptr;
     }
 
     if(blockTab)
@@ -463,7 +458,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
                 cols = tileItem.setup.col;
         }
 
-        m_tileModel->setTableMode(true, cols + 1, rows + (hasEmpty ? 1 : 0) + 1);
+        m_tileModel->setTableMode(true,
+                                  static_cast<int>(cols + 1),
+                                  static_cast<int>(rows + (hasEmpty ? 1 : 0) + 1));
 
         for(int i = 1; i < array->size(); i++)
         {
@@ -475,7 +472,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             e.elementId = tileItem.setup.id;
             e.isCustom = tilesCustomId.contains(tileItem.setup.id);
             e.isValid = true;
-            m_tileModel->addElementCell(tileItem.setup.col, tileItem.setup.row + (hasEmpty ? 1 : 0), e, tileItem.setup.group, tileItem.setup.category);
+            m_tileModel->addElementCell(static_cast<int>(tileItem.setup.col),
+                                        static_cast<int>(tileItem.setup.row + (hasEmpty ? 1 : 0)),
+                                        e, tileItem.setup.group, tileItem.setup.category);
         }
 
         //apply group list
@@ -529,7 +528,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
                 cols = pathItem.setup.col;
         }
 
-        m_pathModel->setTableMode(true, cols + 1, rows + (hasEmpty ? 1 : 0) + 1);
+        m_pathModel->setTableMode(true,
+                                  static_cast<int>(cols + 1),
+                                  static_cast<int>(rows + (hasEmpty ? 1 : 0) + 1));
 
         for(int i = 1; i < array->size(); i++)
         {
@@ -541,7 +542,9 @@ ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData
             e.elementId = pathItem.setup.id;
             e.isCustom = pathCustomId.contains(pathItem.setup.id);
             e.isValid = true;
-            m_pathModel->addElementCell(pathItem.setup.col, pathItem.setup.row + (hasEmpty ? 1 : 0), e, pathItem.setup.group, pathItem.setup.category);
+            m_pathModel->addElementCell(static_cast<int>(pathItem.setup.col),
+                                        static_cast<int>(pathItem.setup.row + (hasEmpty ? 1 : 0)),
+                                        e, pathItem.setup.group, pathItem.setup.category);
         }
 
         //apply group list
@@ -920,7 +923,7 @@ void ItemSelectDialog::on_Sel_DiaButtonBox_accepted()
 
         MusicFileList musicList(dirPath, "");
         if(musicList.exec() == QDialog::Accepted)
-            musicFile = musicList.SelectedFile;
+            musicFile = musicList.currentFile();
         else
             return;
     }

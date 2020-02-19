@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ void dataconfigs::loadTilesets()
     }
 
     // Sort all groups in the list
-    qSort(main_tilesets_grp);
+    std::sort(main_tilesets_grp.begin(), main_tilesets_grp.end());
 
     emit progressTitle(QObject::tr("Initializing tileset categories..."));
     main_tileset_categogies.reserve(tilesetCategoryNames.size());
@@ -106,5 +106,5 @@ void dataconfigs::loadTilesets()
     }
 
     // Sort all categories in the list
-    qSort(main_tileset_categogies);
+    std::sort(main_tileset_categogies.begin(), main_tileset_categogies.end());
 }

@@ -1,0 +1,22 @@
+<RCC>
+    <qresource prefix="/">
+        <file>arrows/red_up.png</file>
+        <file>arrows/red_right.png</file>
+        <file>arrows/red_left.png</file>
+        <file>arrows/red_down.png</file>
+        <file>arrows/green_up.png</file>
+        <file>arrows/green_right.png</file>
+        <file>arrows/green_left.png</file>
+        <file>arrows/green_down.png</file>
+        <file>arrows/box.png</file>
+        <file>arrows/black_up.png</file>
+        <file>arrows/black_right.png</file>
+        <file>arrows/black_left.png</file>
+        <file>arrows/black_down.png</file>
+        <file>arrows/black_top_right.png</file>
+        <file>arrows/black_top_left.png</file>
+        <file>arrows/black_bottom_left.png</file>
+        <file>arrows/black_bottom_right.png</file>
+        <file>arrows/compas.png</file>
+    </qresource>
+</RCC>

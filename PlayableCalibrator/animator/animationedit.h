@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class AnimationEdit;
 class AnimationEdit : public QDialog
 {
     Q_OBJECT
-    
+
 public:
     explicit AnimationEdit(FrameSets &frmConfs, QWidget *parent = 0);
     ~AnimationEdit();
@@ -48,7 +48,7 @@ public:
 
     AniFrameSet currentFrameSet;
     FrameSets   frameList;
-    
+
 private slots:
     void on_AddLeft_clicked();
     void on_SetLeft_clicked();

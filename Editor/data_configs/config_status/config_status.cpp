@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,15 +19,15 @@
 #include "config_status.h"
 #include <ui_config_status.h>
 
-#include <QDesktopWidget>
+#include <common_features/util.h>
 #ifdef Q_OS_WIN
 #include <QtWin>
 #include <QSysInfo>
 #endif
 
-static void setDirEntry(QTableWidget* w, int row, QString name, QString path)
+static void setDirEntry(QTableWidget *w, int row, QString name, QString path)
 {
-    QTableWidgetItem * itemDir;
+    QTableWidgetItem *itemDir;
     w->insertRow(row);
 
     itemDir = new QTableWidgetItem(name);
@@ -38,23 +38,22 @@ static void setDirEntry(QTableWidget* w, int row, QString name, QString path)
     w->setItem(row, 1, itemDir);
 }
 
-static void setRequiredStatusEntry(QListWidget* w, long count, long total, QString status)
+static void setRequiredStatusEntry(QListWidget *w, long count, long total, QString status)
 {
-    QListWidgetItem* item = new QListWidgetItem(w);
+    QListWidgetItem *item = new QListWidgetItem(w);
     item->setText(status.arg(count).arg(total));
     if(count == 0)
         item->setIcon(QIcon(QPixmap(":/images/conf_bad.png")));
-    else
-    if(count < total)
+    else if(count < total)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
     else
         item->setIcon(QIcon(QPixmap(":/images/conf_good.png")));
     w->addItem(item);
 }
 
-static void setOptionalStatusEntry(QListWidget* w, long count, long total, QString status)
+static void setOptionalStatusEntry(QListWidget *w, long count, long total, QString status)
 {
-    QListWidgetItem* item = new QListWidgetItem(w);
+    QListWidgetItem *item = new QListWidgetItem(w);
     item->setText(status.arg(count));
     if(count < total)
         item->setIcon(QIcon(QPixmap(":/images/conf_warn.png")));
@@ -71,26 +70,23 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     configs = &conf;
     ui->setupUi(this);
 
-    setWindowFlags( Qt::Window|
-                    Qt::WindowTitleHint|
-                    Qt::WindowCloseButtonHint);
-    setGeometry(QStyle::alignedRect(Qt::LeftToRight,
-                                    Qt::AlignCenter,
-                                    size(),
-                                    qApp->desktop()->availableGeometry()));
+    setWindowFlags(Qt::Window |
+                   Qt::WindowTitleHint |
+                   Qt::WindowCloseButtonHint);
+    setGeometry(util::alignToScreenCenter(size()));
 
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
-    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
     {
         if(QtWin::isCompositionEnabled())
         {
             this->setAttribute(Qt::WA_TranslucentBackground, true);
-            QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
+            QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
             QtWin::enableBlurBehindWindow(this);
             ui->gridLayout->setMargin(0);
         }
@@ -100,7 +96,7 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-    #endif
+#endif
 
     //Create Statistics
     ui->ItemsStatus->clear();
@@ -134,28 +130,28 @@ ConfigStatus::ConfigStatus(dataconfigs &conf, QWidget *parent) :
     setOptionalStatusEntry(ui->ItemsStatus, configs->main_rotation_table.size(), configs->main_rotation_table.size(), tr("Default rotation rules (%1)"));
 
     ////////////////////////DirList/////////////////////////
-    int row=0;
+    int row = 0;
     setDirEntry(ui->ItemsDirs, row++, tr("Level data"), configs->dirs.glevel);
     setDirEntry(ui->ItemsDirs, row++, tr("World map data"), configs->dirs.gworld);
     setDirEntry(ui->ItemsDirs, row++, tr("Characters"), configs->dirs.gplayble);
-    setDirEntry(ui->ItemsDirs, row++, tr("Game worlds"),configs->dirs.worlds);
+    setDirEntry(ui->ItemsDirs, row++, tr("Game worlds"), configs->dirs.worlds);
     setDirEntry(ui->ItemsDirs, row++, tr("Music"),      configs->dirs.music);
     setDirEntry(ui->ItemsDirs, row++, tr("Sounds"),     configs->dirs.sounds);
-    setDirEntry(ui->ItemsDirs, row++, tr("Custom data"),configs->dirs.gcustom);
+    setDirEntry(ui->ItemsDirs, row++, tr("Custom data"), configs->dirs.gcustom);
 
-    QTableWidgetItem * itemError;
+    QTableWidgetItem *itemError;
     if(configs->errorsList[dataconfigs::ERR_GLOBAL].isEmpty())
     {
         QFont font;
         font.setItalic(true);
         ui->ItemsErrors->insertRow(0);
-            itemError = new QTableWidgetItem(tr("[Error list is empty, congratulations!]"));
-            itemError->setFont(font);
-            ui->ItemsErrors->setItem(0, 0, itemError);
+        itemError = new QTableWidgetItem(tr("[Error list is empty, congratulations!]"));
+        itemError->setFont(font);
+        ui->ItemsErrors->setItem(0, 0, itemError);
     }
     else
     {
-        for(long e=0;e<configs->errorsList[dataconfigs::ERR_GLOBAL].size();e++)
+        for(long e = 0; e < configs->errorsList[dataconfigs::ERR_GLOBAL].size(); e++)
         {
             ui->ItemsErrors->insertRow(int(e));
             QString erroText = configs->errorsList[dataconfigs::ERR_GLOBAL][int(e)];

@@ -1,7 +1,7 @@
 /*
  * A small set of additional math functions and templates
  *
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this
  * software and associated documentation files (the "Software"), to deal in the Software
@@ -43,6 +43,31 @@ namespace Maths
 
     long    roundTo(long src, long grid);
     double  roundTo(double src, double grid);
+
+    inline void clearPrecision(double &n)
+    {
+        n = double(float(n));
+    }
+
+    inline double clearPrecisionRet(double n)
+    {
+        return double(float(n));
+    }
+
+    inline double roundToUp(double numToRound, double multiple)
+    {
+        if (multiple == 0.0)
+            return numToRound;
+
+        double remainder = std::fmod(std::fabs(numToRound), multiple);
+        if (remainder == 0.0)
+            return numToRound;
+
+        if (numToRound < 0)
+            return -(std::fabs(numToRound) - remainder);
+        else
+            return numToRound + multiple - remainder;
+    }
 
     inline double roundToDown(double num, double multto)
     {

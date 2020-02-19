@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,6 +52,10 @@ void Themes::init()
     icons_map[world_16]     = QIcon(":/images/world16.png");
     icons_map[world_24]     = QIcon(":/images/world.png");
     icons_map[npc_16]       = QIcon(":/images/coin.png");
+
+    icons_map[level_item_browser] = QIcon(":/images/item_browser_level.png");
+    icons_map[world_item_browser] = QIcon(":/images/item_browser_world.png");
+    icons_map[world_music_boxes] = QIcon(":/images/musicboxes.png");
 
     icons_map[file_open]    = QIcon(":/images/open.png");
     icons_map[file_new]     = QIcon(":/images/new.png");
@@ -380,6 +384,7 @@ void Themes::loadTheme(const QString &themeDir)
     guiset.endGroup();
 
     guiset.beginGroup("level");
+    loadIcon(guiset, "item-browser", level_item_browser);
     loadIcon(guiset, "section-settings", section_settings);
     loadIcon(guiset, "section-settings-16", section_settings_16);
     loadIcon(guiset, "doors", doors);
@@ -389,6 +394,11 @@ void Themes::loadTheme(const QString &themeDir)
     loadIcon(guiset, "quicksand", quicksand);
     loadIcon(guiset, "player1", draw_player1);
     loadIcon(guiset, "player2", draw_player2);
+    guiset.endGroup();
+
+    guiset.beginGroup("world");
+    loadIcon(guiset, "item-browser", world_item_browser);
+    loadIcon(guiset, "music-boxes", world_music_boxes);
     guiset.endGroup();
 
     guiset.beginGroup("level-items");

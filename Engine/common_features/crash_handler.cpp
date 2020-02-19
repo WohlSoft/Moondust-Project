@@ -1,33 +1,43 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <SDL2/SDL_messagebox.h>
+#include <SDL2/SDL_version.h>
+#include <SDL2/SDL_mixer_ext.h>
 #include <cstdlib>
 #include <signal.h>
 #include <common_features/tr.h>
 #include <settings/debugger.h>
 
 #ifdef _WIN32
-#include <windows.h>
-#include <dbghelp.h>
+#   include <windows.h>
+#   include <dbghelp.h>
+#   include <shlobj.h>
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
-#include <execinfo.h>
-#include <unistd.h>
+#   include <execinfo.h>
+#   include <pwd.h>
+#   include <unistd.h>
+#elif defined(__ANDROID__)
+#   include <unwind.h>
+#   include <dlfcn.h>
+#   include <sstream>
+#   include <iomanip>
 #endif
 
 #include "crash_handler.h"
@@ -42,6 +52,9 @@
     "===================\n" \
     "%s"
 
+#define STR_EXPAND(tok) #tok
+#define STR(tok) STR_EXPAND(tok)
+
 static const char *g_messageToUser =
     "================================================\n"
     "            Additional information:\n"
@@ -50,7 +63,10 @@ static const char *g_messageToUser =
     "Architecture: " FILE_CPU "\n"
     "GIT Revision code: " V_BUILD_VER "\n"
     "GIT branch: " V_BUILD_BRANCH "\n"
-	"Build date: " V_DATE_OF_BUILD "\n"
+    "Build date: " V_DATE_OF_BUILD "\n"
+    "================================================\n"
+    "SDL2 " STR(SDL_MAJOR_VERSION) "." STR(SDL_MINOR_VERSION) "." STR(SDL_PATCHLEVEL) "\n"
+    "SDL Mixer X " STR(SDL_MIXER_MAJOR_VERSION) "." STR(SDL_MIXER_MINOR_VERSION) "." STR(SDL_MIXER_PATCHLEVEL) "\n"
     "================================================\n"
     " Please send this log file to the developers by one of ways:\n"
     " - Via contact form:          http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin\n"
@@ -102,18 +118,140 @@ static bool GetStackWalk(std::string &outWalk)
 }
 #endif
 
+#ifdef __ANDROID__
+namespace AndroidStackTrace
+{
+struct BacktraceState
+{
+    void **current;
+    void **end;
+};
+
+static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context *context, void *arg)
+{
+    BacktraceState *state = static_cast<BacktraceState *>(arg);
+    uintptr_t pc = _Unwind_GetIP(context);
+    if(pc)
+    {
+        if(state->current == state->end)
+            return _URC_END_OF_STACK;
+        else
+            *state->current++ = reinterpret_cast<void *>(pc);
+    }
+    return _URC_NO_REASON;
+}
+
+}
+
+static size_t captureBacktrace(void **buffer, size_t max)
+{
+    AndroidStackTrace::BacktraceState state = {buffer, buffer + max};
+    _Unwind_Backtrace(AndroidStackTrace::unwindCallback, &state);
+
+    return state.current - buffer;
+}
+
+static void androidDumpBacktrace(std::ostringstream &os, void **buffer, size_t count)
+{
+    for(size_t idx = 0; idx < count; ++idx)
+    {
+        const void *addr = buffer[idx];
+        const char *symbol = "";
+
+        Dl_info info;
+        if(dladdr(addr, &info) && info.dli_sname)
+            symbol = info.dli_sname;
+
+        os << "  #" << std::setw(2) << idx << ": " << addr << "  " << symbol << "\n";
+    }
+}
+#endif
+
+static std::string getCurrentUserName()
+{
+    std::string user;
+
+#if defined(_WIN32)
+    char    userName[256];
+    wchar_t userNameW[256];
+    DWORD usernameLen = 256;
+    GetUserNameW(userNameW, &usernameLen);
+    userNameW[usernameLen--] = L'\0';
+    size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, userNameW, usernameLen, userName, 256, 0, 0);
+    userName[nCnt] = '\0';
+    user = std::string(userName);
+#elif defined(__EMSCRIPTEN__) || defined(__ANDROID__)
+    user = "user"; // No way to get user, here is SINGLE generic user
+#else
+    struct passwd *pwd = getpwuid(getuid());
+    if(pwd == nullptr)
+        return "UnknownUser"; // Failed to get a user name!
+    user = std::string(pwd->pw_name);
+#endif
+
+    return user;
+}
+
+static std::string getCurrentHomePath()
+{
+    std::string homedir;
+
+#ifdef _WIN32
+    char    homeDir[MAX_PATH * 4];
+    wchar_t homeDirW[MAX_PATH];
+    SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, homeDirW);
+    size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, homeDirW, -1, homeDir, MAX_PATH * 4, 0, 0);
+    homeDir[nCnt] = '\0';
+    homedir = std::string(homeDir);
+#elif defined(__EMSCRIPTEN__) || defined(__ANDROID__)
+    homedir = "/"; // No way to get user, here is SINGLE generic user
+#else
+    struct passwd *pwd = getpwuid(getuid());
+    if(pwd == nullptr)
+        return "/home/<unknown>"; // Failed to get a user name!
+    homedir = std::string(pwd->pw_dir);
+
+#endif
+
+    return homedir;
+}
+
+static void replaceStr(std::string &data, std::string toSearch, std::string replaceStr)
+{
+    size_t pos = data.find(toSearch);
+
+    while(pos != std::string::npos)
+    {
+        data.replace(pos, toSearch.size(), replaceStr);
+        pos = data.find(toSearch, pos + replaceStr.size());
+    }
+}
+
+static void removePersonalData(std::string &log)
+{
+    std::string user = getCurrentUserName();
+    std::string homePath = getCurrentHomePath();
+
+    // Replace username
+    if(!homePath.empty())
+    {
+        replaceStr(log, homePath, "{...}");
+#ifdef _WIN32
+        replaceStr(homePath, "\\", "/");
+        replaceStr(log, homePath, "{...}");
+#endif
+    }
+    replaceStr(log, user, "anonymouse");
+}
+
 static std::string getStacktrace()
 {
+    D_pLogDebugNA("Initializing std::string...");
+    std::string bkTrace;
+
 #if defined(_WIN32)
-    //StackTracer tracer;
-    //tracer.runStackTracerForAllThreads();
-    //return tracer.theOutput();
-    //dbg::stack s;
-    //std::stringstream out;
-    //std::copy(s.begin(), s.end(), std::ostream_iterator<dbg::stack_frame>(out, "\n"));
-    std::string stack;
-    GetStackWalk(stack);
-    return stack;
+    GetStackWalk(bkTrace);
+
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
     void  *array[400];
     int size;
@@ -122,8 +260,6 @@ static std::string getStacktrace()
     size = backtrace(array, 400);
     D_pLogDebugNA("Converting...");
     strings = backtrace_symbols(array, size);
-    D_pLogDebugNA("Initializing std::string...");
-    std::string bkTrace("");
     D_pLogDebugNA("Filling std::string...");
 
     for(int j = 0; j < size; j++)
@@ -133,14 +269,22 @@ static std::string getStacktrace()
     }
 
     D_pLogDebugNA("DONE!");
-    return bkTrace;
-#else
-    return std::string("<Stack trace not supported for this platform!>");
-#endif
-}
 
-CrashHandler::CrashHandler()
-{}
+#elif defined(__ANDROID__)
+    const size_t max = 400;
+    void *buffer[max];
+    std::ostringstream oss;
+    androidDumpBacktrace(oss, buffer, captureBacktrace(buffer, max));
+    D_pLogDebugNA("DONE!");
+    bkTrace = oss.str();
+
+#else
+    bkTrace = "<Stack trace not supported for this platform!>";
+#endif
+
+    removePersonalData(bkTrace);
+    return bkTrace;
+}
 
 static void msgBox(std::string title, std::string text)
 {
@@ -173,7 +317,7 @@ static void msgBox(std::string title, std::string text)
     mbox.numbuttons     = 1;
     mbox.buttons        = &mboxButton;
     mbox.colorScheme    = &colorScheme;
-    SDL_ShowMessageBox(&mbox, NULL);
+    SDL_ShowMessageBox(&mbox, nullptr);
 }
 
 #ifdef __GNUC__
@@ -194,7 +338,7 @@ static LLVM_ATTRIBUTE_NORETURN void abortEngine(int signal)
 void LLVM_ATTRIBUTE_NORETURN CrashHandler::crashByUnhandledException()
 {
     std::string stack = getStacktrace();
-    std::string exc = "";
+    std::string exc;
 
     try
     {
@@ -484,7 +628,7 @@ struct siginfo_t;
 
 static void handle_signalWIN32(int signal)
 {
-    handle_signal(signal, NULL, NULL);
+    handle_signal(signal, nullptr, nullptr);
 }
 #endif
 
@@ -503,19 +647,19 @@ void CrashHandler::initSigs()
     sigemptyset(&act.sa_mask);
     act.sa_sigaction = handle_signal;
     act.sa_flags = SA_SIGINFO;
-    sigaction(SIGHUP,  &act, NULL);
-    sigaction(SIGQUIT, &act, NULL);
-    //sigaction(SIGKILL, &act, NULL); This signal is unhandlable
-    sigaction(SIGALRM, &act, NULL);
-    sigaction(SIGURG,  &act, NULL);
-    sigaction(SIGUSR1, &act, NULL);
-    sigaction(SIGUSR2, &act, NULL);
-    sigaction(SIGBUS,  &act, NULL);
-    sigaction(SIGILL,  &act, NULL);
-    sigaction(SIGFPE,  &act, NULL);
-    sigaction(SIGSEGV, &act, NULL);
-    sigaction(SIGINT,  &act, NULL);
-    sigaction(SIGABRT, &act, NULL);
+    sigaction(SIGHUP,  &act, nullptr);
+    sigaction(SIGQUIT, &act, nullptr);
+    //sigaction(SIGKILL, &act, nullptr); This signal is unhandlable
+    sigaction(SIGALRM, &act, nullptr);
+    sigaction(SIGURG,  &act, nullptr);
+    sigaction(SIGUSR1, &act, nullptr);
+    sigaction(SIGUSR2, &act, nullptr);
+    sigaction(SIGBUS,  &act, nullptr);
+    sigaction(SIGILL,  &act, nullptr);
+    sigaction(SIGFPE,  &act, nullptr);
+    sigaction(SIGSEGV, &act, nullptr);
+    sigaction(SIGINT,  &act, nullptr);
+    sigaction(SIGABRT, &act, nullptr);
 #else
     signal(SIGILL,  &handle_signalWIN32);
     signal(SIGFPE,  &handle_signalWIN32);

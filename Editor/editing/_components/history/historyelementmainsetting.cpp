@@ -110,6 +110,7 @@ void HistoryElementMainSetting::processLevelUndo()
 
     if(m_modLevelSetting == HistorySettings::SETTING_LEVELNAME){
         lvlScene->m_data->LevelName = m_modData.toList()[0].toString();
+        lvlScene->m_data->custom_params = m_modData.toList()[1].toString();
 
         MainWinConnect::pMainWin->activeLvlEditWin()->setWindowTitle( lvlScene->m_data->LevelName.isEmpty() ?
             MainWinConnect::pMainWin->activeLvlEditWin()->userFriendlyCurrentFile() : lvlScene->m_data->LevelName );
@@ -158,7 +159,8 @@ void HistoryElementMainSetting::processLevelRedo()
         return;
 
     if(m_modLevelSetting == HistorySettings::SETTING_LEVELNAME){
-        lvlScene->m_data->LevelName = m_modData.toList()[1].toString();
+        lvlScene->m_data->LevelName = m_modData.toList()[2].toString();
+        lvlScene->m_data->custom_params = m_modData.toList()[3].toString();
         MainWinConnect::pMainWin->activeLvlEditWin()->setWindowTitle( lvlScene->m_data->LevelName.isEmpty() ?
             MainWinConnect::pMainWin->activeLvlEditWin()->userFriendlyCurrentFile() : lvlScene->m_data->LevelName );
         MainWinConnect::pMainWin->updateWindowMenu();

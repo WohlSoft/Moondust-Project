@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "render_opengl21.h"
@@ -32,9 +33,6 @@
 
 #include "../gl_debug.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB
-#endif
 #include <FreeImageLite.h>
 
 static bool g_OpenGL2_convertToPowof2 = false;
@@ -87,9 +85,6 @@ static void toPowofTwo(FIBITMAP **image)
 
 Render_OpenGL21::Render_OpenGL21() : Render_Base("OpenGL 2.1"),
     color_binded_texture{1.0f, 1.0f, 1.0f, 1.0f}
-{}
-
-Render_OpenGL21::~Render_OpenGL21()
 {}
 
 void Render_OpenGL21::set_SDL_settings()
@@ -184,7 +179,7 @@ void Render_OpenGL21::initDummyTexture()
     if(!image)
     {
         std::string msg = fmt::format_ne("Can't initialize dummy texture!\n"
-                                      "In file: {0}:{1}", __FILE__, __LINE__);
+                                         "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error", msg.c_str(), NULL);
         abort();
@@ -568,8 +563,8 @@ PGE_Point Render_OpenGL21::MapToScr(PGE_Point point)
 PGE_Point Render_OpenGL21::MapToScr(int x, int y)
 {
     return PGE_Point(
-               static_cast<int>( (static_cast<float>(x) - offset_x) / viewport_scale_x),
-               static_cast<int>( (static_cast<float>(y) - offset_y) / viewport_scale_y)
+               static_cast<int>((static_cast<float>(x) - offset_x) / viewport_scale_x),
+               static_cast<int>((static_cast<float>(y) - offset_y) / viewport_scale_y)
            );
 }
 

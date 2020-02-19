@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,10 @@
 #define SAFEMSGBOX_H
 
 #include <QObject>
+#include <QSet>
+#include <QMutex>
+
+class SafeMsgBoxInterface;
 
 /**
  * @brief Provides thread-save way to show message boxes
@@ -28,8 +32,15 @@
 class SafeMsgBox : public QObject
 {
     Q_OBJECT
+
+    friend class SafeMsgBoxInterface;
+    QSet<SafeMsgBoxInterface *> m_source;
+    QMutex m_source_mtx;
+    void initInterface(SafeMsgBoxInterface *source);
+    void disconnectOne(SafeMsgBoxInterface *source);
 public:
     explicit SafeMsgBox(QObject *parent = 0);
+    void disconnectAll();
 
 signals:
 
@@ -51,8 +62,11 @@ public slots:
 class SafeMsgBoxInterface : public QObject
 {
     Q_OBJECT
+
+    SafeMsgBox *m_target = nullptr;
 public:
     explicit SafeMsgBoxInterface(SafeMsgBox* target, QObject*parent = 0);
+    ~SafeMsgBoxInterface();
     int info(QString title,        QString text,   unsigned long buttons);
     int question(QString title,    QString text,   unsigned long buttons);
     int warning(QString title,     QString text,   unsigned long buttons);

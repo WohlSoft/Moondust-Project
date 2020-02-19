@@ -53,6 +53,7 @@ void EditorPipe::sendMessage(const std::string &in)
 {
     std::string outO;
     util::base64_encode(outO, reinterpret_cast<const unsigned char *>(in.c_str()), in.size());
+    D_pLogDebug("EditorPipe::sendMessage: sending data [%s]", outO.c_str());
     std::fprintf(stdout, "%s\n", outO.c_str());
     std::fflush(stdout);
 }
@@ -61,6 +62,7 @@ void EditorPipe::sendMessage(const char *in)
 {
     std::string outO;
     util::base64_encode(outO, reinterpret_cast<const unsigned char *>(in), strlen(in));
+    D_pLogDebug("EditorPipe::sendMessage: sending data [%s]", outO.c_str());
     std::fprintf(stdout, "%s\n", outO.c_str());
     std::fflush(stdout);
 }
@@ -112,7 +114,7 @@ bool EditorPipe::levelIsLoad()
     return state;
 }
 
-void EditorPipe::icomingData(std::string &in)
+void EditorPipe::icomingData(const std::string &in)
 {
     if(in.compare(0, 10, "PARSE_LVLX") == 0)
     {
@@ -123,7 +125,7 @@ void EditorPipe::icomingData(std::string &in)
 
     if(m_doAcceptLevelData)
     {
-        m_acceptedRawData.append(in.c_str());
+        m_acceptedRawData.append(in);
         pLogDebug("Append LVLX data...");
     }
     else if(in.compare(0, 11, "SEND_LVLX: ") == 0)
@@ -140,7 +142,7 @@ void EditorPipe::icomingData(std::string &in)
         IntProc::setState("Accepted SEND_LVLX");
         sendMessage("READY\n\n");
     }
-    else if(in.compare("PARSE_LVLX") == 0)
+    else if(in.compare(0, 10, "PARSE_LVLX") == 0)
     {
         pLogDebug("do Parse LVLX: PARSE_LVLX");
         m_doParseLevelData = true;
@@ -173,12 +175,12 @@ void EditorPipe::icomingData(std::string &in)
         pLogDebug("Accepted Message box: %s", in.c_str());
         IntProc::storeCommand(in.c_str() + 8, in.size() - 8, IntProc::MsgBox);
     }
-    else if(in.compare("CHEAT: ") == 0)
+    else if(in.compare(0, 7, "CHEAT: ") == 0)
     {
         pLogDebug("Accepted cheat code: %s", in.c_str());
         IntProc::storeCommand(in.c_str() + 7, in.size() - 7, IntProc::Cheat);
     }
-    else if(in.compare("PING") == 0)
+    else if(in.compare(0, 4, "PING") == 0)
     {
         D_pLogDebugNA("IN: >> PING");
         sendMessage("PONG\n\n");

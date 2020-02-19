@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "bg_standard.h"
@@ -24,12 +25,12 @@
 
 void StandardBackground::init(const obj_BG &bg)
 {
-    m_bgType            = (BgSetup::BgType)bg.setup.type;
+    m_bgType            = static_cast<BgSetup::BgType>(bg.setup.type);
     m_repeat_h          = bg.setup.repeat_h;
     m_second_repeat_h   = bg.setup.second_repeat_h;
     m_repeat_v          = bg.setup.repeat_v;
-    m_attached          = (BgSetup::BgAttach)bg.setup.attached;
-    m_second_attached   = (BgSetup::BgAttachSecond)bg.setup.second_attached;
+    m_attached          = static_cast<BgSetup::BgAttach>(bg.setup.attached);
+    m_second_attached   = static_cast<BgSetup::BgAttachSecond>(bg.setup.second_attached);
 
     pLogDebug("BG Type %d", m_bgType);
 
@@ -60,28 +61,30 @@ void StandardBackground::init(const obj_BG &bg)
                 for(uint32_t i = 0; i < bg.setup.segmented_strips; i++)
                 {
                     LVL_Background_strip x;
+                    const auto &splits = bg.setup.segmented_splits;
 
-                    if((i > 0) && (i - 1 <  bg.setup.segmented_splits.size()))
+                    if((i > 0) && (i - 1 < splits.size()))
                     {
-                        x.top = (static_cast<double>(bg.setup.segmented_splits[i - 1])
-                                 / static_cast<double>(m_txData1.frame_h));
+                        double split_y = static_cast<double>(splits[i - 1]);
+                        double frame_h = static_cast<double>(m_txData1.frame_h);
+                        x.top = split_y / frame_h;
                     }
                     else
                         x.top = 0.0;
 
-                    if(i < bg.setup.segmented_splits.size())
-                        x.bottom = static_cast<double>(bg.setup.segmented_splits[i]) / static_cast<double>(m_txData1.frame_h);
+                    if(i < splits.size())
+                    {
+                        double split_y = static_cast<double>(splits[i]);
+                        double frame_h = static_cast<double>(m_txData1.frame_h);
+                        x.bottom = split_y / frame_h;
+                    }
                     else
                         x.bottom = 1.0;
 
-                    x.height = static_cast<uint32_t>(Maths::iRound(
-                                                         (i < bg.setup.segmented_splits.size() ?
-                                                          bg.setup.segmented_splits[i] :
-                                                          m_txData1.frame_h)
-                                                         - (i == 0 ?
-                                                            0.0 :
-                                                            bg.setup.segmented_splits[i - 1])
-                                                     ));
+                    uint32_t segment_cur =  (i < splits.size() ? splits[i] : m_txData1.frame_h);
+                    uint32_t segment_prev = (i == 0 ? 0 : splits[i - 1]);
+
+                    x.height = (segment_cur > segment_prev) ? segment_cur - segment_prev : 1;
 
                     if(i < bg.setup.segmented_speeds.size())
                         x.repeat_h = bg.setup.segmented_speeds[i];
@@ -90,15 +93,16 @@ void StandardBackground::init(const obj_BG &bg)
 
                     if(x.repeat_h <= 0)
                         x.repeat_h = 1;
-                    //                            qDebug() << "Magic " << (i==0 ? 0 : bg.magic_splits_i[i-1] )
-                    //                                    << (( i <  bg.magic_splits_i.size())
-                    //                                       ? bg.magic_splits_i[i]: txData1.h )
-                    //                                    << x.height
-                    //                                    << x.repeat_h
-                    //                                    << x.top << x.bottom;
+
+                    if(m_isAnimated && bg.setup.frames > 1)
+                    {
+                        double div_height = static_cast<double>(bg.setup.frames);
+                        x.top /= div_height;
+                        x.bottom /= div_height;
+                    }
+
                     m_strips.push_back(x);
                 }
-                //qDebug() <<  bg.magic_splits_i.size() << bg.magic_speeds_i.size();
                 m_isSegmented = true;
             }
         }
@@ -125,15 +129,6 @@ void StandardBackground::init(const obj_BG &bg)
         if(tID2 >= 0)
         {
             m_txData2 = ConfigManager::level_textures[tID2];
-            /*
-            if(tmpstr=="overfirst")
-                sbg.second_attached = 0;
-            else if(tmpstr=="bottom")
-                sbg.second_attached = 1;
-            else if(tmpstr=="top")
-                sbg.second_attached = 2;
-            else sbg.second_repeat_v = 0;
-            */
             if(bg.setup.second_attached)
                 m_color = bg.Color_upper;
             else
@@ -192,17 +187,6 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
         else
             imgPos_X = refPointX;
     }
-
-    //     tmpstr = bgset.value("repeat-v", "NR").toString();
-    //   if(tmpstr=="NR") //Without repeat, parallax is proportional to section height
-    //      sbg.repead_v = 0;
-    //    else if(tmpstr=="ZR") //Static: without repeat and without parallax
-    //       sbg.repead_v = 1;
-    //   else if(tmpstr=="RP") //paralax with coefficient x2
-    //    sbg.repead_v = 2;
-    //   else if(tmpstr=="RZ") //repeat without parallax
-    //          sbg.repead_v = 3;
-    //    else sbg.repead_v = 0;
 
     switch(m_repeat_v)
     {
@@ -281,12 +265,13 @@ void StandardBackground::renderBackground(const PGE_RectF &box, double x, double
             {
                 if(m_isSegmented)
                 {
-                    draw_x       = std::fmod((box.left() - x) / m_strips[mg].repeat_h, fWidth);
+                    const auto &strip = m_strips[mg];
+                    draw_x       = std::fmod((box.left() - x) / strip.repeat_h, fWidth);
                     draw_x      += lenght;
-                    m_backgrndG.setRect(draw_x, imgPos_Y + drawnHeight, m_txData1.frame_w, m_strips[mg].height);
-                    drawnHeight += m_strips[mg].height;
-                    d_top        = m_strips[mg].top;
-                    d_bottom     = m_strips[mg].bottom;
+                    m_backgrndG.setRect(draw_x, imgPos_Y + drawnHeight, m_txData1.frame_w, strip.height);
+                    drawnHeight += strip.height;
+                    d_top        = ani_x.first + strip.top;
+                    d_bottom     = ani_x.first + strip.bottom;
                 }
 
                 GlRenderer::renderTexture(&m_txData1,

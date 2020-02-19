@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,13 @@
 
 ////////////////////////New files templates///////////////////////////
 
+
+void MainWindow::on_actionNewFile_triggered()
+{
+    //QMessageBox::information(this, "BURP!", "BURP!");
+    ui->menuNew->exec(QCursor::pos());
+}
+
 void MainWindow::on_actionNewNPC_config_triggered()
 {
     //Check if data configs are valid
@@ -43,7 +50,7 @@ void MainWindow::on_actionNewNPC_config_triggered()
     //NpcDialog * npcList = new NpcDialog(&configs);
     ItemSelectDialog * npcList = new ItemSelectDialog(&configs, ItemSelectDialog::TAB_NPC,0,0,0,0,0,0,0,0,0,this,ItemSelectDialog::TAB_NPC);
     npcList->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+    npcList->setGeometry(util::alignToScreenCenter(npcList->size()));
     npcList->setWindowTitle(tr("Create new NPC.txt configuration file"));
     if(npcList->exec() == QDialog::Accepted)
     {
@@ -77,7 +84,7 @@ void MainWindow::on_actionNewLevel_triggered()
         child->updateGeometry();
         child->ResetPosition();
         dock_LvlItemBox->initItemLists();
-        SetCurrentLevelSection(0);
+        setCurrentLevelSection(0);
         on_actionSelect_triggered();
         dock_LvlWarpProps->init();
         dock_LvlLayers->setLayersBox();

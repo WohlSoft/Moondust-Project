@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "mwdock_base.h"
 
 class MainWindow;
+class QTabWidget;
 class ItemBoxListModel;
 
 namespace Ui {
@@ -35,7 +36,7 @@ class WorldItemBox : public QDockWidget, public MWDock_Base
     Q_OBJECT
     friend class MainWindow;
 private:
-    explicit WorldItemBox(QWidget *parent = 0);
+    explicit WorldItemBox(QWidget *parent = nullptr);
     ~WorldItemBox();
 
 public:
@@ -62,7 +63,7 @@ private:
     ItemBoxListModel *m_sceneryModel = nullptr;
     ItemBoxListModel *m_pathsModel = nullptr;
     ItemBoxListModel *m_levelsModel = nullptr;
-    ItemBoxListModel *m_musicboxModel = nullptr;
+    ItemBoxListModel *m_musicBoxModel = nullptr;
 };
 
 #endif // WLD_ITEM_TOOLBOX_H

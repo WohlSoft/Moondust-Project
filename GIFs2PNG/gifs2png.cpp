@@ -1,7 +1,7 @@
 /*
  * GIFs2PNG, a free tool for merge GIF images with his masks and save into PNG
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,16 +29,13 @@
 #include <tclap/CmdLine.h>
 #include "version.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-#endif
 #include <FreeImageLite.h>
 
 #include "common_features/config_manager.h"
 
 static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
 {
-    #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
+#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
     FileMapper fileMap;
     if(!fileMap.open_file(file.c_str()))
         return NULL;
@@ -53,14 +50,14 @@ static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
     fileMap.close_file();
     if(!img)
         return NULL;
-    #else
+#else
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
     if(formato  == FIF_UNKNOWN)
         return NULL;
     FIBITMAP *img = FreeImage_Load(formato, file.c_str());
     if(!img)
         return NULL;
-    #endif
+#endif
 
     if(convertTo32bit)
     {
@@ -121,7 +118,7 @@ static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask, FI
                                     int(Fpix.rgbBlue)) / 3);
             if(newAlpha > 255)
                 newAlpha = 255;
-            Npix.rgbReserved = newAlpha;
+            Npix.rgbReserved = static_cast<BYTE>(newAlpha);
 
             FreeImage_SetPixelColor(image, x, y, &Npix);
         }
@@ -344,11 +341,11 @@ int main(int argc, char *argv[])
     {
         // Define the command line object.
         TCLAP::CmdLine  cmd(V_FILE_DESC "\n"
-                            "Copyright (c) 2017-2018 Vitaly Novichkov <admin@wohlnet.ru>\n"
+                            "Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>\n"
                             "This program is distributed under the GNU GPLv3+ license\n", ' ', V_FILE_VERSION V_FILE_RELEASE);
 
         TCLAP::SwitchArg switchRemove("r", "remove", "Remove source images after a succesful conversion", false);
-        TCLAP::SwitchArg switchSkipBG("b", "ingnore-bg", "Skip all \"background2-*.gif\" sprites (due a bug in the LunaLUA)", false);
+        TCLAP::SwitchArg switchSkipBG("b", "ingnore-bg", "Skip all \"background2-*.gif\" sprites", false);
         TCLAP::SwitchArg switchDigRecursive("d", "dig-recursive", "Look for images in subdirectories", false);
         TCLAP::SwitchArg switchDigRecursiveDEP("w", "dig-recursive-old", "Look for images in subdirectories [deprecated]", false);
 

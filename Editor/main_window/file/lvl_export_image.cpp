@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,8 @@
 #include "ui_lvl_export_image.h"
 #include <editing/edit_level/level_edit.h>
 #include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_npc.h>
 #include <ui_leveledit.h>
 
 //Export whole section
@@ -119,7 +121,7 @@ void LevelEdit::ExportingReady() //slot
 
     ExportToImage imageExportDialog(imgSize, MainWinConnect::pMainWin);
     imageExportDialog.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    imageExportDialog.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, imageExportDialog.size(), qApp->desktop()->availableGeometry()));
+    imageExportDialog.setGeometry(util::alignToScreenCenter(imageExportDialog.size()));
     if(imageExportDialog.exec() != QDialog::Rejected)
         imgSize = imageExportDialog.imageSize;
     else return;
@@ -146,7 +148,7 @@ void LevelEdit::ExportingReady() //slot
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
-    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setCancelButton(0);
     progress.setMinimumDuration(0);
 
@@ -167,16 +169,41 @@ void LevelEdit::ExportingReady() //slot
         QList<QGraphicsItem*> allBlocks = scene->items();
         for(QGraphicsItem* it : allBlocks)
         {
-            if(it->data(ITEM_TYPE).toString() != "Block")
+            if(it->data(ITEM_TYPE).toString() != "Block" &&
+               it->data(ITEM_TYPE).toString() != "BGO" &&
+               it->data(ITEM_TYPE).toString() != "NPC")
                 continue;
+
             //Exclude already hidden elements
             if(!it->isVisible())
                 continue;
-            ItemBlock *blk = dynamic_cast<ItemBlock*>(it);
-            if(blk && blk->m_data.invisible)
+
+            if(it->data(ITEM_TYPE).toString() == "Block")
             {
-                it->setVisible(false);
-                invisibleBlocks.push_back(it);
+                auto *blk = dynamic_cast<ItemBlock*>(it);
+                if(blk && (blk->m_data.invisible || blk->data(ITEM_IS_META).toBool()))
+                {
+                    it->setVisible(false);
+                    invisibleBlocks.push_back(it);
+                }
+            }
+            else if(it->data(ITEM_TYPE).toString() == "BGO")
+            {
+                auto *blk = dynamic_cast<ItemBGO*>(it);
+                if(blk && blk->data(ITEM_IS_META).toBool())
+                {
+                    it->setVisible(false);
+                    invisibleBlocks.push_back(it);
+                }
+            }
+            else if(it->data(ITEM_TYPE).toString() == "NPC")
+            {
+                auto *blk = dynamic_cast<ItemNPC*>(it);
+                if(blk && blk->data(ITEM_IS_META).toBool())
+                {
+                    it->setVisible(false);
+                    invisibleBlocks.push_back(it);
+                }
             }
         }
     }

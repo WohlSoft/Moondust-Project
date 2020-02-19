@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "window.h"
@@ -43,13 +44,28 @@ bool    PGE_Window::vsyncIsSupported    = true;
 bool    PGE_Window::showDebugInfo       = false;
 bool    PGE_Window::showPhysicsDebug    = false;
 
-SDL_Window      *PGE_Window::window     = NULL;
-SDL_GLContext    PGE_Window::glcontext  = NULL;
+SDL_Window      *PGE_Window::window     = nullptr;
+SDL_GLContext    PGE_Window::glcontext  = nullptr;
 
 //! Is graphical sub-system initialized?
 static  bool g_isRenderInit     = false;
 //! Is mouse cursor must be shown?
 static  bool g_showMouseCursor  = true;
+
+class ScreenSize
+{
+public:
+    int screenWidth = 0;
+    int screenHeight = 0;
+
+    ScreenSize()
+    {
+        SDL_DisplayMode dm;
+        SDL_GetCurrentDisplayMode(0, &dm);
+        screenWidth = dm.w;
+        screenHeight = dm.h;
+    }
+};
 
 static SDL_bool IsFullScreen(SDL_Window *win)
 {
@@ -70,10 +86,10 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
     if(*error != '\0')
     {
         PGE_MsgBox::warn(fmt::format_ne("SDL Error: {0}\nFile: {1}\nFunction: {2}\nLine: {3}",
-                                     error,
-                                     fn,
-                                     func,
-                                     line));
+                                        error,
+                                        fn,
+                                        func,
+                                        line));
         SDL_ClearError();
         return true;
     }
@@ -84,16 +100,16 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
 void PGE_Window::printSDLWarn(std::string info)
 {
     PGE_MsgBox::warn(fmt::format_ne("{0}\nSDL Error: {1}",
-                                 info,
-                                 SDL_GetError())
+                                    info,
+                                    SDL_GetError())
                     );
 }
 
 void PGE_Window::printSDLError(std::string info)
 {
     PGE_MsgBox::error(fmt::format_ne("{0}\nSDL Error: {1}",
-                                  info,
-                                  SDL_GetError()));
+                                     info,
+                                     SDL_GetError()));
 }
 
 int PGE_Window::msgBoxInfo(std::string title, std::string text)
@@ -147,7 +163,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     if(rtype == GlRenderer::RENDER_INVALID)
     {
-        //% "Unable to find OpenGL support!\nSoftware renderer will be started.\n"
+        //% "Unable to find OpenGL support!\nSoftware renderer will be started."
         printSDLWarn(qtTrId("RENDERER_NO_OPENGL_ERROR"));
         SDL_ClearError();
         rtype = GlRenderer::RENDER_SW_SDL;
@@ -175,22 +191,31 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     }
 #endif //0
 
+#ifdef __ANDROID__
+    ScreenSize screenSize;
+    int screenWidth = screenSize.screenWidth;
+    int screenHeight = screenSize.screenHeight;
+#else
+#   define screenWidth Width
+#   define screenHeight Height
+#endif
+
     GlRenderer::setVirtualSurfaceSize(Width, Height);
-    GlRenderer::setViewportSize(Width, Height);
+    GlRenderer::setViewportSize(screenWidth, screenHeight);
     window = SDL_CreateWindow(WindowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,
-                          #ifdef __EMSCRIPTEN__ //Set canvas be 1/2 size for a faster rendering
+#ifdef __EMSCRIPTEN__ //Set canvas be 1/2 size for a faster rendering
                               Width / 2, Height / 2,
-                          #else
-                              Width, Height,
-                          #endif //__EMSCRIPTEN__
+#else
+                              screenWidth, screenHeight,
+#endif //__EMSCRIPTEN__
                               SDL_WINDOW_RESIZABLE |
                               SDL_WINDOW_HIDDEN |
                               SDL_WINDOW_ALLOW_HIGHDPI |
                               GlRenderer::SDL_InitFlags());
 
-    if(window == NULL)
+    if(window == nullptr)
     {
         //% "Unable to create window!"
         printSDLError(qtTrId("WINDOW_CREATE_ERROR"));
@@ -215,7 +240,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     GraphicsHelps::initFreeImage();
 
-#ifdef _WIN32
+#if defined(_WIN32)
     FIBITMAP *img[2];
     img[0] = GraphicsHelps::loadImageRC("cat_16.png");
     img[1] = GraphicsHelps::loadImageRC("cat_32.png");
@@ -236,7 +261,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     GraphicsHelps::closeImage(img[0]);
     GraphicsHelps::closeImage(img[1]);
-#else//IF _WIN32
+#elif !defined __EMSCRIPTEN__ //IF _WIN32
 
     FIBITMAP *img;
 #   ifdef __APPLE__
@@ -247,10 +272,10 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     if(img)
     {
-        SDL_Surface *sicon = GraphicsHelps::fi2sdl(img);
-        SDL_SetWindowIcon(window, sicon);
+        SDL_Surface *sIcon = GraphicsHelps::fi2sdl(img);
+        SDL_SetWindowIcon(window, sIcon);
         GraphicsHelps::closeImage(img);
-        SDL_FreeSurface(sicon);
+        SDL_FreeSurface(sIcon);
 
         if(isSdlError())
         {
@@ -263,7 +288,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     g_isRenderInit = true;
     //Init OpenGL (to work with textures, OpenGL should be load)
-    pLogDebug("Init OpenGL settings...");
+    pLogDebug("Init graphics settings...");
 
     if(!GlRenderer::init())
     {
@@ -286,7 +311,7 @@ void PGE_Window::setWindowTitle(std::string title)
     SDL_SetWindowTitle(window, title.c_str());
 }
 
-void PGE_Window::changeInternalResolution(unsigned int newWidth, unsigned int newHeight)
+void PGE_Window::changeViewportResolution(unsigned int newWidth, unsigned int newHeight)
 {
     if(window == nullptr)
         return;
@@ -295,12 +320,17 @@ void PGE_Window::changeInternalResolution(unsigned int newWidth, unsigned int ne
     Height = static_cast<int>(newHeight);
 
     GlRenderer::setVirtualSurfaceSize(Width, Height);
+#ifdef __ANDROID__
+    ScreenSize screenSize;
+    GlRenderer::setViewportSize(screenSize.screenWidth, screenSize.screenHeight);
+#else
     GlRenderer::setViewportSize(Width, Height);
-
     SDL_SetWindowMinimumSize(window, Width, Height);
 
     if(IsFullScreen(window) == SDL_FALSE)
         SDL_SetWindowSize(window, Width, Height);
+#endif
+    GlRenderer::resetViewport();
 }
 
 void PGE_Window::toggleVSync(bool vsync)
@@ -308,7 +338,8 @@ void PGE_Window::toggleVSync(bool vsync)
     if(vsync)
     {
         int display_count = 0, display_index = 0;
-        SDL_DisplayMode mode = { SDL_PIXELFORMAT_UNKNOWN, 0, 0, 0, 0 };
+        SDL_DisplayMode mode;
+        SDL_memset(&mode, 0, sizeof(SDL_DisplayMode));
 
         if((display_count = SDL_GetNumVideoDisplays()) < 1)
         {
@@ -370,7 +401,7 @@ bool PGE_Window::uninit()
     GlRenderer::uninit();
     GraphicsHelps::closeFreeImage();
     SDL_DestroyWindow(window);
-    window = NULL;
+    window = nullptr;
     g_isRenderInit = false;
     return true;
 }
@@ -384,7 +415,7 @@ void PGE_Window::setCursorVisibly(bool viz)
 {
     g_showMouseCursor = viz;
 
-    if(window != NULL)
+    if(window != nullptr)
     {
         if(!IsFullScreen(window))
         {
@@ -398,7 +429,8 @@ void PGE_Window::setCursorVisibly(bool viz)
 
 void PGE_Window::clean()
 {
-    if(window == NULL) return;
+    if(window == nullptr)
+        return;
 
     GlRenderer::setClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     GlRenderer::clearScreen();
@@ -408,7 +440,7 @@ void PGE_Window::clean()
 
 int PGE_Window::setFullScreen(bool fs)
 {
-    if(window == NULL)
+    if(window == nullptr)
         return -1;
 
     if(fs != IsFullScreen(window))
@@ -489,8 +521,8 @@ int PGE_Window::processEvents(SDL_Event &event)
     {
     case SDL_WINDOWEVENT:
     {
-        if((event.window.event == SDL_WINDOWEVENT_RESIZED)||
-                (event.window.event == SDL_WINDOWEVENT_MOVED))
+        if((event.window.event == SDL_WINDOWEVENT_RESIZED) ||
+           (event.window.event == SDL_WINDOWEVENT_MOVED))
             GlRenderer::resetViewport();
 
         return 1;
@@ -507,7 +539,7 @@ int PGE_Window::processEvents(SDL_Event &event)
             }
 
             break;
-            #ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
+#ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
 
         //        from employer - add "DEFINES+=PANIC_KEY" into qmake args
         //        and then you can press NumPad + to instantly close game)
@@ -519,7 +551,7 @@ int PGE_Window::processEvents(SDL_Event &event)
             return 2;
         }
 
-        #endif
+#endif
 
         case SDLK_F2:
         {

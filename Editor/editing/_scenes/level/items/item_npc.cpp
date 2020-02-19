@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 
 #include <QInputDialog>
 #include <QClipboard>
-#include <QDesktopWidget>
 
 #include <mainwindow.h>
 #include <common_features/logger.h>
@@ -32,30 +31,7 @@
 #include "../itemmsgbox.h"
 #include "../newlayerbox.h"
 
-class NPCHistory_UserData : public HistoryElementCustomSetting
-{
-public:
-    NPCHistory_UserData() : HistoryElementCustomSetting() {}
-    virtual ~NPCHistory_UserData() {}
-
-    virtual void undo(const void *sourceItem, QVariant *, QGraphicsItem *item)
-    {
-        const LevelNPC * it = reinterpret_cast<const LevelNPC*>(sourceItem);
-        ItemNPC* ite = qgraphicsitem_cast<ItemNPC*>(item);
-        ite->m_data.meta.custom_params = it->meta.custom_params;
-        ite->arrayApply();
-    }
-    virtual void redo(const void *, QVariant *mod, QGraphicsItem *item)
-    {
-        ItemNPC* ite = qgraphicsitem_cast<ItemNPC*>(item);
-        ite->m_data.meta.custom_params = mod->toString();
-        ite->arrayApply();
-    }
-    virtual QString getHistoryName()
-    {
-        return QObject::tr("NPC user data change");
-    }
-};
+#include <editing/_components/history/settings/lvl_npc_userdata.hpp>
 
 
 ItemNPC::ItemNPC(bool noScene, QGraphicsItem *parent)
@@ -302,7 +278,7 @@ cancelTransform:
                 m_data.contents,
                 0, 0, 0, 0, 0, m_scene->m_subWindow);
         npcList->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        npcList->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, npcList->size(), qApp->desktop()->availableGeometry()));
+        npcList->setGeometry(util::alignToScreenCenter(npcList->size()));
         if(npcList->exec() == QDialog::Accepted)
         {
             //apply to all selected items.
@@ -616,7 +592,7 @@ void ItemNPC::transformTo(long target_id)
 
     m_data.id = target_id;
 
-    setNpcData(m_data, &mergedSet, &animator);
+    setNpcData(m_data, &mergedSet, &animator, true);
     arrayApply();
 
     if(!m_scene->m_opts.animationEnabled)
@@ -874,7 +850,7 @@ void ItemNPC::setMainPixmap(const QPixmap &pixmap)
     refreshOffsets();
 }
 
-void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bool isHistoryManager)
+void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bool isTransform)
 {
     m_data = inD;
 
@@ -911,7 +887,7 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
         else
             setZValue(m_scene->Z_npcStd);
 
-        if(!isHistoryManager) // Do nothing if it's a history manager
+        if(isTransform) // Do work only if it's a transforming
         {
             // Zero containers are not used (for LVLX)
             if(!m_localProps.setup.container)
@@ -1009,6 +985,8 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
 
     setData(ITEM_WIDTH,  QString::number(m_localProps.setup.width));  //width
     setData(ITEM_HEIGHT, QString::number(m_localProps.setup.height));  //height
+
+    setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
 
     m_scene->unregisterElement(this);
     m_scene->registerElement(this);

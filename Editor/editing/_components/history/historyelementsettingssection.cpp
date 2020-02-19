@@ -64,6 +64,10 @@ void HistoryElementSettingsSection::undo()
     if(m_subtype == HistorySettings::SETTING_SECCUSTOMMUSIC){
         lvlScene->m_data->sections[sectionID].music_file = extraData.toList()[0].toString();
     }
+    else
+    if(m_subtype == HistorySettings::SETTING_SEC_XTRA){
+        lvlScene->m_data->sections[sectionID].custom_params = extraData.toList()[0].toString();
+    }
 
     MainWinConnect::pMainWin->dock_LvlSectionProps->refreshFileData();
     LvlMusPlay::updateMusic();
@@ -112,6 +116,10 @@ void HistoryElementSettingsSection::redo()
     else
     if(m_subtype == HistorySettings::SETTING_SECCUSTOMMUSIC){
         lvlScene->m_data->sections[sectionID].music_file = extraData.toList()[1].toString();
+    }
+    else
+    if(m_subtype == HistorySettings::SETTING_SEC_XTRA){
+        lvlScene->m_data->sections[sectionID].custom_params = extraData.toList()[1].toString();
     }
     MainWinConnect::pMainWin->dock_LvlSectionProps->refreshFileData();
     LvlMusPlay::updateMusic();

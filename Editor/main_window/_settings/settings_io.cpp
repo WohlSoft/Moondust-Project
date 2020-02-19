@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,9 +29,8 @@
 #include <audio/sdl_music_player.h>
 #include <audio/music_player.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
-#ifdef _WIN32
+
 #include <main_window/testing/luna_tester.h>
-#endif
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -40,10 +39,11 @@ static void loadToolboxProps(QSettings &s,
                              QString keyprefix,
                              MWDock_Base *widget,
                              bool defViz,
+                             bool forceDefault,
                              bool defFloat)
 {
     QDockWidget *dw = dynamic_cast<QDockWidget *>(widget);
-    widget->m_lastVisibilityState = s.value(keyprefix + QStringLiteral("-visible"), defViz).toBool();
+    widget->m_lastVisibilityState = forceDefault ? defViz : s.value(keyprefix + QStringLiteral("-visible"), defViz).toBool();
     dw->setFloating(s.value(keyprefix + QStringLiteral("-float"), defFloat).toBool());
     dw->restoreGeometry(s.value(keyprefix + QStringLiteral("-geometry"), dw->saveGeometry()).toByteArray());
 }
@@ -119,7 +119,7 @@ void MainWindow::loadSettings()
 
         GlobalSettings::ShowTipOfDay = settings.value("show-tip-of-a-day", true).toBool();
 
-        PGE_MusPlayer::setSampleRate(settings.value("sdl-sample-rate", PGE_MusPlayer::sampleRate()).toInt());
+        MixerX::initAudio(settings.value("sdl-sample-rate", MixerX::sampleRate()).toInt());
 
         GlobalSettings::openPath = settings.value("lastpath", AppPathManager::userAppDir()).toString();
         GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
@@ -127,24 +127,25 @@ void MainWindow::loadSettings()
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 
-        //                         toolbox parameter prefix             pointer to toolbox      saved visibility state flag   defaults: vis.    flaoting
-        loadToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        configs.editor.default_visibility.lvl_itembox,   false);
-        loadToolboxProps(settings, QStringLiteral("level-itemprops-box"), dock_LvlItemProps,     false,  true);
-        loadToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   configs.editor.default_visibility.lvl_section_props,   true);
-        loadToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      configs.editor.default_visibility.lvl_warp_props,  true);
-        loadToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         configs.editor.default_visibility.lvl_layers,   true);
-        loadToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents,         configs.editor.default_visibility.lvl_events,   true);
-        loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      configs.editor.default_visibility.lvl_search,  true);
+        //                         toolbox parameter prefix             pointer to toolbox      saved visibility state flag   defaults: vis.        force default visibility state                          flaoting
+        loadToolboxProps(settings, QStringLiteral("level-item-box"),    dock_LvlItemBox,        configs.editor.default_visibility.lvl_itembox,      configs.editor.default_visibility_enforce.lvl_itembox,   false);
+        loadToolboxProps(settings, QStringLiteral("level-itemprops-box"), dock_LvlItemProps,    false,  false, true);
+        loadToolboxProps(settings, QStringLiteral("level-section-set"), dock_LvlSectionProps,   configs.editor.default_visibility.lvl_section_props,configs.editor.default_visibility_enforce.lvl_section_props,   true);
+        loadToolboxProps(settings, QStringLiteral("level-warps-box"),   dock_LvlWarpProps,      configs.editor.default_visibility.lvl_warp_props,   configs.editor.default_visibility_enforce.lvl_warp_props,  true);
+        loadToolboxProps(settings, QStringLiteral("level-layers"),      dock_LvlLayers,         configs.editor.default_visibility.lvl_layers,       configs.editor.default_visibility_enforce.lvl_layers,   true);
+        loadToolboxProps(settings, QStringLiteral("level-events"),      dock_LvlEvents,         configs.editor.default_visibility.lvl_events,       configs.editor.default_visibility_enforce.lvl_events,   true);
+        loadToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox,      configs.editor.default_visibility.lvl_search,       configs.editor.default_visibility_enforce.lvl_search,  true);
 
-        loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        configs.editor.default_visibility.wld_itembox,   false);
-        loadToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox,    configs.editor.default_visibility.wld_settings,  true);
-        loadToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps,     false,  false);
-        loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      configs.editor.default_visibility.wld_search,  true);
+        loadToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox,        configs.editor.default_visibility.wld_itembox,      configs.editor.default_visibility_enforce.wld_itembox,   false);
+        loadToolboxProps(settings, QStringLiteral("world-muscboxes-box"), dock_WldMusicBoxes,   configs.editor.default_visibility.wld_musicboxes,   configs.editor.default_visibility_enforce.wld_musicboxes,false);
+        loadToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox,   configs.editor.default_visibility.wld_settings,     configs.editor.default_visibility_enforce.wld_settings,  true);
+        loadToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps,    false,  false, true);
+        loadToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox,      configs.editor.default_visibility.wld_search,       configs.editor.default_visibility_enforce.wld_search,  true);
 
-        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        configs.editor.default_visibility.tilesets_box,   true);
-        loadToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       configs.editor.default_visibility.debugger_box,  true);
-        loadToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      configs.editor.default_visibility.bookmarks_box,  true);
-        loadToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      configs.editor.default_visibility.variables_box,  true);
+        loadToolboxProps(settings, QStringLiteral("tileset-box"),       dock_TilesetBox,        configs.editor.default_visibility.tilesets_box,     configs.editor.default_visibility_enforce.tilesets_box, true);
+        loadToolboxProps(settings, QStringLiteral("debugger-box"),      dock_DebuggerBox,       configs.editor.default_visibility.debugger_box,     configs.editor.default_visibility_enforce.debugger_box, true);
+        loadToolboxProps(settings, QStringLiteral("bookmarks-box"),     dock_BookmarksBox,      configs.editor.default_visibility.bookmarks_box,    configs.editor.default_visibility_enforce.bookmarks_box, true);
+        loadToolboxProps(settings, QStringLiteral("variables-box"),     dock_VariablesBox,      configs.editor.default_visibility.variables_box,    configs.editor.default_visibility_enforce.variables_box, true);
 
         ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
         dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
@@ -217,14 +218,12 @@ void MainWindow::loadSettings()
     }
     settings.endGroup();
 
-    #ifdef _WIN32
     settings.beginGroup("LunaTester");
     {
         m_luna->m_noGL = settings.value("nogl", false).toBool();
         m_luna->m_killPreviousSession = settings.value("kill-engine-on-every-test", false).toBool();
     }
     settings.endGroup();
-    #endif
 }
 
 
@@ -255,6 +254,7 @@ void MainWindow::saveSettings()
         saveToolboxProps(settings, QStringLiteral("level-search"),      dock_LvlSearchBox);
 
         saveToolboxProps(settings, QStringLiteral("world-item-box"),    dock_WldItemBox);
+        saveToolboxProps(settings, QStringLiteral("world-muscboxes-box"), dock_WldMusicBoxes);
         saveToolboxProps(settings, QStringLiteral("world-settings-box"), dock_WldSettingsBox);
         saveToolboxProps(settings, QStringLiteral("world-itemprops-box"), dock_WldItemProps);
         saveToolboxProps(settings, QStringLiteral("world-search"),      dock_WldSearchBox);
@@ -306,7 +306,7 @@ void MainWindow::saveSettings()
         settings.setValue("current-theme", GlobalSettings::currentTheme);
         settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
 
-        settings.setValue("sdl-sample-rate", PGE_MusPlayer::sampleRate());
+        settings.setValue("sdl-sample-rate", MixerX::sampleRate());
     }
     settings.endGroup();
 
@@ -360,14 +360,12 @@ void MainWindow::saveSettings()
     }
     settings.endGroup();
 
-    #ifdef _WIN32
     settings.beginGroup("LunaTester");
     {
         settings.setValue("nogl", m_luna->m_noGL);
         settings.setValue("kill-engine-on-every-test", m_luna->m_killPreviousSession);
     }
     settings.endGroup();
-    #endif
 
     settings.beginGroup("logging");
     {
@@ -396,7 +394,7 @@ void MainWindow::on_actionApplication_settings_triggered()
     g_AppSettings *appSettings = new g_AppSettings(this);
     util::DialogToCenter(appSettings, true);
     //appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    //appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), qApp->desktop()->availableGeometry()));
+    //appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), util::getScreenGeometry()));
 
     if(appSettings->exec() == QDialog::Accepted)
     {

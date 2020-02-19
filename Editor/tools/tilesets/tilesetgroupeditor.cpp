@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -317,7 +317,11 @@ void TilesetGroupEditor::on_tilesetUp_clicked()
 
     if(0 < i)
     {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+        tilesets.swapItemsAt(i, i - 1);
+#else
         tilesets.swap(i, i - 1);
+#endif
         redrawAll();
         ui->tilesetList->setCurrentRow(i - 1);
     }
@@ -332,7 +336,11 @@ void TilesetGroupEditor::on_tilesetDown_clicked()
 
     if(i + 1 < tilesets.size())
     {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+        tilesets.swapItemsAt(i, i + 1);
+#else
         tilesets.swap(i, i + 1);
+#endif
         redrawAll();
         ui->tilesetList->setCurrentRow(i + 1);
     }
@@ -411,7 +419,11 @@ void TilesetGroupEditor::movedTileset(const QModelIndex &sourceParent, int sourc
 
     qDebug() << "Tilesets moved";
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 13, 0)
+    tilesets.swapItemsAt(sourceStart, destinationRow);
+#else
     tilesets.swap(sourceStart, destinationRow);
+#endif
     redrawAll();
     ui->tilesetList->setCurrentRow(destinationRow);
 }

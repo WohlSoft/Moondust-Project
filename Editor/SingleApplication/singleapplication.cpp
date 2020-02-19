@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,9 @@
 #include "singleapplication.h"
 #include "semaphore_winapi.h"
 
+#define PGE_SHARED_MEM_KEY "PGE_EditorSharedMemory_35y321c9m853n5y9312mc5ly891235y"
+#define PGE_SEMAPHORE_KEY  "PGE_EditorSemaphore_35y321c9m853n5y9312mc5ly891235y"
+
 /**
  * @brief Sends IPC message to shared memory with semaphore protection
  * @param shmem Identificator of target shared memory object
@@ -32,10 +35,10 @@ static void sendIPCMessage(const char* shmem, const char* semaphore, const QStri
     PGE_Semaphore       t_sema(semaphore, 1);
     QSharedMemory       t_shmem(shmem);
 
-    #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     //Just keep compatibility with WinAPI
     t_shmem.setNativeKey(PGE_EDITOR_SHARED_MEMORY);
-    #endif
+#endif
 
     if(t_shmem.attach())
     {
@@ -71,21 +74,24 @@ static void sendIPCMessage(const char* shmem, const char* semaphore, const QStri
 }
 
 SingleApplication::SingleApplication(QStringList &args) :
-    m_sema("PGE_EditorSemaphore_35y321c9m853n5y9312mc5ly891235y", 1),
-    m_shmem("PGE_EditorSharedMemory_35y321c9m853n5y9312mc5ly891235y"),
+    m_sema(PGE_SEMAPHORE_KEY, 1),
+    m_shmem(PGE_SHARED_MEM_KEY),
     server(nullptr),
     m_shouldContinue(false) //By default this is not the main process
 {
     bool isRunning = false;
     m_sema.acquire();   //Avoid races
-    if(m_shmem.attach())//Detect shared memory copy
+
+    if(!m_shmem.create(1))//Detect shared memory copy
     {
-        isRunning = true;
-    }
-    else
-    {
-        m_shmem.create(1);
-        isRunning = false;
+        m_shmem.attach();
+        m_shmem.detach();
+        if(!m_shmem.create(1))
+        {
+            isRunning = true;
+            if(!m_shmem.attach())
+                qWarning() << "Can't re-attach existing shared memory!";
+        }
     }
 
     //Force run second copy of application
@@ -104,7 +110,7 @@ SingleApplication::SingleApplication(QStringList &args) :
     if(isRunning)
     {
         QString str = QString("CMD:showUp");
-        for(int i=1; i<m_arguments.size(); i++)
+        for(int i = 1; i < m_arguments.size(); i++)
         {
             str.append(QString("\n%1").arg(m_arguments[i]));
         }
@@ -142,7 +148,8 @@ SingleApplication::~SingleApplication()
             LogDebugQD("Terminated!");
         }
     }
-    if(server) delete server;
+    if(server)
+        delete server;
 }
 
 

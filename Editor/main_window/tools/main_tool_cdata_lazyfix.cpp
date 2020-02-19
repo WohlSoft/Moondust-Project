@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,6 @@
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-#endif
 #include <FreeImageLite.h>
 
 static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
@@ -402,7 +399,7 @@ void MainWindow::on_actionFixWrongMasks_triggered()
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
         progress.setFixedSize(progress.size());
-        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+        progress.setGeometry(util::alignToScreenCenter(progress.size()));
         //progress.setCancelButton();
         progress.setMinimumDuration(0);
 

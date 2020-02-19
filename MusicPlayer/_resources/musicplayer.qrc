@@ -12,5 +12,10 @@
         <file>buttons/play.png</file>
         <file>buttons/stop.png</file>
         <file>loop_in_use.png</file>
+        <file>PGE Music Player.desktop.template</file>
+        <file>file_musplay/file_musplay_16x16.png</file>
+        <file>file_musplay/file_musplay_32x32.png</file>
+        <file>file_musplay/file_musplay_48x48.png</file>
+        <file>file_musplay/file_musplay_256x256.png</file>
     </qresource>
 </RCC>

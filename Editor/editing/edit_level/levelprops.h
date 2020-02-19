@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,14 @@
 #ifndef LEVELPROPS_H
 #define LEVELPROPS_H
 
+#include <memory>
 #include <QDialog>
+#include <QSpacerItem>
 
 #include <PGE_File_Formats/lvl_filedata.h>
+
+class MainWindow;
+class JsonSettingsWidget;
 
 namespace Ui {
 class LevelProps;
@@ -31,20 +36,27 @@ class LevelProps;
 class LevelProps : public QDialog
 {
     Q_OBJECT
-    
+
 public:
-    explicit LevelProps(LevelData &FileData,QWidget *parent = 0);
+    explicit LevelProps(LevelData &FileData,QWidget *parent = nullptr);
     ~LevelProps();
-    QString LevelTitle;
-    
+    QString m_levelTitle;
+    QString m_customParams;
+
 private slots:
     void on_LVLPropButtonBox_accepted();
-
     void on_LVLPropButtonBox_rejected();
 
 private:
-    Ui::LevelProps *ui;
-    LevelData *currentData;
+    void initAdvancedSettings();
+    void onExtraSettingsChanged();
+
+    std::unique_ptr<JsonSettingsWidget> m_extraSettings;
+    std::unique_ptr<QSpacerItem> m_extraSettingsSpacer;
+
+    Ui::LevelProps *ui = nullptr;
+    LevelData *m_currentData = nullptr;
+    MainWindow *m_mw = nullptr;
 };
 
 #endif // LEVELPROPS_H

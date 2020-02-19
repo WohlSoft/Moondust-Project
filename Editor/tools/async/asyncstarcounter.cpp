@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+#include <common_features/util.h>
 #include "asyncstarcounter.h"
 
 
@@ -46,7 +47,7 @@ again:;
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint);
     progress.setFixedSize(progress.size());
-    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);
 
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#if !defined(ASSOC_FILES_H) && !defined(MUSPLAY_USE_WINAPI)
+#if !defined(ASSOC_FILES_H)
 #define ASSOC_FILES_H
 
 #include <QDialog>

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,14 +30,14 @@ class ItemNPC : public LvlBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemNPC(LvlScene *parentScene, QGraphicsItem *parent=0);
-    ItemNPC(bool noScene=false, QGraphicsItem *parent=0);
+    ItemNPC(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
+    ItemNPC(bool noScene=false, QGraphicsItem *parent = nullptr);
     ~ItemNPC();
 
     void setMainPixmap(const QPixmap &pixmap);
-    void setNpcData(LevelNPC inD, obj_npc *mergedSet = 0, long *animator_id = 0, bool isHistoryManager = false);
+    void setNpcData(LevelNPC inD, obj_npc *mergedSet = nullptr, long *animator_id = nullptr, bool isTransform = false);
     void setContextMenu(QMenu &menu);
-    void setScenePoint(LvlScene *theScene=NULL);
+    void setScenePoint(LvlScene *theScene = nullptr);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);

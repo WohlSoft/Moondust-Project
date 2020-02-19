@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>504</width>
-    <height>448</height>
+    <width>604</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,165 +18,17 @@
     <normaloff>:/images/cat_builder/cat_builder_48.png</normaloff>:/images/cat_builder/cat_builder_48.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="4" column="0">
+    <widget class="QCheckBox" name="defaultOnly">
      <property name="text">
-      <string>Items</string>
+      <string>Show default only</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="2" rowspan="3">
-    <layout class="QGridLayout" name="tilesetLayoutContainer">
-     <item row="4" column="1" colspan="3">
-      <widget class="QComboBox" name="comboBox">
-       <item>
-        <property name="text">
-         <string>Block</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>BGO</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>NPC</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Terrain tile</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Scenery</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Path</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Level</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Type:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="3">
-      <widget class="QSpinBox" name="spin_height">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>20</number>
-       </property>
-       <property name="value">
-        <number>3</number>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QSpinBox" name="spin_width">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>20</number>
-       </property>
-       <property name="value">
-        <number>3</number>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0" colspan="4">
-      <widget class="QPushButton" name="clearTileset">
-       <property name="text">
-        <string>Clear</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2" colspan="2">
-      <widget class="QPushButton" name="SaveTileset">
-       <property name="text">
-        <string>Save</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0" colspan="4">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Tileset name:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0" colspan="2">
-      <widget class="QPushButton" name="OpenTileset">
-       <property name="text">
-        <string>Open</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="2">
-      <widget class="QLabel" name="label_height">
-       <property name="text">
-        <string>Height:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="0" colspan="4">
-      <layout class="QVBoxLayout" name="tilesetLayoutWidgetContainer">
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>1</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_width">
-       <property name="text">
-        <string>Width:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="4">
-      <widget class="QLineEdit" name="TilesetName"/>
-     </item>
-    </layout>
    </item>
    <item row="3" column="0">
     <widget class="QCheckBox" name="customOnly">
      <property name="text">
       <string>Show custom only</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="QCheckBox" name="specific">
-     <property name="text">
-      <string>Current Level/World specific</string>
      </property>
     </widget>
    </item>
@@ -187,66 +39,303 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QCheckBox" name="defaultOnly">
+   <item row="3" column="1">
+    <widget class="QCheckBox" name="specific">
      <property name="text">
-      <string>Show default only</string>
+      <string>Current Level/World specific</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLineEdit" name="search">
-     <property name="placeholderText">
-      <string>Search</string>
+   <item row="2" column="0" colspan="3">
+    <widget class="QFrame" name="frame">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
      </property>
-     <property name="clearButtonEnabled">
-      <bool>true</bool>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
      </property>
+     <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,10,100" columnstretch="0,0,1000">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="search">
+        <property name="placeholderText">
+         <string>Search</string>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="searchSetup">
+        <property name="maximumSize">
+         <size>
+          <width>35</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Search settings</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../_resources/editor.qrc">
+          <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QScrollArea" name="tilesetScrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>322</width>
+           <height>217</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <layout class="QVBoxLayout" name="tilesetLayoutWidgetContainer">
+            <item>
+             <spacer name="verticalSpacer">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>1</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="2" column="0" rowspan="2" colspan="2">
+       <widget class="QListView" name="listView">
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragOnly</enum>
+        </property>
+        <property name="defaultDropAction">
+         <enum>Qt::IgnoreAction</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="movement">
+         <enum>QListView::Snap</enum>
+        </property>
+        <property name="resizeMode">
+         <enum>QListView::Adjust</enum>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Items</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" rowspan="3">
+       <layout class="QGridLayout" name="tilesetLayoutContainer">
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Type:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1" colspan="3">
+         <widget class="QComboBox" name="comboBox">
+          <item>
+           <property name="text">
+            <string>Block</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>BGO</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>NPC</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Terrain tile</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Scenery</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Path</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Level</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_width">
+          <property name="text">
+           <string>Width:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="4">
+         <widget class="QLineEdit" name="TilesetName"/>
+        </item>
+        <item row="2" column="2" colspan="2">
+         <widget class="QPushButton" name="SaveTileset">
+          <property name="text">
+           <string>Save</string>
+          </property>
+          <property name="default">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="3">
+         <widget class="QSpinBox" name="spin_height">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>20</number>
+          </property>
+          <property name="value">
+           <number>3</number>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="4">
+         <widget class="QPushButton" name="clearTileset">
+          <property name="text">
+           <string>Clear</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QPushButton" name="OpenTileset">
+          <property name="text">
+           <string>Open</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QSpinBox" name="spin_width">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>20</number>
+          </property>
+          <property name="value">
+           <number>3</number>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="2">
+         <widget class="QLabel" name="label_height">
+          <property name="text">
+           <string>Height:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="4">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Tileset name:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="4" rowspan="6">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="searchSetup">
-     <property name="maximumSize">
+   <item row="3" column="2">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>35</width>
-       <height>16777215</height>
+       <width>40</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="toolTip">
-      <string>Search settings</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../../_resources/editor.qrc">
-       <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QListView" name="listView">
-     <property name="minimumSize">
-      <size>
-       <width>150</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-     <property name="movement">
-      <enum>QListView::Snap</enum>
-     </property>
-     <property name="viewMode">
-      <enum>QListView::IconMode</enum>
-     </property>
-    </widget>
+    </spacer>
    </item>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>listView</tabstop>
   <tabstop>TilesetName</tabstop>
   <tabstop>OpenTileset</tabstop>
   <tabstop>SaveTileset</tabstop>

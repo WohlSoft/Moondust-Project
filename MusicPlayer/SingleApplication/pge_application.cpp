@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MUSPLAY_USE_WINAPI
-
 #include <QFileOpenEvent>
 #include <QDebug>
 #include "pge_application.h"
@@ -25,9 +23,9 @@
 PGE_OSXApplication::PGE_OSXApplication(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-    #ifdef Q_OS_MACX
+#ifdef Q_OS_MACX
     m_connected = false;
-    #endif
+#endif
 }
 
 PGE_OSXApplication::~PGE_OSXApplication()
@@ -76,5 +74,3 @@ QStringList PGE_OSXApplication::getOpenFileChain()
     return chain;
 }
 #endif //Q_OS_MACX
-
-#endif

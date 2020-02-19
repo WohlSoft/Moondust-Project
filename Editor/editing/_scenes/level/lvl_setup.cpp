@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,14 +103,14 @@ void LvlScene::SwitchEditingMode(int EdtMode)
 
 }
 
-void LvlScene::switchMode(QString title)
+void LvlScene::switchMode(const QString &title)
 {
     qDebug() << "Switching mode " << title;
-    for(int i=0; i<m_editModes.size(); i++)
+    for(auto &editMode : m_editModes)
     {
-        if(m_editModes[i]->name()==title)
+        if(editMode->name() == title)
         {
-            m_editModeObj = m_editModes[i];
+            m_editModeObj = editMode;
             m_editModeObj->set();
             qDebug() << "mode " << title << "switched!";
             break;
@@ -122,16 +122,15 @@ void LvlScene::switchMode(QString title)
 void LvlScene::hideWarpsAndDoors(bool visible)
 {
     QMap<QString, LevelLayer> localLayers;
-    for(int i = 0; i < m_data->layers.size(); ++i){
-        localLayers[m_data->layers[i].name] = m_data->layers[i];
-    }
+    for(auto &layer : m_data->layers)
+        localLayers[layer.name] = layer;
 
-    foreach (QGraphicsItem* i, items()) {
-        if(i->data(ITEM_TYPE).toString()=="Water"){
-            i->setVisible(!localLayers[((ItemPhysEnv*)i)->m_data.layer].hidden && visible);
-        }else if(i->data(ITEM_TYPE).toString()=="Door_exit" || i->data(ITEM_TYPE).toString()=="Door_enter"){
-            i->setVisible(!localLayers[((ItemDoor*)i)->m_data.layer].hidden && visible);
-        }
+    for(QGraphicsItem* i : items())
+    {
+        if(i->data(ITEM_TYPE).toString() == "Water")
+            i->setVisible(!localLayers[qgraphicsitem_cast<ItemPhysEnv*>(i)->m_data.layer].hidden && visible);
+        else if(i->data(ITEM_TYPE).toString() == "Door_exit" || i->data(ITEM_TYPE).toString() == "Door_enter")
+            i->setVisible(!localLayers[qgraphicsitem_cast<ItemDoor*>(i)->m_data.layer].hidden && visible);
     }
 }
 
@@ -144,63 +143,73 @@ void LvlScene::setTiledBackground(bool forceTiled)
 void LvlScene::applyLayersVisible()
 {
     QList<QGraphicsItem*> ItemList = items();
-    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(auto & it : ItemList)
     {
-        QGraphicsItem* item = (*it);
+        QGraphicsItem* item = it;
         if(!item->data(ITEM_IS_CURSOR).isNull())
             continue;
 
-        if((*it)->data(ITEM_TYPE)=="Block")
+        if(it->data(ITEM_TYPE) == "Block")
         {
-            foreach(LevelLayer layer, m_data->layers)
+            for(const LevelLayer &layer : m_data->layers)
             {
-                if( dynamic_cast<ItemBlock *>(item)->m_data.layer == layer.name)
+                auto *itm = qgraphicsitem_cast<ItemBlock *>(item);
+                if(itm->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemBlock *>(item)->setVisible( !layer.hidden ); break;
+                    itm->setVisible( !layer.hidden );
+                    break;
                 }
             }
         }
         else
-        if(item->data(ITEM_TYPE)=="BGO")
+        if(item->data(ITEM_TYPE) == "BGO")
         {
-            foreach(LevelLayer layer, m_data->layers)
+            for(const LevelLayer &layer : m_data->layers)
             {
-                if( dynamic_cast<ItemBGO *>(item)->m_data.layer == layer.name)
+                auto *itm = qgraphicsitem_cast<ItemBGO *>(item);
+                if(itm->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemBGO *>(item)->setVisible( !layer.hidden ); break;
+                    itm->setVisible( !layer.hidden );
+                    break;
                 }
             }
         }
         else
-        if(item->data(ITEM_TYPE)=="NPC")
+        if(item->data(ITEM_TYPE) == "NPC")
         {
-            foreach(LevelLayer layer, m_data->layers)
+            for(const LevelLayer &layer : m_data->layers)
             {
-                if( dynamic_cast<ItemNPC *>(item)->m_data.layer == layer.name)
+                auto *itm = qgraphicsitem_cast<ItemNPC *>(item);
+                if(itm->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemNPC *>(item)->setVisible( !layer.hidden ); break;
+                    itm->setVisible(!layer.hidden);
+                    break;
                 }
             }
         }
         else
-        if(item->data(ITEM_TYPE)=="Water")
+        if(item->data(ITEM_TYPE) == "Water")
         {
-            foreach(LevelLayer layer, m_data->layers)
+            for(const LevelLayer &layer : m_data->layers)
             {
-                if( dynamic_cast<ItemPhysEnv *>(item)->m_data.layer == layer.name)
+                auto *itm = qgraphicsitem_cast<ItemPhysEnv *>(item);
+                if(itm->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemPhysEnv *>(item)->setVisible( !layer.hidden ); break;
+                    itm->setVisible( !layer.hidden );
+                    break;
                 }
             }
         }
         else
-        if( (item->data(ITEM_TYPE)=="Door_enter") || (item->data(ITEM_TYPE)=="Door_exit") )
+        if((item->data(ITEM_TYPE) == "Door_enter") || (item->data(ITEM_TYPE) == "Door_exit"))
         {
-            foreach(LevelLayer layer, m_data->layers)
+            for(const LevelLayer &layer : m_data->layers)
             {
-                if( dynamic_cast<ItemDoor *>(item)->m_data.layer == layer.name)
+                auto *itm = qgraphicsitem_cast<ItemDoor *>(item);
+                if(itm->m_data.layer == layer.name)
                 {
-                    dynamic_cast<ItemDoor *>(item)->setVisible( !layer.hidden ); break;
+                    itm->setVisible( !layer.hidden );
+                    break;
                 }
             }
         }
@@ -233,45 +242,47 @@ void LvlScene::setLocked(int type, bool lock)
     }
 
     QList<QGraphicsItem*> ItemList = items();
-    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(auto & it : ItemList)
     {
-        if((*it)==NULL) continue;
-        if((*it)->data(ITEM_IS_ITEM).isNull()) continue;
+        if(it == nullptr)
+            continue;
+        if(it->data(ITEM_IS_ITEM).isNull())
+            continue;
 
         switch(type)
         {
         case 1://Block
-            if((*it)->data(ITEM_TYPE).toString()=="Block")
+            if(it->data(ITEM_TYPE).toString() == "Block")
             {
-                ItemBlock *item=qgraphicsitem_cast<ItemBlock *>(*it);
+                auto *item = qgraphicsitem_cast<ItemBlock *>(it);
                 if(item) item->setLocked(lock);
             }
             break;
         case 2://BGO
-            if((*it)->data(ITEM_TYPE).toString()=="BGO")
+            if(it->data(ITEM_TYPE).toString() == "BGO")
             {
-                ItemBGO *i=qgraphicsitem_cast<ItemBGO *>(*it);
+                auto *i = qgraphicsitem_cast<ItemBGO *>(it);
                 if(i) i->setLocked(lock);
             }
             break;
         case 3://NPC
-            if((*it)->data(ITEM_TYPE).toString()=="NPC")
+            if(it->data(ITEM_TYPE).toString() == "NPC")
             {
-                ItemNPC *i=qgraphicsitem_cast<ItemNPC *>(*it);
+                auto *i = qgraphicsitem_cast<ItemNPC *>(it);
                 if(i) i->setLocked(lock);
             }
             break;
         case 4://Water
-            if((*it)->data(ITEM_TYPE).toString()=="Water")
+            if(it->data(ITEM_TYPE).toString() == "Water")
             {
-                ItemPhysEnv *i=qgraphicsitem_cast<ItemPhysEnv *>(*it);
+                auto *i = qgraphicsitem_cast<ItemPhysEnv *>(it);
                 if(i) i->setLocked(lock);
             }
             break;
         case 5://Doors
-            if(((*it)->data(ITEM_TYPE).toString()=="Door_enter")||((*it)->data(ITEM_TYPE).toString()=="Door_exit"))
+            if((it->data(ITEM_TYPE).toString() == "Door_enter") || (it->data(ITEM_TYPE).toString() == "Door_exit"))
             {
-                ItemDoor *i=qgraphicsitem_cast<ItemDoor *>(*it);
+                auto *i = qgraphicsitem_cast<ItemDoor *>(it);
                 if(i) i->setLocked(lock);
             }
             break;
@@ -285,10 +296,11 @@ void LvlScene::setLocked(int type, bool lock)
 void LvlScene::setLayerToSelected()
 {
     QString lName;
-    ToNewLayerBox * layerBox = new ToNewLayerBox(m_data, m_viewPort);
+    auto *layerBox = new ToNewLayerBox(m_data, m_viewPort);
     layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    layerBox->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, layerBox->size(), qApp->desktop()->availableGeometry()));
-    if(layerBox->exec()==QDialog::Accepted)
+    layerBox->setGeometry(util::alignToScreenCenter(layerBox->size()));
+
+    if(layerBox->exec() == QDialog::Accepted)
     {
         lName = layerBox->lName;
 
@@ -311,78 +323,83 @@ void LvlScene::setLayerToSelected()
 
 }
 
-void LvlScene::setLayerToSelected(QString lName, bool isNew)
+void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
 {
     LevelData modData;
-    foreach(LevelLayer lr, m_data->layers)
+    for(const LevelLayer &lr : m_data->layers)
     { //Find layer's settings
-        if(lr.name==lName)
+        if(lr.name == lName)
         {
-            foreach(QGraphicsItem * SelItem, selectedItems() )
+            for(QGraphicsItem *SelItem : selectedItems() )
             {
-                if(SelItem->data(ITEM_TYPE).toString()=="Block")
+                if(SelItem->data(ITEM_TYPE).toString() == "Block")
                 {
-                    modData.blocks.push_back(dynamic_cast<ItemBlock *>(SelItem)->m_data);
-                    dynamic_cast<ItemBlock *>(SelItem)->m_data.layer = lr.name;
-                    dynamic_cast<ItemBlock *>(SelItem)->setVisible(!lr.hidden);
-                    dynamic_cast<ItemBlock *>(SelItem)->arrayApply();
+                    auto *itm = qgraphicsitem_cast<ItemBlock *>(SelItem);
+                    modData.blocks.push_back(itm->m_data);
+                    itm->m_data.layer = lr.name;
+                    itm->setVisible(!lr.hidden);
+                    itm->arrayApply();
                 }
                 else
-                if(SelItem->data(ITEM_TYPE).toString()=="BGO")
+                if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                 {
-                    modData.bgo.push_back(dynamic_cast<ItemBGO *>(SelItem)->m_data);
-                    dynamic_cast<ItemBGO *>(SelItem)->m_data.layer = lr.name;
-                    dynamic_cast<ItemBGO *>(SelItem)->setVisible(!lr.hidden);
-                    dynamic_cast<ItemBGO *>(SelItem)->arrayApply();
+                    auto *itm = qgraphicsitem_cast<ItemBGO *>(SelItem);
+                    modData.bgo.push_back(itm->m_data);
+                    itm->m_data.layer = lr.name;
+                    itm->setVisible(!lr.hidden);
+                    itm->arrayApply();
                 }
                 else
-                if(SelItem->data(ITEM_TYPE).toString()=="NPC")
+                if(SelItem->data(ITEM_TYPE).toString() == "NPC")
                 {
-                    modData.npc.push_back(dynamic_cast<ItemNPC *>(SelItem)->m_data);
-                    dynamic_cast<ItemNPC *>(SelItem)->m_data.layer = lr.name;
-                    dynamic_cast<ItemNPC *>(SelItem)->setVisible(!lr.hidden);
-                    dynamic_cast<ItemNPC *>(SelItem)->arrayApply();
+                    auto *itm = qgraphicsitem_cast<ItemNPC *>(SelItem);
+                    modData.npc.push_back(itm->m_data);
+                    itm->m_data.layer = lr.name;
+                    itm->setVisible(!lr.hidden);
+                    itm->arrayApply();
                 }
                 else
-                if(SelItem->data(ITEM_TYPE).toString()=="Water")
+                if(SelItem->data(ITEM_TYPE).toString() == "Water")
                 {
-                    modData.physez.push_back(dynamic_cast<ItemPhysEnv *>(SelItem)->m_data);
-                    dynamic_cast<ItemPhysEnv *>(SelItem)->m_data.layer = lr.name;
-                    dynamic_cast<ItemPhysEnv *>(SelItem)->setVisible(!lr.hidden);
-                    dynamic_cast<ItemPhysEnv *>(SelItem)->arrayApply();
+                    auto *itm = qgraphicsitem_cast<ItemPhysEnv *>(SelItem);
+                    modData.physez.push_back(itm->m_data);
+                    itm->m_data.layer = lr.name;
+                    itm->setVisible(!lr.hidden);
+                    itm->arrayApply();
                 }
                 else
-                if((SelItem->data(ITEM_TYPE).toString()=="Door_exit")  ||
-                        (SelItem->data(ITEM_TYPE).toString()=="Door_enter"))
+                if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") ||
+                   (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
                 {
-                    if(SelItem->data(ITEM_TYPE).toString()=="Door_exit"){
-                        LevelDoor tDoor = dynamic_cast<ItemDoor *>(SelItem)->m_data;
+                    auto *itm = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                    if(itm->data(ITEM_TYPE).toString() == "Door_exit")
+                    {
+                        LevelDoor tDoor = itm->m_data;
                         tDoor.isSetOut = true;
                         tDoor.isSetIn = false;
                         modData.doors.push_back(tDoor);
                     }
                     else
-                    if(SelItem->data(ITEM_TYPE).toString()=="Door_enter"){
-                        LevelDoor tDoor = dynamic_cast<ItemDoor *>(SelItem)->m_data;
+                    if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                    {
+                        LevelDoor tDoor = itm->m_data;
                         tDoor.isSetOut = false;
                         tDoor.isSetIn = true;
                         modData.doors.push_back(tDoor);
                     }
-                    dynamic_cast<ItemDoor *>(SelItem)->m_data.layer = lr.name;
-                    dynamic_cast<ItemDoor *>(SelItem)->setVisible(!lr.hidden);
-                    dynamic_cast<ItemDoor *>(SelItem)->arrayApply();
+                    itm->m_data.layer = lr.name;
+                    itm->setVisible(!lr.hidden);
+                    itm->arrayApply();
                 }
             }
+
             if(isNew)
-            {
                 m_history->addChangedNewLayer(modData, lr);
-            }
+
             break;
         }
     }//Find layer's settings
 
     if(!isNew)
-    {
         m_history->addChangedLayer(modData, lName);
-    }
 }

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,7 +64,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
     if(!openSection(setup, section.toStdString(), internal))
         return false;
 
-    if(sbgo.setup.parse(setup, bgoPath, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))
+    if(sbgo.setup.parse(setup, folderLvlBgo.graphics, defaultGrid.bgo, merge_with ? &merge_with->setup : nullptr, &errStr))
         sbgo.isValid = true;
     else
     {
@@ -91,10 +91,9 @@ void dataconfigs::loadLevelBGO()
     if(bgo_ini.isEmpty())
         return;
 
-    QString nestDir = "";
-
     IniProcessing setup(bgo_ini);
 
+    folderLvlBgo.items.clear();
     main_bgo.clear();   //Clear old
 
     if(!openSection(&setup, "background-main"))
@@ -103,10 +102,11 @@ void dataconfigs::loadLevelBGO()
         setup.read("total", bgo_total, 0);
         setup.read("grid",  defaultGrid.bgo, defaultGrid.bgo);
         total_data += bgo_total;
-        setup.read("config-dir", nestDir, "");
-        if(!nestDir.isEmpty())
+        setup.read("config-dir", folderLvlBgo.items, "");
+        setup.read("extra-settings", folderLvlBgo.extraSettings, folderLvlBgo.items);
+        if(!folderLvlBgo.items.isEmpty())
         {
-            nestDir = config_dir + nestDir;
+            folderLvlBgo.items = config_dir + folderLvlBgo.items;
             useDirectory = true;
         }
     }
@@ -133,7 +133,7 @@ void dataconfigs::loadLevelBGO()
         bool valid = false;
 
         if(useDirectory)
-            valid = loadLevelBGO(sbgo, "background", nullptr, QString("%1/background-%2.ini").arg(nestDir).arg(i));
+            valid = loadLevelBGO(sbgo, "background", nullptr, QString("%1/background-%2.ini").arg(folderLvlBgo.items).arg(i));
         else
             valid = loadLevelBGO(sbgo, QString("background-%1").arg(i), 0, "", &setup);
 
@@ -141,7 +141,7 @@ void dataconfigs::loadLevelBGO()
         if(valid)
         {
             QString errStr;
-            GraphicsHelps::loadMaskedImage(bgoPath,
+            GraphicsHelps::loadMaskedImage(folderLvlBgo.graphics,
                                            sbgo.setup.image_n, sbgo.setup.mask_n,
                                            sbgo.image,
                                            errStr);

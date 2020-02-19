@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,19 +37,19 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    AppPathManager::initAppPath();
+    AppPathManager::initAppPath(argv[0]);
 
-    foreach(QString arg, a.arguments())
+    for(const QString &arg : a.arguments())
     {
-        if(arg=="--install")
+        if(arg == "--install")
         {
             AppPathManager::install();
-            AppPathManager::initAppPath();
+            AppPathManager::initAppPath(argv[0]);
 
             QApplication::quit();
             QApplication::exit();
             return 0;
-        } else if(arg=="--version") {
+        } else if(arg == "--version") {
             std::cout << V_INTERNAL_NAME " " V_FILE_VERSION << V_FILE_RELEASE "-" V_BUILD_VER << "-" << V_BUILD_BRANCH << std::endl;
             QApplication::quit();
             QApplication::exit();
@@ -60,10 +60,16 @@ int main(int argc, char *argv[])
     CalibrationMain w;
 
     w.setWindowFlags(w.windowFlags() & ~(Qt::WindowMaximizeButtonHint));
-    w.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-    w.size(), qApp->desktop()->availableGeometry(0)));
+    {
+        QList<QScreen*> screens = QGuiApplication::screens();
+        if(!screens.isEmpty())
+        {
+            auto rect = QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, w.size(), screens[0]->availableGeometry());
+            w.setGeometry(rect);
+        }
+    }
 
-    if(!w.wasCanceled)
+    if(!w.m_wasCanceled)
         w.show();
     else
     {

@@ -253,6 +253,7 @@
      <string>View</string>
     </property>
     <addaction name="actionWLDToolBox"/>
+    <addaction name="actionMusicBoxes"/>
     <addaction name="actionWorld_settings"/>
     <addaction name="actionLVLToolBox"/>
     <addaction name="actionSection_Settings"/>
@@ -442,17 +443,11 @@
    <property name="windowTitle">
     <string>General</string>
    </property>
-   <property name="allowedAreas">
-    <set>Qt::TopToolBarArea</set>
-   </property>
    <property name="iconSize">
     <size>
      <width>24</width>
      <height>24</height>
     </size>
-   </property>
-   <property name="floatable">
-    <bool>false</bool>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -505,9 +500,6 @@
    <property name="windowTitle">
     <string>EditingTools</string>
    </property>
-   <property name="allowedAreas">
-    <set>Qt::AllToolBarAreas</set>
-   </property>
    <property name="iconSize">
     <size>
      <width>24</width>
@@ -548,9 +540,6 @@
      <width>24</width>
      <height>24</height>
     </size>
-   </property>
-   <property name="floatable">
-    <bool>true</bool>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -599,6 +588,7 @@
    <addaction name="actionLockMusicBoxes"/>
    <addaction name="separator"/>
    <addaction name="actionWLDToolBox"/>
+   <addaction name="actionMusicBoxes"/>
    <addaction name="actionWorld_settings"/>
    <addaction name="actionWLD_SearchBox"/>
   </widget>
@@ -611,9 +601,6 @@
    </property>
    <property name="windowTitle">
     <string>Level Sections Switch</string>
-   </property>
-   <property name="allowedAreas">
-    <set>Qt::AllToolBarAreas</set>
    </property>
    <property name="iconSize">
     <size>
@@ -728,7 +715,7 @@
   </action>
   <action name="Exit">
    <property name="text">
-    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Edit from the editor">Exit</string>
+    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Exit from the editor">Exit</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
@@ -745,6 +732,9 @@
    <property name="text">
     <string>Level...</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+N</string>
+   </property>
   </action>
   <action name="actionNewWorld_map">
    <property name="icon">
@@ -754,6 +744,9 @@
    <property name="text">
     <string>World map...</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Alt+N, M</string>
+   </property>
   </action>
   <action name="actionNewNPC_config">
    <property name="icon">
@@ -762,6 +755,9 @@
    </property>
    <property name="text">
     <string>NPC config...</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Alt+N, N</string>
    </property>
   </action>
   <action name="actionSave">
@@ -878,10 +874,7 @@
     <string>Section 0</string>
    </property>
    <property name="toolTip">
-    <string>Section 0 (Ctrl+1)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+1</string>
+    <string>Section 0</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -903,10 +896,7 @@
     <string>Section 1</string>
    </property>
    <property name="toolTip">
-    <string>Section 1 (Ctrl+2)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+2</string>
+    <string>Section 1</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -928,10 +918,7 @@
     <string>Section 2</string>
    </property>
    <property name="toolTip">
-    <string>Section 2 (Ctrl+3)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+3</string>
+    <string>Section 2</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -953,10 +940,7 @@
     <string>Section 3</string>
    </property>
    <property name="toolTip">
-    <string>Section 3 (Ctrl+4)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+4</string>
+    <string>Section 3</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -978,10 +962,7 @@
     <string>Section 4</string>
    </property>
    <property name="toolTip">
-    <string>Section 4 (Ctrl+5)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+5</string>
+    <string>Section 4</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1003,10 +984,7 @@
     <string>Section 5</string>
    </property>
    <property name="toolTip">
-    <string>Section 5 (Ctrl+6)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+6</string>
+    <string>Section 5</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1028,10 +1006,7 @@
     <string>Section 6</string>
    </property>
    <property name="toolTip">
-    <string>Section 6 (Ctrl+7)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+7</string>
+    <string>Section 6</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1053,10 +1028,7 @@
     <string>Section 7</string>
    </property>
    <property name="toolTip">
-    <string>Section 7 (Ctrl+8)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+8</string>
+    <string>Section 7</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1078,10 +1050,7 @@
     <string>Section 8</string>
    </property>
    <property name="toolTip">
-    <string>Section 8 (Ctrl+9)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+9</string>
+    <string>Section 8</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1103,10 +1072,7 @@
     <string>Section 9</string>
    </property>
    <property name="toolTip">
-    <string>Section 9 (Ctrl+0)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+0</string>
+    <string>Section 9</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1128,10 +1094,7 @@
     <string>Section 10</string>
    </property>
    <property name="toolTip">
-    <string>Section 10 (Ctrl+Alt+1)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+1</string>
+    <string>Section 10</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1153,10 +1116,7 @@
     <string>Section 11</string>
    </property>
    <property name="toolTip">
-    <string>Section 11 (Ctrl+Alt+2)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+2</string>
+    <string>Section 11</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1178,10 +1138,7 @@
     <string>Section 12</string>
    </property>
    <property name="toolTip">
-    <string>Section 12 (Ctrl+Alt+3)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+3</string>
+    <string>Section 12</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1203,10 +1160,7 @@
     <string>Section 13</string>
    </property>
    <property name="toolTip">
-    <string>Section 13 (Ctrl+Alt+4)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+4</string>
+    <string>Section 13</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1228,10 +1182,7 @@
     <string>Section 14</string>
    </property>
    <property name="toolTip">
-    <string>Section 14 (Ctrl+Alt+5)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+5</string>
+    <string>Section 14</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1253,10 +1204,7 @@
     <string>Section 15</string>
    </property>
    <property name="toolTip">
-    <string>Section 15 (Ctrl+Alt+6)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+6</string>
+    <string>Section 15</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1278,10 +1226,7 @@
     <string>Section 16</string>
    </property>
    <property name="toolTip">
-    <string>Section 16 (Ctrl+Alt+7)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+7</string>
+    <string>Section 16</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1303,10 +1248,7 @@
     <string>Section 17</string>
    </property>
    <property name="toolTip">
-    <string>Section 17 (Ctrl+Alt+8)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+8</string>
+    <string>Section 17</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1328,10 +1270,7 @@
     <string>Section 18</string>
    </property>
    <property name="toolTip">
-    <string>Section 18 (Ctrl+Alt+9)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+9</string>
+    <string>Section 18</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1353,10 +1292,7 @@
     <string>Section 19</string>
    </property>
    <property name="toolTip">
-    <string>Section 19 (Ctrl+Alt+0)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+Alt+0</string>
+    <string>Section 19</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1378,10 +1314,7 @@
     <string>Section 20</string>
    </property>
    <property name="toolTip">
-    <string>Section 20 (Alt+1)</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Alt+1</string>
+    <string>Section 20</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>false</bool>
@@ -1501,13 +1434,13 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/level.png</normaloff>:/images/level.png</iconset>
+     <normaloff>:/images/item_browser_level.png</normaloff>:/images/item_browser_level.png</iconset>
    </property>
    <property name="text">
-    <string>Level toolbox</string>
+    <string>Level items browser</string>
    </property>
    <property name="toolTip">
-    <string>Level objects tool box</string>
+    <string>Items browser with a search</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -1519,10 +1452,13 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/world.png</normaloff>:/images/world.png</iconset>
+     <normaloff>:/images/item_browser_world.png</normaloff>:/images/item_browser_world.png</iconset>
    </property>
    <property name="text">
-    <string>World Toolbox</string>
+    <string>World map items browser</string>
+   </property>
+   <property name="toolTip">
+    <string>Items browser with a search</string>
    </property>
    <property name="iconVisibleInMenu">
     <bool>true</bool>
@@ -2728,56 +2664,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <string>Delete section</string>
    </property>
   </action>
-  <action name="actionAdditional_Settings">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Additional Settings</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionCompile_To">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Compile To: </string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionAutocode_Lunadll_Original_Language">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Autocode [Lunadll Original Language]</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionLunaLua">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>LunaLua</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
   <action name="actionFloodSectionOnly">
    <property name="checkable">
     <bool>true</bool>
@@ -2816,18 +2702,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
   <action name="actionCheckUpdates">
    <property name="text">
     <string>Check for updates...</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionRunTestSMBX">
-   <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/mushroom16.png</normaloff>:/images/mushroom16.png</iconset>
-   </property>
-   <property name="text">
-    <string>Run testing in the SMBX (LunaDLL required)</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -3042,11 +2916,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <string>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</string>
    </property>
   </action>
-  <action name="actionSetGridItemDefault">
-   <property name="text">
-    <string>Item default</string>
-   </property>
-  </action>
   <action name="actionWelcome">
    <property name="text">
     <string>Welcome dialog</string>
@@ -3064,6 +2933,29 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionMusicBoxes">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/musicboxes.png</normaloff>:/images/musicboxes.png</iconset>
+   </property>
+   <property name="text">
+    <string>Music change points</string>
+   </property>
+  </action>
+  <action name="actionNewFile">
+   <property name="text">
+    <string notr="true">New file</string>
+   </property>
+   <property name="iconText">
+    <string notr="true">New file</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+N</string>
    </property>
   </action>
  </widget>

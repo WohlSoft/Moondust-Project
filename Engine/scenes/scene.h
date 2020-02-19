@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef SCENE_H
@@ -46,6 +47,7 @@ struct LoopTiming
         start_render    = 0;
         stop_render     = 0;
         doUpdate_render = 0.0;
+        doUpdate_physics = 0.0;
         start_physics   = 0;
         stop_physics    = 0;
         start_events    = 0;
@@ -61,6 +63,7 @@ struct LoopTiming
     Uint32 start_render;
     Uint32 stop_render;
     double doUpdate_render;
+    double doUpdate_physics;
 
     Uint32 start_physics;
     Uint32 stop_physics;
@@ -73,124 +76,127 @@ struct LoopTiming
 
 class Scene
 {
-        void construct();
-    public:
-        void updateTickValue();
+    void construct();
+public:
+    void updateTickValue();
 
-        enum TypeOfScene
-        {
-            _Unknown = 0,
-            ConfigSelect,
-            Loading,
-            Title,
-            Level,
-            World,
-            Credits,
-            GameOver
-        };
+    double frameDelay();
 
-        Scene();
-        Scene(TypeOfScene _type);
-        virtual ~Scene();
-        virtual void onKeyInput(int key);             //!< Triggering when pressed game specific key
-        virtual void onKeyboardPressed(SDL_Scancode scancode); //!< Triggering when pressed any key on keyboard
-        virtual void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
-        virtual void onKeyboardReleased(SDL_Scancode scancode); //!< Triggering when pressed any key on keyboard
-        virtual void onKeyboardReleasedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
-        virtual void onMouseMoved(SDL_MouseMotionEvent &mmevent);
-        virtual void onMousePressed(SDL_MouseButtonEvent &mbevent);
-        virtual void onMouseReleased(SDL_MouseButtonEvent &mbevent);
-        virtual void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
-        virtual void processEvents();
-        virtual LuaEngine *getLuaEngine();
+    enum TypeOfScene
+    {
+        _Unknown = 0,
+        ConfigSelect,
+        Loading,
+        Title,
+        Level,
+        World,
+        Credits,
+        GameOver
+    };
 
-        virtual void update();
-        virtual void updateLua();
-        virtual void render();
-        virtual void renderMouse();
-        virtual int exec(); //scene's loop
-        TypeOfScene type();
+    Scene();
+    Scene(TypeOfScene _type);
+    virtual ~Scene();
+    virtual void onKeyInput(int key);             //!< Triggering when pressed game specific key
+    virtual void onKeyboardPressed(SDL_Scancode scancode); //!< Triggering when pressed any key on keyboard
+    virtual void onKeyboardPressedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
+    virtual void onKeyboardReleased(SDL_Scancode scancode); //!< Triggering when pressed any key on keyboard
+    virtual void onKeyboardReleasedSDL(SDL_Keycode sdl_key, Uint16 modifier); //!< Triggering when pressed any key on keyboard
+    virtual void onMouseMoved(SDL_MouseMotionEvent &mmevent);
+    virtual void onMousePressed(SDL_MouseButtonEvent &mbevent);
+    virtual void onMouseReleased(SDL_MouseButtonEvent &mbevent);
+    virtual void onMouseWheel(SDL_MouseWheelEvent &wheelevent);
+    virtual void processEvents();
+    virtual LuaEngine *getLuaEngine();
 
-        struct RenderFuncs
-        {
-            typedef std::function<void(double, double)> Function;
-            long double z_index;
-            Function    render;
-        };
+    virtual void update();
+    virtual void updateLua();
+    virtual void render();
+    virtual void renderMouse();
+    virtual int exec(); //scene's loop
+    void runVsyncValidator();
+    TypeOfScene type();
 
-    protected:
-        std::vector<RenderFuncs> luaRenders;
+    struct RenderFuncs
+    {
+        typedef std::function<void(double, double)> Function;
+        long double z_index;
+        Function    render;
+    };
 
-    public:
-        void renderArrayAddFunction(const RenderFuncs::Function &renderFunc, long double zIndex = 400.0L);
-        void renderArrayPrepare();
-        void renderArrayClear();
+protected:
+    std::vector<RenderFuncs> luaRenders;
 
-        virtual bool isVizibleOnScreen(PGE_RectF &rect);
-        virtual bool isVizibleOnScreen(double x, double y, double w, double h);
+public:
+    void renderArrayAddFunction(const RenderFuncs::Function &renderFunc, long double zIndex = 400.0L);
+    void renderArrayPrepare();
+    void renderArrayClear();
 
-        bool isExiting();
-        bool doShutDown();
-        /**************Fader**************/
-        bool isOpacityFadding();
-        void setFade(int speed, float target, float step);
-        PGE_Fader m_fader;
-        /**************Fader**************/
+    virtual bool isVizibleOnScreen(PGE_RectF &rect);
+    virtual bool isVizibleOnScreen(double x, double y, double w, double h);
 
-        /*  Effects engine   */
-        typedef std::vector<Scene_Effect>    SceneEffectsArray;
-        SceneEffectsArray  WorkingEffects;
-        ///
-        /// \brief launchStaticEffect
-        /// Starts static effect by ID at position X,Y relative to left-top corner of effect picture
-        /// \param effectID ID of effect from lvl_effects.ini
-        /// \param startX X position relative to left side of effect picture
-        /// \param startY Y position relative to top side of effect picture
-        /// \param animationLoops Number of loops before effect will be finished. 0 - unlimited while time is not exited
-        /// \param delay max time of effect working. 0 - unlimited while loops are not exited or while effect still vizible of screen.
-        /// \param velocityX Horizontal motion speed (pixels per 1/65 second [independent to framerate])
-        /// \param velocityY Vertical motion speed (pixels per 1/65 second [independent to framerate])
-        /// \param gravity Y-gravitation will cause falling of effect picture
-        /// \param phys Additional physical settings
-        ///
-        void  launchEffect(unsigned long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction = 0, Scene_Effect_Phys phys = Scene_Effect_Phys());
+    bool isExiting();
+    bool doShutDown();
+    /**************Fader**************/
+    bool isOpacityFadding();
+    void setFade(int speed, float target, float step);
+    PGE_Fader m_fader;
+    /**************Fader**************/
 
-        ///
-        /// \brief launchStaticEffectC
-        /// Starts static effect by ID at position X,Y relative to center of effect picture
-        /// \param effectID ID of effect from lvl_effects.ini
-        /// \param startX X position relative to center of effect picture
-        /// \param startY Y position relative to center of effect picture
-        /// \param animationLoops Number of loops before effect will be finished. 0 - unlimited while time is not exited
-        /// \param delay max time of effect working. 0 - unlimited while loops are not exited or while effect still vizible of screen.
-        /// \param velocityX Horizontal motion speed (pixels per 1/65 second [independent to framerate])
-        /// \param velocityY Vertical motion speed (pixels per 1/65 second [independent to framerate])
-        /// \param gravity Y-gravitation will cause falling of effect picture
-        /// \param phys Additional physical settings
-        ///
-        void launchStaticEffectC(unsigned long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction = 0, Scene_Effect_Phys phys = Scene_Effect_Phys());
+    /*  Effects engine   */
+    typedef std::vector<Scene_Effect>    SceneEffectsArray;
+    SceneEffectsArray  WorkingEffects;
+    ///
+    /// \brief launchStaticEffect
+    /// Starts static effect by ID at position X,Y relative to left-top corner of effect picture
+    /// \param effectID ID of effect from lvl_effects.ini
+    /// \param startX X position relative to left side of effect picture
+    /// \param startY Y position relative to top side of effect picture
+    /// \param animationLoops Number of loops before effect will be finished. 0 - unlimited while time is not exited
+    /// \param delay max time of effect working. 0 - unlimited while loops are not exited or while effect still vizible of screen.
+    /// \param velocityX Horizontal motion speed (pixels per 1/65 second [independent to framerate])
+    /// \param velocityY Vertical motion speed (pixels per 1/65 second [independent to framerate])
+    /// \param gravity Y-gravitation will cause falling of effect picture
+    /// \param phys Additional physical settings
+    ///
+    void  launchEffect(unsigned long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction = 0, Scene_Effect_Phys phys = Scene_Effect_Phys());
 
-        void launchEffect(const SpawnEffectDef &effect_def, bool centered = false);
+    ///
+    /// \brief launchStaticEffectC
+    /// Starts static effect by ID at position X,Y relative to center of effect picture
+    /// \param effectID ID of effect from lvl_effects.ini
+    /// \param startX X position relative to center of effect picture
+    /// \param startY Y position relative to center of effect picture
+    /// \param animationLoops Number of loops before effect will be finished. 0 - unlimited while time is not exited
+    /// \param delay max time of effect working. 0 - unlimited while loops are not exited or while effect still vizible of screen.
+    /// \param velocityX Horizontal motion speed (pixels per 1/65 second [independent to framerate])
+    /// \param velocityY Vertical motion speed (pixels per 1/65 second [independent to framerate])
+    /// \param gravity Y-gravitation will cause falling of effect picture
+    /// \param phys Additional physical settings
+    ///
+    void launchStaticEffectC(unsigned long effectID, double startX, double startY, int animationLoops, int delay, double velocityX, double velocityY, double gravity, int direction = 0, Scene_Effect_Phys phys = Scene_Effect_Phys());
 
-        void processEffects(double ticks);
-        /*  Effects engine   */
+    void launchEffect(const SpawnEffectDef &effect_def, bool centered = false);
 
-        std::string errorString();
+    void processEffects(double ticks);
+    /*  Effects engine   */
 
-        //! Queue of message boxes to show them after all code of one frame will be updated/processed
-        MessageBoxQueue m_messages;
+    std::string errorString();
 
-    protected:
-        bool        m_isRunning;
-        bool        m_doShutDown;
-        bool        m_doExit;
-        uint32_t    uTick;
-        double      uTickf;
-        LoopTiming  times;
+    //! Queue of message boxes to show them after all code of one frame will be updated/processed
+    MessageBoxQueue m_messages;
 
-        std::string _errorString;
-    private:
-        TypeOfScene sceneType;
+protected:
+    bool        m_isRunning;
+    bool        m_doShutDown;
+    bool        m_doExit;
+    uint32_t    uTick;
+    double      uTickf;
+    LoopTiming  times;
+
+    std::string _errorString;
+private:
+    TypeOfScene sceneType;
 };
 
 #endif // SCENE_H

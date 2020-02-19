@@ -188,7 +188,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC-Einstellungen</translation>
     </message>
     <message>
         <source>Generator</source>
@@ -208,7 +208,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation>Verzögerung:</translation>
+        <translation>Verzögerung (in Sekunden):</translation>
     </message>
     <message>
         <source>Direction</source>
@@ -1275,10 +1275,6 @@ Bitte speichere sie sofort ab!.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hide editor-only meta-signs pictures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1289,6 +1285,10 @@ Bitte speichere sie sofort ab!.</translation>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Gekachelter Hintergrund</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1483,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>SMBX Welt Datei</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Bitte Warten...</translation>
     </message>
 </context>
 <context>
@@ -2742,7 +2746,7 @@ Bitte überprüfe den Anwendungspfad.</translation>
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Level Editor</translation>
+        <translation type="vanished">Level Editor</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -3050,7 +3054,7 @@ Möchtest du die Änderungen speichern?</translation>
     <name>LevelItemBox</name>
     <message>
         <source>Level toolbox</source>
-        <translation>Level toolbox</translation>
+        <translation type="vanished">Level toolbox</translation>
     </message>
     <message>
         <source>Blocks</source>
@@ -3102,6 +3106,10 @@ Möchtest du die Änderungen speichern?</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level items browser</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3218,6 +3226,19 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <source>Autoplay music</source>
         <translation type="vanished">Musik automatisch abspielen</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Allgemein</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3361,7 +3382,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Violation of SMBX64 standard has beeen found!
+        <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
 Suggested to remove all excess elements.
@@ -3414,14 +3435,6 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>process execution is failed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>patching has failed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3512,6 +3525,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>LunaTester is not running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4188,11 +4207,11 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     </message>
     <message>
         <source>Up</source>
-        <translation>Oben</translation>
+        <translation type="vanished">Oben</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Unten</translation>
+        <translation type="vanished">Unten</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -4297,6 +4316,51 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     <message>
         <source>[none]</source>
         <translation>[Nichts]</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Links</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Rechts</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Oben</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Unten</translation>
+    </message>
+    <message>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5124,22 +5188,27 @@ Physikalische Umgebungen:	%6</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Custom background name which will be shown in the editor</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create your background layers setup here...</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Bitte speichere Datei, bevor du benutzerdefinierte Musikdateien wählen willst.</translation>
     </message>
     <message>
-        <source>Default screen fill color</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
+        <source>Name that will appear in the editor</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backdrop fill color</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add layers here, for example:</source>
+        <comment>A comment in the template of Background2 INI file.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5384,7 +5453,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5394,7 +5463,7 @@ If this flag is enabled, you can only place a warp exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5486,6 +5555,14 @@ Bitte wähle eine Weltkarte in der Liste aus:</translation>
     <message>
         <source>Can&apos;t open the file!</source>
         <translation>Kann Datei nicht öffnen.</translation>
+    </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5735,88 +5812,88 @@ Zeilenlimit: Maximal 28 Zeichen pro Zeile</translation>
     <message>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <extracomment>Edit from the editor</extracomment>
+        <extracomment>Exit from the editor</extracomment>
         <translation>Beenden</translation>
     </message>
     <message>
         <source>Section 1 (Ctrl+2)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {1 ?} {2)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {1 ?} {2)?}</translation>
     </message>
     <message>
         <source>Section 2 (Ctrl+3)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {2 ?} {3)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {2 ?} {3)?}</translation>
     </message>
     <message>
         <source>Section 3 (Ctrl+4)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {3 ?} {4)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {3 ?} {4)?}</translation>
     </message>
     <message>
         <source>Section 4 (Ctrl+5)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {4 ?} {5)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {4 ?} {5)?}</translation>
     </message>
     <message>
         <source>Section 5 (Ctrl+6)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {5 ?} {6)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {5 ?} {6)?}</translation>
     </message>
     <message>
         <source>Section 6 (Ctrl+7)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {6 ?} {7)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {6 ?} {7)?}</translation>
     </message>
     <message>
         <source>Section 7 (Ctrl+8)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {7 ?} {8)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {7 ?} {8)?}</translation>
     </message>
     <message>
         <source>Section 8 (Ctrl+9)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {8 ?} {9)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {8 ?} {9)?}</translation>
     </message>
     <message>
         <source>Section 9 (Ctrl+0)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {9 ?} {0)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {9 ?} {0)?}</translation>
     </message>
     <message>
         <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {10 ?} {1)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {10 ?} {1)?}</translation>
     </message>
     <message>
         <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {11 ?} {2)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {11 ?} {2)?}</translation>
     </message>
     <message>
         <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {12 ?} {3)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {12 ?} {3)?}</translation>
     </message>
     <message>
         <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {13 ?} {4)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {13 ?} {4)?}</translation>
     </message>
     <message>
         <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {14 ?} {5)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {14 ?} {5)?}</translation>
     </message>
     <message>
         <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {15 ?} {6)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {15 ?} {6)?}</translation>
     </message>
     <message>
         <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {16 ?} {7)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {16 ?} {7)?}</translation>
     </message>
     <message>
         <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {17 ?} {8)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {17 ?} {8)?}</translation>
     </message>
     <message>
         <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {18 ?} {9)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {18 ?} {9)?}</translation>
     </message>
     <message>
         <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation type="unfinished">Bereich 20 (Strg+Alt+0) {19 ?} {0)?}</translation>
+        <translation type="obsolete">Bereich 20 (Strg+Alt+0) {19 ?} {0)?}</translation>
     </message>
     <message>
         <source>Section 20 (Alt+1)</source>
-        <translation type="unfinished">Bereich 21 (Alt+1) {20 ?} {1)?}</translation>
+        <translation type="obsolete">Bereich 21 (Alt+1) {20 ?} {1)?}</translation>
     </message>
     <message>
         <source>Prevent overlap</source>
@@ -6101,7 +6178,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Section 0 (Ctrl+1)</source>
-        <translation type="unfinished">Bereich 10 (Strg+0) {0 ?} {1)?}</translation>
+        <translation type="obsolete">Bereich 10 (Strg+0) {0 ?} {1)?}</translation>
     </message>
     <message>
         <source>Section 1</source>
@@ -6436,10 +6513,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6653,19 +6726,19 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Zusätzliche Einstellungen</translation>
+        <translation type="vanished">Zusätzliche Einstellungen</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Kompeliere Zu:</translation>
+        <translation type="vanished">Kompeliere Zu:</translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Lunadll Originale Programmiersprache]</translation>
+        <translation type="vanished">Autocode [Lunadll Originale Programmiersprache]</translation>
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
@@ -6689,7 +6762,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Starte test in SMBX (Benötigt LunaDLL)</translation>
+        <translation type="vanished">Starte test in SMBX (Benötigt LunaDLL)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6726,7 +6799,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Level objects tool box</source>
-        <translation>Level objekte Toolbox</translation>
+        <translation type="vanished">Level objekte Toolbox</translation>
     </message>
     <message>
         <source>World tool box</source>
@@ -7012,7 +7085,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     </message>
     <message>
         <source>Level toolbox</source>
-        <translation>Level toolbox</translation>
+        <translation type="vanished">Level toolbox</translation>
     </message>
     <message>
         <source>World map Toolbar</source>
@@ -7407,7 +7480,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     </message>
     <message>
         <source>World Toolbox</source>
-        <translation>Welt Toolbox</translation>
+        <translation type="vanished">Welt Toolbox</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
@@ -8430,6 +8503,28 @@ Please save the file first.</source>
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Level items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Items browser with a search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music change points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration can&apos;t be loaded:
+%1.
+See %2 for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -8499,7 +8594,7 @@ Möchtest du fortfahren?</translation>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>NPC Konfiguationseditor</translation>
+        <translation type="vanished">NPC Konfiguationseditor</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -9234,7 +9329,7 @@ Grund: Arbeitspeicherverletzung [SIGSERV]</translation>
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Level Name</translation>
+        <translation type="vanished">Level Name</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -9654,6 +9749,14 @@ The maximum number of Music Boxes is %2.</source>
         <source>NPC user data change</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QTranslator</name>
@@ -9886,10 +9989,6 @@ Datei: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Chuck Norris</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9950,6 +10049,10 @@ Datei: %1
     </message>
     <message>
         <source>1 Player settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulldozer mode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10767,6 +10870,14 @@ Daten könnten fehlerhaft sein!</translation>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Plaziere Item zuerst und dann rufe &apos;Einstellungen&apos; im Kontextmenu auf.</translation>
     </message>
+    <message>
+        <source>Please save the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
@@ -10820,23 +10931,23 @@ Daten könnten fehlerhaft sein!</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Lesefehler</translation>
+        <translation type="vanished">Lesefehler</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Kann Datei %1 nicht lesen:
+        <translation type="vanished">Kann Datei %1 nicht lesen:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Konnte Konfiguartion nicht laden</translation>
+        <translation type="vanished">Konnte Konfiguartion nicht laden</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Kann nicht Weltdatei öffnen %1:
+        <translation type="vanished">Kann nicht Weltdatei öffnen %1:
 Weil Objektkonfiguation nicht geladen ist.
 Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und deine Objektkonfiguationen exsistieren.
 </translation>
@@ -10880,6 +10991,14 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Wähle einen Punkt auf der Weltkarte aus!.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11045,6 +11164,10 @@ Oben:	%1
 Links:	%2
 Rechts:	%3
 Unten:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11375,7 +11498,7 @@ Musicboxen:		%5</translation>
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Weltkarte</translation>
+        <translation type="vanished">Weltkarte</translation>
     </message>
     <message>
         <source>Untitled %1</source>
@@ -11625,7 +11748,7 @@ Möchtest du die Änderungen speichern?</translation>
     <name>WorldItemBox</name>
     <message>
         <source>World Map Toolbox</source>
-        <translation>Weltkarte Toolbox</translation>
+        <translation type="vanished">Weltkarte Toolbox</translation>
     </message>
     <message>
         <source>Tiles</source>
@@ -11662,6 +11785,29 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Bitte speichere Datei, bevor du benutzerdefinierte Musikdateien wählen willst.</translation>
+    </message>
+    <message>
+        <source>World Map Items browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WorldMusicBoxItemBox</name>
+    <message>
+        <source>Music boxes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Music Box</source>
+        <translation type="unfinished">Musikbox</translation>
+    </message>
+    <message>
+        <source>Please, save file</source>
+        <translation type="unfinished">Bitte speichere Datei</translation>
+    </message>
+    <message>
+        <source>Please, save file first, if you want to select custom music file.</source>
+        <translation type="unfinished">Bitte speichere Datei, bevor du benutzerdefinierte Musikdateien wählen willst.</translation>
     </message>
 </context>
 <context>
@@ -11729,6 +11875,14 @@ Möchtest du die Änderungen speichern?</translation>
     <message>
         <source>Counting stars...</source>
         <translation>Zähle Sterne...</translation>
+    </message>
+    <message>
+        <source>The name of the level that will be loaded when the game first loads.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Main hub level:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11834,10 +11988,6 @@ therefore you can use same link to get updated version</source>
         <translation>Durchsuchen</translation>
     </message>
     <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Output dir, where will be saved a PNG images
 (if you not set, target images will be stored into the same directory)</source>
         <translation type="vanished">Ausgangsordner, wo die PNG-Datei gespeichert wird
@@ -11912,6 +12062,10 @@ Please, check the application directory and make sure it is installed properly.<
         <translation>Kann nicht ausführen:
 %1
 Bitte überprüfe den Anwendungspfad.</translation>
+    </message>
+    <message>
+        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

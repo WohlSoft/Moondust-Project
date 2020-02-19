@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,11 @@
 #include <QTextStream>
 #include <QSettings>
 #include <QApplication>
+#include <QtDebug>
+#include <QProcess>
+#include <QtConcurrent>
+#include <QProgressDialog>
+#include <QFutureWatcher>
 
 #include <PGE_File_Formats/file_formats.h>
 
@@ -55,11 +60,132 @@ void Installer::moveFromAppToUser()
         QFile(ApplicationPath + "/" + f).remove();
 }
 
-bool Installer::associateFiles()
+#if defined(__linux__)
+static bool xCopyFile(const QString &src, const QString &target)
+{
+    QFile tmp;
+    tmp.setFileName(target);
+    if(tmp.exists())
+        tmp.remove();
+    bool ret = QFile::copy(src, target);
+    if(!ret)
+        qWarning() << "Failed to copy file" << src << "into" << target;
+    else
+        qDebug() << "File " << src << "was successfully copiled into" << target;
+    return ret;
+}
+
+static bool xRunCommand(QString command, const QStringList &args)
+{
+    QProcess xdg;
+    xdg.setProgram(command);
+    xdg.setArguments(args);
+
+    xdg.start();
+    xdg.waitForFinished();
+
+    QString printed = xdg.readAll();
+
+    if(!printed.isEmpty())
+        qDebug() << printed;
+
+    bool ret = (xdg.exitCode() == 0);
+    if(!ret)
+        qWarning() << "Command" << command << "with arguments" << args << "finished with failure";
+    else
+        qDebug() << "Command" << command << "with arguments" << args << "successfully finished";
+
+    return ret;
+}
+
+static bool xInstallIconResource(QString context, int iconSize, QString iconName, QString mimeName)
+{
+    QStringList args;
+    args << "install";
+    args << "--context";
+    args << context;
+    if(context == "apps")
+        args << "--novendor";
+    args << "--size";
+    args << QString::number(iconSize);
+    args << QDir::home().absolutePath() + "/.local/share/icons/" + iconName.arg(iconSize);
+    args << mimeName;
+
+    return xRunCommand("xdg-icon-resource", args);
+}
+
+static bool xIconSize(int iconSize)
+{
+    bool success = true;
+    QString home = QDir::home().absolutePath();
+
+    if(success) success = xCopyFile(QString(":/_files/_files/file_lvl/file_lvl_%1.png")
+                                            .arg(iconSize),
+                                            QString("%1/.local/share/icons/smbx64-level-%2.png")
+                                            .arg(home).arg(iconSize));
+
+    if(success) success = xCopyFile(QString(":/_files/_files/file_lvlx/file_lvlx_%1.png")
+                                            .arg(iconSize),
+                                            QString("%1/.local/share/icons/pgex-level-%2.png")
+                                            .arg(home).arg(iconSize));
+
+    if(success) success = xCopyFile(QString(":/_files/_files/file_wld/file_wld_%1.png")
+                                            .arg(iconSize),
+                                            QString("%1/.local/share/icons/smbx64-world-%2.png")
+                                            .arg(home).arg(iconSize));
+
+    if(success) success = xCopyFile(QString(":/_files/_files/file_wldx/file_wldx_%1.png")
+                                            .arg(iconSize),
+                                            QString("%1/.local/share/icons/pgex-world-%2.png")
+                                            .arg(home).arg(iconSize));
+
+    if(success) success = xCopyFile(QString(":images/cat_builder/cat_builder_%1.png")
+                                            .arg(iconSize),
+                                            QString("%1/.local/share/icons/PgeEditor-%2.png")
+                                            .arg(home).arg(iconSize));
+
+    if(success) success = xInstallIconResource("mimetypes", iconSize, "smbx64-level-%1.png", "x-application-smbx64-level");
+    if(success) success = xInstallIconResource("mimetypes", iconSize, "smbx64-world-%1.png", "x-application-smbx64-world");
+    if(success) success = xInstallIconResource("mimetypes", iconSize, "pgex-level-%1.png", "x-application-pgex-level");
+    if(success) success = xInstallIconResource("mimetypes", iconSize, "pgex-world-%1.png", "x-application-pgex-world");
+    if(success) success = xInstallIconResource("apps", iconSize, "PgeEditor-%1.png", "PgeEditor");
+
+    return success;
+}
+#endif
+
+bool Installer::associateFiles(QWidget *parent)
+{
+    if(!parent)
+        return associateFiles_thread();
+    else
+    {
+        QFutureWatcher<bool> watcher;
+        QProgressDialog waiter(parent);
+        waiter.setWindowTitle(tr("Please wait..."));
+        waiter.setLabelText(tr("Please wait..."));
+        waiter.setModal(true);
+        waiter.setValue(0);
+        waiter.setMaximum(0);
+        waiter.setCancelButton(nullptr);
+        waiter.show();
+
+        QObject::connect(&watcher, &QFutureWatcher<bool>::finished, &waiter, &QProgressDialog::cancel);
+
+        QFuture<bool> reply = QtConcurrent::run(&Installer::associateFiles_thread);
+        watcher.setFuture(reply);
+
+        waiter.exec();
+        reply.waitForFinished();
+        return reply.result();
+    }
+}
+
+bool Installer::associateFiles_thread()
 {
     bool success = true;
 
-#ifdef _WIN32
+#if defined(_WIN32)
     //QSettings registry_hkcr("HKEY_CLASSES_ROOT", QSettings::NativeFormat);
     QSettings registry_hkcu("HKEY_CURRENT_USER", QSettings::NativeFormat);
 
@@ -150,7 +276,7 @@ bool Installer::associateFiles()
     // User variable(s)
     registry_hkcu.setValue("Environment/QT_PLUGIN_PATH", "\"" + QString(ApplicationPath).replace("/", "\\") + "\"");
 
-#elif defined __APPLE__
+#elif defined(__APPLE__)
     // only useful when other apps have taken precedence over our file extensions and you want to reset it
     //Need write correct strings for allow associations for Mac OS:
 
@@ -182,42 +308,22 @@ bool Installer::associateFiles()
     #elif defined Q_OS_ANDROID
     //Is not supported yet :P
     success = false;
-#else
+
+#elif defined(__linux__)
+    QString home = QDir::home().absolutePath();
 
     // Here need correctly associate too
-    if(success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/mime/packages");
-    if(success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/applications");
-    if(success) success = QDir().mkpath(QDir::home().absolutePath() + "/.local/share/icons");
+    if(success) success = QDir().mkpath(home + "/.local/share/mime/packages");
+    if(success) success = QDir().mkpath(home + "/.local/share/applications");
+    if(success) success = QDir().mkpath(home + "/.local/share/icons");
 
-    QFile tmp;
-    Q_UNUSED(tmp);
+    xCopyFile(":/_files/_files/pge-project-mimeinfo.xml",
+              home + "/.local/share/mime/packages/pge-project-mimeinfo.xml");
 
-    #define XcopyFile(src, target) \
-    { \
-        tmp.setFileName(target); \
-        if(tmp.exists())\
-            tmp.remove();\
-        QFile::copy(src, target); \
-    }
-
-    XcopyFile(":/_files/_files/pge-project-mimeinfo.xml", QDir::home().absolutePath() + "/.local/share/mime/packages/pge-project-mimeinfo.xml");
-
-    #define IconSize(Size) \
-    XcopyFile(":/_files/_files/file_lvl/file_lvl_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/smbx64-level-" Size ".png");\
-    XcopyFile(":/_files/_files/file_lvlx/file_lvlx_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/pgex-level-" Size ".png");\
-    XcopyFile(":/_files/_files/file_wld/file_wld_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/smbx64-world-" Size ".png");\
-    XcopyFile(":/_files/_files/file_wldx/file_wldx_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/pgex-world-" Size ".png");\
-    XcopyFile(":/images/cat_builder/cat_builder_" Size ".png", QDir::home().absolutePath()+"/.local/share/icons/PgeEditor-" Size ".png");\
-    if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/smbx64-level-" Size ".png x-application-smbx64-level").toLocal8Bit().constData()) == 0;\
-    if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/smbx64-world-" Size ".png x-application-smbx64-world").toLocal8Bit().constData()) == 0;\
-    if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/pgex-level-" Size ".png x-application-pgex-level").toLocal8Bit().constData()) == 0;\
-    if(success) success = system( QString("xdg-icon-resource install --context mimetypes --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/pgex-world-" Size ".png x-application-pgex-world").toLocal8Bit().constData()) == 0;\
-    if(success) success = system( QString("xdg-icon-resource install --context apps --novendor --size " Size " "+QDir::home().absolutePath()+"/.local/share/icons/PgeEditor-" Size ".png PgeEditor").toLocal8Bit().constData()) == 0;
-
-    IconSize("16");
-    IconSize("32");
-    IconSize("48");
-    IconSize("256");
+    if(success) success = xIconSize(16);
+    if(success) success = xIconSize(32);
+    if(success) success = xIconSize(48);
+    if(success) success = xIconSize(256);
 
     QFile shortcut(":/_files/_files/pge_editor.desktop");
     if(success) success = shortcut.open(QFile::ReadOnly | QFile::Text);
@@ -225,18 +331,22 @@ bool Installer::associateFiles()
     {
         QTextStream shtct(&shortcut);
         QString shortcut_text = shtct.readAll();
-        QFile saveAs(QDir::home().absolutePath() + "/.local/share/applications/pge_editor.desktop");
+        QFile saveAs(home + "/.local/share/applications/pge_editor.desktop");
 
         if(success) success = saveAs.open(QFile::WriteOnly | QFile::Text);
         if(success) QTextStream(&saveAs) << shortcut_text.arg(ApplicationPath_x);
     }
 
-    if(success) success = system("xdg-mime default pge_editor.desktop application/x-smbx64-level") == 0;
-    if(success) success = system("xdg-mime default pge_editor.desktop application/x-smbx64-world") == 0;
-    if(success) success = system("xdg-mime default pge_editor.desktop application/x-pgex-level") == 0;
-    if(success) success = system("xdg-mime default pge_editor.desktop application/x-pgex-world") == 0;
-    if(success) success = system(QString("update-desktop-database " + QDir::home().absolutePath() + "/.local/share/applications").toLocal8Bit().constData()) == 0;
-    if(success) success = system(QString("update-mime-database " + QDir::home().absolutePath() + "/.local/share/mime").toLocal8Bit().constData()) == 0;
+    if(success) success = xRunCommand("xdg-mime", {"default", "pge_editor.desktop", "application/x-smbx64-level"});
+    if(success) success = xRunCommand("xdg-mime", {"default", "pge_editor.desktop", "application/x-smbx64-world"});
+    if(success) success = xRunCommand("xdg-mime", {"default", "pge_editor.desktop", "application/x-pgex-level"});
+    if(success) success = xRunCommand("xdg-mime", {"default", "pge_editor.desktop", "application/x-pgex-world"});
+    if(success) success = xRunCommand("update-desktop-database", {home + "/.local/share/applications"});
+    if(success) success = xRunCommand("update-mime-database", {home + "/.local/share/mime"});
+#else
+    // Unsupported operating system
+    success = false;
+
 #endif
 
     return success;

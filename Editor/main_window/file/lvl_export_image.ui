@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>312</width>
-    <height>325</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="font">
@@ -176,7 +176,7 @@
    <item row="8" column="0" colspan="4">
     <widget class="QCheckBox" name="hideInvisibleBlocks">
      <property name="text">
-      <string>Hide invisible blocks</string>
+      <string>Hide invisible blocks and meta-objects</string>
      </property>
     </widget>
    </item>

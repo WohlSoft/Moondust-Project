@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "pge_audio.h"
@@ -26,10 +27,10 @@ static struct AudioState
     bool        isLoaded;
     int         sRate;
 
-    SDL_mutex*  sampleCountMutex;
+    SDL_mutex  *sampleCountMutex;
     Uint64      sCount;
     Uint64      musSCount;
-} p_audioState = {false, 44100, NULL, 0, 0};
+} p_audioState = {false, 44100, nullptr, 0, 0};
 
 static void postMixCallback(void *udata,
                             Uint8 *stream,
@@ -43,13 +44,11 @@ static void postMixCallback(void *udata,
     if(SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
     {
         // This post mix callback has a simple purpose: count audio samples.
-        p_audioState.sCount += len/4;
+        p_audioState.sCount += len / 4;
 
         // (Approximate) sample count for only when music is playing
         if(PGE_MusPlayer::isPlaying() && !PGE_MusPlayer::isPaused())
-        {
-            p_audioState.musSCount += len/4;
-        }
+            p_audioState.musSCount += len / 4;
         SDL_UnlockMutex(p_audioState.sampleCountMutex);
     }
 }
@@ -61,8 +60,6 @@ int PGE_Audio::init(Uint32 sampleRate,
     int ret = 0;
     p_audioState.sRate = int(sampleRate);
 
-    Mix_Timidity_addToPathList(std::string(ApplicationPathSTD + "timidity/").c_str());
-
     if(p_audioState.isLoaded)
         Mix_CloseAudio();
 
@@ -73,18 +70,19 @@ int PGE_Audio::init(Uint32 sampleRate,
 
     Mix_AllocateChannels(int(allocateChannels));
 
+    // TODO: Implement an ability to choose a timidity config
+    Mix_SetTimidityCfg(std::string(ApplicationPathSTD + "timidity/").c_str());
+
     // Reset the audio sample count and set the post mix callback
-    if(p_audioState.sampleCountMutex == NULL)
-    {
+    if(p_audioState.sampleCountMutex == nullptr)
         p_audioState.sampleCountMutex = SDL_CreateMutex();
-    }
 
     // Reset music sample count
-    if (SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
+    if(SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
     {
         p_audioState.sCount = 0;
         p_audioState.musSCount = 0;
-        Mix_SetPostMix(postMixCallback, NULL);
+        Mix_SetPostMix(postMixCallback, nullptr);
         SDL_UnlockMutex(p_audioState.sampleCountMutex);
     }
 
@@ -99,7 +97,7 @@ int PGE_Audio::quit()
         return -1;
 
     PGE_MusPlayer::freeStream();
-    Mix_SetPostMix(NULL, NULL);
+    Mix_SetPostMix(nullptr, nullptr);
     PGE_SfxPlayer::clearSoundBuffer();
     Mix_CloseAudio();
     p_audioState.isLoaded = false;
@@ -113,7 +111,7 @@ const bool &PGE_Audio::isLoaded()
 
 void PGE_Audio::resetMusicSampleCounter()
 {
-    if (SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
+    if(SDL_LockMutex(p_audioState.sampleCountMutex) == 0)
     {
         p_audioState.musSCount = 0;
         SDL_UnlockMutex(p_audioState.sampleCountMutex);

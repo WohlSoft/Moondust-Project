@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@
 #endif
 #include <QFile>
 #include <QTextStream>
+#include <SDL2/SDL_version.h>
+#include <SDL2/SDL_mixer_ext.h>
 
 #include "../../version.h"
 
@@ -33,18 +35,19 @@ aboutDialog::aboutDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
-    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA &&
+       QSysInfo::WindowsVersion <= QSysInfo::WV_WINDOWS7)
     {
         if(QtWin::isCompositionEnabled())
         {
             this->setAttribute(Qt::WA_TranslucentBackground, true);
-            QtWin::extendFrameIntoClientArea(this, -1,-1,-1, -1);
+            QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
             QtWin::enableBlurBehindWindow(this);
         }
         else
@@ -53,22 +56,31 @@ aboutDialog::aboutDialog(QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-    #endif
+#endif
+
+    SDL_version sdlVer;
+    SDL_GetVersion(&sdlVer);
+    const SDL_version *mixerXVer = Mix_Linked_Version();
 
     ui->About1->setText(ui->About1->text()
                         .arg(V_FILE_VERSION)
                         .arg(V_FILE_RELEASE)
                         .arg(FILE_CPU)
-                        .arg(QString("Revision: %1-%2, Build date: <u>%3</u>")
+                        .arg(QString("<b>Revision:</b> %1-%2, <b>Build date:</b> <u>%3</u><br/>"
+                                     "<b>Qt:</b> %4, <b>SDL2:</b> %5.%6.%7, <b>SDL Mixer X:</b> %8.%9.%10")
                              .arg(V_BUILD_VER)
                              .arg(V_BUILD_BRANCH)
-                             .arg(V_DATE_OF_BUILD))
-                        );
+                             .arg(V_DATE_OF_BUILD)
+                             .arg(qVersion())
+                             .arg(sdlVer.major).arg(sdlVer.minor).arg(sdlVer.patch)
+                             .arg(mixerXVer->major).arg(mixerXVer->minor).arg(mixerXVer->patch)
+                            )
+                       );
 
     QFile mFile(":/credits.html");
-    if(!mFile.open(QFile::ReadOnly | QFile::Text)){
+
+    if(!mFile.open(QFile::ReadOnly | QFile::Text))
         return;
-    }
 
     QTextStream in(&mFile);
     in.setCodec("UTF-8");

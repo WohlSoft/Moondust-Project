@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -206,7 +206,7 @@ void LvlScene::collectDataFromItems(LevelData &dataToStore, QList<QGraphicsItem 
     }
 }
 
-void LvlScene::placeAll(const LevelData &data, bool isHistoryManager)
+void LvlScene::placeAll(const LevelData &data)
 {
     bool hasToUpdateDoorData = false;
 
@@ -230,7 +230,7 @@ void LvlScene::placeAll(const LevelData &data, bool isHistoryManager)
     {
         //place them back
         m_data->npc.push_back(npc);
-        placeNPC(npc, false, isHistoryManager);
+        placeNPC(npc, false);
     }
 
     for(LevelPhysEnv water : data.physez)

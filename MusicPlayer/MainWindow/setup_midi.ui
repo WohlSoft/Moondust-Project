@@ -6,15 +6,204 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
-    <height>574</height>
+    <width>438</width>
+    <height>729</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MIDI Setup</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
+   <item row="1" column="0">
+    <widget class="QGroupBox" name="timidity_extra">
+     <property name="title">
+      <string>Timidity Setup</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="QLabel" name="timidityCfgPathLabel">
+        <property name="text">
+         <string>Config file path:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="timidityCfgPath"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="timidityCfgPathBrowse">
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QGroupBox" name="opnmidi_extra">
+     <property name="title">
+      <string>OPNMIDI Extra Setup</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,1000">
+      <item row="0" column="0">
+       <widget class="QLabel" name="adlEmulatorLabel_2">
+        <property name="text">
+         <string>Chip emulator:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Volume ranges model:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="opnVolumeModel">
+        <item>
+         <property name="text">
+          <string>[Auto]</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Generic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Native OPN2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>DMX</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Apogee</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>9X</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QFrame" name="frame">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="opn_use_custom">
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this to use custom bank.&lt;/p&gt;&lt;p&gt;Uncheck this if you want to use default bank and keep custom bank field be filled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QCheckBox {
+	border-color: rgb(0, 170, 0);
+    border-width: 1px;
+	color: rgb(0, 255, 255);
+ }</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>Custom bank file:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="opn_bank"/>
+         </item>
+         <item>
+          <widget class="QPushButton" name="opn_bank_browse">
+           <property name="text">
+            <string>Browse</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="opnEmulator">
+        <item>
+         <property name="text">
+          <string>Mame YM2612 (OPN2)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Nuked OPN2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>GENS 2.10 OPN2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Neko Project II OPNA</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Mame YM2608 (OPNA)</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLineEdit" name="autoArguments">
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
     <widget class="QGroupBox" name="adlmidi_xtra">
      <property name="title">
       <string>ADLMIDI Extra Setup</string>
@@ -38,6 +227,42 @@
         <property name="maxVisibleItems">
          <number>50</number>
         </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="adlEmulatorLabel">
+        <property name="text">
+         <string>Chip emulator:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="adlEmulator">
+        <item>
+         <property name="text">
+          <string>Nuked OPL3 1.8</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Nuked OPL3 1.7</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>DosBox OPL3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Opal OPL3 (by RAD)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>JavaOPL3 (OPL3.java)</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="3" column="0">
@@ -166,16 +391,6 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
        </widget>
       </item>
       <item row="7" column="0" colspan="2">
-       <widget class="QCheckBox" name="adl_adlibMode">
-        <property name="text">
-         <string>Ad-Lib drums mode</string>
-        </property>
-        <property name="tristate">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="0" colspan="2">
        <widget class="QCheckBox" name="adl_scalableModulation">
         <property name="text">
          <string>Scalable modulation</string>
@@ -185,47 +400,14 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
         </property>
        </widget>
       </item>
-      <item row="9" column="0" colspan="2">
+      <item row="8" column="0" colspan="2">
        <widget class="QPushButton" name="resetDefaultADLMIDI">
         <property name="text">
          <string>Reset to defaults</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="adlEmulatorLabel">
-        <property name="text">
-         <string>Chip emulator:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QComboBox" name="adlEmulator">
-        <item>
-         <property name="text">
-          <string>Nuked OPL3 1.8</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Nuked OPL3 1.7</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>DosBox OPL3</string>
-         </property>
-        </item>
-       </widget>
-      </item>
      </layout>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLineEdit" name="autoArguments">
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
     </widget>
    </item>
    <item row="0" column="0">
@@ -283,147 +465,27 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QGroupBox" name="opnmidi_extra">
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>OPNMIDI Extra Setup</string>
+      <string>FluidSynth Setup</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,1000">
+     <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="0">
-       <widget class="QLabel" name="adlEmulatorLabel_2">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>Chip emulator:</string>
+         <string>SoundFonts paths:</string>
         </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Volume ranges model:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="opnVolumeModel">
-        <item>
-         <property name="text">
-          <string>[Auto]</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Generic</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Native OPN2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>DMX</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Apogee</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>9X</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="QFrame" name="frame">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="opn_use_custom">
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Check this to use custom bank.&lt;/p&gt;&lt;p&gt;Uncheck this if you want to use default bank and keep custom bank field be filled.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox {
-	border-color: rgb(0, 170, 0);
-    border-width: 1px;
-	color: rgb(0, 255, 255);
- }</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>Custom bank file:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="opn_bank"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="opn_bank_browse">
-           <property name="text">
-            <string>Browse</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="opnEmulator">
-        <item>
-         <property name="text">
-          <string>Mame YM2612</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Nuked OPN2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>GENS 2.10</string>
-         </property>
-        </item>
+       <widget class="QLineEdit" name="fluidSynthSF2Paths"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="fluidSynthSF2PathsBrowse">
+        <property name="text">
+         <string>Browse...</string>
+        </property>
        </widget>
       </item>
      </layout>

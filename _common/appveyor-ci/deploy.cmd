@@ -1,4 +1,4 @@
-@echo on
+@echo off
 
 if [%APPVEYOR_PULL_REQUEST_NUMBER%]==[] (
     echo "Prepating artifacts..."

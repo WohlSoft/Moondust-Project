@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.1.0)
+cmake_minimum_required (VERSION 3.2)
 project(MoondustEditor C CXX)
 
 if(POLICY CMP0071) # Automoc
@@ -21,23 +21,13 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/_includes
     ${DEPENDENCIES_INSTALL_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../_common/ # PGE-FL
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
     message("== Using default build configuration which is a Release!")
-endif()
-
-set(CMAKE_CXX_STANDARD 14)
-if(MSVC)
-    if(MSVC_VERSION GREATER_EQUAL "1900")
-        include(CheckCXXCompilerFlag)
-        CHECK_CXX_COMPILER_FLAG("/std:c++latest" _cpp_latest_flag_supported)
-        if (_cpp_latest_flag_supported)
-            add_compile_options("/std:c++latest")
-        endif()
-    endif()
 endif()
 
 # Version
@@ -50,8 +40,6 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 # Find extra libraries to link when using static Qt (use ${QT_EXTRA_LIBS}!)
 include(../_common/static_qt.cmake)
-# Find the SDL Mixer X library and it's dependencies
-include(../_common/find_sdl_mixer_x.cmake)
 
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
@@ -59,14 +47,14 @@ include(../_common/DirManager/dirman.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
 include(../_common/IniProcessor/IniProcessor.cmake)
-add_definitions(-DPGE_FILES_QT)
-include(../_common/PGE_File_Formats/pge_file_library.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
+
+pge_cxx_standard(14)
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
@@ -116,8 +104,7 @@ qt5_wrap_ui(UIS_HDRS
     data_configs/selection_dialog/config_manager.ui
     dev_console/devconsole.ui
     editing/_dialogs/itemselectdialog.ui
-    editing/_dialogs/levelfilelist.ui
-    editing/_dialogs/musicfilelist.ui
+    editing/_dialogs/file_list_browser.ui
     editing/_dialogs/savingnotificationdialog.ui
     editing/_dialogs/user_data_edit.ui
     editing/_dialogs/wld_setpoint.ui
@@ -142,6 +129,7 @@ qt5_wrap_ui(UIS_HDRS
     main_window/dock/variables_box.ui
     main_window/dock/wld_item_props.ui
     main_window/dock/wld_item_toolbox.ui
+    main_window/dock/wld_musicbox_itemset.ui
     main_window/dock/wld_search_box.ui
     main_window/dock/wld_settings_box.ui
     main_window/file/lvl_export_image.ui
@@ -185,7 +173,9 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/bool_reseter.cpp
     common_features/crashhandler.cpp
     common_features/dir_copy.cpp
+    common_features/direction_switch_widget.cpp
     common_features/edit_mode_base.cpp
+    common_features/file_keeper.cpp
     common_features/flowlayout.cpp
     common_features/graphics_funcs.cpp
     common_features/graphicsworkspace.cpp
@@ -193,6 +183,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/installer.cpp
     common_features/item_rectangles.cpp
     common_features/items.cpp
+    common_features/json_settings_widget.cpp
     common_features/logger_sets.cpp
     common_features/main_window_ptr.cpp
     common_features/npc_animator.cpp
@@ -250,6 +241,7 @@ list(APPEND PGE_EDITOR_SRCS
     editing/_components/history/ihistoryelement.cpp
     editing/_components/history/itemsearcher.cpp
     editing/_dialogs/itemselectdialog.cpp
+    editing/_dialogs/file_list_browser.cpp
     editing/_dialogs/levelfilelist.cpp
     editing/_dialogs/musicfilelist.cpp
     editing/_dialogs/savingnotificationdialog.cpp
@@ -366,6 +358,7 @@ list(APPEND PGE_EDITOR_SRCS
     main_window/dock/variables_box.cpp
     main_window/dock/wld_item_props.cpp
     main_window/dock/wld_item_toolbox.cpp
+    main_window/dock/wld_musicbox_itemset.cpp
     main_window/dock/wld_search_box.cpp
     main_window/dock/wld_settings_box.cpp
     main_window/edit/edit_clipboard.cpp
@@ -441,14 +434,14 @@ list(APPEND PGE_EDITOR_SRCS
     ${QT_PLUGINS_CPP}
 )
 
-if(WIN32)
+#if(WIN32)
     # TODO: Create external executable API
     # which will allow usage of LunaTester on the Wine with
     # Linux/Mac native builds or from 64-bit editor builds
     list(APPEND PGE_EDITOR_SRCS
         main_window/testing/luna_tester.cpp
     )
-endif()
+#endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
@@ -471,31 +464,50 @@ add_executable(pge_editor
     ${DIRMANAGER_SRCS}
     ${FILEMAPPER_SRCS}
     ${INIPROCESSOR_SRCS}
-    ${PGE_FILE_LIBRARY_SRCS}
     ${STACK_WALKER_SRCS}
     ${UTF8MAIN_SRCS}
     ${UTILS_SRCS}
 )
 
+add_library(PGE_QtLibs INTERFACE)
+
+target_link_libraries(PGE_QtLibs INTERFACE
+    ${QT_EXTRA_LIBS_PRE}
+    PGE_FileFormatsQt
+    ${Qt5Qml_LIBRARIES}
+    ${Qt5Concurrent_LIBRARIES}
+    ${Qt5Widgets_LIBRARIES}
+    ${Qt5Network_LIBRARIES}
+    ${Qt5Gui_LIBRARIES}
+    ${Qt5Core_LIBRARIES}
+    ${QT_EXTRA_LIBS}
+)
+if(WIN32)
+    target_link_libraries(PGE_QtLibs INTERFACE
+        ${Qt5WinExtras_LIBRARIES}
+    )
+endif()
+
 # We need add -DQT_WIDGETS_LIB when using QtWidgets in Qt 5.
-target_compile_definitions(pge_editor
-    PRIVATE
+target_compile_definitions(PGE_QtLibs
+    INTERFACE
     ${Qt5Core_DEFINITIONS}
     ${Qt5Gui_DEFINITIONS}
     ${Qt5Widgets_DEFINITIONS}
     ${Qt5Network_DEFINITIONS}
     ${Qt5Concurrent_DEFINITIONS}
     ${Qt5Qml_DEFINITIONS}
+    -DPGE_FILES_QT
 )
 if(WIN32)
-    target_compile_definitions(pge_editor
-        PRIVATE
+    target_compile_definitions(PGE_QtLibs
+        INTERFACE
         ${Qt5WinExtras_DEFINITIONS}
     )
 endif()
 
-target_include_directories(pge_editor
-    PRIVATE
+target_include_directories(PGE_QtLibs
+    INTERFACE
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
@@ -504,11 +516,12 @@ target_include_directories(pge_editor
     ${Qt5Qml_INCLUDE_DIRS}
 )
 if(WIN32)
-    target_include_directories(pge_editor
-        PRIVATE
+    target_include_directories(PGE_QtLibs
+        INTERFACE
         ${Qt5WinExtras_INCLUDE_DIRS}
     )
 endif()
+
 
 target_compile_definitions(pge_editor
     PRIVATE
@@ -537,12 +550,14 @@ add_dependencies(pge_editor
     SDLMixerX_Local
     SDL2_Local
     FreeImage_Local
+    libpng_Local
+    FREETYPE_Local
+    PGE_FileFormatsQt
     editor_translations
 )
 
 set(PGE_EDITOR_LINK_LIBS)
 set(PGE_EDITOR_INSTALLS)
-
 
 list(APPEND PGE_EDITOR_INSTALLS
     pge_editor
@@ -550,39 +565,32 @@ list(APPEND PGE_EDITOR_INSTALLS
 
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
-    FreeImageLite$<$<CONFIG:Debug>:d>
+    PGE_QtLibs
+    PGE_FreeImage
 )
 
-set(MIXER_LIBS)
-
 if(PGE_STATIC_SDLMIXER)
-    find_mixer_x(TARGET MIXER_LIBS
-                STATIC
-                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-    )
+    list(APPEND PGE_EDITOR_LINK_LIBS PGE_SDLMixerX_static PGE_SDL2_static)
 else()
-    find_mixer_x(TARGET MIXER_LIBS
-                SHARED
-                SEARCH_PATHS "${CMAKE_BINARY_DIR}/lib"
-    )
+    list(APPEND PGE_EDITOR_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
 
-list(APPEND PGE_EDITOR_LINK_LIBS ${MIXER_LIBS})
+if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT AND NOT USE_SYSTEM_LIBC)
+    set_property(TARGET pge_editor APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
+endif()
 
-if(NOT APPLE AND NOT PGE_ENABLE_STATIC_QT)
-    set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+if(WIN32)
+    list(APPEND PGE_EDITOR_LINK_LIBS kernel32 psapi) # Needed for LunaTester killer
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-mwindows")
+        set_target_properties(pge_editor PROPERTIES WIN32_EXECUTABLE ON)
         if(NOT PGE_ENABLE_STATIC_QT)
             list(APPEND PGE_EDITOR_LINK_LIBS "-static")
         endif()
     endif()
-    list(APPEND PGE_EDITOR_LINK_LIBS pthread)
 endif()
-
 
 if(APPLE)
     set_target_properties(pge_editor PROPERTIES
@@ -603,50 +611,13 @@ if(APPLE)
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     list(APPEND PGE_EDITOR_LINK_LIBS iconv)
-
-    find_library(COREAUDIO_LIBRARY CoreAudio)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${COREAUDIO_LIBRARY})
-    find_library(COREVIDEO_LIBRARY CoreVideo)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${COREVIDEO_LIBRARY})
-    find_library(IOKIT_LIBRARY IOKit)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${IOKIT_LIBRARY})
-    find_library(CARBON_LIBRARY Carbon)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${CARBON_LIBRARY})
-    find_library(COCOA_LIBRARY Cocoa)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${COCOA_LIBRARY})
-    find_library(FORCEFEEDBAK_LIBRARY ForceFeedback)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${FORCEFEEDBAK_LIBRARY})
-    find_library(METAL_LIBRARY Metal)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${METAL_LIBRARY})
-    find_library(COREFOUNDATION_LIBRARY CoreFoundation)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${COREFOUNDATION_LIBRARY})
-    find_library(AUDIOTOOLBOX_LIBRARY AudioToolbox)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${AUDIOTOOLBOX_LIBRARY})
-    find_library(AUDIOUNIT_LIBRARY AudioUnit)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${AUDIOUNIT_LIBRARY})
-    find_library(OPENGL_LIBRARY OpenGL)
-    list(APPEND PGE_EDITOR_LINK_LIBS ${OPENGL_LIBRARY})
 endif()
 
-list(APPEND PGE_EDITOR_LINK_LIBS
-    ${QT_EXTRA_LIBS_PRE}
-    ${Qt5Qml_LIBRARIES}
-    ${Qt5Concurrent_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
-    ${Qt5Network_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Core_LIBRARIES}
-    ${QT_EXTRA_LIBS}
-)
-if(WIN32)
-    list(APPEND PGE_EDITOR_LINK_LIBS
-        ${Qt5WinExtras_LIBRARIES}
-    )
-endif()
-
-target_link_libraries(pge_editor
+target_link_libraries(pge_editor PUBLIC
     ${PGE_EDITOR_LINK_LIBS}
 )
+
+pge_set_nopie(pge_editor)
 
 install(TARGETS ${PGE_EDITOR_INSTALLS}
     RUNTIME DESTINATION "${PGE_INSTALL_DIRECTORY}/"

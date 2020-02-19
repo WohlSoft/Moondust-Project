@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "../lvl_npc.h"
@@ -54,7 +55,7 @@ void LVL_Npc::init()
     m_scene->m_layers.registerItem(data.layer, this);
     m_momentum_relative.saveOld();
     m_momentum.saveOld();
-    setStaticBody(is_static);
+    setBodyType(is_static, m_bodySticky);
 }
 
 void LVL_Npc::setScenePointer(LevelScene *_pointer)
@@ -102,7 +103,7 @@ void LVL_Npc::setStaticBody(bool isStatic)
     else if(!isStatic && (m_bodytype == Body_STATIC))
     {
         m_bodytype = Body_DYNAMIC;
-        m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, false, true);
+        m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, m_bodySticky, true);
     }
     is_static = isStatic;
 }
@@ -122,7 +123,8 @@ void LVL_Npc::setBodyType(bool isStatic, bool isSticky)
     else
         m_bodytype = Body_DYNAMIC;
 
-    if((bool)m_parent != isSticky)
+    m_bodySticky = isSticky;
+    if((m_parent != nullptr) != isSticky)
         m_scene->m_layers.setItemMovable(m_scene->m_layers.getLayer(data.layer), this, isSticky, true);
 
     is_static = isStatic;
@@ -188,9 +190,10 @@ void LVL_Npc::setDefaults()
     is_shared_animation = setup->setup.shared_ani;
     keep_position_on_despawn = setup->setup.keep_position;
     is_static            = setup->setup.scenery;
-    is_layer_unstickable = !setup->setup.scenery && !m_isGenerator;
+    m_bodySticky = setup->setup.sticked_on_layer;
+    is_layer_unstickable = !setup->setup.sticked_on_layer && !m_isGenerator;
     if(m_isInited)
-        setStaticBody(setup->setup.scenery);
+        setBodyType(setup->setup.scenery, m_bodySticky);
 }
 
 void LVL_Npc::transformTo_x(unsigned long id)

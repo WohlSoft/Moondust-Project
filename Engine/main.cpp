@@ -1,6 +1,6 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -25,6 +25,7 @@
 #include <audio/play_music.h>
 #include <common_features/logger.h>
 #include <common_features/tr.h>
+#include <common_features/pge_delay.h>
 
 #include <PGE_File_Formats/pge_x.h>
 
@@ -86,11 +87,7 @@ int main(int argc, char *argv[])
 {
     std::vector<std::string> args;
     for(int i = 0; i < argc; i++)
-        args.push_back(std::string(argv[i]));
-
-    #ifdef __EMSCRIPTEN__
-    args.push_back(PGE_RUN_SINGLE_LEVEL);
-    #endif
+        args.emplace_back(argv[i]);
 
     // Parse --version or --install low args
     if(!PGEEngineApp::parseLowArgs(args))
@@ -109,12 +106,12 @@ int main(int argc, char *argv[])
     // Parse high arguments
     app.parseHighArgs(args);
 
-    // Initalizing SDL
+    // Initializing SDL
     if(app.initSDL())
     {
         //% "Unable to init SDL!"
         PGE_Window::printSDLError(qtTrId("SDL_INIT_ERROR"));
-        pLogDebug("<Application closed with failture>");
+        pLogDebug("<Application closed with failure>");
         return 1;
     }
 
@@ -127,13 +124,13 @@ int main(int argc, char *argv[])
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "Audio subsystem Error",
                                  msg.c_str(),
-                                 NULL);
+                                 nullptr);
         g_flags.audioEnabled = false;
     }
 
     if(app.initWindow(INITIAL_WINDOW_TITLE, g_flags.rendererType))
     {
-        pLogDebug("<Application closed with failture>");
+        pLogDebug("<Application closed with failure>");
         return 1;
     }
 
@@ -143,9 +140,9 @@ int main(int argc, char *argv[])
     if(g_AppSettings.fullScreen)
         pLogDebug("Toggle fullscreen...");
 
-    #ifdef __APPLE__
+#ifdef __APPLE__
     macosReceiveOpenFile();
-    #endif
+#endif
 
     PGE_Window::setFullScreen(g_AppSettings.fullScreen);
     GlRenderer::resetViewport();
@@ -190,7 +187,7 @@ int main(int argc, char *argv[])
             GOScene.setLabel(qtTrId("CONFIG_SELECT_TEST"));
         }
 
-        //If application runned first time or target configuration is not exist
+        //If application have ran a first time or target configuration is not exist
         if(configPath_manager.empty() && g_configPackPath.empty())
         {
             //Ask for configuration
@@ -205,11 +202,11 @@ int main(int argc, char *argv[])
         pLogDebug("Opening of the configuration package...");
         ConfigManager::setConfigPath(g_configPackPath);
 
-        pLogDebug("Initalization of basic properties...");
+        pLogDebug("Initialization of basic properties...");
 
         if(!ConfigManager::loadBasics())
         {
-            pLogDebug("<Application closed with failture>");
+            pLogDebug("<Application closed with failure>");
             return 1;
         }
 
@@ -218,10 +215,14 @@ int main(int argc, char *argv[])
         if(!ConfigManager::config_name.empty())
             PGE_Window::setWindowTitle(ConfigManager::config_name);
 
-        if(ConfigManager::viewport_width != static_cast<unsigned int>(PGE_Window::Width) &&
+        pLogDebug("Current scene resolution: %d x %d", PGE_Window::Width, PGE_Window::Height);
+        pLogDebug("Config pack scene resolution: %d x %d", ConfigManager::viewport_width, ConfigManager::viewport_height);
+
+        if(ConfigManager::viewport_width != static_cast<unsigned int>(PGE_Window::Width) ||
            ConfigManager::viewport_height != static_cast<unsigned int>(PGE_Window::Height))
         {
-            PGE_Window::changeInternalResolution(ConfigManager::viewport_width, ConfigManager::viewport_height);
+            PGE_Window::changeViewportResolution(ConfigManager::viewport_width, ConfigManager::viewport_height);
+            pLogDebug("Using scene resolution: %d x %d", ConfigManager::viewport_width, ConfigManager::viewport_height);
         }
 
         pLogDebug("Configuration package successfully loaded!");
@@ -245,10 +246,10 @@ int main(int argc, char *argv[])
 
         if(Files::hasSuffix(g_fileToOpen, ".lvl") || Files::hasSuffix(g_fileToOpen, ".lvlx"))
         {
-            g_GameState.LevelFile = g_fileToOpen;
-            g_GameState.isEpisode = false;
-            g_GameState.isTestingModeL = true;
-            g_GameState.isTestingModeW = false;
+            g_GameState.m_nextLevelFile = g_fileToOpen;
+            g_GameState.m_isEpisode = false;
+            g_GameState.m_isTestingModeL = true;
+            g_GameState.m_isTestingModeW = false;
             g_flags.testLevel = true;
             g_flags.testWorld = false;
             goto PlayLevel;
@@ -258,12 +259,12 @@ int main(int argc, char *argv[])
             g_Episode.character = 1;
             g_Episode.savefile = "save1.savx";
             g_Episode.worldfile = g_fileToOpen;
-            g_GameState._episodePath = DirMan(Files::dirname(g_fileToOpen)).absolutePath() + "/";
-            g_GameState.saveFileName = g_Episode.savefile;
-            g_GameState.isEpisode = true;
-            g_GameState.WorldFile = g_fileToOpen;
-            g_GameState.isTestingModeL = false;
-            g_GameState.isTestingModeW = true;
+            g_GameState.m_episodePath = DirMan(Files::dirname(g_fileToOpen)).absolutePath() + "/";
+            g_GameState.m_saveFileName = g_Episode.savefile;
+            g_GameState.m_isEpisode = true;
+            g_GameState.m_nextWorldFile = g_fileToOpen;
+            g_GameState.m_isTestingModeL = false;
+            g_GameState.m_isTestingModeW = true;
             g_flags.testLevel = false;
             g_flags.testWorld = true;
             goto PlayWorldMap;
@@ -318,7 +319,7 @@ GameOverScreen:
 
         if(result == GameOverSceneResult::CONTINUE)
         {
-            if(g_GameState.isHubLevel)
+            if(g_GameState.m_isHubLevel)
                 goto PlayLevel;
             else
                 goto PlayWorldMap;
@@ -359,12 +360,12 @@ MainMenu:
         case TitleScene::ANSWER_PLAYLEVEL:
         {
             g_jumpOnLevelEndTo = RETURN_TO_MAIN_MENU;
-            g_GameState.isEpisode = false;
-            g_GameState.numOfPlayers = 1;
-            g_GameState.LevelFile = res_level.levelfile;
-            g_GameState._episodePath.clear();
-            g_GameState.saveFileName.clear();
-            g_GameState.isTestingModeL = true;
+            g_GameState.m_isEpisode = false;
+            g_GameState.m_numOfPlayers = 1;
+            g_GameState.m_nextLevelFile = res_level.levelfile;
+            g_GameState.m_episodePath.clear();
+            g_GameState.m_saveFileName.clear();
+            g_GameState.m_isTestingModeL = true;
             goto PlayLevel;
         }
 
@@ -372,7 +373,7 @@ MainMenu:
         case TitleScene::ANSWER_PLAYEPISODE_2P:
         {
             g_jumpOnLevelEndTo = RETURN_TO_WORLDMAP;
-            g_GameState.numOfPlayers = (answer == TitleScene::ANSWER_PLAYEPISODE_2P) ? 2 : 1;
+            g_GameState.m_numOfPlayers = (answer == TitleScene::ANSWER_PLAYEPISODE_2P) ? 2 : 1;
             PlayerState plr;
             plr._chsetup = FileFormats::CreateSavCharacterState();
             plr.characterID = 1;
@@ -385,10 +386,10 @@ MainMenu:
             plr._chsetup.id = 2;
             plr._chsetup.state = 1;
             g_GameState.setPlayerState(2, plr);
-            g_GameState.isEpisode = true;
+            g_GameState.m_isEpisode = true;
             g_Episode = res_episode;
-            g_GameState._episodePath = DirMan(Files::dirname(g_Episode.worldfile)).absolutePath() + "/";
-            g_GameState.saveFileName = g_Episode.savefile;
+            g_GameState.m_episodePath = DirMan(Files::dirname(g_Episode.worldfile)).absolutePath() + "/";
+            g_GameState.m_saveFileName = g_Episode.savefile;
             g_GameState.load();
             goto PlayWorldMap;
         }
@@ -446,7 +447,7 @@ PlayWorldMap:
             PGE_MsgBox::error( fmt::qformat(qtTrId("WLD_ERROR_LVLCLOSED"), wScene->errorString()) );
         }
 
-        g_GameState._recent_ExitCode_world = (int)wldExitCode;
+        g_GameState.m_lastWorldExitCode = (int)wldExitCode;
 
         if(wScene->doShutDown())
         {
@@ -460,7 +461,7 @@ PlayWorldMap:
             {
                 std::string msg;
                 //% "Start level\n%1"
-                msg += fmt::qformat(qtTrId("MSG_START_LEVEL"), g_GameState.LevelFile) + "\n\n";
+                msg += fmt::qformat(qtTrId("MSG_START_LEVEL"), g_GameState.m_nextLevelFile) + "\n\n";
                 //% "Type an exit code (signed integer)"
                 msg += qtTrId("MSG_WLDTEST_EXIT_CODE");
                 PGE_TextInputBox text(nullptr, msg, PGE_BoxBase::msg_info_light,
@@ -468,12 +469,12 @@ PlayWorldMap:
                                       ConfigManager::setup_message_box.box_padding,
                                       ConfigManager::setup_message_box.sprite);
                 text.exec();
-                g_GameState._recent_ExitCode_level  = LvlExit::EXIT_Neutral;
+                g_GameState.m_lastLevelExitCode  = LvlExit::EXIT_Neutral;
 
                 if(PGEFile::IsIntS(text.inputText()))
-                    g_GameState._recent_ExitCode_level = SDL_atoi(text.inputText().c_str());
+                    g_GameState.m_lastLevelExitCode = SDL_atoi(text.inputText().c_str());
 
-                if(g_GameState.isHubLevel)
+                if(g_GameState.m_isHubLevel)
                     goto ExitFromApplication;
 
                 goto PlayWorldMap;
@@ -516,24 +517,24 @@ PlayLevel:
 
         while(playAgain)
         {
-            entranceID = g_GameState.LevelTargetWarp;
+            entranceID = g_GameState.m_nextLevelEnterWarp;
 
-            if(g_GameState.LevelFile_hub == g_GameState.LevelFile)
+            if(g_GameState.m_currentHubLevelFile == g_GameState.m_nextLevelFile)
             {
-                g_GameState.isHubLevel = true;
-                entranceID = g_GameState.game_state.last_hub_warp;
+                g_GameState.m_isHubLevel = true;
+                entranceID = g_GameState.m_gameSave.last_hub_warp;
             }
 
             int levelExitCode = 0;
             lScene.reset(new LevelScene());
 
             if(g_AppSettings.interprocessing)
-                g_GameState.isTestingModeL = true;
+                g_GameState.m_isTestingModeL = true;
 
             lScene->setGameState(&g_GameState);
             bool sceneResult = true;
 
-            if(g_GameState.LevelFile.empty())
+            if(g_GameState.m_nextLevelFile.empty())
             {
                 if(g_AppSettings.interprocessing && IntProc::isEnabled())
                 {
@@ -541,9 +542,9 @@ PlayLevel:
 
                     if((!sceneResult) && (!lScene->isExiting()))
                     {
-                        //SDL_Delay(50);
+                        //PGE_Delay(50);
                         levelExitCode = LvlExit::EXIT_Error;
-                        PGE_MsgBox msgBox(NULL, fmt::format_ne("ERROR:\nFail to start level\n\n{0}",
+                        PGE_MsgBox msgBox(nullptr, fmt::format_ne("ERROR:\nFail to start level\n\n{0}",
                                                 lScene->getLastError()),
                                                 PGE_MsgBox::msg_error);
                         msgBox.exec();
@@ -559,12 +560,12 @@ PlayLevel:
             }
             else
             {
-                sceneResult = lScene->loadFile(g_GameState.LevelFile);
+                sceneResult = lScene->loadFile(g_GameState.m_nextLevelFile);
 
                 if(!sceneResult)
                 {
-                    SDL_Delay(50);
-                    PGE_MsgBox msgBox(NULL,
+                    PGE_Delay(50);
+                    PGE_MsgBox msgBox(nullptr,
                                       fmt::format_ne("ERROR:\nFail to start level\n\n"
                                                      "{0}", lScene->getLastError()),
                                       PGE_MsgBox::msg_error);
@@ -582,7 +583,7 @@ PlayLevel:
             {
                 lScene->m_fader.setFade(10, 0.0, 0.02);
                 levelExitCode = lScene->exec();
-                g_GameState._recent_ExitCode_level = levelExitCode;
+                g_GameState.m_lastLevelExitCode = levelExitCode;
             }
 
             if(!sceneResult)
@@ -594,26 +595,26 @@ PlayLevel:
             {
                 if(lScene->m_warpToWorld)
                 {
-                    g_GameState.game_state.worldPosX = lScene->toWorldXY().x();
-                    g_GameState.game_state.worldPosY = lScene->toWorldXY().y();
-                    g_GameState.LevelFile.clear();
+                    g_GameState.m_gameSave.worldPosX = lScene->toWorldXY().x();
+                    g_GameState.m_gameSave.worldPosY = lScene->toWorldXY().y();
+                    g_GameState.m_nextLevelFile.clear();
                     entranceID = 0;
-                    g_jumpOnLevelEndTo = g_GameState.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                    g_jumpOnLevelEndTo = g_GameState.m_isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 }
                 else
                 {
-                    g_GameState.LevelFile = lScene->toAnotherLevel();
-                    g_GameState.LevelTargetWarp = lScene->toAnotherEntrance();
-                    entranceID = g_GameState.LevelTargetWarp;
+                    g_GameState.m_nextLevelFile = lScene->toAnotherLevel();
+                    g_GameState.m_nextLevelEnterWarp = lScene->toAnotherEntrance();
+                    entranceID = g_GameState.m_nextLevelEnterWarp;
 
-                    if(g_GameState.isHubLevel)
+                    if(g_GameState.m_isHubLevel)
                     {
-                        g_GameState.isHubLevel = false;
-                        g_GameState.game_state.last_hub_warp = lScene->m_lastWarpID;
+                        g_GameState.m_isHubLevel = false;
+                        g_GameState.m_gameSave.last_hub_warp = lScene->m_lastWarpID;
                     }
                 }
 
-                if(g_GameState.LevelFile.empty())
+                if(g_GameState.m_nextLevelFile.empty())
                     playAgain = false;
 
                 if(g_AppSettings.debugMode)
@@ -623,11 +624,11 @@ PlayLevel:
                     if(lScene->m_warpToWorld)
                     {
                         target = fmt::format_ne("X={0}, Y={1}",
-                                 g_GameState.game_state.worldPosX,
-                                 g_GameState.game_state.worldPosY);
+                                 g_GameState.m_gameSave.worldPosX,
+                                 g_GameState.m_gameSave.worldPosY);
                     }
                     else
-                        target = g_GameState.LevelFile;
+                        target = g_GameState.m_nextLevelFile;
 
                     if(!target.empty())
                     {
@@ -655,9 +656,9 @@ PlayLevel:
 
             case LvlExit::EXIT_MenuExit:
             {
-                g_jumpOnLevelEndTo = g_GameState.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                g_jumpOnLevelEndTo = g_GameState.m_isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
 
-                if(g_GameState.isHubLevel)
+                if(g_GameState.m_isHubLevel)
                     g_jumpOnLevelEndTo = g_flags.testLevel ? RETURN_TO_EXIT : RETURN_TO_MAIN_MENU;
 
                 playAgain = false;
@@ -666,20 +667,20 @@ PlayLevel:
 
             case LvlExit::EXIT_PlayerDeath:
             {
-                playAgain = g_GameState.isEpisode ? g_GameState.replay_on_fail : true;
-                g_jumpOnLevelEndTo = g_GameState.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                playAgain = g_GameState.m_isEpisode ? g_GameState.m_autoRestartFailedLevel : true;
+                g_jumpOnLevelEndTo = g_GameState.m_isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
 
                 //check the number of player lives here and decided to return worldmap or gameover
-                if(g_GameState.isEpisode)
+                if(g_GameState.m_isEpisode)
                 {
-                    g_GameState.game_state.lives--;
+                    g_GameState.m_gameSave.lives--;
 
-                    if(g_GameState.game_state.lives < 0)
+                    if(g_GameState.m_gameSave.lives < 0)
                     {
                         playAgain = false;
-                        g_GameState.game_state.coins = 0;
-                        g_GameState.game_state.points = 0;
-                        g_GameState.game_state.lives = 3;
+                        g_GameState.m_gameSave.coins = 0;
+                        g_GameState.m_gameSave.points = 0;
+                        g_GameState.m_gameSave.lives = 3;
                         g_jumpOnLevelEndTo = RETURN_TO_GAMEOVER_SCREEN;
                     }
                 }
@@ -688,7 +689,7 @@ PlayLevel:
 
             case LvlExit::EXIT_Error:
             {
-                g_jumpOnLevelEndTo = (g_GameState.isEpisode) ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                g_jumpOnLevelEndTo = (g_GameState.m_isEpisode) ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 playAgain = false;
                 //% "Level was closed with error.\n%1"
                 PGE_MsgBox::error( fmt::qformat(qtTrId("LVL_ERROR_LVLCLOSED"), lScene->errorString()) );
@@ -696,7 +697,7 @@ PlayLevel:
             break;
 
             default:
-                g_jumpOnLevelEndTo = g_GameState.isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
+                g_jumpOnLevelEndTo = g_GameState.m_isEpisode ? RETURN_TO_WORLDMAP : RETURN_TO_MAIN_MENU;
                 playAgain = false;
             }
 

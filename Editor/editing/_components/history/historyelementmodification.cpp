@@ -88,13 +88,13 @@ void HistoryElementModification::processReplacement(const LevelData &toRemoveDat
         lvlSearcher.find(toRemoveData, m_scene->items()); //remove the new level Data
 
         //place the old lvl Data
-        lvlScene->placeAll(toPlaceData, true);
+        lvlScene->placeAll(toPlaceData);
     }
 }
 
 void HistoryElementModification::processReplacement(const WorldData &toRemoveData, const WorldData &toPlaceData)
 {
-    WldScene* wldScene = 0;
+    WldScene* wldScene = nullptr;
     if(!m_scene)
         return;
     if((wldScene = qobject_cast<WldScene*>(m_scene))){

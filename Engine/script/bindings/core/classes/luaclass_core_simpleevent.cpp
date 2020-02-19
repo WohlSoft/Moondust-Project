@@ -1,3 +1,22 @@
+/*
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
+ *
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
+ */
+
 #include "luaclass_core_simpleevent.h"
 
 Binding_Core_Class_SimpleEvent::Binding_Core_Class_SimpleEvent() : eventData(), eventCancellable(false), eventCancelled(false)
@@ -14,6 +33,11 @@ void Binding_Core_Class_SimpleEvent::setDataObject(luabind::adl::object dataObj)
 luabind::adl::object Binding_Core_Class_SimpleEvent::getDataObject()
 {
     return eventData;
+}
+
+std::string Binding_Core_Class_SimpleEvent::getEventName()
+{
+    return eventName;
 }
 
 bool Binding_Core_Class_SimpleEvent::isCancellable()
@@ -44,14 +68,19 @@ luabind::scope Binding_Core_Class_SimpleEvent::bindToLua()
     using namespace luabind;
     /***
     Simple utility class for a custom events
-    @type SimpleLuaEvent
+    @type Event
     */
-    return class_<Binding_Core_Class_SimpleEvent>("SimpleLuaEvent")
+    return class_<Binding_Core_Class_SimpleEvent>("Event")
             /***
             User data
             @tfield object data
             */
             .property("data", &Binding_Core_Class_SimpleEvent::getDataObject)
+            /***
+            Own name of event callback, <strong>Not a level/world event!</strong>
+            @tfield string Name of event
+            */
+            .property("eventName", &Binding_Core_Class_SimpleEvent::getEventName)
             /***
             Is this event cancellable
             @tfield bool cancellable true or false

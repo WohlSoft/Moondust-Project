@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,6 +62,25 @@ void tileset::paintEvent(QPaintEvent *ev)
     painter.begin(this);
     painter.fillRect(ev->rect(), Qt::white);
 
+    // ------- Draw grid -------
+    painter.setPen(QPen(QBrush(Qt::lightGray), 1, Qt::DashDotLine));
+    for(int w = 1; w < m_cols; w++)
+    {
+        painter.drawLine((w * 32) - 1,
+                         0,
+                         (w * 32) - 1,
+                         m_rows * 32);
+    }
+
+    for(int h = 1; h < m_rows; h++)
+    {
+        painter.drawLine(0,
+                         (h * 32) - 1,
+                         m_cols * 32,
+                         (h * 32) - 1);
+    }
+    // -------------------------
+
     if(highlightedRect.isValid())
     {
         painter.setBrush(QColor("#ffcccc"));
@@ -71,8 +90,13 @@ void tileset::paintEvent(QPaintEvent *ev)
 
     if(pieceRects.isEmpty())
     {
+        painter.setPen(QPen(QBrush(Qt::black), 1));
         if(highlightedRect.isEmpty())
-            painter.drawText(ev->rect(), Qt::AlignCenter, tr("Drag & Drop items into this box!\nRight-click to remove!"));
+        {
+            painter.drawText(QRect(0, 0, m_cols * 32, m_rows * 32),
+                             Qt::AlignCenter,
+                             tr("Drag & Drop items into this box!\nRight-click to remove!"));
+        }
     }
     else
     {
@@ -197,7 +221,7 @@ void tileset::mousePressEvent(QMouseEvent *event)
     drag->setHotSpot(event->pos() - square.topLeft());
     drag->setPixmap(pixmap);
 
-    if(drag->start(Qt::MoveAction) == 0)
+    if(drag->exec(Qt::MoveAction) == 0)
     {
         piecePixmaps.insert(found, pixmap);
         pieceRects.insert(found, square);

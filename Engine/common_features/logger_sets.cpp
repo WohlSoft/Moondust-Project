@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <IniProcessor/ini_processing.h>
@@ -36,28 +37,33 @@
 #define LOG_CHANNEL "Application"
 #endif
 
+#ifdef __ANDROID__
+#include <android/log.h>
+#endif
+
 static std::mutex g_lockLocker;
 #define OUT_BUFFER_SIZE 10240
 static char       g_outputBuffer[OUT_BUFFER_SIZE];
 
 class MutexLocker
 {
-        std::mutex *m_mutex;
-    public:
-        MutexLocker(std::mutex *mutex)
-        {
-            m_mutex = mutex;
-            m_mutex->lock();
-        }
-        ~MutexLocker()
-        {
-            m_mutex->unlock();
-        }
+    std::mutex *m_mutex;
+public:
+    MutexLocker(std::mutex *mutex)
+    {
+        m_mutex = mutex;
+        m_mutex->lock();
+    }
+    ~MutexLocker()
+    {
+        m_mutex->unlock();
+    }
 };
 
 std::string     LogWriter::m_logFilePath;
 PGE_LogLevel    LogWriter::m_logLevel;
-bool            LogWriter::m_enabled;
+bool            LogWriter::m_enabled = false;
+bool            LogWriter::m_enabledStdOut = false;
 
 bool  LogWriter::m_logIsOpened = false;
 SDL_RWops *LogWriter::m_logout = nullptr;
@@ -76,7 +82,7 @@ static std::string return_current_time_and_date()
 }
 #endif//__EMSCRIPTEN__
 
-void LogWriter::LoadLogSettings()
+void LogWriter::LoadLogSettings(bool disableStdOut)
 {
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
@@ -88,6 +94,7 @@ void LogWriter::LoadLogSettings()
 #else
     std::string logFileName = fmt::format_ne("PGE_Engine_log_{0}.txt", return_current_time_and_date());
 
+    m_enabledStdOut = !disableStdOut;
     m_logLevel = PGE_LogLevel::Debug;
     std::string mainIniFile = AppPathManager::settingsFileSTD();
     IniProcessing logSettings(mainIniFile);
@@ -125,21 +132,19 @@ void LogWriter::LoadLogSettings()
     {
         m_logout = SDL_RWFromFile(m_logFilePath.c_str(), "a");
         if(m_logout)
-        {
             m_logIsOpened = true;
-        }
         else
         {
-            std::fprintf(stderr, "Impossible to open %s for write, all logs are will be printed through QtDebug...\n", m_logFilePath.c_str());
+            std::fprintf(stderr, "Impossible to open %s for write, log printing is disabled!\n", m_logFilePath.c_str());
             std::fflush(stderr);
         }
     }
 #endif
 }
 
-void LoadLogSettings()
+void LoadLogSettings(bool disableStdOut)
 {
-    LogWriter::LoadLogSettings();
+    LogWriter::LoadLogSettings(disableStdOut);
 }
 
 void CloseLog()
@@ -147,7 +152,8 @@ void CloseLog()
 #ifndef __EMSCRIPTEN__
     MutexLocker mutex(&g_lockLocker);
     (void)(mutex);
-    SDL_RWclose(LogWriter::m_logout);
+    if(LogWriter::m_logout)
+        SDL_RWclose(LogWriter::m_logout);
     LogWriter::m_logout = nullptr;
     //LogWriter::m_out_stream.reset();
     LogWriter::m_logIsOpened = false;
@@ -162,137 +168,121 @@ void CloseLog()
 #define OS_NEWLINE_LEN 1
 #endif
 
-void pLogDebug(const char *format, ...)
+#if defined(__ANDROID__)
+static int pgeToAndroidLL(PGE_LogLevel level)
 {
-    va_list arg;
+    switch(level)
+    {
+    case PGE_LogLevel::NoLog:
+        return ANDROID_LOG_INFO;
+    case PGE_LogLevel::Fatal:
+        return ANDROID_LOG_FATAL;
+    case PGE_LogLevel::Info:
+        return ANDROID_LOG_INFO;
+    case PGE_LogLevel::Critical:
+        return ANDROID_LOG_ERROR;
+    case PGE_LogLevel::Warning:
+        return ANDROID_LOG_WARN;
+    case PGE_LogLevel::Debug:
+        return ANDROID_LOG_DEBUG;
+    }
+    // For just in a case
+    return ANDROID_LOG_INFO;
+}
+#endif
+
+static void pLogGeneric(PGE_LogLevel level, const char *label, const char *format, va_list arg)
+{
+    va_list arg_in;
+
+#if defined(DEBUG_BUILD) && !defined(__ANDROID__)
+    if(LogWriter::m_enabledStdOut)
+    {
+        va_copy(arg_in, arg);
+        std::fprintf(stdout, "%s: ", label);
+        std::vfprintf(stdout, format, arg_in);
+        std::fprintf(stdout, OS_NEWLINE);
+        std::fflush(stdout);
+        va_end(arg_in);
+    }
+#endif
+
+#if defined(__ANDROID__)
+    va_copy(arg_in, arg);
+    __android_log_vprint(pgeToAndroidLL(level), "TRACKERS", format, arg_in);
+    va_end(arg_in);
+#endif
+
 #ifndef __EMSCRIPTEN__
     if(LogWriter::m_logout == nullptr)
         return;
 #endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Debug)
+
+    if(LogWriter::m_logLevel < level)
         return;
 
     MutexLocker mutex(&g_lockLocker);
     ((void)mutex);
-    va_start(arg, format);
+
 #ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Debug: %s\n", g_outputBuffer);
+    va_copy(arg_in, arg);
+    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg_in);
+    std::fprintf(stdout, "%s: %s\n", label, g_outputBuffer);
     std::fflush(stdout);
+    va_end(arg_in);
 #else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Debug: "), 1, 7);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
+    va_copy(arg_in, arg);
+    int len = SDL_snprintf(g_outputBuffer, OUT_BUFFER_SIZE, "%s: ", label);
+    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
+    len = SDL_vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg_in);
     SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
     SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
+    va_end(arg_in);
 #endif
+
+}
+
+void pLogDebug(const char *format, ...)
+{
+    va_list arg;
+    va_start(arg, format);
+    pLogGeneric(PGE_LogLevel::Debug, "Debug", format, arg);
     va_end(arg);
 }
 
 void pLogWarning(const char *format, ...)
 {
     va_list arg;
-#ifndef __EMSCRIPTEN__
-    if(LogWriter::m_logout == nullptr)
-        return;
-#endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Warning)
-        return;
-
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
     va_start(arg, format);
-#ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Warning: %s\n", g_outputBuffer);
-    std::fflush(stdout);
-#else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Warning: "), 1, 9);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
-#endif
+    pLogGeneric(PGE_LogLevel::Warning, "Warning", format, arg);
     va_end(arg);
 }
 
 void pLogCritical(const char *format, ...)
 {
     va_list arg;
-#ifndef __EMSCRIPTEN__
-    if(LogWriter::m_logout == nullptr)
-        return;
-#endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Critical)
-        return;
-
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
     va_start(arg, format);
-#ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Critical: %s\n", g_outputBuffer);
-    std::fflush(stdout);
-#else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Critical: "), 1, 10);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
-#endif
+    pLogGeneric(PGE_LogLevel::Critical, "Critical", format, arg);
     va_end(arg);
 }
 
 void pLogFatal(const char *format, ...)
 {
     va_list arg;
-#ifndef __EMSCRIPTEN__
-    if(LogWriter::m_logout == nullptr)
-        return;
-#endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Fatal)
-        return;
-
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
     va_start(arg, format);
-#ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Fatal: %s\n", g_outputBuffer);
-    std::fflush(stdout);
-#else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Fatal: "), 1, 7);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
-#endif
+    pLogGeneric(PGE_LogLevel::Fatal, "Fatal", format, arg);
     va_end(arg);
 }
 
 void pLogInfo(const char *format, ...)
 {
     va_list arg;
-#ifndef __EMSCRIPTEN__
-    if(LogWriter::m_logout == nullptr)
-        return;
-#endif
-    if(LogWriter::m_logLevel < PGE_LogLevel::Fatal)
-        return;
-
-    MutexLocker mutex(&g_lockLocker);
-    ((void)mutex);
     va_start(arg, format);
-#ifdef __EMSCRIPTEN__
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    std::fprintf(stdout, "Info: %s\n", g_outputBuffer);
-    std::fflush(stdout);
-#else
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>("Info: "), 1, 6);
-    int len = std::vsnprintf(g_outputBuffer, OUT_BUFFER_SIZE, format, arg);
-    SDL_RWwrite(LogWriter::m_logout, g_outputBuffer, 1, (size_t)len);
-    SDL_RWwrite(LogWriter::m_logout, reinterpret_cast<const void *>(OS_NEWLINE), 1, OS_NEWLINE_LEN);
-#endif
+    pLogGeneric(PGE_LogLevel::Info, "Info", format, arg);
     va_end(arg);
 }
 
-void WriteToLog(PGE_LogLevel type, std::string msg)
+void WriteToLog(PGE_LogLevel type, const std::string &msg)
 {
     LogWriter::WriteToLog(type, msg);
 }
@@ -315,6 +305,9 @@ void LogWriter::WriteToLog(PGE_LogLevel type, const std::string &msg)
             break;
         case PGE_LogLevel::Critical:
             std::fprintf(stderr, "CRITICAL ERROR: %s\n", msg.c_str());
+            break;
+        case PGE_LogLevel::Info:
+            std::fprintf(stderr, "INFO: %s\n", msg.c_str());
             break;
         case PGE_LogLevel::Fatal:
             std::fprintf(stderr, "FATAL ERROR: %s\n", msg.c_str());
@@ -342,6 +335,11 @@ void LogWriter::WriteToLog(PGE_LogLevel type, const std::string &msg)
         if(m_logLevel < PGE_LogLevel::Critical)
             return;
         pLogCritical("%s", msg.c_str());
+        break;
+    case PGE_LogLevel::Info:
+        if(m_logLevel < PGE_LogLevel::Info)
+            return;
+        pLogInfo("%s", msg.c_str());
         break;
     case PGE_LogLevel::Fatal:
         if(m_logLevel < PGE_LogLevel::Fatal)

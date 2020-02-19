@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "raster_font.h"
@@ -270,7 +271,7 @@ PGE_Size RasterFont::textSize(std::string &text, uint32_t max_line_lenght, bool 
     uint32_t x = 0;
     for(size_t i = 0; i < text.size(); i++, x++)
     {
-        char &cx = text[i];
+        const char &cx = text[i];
         UTF8 uch = static_cast<unsigned char>(cx);
 
         switch(cx)
@@ -312,33 +313,34 @@ PGE_Size RasterFont::textSize(std::string &text, uint32_t max_line_lenght, bool 
         default:
         {
             CharMap::iterator rc = m_charMap.find(get_utf8_char(&cx));
+            bool need_a_ttf = false;
             if(rc != m_charMap.end())
             {
                 RasChar &rch = rc->second;
+                need_a_ttf = !rch.valid;
                 if(rch.valid)
-                {
                     widthSumm += (m_letterWidth - rch.padding_left - rch.padding_right + m_interLetterSpace);
-                }
-                else
-                {
-                    TtfFont *font = reinterpret_cast<TtfFont*>(FontManager::getDefaultTtfFont());
-                    if(font)
-                    {
-                        TtfFont::TheGlyphInfo glyph = font->getGlyphInfo(&cx, m_letterWidth);
-                        widthSumm += glyph.width > 0 ? uint32_t(glyph.advance >> 6) : (m_letterWidth >> 2);
-                    } else {
-                        widthSumm += m_letterWidth + m_interLetterSpace;
-                    }
-                }
-                if(widthSumm > widthSummMax)
-                    widthSummMax = widthSumm;
             }
             else
+                need_a_ttf = true;
+
+            if(need_a_ttf)
             {
-                widthSumm += (m_letterWidth + m_interLetterSpace);
-                if(widthSumm > widthSummMax)
-                    widthSummMax = widthSumm;
+                TtfFont *font = reinterpret_cast<TtfFont*>(FontManager::getDefaultTtfFont());
+                if(font)
+                {
+                    TtfFont::TheGlyphInfo glyph = font->getGlyphInfo(&cx, m_letterWidth);
+                    uint32_t glyph_width = glyph.width > 0 ? uint32_t(glyph.advance >> 6) : (m_letterWidth >> 2);
+                    // Raster fonts are monospace fonts. TTF glyphs shoudn't break mono-width until they are wider than a cell
+                    widthSumm += glyph_width > m_letterWidth ? glyph_width : m_letterWidth;
+                } else {
+                    widthSumm += m_letterWidth + m_interLetterSpace;
+                }
             }
+
+            if(widthSumm > widthSummMax)
+                widthSummMax = widthSumm;
+
             break;
         }
 

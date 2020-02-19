@@ -34,6 +34,7 @@ class ImageCalibrator : public QDialog
 
         void on_Matrix_clicked();
         void on_Reset_clicked();
+        void makeBackup();
         void on_WritePNG_GIF_clicked();
         void on_WritePNG_clicked();
         void on_WriteGIF_clicked();
@@ -53,6 +54,7 @@ class ImageCalibrator : public QDialog
         int m_frmY;
 
         QPixmap m_sprite;
+        QPixmap m_spriteOrig;
         QGraphicsPixmapItem *m_imgFrame;
         QGraphicsRectItem *m_phsFrame;
         QGraphicsRectItem *m_physics;
@@ -60,6 +62,7 @@ class ImageCalibrator : public QDialog
         QString m_pngPath;
         QString m_gifPath;
         QString m_gifPathM;
+        QString m_backupPath;
         QString m_iniPath;
 
         Ui::ImageCalibrator *ui;

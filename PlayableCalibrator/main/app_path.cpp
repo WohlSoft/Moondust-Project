@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,10 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QDir>
+#include <QFileInfo>
 #ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
 #include <QUrl>
 #endif
 
@@ -34,19 +36,16 @@ QString ApplicationPath_x;
 QString AppPathManager::m_settingsPath;
 QString AppPathManager::m_userPath;
 
-#if __ANDROID__ || __APPLE__
+#if defined(__ANDROID__) || defined(__APPLE__)
 #   define UserDirName "/PGE Project"
 #else
 #   define UserDirName "/.PGE_Project"
 #endif
 
-void AppPathManager::initAppPath()
+void AppPathManager::initAppPath(const char *argv0)
 {
-    QApplication::setOrganizationName(V_COMPANY);
-    QApplication::setOrganizationDomain(V_PGE_URL);
-    QApplication::setApplicationName("Playable Character Calibrator");
-
-    #ifdef __APPLE__
+#ifdef __APPLE__
+    Q_UNUSED(argv0);
     {
         CFURLRef appUrlRef;
         appUrlRef = CFBundleCopyBundleURL(CFBundleGetMainBundle());
@@ -66,15 +65,21 @@ void AppPathManager::initAppPath()
         {
             QString realAppPath("/Applications/PGE Project");
             if(QDir(realAppPath).exists())
-            {
                 ApplicationPath = realAppPath;
-            }
         }
     }
-    #else
-    ApplicationPath = QApplication::applicationDirPath();
-    #endif
+#else
+    ApplicationPath = QFileInfo(QString::fromUtf8(argv0)).absoluteDir().absolutePath();
+#endif
     ApplicationPath_x = ApplicationPath;
+
+    QApplication::addLibraryPath(".");
+    QApplication::addLibraryPath(ApplicationPath);
+    QApplication::addLibraryPath(QFileInfo(QString::fromLocal8Bit(argv0)).absoluteDir().absolutePath());
+
+    QApplication::setOrganizationName(V_COMPANY);
+    QApplication::setOrganizationDomain(V_PGE_URL);
+    QApplication::setApplicationName("PGE Calibrator");
 
     if(isPortable())
         return;
@@ -86,18 +91,19 @@ void AppPathManager::initAppPath()
 #endif
     if(!path.isEmpty())
     {
-        QDir appDir(path+UserDirName);
+        QDir appDir(path + UserDirName);
         if(!appDir.exists())
-            if(!appDir.mkpath(path+UserDirName))
+            if(!appDir.mkpath(path + UserDirName))
                 goto defaultSettingsPath;
-
+#ifdef __APPLE__
+        if(!QDir(ApplicationPath + "/Data directory").exists())
+            symlink((path + UserDirName).toUtf8().data(), (ApplicationPath + "/Data directory").toUtf8().data());
+#endif
         m_userPath = appDir.absolutePath();
         initSettingsPath();
     }
     else
-    {
         goto defaultSettingsPath;
-    }
 
     return;
 defaultSettingsPath:
@@ -107,12 +113,40 @@ defaultSettingsPath:
 
 QString AppPathManager::settingsFile()
 {
-    return m_settingsPath+"/pge_calibrator.ini";
+    return m_settingsPath + "/pge_calibrator.ini";
+}
+
+QString AppPathManager::settingsPath()
+{
+    return m_settingsPath;
 }
 
 QString AppPathManager::userAppDir()
 {
     return m_userPath;
+}
+
+QString AppPathManager::languagesDir()
+{
+#ifndef Q_OS_MAC
+    return ApplicationPath + "/languages";
+#else
+    CFURLRef appUrlRef;
+    appUrlRef = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("languages"), NULL, NULL);
+    CFStringRef filePathRef = CFURLGetString(appUrlRef);
+    QString path = QUrl(QString::fromCFString(filePathRef)).toLocalFile();
+    CFRelease(appUrlRef);
+    return path;
+#endif
+}
+
+QString AppPathManager::logsDir()
+{
+#ifndef Q_OS_MAC
+    return m_userPath + "/logs";
+#else
+    return QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/Library/Logs/PGE Project";
+#endif
 }
 
 void AppPathManager::install()
@@ -124,9 +158,9 @@ void AppPathManager::install()
 #endif
     if(!path.isEmpty())
     {
-        QDir appDir(path+UserDirName);
+        QDir appDir(path + UserDirName);
         if(!appDir.exists())
-            appDir.mkpath(path+UserDirName);
+            appDir.mkpath(path + UserDirName);
     }
 }
 
@@ -137,10 +171,11 @@ bool AppPathManager::isPortable()
     if(m_userPath.isNull())
         m_userPath = ApplicationPath;
     if(!QFile(settingsFile()).exists()) return false;
-    bool forcePortable=false;
+    bool forcePortable = false;
     QSettings checkForPort(settingsFile(), QSettings::IniFormat);
+
     checkForPort.beginGroup("Main");
-        forcePortable=checkForPort.value("force-portable", false).toBool();
+    forcePortable = checkForPort.value("force-portable", false).toBool();
     checkForPort.endGroup();
 
     if(forcePortable)

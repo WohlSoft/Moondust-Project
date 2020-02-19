@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -184,10 +184,10 @@ public:
     static QString configPath;
 
     static QString configDataPath;
-    #ifdef _WIN32
+
     static QString SmbxEXE_Name;
     static bool    SmbxTest_By_Default;
-    #endif
+    static bool    SmbxTest_HidePgeEngine;
 };
 
 #endif // GLOBAL_SETTINGS_H

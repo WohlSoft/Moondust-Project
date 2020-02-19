@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#if !defined(MUSPLAY_USE_WINAPI)
 #include <QtDebug>
 
 #include "singleapplication.h"
@@ -32,22 +31,25 @@ SingleApplication::SingleApplication(QStringList &args) :
     m_sema("PGE_MusPlaySemaphore_pehq395mh03hu320vu3n0u", 1),
     m_shmem("PGE_MusPlaySharedMemory_vy24h$@62j6@^jWyh3c6@46j@$^v24J42j6")
 {
-    _shouldContinue = false; // By default this is not the main process
+    m_shouldContinue = false; // By default this is not the main process
 
-    socket = new QUdpSocket();
-    server = NULL;
+    m_socket = new QUdpSocket();
+    m_server = nullptr;
     QString isServerRuns;
 
     bool isRunning=false;
     m_sema.acquire();//Avoid races
-    if(m_shmem.attach()) //Detect shared memory copy
+
+    if(!m_shmem.create(1))//Detect shared memory copy
     {
-        isRunning = true;
-    }
-    else
-    {
-        m_shmem.create(1);
-        isRunning = false;
+        m_shmem.attach();
+        m_shmem.detach();
+        if(!m_shmem.create(1))
+        {
+            isRunning = true;
+            if(!m_shmem.attach())
+                qWarning() << "Can't re-attach existing shared memory!";
+        }
     }
 
     //Force run second copy of application
@@ -64,24 +66,26 @@ SingleApplication::SingleApplication(QStringList &args) :
         acceptor.bind(QHostAddress::LocalHost, 58235, QUdpSocket::ReuseAddressHint|QUdpSocket::ShareAddress);
 
         // Attempt to connect to the LocalServer
-        socket->connectToHost(QHostAddress::LocalHost, 58234);
-        if(socket->waitForConnected(100))
+        m_socket->connectToHost(QHostAddress::LocalHost, 58234);
+        if(m_socket->waitForConnected(100))
         {
-            socket->write(QString("CMD:Is SDL2 Mixer X running?").toUtf8());
-            socket->flush();
+            m_socket->write(QString("CMD:Is SDL2 Mixer X running?").toUtf8());
+            m_socket->flush();
             if(acceptor.waitForReadyRead(100))
             {
                 //QByteArray dataGram;//Yes, I'm runs!
                 QByteArray datagram;
-                datagram.resize(acceptor.pendingDatagramSize());
+                datagram.resize(static_cast<int>(acceptor.pendingDatagramSize()));
                 QHostAddress sender;
                 quint16 senderPort;
                 acceptor.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
-                if(QString::fromUtf8(datagram)=="Yes, I'm runs!")
+                if(QString::fromUtf8(datagram) == "Yes, I'm runs!")
                 {
-                    isServerRuns="Yes!";
+                    isServerRuns = "Yes!";
                     qDebug() <<"Found running player!";
-                } else qDebug() << "I'v got: "<<QString::fromUtf8(datagram);
+                }
+                else
+                    qDebug() << "I'v got: "<<QString::fromUtf8(datagram);
             }
         }
     }
@@ -91,32 +95,30 @@ SingleApplication::SingleApplication(QStringList &args) :
         isServerRuns.clear();
         args.removeAll("--force-run");
     }
-    _arguments = args;
+    m_arguments = args;
 
     if(isRunning)
     {
         QString str = QString("CMD:showUp");
         QByteArray bytes;
-        for(int i=1; i<_arguments.size(); i++)
-        {
-            str.append(QString("\n%1").arg(_arguments[i]));
-        }
+        for(int i = 1; i < m_arguments.size(); i++)
+            str.append(QString("\n%1").arg(m_arguments[i]));
         bytes = str.toUtf8();
-        socket->write(bytes);
-        socket->flush();
+        m_socket->write(bytes);
+        m_socket->flush();
         QThread::msleep(100);
-        socket->close();
+        m_socket->close();
     }
     else
     {
         // The attempt was insuccessful, so we continue the program
-        _shouldContinue = true;
-        server = new LocalServer();
-        server->start();
-        QObject::connect(server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
-        QObject::connect(server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
-        QObject::connect(server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
-        QObject::connect(this, SIGNAL(stopServer()), server, SLOT(stopServer()));
+        m_shouldContinue = true;
+        m_server = new LocalServer();
+        m_server->start();
+        QObject::connect(m_server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
+        QObject::connect(m_server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
+        QObject::connect(m_server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
+        QObject::connect(this, SIGNAL(stopServer()), m_server, SLOT(stopServer()));
     }
     m_sema.release();//Free semaphore
 }
@@ -127,19 +129,19 @@ SingleApplication::SingleApplication(QStringList &args) :
  */
 SingleApplication::~SingleApplication()
 {
-    if(_shouldContinue)
+    if(m_shouldContinue)
     {
         emit stopServer();
-        if(server && (!server->wait(5000)))
+        if(m_server && (!m_server->wait(5000)))
         {
             qDebug() << "TERMINATOR RETURNS BACK single application! 8-)";
-            server->terminate();
+            m_server->terminate();
             qDebug() << "Wait for nothing";
-            server->wait();
+            m_server->wait();
             qDebug() << "Terminated!";
         }
     }
-    if(server) delete server;
+    if(m_server) delete m_server;
 }
 
 /**
@@ -149,12 +151,12 @@ SingleApplication::~SingleApplication()
  */
 bool SingleApplication::shouldContinue()
 {
-    return _shouldContinue;
+    return m_shouldContinue;
 }
 
 QStringList SingleApplication::arguments()
 {
-    return _arguments;
+    return m_arguments;
 }
 
 /**
@@ -175,5 +177,3 @@ void SingleApplication::slotAcceptedCommand(QString cmd)
 {
     emit acceptedCommand(cmd);
 }
-
-#endif

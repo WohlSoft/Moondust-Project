@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 /*
@@ -37,9 +38,6 @@
 
 #include "gl_debug.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB
-#endif
 #include <FreeImageLite.h>
 
 #include <audio/pge_audio.h>
@@ -51,7 +49,7 @@
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
 #include <common_features/fmt_format_ne.h>
-#include <fmt/fmt_time.h>
+#include <common_features/fmt_time_ne.h>
 
 #include <ctime>
 #include <chrono>
@@ -69,7 +67,7 @@ static Render_Base      *g_renderer = &g_dummy;
 
 
 bool GlRenderer::m_isReady = false;
-SDL_Thread *GlRenderer::m_screenshot_thread = NULL;
+SDL_Thread *GlRenderer::m_screenshot_thread = nullptr;
 
 int     GlRenderer::m_viewport_w    = 800;
 int     GlRenderer::m_viewport_h    = 600;
@@ -91,16 +89,16 @@ static bool isGL_Error()
 
 static bool isGlExtensionSupported(const char *ext, const unsigned char *exts)
 {
-    return (strstr(reinterpret_cast<const char *>(exts), ext) != NULL);
+    return (strstr(reinterpret_cast<const char *>(exts), ext) != nullptr);
 }
 
 #ifdef RENDER_SUPORT_OPENGL2
 static bool detectOpenGL2()
 {
     const char *errorPlace = "";
-    SDL_GLContext glcontext = NULL;
-    SDL_Window *dummy = NULL;
-    GLubyte *sExtensions = NULL;
+    SDL_GLContext glcontext = nullptr;
+    SDL_Window *dummy = nullptr;
+    GLubyte *sExtensions = nullptr;
     GLuint test_texture = 0;
     unsigned char dummy_texture[] =
     {
@@ -119,9 +117,9 @@ static bool detectOpenGL2()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
     //SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
-    #ifdef __APPLE__
+#ifdef __APPLE__
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);//FOR GL 2.1
-    #endif
+#endif
     pLogDebug("GL2PROBE: Create hidden window");
     dummy = SDL_CreateWindow("OpenGL 2 probe dummy window",
                              SDL_WINDOWPOS_CENTERED,
@@ -366,9 +364,9 @@ sdl_error:
 static bool detectOpenGL3()
 {
     const char *errorPlace = "";
-    SDL_GLContext glcontext = NULL;
-    SDL_Window *dummy = NULL;
-    GLubyte *sExtensions = NULL;
+    SDL_GLContext glcontext = nullptr;
+    SDL_Window *dummy = nullptr;
+    GLubyte *sExtensions = nullptr;
     GLuint test_texture = 0;
     unsigned char dummy_texture[] =
     {
@@ -703,27 +701,27 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
 #endif
 
 #ifdef RENDER_SUPORT_OPENGL2
-        if(detectOpenGL2())
-        {
-            rtype = RENDER_OPENGL_2_1;
-            pLogDebug("OpenGL 2.1 detected!");
-        }//RENDER_SDL2
-        else
+            if(detectOpenGL2())
+            {
+                rtype = RENDER_OPENGL_2_1;
+                pLogDebug("OpenGL 2.1 detected!");
+            }//RENDER_SDL2
+            else
 #endif
 #if !defined(RENDER_SUPORT_OPENGL3) && !defined(RENDER_SUPORT_OPENGL2)
-        {
-            rtype = RENDER_SW_SDL;
-            pLogDebug("SW SDL detected");
-        }
+            {
+                rtype = RENDER_SW_SDL;
+                pLogDebug("SW SDL detected");
+            }
 #else
-        {
-            rtype = RENDER_INVALID;
-            pLogCritical("OpenGL not detected!");
-        }
+            {
+                rtype = RENDER_INVALID;
+                pLogCritical("OpenGL not detected!");
+            }
 #endif
     }
 
-    #ifdef RENDER_SUPORT_OPENGL3
+#ifdef RENDER_SUPORT_OPENGL3
     else if(rtype == RENDER_OPENGL_3_1)
     {
         if(detectOpenGL3())
@@ -734,9 +732,9 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
             pLogWarning("OpenGL 3.1 selected, but proble failed!");
         }
     }
-    #endif
+#endif
 
-    #ifdef RENDER_SUPORT_OPENGL2
+#ifdef RENDER_SUPORT_OPENGL2
     else if(rtype == RENDER_OPENGL_2_1)
     {
         if(detectOpenGL2())
@@ -747,7 +745,7 @@ GlRenderer::RenderEngineType GlRenderer::setRenderer(GlRenderer::RenderEngineTyp
             pLogWarning("OpenGL 2.1 selected, but proble failed!");
         }
     }
-    #endif
+#endif
     else if(rtype == RENDER_SW_SDL)
         pLogDebug("SDL Software renderer selected!");
 
@@ -811,7 +809,7 @@ PGE_Texture GlRenderer::loadTexture(std::string path, std::string maskPath, std:
     return target;
 }
 
-void GlRenderer::loadTextureP(PGE_Texture& target,
+void GlRenderer::loadTextureP(PGE_Texture &target,
                               std::string path,
                               std::string maskPath,
                               std::string maskFallbackPath)
@@ -850,7 +848,7 @@ void GlRenderer::loadTextureP(PGE_Texture& target,
         return;
     }
 
-    #ifdef DEBUG_BUILD
+#ifdef DEBUG_BUILD
     ElapsedTimer totalTime;
     ElapsedTimer maskMergingTime;
     ElapsedTimer bindingTime;
@@ -859,28 +857,28 @@ void GlRenderer::loadTextureP(PGE_Texture& target,
     int64_t maskElapsed = 0;
     int64_t bindElapsed = 0;
     int64_t unloadElapsed = 0;
-    #endif
+#endif
 
     //Apply Alpha mask
     if(!maskPath.empty() && Files::fileExists(maskPath))
     {
-        #ifdef DEBUG_BUILD
+#ifdef DEBUG_BUILD
         maskMergingTime.start();
-        #endif
+#endif
         GraphicsHelps::mergeWithMask(sourceImage, maskPath);
-        #ifdef DEBUG_BUILD
+#ifdef DEBUG_BUILD
         maskElapsed = maskMergingTime.nanoelapsed();
-        #endif
+#endif
     }
     else if(!maskFallbackPath.empty())
     {
-        #ifdef DEBUG_BUILD
+#ifdef DEBUG_BUILD
         maskMergingTime.start();
-        #endif
+#endif
         GraphicsHelps::mergeWithMask(sourceImage, "", maskFallbackPath);
-        #ifdef DEBUG_BUILD
+#ifdef DEBUG_BUILD
         maskElapsed = maskMergingTime.nanoelapsed();
-        #endif
+#endif
     }
 
     uint32_t w = static_cast<uint32_t>(FreeImage_GetWidth(sourceImage));
@@ -898,9 +896,9 @@ void GlRenderer::loadTextureP(PGE_Texture& target,
         return;
     }
 
-    #ifdef DEBUG_BUILD
+#ifdef DEBUG_BUILD
     bindingTime.start();
-    #endif
+#endif
     RGBQUAD upperColor;
     FreeImage_GetPixelColor(sourceImage, 0, 0, &upperColor);
     target.ColorUpper.r = float(upperColor.rgbRed) / 255.0f;
@@ -933,16 +931,16 @@ void GlRenderer::loadTextureP(PGE_Texture& target,
     //           0, target.format, GL_UNSIGNED_BYTE, textura ); GLERRORCHECK();
     //    glBindTexture( GL_TEXTURE_2D, 0); GLERRORCHECK();
     //    target.inited = true;
-    #ifdef DEBUG_BUILD
+#ifdef DEBUG_BUILD
     bindElapsed = bindingTime.nanoelapsed();
     unloadTime.start();
-    #endif
+#endif
     //SDL_FreeSurface(sourceImage);
     GraphicsHelps::closeImage(sourceImage);
-    #ifdef DEBUG_BUILD
+#ifdef DEBUG_BUILD
     unloadElapsed = unloadTime.nanoelapsed();
-    #endif
-    #ifdef DEBUG_BUILD
+#endif
+#ifdef DEBUG_BUILD
     pLogDebug("Mask merging of %s passed in %d nanoseconds", path.c_str(), static_cast<int>(maskElapsed));
     pLogDebug("Binding time of %s passed in %d nanoseconds", path.c_str(), static_cast<int>(bindElapsed));
     pLogDebug("Unload time of %s passed in %d nanoseconds", path.c_str(), static_cast<int>(unloadElapsed));
@@ -951,7 +949,7 @@ void GlRenderer::loadTextureP(PGE_Texture& target,
               static_cast<int>(totalTime.nanoelapsed()),
               static_cast<int>(w),
               static_cast<int>(h));
-    #endif
+#endif
     return;
 }
 
@@ -970,12 +968,11 @@ void GlRenderer::deleteTexture(PGE_Texture &tx)
         g_renderer->deleteTexture(tx);
 
     tx.inited = false;
-    tx.inited = false;
     tx.w = 0;
     tx.h = 0;
     tx.frame_w = 0;
     tx.frame_h = 0;
-    tx.texture_layout = NULL;
+    tx.texture_layout = nullptr;
     tx.format = 0;
     tx.nOfColors = 0;
     tx.ColorUpper.r = 0;
@@ -1032,11 +1029,11 @@ void GlRenderer::makeShot()
     shoot->pixels = pixels;
     shoot->w = w;
     shoot->h = h;
-    #ifndef PGE_NO_THREADING
+#ifndef PGE_NO_THREADING
     m_screenshot_thread = SDL_CreateThread(makeShot_action, "scrn_maker", reinterpret_cast<void *>(shoot));
-    #else
+#else
     makeShot_action(reinterpret_cast<void *>(shoot));
-    #endif
+#endif
     PGE_Audio::playSoundByRole(obj_sound_role::PlayerTakeItem);
 }
 
@@ -1044,7 +1041,7 @@ static std::string shoot_getTimedString(std::string path, const char *ext = "png
 {
     auto now = std::chrono::system_clock::now();
     std::time_t in_time_t = std::chrono::system_clock::to_time_t(now);
-    std::tm t = fmt::localtime(in_time_t);
+    std::tm t = fmt::localtime_ne(in_time_t);
     static int prevSec = 0;
     static int prevSecCounter = 0;
     if(prevSec != t.tm_sec)
@@ -1058,19 +1055,19 @@ static std::string shoot_getTimedString(std::string path, const char *ext = "png
     if(!prevSecCounter)
     {
         return fmt::sprintf_ne("%sScr_%04d-%02d-%02d_%02d-%02d-%02d.%s",
-                                             path,
-                                             (1900 + t.tm_year), (1 + t.tm_mon), t.tm_mday,
-                                             t.tm_hour, t.tm_min, t.tm_sec,
-                                             ext);
+                               path,
+                               (1900 + t.tm_year), (1 + t.tm_mon), t.tm_mday,
+                               t.tm_hour, t.tm_min, t.tm_sec,
+                               ext);
     }
     else
     {
         return fmt::sprintf_ne("%sScr_%04d-%02d-%02d_%02d-%02d-%02d_(%d).%s",
-                                             path,
-                                             (1900 + t.tm_year), (1 + t.tm_mon), t.tm_mday,
-                                             t.tm_hour, t.tm_min, t.tm_sec,
-                                             prevSecCounter,
-                                             ext);
+                               path,
+                               (1900 + t.tm_year), (1 + t.tm_mon), t.tm_mday,
+                               t.tm_hour, t.tm_min, t.tm_sec,
+                               prevSecCounter,
+                               ext);
     }
 }
 
@@ -1083,7 +1080,7 @@ int GlRenderer::makeShot_action(void *_pixels)
     if(!shotImg)
     {
         delete []shoot->pixels;
-        shoot->pixels = NULL;
+        shoot->pixels = nullptr;
         delete []shoot;
         return 0;
     }
@@ -1095,7 +1092,7 @@ int GlRenderer::makeShot_action(void *_pixels)
     {
         FreeImage_Unload(shotImg);
         delete []shoot->pixels;
-        shoot->pixels = NULL;
+        shoot->pixels = nullptr;
         delete []shoot;
         return 0;
     }
@@ -1112,7 +1109,7 @@ int GlRenderer::makeShot_action(void *_pixels)
         {
             FreeImage_Unload(shotImg);
             delete []shoot->pixels;
-            shoot->pixels = NULL;
+            shoot->pixels = nullptr;
             delete []shoot;
             return 0;
         }
@@ -1134,7 +1131,7 @@ int GlRenderer::makeShot_action(void *_pixels)
 
     FreeImage_Unload(shotImg);
     delete []shoot->pixels;
-    shoot->pixels = NULL;
+    shoot->pixels = nullptr;
     delete []shoot;
     return 0;
 }
@@ -1142,13 +1139,13 @@ int GlRenderer::makeShot_action(void *_pixels)
 
 static struct gifRecord
 {
-    GifWriter   writer      = {NULL, NULL, true, false, NULL, 0, 0, 0, 0, false};
+    GifWriter   writer      = {nullptr, nullptr, true, false, nullptr, 0, 0, 0, 0, false};
     SDL_Thread *worker      = nullptr;
     SDL_mutex  *mutex       = nullptr;
     uint32_t    delay       = 3;
     double      delayTimer  = 0.0;
     bool        enabled     = false;
-    unsigned char padding[7]= {0, 0, 0, 0, 0, 0, 0};
+    unsigned char padding[7] = {0, 0, 0, 0, 0, 0, 0};
 } g_gif;
 
 bool GlRenderer::recordInProcess()
@@ -1177,11 +1174,11 @@ void GlRenderer::toggleRecorder()
     }
     else
     {
-        #ifndef PGE_NO_THREADING
+#ifndef PGE_NO_THREADING
         if(g_gif.worker)
-            SDL_WaitThread(g_gif.worker, NULL);
+            SDL_WaitThread(g_gif.worker, nullptr);
         g_gif.worker = nullptr;
-        #endif
+#endif
         //if(g_gif.mutex)
         //    SDL_DestroyMutex(g_gif.mutex);
         //g_gif.mutex = nullptr;
@@ -1220,13 +1217,13 @@ void GlRenderer::processRecorder(double ticktime)
         shoot->pixels = pixels;
         shoot->w = w;
         shoot->h = h;
-        #ifndef PGE_NO_THREADING
+#ifndef PGE_NO_THREADING
         if(g_gif.worker)
-            SDL_WaitThread(g_gif.worker, NULL);
+            SDL_WaitThread(g_gif.worker, nullptr);
         g_gif.worker = SDL_CreateThread(processRecorder_action, "gif_recorder", reinterpret_cast<void *>(shoot));
-        #else
+#else
         processRecorder_action(reinterpret_cast<void *>(shoot));
-        #endif
+#endif
     }
 }
 
@@ -1235,9 +1232,9 @@ int GlRenderer::processRecorder_action(void *_pixels)
     //SDL_LockMutex(g_gif.mutex);
     PGE_GL_shoot *shoot = reinterpret_cast<PGE_GL_shoot *>(_pixels);
     FIBITMAP *shotImg = FreeImage_ConvertFromRawBitsEx(false, reinterpret_cast<BYTE *>(shoot->pixels), FIT_BITMAP,
-                                                       shoot->w, shoot->h,
-                                                        4 * shoot->w, 32,
-                                                       0xFF000000, 0x00FF0000, 0x0000FF00, g_renderer->isTopDown());
+                        shoot->w, shoot->h,
+                        4 * shoot->w, 32,
+                        0xFF000000, 0x00FF0000, 0x0000FF00, g_renderer->isTopDown());
     if((shoot->w != m_viewport_w) || (shoot->h != m_viewport_h))
     {
         FIBITMAP *temp;

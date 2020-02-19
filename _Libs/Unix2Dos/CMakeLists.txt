@@ -1,6 +1,11 @@
 cmake_minimum_required (VERSION 2.8.11)
 project(Unix2Dos C)
 
+# Disable bogus MSVC warnings
+if(MSVC)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS -D_CRT_NONSTDC_NO_WARNINGS)
+endif()
+
 add_definitions(
 	-DD2U_UNIFILE
 	-DD2U_UNICODE

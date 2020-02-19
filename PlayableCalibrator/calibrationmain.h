@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,14 @@
 #ifndef CALIBRATIONMAIN_H
 #define CALIBRATIONMAIN_H
 
-#include <QWidget>
+#include <QMainWindow>
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QtWidgets>
+#include <QMenu>
+
+#include <translator-qt/translator.h>
+
 #include "animator/aniFrames.h"
 
 struct frameOpts
@@ -47,37 +51,42 @@ class CalibrationMain;
 class CalibrationMain : public QWidget
 {
     Q_OBJECT
-    
+
 public:
-    explicit CalibrationMain(QWidget *parent = 0);
+    explicit CalibrationMain(QWidget *parent = nullptr);
     ~CalibrationMain();
-    QGraphicsScene * Scene;
-    FrameSets AnimationFrames;
+
+    void translateSaveMenu();
+
+    //! Scene for drawing of playable character preview
+    QGraphicsScene *m_scene;
+
+    FrameSets m_animationFrames;
     void getSpriteAniData(QSettings &set, QString name);
     void setSpriteAniData(QSettings &set);
 
-    QString currentConfig;
+    QString m_currentConfig;
     void loadConfig(QString fileName);
-    void saveConfig(QString fileName, bool customPath=false);
+    bool saveConfig(QString fileName, bool customPath=false);
     void OpenFile(QString fileName);
 
     void createDirs();
 
-    bool wasCanceled;
+    bool m_wasCanceled = false;
 
-    QPixmap x_imageSprite;
+    QPixmap m_xImageSprite;
 
 protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
+    void languageSwitched();
+
     void on_AboutButton_clicked();
     void on_Matrix_clicked();
     void on_AnimatorButton_clicked();
     void on_calibrateImage_clicked();
     void on_MakeTemplateB_clicked();
-
-    void on_editSizes_clicked();
 
     void on_EnableFrame_clicked(bool checked);
 
@@ -105,34 +114,39 @@ private slots:
     void on_PasteButton_clicked();
 
     bool on_OpenSprite_clicked();
-    void on_SaveConfigButton_clicked();
 
     void on_applyToAll_clicked();
 
-
+    bool trySave();
     void updateControls();
     void initScene();
+    void enableFrame();
     void updateScene();
 
-
-
 private:
-    int frmX;
-    int frmY;
+    int m_frmX = 0;
+    int m_frmY = 0;
 
-    bool lockControls;
+    bool m_lockControls = false;
+    bool m_wasModified = false;
 
     QPoint m_FramePos;
-    QGraphicsPixmapItem currentImageItem;
-    QPixmap             currentPixmap;
-    QGraphicsRectItem FrameBox_gray;
-    QGraphicsRectItem CollisionBox_green;
+    QGraphicsPixmapItem m_currentImageItem;
+    QPixmap             m_currentPixmap;
+    QGraphicsRectItem m_frameBox_gray;
+    QGraphicsRectItem m_hitBox_green;
 
-    QGraphicsLineItem grabLineX;
-    QGraphicsLineItem grabLineY;
+    QGraphicsLineItem m_grabLineX;
+    QGraphicsLineItem m_grabLineY;
 
     Ui::CalibrationMain *ui;
-    QString titleCache;
+    QString     m_titleCache;
+
+    QMenu       m_saveMenu;
+    QAction    *m_saveMenuQuickSave = nullptr;
+    QAction    *m_saveMenuSaveAs = nullptr;
+    QMenu       m_langMenu;
+    Translator  m_translator;
 };
 
 

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ private slots:
 
 private:
     Ui::LvlSearchBox *ui;
-    bool lockReset;
+    bool m_lockReset;
 
     template<class T>
     struct SearchMeta
@@ -89,9 +89,9 @@ private:
     };
 
     void resetAllSearchFields();
-    SearchMeta<LevelBlock>  curBlock;
-    SearchMeta<LevelBGO>    curBgo;
-    SearchMeta<LevelNPC>    curNpc;
+    SearchMeta<LevelBlock>  m_curBlock;
+    SearchMeta<LevelBGO>    m_curBgo;
+    SearchMeta<LevelNPC>    m_curNpc;
 
     bool doSearchBlock(LevelEdit *edit);
     bool doSearchBGO(LevelEdit *edit);
@@ -108,7 +108,7 @@ private:
         SEARCH_LEVEL = 1 << 6,
         SEARCH_MUSICBOX = 1 << 7
     };
-    int currentSearches;
+    int m_currentSearches;
 };
 
 #endif // LVL_SEARCH_BOX_H

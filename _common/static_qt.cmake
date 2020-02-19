@@ -17,6 +17,11 @@ if(PGE_ENABLE_STATIC_QT)
         # message("==Qt-LibPNG detected! (${QT_PRCE2})==")
         list(APPEND QT_FOUND_EXTRA_LIBS ${QT_PRCE2})
         set(PGE_QT_STATIC_DETECTED TRUE)
+    else()
+        find_library(QT_PRCE2 pcre2)
+        if(QT_PRCE2)
+            list(APPEND QT_FOUND_EXTRA_LIBS ${QT_PRCE2})
+        endif()
     endif()
 
     find_library(QT_HARFBUZZ qtharfbuzz)
@@ -24,19 +29,16 @@ if(PGE_ENABLE_STATIC_QT)
         # message("==Qt-HarfBuzz detected! (${QT_HARFBUZZ})==")
         list(APPEND QT_FOUND_EXTRA_LIBS ${QT_HARFBUZZ})
         set(PGE_QT_STATIC_DETECTED TRUE)
+    else()
+        find_library(QT_HARFBUZZ harfbuzz)
+        if(QT_HARFBUZZ)
+            list(APPEND QT_FOUND_EXTRA_LIBS ${QT_HARFBUZZ})
+        endif()
     endif()
 
-    find_library(QT_FREETYPE qtfreetype)
-    if(QT_FREETYPE)
-        message("==Qt-FreeType detected! (${QT_FREETYPE})==")
-        list(APPEND QT_FOUND_EXTRA_LIBS ${QT_FREETYPE})
-    endif()
+    list(APPEND QT_FOUND_EXTRA_LIBS PGE_FreeType)
 
-    find_library(QT_PNG qtlibpng)
-    if(QT_PNG)
-        # message("==Qt-LibPNG detected! (${QT_PNG})==")
-        list(APPEND QT_FOUND_EXTRA_LIBS ${QT_PNG})
-    endif()
+    list(APPEND QT_FOUND_EXTRA_LIBS PGE_libPNG PGE_ZLib)
 
     find_library(QT_PTHREAD pthread)
     #if(QT_PTHREAD)
@@ -56,6 +58,7 @@ if(PGE_ENABLE_STATIC_QT)
 
         if(WIN32)
             set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                Q_IMPORT_PLUGIN(QWindowsVistaStylePlugin)
                 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)"
             )
         elseif(APPLE)
@@ -94,17 +97,17 @@ if(PGE_ENABLE_STATIC_QT)
 
         # message("Plugins:\n\n${QT_IMPORT_PLUGINS_MODULE}\n\n\n")
 
-        find_library(QT_QGIF    qgif PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
+        find_library(QT_QGIF    qgif PATHS "${CMAKE_PREFIX_PATH}/plugins/imageformats" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/imageformats")
         list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QGIF})
-        find_library(QT_ICNS    qicns PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
+        find_library(QT_ICNS    qicns PATHS "${CMAKE_PREFIX_PATH}/plugins/imageformats" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/imageformats")
         list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICNS})
-        find_library(QT_ICO     qico PATHS ${CMAKE_PREFIX_PATH}/plugins/imageformats)
+        find_library(QT_ICO     qico PATHS "${CMAKE_PREFIX_PATH}/plugins/imageformats" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/imageformats")
         list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICO})
 
         if(APPLE)
-            find_library(QT_MACSTYLE qmacstyle PATHS ${CMAKE_PREFIX_PATH}/plugins/styles)
+            find_library(QT_MACSTYLE qmacstyle PATHS "${CMAKE_PREFIX_PATH}/plugins/styles" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/styles")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_MACSTYLE})
-            find_library(QT_COCOA    qcocoa PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
+            find_library(QT_COCOA    qcocoa PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_COCOA})
 
             list(APPEND QT_FOUND_EXTRA_LIBS cups)
@@ -118,10 +121,12 @@ if(PGE_ENABLE_STATIC_QT)
                 Qt5PrintSupport
                 DiskArbitration
                 IOKit
+                IOSurface
                 Foundation
                 CoreServices
                 AppKit
                 ApplicationServices
+                Metal
                 CoreFoundation
                 CoreGraphics
                 OpenGL
@@ -143,40 +148,54 @@ if(PGE_ENABLE_STATIC_QT)
             endforeach()
         endif()
 
+        if(WIN32)
+            find_library(QT_WINVISTASTYLE qwindowsvistastyle PATHS "${CMAKE_PREFIX_PATH}/plugins/styles" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/styles")
+            if(QT_WINVISTASTYLE)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WINVISTASTYLE})
+            endif()
+            find_library(QT_WINDOWS    qwindows PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WINDOWS})
+        endif()
+
         if("${CMAKE_SYSTEM}" MATCHES "Linux")
 
-            find_library(QT_QEGLFS  qeglfs PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
+            find_library(QT_QEGLFS  qeglfs PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QEGLFS})
-            find_library(QT_LINUXFB qlinuxfb PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
+            find_library(QT_LINUXFB qlinuxfb PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_LINUXFB})
 
             # find_library(QT_EGLEMU  qeglfs-emu-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations)
             # list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLEMU})
-            find_library(QT_EGLX11  qeglfs-x11-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations)
+            find_library(QT_EGLX11  qeglfs-x11-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/egldeviceintegrations")
             if(QT_EGLX11)
                 list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLX11})
             else()
                 message("!!! QT_EGLX11 NOT FOUND!!!")
             endif()
 
-            find_library(QT_QXCB    qxcb PATHS ${CMAKE_PREFIX_PATH}/plugins/platforms)
+            find_library(QT_QXCB    qxcb PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             if(QT_QXCB)
                 list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QXCB})
+            else()
+                find_library(QT_QXCB xcb)
+                if(QT_QXCB)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QXCB})
+                endif()
             endif()
 
             # GTK3
             if(GTK_FOUND)
-                find_library(QT_GTK3 qgtk3 PATHS ${CMAKE_PREFIX_PATH}/plugins/platformthemes)
+                find_library(QT_GTK3 qgtk3 PATHS "${CMAKE_PREFIX_PATH}/plugins/platformthemes" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platformthemes")
                 if(QT_GTK3)
                     list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GTK3})
                     list(APPEND QT_FOUND_EXTRA_LIBS ${GTK_LIBRARIES})
                 endif()
             endif()
 
-            find_library(QT_EGLINT  qxcb-egl-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
+            find_library(QT_EGLINT  qxcb-egl-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLINT})
 
-            find_library(QT_Qt5EglFSDeviceIntegration  Qt5EglFSDeviceIntegration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
+            find_library(QT_Qt5EglFSDeviceIntegration  Qt5EglFSDeviceIntegration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_Qt5EglFSDeviceIntegration})
 
             foreach(qqlib
@@ -202,7 +221,7 @@ if(PGE_ENABLE_STATIC_QT)
                 endif()
             endforeach()
 
-            find_library(QT_GLXINT  qxcb-glx-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations)
+            find_library(QT_GLXINT  qxcb-glx-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GLXINT})
 
             if(NOT QT_PRCE2)
@@ -281,7 +300,7 @@ if(PGE_ENABLE_STATIC_QT)
             find_library(QT_GL GL)
             list(APPEND QT_FOUND_EXTRA_LIBS ${QT_GL})
 
-            find_library(QT_DL glib NAMES dl)
+            find_library(QT_DL dl)
             if(QT_DL)
                 # message("==DL detected! (${QT_DL})==")
                 list(APPEND QT_FOUND_EXTRA_LIBS ${QT_DL})

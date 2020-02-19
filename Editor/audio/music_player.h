@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class LvlMusPlay
 {
 public:
     enum MusicType{
-        LevelMusic=0,
+        LevelMusic = 0,
         WorldMusic,
         SpecialMusic
     };
@@ -47,7 +47,7 @@ public:
     static void setMusic(MusicType mt, unsigned long id, QString cmus);
     static void setNoMusic();
     static void updateMusic();
-    static void updatePlayerState(bool playing=true);
+    static void updatePlayerState(bool playing = true);
     static void stopMusic();
 
 };

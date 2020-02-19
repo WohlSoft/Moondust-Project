@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include <DirManager/dirman.h>
@@ -242,9 +243,9 @@ void TitleScene::processMenu()
             }
             else if(value == "menubox")
             {
-                PGE_MenuBox menubox(this, "Select something", PGE_MenuBox::msg_info, PGE_Point(-1, -1),
-                                    ConfigManager::setup_menu_box.box_padding,
-                                    ConfigManager::setup_message_box.sprite);
+                PGE_MenuBox menuBox = PGE_MenuBox(this, "Select something", PGE_MenuBox::msg_info, PGE_Point(-1, -1),
+                                                  ConfigManager::setup_menu_box.box_padding,
+                                                  ConfigManager::setup_message_box.sprite);
                 std::vector<std::string> items =
                 {
                     "Menuitem 1",
@@ -259,14 +260,14 @@ void TitleScene::processMenu()
                     "Menuitem 10",
                     "Menuitem 11"
                 };
-                menubox.addMenuItems(items);
-                menubox.setRejectSnd(obj_sound_role::MenuPause);
-                menubox.setMaxMenuItems(5);
-                menubox.exec();
+                menuBox.addMenuItems(items);
+                menuBox.setRejectSnd(obj_sound_role::MenuPause);
+                menuBox.setMaxMenuItems(5);
+                menuBox.exec();
 
-                if(menubox.answer() != PGE_Menu::npos)
+                if(menuBox.answer() != PGE_Menu::npos)
                 {
-                    PGE_MsgBox msg(this, "Your answer is:\n" + items[menubox.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1, -1),
+                    PGE_MsgBox msg(this, "Your answer is:\n" + items[menuBox.answer()], PGE_BoxBase::msg_info_light, PGE_Point(-1, -1),
                                    ConfigManager::setup_message_box.box_padding,
                                    ConfigManager::setup_message_box.sprite);
                     msg.exec();
@@ -342,15 +343,15 @@ void TitleScene::processMenu()
 }
 
 
-void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
+void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
 {
-    if(_menu < menuFirst) return;
-    if(_menu > menuLast) return;
+    if(targetMenu < menuFirst) return;
+    if(targetMenu > menuLast) return;
 
-    m_currentMenu = _menu;
+    m_currentMenu = targetMenu;
     m_menu.clear();
     m_menu.setTextLenLimit(22);
-    switch(int(_menu))
+    switch(int(targetMenu))
     {
     case menu_main:
         m_menu.setPos(300, 350);
@@ -379,13 +380,14 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         m_menu.addMenuItem("videosetup", qtTrId("MAINMENU_OPTIONS_VIDEO"));
         //% "Music volume"
         m_menu.addIntMenuItem(&g_AppSettings.volume_music, 0, 128, "vlm_music", qtTrId("MAINMENU_OPTIONS_MUS_VOL"), false,
-                            []()->void{ PGE_MusPlayer::setVolume(g_AppSettings.volume_music); });
+                              []()->void{ PGE_MusPlayer::setVolume(g_AppSettings.volume_music); });
         //% "Sound volume"
         m_menu.addIntMenuItem(&g_AppSettings.volume_sound, 0, 128, "vlm_sound", qtTrId("MAINMENU_OPTIONS_SND_VOL"), false);
+#ifndef __ANDROID__
         //% "Full Screen mode"
         m_menu.addBoolMenuItem(&g_AppSettings.fullScreen, "full_screen", qtTrId("MAINMENU_OPTIONS_FULLSCR"),
-                             []()->void{ PGE_Window::setFullScreen(g_AppSettings.fullScreen); }
-                            );
+                               []()->void{ PGE_Window::setFullScreen(g_AppSettings.fullScreen); });
+#endif
         break;
     case menu_tests:
         m_menu.setPos(300, 350);
@@ -418,7 +420,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         m_menu.addBoolMenuItem(&g_AppSettings.frameSkip, "frame_skip", qtTrId("VIDEO_ENABLE_FRSKIP"));
         //% "Enable V-Sync"
         m_menu.addBoolMenuItem(&g_AppSettings.vsync, "vsync", qtTrId("VIDEO_ENABLE_VSYNC"),
-                             [this]()->void
+                               [this]()->void
         {
             PGE_Window::vsync = g_AppSettings.vsync;
             PGE_Window::toggleVSync(g_AppSettings.vsync);
@@ -426,11 +428,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             m_menu.setEnabled("phys_step", !PGE_Window::vsync);
         },
         PGE_Window::vsyncIsSupported
-                            );
+                              );
 
         //% "Frame time (ms.)"
         m_menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 17, "phys_step", qtTrId("VIDEO_FRAME_TIME"), false,
-                            [this]()->void
+                              [this]()->void
         {
             if(!PGE_Window::vsync)
             {
@@ -441,9 +443,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             }
             else
                 g_AppSettings.timeOfFrame = PGE_Window::frameDelay;
-        },
-        !PGE_Window::vsync
-                           );
+        }, !PGE_Window::vsync);
         break;
     case menu_controls:
         m_menu.setPos(300, 350);
@@ -458,11 +458,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
     {
 
         KeyMap *mp_p;
-        int *mct_p = 0;
-        SDL_Joystick *jdev = NULL;
+        int *mct_p = nullptr;
+        SDL_Joystick *jDev = nullptr;
         std::function<void()> ctrlSwitch;
 
-        if(_menu == menu_controls_plr1)
+        if(targetMenu == menu_controls_plr1)
         {
             ctrlSwitch = [this]()->void
             {
@@ -472,7 +472,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             if((*mct_p >= 0) && (*mct_p < static_cast<int>(g_AppSettings.player1_joysticks.size())))
             {
                 if(*mct_p < static_cast<int>(g_AppSettings.joysticks.size()))
-                    jdev = g_AppSettings.joysticks[size_t(*mct_p)];
+                    jDev = g_AppSettings.joysticks[size_t(*mct_p)];
                 mp_p = &g_AppSettings.player1_joysticks[size_t(*mct_p)];
             }
             else
@@ -488,7 +488,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
             if((*mct_p >= 0) && (*mct_p < static_cast<int>(g_AppSettings.player2_joysticks.size())))
             {
                 if(*mct_p < static_cast<int>(g_AppSettings.joysticks.size()))
-                    jdev = g_AppSettings.joysticks[size_t(*mct_p)];
+                    jDev = g_AppSettings.joysticks[size_t(*mct_p)];
                 mp_p = &g_AppSettings.player2_joysticks[size_t(*mct_p)];
             }
             else
@@ -497,43 +497,43 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 
         m_menu.setPos(300, 216);
         m_menu.setItemsNumber(11);
-        std::vector<NamedIntItem> ctrls;
+        std::vector<NamedIntItem> controllers;
         NamedIntItem controller;
         controller.value = -1;
         //% "Keyboard"
         controller.label =   qtTrId("PLAYER_CONTROLS_SETUP_KEYBOARD");
-        ctrls.push_back(controller);
+        controllers.push_back(controller);
         for(size_t i = 0; i < g_AppSettings.joysticks.size(); i++)
         {
             controller.value = int(i);
             //FIXME: missing in-string arguments support
             //% "Joystick: %1"
             controller.label = fmt::qformat(qtTrId("PLAYER_CONTROLS_SETUP_JOYSTICK"), SDL_JoystickName(g_AppSettings.joysticks[i]));
-            ctrls.push_back(controller);
+            controllers.push_back(controller);
         }
         //% "Input:"
-        m_menu.addNamedIntMenuItem(mct_p, ctrls, "ctrl_type", qtTrId("PLAYER_CONTROLS_SETUP_INPUT_TYPE"), true, ctrlSwitch);
+        m_menu.addNamedIntMenuItem(mct_p, controllers, "ctrl_type", qtTrId("PLAYER_CONTROLS_SETUP_INPUT_TYPE"), true, ctrlSwitch);
         m_menu.setItemWidth(300);
         m_menu.setValueOffset(150);
-        m_menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->left, "key1",        "Left.........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->right, "key2",       "Right........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->right, "key2",       "Right........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->up, "key3",          "Up...........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->up, "key3",          "Up...........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->down, "key4",        "Down.........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->down, "key4",        "Down.........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->jump, "key5",        "Jump.........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->jump, "key5",        "Jump.........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6",    "Alt-Jump....", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->jump_alt, "key6",    "Alt-Jump....", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->run, "key7",         "Run..........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->run, "key7",         "Run..........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8",     "Alt-Run.....", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->run_alt, "key8",     "Alt-Run.....", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->drop, "key9",        "Drop.........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->drop, "key9",        "Drop.........", jDev);
         m_menu.setValueOffset(210);
-        m_menu.addKeyGrabMenuItem(&mp_p->start, "key10",      "Start........", jdev);
+        m_menu.addKeyGrabMenuItem(&mp_p->start, "key10",      "Start........", jDev);
         m_menu.setValueOffset(210);
     }
     break;
@@ -545,11 +545,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         m_menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         m_filefind_finished = false;
         m_filefind_folder = ConfigManager::dirs.worlds;
-        #ifndef PGE_NO_THREADING
-        m_filefind_thread = SDL_CreateThread(findEpisodes, "EpisodeFinderThread", NULL);
-        #else
-        findEpisodes(NULL);
-        #endif
+#ifndef PGE_NO_THREADING
+        m_filefind_thread = SDL_CreateThread(findEpisodes, "EpisodeFinderThread", nullptr);
+#else
+        findEpisodes(nullptr);
+#endif
     }
     break;
     case menu_playepisode:
@@ -575,11 +575,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
         m_menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         m_filefind_finished = false;
         m_filefind_folder = ConfigManager::dirs.worlds;
-        #ifndef PGE_NO_THREADING
-        m_filefind_thread = SDL_CreateThread(findLevels, "LevelFinderThread", NULL);
-        #else
-        findLevels(NULL);
-        #endif
+#ifndef PGE_NO_THREADING
+        m_filefind_thread = SDL_CreateThread(findLevels, "LevelFinderThread", nullptr);
+#else
+        findLevels(nullptr);
+#endif
     }
     break;
     case menu_playlevel:
@@ -603,9 +603,9 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 
     PGE_Rect menuBox = m_menu.rect();
     m_menu.setPos(PGE_Window::Width / 2 - menuBox.width() / 2, menuBox.y());
-    pLogDebug("Menuitem ID: %d, scrolling offset: %d", m_menustates[_menu].first, m_menustates[_menu].second);
-    m_menu.setCurrentItem(m_menustates[_menu].first);
-    m_menu.setOffset(m_menustates[_menu].second);
+    pLogDebug("Menuitem ID: %d, scrolling offset: %d", m_menustates[targetMenu].first, m_menustates[targetMenu].second);
+    m_menu.setCurrentItem(m_menustates[targetMenu].first);
+    m_menu.setOffset(m_menustates[targetMenu].second);
 }
 
 
@@ -614,17 +614,17 @@ void TitleScene::setMenu(TitleScene::CurrentMenu _menu)
 int TitleScene::findEpisodes(void *)
 {
     m_filefind_found_files.clear();
-    DirMan worlddir(m_filefind_folder);
+    DirMan worldDir(m_filefind_folder);
     std::vector<std::string> files;
     std::vector<std::string> folders;
-    worlddir.getListOfFolders(folders);
+    worldDir.getListOfFolders(folders);
 
     for(std::string &folder : folders)
     {
         std::string path = m_filefind_folder + folder;
-        DirMan episodedir(path);
+        DirMan episodeDir(path);
         std::vector<std::string> worlds;
-        episodedir.getListOfFiles(worlds, {".wld", ".wldx"});
+        episodeDir.getListOfFiles(worlds, {".wld", ".wldx"});
         for(std::string &world : worlds)
             files.push_back(m_filefind_folder + folder + "/" + world);
     }
@@ -670,10 +670,10 @@ int TitleScene::findEpisodes(void *)
 int TitleScene::findLevels(void *)
 {
     //Build list of casual levels
-    DirMan leveldir(m_filefind_folder);
+    DirMan levelDir(m_filefind_folder);
 
     std::vector<std::string> files;
-    leveldir.getListOfFiles(files, {".lvl", ".lvlx"});
+    levelDir.getListOfFiles(files, {".lvl", ".lvlx"});
 
     m_filefind_found_files.clear();//Clean up old stuff
 
@@ -687,10 +687,10 @@ int TitleScene::findLevels(void *)
             if(FileFormats::OpenLevelFileHeader(m_filefind_folder + file, level))
             {
                 std::string title = level.LevelName;
-                std::pair<std::string, std::string > filex;
-                filex.first = m_filefind_folder + file;
-                filex.second = (title.empty() ? file : title);
-                m_filefind_found_files.push_back(filex);
+                std::pair<std::string, std::string > fileX;
+                fileX.first = m_filefind_folder + file;
+                fileX.second = (title.empty() ? file : title);
+                m_filefind_found_files.push_back(fileX);
                 has_files_added = true;
             }
             else

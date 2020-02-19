@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,11 +38,11 @@ class TilesetEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit TilesetEditor(dataconfigs* conf, QGraphicsScene *scene=0, QWidget *parent = 0);
+    explicit TilesetEditor(dataconfigs *conf, QGraphicsScene *scene = nullptr, QWidget *parent = nullptr);
     ~TilesetEditor();
     enum GFXMode
     {
-        GFX_Staff=0,
+        GFX_Staff = 0,
         GFX_Level,
         GFX_World
     };
@@ -79,14 +79,14 @@ private:
     QMenu   m_searchSetup;
     int     m_searchBy = 0;
 
-    GFXMode mode;
-    QGraphicsScene *scn;
+    GFXMode m_mode = GFX_Staff;
+    QGraphicsScene *scn = nullptr;
 
-    tileset* m_tileset;
+    tileset* m_tileset = nullptr;
     int oldWidth;
     int oldHeight;
-    ElementsListModel* m_model;
-    dataconfigs* m_conf;
+    ElementsListModel *m_model = nullptr;
+    dataconfigs *m_conf = nullptr;
     //void setUpItems(ItemTypes type);
     ElementsListModel::ElementType toElementType(int type);
 };

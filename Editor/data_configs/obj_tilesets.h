@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,7 +81,20 @@ struct SimpleTilesetGroup
             return groupName.compare(other.groupName, Qt::CaseInsensitive) > 0;
         return groupWeight > other.groupWeight;
     }
+
+    bool operator==(const SimpleTilesetGroup& other) const
+    {
+        return ((groupCat == other.groupCat) &&
+                (groupWeight == other.groupWeight) &&
+                (groupName.compare(other.groupName, Qt::CaseInsensitive) == 0));
+    }
+
+    bool operator!=(const SimpleTilesetGroup& other) const
+    {
+        return !operator==(other);
+    }
 };
+
 
 /**
  * @brief Cached category entry auto-created from the list of groups
@@ -113,6 +126,17 @@ struct SimpleTilesetCachedCategory
         if((weight < 0) || (other.weight < 0) || (weight == other.weight))
             return name.compare(other.name, Qt::CaseInsensitive) > 0;
         return weight > other.weight;
+    }
+
+    bool operator==(const SimpleTilesetCachedCategory& other) const
+    {
+        return ((weight == other.weight) &&
+                (name.compare(other.name, Qt::CaseInsensitive) == 0));
+    }
+
+    bool operator!=(const SimpleTilesetCachedCategory& other) const
+    {
+        return !operator==(other);
     }
 };
 

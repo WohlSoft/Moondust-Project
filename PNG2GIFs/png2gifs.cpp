@@ -1,7 +1,7 @@
 /*
  * PNG2GIFs, a free tool for convert PNG into GIF images with his masks
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,6 @@
 #include <tclap/CmdLine.h>
 #include "version.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-#endif
 #include <FreeImageLite.h>
 
 static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
@@ -262,7 +259,7 @@ int main(int argc, char *argv[])
     {
         // Define the command line object.
         TCLAP::CmdLine  cmd(V_FILE_DESC "\n"
-                            "Copyright (c) 2017-2018 Vitaly Novichkov <admin@wohlnet.ru>\n"
+                            "Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>\n"
                             "This program is distributed under the GNU GPLv3+ license\n", ' ', V_FILE_VERSION V_FILE_RELEASE);
 
         TCLAP::SwitchArg switchRemove("r",          "remove", "Remove source images after successful conversion", false);
@@ -273,7 +270,7 @@ int main(int argc, char *argv[])
                 "path to a directory where the converted images will be saved",
                 false, "", "/path/to/output/directory/");
         TCLAP::UnlabeledMultiArg<std::string> inputFileNames("filePath(s)",
-                "Input GIF file(s)",
+                "Input PNG file(s)",
                 true,
                 "Input file path(s)");
 

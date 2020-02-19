@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,23 +29,26 @@
 //Open Level Properties
 void MainWindow::on_actionLevelProp_triggered()
 {
-    if(activeChildWindow()==1)
+    if(activeChildWindow() != WND_Level)
+        return;
+
+    LevelEdit * e=activeLvlEditWin();
+    if(!e) return;
+    LevelProps levelProps(e->LvlData, this);
+    levelProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    levelProps.setGeometry(util::alignToScreenCenter(levelProps.size()));
+    if(levelProps.exec() == QDialog::Accepted)
     {
-        LevelEdit * e=activeLvlEditWin();
-        if(!e) return;
-        LevelProps LevProps(e->LvlData, this);
-        LevProps.setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        LevProps.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, LevProps.size(), qApp->desktop()->availableGeometry()));
-        if(LevProps.exec()==QDialog::Accepted)
-        {
-            QList<QVariant> lvlsetData;
-            lvlsetData.push_back(e->LvlData.LevelName);
-            lvlsetData.push_back(LevProps.LevelTitle);
-            e->scene->m_history->addChangeLevelSettings(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
-            e->LvlData.LevelName = LevProps.LevelTitle;
-            e->LvlData.meta.modified = true;
-            e->setWindowTitle( QString(LevProps.LevelTitle.isEmpty() ? e->userFriendlyCurrentFile() : LevProps.LevelTitle).replace("&", "&&&") );
-            updateWindowMenu();
-        }
+        QList<QVariant> lvlsetData;
+        lvlsetData.push_back(e->LvlData.LevelName);
+        lvlsetData.push_back(e->LvlData.custom_params);
+        lvlsetData.push_back(levelProps.m_levelTitle);
+        lvlsetData.push_back(levelProps.m_customParams);
+        e->scene->m_history->addChangeLevelSettings(HistorySettings::SETTING_LEVELNAME, QVariant(lvlsetData));
+        e->LvlData.LevelName = levelProps.m_levelTitle;
+        e->LvlData.custom_params = levelProps.m_customParams;
+        e->LvlData.meta.modified = true;
+        e->setWindowTitle( QString(levelProps.m_levelTitle.isEmpty() ? e->userFriendlyCurrentFile() : levelProps.m_levelTitle).replace("&", "&&&") );
+        updateWindowMenu();
     }
 }

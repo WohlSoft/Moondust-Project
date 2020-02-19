@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 #endif
 
 #include <iostream>
+#include <locale.h>
 #include "version.h"
 
 #include <common_features/logger.h>
@@ -51,11 +52,6 @@
 
 #include "mainwindow.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-//#define DWORD unsigned int //Avoid definition as "unsigned long" while some functions are built as "unsigned int"
-#endif
-
 #include <FreeImageLite.h>
 
 static bool initied_sdl = false;
@@ -69,10 +65,10 @@ static QStringList          args;
 
 static void pgeInitSDL()
 {
-    #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
     SDL_SetMainReady();
-    #endif
-    #ifdef USE_SDL_MIXER
+#endif
+#ifdef USE_SDL_MIXER
     LogDebugNC("Initializing SDL Audio...");
     if(SDL_Init(SDL_INIT_AUDIO) < 0)
     {
@@ -82,7 +78,7 @@ static void pgeInitSDL()
     LogDebugNC("Initializing SDL Mixer X...");
     if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MID) < 0)
         LogWarning(QString("Error of loading SDL Mixer: %1").arg(Mix_GetError()));
-    #endif
+#endif
 
     initied_sdl = true;
 }
@@ -98,16 +94,16 @@ static void pgeEditorQuit()
 {
     if(initied_sdl)
     {
-        #ifdef USE_SDL_MIXER
+#ifdef USE_SDL_MIXER
         LogDebugNC("Free music buffer...");
-        PGE_MusPlayer::MUS_freeStream();
+        PGE_MusPlayer::closeFile();
         LogDebugNC("Free sound buffer...");
         PGE_SfxPlayer::freeBuffer();
         LogDebugNC("Closing audio...");
         Mix_CloseAudio();
         LogDebugNC("Closing SDL...");
         SDL_Quit();
-        #endif
+#endif
     }
 
     if(initied_fig)
@@ -148,27 +144,30 @@ int main(int argc, char *argv[])
         advSetup.beginGroup("extra");
         bool atr_hdpi   = advSetup.value("high-dpi-scaling", true).toBool();
         advSetup.endGroup();
-        #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
         QApplication::setAttribute(Qt::AA_DontShowIconsInMenus, true);
         //QApplication::setAttribute(Qt::AA_NativeWindows, true);  //Experimentally
-        #endif
-        #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+#endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
         QApplication::setAttribute(Qt::AA_DisableHighDpiScaling, !atr_hdpi);
         QApplication::setAttribute(Qt::AA_EnableHighDpiScaling, atr_hdpi);
         QApplication::setAttribute(Qt::AA_UseHighDpiPixmaps, atr_hdpi);
-        #else
+#else
         Q_UNUSED(atr_hdpi);
-        #endif
+#endif
     }
 
     app     = new PGE_Application(argc, argv);
     args    = app->arguments();
 
-    #ifdef Q_OS_MAC
+    // Workaround: https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
+    setlocale(LC_NUMERIC, "C");
+
+#ifdef Q_OS_MAC
     QDir dir(QApplication::applicationDirPath());
     dir.cdUp();
     QApplication::setLibraryPaths(QStringList(dir.absolutePath()));
-    #endif
+#endif
 
     int ret = 0;
     appSingle = new SingleApplication(args);
@@ -181,15 +180,16 @@ int main(int argc, char *argv[])
     }
 
     app->setStyle(new PGE_ProxyStyle(app->style()));
-    #ifdef Q_OS_LINUX
-    {
-        QStringList availableStyles = QStyleFactory::keys();
-        if(availableStyles.contains("GTK2", Qt::CaseInsensitive))
-            app->setStyle(QStyleFactory::create("GTK2"));
-        else if(availableStyles.contains("Fusion", Qt::CaseInsensitive))
-            app->setStyle(QStyleFactory::create("Fusion"));
-    }
-    #endif
+//TODO: Implement a "view" setting like VLC has to change the view theme
+//#ifdef Q_OS_LINUX
+//    {
+//        QStringList availableStyles = QStyleFactory::keys();
+//        if(availableStyles.contains("GTK2", Qt::CaseInsensitive))
+//            QApplication::setStyle(QStyleFactory::create("GTK2"));
+//        else if(availableStyles.contains("Fusion", Qt::CaseInsensitive))
+//            QApplication::setStyle(QStyleFactory::create("Fusion"));
+//    }
+//#endif
 
     QFont fnt = app->font();
     fnt.setPointSize(PGEDefaultFontSize);
@@ -265,13 +265,13 @@ int main(int argc, char *argv[])
     app->connect(mWindow, SIGNAL(closeEditor()), app, SLOT(quit()));
     app->connect(mWindow, SIGNAL(closeEditor()), app, SLOT(closeAllWindows()));
 
-    #ifndef Q_OS_ANDROID
+#ifndef Q_OS_ANDROID
     mWindow->show();
     mWindow->setWindowState(mWindow->windowState() | Qt::WindowActive);
     mWindow->raise();
-    #else
+#else
     mWindow->showFullScreen();
-    #endif
+#endif
 
     QApplication::setActiveWindow(mWindow);
 
@@ -280,20 +280,20 @@ int main(int argc, char *argv[])
 
     //Open files which opened by command line
     mWindow->openFilesByArgs(args);
-    #ifdef __APPLE__
+#ifdef __APPLE__
     mWindow->openFilesByArgs(app->getOpenFileChain(), 0);
-    #endif
+#endif
 
     //Set acception of external file openings
     mWindow->connect(appSingle, SIGNAL(openFile(QString)), mWindow, SLOT(OpenFile(QString)));
-    #ifdef __APPLE__
+#ifdef __APPLE__
     mWindow->connect(app, SIGNAL(openFileRequested(QString)), mWindow, SLOT(OpenFile(QString)));
     app->setConnected();
-    #endif
+#endif
 
-    #ifdef Q_OS_WIN
+#ifdef Q_OS_WIN
     mWindow->initWindowsThumbnail();
-    #endif
+#endif
 
     //Show greeting
     mWindow->showWelcomeDialog();

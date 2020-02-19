@@ -6,6 +6,7 @@ SET MAKE_EXTRA_ARGS=-j 4
 SET CMakeIt=1
 SET CMakeNinja=0
 SET CMakeDeploy=0
+SET PortableDeploy=0
 SET DebugBuild=0
 
 set OldPATH=%PATH%
@@ -32,6 +33,7 @@ if "%1"=="qmake-it" (
     goto error
 )
 if "%1"=="deploy" SET CMakeDeploy=1
+if "%1"=="portable" SET PortableDeploy=1
 if "%1"=="ninja" SET CMakeNinja=1
 if "%1"=="debug" SET DebugBuild=1
 if "%1"=="--help" goto Usage
@@ -59,7 +61,11 @@ echo  repair-submodules    - Repair invalid or broken submodules
 echo  --help               - Print this manual
 echo  debug                - Run build in debug configuration
 echo  ninja                - Use Ninja build system (CMake only build)
-echo  deploy               - Automatically run a deploymed (CMake only build)
+echo  deploy               - Automatically run a deploymed
+echo.
+echo --- Deployment options ---
+echo  portable             - Deploy a portable installation that will don't store
+echo                         settings, logs, and game saves in system or home directory.
 echo.
 echo --- Flags ---
 echo  nopause              - Disable pause on script completion
@@ -68,7 +74,7 @@ echo --- Disable building of components ---
 echo  noqt                  - Skip building of components are using Qt
 echo  noeditor              - Skip building of PGE Editor compoment (Qt5)
 echo  noengine              - Skip building of PGE Engine compoment (SDL2)
-echo  nocalibrator          - Skip building of Playable Character Calibrator compoment (Qt5)
+echo  nocalibrator          - Skip building of Playable Character Calibrator (Qt5)
 echo  nomaintainer          - Skip building of PGE Maintainer compoment (Qt5)
 echo  nomanager             - Skip building of PGE Manager compoment (Qt5)
 echo  nomusicplayer         - Skip building of PGE MusPlay compoment (Qt5)
@@ -118,10 +124,6 @@ cmake -G "%CMAKE_GENERATOR%" -DCMAKE_PREFIX_PATH="%QtDir%/../" -DCMAKE_INSTALL_P
 @echo off
 if ERRORLEVEL 1 goto error
 
-rem ==== WORKAROUND for Ninja that won't allow refer not built yet libraries ====
-if %CMakeNinja%==1 cmake --build . --target libs -- %MAKE_EXTRA_ARGS%
-if %CMakeNinja%==1 if ERRORLEVEL 1 goto error
-
 cmake --build . --target all -- %MAKE_EXTRA_ARGS%
 if ERRORLEVEL 1 goto error
 
@@ -133,8 +135,10 @@ if ERRORLEVEL 1 goto error
 
 if %CMakeDeploy%==0 goto cMakeSkipDeploy
     rem === Small tweaking inside of the repository ===
-    cmake --build . --target enable_portable
-    if ERRORLEVEL 1 goto error
+    if %PortableDeploy%==1 (
+        cmake --build . --target enable_portable
+        if ERRORLEVEL 1 goto error
+    )
 
     cmake --build . --target put_online_help
     if ERRORLEVEL 1 goto error
@@ -191,6 +195,16 @@ IF EXIST .\_Libs\_sources\_build_cache_msvc\NUL (
     rmdir /s /q _Libs\_sources\_build_cache_msvc
 )
 
+IF EXIST .\build-pge-cmake-release\NUL (
+                    echo removing build-pge-cmake-release ...
+                    rmdir /s /q build-pge-cmake-release
+)
+
+IF EXIST .\build-pge-cmake-debug\NUL (
+                    echo removing build-pge-cmake-debug ...
+                    rmdir /s /q build-pge-cmake-debug
+)
+
 echo ==== Clear! ====
 exit /B 0
 goto quit
@@ -215,7 +229,6 @@ rem ------------------------------------------------------------
 rem !!FIXME!! Implement parsing of submodules list and fill this array automatically
 rem NOTE: Don't use "git submodule foreach" because broken submodule will not shown in it's list!
 set SUBMODULES=_Libs\FreeImage
-set SUBMODULES=%SUBMODULES% _Libs\QtPropertyBrowser
 set SUBMODULES=%SUBMODULES% _Libs\sqlite3
 set SUBMODULES=%SUBMODULES% _Libs\AudioCodecs
 set SUBMODULES=%SUBMODULES% _Libs\SDL_Mixer_X

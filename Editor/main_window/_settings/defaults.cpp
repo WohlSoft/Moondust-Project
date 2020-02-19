@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,15 +78,15 @@ void MainWindow::setDefaults()
 
 void MainWindow::setUiDefults()
 {
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
-    #endif
+#endif
 
     //MainWindow Geometry;
-    QRect dg = qApp->desktop()->availableGeometry(qApp->desktop()->primaryScreen());
+    QRect dg = util::getScreenGeometry();
 
     //Init default geometry of main window
     int margin = 100;
@@ -96,6 +96,7 @@ void MainWindow::setUiDefults()
 
     dock_LvlItemBox      = new LevelItemBox(this);
     dock_WldItemBox      = new WorldItemBox(this);
+    dock_WldMusicBoxes   = new WorldMusicBoxItemBox(this);
 
     dock_LvlWarpProps    = new LvlWarpBox(this);
     dock_LvlItemProps    = new LvlItemProperties(this);
@@ -114,6 +115,29 @@ void MainWindow::setUiDefults()
     dock_VariablesBox    = new VariablesBox(this);
 
     tabifyDockWidget(dock_LvlItemBox, dock_WldItemBox);
+    tabifyDockWidget(dock_WldItemBox, dock_WldMusicBoxes);
+
+    m_sectionButtons[0] = ui->actionSection_1;
+    m_sectionButtons[1] = ui->actionSection_2;
+    m_sectionButtons[2] = ui->actionSection_3;
+    m_sectionButtons[3] = ui->actionSection_4;
+    m_sectionButtons[4] = ui->actionSection_5;
+    m_sectionButtons[5] = ui->actionSection_6;
+    m_sectionButtons[6] = ui->actionSection_7;
+    m_sectionButtons[7] = ui->actionSection_8;
+    m_sectionButtons[8] = ui->actionSection_9;
+    m_sectionButtons[9] = ui->actionSection_10;
+    m_sectionButtons[10] = ui->actionSection_11;
+    m_sectionButtons[11] = ui->actionSection_12;
+    m_sectionButtons[12] = ui->actionSection_13;
+    m_sectionButtons[13] = ui->actionSection_14;
+    m_sectionButtons[14] = ui->actionSection_15;
+    m_sectionButtons[15] = ui->actionSection_16;
+    m_sectionButtons[16] = ui->actionSection_17;
+    m_sectionButtons[17] = ui->actionSection_18;
+    m_sectionButtons[18] = ui->actionSection_19;
+    m_sectionButtons[19] = ui->actionSection_20;
+    m_sectionButtons[20] = ui->actionSection_21;
 
     //#ifndef Q_OS_WIN
     //tabifyDockWidget(dock_LvlWarpProps, dock_LvlSectionProps);
@@ -140,10 +164,10 @@ void MainWindow::setUiDefults()
     //DisableFloatFeature(dock_WldSearchBox);
     //DisableFloatFeature(dock_WldSettingsBox);
     //DisableFloatFeature(dock_DebuggerBox);
-    #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
     DisableFloatFeature(dock_TilesetBox);
     DisableFloatFeature(dock_BookmarksBox);
-    #endif
+#endif
     //#endif
 
     //Add "New" tool button as menu
@@ -166,11 +190,6 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptLocal, &QAction::setDisabled);
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptEpisode, &QAction::setDisabled);
 
-    windowMapper = new QSignalMapper(this);
-
-    connect(windowMapper, SIGNAL(mapped(QWidget *)),
-            this, SLOT(setActiveSubWindow(QWidget *)));
-
     ui->actionPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
     ui->centralWidget->cascadeSubWindows();
 
@@ -185,10 +204,10 @@ void MainWindow::setUiDefults()
     ui->actionFloodSectionOnly->setVisible(false);
     ui->actionFloodSectionOnly->setEnabled(false);
 
-    #ifndef Q_OS_WIN
+#ifndef Q_OS_WIN
     addToolBar(Qt::LeftToolBarArea, ui->LevelObjectToolbar);
     addToolBar(Qt::LeftToolBarArea, ui->WorldObjectToolbar);
-    #endif
+#endif
 
     {
         QAction *action = ui->menuSetGridSize->addAction(tr("Default by item"));
@@ -355,6 +374,9 @@ void MainWindow::setUiDefults()
         m_toolbarVanilla->setVisible(false);
     }
 
+    // Register hot key without adding into toolbar
+    addAction(ui->actionNewFile);
+
     ui->menuWindow->menuAction()->setEnabled(true);
     ui->menuLevel->menuAction()->setEnabled(false);
     ui->menuWorld->menuAction()->setEnabled(false);
@@ -368,6 +390,7 @@ void MainWindow::setUiDefults()
     ui->actionSection_Settings->setVisible(false);
     ui->actionWarpsAndDoors->setVisible(false);
     ui->actionWLDToolBox->setVisible(false);
+    ui->actionMusicBoxes->setVisible(false);
     ui->actionGridEn->setChecked(true);
 
     ui->actionTilesetBox->setVisible(false);
@@ -391,9 +414,9 @@ void MainWindow::setUiDefults()
     m_ui_musicVolume->setMaximumWidth(70);
     m_ui_musicVolume->setMinimumWidth(70);
     m_ui_musicVolume->setMinimum(0);
-    #ifndef MIX_MAX_VOLUME
-#define MIX_MAX_VOLUME 128
-    #endif
+#ifndef MIX_MAX_VOLUME
+#   define MIX_MAX_VOLUME 128
+#endif
     m_ui_musicVolume->setMaximum(MIX_MAX_VOLUME);
     m_ui_musicVolume->setValue(GlobalSettings::musicVolume);
 
@@ -407,12 +430,12 @@ void MainWindow::setUiDefults()
     zoom = new QLineEdit(ui->LevelSectionsToolBar);
     zoom->setValidator(new QIntValidator(0, 2001, zoom));
     zoom->setText("100");
-    #ifdef Q_OS_OSX
+#ifdef Q_OS_OSX
     zoom->setMinimumWidth(40);
     zoom->setMaximumWidth(50);
-    #else
+#else
     zoom->setMaximumWidth(28);
-    #endif
+#endif
     zoom->setEnabled(false);
 
     ui->LevelSectionsToolBar->insertWidget(ui->actionZoomReset, zoom);
@@ -420,10 +443,10 @@ void MainWindow::setUiDefults()
     /*********************Zoom field*************************/
 
     /***Hide all "under construction" elements in release builds***/
-    #ifndef DEBUG_BUILD
+#ifndef DEBUG_BUILD
     ui->actionVariables->setVisible(false);
     ui->actionScriptEditor->setVisible(false);
-    #endif
+#endif
     /**************************************************************/
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionSelect, &QAction::setEnabled);
@@ -459,9 +482,6 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setVisible);
 
     connect(this, &MainWindow::windowActiveLevelWorld,  ui->action_doSafeTest, &QAction::setEnabled);
-    #ifdef Q_OS_WIN
-    connect(this, &MainWindow::windowActiveLevel, ui->actionRunTestSMBX, &QAction::setEnabled);
-    #endif
     connect(this, &MainWindow::windowActiveLevel, ui->LevelObjectToolbar, &QWidget::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->WorldObjectToolbar, &QWidget::setVisible);
 
@@ -479,6 +499,7 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionDebugger, &QAction::setVisible);
 
     connect(this, &MainWindow::windowActiveWorld, ui->actionWLDToolBox, &QAction::setVisible);
+    connect(this, &MainWindow::windowActiveWorld, ui->actionMusicBoxes, &QAction::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->actionWorld_settings, &QAction::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->actionWLD_SearchBox, &QAction::setVisible);
 
@@ -520,34 +541,13 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_FlipVertical, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_RotateLeft, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevel, ui->actionSCT_RotateRight, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel, ui->actionAdditional_Settings, &QAction::setEnabled);
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuScript->menuAction(), &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCreateScriptLocal, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCreateScriptEpisode, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuLunaLUA_scripts->menuAction(), &QAction::setEnabled);
 
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_1, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_2, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_3, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_4, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_5, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_6, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_7, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_8, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_9, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_10, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_11, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_12, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_13, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_14, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_15, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_16, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_17, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_18, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_19, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_20, &QAction::setEnabled);
-    connect(this, &MainWindow::windowActiveLevel,   ui->actionSection_21, &QAction::setEnabled);
+    for(size_t i = 0; i < m_sectionButtonsCount; i++)
+        connect(this, &MainWindow::windowActiveLevel,   m_sectionButtons[i], &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevel,   ui->actionSectionMore, &QAction::setEnabled);
-
 }

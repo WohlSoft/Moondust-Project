@@ -1,33 +1,33 @@
-#/bin/bash
+#!/bin/bash
 
 # Prints a line with text in middle
 # Syntax:
 #   printLine <string> <color of text in ANSI format> <color of line>
 function printLine()
 {
-    lineLenght=64
+    lineLength=64
     Str=$1
     StrLen=${#Str}
-    BeginAt=$(( ($lineLenght/2) - ($StrLen/2) ))
+    BeginAt=$(( ($lineLength/2) - ($StrLen/2) ))
 
     lineColor=$3
     textColor=$2
 
     if [[ "$lineColor" != "" ]]; then
-    printf $lineColor; fi
+    printf ${lineColor}; fi
 
-    for((i=0; i < $lineLenght; i++))
+    for((i=0; i < $lineLength; i++))
     do
         if (($i == $BeginAt))
         then
             if [[ "$textColor" != "" ]]; then
-            printf $textColor; fi
+            printf ${textColor}; fi
         fi
 
         if (($i == $BeginAt + $StrLen))
         then
             if [[ "$lineColor" != "" ]]; then
-            printf $lineColor; fi
+            printf ${lineColor}; fi
         fi
 
         if (( $i >= $BeginAt && $i < $BeginAt + $StrLen ))
@@ -46,9 +46,9 @@ function getCpusCount()
     if [[ "$OSTYPE" == "darwin"* ]]; then
         echo $(sysctl -n hw.ncpu);
     elif [[ "$OSTYPE" == "msys"* ]]; then
-        echo 4; # Windows says 'No way!'. Yet... Until we find a way to do this
+        echo $(grep -c ^processor /proc/cpuinfo);
     elif [[ "$OSTYPE" == "haiku" ]]; then
-    	echo 4; # Haiku also can't say count of CPUs
+        echo 4; # Haiku can't say count of CPUs
     else
         echo $(grep -c ^processor /proc/cpuinfo);
     fi
@@ -84,14 +84,14 @@ function pause()
 
 function errorofbuild()
 {
-    printLine "AN ERROR OCCURED!" "\E[0;41;37m" "\E[0;31m"
-    cd $bak
+    printLine "AN ERROR OCCURRED!" "\E[0;41;37m" "\E[0;31m"
+    cd ${bak}
     exit 1
 }
 
 function checkState()
 {
-    if [ $? -eq 0 ]
+    if [[ $? -eq 0 ]]
     then
         printf "=== \E[37;42mOK!\E[0m ===\n\n"
     else
@@ -102,11 +102,11 @@ function checkState()
 function lackOfDependency()
 {
     printLine "DEPENDENCIES ARE NOT BUILT! Run ./build_deps.sh first!" "\E[0;41;37m" "\E[0;31m"
-    cd $bak
+    cd ${bak}
     exit 1
 }
 
-function osx_realpath() 
+function osx_realpath()
 {
     case "${1}" in
     [./]*)

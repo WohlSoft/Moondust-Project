@@ -1,3 +1,18 @@
+1.4.2
+* Added tempo change slider (will work for some formats only)
+* Added tooltip to display current volume value while sliding volume by mouse
+* On Linux and macOS is no more need to try restart MusPlay twice after crash: single try should start MusPlay normally
+* File association now works on Linux
+* Music looping control: added ability to set loop to 1, 2, 3 times or keep loop forever
+* Added position and panning effects controlling for SFX testing
+* Added Audio Settings to change sample rate, format and a count of channels
+* Added an ability to change Timidity config path on the fly
+* Added an ability to change FluidSynth SF2 path on the fly
+
+1.4.1
+* Removed "AdLib percussion" flag since it have lost a sense with rework on libADLMIDI side
+* Added support for more OPL3 and OPL2 emulators into emulator choice lists
+
 1.4
 * Begin the changelog
 * Split up MIDI Settings and SFX testing

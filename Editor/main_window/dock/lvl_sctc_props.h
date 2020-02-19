@@ -3,10 +3,14 @@
 #define LVL_SCTC_PROPS_H
 
 #include <QDockWidget>
+#include <QMutex>
+#include <memory>
 #include "mwdock_base.h"
 
 class MainWindow;
 class QPushButton;
+class QSpacerItem;
+class JsonSettingsWidget;
 
 namespace Ui {
 class LvlSectionProps;
@@ -20,8 +24,9 @@ class LvlSectionProps : public QDockWidget, public MWDock_Base
 private:
     explicit LvlSectionProps(QWidget *parent);
     ~LvlSectionProps();
+
 public:
-    bool lockSctSettingsProps;
+    bool m_externalLock = false;
     QPushButton *getEditBackground2IniButton();
 
 public slots:
@@ -60,6 +65,13 @@ protected:
     virtual void focusInEvent(QFocusEvent * ev);
 
 private:
+    void updateExtraSettingsWidget();
+    void onExtraSettingsChanged();
+
+    QMutex m_mutex;
+    std::unique_ptr<JsonSettingsWidget> m_extraSettings;
+    std::unique_ptr<QSpacerItem> m_extraSettingsSpacer;
+
     Ui::LvlSectionProps *ui;
 };
 

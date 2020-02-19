@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,16 +46,17 @@ void MainWindow::applyTheme(QString themeDir)
 
     this->setStyleSheet( Themes::StyleSheet() );
 
-    ui->actionLVLToolBox->setIcon(Themes::icon(Themes::level_24));
-    ui->actionWLDToolBox->setIcon(Themes::icon(Themes::world_24));
+    ui->actionLVLToolBox->setIcon(Themes::icon(Themes::level_item_browser));
+    ui->actionWLDToolBox->setIcon(Themes::icon(Themes::world_item_browser));
+    ui->actionMusicBoxes->setIcon(Themes::icon(Themes::world_music_boxes));
 
     ui->menuNew->setIcon(Themes::icon(Themes::file_new));
     setToolButtonMenuIcon(ui->fileIoTooBar, ui->menuNew, Themes::icon(Themes::file_new));
     ui->actionNewLevel->setIcon(Themes::icon(Themes::level_16));
-    dock_LvlItemBox->setWindowIcon(Themes::icon(Themes::level_16));
+    dock_LvlItemBox->setWindowIcon(Themes::icon(Themes::level_item_browser));
 
     ui->actionNewWorld_map->setIcon(Themes::icon(Themes::world_16));
-    dock_WldItemBox->setWindowIcon(Themes::icon(Themes::level_16));
+    dock_WldItemBox->setWindowIcon(Themes::icon(Themes::world_item_browser));
 
     ui->actionNewNPC_config->setIcon(Themes::icon(Themes::npc_16));
 

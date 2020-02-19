@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>289</width>
-    <height>468</height>
+    <width>277</width>
+    <height>500</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="focusPolicy">
    <enum>Qt::NoFocus</enum>
@@ -24,476 +30,541 @@
    <string>Section Settings</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents">
-   <layout class="QGridLayout" name="gridLayout_4">
+   <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,0,0,0">
     <property name="leftMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="topMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="rightMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>5</number>
+     <number>0</number>
     </property>
     <property name="spacing">
-     <number>3</number>
+     <number>0</number>
     </property>
-    <item row="2" column="0" colspan="2">
-     <widget class="QGroupBox" name="LVLPropMusicGr">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>83</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Music</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_2" columnstretch="400,0,0">
-       <property name="leftMargin">
-        <number>2</number>
-       </property>
-       <property name="topMargin">
-        <number>2</number>
-       </property>
-       <property name="rightMargin">
-        <number>2</number>
-       </property>
-       <property name="bottomMargin">
-        <number>2</number>
-       </property>
-       <property name="horizontalSpacing">
-        <number>2</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>1</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QComboBox" name="LVLPropsMusicNumber">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>24</height>
-          </size>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::WheelFocus</enum>
-         </property>
-         <property name="maxVisibleItems">
-          <number>50</number>
-         </property>
-         <item>
-          <property name="text">
-           <string notr="true">[Silence]</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>16</height>
-          </size>
-         </property>
-         <property name="text">
-          <string comment="Flag of custom music on the level">Custom</string>
-         </property>
-         <property name="tristate">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QLabel" name="LVLPropCMusicLbl">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>12</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Music file:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="LVLPropsMusicCustomBrowse">
-         <property name="toolTip">
-          <string>Browse...</string>
-         </property>
-         <property name="text">
-          <string notr="true">...</string>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="2">
-        <widget class="QLineEdit" name="LVLPropsMusicCustom"/>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QGroupBox" name="groupBox_5">
-      <property name="title">
-       <string>Current Section</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="50,0,0,50">
-       <property name="spacing">
-        <number>4</number>
-       </property>
-       <property name="leftMargin">
-        <number>4</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>4</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Section:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="LVLProp_CurSect">
-         <property name="text">
-          <string notr="true">0</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="3" column="0" colspan="2">
-     <widget class="QGroupBox" name="LVLPropStyleGr">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>70</height>
-       </size>
-      </property>
-      <property name="autoFillBackground">
-       <bool>false</bool>
-      </property>
-      <property name="title">
-       <string>Style</string>
-      </property>
-      <property name="flat">
-       <bool>false</bool>
-      </property>
-      <layout class="QGridLayout" name="gridLayout" columnstretch="100,0">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <property name="horizontalSpacing">
-        <number>0</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>1</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="LVLPropBckrImg">
-         <property name="text">
-          <string>Background image</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="editBackground2Ini">
-         <property name="toolTip">
-          <string>Edit a custom background config...</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../_resources/editor.qrc">
-           <normaloff>:/images/pencil_16x16.png</normaloff>:/images/pencil_16x16.png</iconset>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QComboBox" name="LVLPropsBackImage">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::WheelFocus</enum>
-         </property>
-         <property name="maxVisibleItems">
-          <number>50</number>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>100</width>
-           <height>10</height>
-          </size>
-         </property>
-         <item>
-          <property name="text">
-           <string notr="true">[No image]</string>
-          </property>
-          <property name="icon">
-           <iconset resource="../../_resources/editor.qrc">
-            <normaloff>:/dummies/dummies/unknown_block.png</normaloff>:/dummies/dummies/unknown_block.png</iconset>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QGroupBox" name="LVLPropSettingsGrp">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>95</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>Section Settings</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <property name="leftMargin">
-        <number>4</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>4</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <property name="horizontalSpacing">
-        <number>2</number>
-       </property>
-       <property name="verticalSpacing">
-        <number>5</number>
-       </property>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="LVLPropsNoTBack">
-         <property name="text">
-          <string comment="Please, translate as &quot;One way scrolling&quot;">No turn back (disable moving to left)</string>
-         </property>
-         <property name="tristate">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="LVLPropsOffScr">
-         <property name="text">
-          <string>Off screen exit</string>
-         </property>
-         <property name="tristate">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Maximum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="LVLPropsUnderWater">
-         <property name="text">
-          <string>Underwater</string>
-         </property>
-         <property name="tristate">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="LVLPropsWrapHorizontal">
-         <property name="whatsThis">
-          <string>Leaving for the screen, the player enters the screen on the other side</string>
-         </property>
-         <property name="text">
-          <string comment="This must be translated as &quot;Connect left and right sides&quot;">Wrap horizontaly</string>
-         </property>
-         <property name="tristate">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="LVLPropsWrapVertical">
-         <property name="text">
-          <string>Wrap vertically</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="2">
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeType">
-       <enum>QSizePolicy::Expanding</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="1">
-     <widget class="QFrame" name="frame">
+     <widget class="QScrollArea" name="LVLPropSettingsScroll">
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::NoFrame</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Sunken</enum>
+       <enum>QFrame::Plain</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout_5" columnstretch="50,50">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetNoConstraint</enum>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContents</enum>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="LVLPropSettingsScrollContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>277</width>
+         <height>480</height>
+        </rect>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <item row="0" column="0" colspan="2">
-        <widget class="QPushButton" name="ResizeSection">
-         <property name="text">
-          <string>Resize section</string>
-         </property>
-         <property name="checkable">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="applyResize">
-         <property name="minimumSize">
-          <size>
-           <width>62</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Apply</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QPushButton" name="cancelResize">
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,100">
+        <property name="spacing">
+         <number>1</number>
+        </property>
+        <property name="leftMargin">
+         <number>2</number>
+        </property>
+        <property name="topMargin">
+         <number>2</number>
+        </property>
+        <property name="rightMargin">
+         <number>2</number>
+        </property>
+        <property name="bottomMargin">
+         <number>2</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="LVLSectionTopSettings" native="true">
+          <layout class="QGridLayout" name="gridLayout_6">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QGroupBox" name="groupBox_5">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>50</height>
+              </size>
+             </property>
+             <property name="title">
+              <string>Current Section</string>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout" stretch="50,0,0,50">
+              <property name="leftMargin">
+               <number>4</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>4</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <spacer name="horizontalSpacer_2">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>Section:</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="LVLProp_CurSect">
+                <property name="text">
+                 <string notr="true">0</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QFrame" name="frame">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Sunken</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5" columnstretch="50,50">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetNoConstraint</enum>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item row="0" column="0" colspan="2">
+               <widget class="QPushButton" name="ResizeSection">
+                <property name="text">
+                 <string>Resize section</string>
+                </property>
+                <property name="checkable">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="applyResize">
+                <property name="minimumSize">
+                 <size>
+                  <width>62</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Apply</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="cancelResize">
+                <property name="text">
+                 <string>Cancel</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="LVLPropStyleGr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>129</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="title">
+           <string>Style</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
+          </property>
+          <layout class="QGridLayout" name="gridLayout" columnstretch="100,0">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLabel" name="LVLPropBckrImg">
+             <property name="text">
+              <string>Background image</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="editBackground2Ini">
+             <property name="toolTip">
+              <string>Edit a custom background config...</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/pencil_16x16.png</normaloff>:/images/pencil_16x16.png</iconset>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QComboBox" name="LVLPropsBackImage">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>80</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::WheelFocus</enum>
+             </property>
+             <property name="maxVisibleItems">
+              <number>50</number>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>100</width>
+               <height>10</height>
+              </size>
+             </property>
+             <item>
+              <property name="text">
+               <string notr="true">[No image]</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../_resources/editor.qrc">
+                <normaloff>:/dummies/dummies/unknown_block.png</normaloff>:/dummies/dummies/unknown_block.png</iconset>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="LVLPropMusicGr">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>83</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Music</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2" columnstretch="400,0,0">
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <property name="horizontalSpacing">
+            <number>2</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QComboBox" name="LVLPropsMusicNumber">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::WheelFocus</enum>
+             </property>
+             <property name="maxVisibleItems">
+              <number>50</number>
+             </property>
+             <item>
+              <property name="text">
+               <string notr="true">[Silence]</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="1" colspan="2">
+            <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string comment="Flag of custom music on the level">Custom</string>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="3">
+            <widget class="QLabel" name="LVLPropCMusicLbl">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>12</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Music file:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QPushButton" name="LVLPropsMusicCustomBrowse">
+             <property name="toolTip">
+              <string>Browse...</string>
+             </property>
+             <property name="text">
+              <string notr="true">...</string>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLineEdit" name="LVLPropsMusicCustom"/>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="LVLPropSettingsGrp">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>139</height>
+           </size>
+          </property>
+          <property name="title">
+           <string>Section Settings</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="leftMargin">
+            <number>4</number>
+           </property>
+           <property name="topMargin">
+            <number>4</number>
+           </property>
+           <property name="rightMargin">
+            <number>4</number>
+           </property>
+           <property name="bottomMargin">
+            <number>4</number>
+           </property>
+           <item>
+            <widget class="QCheckBox" name="LVLPropsWrapHorizontal">
+             <property name="whatsThis">
+              <string>Leaving for the screen, the player enters the screen on the other side</string>
+             </property>
+             <property name="text">
+              <string comment="This must be translated as &quot;Connect left and right sides&quot;">Wrap horizontaly</string>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="LVLPropsWrapVertical">
+             <property name="text">
+              <string>Wrap vertically</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="LVLPropsOffScr">
+             <property name="text">
+              <string>Off screen exit</string>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="LVLPropsNoTBack">
+             <property name="text">
+              <string comment="Please, translate as &quot;One way scrolling&quot;">No turn back (disable moving to left)</string>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="LVLPropsUnderWater">
+             <property name="text">
+              <string>Underwater</string>
+             </property>
+             <property name="tristate">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="extraSettings">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>0</number>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>

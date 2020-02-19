@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #pragma once
@@ -25,14 +26,15 @@
 
 enum class PGE_LogLevel
 {
-    Debug    = 4,
-    Warning  = 3,
-    Critical = 2,
+    Debug    = 5,
+    Warning  = 4,
+    Critical = 3,
+    Info     = 2,
     Fatal    = 1,
     NoLog    = 0,
 };
 
-extern void LoadLogSettings();
+extern void LoadLogSettings(bool disableStdOut = false);
 extern void CloseLog();
 #endif//__cplusplus
 
@@ -43,29 +45,29 @@ extern "C"
 extern void pLogDebug(const char *format, ...);
 extern void pLogWarning(const char *format, ...);
 extern void pLogCritical(const char *format, ...);
-extern void pLogFatal(const char *format, ...);
 extern void pLogInfo(const char *format, ...);
+extern void pLogFatal(const char *format, ...);
 #ifdef __cplusplus
 }
 #endif
 
 #ifdef __cplusplus
-extern void WriteToLog(PGE_LogLevel type, std::string msg);
+extern void WriteToLog(PGE_LogLevel type, const std::string &msg);
 #endif
 
 #ifdef DEBUG_BUILD
-// Variatic with arguments
+// Variadic with arguments
 #define D_pLogDebug(fmt, ...) pLogDebug(fmt, ##__VA_ARGS__)
 #define D_pLogWarning(fmt, ...) pLogWarning(fmt, ##__VA_ARGS__)
 #define D_pLogCritical(fmt, ...) pLogCritical(fmt, ##__VA_ARGS__)
-#define D_pLogFatal(fmt, ...) pLogFatal(fmt, ##__VA_ARGS__)
 #define D_pLogInfo(fmt, ...) pLogInfo(fmt, ##__VA_ARGS__)
+#define D_pLogFatal(fmt, ...) pLogFatal(fmt, ##__VA_ARGS__)
 // Standard without arguments to avoid "ISO C++11 requires at least one argument of the '...' in a variadic macro"
 #define D_pLogDebugNA(fmt) pLogDebug(fmt)
 #define D_pLogWarningNA(fmt) pLogWarning(fmt)
 #define D_pLogCriticalNA(fmt) pLogCritical(fmt)
-#define D_pLogFatalNA(fmt) pLogFatal(fmt)
 #define D_pLogInfoNA(fmt) pLogInfo(fmt)
+#define D_pLogFatalNA(fmt) pLogFatal(fmt)
 #else
 #define D_pLogDebug(fmt, ...)
 #define D_pLogWarning(fmt, ...)

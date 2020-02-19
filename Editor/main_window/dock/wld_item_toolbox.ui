@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/world16.png</normaloff>:/images/world16.png</iconset>
+    <normaloff>:/images/item_browser_world.png</normaloff>:/images/item_browser_world.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -36,7 +36,7 @@
    <set>Qt::BottomDockWidgetArea|Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
   </property>
   <property name="windowTitle">
-   <string>World Map Toolbox</string>
+   <string>World Map Items browser</string>
   </property>
   <widget class="QTabWidget" name="WorldToolBoxTabs">
    <property name="tabPosition">

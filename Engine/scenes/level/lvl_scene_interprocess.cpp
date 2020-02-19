@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "../scene_level.h"
@@ -77,8 +78,8 @@ void LevelScene::process_InterprocessCommands()
                     obj_block &bl = ConfigManager::lvl_block_indexes[m_placingMode_block.id];
                     m_placingMode_animated = bl.setup.animated;
                     m_placingMode_animatorID = bl.animator_ID;
-                    m_placingMode_drawSize.setX(m_placingMode_texture.w);
-                    m_placingMode_drawSize.setY(m_placingMode_texture.h / static_cast<int>(bl.setup.frames));
+                    m_placingMode_drawSize.setX(m_placingMode_texture.frame_w);
+                    m_placingMode_drawSize.setY(m_placingMode_texture.frame_h);
                 }
             }
             else if(raw.compare(0, 9, "BGO_PLACE") == 0)
@@ -95,8 +96,8 @@ void LevelScene::process_InterprocessCommands()
                     obj_bgo &bg = ConfigManager::lvl_bgo_indexes[m_placingMode_bgo.id];
                     m_placingMode_animated = bg.setup.animated;
                     m_placingMode_animatorID = bg.animator_ID;
-                    m_placingMode_drawSize.setX(m_placingMode_texture.w);
-                    m_placingMode_drawSize.setY(m_placingMode_texture.h);
+                    m_placingMode_drawSize.setX(m_placingMode_texture.frame_w);
+                    m_placingMode_drawSize.setY(m_placingMode_texture.frame_h);
                 }
             }
             else if(raw.compare(0, 9, "NPC_PLACE") == 0)
@@ -188,7 +189,10 @@ void LevelScene::drawPlacingItem()
         break;
 
     case 2:
-        if(m_placingMode_animated) x = ConfigManager::Animator_NPC[m_placingMode_animatorID].image(m_placingMode_npc.direct);
+        if(m_placingMode_animated)
+            x = ConfigManager::Animator_NPC[m_placingMode_animatorID].image(m_placingMode_npc.direct);
+        else
+            x = AniPos(0, m_placingMode_drawSize.y() / m_placingMode_texture.h);
 
         d = m_placingMode_npc.direct;
 

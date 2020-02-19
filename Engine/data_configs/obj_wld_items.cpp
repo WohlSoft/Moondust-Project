@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "obj_wld_items.h"
@@ -63,7 +64,7 @@ bool ConfigManager::loadWorldTile(obj_w_tile &tile, std::string section, obj_w_t
     }
 
     tile.isInit = false;
-    tile.image = NULL;
+    tile.image = nullptr;
     tile.textureArrayId = 0;
     tile.animator_ID = 0;
 
@@ -97,7 +98,7 @@ bool ConfigManager::loadWorldPath(obj_w_path &path, std::string section, obj_w_p
     }
 
     path.isInit = false;
-    path.image = NULL;
+    path.image = nullptr;
     path.textureArrayId = 0;
     path.animator_ID = 0;
 
@@ -131,7 +132,7 @@ bool ConfigManager::loadWorldScenery(obj_w_scenery &scene, std::string section, 
     }
 
     scene.isInit = false;
-    scene.image = NULL;
+    scene.image = nullptr;
     scene.textureArrayId = 0;
     scene.animator_ID = 0;
 
@@ -165,7 +166,7 @@ bool ConfigManager::loadWorldLevel(obj_w_level &level, std::string section, obj_
     }
 
     level.isInit = false;
-    level.image = NULL;
+    level.image = nullptr;
     level.textureArrayId = 0;
     level.animator_ID = 0;
 
@@ -195,7 +196,7 @@ bool ConfigManager::loadWorldTiles()
     unsigned long tiles_total = 0;
     bool useDirectory = false;
     std::string tile_ini = config_dirSTD + "wld_tiles.ini";
-    std::string nestDir = "";
+    std::string nestDir;
 
     if(!Files::fileExists(tile_ini))
     {
@@ -233,7 +234,7 @@ bool ConfigManager::loadWorldTiles()
     }
 
     stile.isInit = false;
-    stile.image = NULL;
+    stile.image = nullptr;
     stile.textureArrayId = 0;
     stile.animator_ID = 0;
 
@@ -283,7 +284,7 @@ bool ConfigManager::loadWorldScenery()
     unsigned long scenery_total = 0;
     bool useDirectory = false;
     std::string scene_ini = config_dirSTD + "wld_scenery.ini";
-    std::string  nestDir = "";
+    std::string  nestDir;
 
     if(!Files::fileExists(scene_ini))
     {
@@ -317,7 +318,7 @@ bool ConfigManager::loadWorldScenery()
     }
 
     sScene.isInit = false;
-    sScene.image = NULL;
+    sScene.image = nullptr;
     sScene.textureArrayId = 0;
     sScene.animator_ID = 0;
 
@@ -368,7 +369,7 @@ bool ConfigManager::loadWorldPaths()
     unsigned long path_total = 0;
     bool useDirectory = false;
     std::string scene_ini = config_dirSTD + "wld_paths.ini";
-    std::string nestDir = "";
+    std::string nestDir;
 
     if(!Files::fileExists(scene_ini))
     {
@@ -402,7 +403,7 @@ bool ConfigManager::loadWorldPaths()
 
     wld_paths.allocateSlots(path_total);
     sPath.isInit = false;
-    sPath.image = NULL;
+    sPath.image = nullptr;
     sPath.textureArrayId = 0;
     sPath.animator_ID = 0;
 
@@ -452,7 +453,7 @@ bool ConfigManager::loadWorldLevels()
     unsigned long levels_total = 0;
     bool useDirectory = false;
     std::string level_ini = config_dirSTD + "wld_levels.ini";
-    std::string nestDir = "";
+    std::string nestDir;
 
     if(!Files::fileExists(level_ini))
     {
@@ -488,7 +489,7 @@ bool ConfigManager::loadWorldLevels()
 
     wld_levels.allocateSlots(levels_total);
     slevel.isInit = false;
-    slevel.image = NULL;
+    slevel.image = nullptr;
     slevel.textureArrayId = 0;
     slevel.animator_ID = 0;
 

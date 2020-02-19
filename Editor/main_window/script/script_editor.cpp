@@ -12,11 +12,11 @@ Highlighter::Highlighter(QTextDocument *parent)
 
 void Highlighter::highlightBlock(const QString &text)
 {
-    foreach (const HighlightingRule &rule, highlightingRules)
+    foreach(const HighlightingRule &rule, highlightingRules)
     {
         QRegExp expression(rule.pattern);
         int index = expression.indexIn(text);
-        while (index >= 0)
+        while(index >= 0)
         {
             int length = expression.matchedLength();
             setFormat(index, length, rule.format);
@@ -26,17 +26,20 @@ void Highlighter::highlightBlock(const QString &text)
     setCurrentBlockState(0);
 
     int startIndex = 0;
-    if (previousBlockState() != 1)
+    if(previousBlockState() != 1)
         startIndex = commentStartExpression.indexIn(text);
 
-    while (startIndex >= 0)
+    while(startIndex >= 0)
     {
         int endIndex = commentEndExpression.indexIn(text, startIndex);
         int commentLength;
-        if (endIndex == -1) {
+        if(endIndex == -1)
+        {
             setCurrentBlockState(1);
             commentLength = text.length() - startIndex;
-        } else {
+        }
+        else
+        {
             commentLength = endIndex - startIndex
                             + commentEndExpression.matchedLength();
         }
@@ -64,7 +67,8 @@ Highlighter_CPP::Highlighter_CPP(QTextDocument *parent) :
                     << "\\btemplate\\b" << "\\btypedef\\b" << "\\btypename\\b"
                     << "\\bunion\\b" << "\\bunsigned\\b" << "\\bvirtual\\b"
                     << "\\bvoid\\b" << "\\bvolatile\\b";
-    foreach (const QString &pattern, keywordPatterns) {
+    foreach(const QString &pattern, keywordPatterns)
+    {
         rule.pattern = QRegExp(pattern);
         rule.format = keywordFormat;
         highlightingRules.append(rule);
@@ -103,8 +107,8 @@ Highlighter_CPP::Highlighter_CPP(QTextDocument *parent) :
 
 
 ScriptEditorWindow::ScriptEditorWindow(QWidget *parent) :
-    QTextEdit( parent ),
-    highlighter(nullptr)
+    QTextEdit(parent),
+    m_highLighter(nullptr)
 {
     setupEditor();
 }
@@ -114,8 +118,8 @@ ScriptEditorWindow::~ScriptEditorWindow()
 
 void ScriptEditorWindow::setLang(ScriptEditorWindow::ScriptLangs lang)
 {
-    if(highlighter)
-        delete highlighter;
+    delete m_highLighter;
+    m_highLighter = nullptr;
 
     switch(lang)
     {
@@ -129,11 +133,11 @@ void ScriptEditorWindow::setLang(ScriptEditorWindow::ScriptLangs lang)
         //highlighter = new Highlighter_TeaScript( this->document() );
         break;
     case LANG_CPP:
-        highlighter = new Highlighter_CPP( this->document() );
+        m_highLighter = new Highlighter_CPP(this->document());
         break;
     case LANG_TEXT:
     default:
-        highlighter = nullptr;
+        m_highLighter = nullptr;
     }
 }
 
@@ -145,9 +149,9 @@ void ScriptEditorWindow::setupEditor()
     font.setPointSize(10);
 
     setFont(font);
-//    QFile file("mainwindow.h");
-//    if (file.open(QFile::ReadOnly | QFile::Text))
-//        editor->setPlainText(file.readAll());
+    //    QFile file("mainwindow.h");
+    //    if (file.open(QFile::ReadOnly | QFile::Text))
+    //        editor->setPlainText(file.readAll());
 }
 
 
@@ -161,9 +165,7 @@ static ScriptEditor *g_scriptEditor = nullptr;
 void MainWindow::on_actionScriptEditor_triggered()
 {
     if(!g_scriptEditor)
-    {
         g_scriptEditor = new ScriptEditor(this);
-    }
     g_scriptEditor->show();
     g_scriptEditor->raise();
     g_scriptEditor->setFocus();
@@ -176,7 +178,7 @@ ScriptEditor::ScriptEditor(QWidget *parent) :
     ui(new Ui::ScriptEditor)
 {
     ui->setupUi(this);
-    ui->centralwidget->setViewMode( QMdiArea::TabbedView );
+    ui->centralwidget->setViewMode(QMdiArea::TabbedView);
     connect(ui->actionCloseScriptEditor, SIGNAL(triggered(bool)), this, SLOT(close()));
 }
 
@@ -189,8 +191,8 @@ void ScriptEditor::on_actionNew_triggered()
 {
     QMdiSubWindow *window = addSubWindow();
     static int UntitleCounter = 0;
-    window->setWindowTitle( QString("Untitled-%1.lua").arg( UntitleCounter++ ) );
-    ScriptEditorWindow* box = qobject_cast<ScriptEditorWindow*>(window->widget());
+    window->setWindowTitle(QString("Untitled-%1.lua").arg(UntitleCounter++));
+    ScriptEditorWindow *box = qobject_cast<ScriptEditorWindow *>(window->widget());
     if(box)
         box->setLang(ScriptEditorWindow::LANG_CPP);
     window->show();
@@ -199,7 +201,7 @@ void ScriptEditor::on_actionNew_triggered()
 
 QMdiSubWindow *ScriptEditor::addSubWindow()
 {
-    QMdiSubWindow * w = ui->centralwidget->addSubWindow(new ScriptEditorWindow(ui->centralwidget));
+    QMdiSubWindow *w = ui->centralwidget->addSubWindow(new ScriptEditorWindow(ui->centralwidget));
     w->setAttribute(Qt::WA_DeleteOnClose, true);
     return w;
 }

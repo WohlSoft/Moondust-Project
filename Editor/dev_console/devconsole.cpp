@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ void DevConsole::retranslateP()
     ui->retranslateUi(this);
 }
 
-void DevConsole::logMessage(QString text, QString chan)
+void DevConsole::logMessage(const QString &text, const QString &chan)
 {
     logToConsole(text, chan, false);
 }
@@ -179,15 +179,15 @@ void DevConsole::logToConsole(const QString &logText, const QString &channel, bo
     }
     //create new channel
     QWidget *w = new QWidget();
-    QGridLayout *l = new QGridLayout(w);
+    auto *l = new QGridLayout(w);
     l->setContentsMargins(0, 0, 0, 0);
     l->setSpacing(0);
-    QPlainTextEdit *e = new QPlainTextEdit(w);
+    auto *e = new QPlainTextEdit(w);
     l->addWidget(e, 0, 0, 1, 1);
-    QPushButton *p = new QPushButton(w);
+    auto *p = new QPushButton(w);
     l->addWidget(p, 1, 0, 1, 1);
     p->setFlat(true);
-    p->connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
+    QObject::connect(p, SIGNAL(clicked()), this, SLOT(clearCurrentLog()));
     p->setText(tr("Clear %1 Log").arg(target_channel));
     e->setReadOnly(true);
     e->setStyleSheet(ui->plainTextEdit->styleSheet());
@@ -207,12 +207,12 @@ QPlainTextEdit *DevConsole::getCurrentEdit()
     return getEditByIndex(ui->tabWidget->currentIndex());
 }
 
-void DevConsole::registerCommand(const QString commandName, DevConsole::command cmd, const QString helpText)
+void DevConsole::registerCommand(const QString &commandName, DevConsole::command cmd, const QString &helpText)
 {
     commands[commandName.toLower()] = qMakePair<command, QString>(cmd, helpText);
 }
 
-void DevConsole::registerCommand(const std::initializer_list<QString> commandNames, DevConsole::command cmd, const QString helpText)
+void DevConsole::registerCommand(const std::initializer_list<QString> &commandNames, DevConsole::command cmd, const QString &helpText)
 {
     for(const QString &tarCmd : commandNames)
         commands[tarCmd.toLower()] = qMakePair<command, QString>(cmd, helpText);
@@ -234,8 +234,8 @@ void DevConsole::clearCurrentLog()
 
 void DevConsole::closeEvent(QCloseEvent *event)
 {
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
+    QString iniFile = AppPathManager::settingsFile();
+    QSettings settings(iniFile, QSettings::IniFormat);
 
     settings.beginGroup("dev-console");
     settings.setValue("geometry", this->saveGeometry());
@@ -270,17 +270,17 @@ void DevConsole::registerCommands()
     registerCommand("test", &DevConsole::doTest, tr("Prints a test command"));
     registerCommand("version", &DevConsole::doVersion, tr("Prints the editor version"));
     registerCommand("quit", &DevConsole::doQuit, tr("Quits the program"));
-    registerCommand("savesettings", &DevConsole::doSavesettings, tr("Saves the application settings"));
+    registerCommand("savesettings", &DevConsole::doSaveSettings, tr("Saves the application settings"));
     registerCommand("md5", &DevConsole::doMd5, tr("Args: {SomeString} Calculates MD5 hash of string"));
     registerCommand("strarr", &DevConsole::doValidateStrArray, tr("Arg: {String array} validates the PGE-X string array"));
-    #ifdef ENABLE_CRASH_TESTS
+#ifdef ENABLE_CRASH_TESTS
     // Debug only commands, must be disabled in releases! (or Static Analyzers will swear!)
     registerCommand("crashme",  &DevConsole::doFakeCrash, tr("Simulates crash signal"));
     registerCommand("flood",    &DevConsole::doFlood, tr("Args: {[Number] Gigabytes} | Floods the memory with megabytes"));
     registerCommand("unhandle", &DevConsole::doThrowUnhandledException, tr("Throws an unhandled exception to crash the editor"));
     registerCommand("segserv",  &DevConsole::doSegmentationViolation, tr("Does a segmentation violation"));
     registerCommand("itemdialogmemleak",  &DevConsole::doMemLeakResearch, tr("Creates and deletes ItemSelectDialog to analyze memory leaking"));
-    #endif
+#endif
     registerCommand("pgex", &DevConsole::doPgeXTest, tr("Arg: {Path to file} tests if the file is in the PGE-X file format"));
     registerCommand("playmusic", &DevConsole::doPlayMusic, tr("Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID"));
     registerCommand("engine", &DevConsole::doSendCheat, tr("Args: {engine commands} Send a command or message into the PGE Engine if it's running"));
@@ -306,19 +306,19 @@ void DevConsole::doCommand()
         log("-> Unknown command. Type 'help' to show available command list", ui->tabWidget->tabText(0));
 }
 
-void DevConsole::doHelp(QStringList /*args*/)
+void DevConsole::doHelp(const QStringList &/*args*/)
 {
     QStringList keys = commands.keys();
     for(int i = 0; i < keys.size(); ++i)
         log(keys[i] + QString(" - " + commands[keys[i]].second));
 }
 
-void DevConsole::doTest(QStringList /*args*/)
+void DevConsole::doTest(const QStringList &/*args*/)
 {
     log("-> All good!", ui->tabWidget->tabText(0));
 }
 
-void DevConsole::doPlayMusic(QStringList args)
+void DevConsole::doPlayMusic(const QStringList &args)
 {
     if(args.size() != 2)
     {
@@ -343,11 +343,11 @@ void DevConsole::doPlayMusic(QStringList args)
 }
 
 
-void DevConsole::doMd5(QStringList args)
+void DevConsole::doMd5(const QStringList &args)
 {
     QString src;
 
-    for(QString &s : args)
+    for(const QString &s : args)
         src.append(s + (args.indexOf(s) < args.size() - 1 ? " " : ""));
 
     QString encoded = QString(QCryptographicHash::hash(src.toUtf8(), QCryptographicHash::Md5).toHex());
@@ -355,11 +355,11 @@ void DevConsole::doMd5(QStringList args)
     log(QString("MD5 hash: %1").arg(encoded), ui->tabWidget->tabText(0));
 }
 
-void DevConsole::doValidateStrArray(QStringList args)
+void DevConsole::doValidateStrArray(const QStringList &args)
 {
     QString src;
 
-    for(QString &s : args)
+    for(const QString &s : args)
         src.append(s + (args.indexOf(s) < args.size() - 1 ? " " : ""));
 
     log(QString("%1").arg(src), ui->tabWidget->tabText(0));
@@ -367,62 +367,60 @@ void DevConsole::doValidateStrArray(QStringList args)
 }
 
 
-void DevConsole::doVersion(QStringList /*args*/)
+void DevConsole::doVersion(const QStringList &/*args*/)
 {
     log(QString("-> " V_FILE_DESC ", version " V_FILE_VERSION V_FILE_RELEASE), ui->tabWidget->tabText(0));
 }
 
-void DevConsole::doQuit(QStringList /*args*/)
+void DevConsole::doQuit(const QStringList &/*args*/)
 {
     log("-> Bye-bye!", ui->tabWidget->tabText(0));
     MainWinConnect::pMainWin->close();
 }
 
-void DevConsole::doSavesettings(QStringList /*args*/)
+void DevConsole::doSaveSettings(const QStringList &/*args*/)
 {
     MainWinConnect::pMainWin->saveSettings();
     log("-> Application Settings was saved!", ui->tabWidget->tabText(0));
 }
 
 #ifdef ENABLE_CRASH_TESTS
-void DevConsole::doFakeCrash(QStringList /*args*/)
+void DevConsole::doFakeCrash(const QStringList &/*args*/)
 {
     CrashHandler::crashBySIGNAL(0);
 }
 
-void DevConsole::doFlood(QStringList args)
+void DevConsole::doFlood(const QStringList &args)
 {
-    if(args.size() > 0)
+    if(!args.empty())
     {
-        bool succ;
-        int floodSize = args[0].toInt(&succ);
-        if(!succ)
+        bool success;
+        int floodSize = args[0].toInt(&success);
+        if(!success)
             return;
         log("Flooding with " + QString::number(floodSize * 1024 * 1024) + "bytes");
         char *fl = new char[floodSize * 1024 * 1024];
-        if(fl == 0)
-            log("No memory assigned");
         Q_UNUSED(fl)
         delete[] fl;//Delete this crap if application has been survived a flood
     }
 }
 
-void DevConsole::doThrowUnhandledException(QStringList /*args*/)
+void DevConsole::doThrowUnhandledException(const QStringList &/*args*/)
 {
     throw std::runtime_error("Test Exception of Toast!");
 }
 
-void DevConsole::doSegmentationViolation(QStringList)
+void DevConsole::doSegmentationViolation(const QStringList&)
 {
 #ifndef _MSC_VER //Unfortunately MSVC swearing with hard erros on detecting this
-    int *my_nullptr = 0;
+    int *my_nullptr = nullptr;
     *my_nullptr = 42; //Answer to the Ultimate Question of Life, the Universe, and Everything will let you app crash >:D
 #else
     log("-> This test isn't available in assembly built by MSVC! Please rebuild Editor in the another compiler (like MinGW or Intel C++ compiler)!", ui->tabWidget->tabText(0));
 #endif
 }
 
-void DevConsole::doMemLeakResearch(QStringList args)
+void DevConsole::doMemLeakResearch(const QStringList &args)
 {
     if(args.empty())
     {
@@ -440,7 +438,7 @@ void DevConsole::doMemLeakResearch(QStringList args)
     log("-> Begin spam...", ui->tabWidget->tabText(0));
     for(unsigned int i = 0; i < cycles; i++)
     {
-        ItemSelectDialog *ddd = new ItemSelectDialog(&MainWinConnect::pMainWin->configs,
+        auto *ddd = new ItemSelectDialog(&MainWinConnect::pMainWin->configs,
                                                      ItemSelectDialog::TAB_BLOCK|
                                                      ItemSelectDialog::TAB_BGO|
                                                      ItemSelectDialog::TAB_NPC|
@@ -484,13 +482,13 @@ QString ______recourseBuildPGEX_Tree(QList<PGEFile::PGEX_Entry > &entry, int dep
 
 
 
-void DevConsole::doPgeXTest(QStringList args)
+void DevConsole::doPgeXTest(const QStringList &args)
 {
     if(!args.isEmpty())
     {
         QString src;
 
-        for(QString &s : args)
+        for(const QString &s : args)
             src.append(s + (args.indexOf(s) < args.size() - 1 ? " " : ""));
 
         QFile file(src);
@@ -523,7 +521,7 @@ void DevConsole::doPgeXTest(QStringList args)
                 //                    }
                 //                }
 
-                if(pgeX_Data.dataTree[i].subTree.size() > 0)
+                if(!pgeX_Data.dataTree[i].subTree.empty())
                     treeView += ______recourseBuildPGEX_Tree(pgeX_Data.dataTree[i].subTree);
             }
             log(QString("-> File read:\nRaw size is %1\n%2").arg(raw.size()).arg(treeView),
@@ -537,10 +535,10 @@ void DevConsole::doPgeXTest(QStringList args)
 
 }
 
-void DevConsole::doSendCheat(QStringList args)
+void DevConsole::doSendCheat(const QStringList &args)
 {
     QString src;
-    for(QString &s : args)
+    for(const QString &s : args)
         src.append(s + (args.indexOf(s) < args.size() - 1 ? " " : ""));
 
     if(src.isEmpty())
@@ -558,7 +556,7 @@ void DevConsole::doSendCheat(QStringList args)
 
 }
 
-void DevConsole::doOutputPaths(QStringList /*args*/)
+void DevConsole::doOutputPaths(const QStringList &/*args*/)
 {
     log(QString("App path: ") + AppPathManager::userAppDir());
     log(QString("Settings file: ") + AppPathManager::settingsFile());

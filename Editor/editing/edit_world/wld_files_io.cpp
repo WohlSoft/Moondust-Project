@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,12 +22,12 @@
 #include <QProgressDialog>
 #include <QLineEdit>
 #include <QCheckBox>
-#include <QDesktopWidget>
 #include <QInputDialog>
 
 #include <common_features/logger.h>
 #include <common_features/util.h>
 #include <common_features/main_window_ptr.h>
+#include <common_features/file_keeper.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include <editing/_dialogs/savingnotificationdialog.h>
 #include <main_window/global_settings.h>
@@ -47,6 +47,24 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
     FileFormats::CreateWorldData(WldData);
     WldData.meta.modified = true;
     WldData.meta.untitled = true;
+
+    switch(configs.editor.default_file_formats.world)
+    {
+    case EditorSetup::DefaultFileFormats::SMBX64:
+        WldData.meta.RecentFormat = LevelData::SMBX64;
+        WldData.meta.smbx64strict = true;
+        break;
+    case EditorSetup::DefaultFileFormats::PGEX:
+        WldData.meta.RecentFormat = LevelData::PGEX;
+        WldData.meta.smbx64strict = false;
+        break;
+    case EditorSetup::DefaultFileFormats::SMBX38A:
+        // WldData.meta.RecentFormat = LevelData::SMBX38A;
+        WldData.meta.RecentFormat = LevelData::PGEX;//TODO: Change to real 38A when PGE-FL will support write of WLD files
+        WldData.meta.smbx64strict = false;
+        break;
+    }
+
     StartWldData = WldData;
     ui->graphicsView->setBackgroundBrush(QBrush(Qt::black));
 
@@ -102,7 +120,6 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     if(savOptionsDialog)
     {
         SavingNotificationDialog *sav = new SavingNotificationDialog(false, SavingNotificationDialog::D_QUESTION, this);
-        util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("Please enter a episode title for '%1'!").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(tr("Saving") + " " + userFriendlyCurrentFile());
         QLineEdit *wldNameBox = new QLineEdit();
@@ -110,8 +127,10 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
         sav->addUserItem(tr("Episode Title: "), wldNameBox);
         sav->addUserItem(tr("Make custom folder"), mkDirCustom);
         mkDirCustom->setToolTip(tr("Note: Custom folders are not supported for legacy SMBX Engine!"));
-        sav->setAdjustSize(400, 150);
         wldNameBox->setText(WldData.EpisodeTitle);
+        sav->adjustSize();
+        util::DialogToCenter(sav, true);
+        sav->fixSize();
 
         if(sav->exec() == QDialog::Accepted)
         {
@@ -136,10 +155,25 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
     QString filePGEX = "Extended World map file (*.wldx)";
     QString selectedFilter;
 
-    if(fileName.endsWith(".wldx", Qt::CaseInsensitive))
+    switch(WldData.meta.RecentFormat)
+    {
+    case LevelData::PGEX:
         selectedFilter = filePGEX;
-    else
-        selectedFilter = fileSMBX64;
+        break;
+
+    case LevelData::SMBX64:
+        if(WldData.meta.RecentFormatVersion >= 64)
+            selectedFilter = fileSMBX64;
+        else
+            selectedFilter = fileSMBXany;
+
+        break;
+
+    case LevelData::SMBX38A:
+        // selectedFilter = fileSMBX38A;
+        selectedFilter = filePGEX;//TODO: Put 38A target once PGE-FL gets support for SMBX-38A
+        break;
+    }
 
     QString filter =
         fileSMBX64 + ";;" +
@@ -226,6 +260,10 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
+    FileKeeper fileKeeper = FileKeeper(fileName);
+
+    FileFormats::WorldPrepare(WldData); // Sort all data arrays
+
     // ////////////////////// Write SMBX64 WLD //////////////////////////////
     if(fileName.endsWith(".wld", Qt::CaseInsensitive))
     {
@@ -268,7 +306,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
                 isSMBX64limit = false;
         }
 
-        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_SMBX64, file_format))
+        if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_SMBX64, static_cast<unsigned int>(file_format)))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -286,7 +324,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
     {
         WldData.meta.smbx64strict = false; //Disable strict mode
 
-        if(!FileFormats::SaveWorldFile(WldData, fileName, FileFormats::WLD_PGEX))
+        if(!FileFormats::SaveWorldFile(WldData, fileKeeper.tempPath(), FileFormats::WLD_PGEX))
         {
             QMessageBox::warning(this, tr("File save error"),
                                  tr("Cannot save file %1:\n%2.")
@@ -297,6 +335,9 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 
         GlobalSettings::savePath = QFileInfo(fileName).path();
     }
+
+    // Swap old file with new
+    fileKeeper.restore();
 
     // //////////////////////////////////////////////////////////////////////
     QApplication::restoreOverrideCursor();
@@ -372,7 +413,7 @@ bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfig
     progress.setWindowModality(Qt::WindowModal);
     progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
     progress.setFixedSize(progress.size());
-    progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+    progress.setGeometry(util::alignToScreenCenter(progress.size()));
     progress.setMinimumDuration(0);
     progress.setAutoClose(false);
 
@@ -426,14 +467,15 @@ bool WorldEdit::maybeSave()
     if(WldData.meta.modified)
     {
         SavingNotificationDialog *sav = new SavingNotificationDialog(true, SavingNotificationDialog::D_WARN, this);
-        util::DialogToCenter(sav, true);
         sav->setSavingTitle(tr("'%1' has been modified.\n"
                                "Do you want to save your changes?").arg(userFriendlyCurrentFile()));
         sav->setWindowTitle(userFriendlyCurrentFile() + tr(" not saved"));
-        QLineEdit *wldNameBox = new QLineEdit();
+        QLineEdit *wldNameBox = new QLineEdit(sav);
         sav->addUserItem(tr("World title:"), wldNameBox);
-        sav->setAdjustSize(400, 150);
         wldNameBox->setText(WldData.EpisodeTitle);
+        sav->adjustSize();
+        util::DialogToCenter(sav, true);
+        sav->fixSize();
 
         if(sav->exec() == QDialog::Accepted)
         {

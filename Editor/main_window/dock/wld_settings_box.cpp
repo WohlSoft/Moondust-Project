@@ -1,7 +1,6 @@
 /*
- *
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +42,7 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     setVisible(false);
     setAttribute(Qt::WA_ShowWithoutActivating);
     ui->setupUi(this);
-    world_settings_lock_fields = false;
+    m_lockSettings = false;
     QRect mwg = mw()->geometry();
     int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
@@ -58,6 +57,11 @@ WorldSettingsBox::WorldSettingsBox(QWidget *parent) :
     m_lastVisibilityState = isVisible();
     mw()->docks_world.
     addState(this, &m_lastVisibilityState);
+    updateLevelIntroLabel();
+    connect(ui->WLD_NoWorldMap, &QCheckBox::toggled, [this](bool)
+    {
+        updateLevelIntroLabel();
+    });
 }
 
 WorldSettingsBox::~WorldSettingsBox()
@@ -69,6 +73,7 @@ void WorldSettingsBox::re_translate()
 {
     ui->retranslateUi(this);
     setCurrentWorldSettings();
+    updateLevelIntroLabel();
 }
 
 
@@ -91,7 +96,7 @@ void MainWindow::on_actionWorld_settings_triggered(bool checked)
 
 void WorldSettingsBox::setCurrentWorldSettings()
 {
-    world_settings_lock_fields = true;
+    m_lockSettings = true;
     int WinType = mw()->activeChildWindow();
 
     if(WinType == 3)
@@ -114,11 +119,11 @@ void WorldSettingsBox::setCurrentWorldSettings()
         LogDebug("-> Character List");
 
         //clear character list
-        while(!WLD_CharacterCheckBoxes.isEmpty())
+        while(!m_charactersCheckBoxes.isEmpty())
         {
-            QMap<QCheckBox *, int>::iterator it = WLD_CharacterCheckBoxes.begin();
+            QMap<QCheckBox *, int>::iterator it = m_charactersCheckBoxes.begin();
             delete it.key();
-            WLD_CharacterCheckBoxes.erase(it);
+            m_charactersCheckBoxes.erase(it);
         }
 
         LogDebug("-> Clear Menu");
@@ -138,7 +143,7 @@ void WorldSettingsBox::setCurrentWorldSettings()
             if(i < edit->WldData.nocharacter.size())
                 cur->setChecked(edit->WldData.nocharacter[i]);
 
-            WLD_CharacterCheckBoxes[cur] = static_cast<int>(mw()->configs.main_characters[i].id);
+            m_charactersCheckBoxes[cur] = static_cast<int>(mw()->configs.main_characters[i].id);
             connect(cur, SIGNAL(clicked(bool)), this, SLOT(characterActivated(bool)));
             ui->WLD_DisableCharacters->layout()->addWidget(cur);
         }
@@ -146,7 +151,7 @@ void WorldSettingsBox::setCurrentWorldSettings()
         LogDebug("-> Done");
     }
 
-    world_settings_lock_fields = false;
+    m_lockSettings = false;
 }
 
 
@@ -163,13 +168,13 @@ void WorldSettingsBox::characterActivated(bool checked)
         if(!ch)
             return;
 
-        long ind = mw()->configs.getCharacterI(static_cast<unsigned long>(WLD_CharacterCheckBoxes[ch]));
+        long ind = mw()->configs.getCharacterI(static_cast<unsigned long>(m_charactersCheckBoxes[ch]));
 
         if(ind == -1)
             return;
 
         QList<QVariant> chData;
-        chData << WLD_CharacterCheckBoxes[ch] << checked;
+        chData << m_charactersCheckBoxes[ch] << checked;
         edit->scene->m_history->addChangeWorldSettingsHistory(HistorySettings::SETTING_CHARACTER, chData);
         edit->WldData.nocharacter[static_cast<int>(ind)] = checked;
     }
@@ -183,7 +188,7 @@ void MainWindow::on_actionWLDProperties_triggered()
 
 void WorldSettingsBox::on_WLD_Title_editingFinished()
 {
-    if(world_settings_lock_fields) return;
+    if(m_lockSettings) return;
 
     if(!ui->WLD_Title->isModified()) return;
 
@@ -204,9 +209,14 @@ void WorldSettingsBox::on_WLD_Title_editingFinished()
     }
 }
 
+void WorldSettingsBox::updateLevelIntroLabel()
+{
+    ui->introLevelLabel->setText(ui->WLD_NoWorldMap->isChecked() ? tr("Main hub level:") : tr("Intro level:"));
+}
+
 void WorldSettingsBox::on_WLD_NoWorldMap_clicked(bool checked)
 {
-    if(world_settings_lock_fields) return;
+    if(m_lockSettings) return;
 
     if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
@@ -223,7 +233,7 @@ void WorldSettingsBox::on_WLD_NoWorldMap_clicked(bool checked)
 
 void MainWindow::on_actionWLDDisableMap_triggered(bool checked)
 {
-    if(dock_WldSettingsBox->world_settings_lock_fields) return;
+    if(dock_WldSettingsBox->m_lockSettings) return;
 
     if(activeChildWindow() == MainWindow::WND_World)
     {
@@ -241,7 +251,7 @@ void MainWindow::on_actionWLDDisableMap_triggered(bool checked)
 
 void WorldSettingsBox::on_WLD_RestartLevel_clicked(bool checked)
 {
-    if(world_settings_lock_fields) return;
+    if(m_lockSettings) return;
 
     if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
@@ -257,7 +267,7 @@ void WorldSettingsBox::on_WLD_RestartLevel_clicked(bool checked)
 }
 void MainWindow::on_actionWLDFailRestart_triggered(bool checked)
 {
-    if(dock_WldSettingsBox->world_settings_lock_fields) return;
+    if(dock_WldSettingsBox->m_lockSettings) return;
 
     if(activeChildWindow() == MainWindow::WND_World)
     {
@@ -287,7 +297,7 @@ void MainWindow::on_WLD_AutostartLvl_textEdited(const QString &arg1)
 
 void WorldSettingsBox::on_WLD_AutostartLvl_editingFinished()
 {
-    if(world_settings_lock_fields) return;
+    if(m_lockSettings) return;
 
     if(!ui->WLD_AutostartLvl->isModified()) return;
 
@@ -310,7 +320,7 @@ void WorldSettingsBox::on_WLD_AutostartLvl_editingFinished()
 
 void WorldSettingsBox::on_WLD_AutostartLvlBrowse_clicked()
 {
-    if(world_settings_lock_fields) return;
+    if(m_lockSettings) return;
 
     QString dirPath;
 
@@ -325,7 +335,7 @@ void WorldSettingsBox::on_WLD_AutostartLvlBrowse_clicked()
     {
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
-            ui->WLD_AutostartLvl->setText(levelList.SelectedFile);
+            ui->WLD_AutostartLvl->setText(levelList.currentFile());
             ui->WLD_AutostartLvl->setModified(true);
             on_WLD_AutostartLvl_editingFinished();
         }
@@ -334,7 +344,7 @@ void WorldSettingsBox::on_WLD_AutostartLvlBrowse_clicked()
 
 void WorldSettingsBox::on_WLD_Stars_valueChanged(int arg1)
 {
-    if(world_settings_lock_fields) return;
+    if(m_lockSettings) return;
 
     if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
@@ -353,7 +363,7 @@ void WorldSettingsBox::on_WLD_Stars_valueChanged(int arg1)
 
 void WorldSettingsBox::on_WLD_Credirs_textChanged()
 {
-    if(world_settings_lock_fields) return;
+    if(m_lockSettings) return;
 
     if(mw()->activeChildWindow() == MainWindow::WND_World)
     {
@@ -369,7 +379,7 @@ void WorldSettingsBox::on_WLD_Credirs_textChanged()
 
 
 /********************************Star counter begin**************************************************/
-unsigned long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QSet<QString> &exists)
+unsigned long WorldSettingsBox::starCounter_checkLevelFile(QString FilePath, QSet<QString> &exists)
 {
     QRegExp lvlext = QRegExp(".*\\.(lvl|lvlx)$");
     lvlext.setCaseSensitivity(Qt::CaseInsensitive);
@@ -392,7 +402,7 @@ unsigned long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QSe
             if((getLevelHead.npc[q].is_star) && (!getLevelHead.npc[q].friendly))
                 foundStars++;
 
-            if(StarCounter_canceled)
+            if(m_starCounter_canceled)
                 return starCount;
         }
 
@@ -415,9 +425,9 @@ unsigned long WorldSettingsBox::StarCounter_checkLevelFile(QString FilePath, QSe
                     continue;
 
                 exists.insert(FilePath_W);
-                starCount += StarCounter_checkLevelFile(FilePath_W, exists);
+                starCount += starCounter_checkLevelFile(FilePath_W, exists);
 
-                if(StarCounter_canceled)
+                if(m_starCounter_canceled)
                     return starCount;
             }
         }
@@ -432,7 +442,7 @@ unsigned long WorldSettingsBox::doStarCount(QString dir, QList<WorldLevelTile> l
     QString dirPath = dir;
     unsigned long starzzz = 0;
     bool introCounted = false;
-    StarCounter_canceled = false;
+    m_starCounter_canceled = false;
     QSet<QString> LevelAlreadyChecked;
 
     for(int i = 0; i < levels.size() || !introCounted; i++)
@@ -469,9 +479,9 @@ unsigned long WorldSettingsBox::doStarCount(QString dir, QList<WorldLevelTile> l
 
         LevelAlreadyChecked.insert(FilePath);
         emit countedStar(i < 0 ? 1 : i);
-        starzzz += StarCounter_checkLevelFile(FilePath, LevelAlreadyChecked);
+        starzzz += starCounter_checkLevelFile(FilePath, LevelAlreadyChecked);
 
-        if(StarCounter_canceled)
+        if(m_starCounter_canceled)
             break;
     }
 
@@ -480,7 +490,7 @@ unsigned long WorldSettingsBox::doStarCount(QString dir, QList<WorldLevelTile> l
 
 void WorldSettingsBox::on_WLD_DoCountStars_clicked()
 {
-    if(world_settings_lock_fields)
+    if(m_lockSettings)
         return;
 
     QString dirPath;
@@ -532,7 +542,7 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
         progress.setWindowModality(Qt::WindowModal);
         progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
         progress.setFixedSize(progress.size());
-        progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+        progress.setGeometry(util::alignToScreenCenter(progress.size()));
         progress.setMinimumDuration(0);
         progress.show();
         progress.connect(this,
@@ -552,7 +562,7 @@ void WorldSettingsBox::on_WLD_DoCountStars_clicked()
             qApp->processEvents();
 
             if(progress.wasCanceled())
-                StarCounter_canceled = true;
+                m_starCounter_canceled = true;
 
             QThread::msleep(1);
         }

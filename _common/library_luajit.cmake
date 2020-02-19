@@ -1,13 +1,43 @@
 
+add_library(PGE_LuaJIT INTERFACE)
+
 set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT ON)
-if(ANDROID OR EMSCRIPTEN OR MSVC)
+if(EMSCRIPTEN)
     # Disable LuaJIT for unsupported platforms
     set(PGE_USE_LUAJIT_ENABLED_BY_DEFAULT OFF)
 endif()
 
 option(PGE_USE_LUAJIT "Use LuaJIT lua engine" ${PGE_USE_LUAJIT_ENABLED_BY_DEFAULT})
 
+set(luajitArchive ${CMAKE_SOURCE_DIR}/_Libs/_sources/luajit.tar.gz)
+file(SHA256 ${luajitArchive} luajitArchive_hash)
+
+set(libLuaJit_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}luajit${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+
 if(PGE_USE_LUAJIT)
+    ExternalProject_Add(
+        LuaJIT_local
+        PREFIX ${CMAKE_BINARY_DIR}/external/luabind
+        URL ${luajitArchive}
+        URL_HASH SHA256=${luajitArchive_hash}
+        CMAKE_ARGS
+        "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
+        "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
+        "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
+        "-DCMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}"
+        "-DCMAKE_DEBUG_POSTFIX=d"
+        "-DCMAKE_POSITION_INDEPENDENT_CODE=ON"
+        "-DLUAJIT_FORCE_UTF8_FOPEN=ON"
+        ${ANDROID_CMAKE_FLAGS}
+        ${LUAJIT_USE_CMAKE_FLAG}
+        $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
+    BUILD_BYPRODUCTS
+        "${libLuaJit_Lib}"
+    )
+
+    target_link_libraries(PGE_LuaJIT INTERFACE ${libLuaJit_Lib})
+
+elseif(PGE_USE_LUAJIT_LEGACY_BUILD)
     if(WIN32)
         set(MAKECMD "mingw32-make")
     else()
@@ -41,7 +71,8 @@ if(PGE_USE_LUAJIT)
     ExternalProject_Add(
         LuaJIT_local
         PREFIX ${CMAKE_BINARY_DIR}/external/luajit
-        URL ${CMAKE_SOURCE_DIR}/_Libs/_sources/luajit.tar.gz
+        URL ${luajitArchive}
+        URL_HASH SHA256=${luajitArchive_hash}
         UPDATE_COMMAND ""
         CONFIGURE_COMMAND ""
         SOURCE_DIR ${LUAJIT_LOCAL_SOURCE_DIR}
@@ -53,6 +84,8 @@ if(PGE_USE_LUAJIT)
             "CCWARN+=-Wno-unused-function"
             ${BUILD_FLAGS}
         INSTALL_COMMAND "${LUAJIT_INSTALL_COMMAND}"
+    BUILD_BYPRODUCTS
+        "${libLuaJit_Lib}"
     )
     if(WIN32)
         set(LUAJIT_BINARY_FILES "luajit.exe")
@@ -88,5 +121,8 @@ if(PGE_USE_LUAJIT)
             DEPENDEES BUILD CreateLuaJitInstallFolder
         )
     endif() #NOT WIN32
+
+    target_link_libraries(PGE_LuaJIT INTERFACE ${libLuaJit_Lib})
+
 endif()
 

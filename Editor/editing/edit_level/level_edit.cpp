@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,6 +83,8 @@ void LevelEdit::prepareLevelFile(LevelData &data)
         return;
 
     dataconfigs *config = scene->m_configs;
+
+    FileFormats::arrayIdLevelSortBGOs(data);
 
     // TODO: make here the synchronizarion with the main scene
     // Instead of real-time in-scene synchronization, total performance

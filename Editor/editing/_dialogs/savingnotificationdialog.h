@@ -33,7 +33,7 @@ public:
     ~SavingNotificationDialog();
 
     void setSavingTitle(const QString &title);
-    void setAdjustSize(const int &width, const int &height);
+    void fixSize();
     void addUserItem(const QString &desc, QWidget* wid);
 
 private slots:

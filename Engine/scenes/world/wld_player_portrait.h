@@ -16,7 +16,7 @@ public:
                         int framedelay,
                         int dir);
     WorldScene_Portrait(const WorldScene_Portrait &pt) = default;
-    ~WorldScene_Portrait();
+    ~WorldScene_Portrait() = default;
     void init(unsigned long CharacterID,
               unsigned long stateID,
               int posX,

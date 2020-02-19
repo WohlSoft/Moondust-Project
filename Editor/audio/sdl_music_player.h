@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,60 +22,51 @@
 
 #include <QString>
 #include <QObject>
-#ifdef USE_QMEDIAPLAYER
-#include <QMediaPlayer>
-#include <QMediaPlaylist>
-#include <QUrl>
-#elif USE_SDL_MIXER
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer_ext.h>
-#endif
+
+namespace MixerX
+{
+extern void initAudio(int frequency, Uint16 format = AUDIO_S16, int channels = 2, int chunksize = 4096);
+extern int  sampleRate();
+extern void closeAudio();
+}
 
 class PGE_MusPlayer : public QObject
 {
     Q_OBJECT
+    friend void MixerX::initAudio(int,Uint16,int,int);
+
 public:
-    static void MUS_stopMusic();
+    static void changeVolume(int vlm);
+    static int  currentVolume();
 
-    static void MUS_playMusic();
-
-    static void MUS_changeVolume(int vlm);
-    static void MUS_openFile(QString musFile);
-    static void MUS_freeStream();
-    static void setSampleRate(int sampleRate);
-    static int sampleRate();
-    static int currentVolume();
+    static void openFile(QString musFile);
+    static void closeFile();
+    static void stop();
+    static void play();
 
 public slots:
     void setVolume(int volume);
 
 private:
-    #ifdef USE_QMEDIAPLAYER
-    static QMediaPlayer *musicPlayer;
-    static QMediaPlaylist *playList;
-    #elif USE_SDL_MIXER
     static Mix_Music *play_mus;
-    #endif
     static int volume;
     static int sRate;
-    static QString current;
+    static QString currentMusic;
 };
 
 class PGE_SfxPlayer : public QObject
 {
     Q_OBJECT
 public:
-    static void SND_PlaySnd(QString sndFile);
+    static void playFile(QString sndFile);
     static void freeBuffer();
 
 private:
-    #ifdef USE_QMEDIAPLAYER
-    static QMediaPlayer *mp3Play;
-    #elif USE_SDL_MIXER
     static Mix_Chunk *sound;
-    #endif
-    static QString current;
+    static QString currentSound;
 };
 
 #endif // MUSIC_PLAYER_H

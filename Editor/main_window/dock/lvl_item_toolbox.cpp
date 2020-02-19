@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ void LevelItemBox::initItemLists()
         return;
 
     LevelEdit *edit = mw()->activeLvlEditWin();
-    if((edit == NULL) || (!edit->sceneCreated))
+    if((edit == nullptr) || (!edit->sceneCreated))
     {
         LogDebug("LevelTools -> Can't reload: no editing level, or scene isn't initialized!");
         return;
@@ -113,19 +113,19 @@ void LevelItemBox::initItemLists()
         return;
     }
 
-    m_allLabel = MainWindow::tr("[all]");
+    m_allLabelText = MainWindow::tr("[all]");
 
     mw()->ui->menuNew->setEnabled(false);
 
-    lock_cat = true;
-    QString cat_blocks = ui->BlockCatList->currentIndex() > 0 ? ui->BlockCatList->currentText() : m_allLabel;
-    QString cat_bgos = ui->BGOCatList->currentIndex() > 0 ? ui->BGOCatList->currentText() : m_allLabel;
-    QString cat_npcs = ui->NPCCatList->currentIndex() > 0 ? ui->NPCCatList->currentText() : m_allLabel;
+    m_lockCategory = true;
+    QString cat_blocks = ui->BlockCatList->currentIndex() > 0 ? ui->BlockCatList->currentText() : m_allLabelText;
+    QString cat_bgos = ui->BGOCatList->currentIndex() > 0 ? ui->BGOCatList->currentText() : m_allLabelText;
+    QString cat_npcs = ui->NPCCatList->currentIndex() > 0 ? ui->NPCCatList->currentText() : m_allLabelText;
 
-    lock_grp = true;
-    QString grp_blocks = ui->BlockGroupList->currentIndex() > 0 ? ui->BlockGroupList->currentText() : m_allLabel;
-    QString grp_bgo = ui->BGOGroupList->currentIndex() > 0 ? ui->BGOGroupList->currentText() : m_allLabel;
-    QString grp_npc = ui->NPCGroupList->currentIndex() > 0 ? ui->NPCGroupList->currentText() : m_allLabel;
+    m_lockGroup = true;
+    QString grp_blocks = ui->BlockGroupList->currentIndex() > 0 ? ui->BlockGroupList->currentText() : m_allLabelText;
+    QString grp_bgo = ui->BGOGroupList->currentIndex() > 0 ? ui->BGOGroupList->currentText() : m_allLabelText;
+    QString grp_npc = ui->NPCGroupList->currentIndex() > 0 ? ui->NPCGroupList->currentText() : m_allLabelText;
 
     LogDebug("LevelTools -> Clear current");
 
@@ -133,12 +133,12 @@ void LevelItemBox::initItemLists()
     m_bgoModel->clear();
     m_npcModel->clear();
 
-    m_blockModel->setGroupAllKey(m_allLabel);
-    m_bgoModel->setGroupAllKey(m_allLabel);
-    m_npcModel->setGroupAllKey(m_allLabel);
-    m_blockModel->setCategoryAllKey(m_allLabel);
-    m_bgoModel->setCategoryAllKey(m_allLabel);
-    m_npcModel->setCategoryAllKey(m_allLabel);
+    m_blockModel->setGroupAllKey(m_allLabelText);
+    m_bgoModel->setGroupAllKey(m_allLabelText);
+    m_npcModel->setGroupAllKey(m_allLabelText);
+    m_blockModel->setCategoryAllKey(m_allLabelText);
+    m_bgoModel->setCategoryAllKey(m_allLabelText);
+    m_npcModel->setCategoryAllKey(m_allLabelText);
 
 
 
@@ -152,7 +152,7 @@ void LevelItemBox::initItemLists()
         blockCustomId.insert(block.setup.id);
     }
 
-    m_blockModel->addElementsBegin(scene->m_localConfigBlocks.size());
+    m_blockModel->addElementsBegin(static_cast<int>(scene->m_localConfigBlocks.size()));
     for(int i = 1; i < scene->m_localConfigBlocks.size(); i++)
     {
         obj_block &blockItem =  scene->m_localConfigBlocks[i];
@@ -170,8 +170,8 @@ void LevelItemBox::initItemLists()
 
     //apply group list
     ui->BlockGroupList->clear();
-    ui->BlockGroupList->addItems(m_blockModel->getGroupsList(m_allLabel));
-    if(grp_blocks != m_allLabel)
+    ui->BlockGroupList->addItems(m_blockModel->getGroupsList(m_allLabelText));
+    if(grp_blocks != m_allLabelText)
     {
         ui->BlockGroupList->setCurrentText(grp_blocks);
         m_blockModel->setGroupFilter(grp_blocks);
@@ -179,8 +179,8 @@ void LevelItemBox::initItemLists()
 
     //apply category list
     ui->BlockCatList->clear();
-    ui->BlockCatList->addItems(m_blockModel->getCategoriesList(m_allLabel));
-    if(cat_blocks != m_allLabel)
+    ui->BlockCatList->addItems(m_blockModel->getCategoriesList(m_allLabelText));
+    if(cat_blocks != m_allLabelText)
     {
         ui->BlockCatList->setCurrentText(cat_blocks);
         m_blockModel->setCategoryFilter(cat_blocks);
@@ -199,7 +199,7 @@ void LevelItemBox::initItemLists()
         bgoCustomId.insert(bgo.setup.id);
     }
 
-    m_bgoModel->addElementsBegin(scene->m_localConfigBGOs.size());
+    m_bgoModel->addElementsBegin(static_cast<int>(scene->m_localConfigBGOs.size()));
     for(int i = 1; i < scene->m_localConfigBGOs.size(); i++)
     {
         obj_bgo &bgoItem = scene->m_localConfigBGOs[i];
@@ -216,8 +216,8 @@ void LevelItemBox::initItemLists()
 
     //apply group list
     ui->BGOGroupList->clear();
-    ui->BGOGroupList->addItems(m_bgoModel->getGroupsList(m_allLabel));
-    if(grp_bgo != m_allLabel)
+    ui->BGOGroupList->addItems(m_bgoModel->getGroupsList(m_allLabelText));
+    if(grp_bgo != m_allLabelText)
     {
         ui->BGOGroupList->setCurrentText(grp_bgo);
         m_bgoModel->setGroupFilter(grp_bgo);
@@ -225,8 +225,8 @@ void LevelItemBox::initItemLists()
 
     //apply category list
     ui->BGOCatList->clear();
-    ui->BGOCatList->addItems(m_bgoModel->getCategoriesList(m_allLabel));
-    if(cat_bgos != m_allLabel)
+    ui->BGOCatList->addItems(m_bgoModel->getCategoriesList(m_allLabelText));
+    if(cat_bgos != m_allLabelText)
     {
         ui->BGOCatList->setCurrentText(cat_bgos);
         m_bgoModel->setCategoryFilter(cat_bgos);
@@ -242,7 +242,7 @@ void LevelItemBox::initItemLists()
         npcCustomId.insert(npc.setup.id);
     }
 
-    m_npcModel->addElementsBegin(scene->m_localConfigNPCs.size());
+    m_npcModel->addElementsBegin(static_cast<int>(scene->m_localConfigNPCs.size()));
     for(int i = 1; i < scene->m_localConfigNPCs.size(); i++)
     {
         obj_npc &npcItem =  scene->m_localConfigNPCs[i];
@@ -259,8 +259,8 @@ void LevelItemBox::initItemLists()
 
     //apply group list
     ui->NPCGroupList->clear();
-    ui->NPCGroupList->addItems(m_npcModel->getGroupsList(m_allLabel));
-    if(grp_npc != m_allLabel)
+    ui->NPCGroupList->addItems(m_npcModel->getGroupsList(m_allLabelText));
+    if(grp_npc != m_allLabelText)
     {
         ui->NPCGroupList->setCurrentText(grp_npc);
         m_npcModel->setGroupFilter(grp_npc);
@@ -268,15 +268,15 @@ void LevelItemBox::initItemLists()
 
     //apply category list
     ui->NPCCatList->clear();
-    ui->NPCCatList->addItems(m_npcModel->getCategoriesList(m_allLabel));
-    if(cat_npcs != m_allLabel)
+    ui->NPCCatList->addItems(m_npcModel->getCategoriesList(m_allLabelText));
+    if(cat_npcs != m_allLabelText)
     {
         ui->NPCCatList->setCurrentText(cat_npcs);
         m_npcModel->setCategoryFilter(cat_npcs);
     }
 
-    lock_grp = false;
-    lock_cat = false;
+    m_lockGroup = false;
+    m_lockCategory = false;
 
     mw()->ui->menuNew->setEnabled(true);
 }
@@ -438,59 +438,59 @@ void LevelItemBox::on_NPCItemsList_customContextMenuRequested(const QPoint &pos)
 // ///////////////////////////////////
 void LevelItemBox::on_BlockGroupList_currentIndexChanged(const QString &arg1)
 {
-    if(lock_grp)
+    if(m_lockGroup)
         return;
     m_blockModel->setGroupFilter(arg1);
-    lock_cat = true;
+    m_lockCategory = true;
     ui->BlockCatList->clear();
-    ui->BlockCatList->addItems(m_blockModel->getCategoriesList(m_allLabel));
-    lock_cat = false;
+    ui->BlockCatList->addItems(m_blockModel->getCategoriesList(m_allLabelText));
+    m_lockCategory = false;
 }
 
 void LevelItemBox::on_BGOGroupList_currentIndexChanged(const QString &arg1)
 {
-    if(lock_grp)
+    if(m_lockGroup)
         return;
 
     m_bgoModel->setGroupFilter(arg1);
 
-    lock_cat = true;
+    m_lockCategory = true;
     ui->BGOCatList->clear();
-    ui->BGOCatList->addItems(m_bgoModel->getCategoriesList(m_allLabel));
-    lock_cat = false;
+    ui->BGOCatList->addItems(m_bgoModel->getCategoriesList(m_allLabelText));
+    m_lockCategory = false;
 }
 
 void LevelItemBox::on_NPCGroupList_currentIndexChanged(const QString &arg1)
 {
-    if(lock_grp)
+    if(m_lockGroup)
         return;
 
     m_npcModel->setGroupFilter(arg1);
 
-    lock_cat = true;
+    m_lockCategory = true;
     ui->NPCCatList->clear();
-    ui->NPCCatList->addItems(m_npcModel->getCategoriesList(m_allLabel));
-    lock_cat = false;
+    ui->NPCCatList->addItems(m_npcModel->getCategoriesList(m_allLabelText));
+    m_lockCategory = false;
 }
 
 // ///////////////////////////////////
 void LevelItemBox::on_BlockCatList_currentIndexChanged(const QString &arg1)
 {
-    if(lock_cat)
+    if(m_lockCategory)
         return;
     m_blockModel->setCategoryFilter(arg1);
 }
 
 void LevelItemBox::on_BGOCatList_currentIndexChanged(const QString &arg1)
 {
-    if(lock_cat)
+    if(m_lockCategory)
         return;
     m_bgoModel->setCategoryFilter(arg1);
 }
 
 void LevelItemBox::on_NPCCatList_currentIndexChanged(const QString &arg1)
 {
-    if(lock_cat)
+    if(m_lockCategory)
         return;
     m_npcModel->setCategoryFilter(arg1);
 }
@@ -505,7 +505,7 @@ void LevelItemBox::BlockList_itemClicked(const QModelIndex &item)
     {
         if(!m_blockModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
             return;
-        int id = m_blockModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        unsigned int id = m_blockModel->data(item, ItemBoxListModel::ItemBox_ItemId).toUInt();
         mw()->SwitchPlacingItem(ItemTypes::LVL_Block, id);
     }
 }
@@ -517,7 +517,7 @@ void LevelItemBox::BGOList_itemClicked(const QModelIndex &item)
     {
         if(!m_bgoModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
             return;
-        int id = m_bgoModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        unsigned int id = m_bgoModel->data(item, ItemBoxListModel::ItemBox_ItemId).toUInt();
         mw()->SwitchPlacingItem(ItemTypes::LVL_BGO, id);
     }
 }
@@ -529,7 +529,7 @@ void LevelItemBox::NPCList_itemClicked(const QModelIndex &item)
     {
         if(!m_npcModel->data(item, ItemBoxListModel::ItemBox_ItemIsValid).toBool())
             return;
-        int id = m_npcModel->data(item, ItemBoxListModel::ItemBox_ItemId).toInt();
+        unsigned int id = m_npcModel->data(item, ItemBoxListModel::ItemBox_ItemId).toUInt();
         mw()->SwitchPlacingItem(ItemTypes::LVL_NPC, id);
     }
 }

@@ -4,22 +4,12 @@
 *.lo
 *.o
 *.a
-!_Libs/_builds/*/*/*.a
 *.la
-!_Libs/_builds/*/*/*.la
 *.lai
-!_Libs/_builds/*/*/*.lai
 *.so
-!_Libs/_builds/*/*/*.so
 *.dll
-!_Libs/_builds/*/*/*.dll
 *.dylib
-!_Libs/_builds/*/*/*.dylib
-_Libs/_builds/linux/*
-_Libs/_builds/haiku/*
-_Libs/_builds/macos/*
-_Libs/_builds/android/*
-_Libs/_builds/win*-msvc/*
+_Libs/_builds/*
 _Libs/object_script*
 
 #Mac OS's junk
@@ -77,6 +67,7 @@ Makefile.*
 /bin-w32
 /bin-w64
 /bin-cmake*
+/out
 /bin-archives
 /ServerLib/bin
 /android-build
@@ -89,6 +80,7 @@ Makefile.*
 /_Misc/SDLMusPlayer/app_process
 /_Misc/SDLMusPlayer/android-build
 /_Misc/SDLMusPlayer/android-libpge_engine.so*
+
 #NSIS-output file
 /_Misc/dev_scripts/deploy/nsis/pge-online-installer*.exe
 
@@ -117,6 +109,9 @@ qt_en.qm
 *.db
 *_plugin_import.cpp
 
+# Some tools like astyle may leave these files
+*.orig
+
 #unpacked libraries sources
 /_Libs/_sources/_build_cache*/*
 !/_Libs/_sources
@@ -127,6 +122,9 @@ qt_en.qm
 #Paths config files in the root
 /_paths.bat
 /_paths.sh
+
+#A list of files for lupdate to run
+_lupdate_temp_list.tmp
 
 #Notepad++ Backup files
 *.bak
@@ -150,3 +148,4 @@ libSDL2_mixer.dylib
 PVS-Studio.pri
 
 *.directory
+

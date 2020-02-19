@@ -133,8 +133,10 @@ therefore you can use same link to get updated version.</source>
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <source>Unable to find OpenGL support!
+Software renderer will be started.</source>
+        <oldsource>Unable to find OpenGL support!
 Software renderer will be started.
-</source>
+</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message id="NO_RENDERER_ERROR">
@@ -424,6 +426,10 @@ Did you placed player start point (or entrance warp point) too far off of the se
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
         <source>&lt;levels not found&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="VSYNC_ERROR_INFO">
+        <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

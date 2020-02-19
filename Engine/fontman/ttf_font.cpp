@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "ttf_font.h"
@@ -51,8 +52,6 @@ void closeFreeType()
 
 // Default dummy glyph
 const TtfFont::TheGlyph TtfFont::dummyGlyph;
-
-TtfFont::TheGlyph::TheGlyph() {}
 
 TtfFont::TtfFont() : BaseFontEngine()
 {
@@ -129,7 +128,7 @@ bool TtfFont::loadFont(const char *mem, size_t size)
 }
 
 PGE_Size TtfFont::textSize(std::string &text,
-                           uint32_t max_line_lenght,
+                           uint32_t max_line_length,
                            bool cut, uint32_t fontSize)
 {
     SDL_assert_release(g_ft);
@@ -178,7 +177,7 @@ PGE_Size TtfFont::textSize(std::string &text,
         case '\n':
         {
             lastspace = 0;
-            if((maxWidth < x) && (maxWidth < max_line_lenght))
+            if((maxWidth < x) && (maxWidth < max_line_length))
                 maxWidth = x;
             x = 0;
             widthSumm = 0;
@@ -199,7 +198,7 @@ PGE_Size TtfFont::textSize(std::string &text,
 
         }//Switch
 
-        if((max_line_lenght > 0) && (x >= max_line_lenght)) //If lenght more than allowed
+        if((max_line_length > 0) && (x >= max_line_length)) //If lenght more than allowed
         {
             maxWidth = x;
             if(lastspace > 0)
@@ -249,7 +248,7 @@ void TtfFont::printText(const std::string &text,
         {
         case '\n':
             offsetX = 0;
-            offsetY += (fontSize * 1.5);
+            offsetY += static_cast<uint32_t>(fontSize * 1.5);
             continue;
 
         case '\t':
@@ -259,6 +258,8 @@ void TtfFont::printText(const std::string &text,
 //        case ' ':
 //            offsetX += m_spaceWidth + m_interLetterSpace / 2;
 //            continue;
+        default:
+            break;
         }
 
         const TheGlyph &glyph = getGlyph(doublePixel ? (fontSize / 2) : fontSize, get_utf8_char(&cx));
@@ -326,10 +327,10 @@ TtfFont::TheGlyphInfo TtfFont::getGlyphInfo(const char *u8char, uint32_t fontSiz
 
 const TtfFont::TheGlyph &TtfFont::getGlyph(uint32_t fontSize, char32_t character)
 {
-    SizeCharMap::iterator fSize = m_charMap.find(fontSize);
+    auto fSize = m_charMap.find(fontSize);
     if(fSize != m_charMap.end())
     {
-        CharMap::iterator rc = fSize->second.find(character);
+        auto rc = fSize->second.find(character);
         if(rc != fSize->second.end())
             return rc->second;
         return loadGlyph(fontSize, character);
@@ -347,9 +348,11 @@ const TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t characte
 
     if(m_recentPixelSize != fontSize)
     {
+        g_loadedFaces_mutex.lock();
         error = FT_Set_Pixel_Sizes(cur_font, 0, fontSize);
         SDL_assert_release(error == 0);
         m_recentPixelSize = fontSize;
+        g_loadedFaces_mutex.unlock();
     }
 
     t_glyphIndex = FT_Get_Char_Index(cur_font, character);
@@ -389,7 +392,7 @@ const TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t characte
     if((width == 0) || (height == 0))
         return dummyGlyph;
 
-    uint8_t *image = new uint8_t[4 * width * height];
+    auto *image = new uint8_t[4 * width * height];
     if(bitmap.pitch >= 0)
     {
         for(uint32_t w = 0; w < width; w++)
@@ -435,7 +438,7 @@ const TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t characte
 
     delete [] image;
 
-    SizeCharMap::iterator fSize = m_charMap.find(fontSize);
+    auto fSize = m_charMap.find(fontSize);
     if(fSize == m_charMap.end())
     {
         m_charMap.insert({fontSize, CharMap()});
@@ -444,10 +447,8 @@ const TtfFont::TheGlyph &TtfFont::loadGlyph(uint32_t fontSize, char32_t characte
     }
 
     fSize->second.insert({character, t_glyph});
-    CharMap::iterator rc = fSize->second.find(character);
+    auto rc = fSize->second.find(character);
     SDL_assert_release(rc != fSize->second.end());
 
     return rc->second;
 }
-
-

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,12 +21,16 @@
 #define LVL_ITEM_PROPERTIES_H
 
 #include <QDockWidget>
+#include <QMutex>
 #include "mwdock_base.h"
 #include <PGE_File_Formats/lvl_filedata.h>
+#include <memory>
 
 class MainWindow;
 class QComboBox;
 class QPushButton;
+class QSpacerItem;
+class JsonSettingsWidget;
 
 namespace Ui {
 class LvlItemProperties;
@@ -40,11 +44,15 @@ class LvlItemProperties : public QDockWidget, public MWDock_Base
 private:
     explicit LvlItemProperties(QWidget *parent);
     ~LvlItemProperties();
+
+    void re_translate_widgets();
+
 public:
-    long blockPtr;
-    long bgoPtr;
-    long npcPtr;
-    bool LvlItemPropsLock;
+    long m_currentBlockArrayId;
+    long m_currentBgoArrayId;
+    long m_currentNpcArrayId;
+
+    void setSettingsLock(bool locked);
 
     QComboBox *cbox_layer_block();
     QComboBox *cbox_layer_bgo();
@@ -70,7 +78,7 @@ public slots:
     void OpenNPC(LevelNPC& npc, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
     void CloseBox();
 
-    void LvlItemProps(int Type,
+    void openPropertiesFor(int Type,
                       LevelBlock& block,
                       LevelBGO& bgo,
                       LevelNPC& npc,
@@ -116,10 +124,7 @@ private slots:
     void on_PROPS_NpcGenerator_clicked(bool checked);
     void on_PROPS_NPCGenType_currentIndexChanged(int index);
     void on_PROPS_NPCGenTime_valueChanged(double arg1);
-    void on_PROPS_NPCGenUp_clicked();
-    void on_PROPS_NPCGenLeft_clicked();
-    void on_PROPS_NPCGenDown_clicked();
-    void on_PROPS_NPCGenRight_clicked();
+    void npcGeneratorDirectionChange(int direction);
     void on_PROPS_NpcLayer_currentIndexChanged(const QString &arg1);
     void on_PROPS_NpcAttachLayer_currentIndexChanged(const QString &arg1);
     void on_PROPS_NpcEventActivate_currentIndexChanged(const QString &arg1);
@@ -133,19 +138,40 @@ protected:
 private:
     void processNpcContainerButton(QPushButton *btn);
 
-    int npcSpecSpinOffset;
-    int npcSpecSpinOffset_2;
-    bool LockItemProps;
+    void initExtraSettingsWidget(const QString &defaultLocalDir,
+                                 const QString &defaultGlobalDir,
+                                 const QString &layoutPath,
+                                 const QString &layoutPathGlobal,
+                                 QString &properties,
+                                 void (LvlItemProperties::*callback)());
 
-    int curItemType;
-    QString BlockEventDestroy;
-    QString BlockEventHit;
-    QString BlockEventLayerEmpty;
+    void onExtraSettingsBlockChanged();
+    void onExtraSettingsBGOChanged();
+    void onExtraSettingsNPCChanged();
 
-    QString NpcEventActivated;
-    QString NpcEventDeath;
-    QString NpcEventTalk;
-    QString NpcEventLayerEmpty;
+    int m_npcSpecSpinOffset;
+    int m_npcSpecSpinOffset_2;
+
+    //! A lock of item properties change events that was set externally
+    bool m_externalLock = true;
+    //! A lock of item properties change events that was set internally
+    bool m_internalLock = false;
+
+    QMutex m_mutex;
+    std::unique_ptr<JsonSettingsWidget> m_extraSettings;
+    std::unique_ptr<JsonSettingsWidget> m_extraGlobalSettings;
+    std::unique_ptr<QSpacerItem> m_extraSettingsSpacer;
+
+    int m_curItemType;
+
+    QString m_recentBlockEventDestroy;
+    QString m_recentBlockEventHit;
+    QString m_recentBlockEventLayerEmpty;
+
+    QString m_recentNpcEventActivated;
+    QString m_recentNpcEventDeath;
+    QString m_recentNpcEventTalk;
+    QString m_recentNpcEventLayerEmpty;
 
     Ui::LvlItemProperties *ui;
 };

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ SETTINGS_ScreenGrabSettings GlobalSettings::screenGrab;
 SETTINGS_Extra GlobalSettings::extra;
 
 bool GlobalSettings::autoPlayMusic  = false;
-int  GlobalSettings::musicVolume    = 128;
+int  GlobalSettings::musicVolume    = 54;
 bool GlobalSettings::recentMusicPlayingState = false;
 
 bool GlobalSettings::MidMouse_allowDuplicate    = true;
@@ -86,13 +86,13 @@ long ConfStatus::total_music_wld=0;
 long ConfStatus::total_music_spc=0;
 long ConfStatus::total_sound=0;
 
-QString ConfStatus::configName="";
-QString ConfStatus::configPath="";
+QString ConfStatus::configName;
+QString ConfStatus::configPath;
 
-QString ConfStatus::configDataPath="";
-#ifdef _WIN32
-QString ConfStatus::SmbxEXE_Name="";
-bool    ConfStatus::SmbxTest_By_Default=false;
-#endif
+QString ConfStatus::configDataPath;
 
-QString ConfStatus::defaultTheme="";
+QString ConfStatus::SmbxEXE_Name;
+bool    ConfStatus::SmbxTest_By_Default = false;
+bool    ConfStatus::SmbxTest_HidePgeEngine = false;
+
+QString ConfStatus::defaultTheme;

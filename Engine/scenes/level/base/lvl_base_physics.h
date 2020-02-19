@@ -36,10 +36,10 @@ struct PGE_Phys_Object_Phys
 class PGE_physBody
 {
 public:
-    PGE_physBody();
+    PGE_physBody() = default;
     PGE_physBody(const PGE_physBody &o) = default;
 
-    void processCollisions(PGE_RenderList &objs);
+    // void processCollisions(PGE_RenderList &objs);
 
     /***********************Physical engine locals*****************************/
     enum ContactAt
@@ -86,7 +86,7 @@ public:
 
     struct objRect
     {
-        objRect() {}
+        objRect() = default;
         objRect(double _x, double _y, double _w, double _h):
             x(_x), y(_y), w(_w), h(_h)
         {}
@@ -395,6 +395,9 @@ public:
     double  m_onSlopeYAdd = 0.0;
     //! Body type
     BodyType m_bodytype = Body_STATIC;
+    //! Stick body on parent subtree, othrewise, it will freely move in the common space
+    bool     m_bodySticky = false;
+    //! Collision check policy
     int      m_collisionCheckPolicy = CollisionCheckPolicy_EVERYTHING;
 
     //! Allow running over floor holes

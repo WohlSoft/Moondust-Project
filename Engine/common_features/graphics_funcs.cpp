@@ -1,19 +1,20 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 #include <Utils/files.h>
 #include <FileMapper/file_mapper.h>
@@ -27,11 +28,10 @@
 
 #include <ConfigPackManager/image_size.h>
 
-#include <_resources/resource.h>
+#include <common_features/engine_resources.h>
 
 #ifdef _WIN32
 #include <SDL2/SDL_syswm.h>
-#define FREEIMAGE_LIB 1
 #endif
 #include <FreeImageLite.h>
 
@@ -58,32 +58,32 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     FileMapper fileMap;
 
     if(!fileMap.open_file(file.c_str()))
-        return NULL;
+        return nullptr;
 
     FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
                                             static_cast<unsigned int>(fileMap.size()));
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 
     if(formato  == FIF_UNKNOWN)
-        return NULL;
+        return nullptr;
 
     FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
     FreeImage_CloseMemory(imgMEM);
     fileMap.close_file();
 
     if(!img)
-        return NULL;
+        return nullptr;
 
 #else
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
 
     if(formato  == FIF_UNKNOWN)
-        return NULL;
+        return nullptr;
 
     FIBITMAP *img = FreeImage_Load(formato, file.c_str());
 
     if(!img)
-        return NULL;
+        return nullptr;
 
 #endif
 #ifdef DEBUG_BUILD
@@ -100,7 +100,7 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
         temp = FreeImage_ConvertTo32Bits(img);
 
         if(!temp)
-            return NULL;
+            return nullptr;
 
         FreeImage_Unload(img);
         img = temp;
@@ -123,8 +123,8 @@ FIBITMAP *GraphicsHelps::loadImageRC(const char *file)
     size_t fileSize = 0;
     SDL_assert_release(RES_getMem(file, memory, fileSize));
     //{
-        //pLogCritical("Resource file \"%s\" is not found!", file);
-        //return nullptr;
+    //pLogCritical("Resource file \"%s\" is not found!", file);
+    //return nullptr;
     //}
 
     FIMEMORY *imgMEM = FreeImage_OpenMemory(memory, static_cast<FI_DWORD>(fileSize));
@@ -260,7 +260,7 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::
     FreeImage_Unload(mask);
 }
 
-bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size* imgSize)
+bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size *imgSize)
 {
 
     if(!imgSize)
@@ -276,7 +276,7 @@ bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size* imgSize)
     return true;
 }
 
-void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgName, std::string& out_maskName, std::string& out_errStr, PGE_Size* imgSize)
+void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgName, std::string &out_maskName, std::string &out_errStr, PGE_Size *imgSize)
 {
     if(in_imgName.empty())
     {

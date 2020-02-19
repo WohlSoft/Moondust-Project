@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,32 +28,12 @@
 #include "../lvl_history_manager.h"
 #include "../newlayerbox.h"
 
-class BgoHistory_UserData : public HistoryElementCustomSetting
+#include <editing/_components/history/settings/lvl_bgo_userdata.hpp>
+
+static inline double bgoZ(const LevelBGO &b)
 {
-public:
-    BgoHistory_UserData() : HistoryElementCustomSetting() {}
-    virtual ~BgoHistory_UserData() {}
-
-    virtual void undo(const void *sourceItem, QVariant *, QGraphicsItem *item)
-    {
-        const LevelBGO * it = reinterpret_cast<const LevelBGO*>(sourceItem);
-        ItemBGO* ite = qgraphicsitem_cast<ItemBGO*>(item);
-        ite->m_data.meta.custom_params = it->meta.custom_params;
-        ite->arrayApply();
-    }
-    virtual void redo(const void *, QVariant *mod, QGraphicsItem *item)
-    {
-        ItemBGO* ite = qgraphicsitem_cast<ItemBGO*>(item);
-        ite->m_data.meta.custom_params = mod->toString();
-        ite->arrayApply();
-    }
-    virtual QString getHistoryName()
-    {
-        return QObject::tr("BGO user data change");
-    }
-};
-
-
+    return (static_cast<double>(b.meta.array_id) * 0.000000000001);
+}
 
 ItemBGO::ItemBGO(QGraphicsItem *parent) : LvlBaseItem(parent)
 {
@@ -607,6 +587,7 @@ void ItemBGO::setBGOData(LevelBGO inD, obj_bgo *mergedSet, long *animator_id)
         m_gridOffsetX = m_localProps.setup.grid_offset_x;
         m_gridOffsetY = m_localProps.setup.grid_offset_y;
         setZMode(m_data.z_mode, m_data.z_offset, true);
+        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
 
     if(animator_id)
@@ -668,7 +649,7 @@ void ItemBGO::setZMode(int mode, qreal offset, bool init)
         break;
     }
 
-    setZValue(targetZ);
+    setZValue(targetZ + bgoZ(m_data));
 
     if(!init) arrayApply();
 }

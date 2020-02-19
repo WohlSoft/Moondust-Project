@@ -3,7 +3,7 @@
 ** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
-** Copyright (C) 2016 Vitaliy Novichkov <admin@wohlnet.ru>
+** Copyright (C) 2016-2019 Vitaliy Novichkov <admin@wohlnet.ru>
 **
 ** This file use a part of the QtCore module of the Qt Toolkit,
 ** ported into pure STL to allow support of qm translations in the non-Qt projects.
@@ -72,20 +72,23 @@ public:
 
     //Return UTF-8 string
     std::string    do_translate8(const char *context, const char *sourceText,
-                                 const char *comment = NULL, int32_t n = -1);
+                                 const char *comment = nullptr, int32_t n = -1);
 
     //Return UTF-16 string (equal wchar_t on Windows)
     std::u16string do_translate(const char *context, const char *sourceText,
-                                const char *comment = NULL, int32_t n = -1);
+                                const char *comment = nullptr, int32_t n = -1);
 
     //Return UTF-32 string (equal wchar_t on Unix-like operating systems)
     std::u32string do_translate32(const char *context, const char *sourceText,
-                                  const char *comment = NULL, int32_t n = -1);
+                                  const char *comment = nullptr, int32_t n = -1);
 
-    bool loadFile(const char *filePath, uint8_t *directory = 0);
-    bool loadData(uint8_t *data, size_t len, uint8_t *directory = 0);
+    bool loadFile(const char *filePath, uint8_t *directory = nullptr);
+    bool loadData(const uint8_t *data, size_t len, uint8_t *directory = nullptr);
     bool isEmpty();
     void close();
+
+private:
+    bool loadDataPrivate(uint8_t *data, size_t len, uint8_t *directory = nullptr);
 };
 
 #endif // QMTRANSLATORX_H

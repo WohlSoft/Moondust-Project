@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
     {
         LvlCloneSection box(this);
         box.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-        box.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, box.size(), qApp->desktop()->availableGeometry()));
+        box.setGeometry(util::alignToScreenCenter(box.size()));
 
 
         //Creating of level files list
@@ -64,7 +64,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
             progress.setWindowModality(Qt::WindowModal);
             progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
             progress.setFixedSize(progress.size());
-            progress.setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, progress.size(), qApp->desktop()->availableGeometry()));
+            progress.setGeometry(util::alignToScreenCenter(progress.size()));
             progress.setCancelButton(0);
             progress.setMinimumDuration(0);
 
@@ -237,7 +237,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
             // Toggle destinition section if destinition level is same as currently toggled
             if(activeLvlWin == dst)
-                SetCurrentLevelSection(d_id);
+                setCurrentLevelSection(d_id);
             else // Or just change current section of that level without refreshing of current view
                 dst->setCurrentSection(d_id);
 
@@ -287,14 +287,14 @@ void MainWindow::on_actionSCT_Delete_triggered()
                     (edit->LvlData.sections[i].size_top != 0)
                 )
                 {
-                    SetCurrentLevelSection(i);
+                    setCurrentLevelSection(i);
                     switched = true;
                     break;
                 }
             }
 
             if(!switched)
-                SetCurrentLevelSection(0);
+                setCurrentLevelSection(0);
 
             //Pop last section entry if possible
             if(deletedSection > 20 && edit->LvlData.sections.size() > 21)

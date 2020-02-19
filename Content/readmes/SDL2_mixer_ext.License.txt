@@ -4,7 +4,7 @@ forked from SDL Mixer 2.0 by Sam Lantinga <slouken@libsdl.org>
 ========================================================================
 
 SDL_mixer_ext:  An extended audio mixer library, forked from SDL_mixer
-Copyright (C) 2014-2016 Vitaly Novichkov <admin@wohlnet.ru>
+Copyright (C) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
 
 SDL_mixer:  An audio mixer library based on the SDL library
 Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
@@ -39,7 +39,7 @@ Statically linked libraries:
 libADLMIDI: is a free MIDI to WAV conversion library with OPL3 emulation
 
 Original ADLMIDI code: Copyright (c) 2010-2014 Joel Yliluoma <bisqwit@iki.fi>
-ADLMIDI Library API:   Copyright (c) 2015 Vitaly Novichkov <admin@wohlnet.ru>
+ADLMIDI Library API:   Copyright (c) 2015-2020 Vitaly Novichkov <admin@wohlnet.ru>
 
 Library is based on the ADLMIDI, a MIDI player for Linux and Windows
 with OPL3 emulation:
@@ -66,20 +66,20 @@ Game Music Emulators: is a free chuptunes to WAV conversion library.
 
 Source code: https://bitbucket.org/mpyne/game-music-emu
 
-Copyright (C) 2003-2006 Shay Green. 
+Copyright (C) 2003-2006 Shay Green.
 
-This module is free software; you can redistribute it and/or modify 
+This module is free software; you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published
 by the Free Software Foundation; either version 2.1 of the License,
-or (at your option) any later version. 
+or (at your option) any later version.
 
 This module is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Lesser General Public License for more details. 
+GNU Lesser General Public License for more details.
 
 You should have received a copy of the GNU Lesser General Public
-License along with this module; 
+License along with this module;
 If not, see <http://www.gnu.org/licenses/>.
 
 ------------------------------------------------------------------------

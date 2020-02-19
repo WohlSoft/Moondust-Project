@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,15 +38,12 @@ static void base64_encode(QByteArray &out, QString &string)
 IntEngine::IntEngine()
 {}
 
-IntEngine::~IntEngine()
-{}
-
 void IntEngine::onData()
 {
     if(isWorking())
     {
-        QByteArray strdata = engine->readAllStandardOutput();
-        QByteArray msg = QByteArray::fromBase64(strdata);
+        QByteArray strData = engine->readAllStandardOutput();
+        QByteArray msg = QByteArray::fromBase64(strData);
 
         if(msg.startsWith("CMD:"))
         {

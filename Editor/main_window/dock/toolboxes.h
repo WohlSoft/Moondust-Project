@@ -20,6 +20,7 @@
 //World map specific toolboxes
 #include "wld_settings_box.h"
 #include "wld_item_toolbox.h"
+#include "wld_musicbox_itemset.h"
 #include "wld_item_props.h"
 #include "wld_search_box.h"
 

@@ -1,33 +1,32 @@
 /*
- * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017 Vitaly Novichkov <admin@wohlnet.ru>
+ * Moondust, a free game engine for platform game making
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
+ * This software is licensed under a dual license system (MIT or GPL version 3 or later).
+ * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
+ * you want to use this software.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You can see text of MIT license in the LICENSE.mit file you can see in Engine folder,
+ * or see https://mit-license.org/.
+ *
+ * You can see text of GPLv3 license in the LICENSE.gpl3 file you can see in Engine folder,
+ * or see <http://www.gnu.org/licenses/>.
  */
 
 #include "custom_data.h"
 #include <Utils/files.h>
+#include <utility>
 
-CustomDirManager::CustomDirManager()
-{}
-
-CustomDirManager::CustomDirManager(std::string path, std::string name, std::string stuffPath)
+CustomDirManager::CustomDirManager(const std::string &path, const std::string &name, const std::string &stuffPath)
 {
     setCustomDirs(path, name, stuffPath);
 }
 
-std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
+std::string CustomDirManager::getCustomFile(const std::string &name, bool *isDefault)
 {
     if(name.empty())
         return "";
@@ -40,7 +39,7 @@ std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
         backupName = srcName;
         backupName = Files::changeSuffix(backupName, ".png");
         //backupName.replace(backupName.size() - 3, 3, "png");
-        //find PNG's first!
+        //find PNGs first!
         std::string tmp = backupName;
         backupName = srcName;
         srcName = tmp;
@@ -52,7 +51,7 @@ std::string CustomDirManager::getCustomFile(std::string name, bool *isDefault)
         //backupName.replace(backupName.size()-3, 3, "gif");
     }
 
-    std::string target = "";
+    std::string target;
 tryBackup:
     if((Files::fileExists(m_dirCustom)) &&
        (Files::fileExists(m_dirCustom + "/" + srcName)))
@@ -64,9 +63,13 @@ tryBackup:
     else if(Files::fileExists(m_dirEpisode + "/" + srcName))
     {
         target = m_dirEpisode + "/" + srcName;
-        if(isDefault) *isDefault = false;
+        if(isDefault)
+            *isDefault = false;
     }
     else
+        target = findFileInExtraDirs(name);
+
+    if(target.empty())
     {
         if((!backupName.empty()) && (backupName != srcName))
         {
@@ -74,13 +77,21 @@ tryBackup:
             goto tryBackup;
         }
         target = m_mainStuffFullPath + name;
-        if(isDefault) *isDefault = true;
+        if(isDefault)
+            *isDefault = true;
+    }
+
+    if(!Files::fileExists(target))
+    {
+        target.clear();
+        if(isDefault)
+            *isDefault = false;
     }
 
     return target;
 }
 
-std::string CustomDirManager::getDefaultFile(std::string name)
+std::string CustomDirManager::getDefaultFile(const std::string &name)
 {
     std::string target;
     target = m_mainStuffFullPath + name;
@@ -89,16 +100,40 @@ std::string CustomDirManager::getDefaultFile(std::string name)
     return target;
 }
 
-std::string CustomDirManager::getMaskFallbackFile(std::string name)
+std::string CustomDirManager::getMaskFallbackFile(const std::string &name)
 {
     if(Files::hasSuffix(name, ".png"))
         return getDefaultFile(name);
     return std::string();
 }
 
-void CustomDirManager::setCustomDirs(std::string path, std::string name, std::string stuffPath)
+void CustomDirManager::setCustomDirs(const std::string &path, const std::string &name, const std::string &stuffPath, const std::vector<std::string> &extraPaths)
 {
     m_dirCustom = path + "/" + name;
     m_dirEpisode = path;
     m_mainStuffFullPath = stuffPath;
+    m_dirsExtra = extraPaths;
+}
+
+void CustomDirManager::addExtraDirs(const std::vector<std::string> &dPaths)
+{
+    m_dirsExtra.insert(m_dirsExtra.end(), dPaths.begin(), dPaths.end());
+}
+
+void CustomDirManager::clearExtraDirs()
+{
+    m_dirsExtra.clear();
+}
+
+std::string CustomDirManager::findFileInExtraDirs(const std::string &fPath)
+{
+    for(const std::string &d : m_dirsExtra)
+    {
+        std::string f = d;
+        f += "/";
+        f += fPath;
+        if(Files::fileExists(f))
+            return f;
+    }
+    return std::string();
 }

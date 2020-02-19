@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -235,17 +235,30 @@ public:
 
     //Defining indexes for data values of items
 #define ITEM_TYPE                    0 //String
+    // ID of item
 #define ITEM_ID                      1 //int
+    // in-array UID
 #define ITEM_ARRAY_ID                2 //int
+    // Is it's a block item which is sizable
 #define ITEM_BLOCK_IS_SIZABLE        3 //bool
+    // Is it's NPC which should collide blocks
 #define ITEM_NPC_BLOCK_COLLISION     7 //bool
+    // NPC that shoudn't collide other NPCs
 #define ITEM_NPC_NO_NPC_COLLISION    8 //bool
+    // Width of element
 #define ITEM_WIDTH                   9 //int
+    // Height of element
 #define ITEM_HEIGHT                  10 //int
+    // Is it's a scene object
 #define ITEM_IS_ITEM                 24 //bool
+    // Is it's a cursor object
 #define ITEM_IS_CURSOR               25 //bool
+    // Last remembered position before commit
 #define ITEM_LAST_POS                26 //QPointF
+    // Last remembered size before commit
 #define ITEM_LAST_SIZE               27 //QSizeF
+    //Never seen in game or on exported images
+#define ITEM_IS_META                 28 //bool
 
     void placeTile(WorldTerrainTile &tile, bool toGrid = false);
     void placeScenery(WorldScenery &scenery, bool toGrid = false);

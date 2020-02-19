@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@
 #include <QDialog>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QScreen>
+#include <QStyle>
 #include <QLineEdit>
 #include <QListWidget>
 #include <QTableWidget>
@@ -38,18 +40,16 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int search
         QListWidgetItem *item = itemList->item(i);
         if(toSearch.isEmpty())
         {
-            itemList->setItemHidden(item, false);
+            item->setHidden(false);
             continue;
         }
+
         switch(searchType)
         {
         case 0:
         {
             //search by text
-            if(!item->text().contains(toSearch, Qt::CaseInsensitive))
-                itemList->setItemHidden(item, true);
-            else
-                itemList->setItemHidden(item, false);
+            item->setHidden(!item->text().contains(toSearch, Qt::CaseInsensitive));
             break;
         }
         case 1:
@@ -58,23 +58,14 @@ void util::updateFilter(QLineEdit *searchEdit, QListWidget *itemList, int search
             bool conv = false;
             int toIdSearch = toSearch.toInt(&conv);
             if(!conv)
-            {
-                //cannot convert
-                break;
-            }
-            if(item->data(Qt::UserRole).toInt() == toIdSearch)
-                itemList->setItemHidden(item, false);
-            else
-                itemList->setItemHidden(item, true);
+                break;//cannot convert
+            item->setHidden(item->data(Qt::UserRole).toInt() != toIdSearch);
             break;
         }
         case 2:
         {
             //search by ID (contents)
-            if(!item->data(Qt::UserRole).toString().contains(toSearch, Qt::CaseInsensitive))
-                itemList->setItemHidden(item, true);
-            else
-                itemList->setItemHidden(item, false);
+            item->setHidden(!item->data(Qt::UserRole).toString().contains(toSearch, Qt::CaseInsensitive));
             break;
         }
         default:
@@ -168,8 +159,7 @@ void util::DialogToCenter(QDialog *dialog, bool CloseButtonOnly)
 {
     if(CloseButtonOnly)
         dialog->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
-    dialog->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
-                                            dialog->size(), qApp->desktop()->availableGeometry(0)));
+    dialog->setGeometry(alignToScreenCenter(dialog->size()));
 }
 
 QString util::getBaseFilename(QString str)
@@ -226,4 +216,24 @@ void util::CSV2DoubleArr(QString source, QList<double> &dest)
 void util::CSV2DoubleArr(QString source, QVector<double> &dest)
 {
     CSV2IntArr_CODE(source, dest, 0.0);
+}
+
+QRect util::getScreenGeometry(int screenIndex)
+{
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if(screenIndex < 0)
+        return screen ? screen->geometry() : qApp->desktop()->geometry();
+    else
+    {
+        QList<QScreen*> screens = QGuiApplication::screens();
+        if(screenIndex >= screens.size())
+            return qApp->desktop()->geometry();
+        else
+            return screens[screenIndex]->geometry();
+    }
+}
+
+QRect util::alignToScreenCenter(const QSize size)
+{
+    return QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size, getScreenGeometry());
 }

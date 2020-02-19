@@ -14,12 +14,12 @@
    height="430.4711"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="MusicListener.svg"
    style="enable-background:new"
-   inkscape:export-filename="/_server/172.16.0.10/WebHosting/engine.wohlnet.ru/docs/docs/Images/Icons/cat_musicplay/cat_musplay_16x16.png"
-   inkscape:export-xdpi="3.3499999"
-   inkscape:export-ydpi="3.3499999">
+   inkscape:export-filename="/home/vitaly/ownCloud-wohlstand/Graphics/PGE Cats/MusicListener.png"
+   inkscape:export-xdpi="178.40919"
+   inkscape:export-ydpi="178.40919">
   <defs
      id="defs4">
     <linearGradient
@@ -1100,15 +1100,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="245.83768"
+     inkscape:cx="235.12339"
      inkscape:cy="235.48253"
      inkscape:document-units="px"
      inkscape:current-layer="layer19"
      showgrid="false"
      inkscape:window-width="1280"
-     inkscape:window-height="947"
+     inkscape:window-height="950"
      inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:window-y="25"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -1120,7 +1120,8 @@
     <sodipodi:guide
        position="147.85714,317.14286"
        orientation="0,1"
-       id="guide4444" />
+       id="guide4444"
+       inkscape:locked="false" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -1130,7 +1131,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

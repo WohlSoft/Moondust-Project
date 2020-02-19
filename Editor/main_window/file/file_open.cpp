@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -143,7 +143,7 @@ void MainWindow::on_OpenFile_triggered()
     }
 
     QStringList fileName_DATA = QFileDialog::getOpenFileNames(this,
-                                trUtf8("Open file"),
+                                tr("Open file"),
                                 GlobalSettings::openPath,
                                 QString("All supported formats (*.lvlx *.wldx *.lvl *.wld npc-*.txt *.sav);;"
                                         "All SMBX files (*.lvl *.wld npc-*.txt);;"
@@ -187,7 +187,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         return;
     }
 
-    QMdiSubWindow *newSubWin = NULL;
+    QMdiSubWindow *newSubWin = nullptr;
     QMdiSubWindow *existing = findOpenedFileWin(FilePath);
     if(existing)
     {
@@ -233,7 +233,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->ResetPosition();
             dock_LvlItemBox->initItemLists();
             statusBar()->showMessage(tr("Level file loaded"), 2000);
-            SetCurrentLevelSection(0);
+            setCurrentLevelSection(0);
             dock_LvlWarpProps->init();
             dock_LvlLayers->setLayersBox();
 

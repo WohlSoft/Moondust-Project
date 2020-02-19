@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,7 +179,7 @@ void LevelEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool c
     if(SwitchToSection)
     {
         int section = findNearestSection(LvlData, x, y);
-        m_mw->SetCurrentLevelSection(section);
+        m_mw->setCurrentLevelSection(section);
     }
 
     qreal zoom = 1.0;

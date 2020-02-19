@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -56,13 +56,13 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
     );
 
     connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)),
-            this, SLOT(DragAndDroppedLayer(QModelIndex, int, int, QModelIndex, int)));
+            this, SLOT(dragAndDroppedLayer(QModelIndex, int, int, QModelIndex, int)));
 
     m_lastVisibilityState = isVisible();
     mw()->docks_level.
     addState(this, &m_lastVisibilityState);
 
-    lockLayerEdit = false;
+    m_lockSettings = false;
 }
 
 LvlLayersBox::~LvlLayersBox()
@@ -134,8 +134,8 @@ void LvlLayersBox::setLayersBox()
 void MainWindow::LayerListsSync()
 {
     dock_LvlItemProps->hide();
-    dock_LvlItemProps->LvlItemPropsLock = true;
-    dock_LvlWarpProps->lockWarpSetSettings = true;
+    dock_LvlItemProps->setSettingsLock(true);
+    dock_LvlWarpProps->setSettingsLock(true);
 
     //save old entry from search!
     QString curSearchLayerBlock = dock_LvlSearchBox->cbox_layer_block()->currentText();
@@ -147,7 +147,7 @@ void MainWindow::LayerListsSync()
 
     int WinType = activeChildWindow();
 
-    dock_LvlItemProps->LvlItemPropsLock = true;
+    dock_LvlItemProps->setSettingsLock(true);
     dock_LvlItemProps->cbox_layer_bgo()->clear();
     dock_LvlItemProps->cbox_layer_npc()->clear();
     dock_LvlItemProps->cbox_layer_block()->clear();
@@ -156,7 +156,7 @@ void MainWindow::LayerListsSync()
 
     dock_LvlWarpProps->cbox_layer()->clear();
 
-    dock_LvlEvents->LvlEventBoxLock = true;
+    dock_LvlEvents->m_externalLock = true;
     dock_LvlEvents->cbox_layer_to_move()->clear();
     dock_LvlEvents->cbox_layer_to_move()->addItem(tr("[None]"));
 
@@ -192,19 +192,20 @@ void MainWindow::LayerListsSync()
     dock_LvlSearchBox->cbox_layer_bgo()->setCurrentText(curSearchLayerBGO);
     dock_LvlSearchBox->cbox_layer_npc()->setCurrentText(curSearchLayerNPC);
     dock_LvlSearchBox->cbox_layer_attached_npc()->setCurrentText(curSearchLayerAttachedNPC);
-    dock_LvlWarpProps->lockWarpSetSettings = false;
-    dock_LvlItemProps->LvlItemPropsLock = false;
-    dock_LvlEvents->LvlEventBoxLock = false;
+
+    dock_LvlWarpProps->setSettingsLock(false);
+    dock_LvlItemProps->setSettingsLock(false);
+    dock_LvlEvents->m_externalLock = false;
 }
 
 void LvlLayersBox::setLayerToolsLocked(bool locked)
 {
-    lockLayerEdit = locked;
+    m_lockSettings = locked;
 }
 
 
 
-void LvlLayersBox::RemoveCurrentLayer(bool moveToDefault)
+void LvlLayersBox::removeCurrentLayer(bool moveToDefault)
 {
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
@@ -251,20 +252,20 @@ void LvlLayersBox::RemoveCurrentLayer(bool moveToDefault)
 
     if(moveToDefault)
     {
-        ModifyLayer(selected[0]->text(), "Default", layerVisible, 0);
+        modifyLayer(selected[0]->text(), "Default", layerVisible, 0);
     }
     else
     {
-        RemoveLayerItems(selected[0]->text());
+        removeLayerItems(selected[0]->text());
     }
 
     if(selected.isEmpty()) return;
 
-    RemoveLayerFromListAndData(selected[0]);
+    removeLayerFromListAndData(selected[0]);
 }
 
 
-void LvlLayersBox::RemoveLayerItems(QString layerName)
+void LvlLayersBox::removeLayerItems(QString layerName)
 {
     LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit) return;
@@ -353,7 +354,7 @@ void LvlLayersBox::RemoveLayerItems(QString layerName)
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
-void LvlLayersBox::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
+void LvlLayersBox::removeLayerFromListAndData(QListWidgetItem *layerItem)
 {
     LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit) return;
@@ -379,7 +380,7 @@ void LvlLayersBox::RemoveLayerFromListAndData(QListWidgetItem *layerItem)
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
-void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
+void LvlLayersBox::modifyLayer(QString layerName, bool visible)
 {
     //Apply layer's visibly to all items
     LevelEdit *edit = mw()->activeLvlEditWin();
@@ -431,7 +432,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, bool visible)
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
-void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName)
+void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName)
 {
     //Apply layer's name to all items
     LevelEdit *edit = mw()->activeLvlEditWin();
@@ -507,7 +508,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName)
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
-void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord)
+void LvlLayersBox::modifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord)
 {
     //Apply layer's name/visibly to all items
     LevelEdit *edit = mw()->activeLvlEditWin();
@@ -645,7 +646,7 @@ void LvlLayersBox::ModifyLayer(QString layerName, QString newLayerName, bool vis
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
-void LvlLayersBox::AddNewLayer(QString layerName, bool setEdited)
+void LvlLayersBox::addNewLayer(QString layerName, bool setEdited)
 {
     LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit) return;
@@ -686,7 +687,7 @@ void LvlLayersBox::AddNewLayer(QString layerName, bool setEdited)
     mw()->LayerListsSync();  //Sync comboboxes in properties
 }
 
-void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible)
+void LvlLayersBox::modifyLayerItem(QListWidgetItem *item, QString oldLayerName, QString newLayerName, bool visible)
 {
     //Find layer enrty in array and apply settings
     LevelEdit *edit = mw()->activeLvlEditWin();
@@ -704,9 +705,9 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
             if(newLayerName.isEmpty())
             {
                 //Discard change to empty
-                lockLayerEdit = true;
+                m_lockSettings = true;
                 item->setText(oldLayerName);
-                lockLayerEdit = false;
+                m_lockSettings = false;
                 return;
             }
 
@@ -732,24 +733,24 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
                 if(merge)
                 {
                     //Merge layers
-                    lockLayerEdit = true;
+                    m_lockSettings = true;
                     edit->LvlData.layers[l].name = newLayerName;
                     edit->LvlData.layers[l].hidden = !visible;
-                    ModifyLayer(newLayerName, visible);
-                    ModifyLayer(oldLayerName, newLayerName, visible, 1);
+                    modifyLayer(newLayerName, visible);
+                    modifyLayer(oldLayerName, newLayerName, visible, 1);
                     delete item;
                     edit->LvlData.layers.removeAt(i);
                     mw()->LayerListsSync();  //Sync comboboxes in properties
                     setLayersBox();
-                    lockLayerEdit = false;
+                    m_lockSettings = false;
                     return;
                 }
                 else
                 {
                     //cancel renaming
-                    lockLayerEdit = true;
+                    m_lockSettings = true;
                     item->setText(oldLayerName);
-                    lockLayerEdit = false;
+                    m_lockSettings = false;
                     return;
                 }
             }
@@ -759,7 +760,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
                 edit->LvlData.layers[i].name = newLayerName;
                 edit->LvlData.layers[i].hidden = !visible;
                 //Apply layer's name/visibly to all items
-                ModifyLayer(oldLayerName, newLayerName, visible);
+                modifyLayer(oldLayerName, newLayerName, visible);
             }
             break;
         }
@@ -768,7 +769,7 @@ void LvlLayersBox::ModifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
     mw()->dock_LvlWarpProps->setDoorData(-2);
 }
 
-void LvlLayersBox::DragAndDroppedLayer(QModelIndex /*sourceParent*/, int sourceStart, int sourceEnd, QModelIndex /*destinationParent*/, int destinationRow)
+void LvlLayersBox::dragAndDroppedLayer(QModelIndex /*sourceParent*/, int sourceStart, int sourceEnd, QModelIndex /*destinationParent*/, int destinationRow)
 {
     LevelEdit *edit = mw()->activeLvlEditWin();
     if(!edit) return;
@@ -799,7 +800,7 @@ void LvlLayersBox::on_AddLayer_clicked()
     QString newName = tr("New Layer %1");
     while(layerIsExist(newName.arg(NewCounter)))
         NewCounter++;
-    AddNewLayer(newName.arg(NewCounter), true);
+    addNewLayer(newName.arg(NewCounter), true);
 }
 
 
@@ -842,7 +843,7 @@ void LvlLayersBox::on_LvlLayerList_itemSelectionChanged()
 
 void LvlLayersBox::on_LvlLayerList_itemChanged(QListWidgetItem *item)
 {
-    if(lockLayerEdit) return;
+    if(m_lockSettings) return;
     int WinType = mw()->activeChildWindow();
 
     LevelEdit *edit = mw()->activeLvlEditWin();
@@ -855,7 +856,7 @@ void LvlLayersBox::on_LvlLayerList_itemChanged(QListWidgetItem *item)
         QString oldLayerName = item->text();
 
         bool layerVisible = (item->checkState() == Qt::Checked);
-        ModifyLayerItem(item, oldLayerName, layerName, layerVisible);
+        modifyLayerItem(item, oldLayerName, layerName, layerVisible);
 
         edit->LvlData.meta.modified = true;
     }
@@ -869,7 +870,7 @@ void LvlLayersBox::on_RemoveLayer_clicked()
                                          tr("Remove layer"),
                                          tr("Are you sure you want to remove this layer?\nAll objects on this layer will be moved to the 'Default' layer."),
                                          QMessageBox::Yes | QMessageBox::No);
-    if(answer == QMessageBox::Yes) RemoveCurrentLayer(true);
+    if(answer == QMessageBox::Yes) removeCurrentLayer(true);
 }
 
 void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
@@ -903,7 +904,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
                                                  tr("Remove layer"),
                                                  tr("Are you sure you want to remove this layer?\nAll elements of this layer will be moved to the 'Default' layer!"),
                                                  QMessageBox::Yes | QMessageBox::No);
-            if(answer == QMessageBox::Yes) RemoveCurrentLayer(true);
+            if(answer == QMessageBox::Yes) removeCurrentLayer(true);
         }
         else if(selected == removeLayer)
         {
@@ -911,7 +912,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
                                                  tr("Remove layer"),
                                                  tr("Are you sure you want to remove this layer?\nAll elements of this layer will be removed too!"),
                                                  QMessageBox::Yes | QMessageBox::No);
-            if(answer == QMessageBox::Yes) RemoveCurrentLayer(false);
+            if(answer == QMessageBox::Yes) removeCurrentLayer(false);
         }
     }
 }

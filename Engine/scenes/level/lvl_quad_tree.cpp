@@ -11,6 +11,10 @@ public:
         bbox->top       = object->m_momentum.y;
         bbox->width     = object->m_momentum.w;
         bbox->height    = object->m_momentum.h;
+        if(bbox->width <= 0.0)
+            bbox->width = 1.0;
+        if(bbox->height <= 0.0)
+            bbox->height = 1.0;
     }
 };
 

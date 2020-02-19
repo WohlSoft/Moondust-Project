@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2018 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,13 +52,14 @@ ItemMsgBox::ItemMsgBox(Opened_By openedBy, QString text, bool isFriendly, QStrin
 //#endif
     QFont theFont("Press Start 2P");
     theFont.setPixelSize(8);
+    theFont.setStyleHint(QFont::Monospace);
     ui->msgTextBox->setFont(theFont);
     ui->msgTextBox->clear();
     QFontMetrics meter(ui->msgTextBox->font());
     int w_width = meter.size(Qt::TextSingleLine, "XXXXXXXXXXXXXXXXXXXXXXXXXXX").width();
     int scrW = ui->msgTextBox->style()->pixelMetric(QStyle::PM_ScrollBarExtent);
-    ui->msgTextBox->setMaximumWidth(w_width+scrW+12);
-    ui->msgTextBox->setMinimumWidth(w_width+scrW+12);
+    ui->msgTextBox->setMaximumWidth(w_width + scrW + 18);
+    ui->msgTextBox->setMinimumWidth(w_width + scrW + 18);
     ui->msgTextBox->appendPlainText(currentText);
     updateGeometry();
 }

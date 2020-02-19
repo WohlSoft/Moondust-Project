@@ -23,7 +23,7 @@ class LvlEventsBox : public QDockWidget, public MWDock_Base
 
     friend class MainWindow;
 
-    explicit LvlEventsBox(QWidget *parent = 0);
+    explicit LvlEventsBox(QWidget *parent = nullptr);
     ~LvlEventsBox();
 
     /**
@@ -33,7 +33,7 @@ class LvlEventsBox : public QDockWidget, public MWDock_Base
      */
     void checkSectionSet(QList<LevelEvent_Sets> &setsList, int sectionID);
 public:
-    bool LvlEventBoxLock;
+    bool m_externalLock = false;
     QComboBox* cbox_layer_to_move();
     QComboBox* cbox_event_trigger();
     QComboBox* cbox_sct_mus();
@@ -48,16 +48,19 @@ public slots:
     void eventSectionSettingsSync();
     void reloadSoundsList();
 
-    void DragAndDroppedEvent(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
+    void dragAndDroppedEvent(QModelIndex sourceParent,
+                             int sourceStart, int sourceEnd,
+                             QModelIndex destinationParent,
+                             int destinationRow);
 
-    void EventListsSync();
+    void eventListsSync();
     void setEventsBox();
-    void setEventData(long index=-1);
+    void setEventData(long index = -1);
 
 public slots:
     void ModifyEvent(QString eventName, QString newEventName);
 
-    QListWidget* getEventList();
+    QListWidget *getEventList();
     void setEventToolsLocked(bool locked);
     long getEventArrayIndex();
 
@@ -137,25 +140,25 @@ private slots:
     void on_bps_Scroll_vertSpeed_clicked();
 
 private:
-    void AddNewEvent(QString eventName, bool setEdited);
-    void ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
+    void addNewEvent(QString eventName, bool setEdited);
+    void modifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName);
 
-    void RemoveEvent(QString eventName);
+    void removeEvent(QString eventName);
 
     void refreshShownTabs(LevelSMBX64Event event, bool hideAll=false);
 
     Ui::LvlEventsBox *ui;
 
-    long currentEventArrayID;
-    bool lockSetEventSettings;
+    long m_currentEventArrayID = 0;
+    bool m_internalLock = false;
 
-    bool lockEventSectionDataList;
-    long curSectionField;
+    bool m_lockEventSectionDataList = false;
+    long m_curSectionField = 0;
 
-    bool cloneEvent;
-    long cloneEventId;
+    bool m_cloneEvent = false;
+    long m_cloneEventId = 0;
 
-    int newEventCounter;
+    int m_newEventCounter = 1;
 };
 
 #endif // LVL_EVENTS_BOX_H
