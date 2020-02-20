@@ -1061,7 +1061,7 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             row++;
         }
 
-        // Music/Sound/Level file
+        // Item-ID select dialog
         else if(!control.compare("itemSelect", Qt::CaseInsensitive))
         {
             int valueDefault = o["value-default"].toInt();
