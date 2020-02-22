@@ -193,32 +193,32 @@ void GraphicsHelps::mergeToRGBA(QPixmap &img, QImage &mask, QString path, QStrin
 
 void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, QImage &mask)
 {
-    unsigned int img_w   = srcimage.width();
-    unsigned int img_h   = srcimage.height();
+    unsigned int img_w   = static_cast<unsigned int>(srcimage.width());
+    unsigned int img_h   = static_cast<unsigned int>(srcimage.height());
 
     QImage image = srcimage.toImage();
-    mask = QImage(img_w, img_h, QImage::Format_ARGB32);
+    mask = QImage(int(img_w), int(img_h), QImage::Format_ARGB32);
     QRgb Fpix;
     for(unsigned int y = 0; (y < img_h); y++)
     {
         for(unsigned int x = 0; (x < img_w); x++)
         {
-            Fpix = image.pixel(x, y);
-            uint32_t grey = (255 - qAlpha(Fpix));
-            mask.setPixel(x, y, qRgba(grey, grey, grey, 0xFF));
+            Fpix = image.pixel(int(x), int(y));
+            int gray = (255 - qAlpha(Fpix));
+            mask.setPixel(int(x), int(y), qRgba(gray, gray, gray, 0xFF));
         }
     }
 }
 
 void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, FIBITMAP *&mask)
 {
-    unsigned int img_w   = srcimage.width();
-    unsigned int img_h   = srcimage.height();
+    unsigned int img_w   = static_cast<unsigned int>(srcimage.width());
+    unsigned int img_h   = static_cast<unsigned int>(srcimage.height());
 
     QImage image = srcimage.toImage();
 
     mask = FreeImage_AllocateT(FIT_BITMAP,
-                               img_w, img_h,
+                               int(img_w), int(img_h),
                                32,
                                FI_RGBA_RED_MASK,
                                FI_RGBA_GREEN_MASK,
@@ -230,10 +230,10 @@ void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, FIBITMAP *&mask)
     {
         for(unsigned int x = 0; (x < img_w); x++)
         {
-            uint8_t grey = (255 - qAlpha(image.pixel(x, ((img_h - 1) - y))));
-            Npix.rgbRed  = grey;
-            Npix.rgbGreen = grey;
-            Npix.rgbBlue = grey;
+            uint8_t gray = uint8_t(255 - qAlpha(image.pixel(int(x), (int(img_h) - 1) - int(y)) ));
+            Npix.rgbRed  = gray;
+            Npix.rgbGreen = gray;
+            Npix.rgbBlue = gray;
             Npix.rgbReserved = 0xFF;
             FreeImage_SetPixelColor(mask,  x, y, &Npix);
         }
@@ -260,6 +260,7 @@ void GraphicsHelps::mergeToRGBA_BitWise(QImage &image, QImage mask)
     //    }
 
     for(int y = 0; (y < image.height()) && (y < mask.height()); y++)
+    {
         for(int x = 0; (x < image.width()) && (x < mask.width()); x++)
         {
             QColor Fpix = QColor(image.pixel(x, y));
@@ -294,6 +295,7 @@ void GraphicsHelps::mergeToRGBA_BitWise(QImage &image, QImage mask)
             Npix.setAlpha(newAlpha);
             image.setPixel(x, y, Npix.rgba());
         }
+    }
 }
 
 void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &, QString &out_errStr)

@@ -161,8 +161,8 @@ void GraphicsHelps::getMaskFromRGBA(FIBITMAP *&image, FIBITMAP *&mask)
     unsigned int img_h   = FreeImage_GetHeight(image);
 
     mask = FreeImage_AllocateT(FIT_BITMAP,
-                               img_w, img_h,
-                               FreeImage_GetBPP(image),
+                               int(img_w), int(img_h),
+                               int(FreeImage_GetBPP(image)),
                                FreeImage_GetRedMask(image),
                                FreeImage_GetGreenMask(image),
                                FreeImage_GetBlueMask(image));
@@ -268,7 +268,6 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::
 
 bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size *imgSize)
 {
-
     if(!imgSize)
         return false;
 
@@ -278,7 +277,7 @@ bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size *imgSize)
     if(!PGE_ImageInfo::getImageSize(imageFile, &w, &h, &errorCode))
         return false;
 
-    imgSize->setSize(w, h);
+    imgSize->setSize(int(w), int(h));
     return true;
 }
 
@@ -314,12 +313,12 @@ void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgNa
     }
 
     out_maskName = PGE_ImageInfo::getMaskName(in_imgName);
-    out_errStr = "";
+    out_errStr.clear();
 
     if(imgSize)
     {
-        imgSize->setWidth(w);
-        imgSize->setHeight(h);
+        imgSize->setWidth(int(w));
+        imgSize->setHeight(int(h));
     }
 }
 
