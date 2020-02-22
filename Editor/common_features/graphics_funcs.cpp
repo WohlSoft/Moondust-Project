@@ -101,8 +101,8 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *
     unsigned int mask_h = FreeImage_GetHeight(mask);
     BYTE *img_bits  = FreeImage_GetBits(image);
     BYTE *mask_bits = FreeImage_GetBits(mask);
-    BYTE *FPixP = img_bits + (img_w * img_h * 4) - 4;
-    BYTE *SPixP = mask_bits + (mask_w * mask_h * 4) - 4;
+    BYTE *FPixP = img_bits;
+    BYTE *SPixP = mask_bits;
     RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   //Destination pixel color
     unsigned short newAlpha = 255; //Calculated destination alpha-value
 
@@ -110,6 +110,8 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *
     unsigned int y = img_h - 1;
     while(1)
     {
+        FPixP = img_bits + (img_w * y * 4);
+        SPixP = mask_bits + (mask_w * ym * 4);
         for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
         {
             Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
@@ -135,13 +137,13 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *
             FPixP[FI_RGBA_GREEN] = Npix.rgbGreen;
             FPixP[FI_RGBA_RED]   = Npix.rgbRed;
             FPixP[FI_RGBA_ALPHA] = static_cast<BYTE>(newAlpha);
-            FPixP -= 4;
-            SPixP -= 4;
+            FPixP += 4;
+            SPixP += 4;
         }
 
-        y--; ym--;
         if(y == 0 || ym == 0)
             break;
+        y--; ym--;
     }
 
     FreeImage_Unload(mask);

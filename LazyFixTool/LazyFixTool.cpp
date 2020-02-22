@@ -123,9 +123,9 @@ static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
             FreeImage_SetPixelColor(image, x, y, &Npix);
         }
 
-        y--; ym--;
         if(y == 0 || ym == 0)
             break;
+        y--; ym--;
     }
     FreeImage_Unload(mask);
     return true;
