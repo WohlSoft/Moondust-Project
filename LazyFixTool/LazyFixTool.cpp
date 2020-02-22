@@ -91,13 +91,15 @@ static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
     RGBQUAD Bpix;
     RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
 
-    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
+    unsigned int ym = mask_h - 1;
+    unsigned int y = img_h - 1;
+    while(1)
     {
         for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
         {
 
             FreeImage_GetPixelColor(image, x, y, &Fpix);
-            FreeImage_GetPixelColor(mask, x, y, &Bpix);
+            FreeImage_GetPixelColor(mask, x, ym, &Bpix);
 
             Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
             Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
@@ -120,6 +122,10 @@ static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
 
             FreeImage_SetPixelColor(image, x, y, &Npix);
         }
+
+        y--; ym--;
+        if(y == 0 || ym == 0)
+            break;
     }
     FreeImage_Unload(mask);
     return true;
