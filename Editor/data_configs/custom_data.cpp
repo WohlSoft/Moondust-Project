@@ -104,7 +104,11 @@ QStringList CustomDirManager::getCustomFiles(QString nameBase, QStringList exten
 void CustomDirManager::setCustomDirs(QString path, QString name)
 {
     if(path.isEmpty())
+    {
+        dirCustom.clear();
+        dirEpisode.clear();
         return; // Don't even try to search here if path is blank
+    }
     dirCustom = path + "/" + name;
     dirEpisode = path;
 }
