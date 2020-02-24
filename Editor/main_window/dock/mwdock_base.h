@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,13 +26,11 @@ class QObject;
 class MWDock_Base
 {
 public:
-    explicit MWDock_Base(QObject *parent = 0);
+    explicit MWDock_Base(QObject *parent = nullptr);
     virtual ~MWDock_Base();
     MainWindow *mw();
 
-//public slots:
-//    virtual void re_translate();
-    bool m_lastVisibilityState;
+    bool m_lastVisibilityState = false;
 
 protected:
     virtual void construct(MainWindow *ParentMW);

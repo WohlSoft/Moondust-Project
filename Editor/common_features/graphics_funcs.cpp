@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,11 +28,7 @@
 
 #include "graphics_funcs.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-#endif
 #include <FreeImageLite.h>
-
 #include <QtDebug>
 
 
@@ -110,8 +106,12 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *
     RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   //Destination pixel color
     unsigned short newAlpha = 255; //Calculated destination alpha-value
 
-    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
+    unsigned int ym = mask_h - 1;
+    unsigned int y = img_h - 1;
+    while(1)
     {
+        FPixP = img_bits + (img_w * y * 4);
+        SPixP = mask_bits + (mask_w * ym * 4);
         for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
         {
             Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
@@ -140,6 +140,10 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *
             FPixP += 4;
             SPixP += 4;
         }
+
+        if(y == 0 || ym == 0)
+            break;
+        y--; ym--;
     }
 
     FreeImage_Unload(mask);
@@ -191,32 +195,32 @@ void GraphicsHelps::mergeToRGBA(QPixmap &img, QImage &mask, QString path, QStrin
 
 void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, QImage &mask)
 {
-    unsigned int img_w   = srcimage.width();
-    unsigned int img_h   = srcimage.height();
+    unsigned int img_w   = static_cast<unsigned int>(srcimage.width());
+    unsigned int img_h   = static_cast<unsigned int>(srcimage.height());
 
     QImage image = srcimage.toImage();
-    mask = QImage(img_w, img_h, QImage::Format_ARGB32);
+    mask = QImage(int(img_w), int(img_h), QImage::Format_ARGB32);
     QRgb Fpix;
     for(unsigned int y = 0; (y < img_h); y++)
     {
         for(unsigned int x = 0; (x < img_w); x++)
         {
-            Fpix = image.pixel(x, y);
-            uint32_t grey = (255 - qAlpha(Fpix));
-            mask.setPixel(x, y, qRgba(grey, grey, grey, 0xFF));
+            Fpix = image.pixel(int(x), int(y));
+            int gray = (255 - qAlpha(Fpix));
+            mask.setPixel(int(x), int(y), qRgba(gray, gray, gray, 0xFF));
         }
     }
 }
 
 void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, FIBITMAP *&mask)
 {
-    unsigned int img_w   = srcimage.width();
-    unsigned int img_h   = srcimage.height();
+    unsigned int img_w   = static_cast<unsigned int>(srcimage.width());
+    unsigned int img_h   = static_cast<unsigned int>(srcimage.height());
 
     QImage image = srcimage.toImage();
 
     mask = FreeImage_AllocateT(FIT_BITMAP,
-                               img_w, img_h,
+                               int(img_w), int(img_h),
                                32,
                                FI_RGBA_RED_MASK,
                                FI_RGBA_GREEN_MASK,
@@ -228,10 +232,10 @@ void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, FIBITMAP *&mask)
     {
         for(unsigned int x = 0; (x < img_w); x++)
         {
-            uint8_t grey = (255 - qAlpha(image.pixel(x, ((img_h - 1) - y))));
-            Npix.rgbRed  = grey;
-            Npix.rgbGreen = grey;
-            Npix.rgbBlue = grey;
+            uint8_t gray = uint8_t(255 - qAlpha(image.pixel(int(x), (int(img_h) - 1) - int(y)) ));
+            Npix.rgbRed  = gray;
+            Npix.rgbGreen = gray;
+            Npix.rgbBlue = gray;
             Npix.rgbReserved = 0xFF;
             FreeImage_SetPixelColor(mask,  x, y, &Npix);
         }
@@ -258,6 +262,7 @@ void GraphicsHelps::mergeToRGBA_BitWise(QImage &image, QImage mask)
     //    }
 
     for(int y = 0; (y < image.height()) && (y < mask.height()); y++)
+    {
         for(int x = 0; (x < image.width()) && (x < mask.width()); x++)
         {
             QColor Fpix = QColor(image.pixel(x, y));
@@ -292,6 +297,7 @@ void GraphicsHelps::mergeToRGBA_BitWise(QImage &image, QImage mask)
             Npix.setAlpha(newAlpha);
             image.setPixel(x, y, Npix.rgba());
         }
+    }
 }
 
 void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &, QString &out_errStr)

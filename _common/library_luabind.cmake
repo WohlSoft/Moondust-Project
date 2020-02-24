@@ -13,12 +13,16 @@ endif()
 
 set(libLuaBind_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}luabind${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
+if(NOT LUABIND_SOURCE_DIR)
+    set(LUABIND_SOURCE_DIR "${CMAKE_SOURCE_DIR}/_Libs/luabind")
+endif()
+
 # LuaBind is a powerful lua binding library for C++
 ExternalProject_Add(
     LuaBind_Local
     PREFIX ${CMAKE_BINARY_DIR}/external/luabind
     DOWNLOAD_COMMAND ""
-    SOURCE_DIR ${CMAKE_SOURCE_DIR}/_Libs/luabind
+    SOURCE_DIR "${LUABIND_SOURCE_DIR}"
     CMAKE_ARGS
         "-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}"
         "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"

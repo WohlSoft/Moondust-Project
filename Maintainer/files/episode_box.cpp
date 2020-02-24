@@ -14,7 +14,7 @@ void EpisodeBox_level::buildEntriesCache()
     {
         QDir fullPath(d.meta.path);
         //From sections
-        for(int i=0; i<d.sections.size(); i++)
+        for(int i = 0; i < d.sections.size(); i++)
         {
             QString &musFile = d.sections[i].music_file;
             if(musFile.isEmpty()) continue;
@@ -29,9 +29,9 @@ void EpisodeBox_level::buildEntriesCache()
         }
 
         //For custom musics per events
-        for(int i=0; i < d.events.size(); i++)
+        for(int i = 0; i < d.events.size(); i++)
         {
-            for(int j=0;j < d.events[i].sets.size(); j++)
+            for(int j = 0; j < d.events[i].sets.size(); j++)
             {
                 QString &musFile = d.events[i].sets[j].music_file;
                 if(musFile.isEmpty()) continue;
@@ -47,7 +47,7 @@ void EpisodeBox_level::buildEntriesCache()
         }
 
         //For level paths
-        for(int i=0; i < d.doors.size(); i++)
+        for(int i = 0; i < d.doors.size(); i++)
         {
             QString &lvlFile = d.doors[i].lname;
             if(lvlFile.isEmpty()) continue;
@@ -78,6 +78,7 @@ EpisodeBox_level::EpisodeBox_level(const EpisodeBox_level &e)
     ftype         = e.ftype;
     ftypeVer      = e.ftypeVer;
     fPath         = e.fPath;
+    dataPath      = e.dataPath;
     music_entries = e.music_entries;
     level_entries = e.level_entries;
     m_wasOverwritten = e.m_wasOverwritten;
@@ -88,50 +89,89 @@ EpisodeBox_level::~EpisodeBox_level()
 
 bool EpisodeBox_level::open(QString filePath)
 {
-    fPath=filePath;
+    fPath = filePath;
 
     PGE_FileFormats_misc::TextFileInput file;
     if(file.open(fPath))
     {
         PGESTRING firstLine = file.read(8);
         file.close();
-        if( firstLine.startsWith("SMBXFile") )
+        if(firstLine.startsWith("SMBXFile"))
         {
             ftype = F_LVL38A;
             FileFormats::ReadSMBX38ALvlFileF(filePath, d);
         }
-        else if( PGE_FileFormats_misc::PGE_DetectSMBXFile( firstLine ) )
+        else if(PGE_FileFormats_misc::PGE_DetectSMBXFile(firstLine))
         {
             ftype = F_LVL;
             FileFormats::ReadSMBX64LvlFileF(filePath, d);
-            ftypeVer = d.meta.RecentFormatVersion;
+            ftypeVer = static_cast<int>(d.meta.RecentFormatVersion);
         }
         else
         {
             ftype = F_LVLX;
             FileFormats::ReadExtendedLvlFileF(filePath, d);
         }
-        qDebug()<< "Opened level, is valid = " << d.meta.ReadFileValid << filePath;
+        qDebug() << "Opened level, is valid = " << d.meta.ReadFileValid << filePath;
     }
 
-
+    dataPath = d.meta.path + "/" + d.meta.filename;
 
     return d.meta.ReadFileValid;
 }
 
-bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
+QString EpisodeBox_level::findFileAliasCaseInsensitive(QString file)
 {
-    bool modified=false;
     QDir fullPath(d.meta.path);
-    for(int i=0; i < music_entries.size(); i++)
+    for(MusicField &mus : music_entries)
     {
-        MusicField &mus = music_entries[i];
-        if( mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0 )
+        if(mus.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(mus.field);
+    }
+
+    for(MusicField &lvl : level_entries)
+    {
+        if(lvl.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(lvl.field);
+    }
+
+    return QString();
+}
+
+bool EpisodeBox_level::renameFile(QString oldFile, QString newFile)
+{
+    bool modified = false;
+    if(oldFile == fPath)
+    {
+        QFile::rename(fPath, newFile);
+        fPath = newFile;
+        QString newDataPath = newFile;
+        int dotPos = newFile.lastIndexOf(".");
+        if(dotPos > 0)
+            newDataPath.remove(dotPos, newDataPath.size() - dotPos);
+        QDir dDir(dataPath);
+        if(dDir.exists())
         {
-            *(mus.field) = fullPath.relativeFilePath( newMus );
-            modified=true;
+            if(dataPath != newDataPath)
+                dDir.rename(dDir.path(), newDataPath);
+        }
+        else // Check if it's a possible case missmatch, fix it!
+        {
+            QDir parent = QFileInfo(fPath).absoluteDir();
+            auto dirs = parent.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+            for(auto &d : dirs)
+            {
+                QString dp = parent.path() + "/" + d;
+                if(dp.compare(dataPath, Qt::CaseInsensitive) == 0)
+                {
+                    dDir.setPath(dp);
+                    dDir.rename(dDir.path(), newDataPath);
+                }
+            }
         }
     }
+    modified |= renameMusic(oldFile, newFile, true);
+    modified |= renameLevel(oldFile, newFile, true);
     if(modified)
     {
         save();
@@ -140,20 +180,39 @@ bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus)
     return modified;
 }
 
-bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl)
+bool EpisodeBox_level::renameMusic(QString oldMus, QString newMus, bool isBulk)
 {
-    bool modified=false;
+    bool modified = false;
     QDir fullPath(d.meta.path);
-    for(int i=0; i < level_entries.size(); i++)
+    for(MusicField &mus : music_entries)
     {
-        MusicField &lvl = level_entries[i];
-        if( lvl.absolutePath.compare(oldLvl, Qt::CaseInsensitive) == 0 )
+        if(mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0)
         {
-            *(lvl.field) = fullPath.relativeFilePath( newLvl );
-            modified=true;
+            *(mus.field) = fullPath.relativeFilePath(newMus);
+            modified = true;
         }
     }
-    if(modified)
+    if(!isBulk && modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
+    return modified;
+}
+
+bool EpisodeBox_level::renameLevel(QString oldLvl, QString newLvl, bool isBulk)
+{
+    bool modified = false;
+    QDir fullPath(d.meta.path);
+    for(MusicField &lvl : level_entries)
+    {
+        if(lvl.absolutePath.compare(oldLvl, Qt::CaseInsensitive) == 0)
+        {
+            *(lvl.field) = fullPath.relativeFilePath(newLvl);
+            modified = true;
+        }
+    }
+    if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;
@@ -166,14 +225,14 @@ void EpisodeBox_level::save()
 {
     if(!d.meta.ReadFileValid) return;
 
-    qDebug() << "reSaving Level: " << fPath << ", ftype="<<ftype;
+    qDebug() << "reSaving Level: " << fPath << ", ftype=" << ftype;
 
-    if(ftype==F_LVL)
+    if(ftype == F_LVL)
     {
         if(!FileFormats::SaveLevelFile(d, fPath, FileFormats::LVL_SMBX64, 64))
             return;
     }
-    else if(ftype==F_LVL38A)
+    else if(ftype == F_LVL38A)
     {
         if(!FileFormats::SaveLevelFile(d, fPath, FileFormats::LVL_SMBX38A))
             return;
@@ -195,13 +254,13 @@ void EpisodeBox_world::buildEntriesCache()
     {
         QDir fullPath(d.meta.path);
         //From music boxes
-        for(int i=0; i<d.music.size(); i++)
+        for(int i = 0; i < d.music.size(); i++)
         {
             QString &musFile = d.music[i].music_file;
             if(musFile.isEmpty()) continue;
             musFile.replace('\\', '/');
             musFile.replace("//", "/");
-            QString mFile = fullPath.absoluteFilePath( musFile );
+            QString mFile = fullPath.absoluteFilePath(musFile);
 
             MusicField mus;
             mus.absolutePath = mFile;
@@ -210,7 +269,7 @@ void EpisodeBox_world::buildEntriesCache()
         }
 
         //Levels list
-        for(int i=-1; i < d.levels.size(); i++)
+        for(int i = -1; i < d.levels.size(); i++)
         {
             //on -1 check intro level file! (just to have shorter code)
             QString &lvlFile = i < 0 ? d.IntroLevel_file : d.levels[i].lvlfile;
@@ -219,7 +278,7 @@ void EpisodeBox_world::buildEntriesCache()
             lvlFile.replace("//", "/");
             if(!lvlFile.endsWith(".lvl", Qt::CaseInsensitive) && !lvlFile.endsWith(".lvlx", Qt::CaseInsensitive))
                 lvlFile.append(".lvl");
-            QString mFile = fullPath.absoluteFilePath( lvlFile );
+            QString mFile = fullPath.absoluteFilePath(lvlFile);
 
             MusicField mus;
             mus.absolutePath = mFile;
@@ -240,6 +299,7 @@ EpisodeBox_world::EpisodeBox_world(const EpisodeBox_world &w)
 {
     d           = w.d;
     fPath       = w.fPath;
+    dataPath    = w.dataPath;
     ftype       = w.ftype;
     ftypeVer    = w.ftypeVer;
     music_entries = w.music_entries;
@@ -252,33 +312,81 @@ EpisodeBox_world::~EpisodeBox_world()
 
 bool EpisodeBox_world::open(QString filePath)
 {
-    fPath=filePath;
+    fPath = filePath;
     FileFormats::OpenWorldFile(filePath, d);
 
     switch(d.meta.RecentFormat)
     {
-    case FileFormats::WLD_PGEX:     ftype = F_WLDX;     break;
-    case FileFormats::WLD_SMBX64:   ftype = F_WLD;      ftypeVer=d.meta.RecentFormatVersion;break;
-    case FileFormats::WLD_SMBX38A:  ftype = F_WLD38A;   break;
+    case FileFormats::WLD_PGEX:
+        ftype = F_WLDX;
+        break;
+    case FileFormats::WLD_SMBX64:
+        ftype = F_WLD;
+        ftypeVer = static_cast<int>(d.meta.RecentFormatVersion);
+        break;
+    case FileFormats::WLD_SMBX38A:
+        ftype = F_WLD38A;
+        break;
     }
 
-    qDebug()<< "Opened world, valud=" << d.meta.ReadFileValid << filePath;
+    dataPath = d.meta.path + "/" + d.meta.filename;
+
+    qDebug() << "Opened world, valud=" << d.meta.ReadFileValid << filePath;
     return d.meta.ReadFileValid;
 }
 
-bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
+QString EpisodeBox_world::findFileAliasCaseInsensitive(QString file)
 {
-    bool modified=false;
     QDir fullPath(d.meta.path);
-    for(int i=0; i < music_entries.size(); i++)
+    for(MusicField &mus : music_entries)
     {
-        MusicField &mus = music_entries[i];
-        if( mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0 )
+        if(mus.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(mus.field);
+    }
+
+    for(MusicField &lvl : level_entries)
+    {
+        if(lvl.absolutePath.compare(file, Qt::CaseInsensitive) == 0)
+            return *(lvl.field);
+    }
+
+    return QString();
+}
+
+bool EpisodeBox_world::renameFile(QString oldFile, QString newFile)
+{
+    bool modified = false;
+    if(oldFile == fPath)
+    {
+        QFile::rename(fPath, newFile);
+        fPath = newFile;
+        QString newDataPath = newFile;
+        int dotPos = newFile.lastIndexOf(".");
+        if(dotPos > 0)
+            newDataPath.remove(dotPos, newDataPath.size() - dotPos);
+        QDir dDir(dataPath);
+        if(dDir.exists())
         {
-            *(mus.field) = fullPath.relativeFilePath( newMus );
-            modified=true;
+            if(dataPath != newDataPath)
+                dDir.rename(dDir.path(), newDataPath);
+        }
+        else // Check if it's a possible case missmatch, fix it!
+        {
+            QDir parent = QFileInfo(fPath).absoluteDir();
+            auto dirs = parent.entryList(QDir::Dirs|QDir::NoDotAndDotDot);
+            for(auto &d : dirs)
+            {
+                QString dp = parent.path() + "/" + d;
+                if(dp.compare(dataPath, Qt::CaseInsensitive) == 0)
+                {
+                    dDir.setPath(dp);
+                    dDir.rename(dDir.path(), newDataPath);
+                }
+            }
         }
     }
+    modified |= renameMusic(oldFile, newFile, true);
+    modified |= renameLevel(oldFile, newFile, true);
     if(modified)
     {
         save();
@@ -287,20 +395,39 @@ bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus)
     return modified;
 }
 
-bool EpisodeBox_world::renameLevel(QString oldLvl, QString newLvl)
+bool EpisodeBox_world::renameMusic(QString oldMus, QString newMus, bool isBulk)
 {
-    bool modified=false;
+    bool modified = false;
     QDir fullPath(d.meta.path);
-    for(int i=0; i < level_entries.size(); i++)
+    for(MusicField &mus : music_entries)
     {
-        MusicField &lvl = level_entries[i];
-        if( lvl.absolutePath.compare(oldLvl, Qt::CaseInsensitive) == 0 )
+        if(mus.absolutePath.compare(oldMus, Qt::CaseInsensitive) == 0)
         {
-            *(lvl.field) = fullPath.relativeFilePath( newLvl );
-            modified=true;
+            *(mus.field) = fullPath.relativeFilePath(newMus);
+            modified = true;
         }
     }
-    if(modified)
+    if(!isBulk && modified)
+    {
+        save();
+        m_wasOverwritten = true;
+    }
+    return modified;
+}
+
+bool EpisodeBox_world::renameLevel(QString oldLvl, QString newLvl, bool isBulk)
+{
+    bool modified = false;
+    QDir fullPath(d.meta.path);
+    for(MusicField &lvl : level_entries)
+    {
+        if(lvl.absolutePath.compare(oldLvl, Qt::CaseInsensitive) == 0)
+        {
+            *(lvl.field) = fullPath.relativeFilePath(newLvl);
+            modified = true;
+        }
+    }
+    if(!isBulk && modified)
     {
         save();
         m_wasOverwritten = true;
@@ -312,12 +439,12 @@ void EpisodeBox_world::save()
 {
     if(!d.meta.ReadFileValid) return;
 
-    if(ftype==F_WLD)
+    if(ftype == F_WLD)
     {
-        if(!FileFormats::SaveWorldFile(d, fPath, FileFormats::WLD_SMBX64, ftypeVer))
+        if(!FileFormats::SaveWorldFile(d, fPath, FileFormats::WLD_SMBX64, static_cast<unsigned int>(ftypeVer)))
             return;
     }
-    else if(ftype==F_WLD38A)
+    else if(ftype == F_WLD38A)
     {
         if(!FileFormats::SaveWorldFile(d, fPath, FileFormats::WLD_SMBX38A))
             return;
@@ -332,7 +459,7 @@ void EpisodeBox_world::save()
 
 EpisodeBox::EpisodeBox() {}
 
-EpisodeBox::~EpisodeBox(){}
+EpisodeBox::~EpisodeBox() {}
 
 void EpisodeBox::openEpisode(QString dirPath, bool recursive)
 {
@@ -348,50 +475,56 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
     filters << "*.lvlx";
     filters << "*.wld";
     filters << "*.wldx";
-    dr.setSorting( QDir::NoSort );
-    dr.setNameFilters( filters );
+    dr.setSorting(QDir::NoSort);
+    dr.setNameFilters(filters);
 
     if(recursive)
     {
-        QDirIterator dirsList( dirPath, filters,
-                              QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot,
-                              QDirIterator::Subdirectories );
-        while( dirsList.hasNext() )
+        QDirIterator dirsList(dirPath, filters,
+                              QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot,
+                              QDirIterator::Subdirectories);
+        while(dirsList.hasNext())
         {
             dirsList.next();
-            QString file = dr.relativeFilePath( dirsList.filePath() );
+            QString file = dr.relativeFilePath(dirsList.filePath());
             if(file.endsWith(".lvl", Qt::CaseInsensitive) || file.endsWith(".lvlx", Qt::CaseInsensitive))
             {
                 EpisodeBox_level l;
-                if( l.open( epPath + "/" + file ) ) //Push only valid files!!!
+                if(l.open(epPath + "/" + file))     //Push only valid files!!!
                 {
                     d.push_back(l);
                     d.last().buildEntriesCache();
                 }
-            } else {
+            }
+            else
+            {
                 EpisodeBox_world w;
-                if( w.open(epPath+"/"+file) ) //Push only valid files!!!
+                if(w.open(epPath + "/" + file)) //Push only valid files!!!
                 {
                     dw.push_back(w);
                     dw.last().buildEntriesCache();
                 }
             }
         }
-    } else {
-        QStringList dirList = dr.entryList(filters, QDir::Files|QDir::NoSymLinks|QDir::NoDotAndDotDot, QDir::NoSort);
+    }
+    else
+    {
+        QStringList dirList = dr.entryList(filters, QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot, QDir::NoSort);
         foreach(QString file, dirList)
         {
             if(file.endsWith(".lvl", Qt::CaseInsensitive) || file.endsWith(".lvlx", Qt::CaseInsensitive))
             {
                 EpisodeBox_level l;
-                if( l.open( epPath + "/" + file ) ) //Push only valid files!!!
+                if(l.open(epPath + "/" + file))     //Push only valid files!!!
                 {
                     d.push_back(l);
                     d.last().buildEntriesCache();
                 }
-            } else {
+            }
+            else
+            {
                 EpisodeBox_world w;
-                if( w.open(epPath+"/"+file) ) //Push only valid files!!!
+                if(w.open(epPath + "/" + file)) //Push only valid files!!!
                 {
                     dw.push_back(w);
                     dw.last().buildEntriesCache();
@@ -403,8 +536,8 @@ void EpisodeBox::openEpisode(QString dirPath, bool recursive)
 
 long EpisodeBox::overwrittenLevels()
 {
-    long count=0;
-    for(int i=0;i<d.size(); i++)
+    long count = 0;
+    for(int i = 0; i < d.size(); i++)
     {
         if(d[i].m_wasOverwritten)
             count++;
@@ -414,8 +547,8 @@ long EpisodeBox::overwrittenLevels()
 
 long EpisodeBox::overwrittenWorlds()
 {
-    long count=0;
-    for(int i=0;i<dw.size(); i++)
+    long count = 0;
+    for(int i = 0; i < dw.size(); i++)
     {
         if(dw[i].m_wasOverwritten)
             count++;
@@ -428,26 +561,44 @@ int EpisodeBox::totalElements()
     return d.size() + dw.size();
 }
 
+QString EpisodeBox::findFileAliasCaseInsensitive(QString file)
+{
+    for(int i = 0; i < d.size(); i++)
+    {
+        QString f = d[i].findFileAliasCaseInsensitive(file);
+        if(!f.isEmpty())
+            return f;
+    }
+
+    for(int i = 0; i < dw.size(); i++)
+    {
+        QString f = dw[i].findFileAliasCaseInsensitive(file);
+        if(!f.isEmpty())
+            return f;
+    }
+    return QString();
+}
+
+void EpisodeBox::renameFile(QString oldFile, QString newFile)
+{
+    for(int i = 0; i < d.size(); i++)
+        d[i].renameFile(oldFile, newFile);
+    for(int i = 0; i < dw.size(); i++)
+        dw[i].renameFile(oldFile, newFile);
+}
+
 void EpisodeBox::renameMusic(QString oldMus, QString newMus)
 {
-    for(int i=0;i<d.size(); i++)
-    {
+    for(int i = 0; i < d.size(); i++)
         d[i].renameMusic(oldMus, newMus);
-    }
-    for(int i=0;i<dw.size(); i++)
-    {
+    for(int i = 0; i < dw.size(); i++)
         dw[i].renameMusic(oldMus, newMus);
-    }
 }
 
 void EpisodeBox::renameLevel(QString oldLvl, QString newLvl)
 {
-    for(int i=0;i<d.size(); i++)
-    {
+    for(int i = 0; i < d.size(); i++)
         d[i].renameLevel(oldLvl, newLvl);
-    }
-    for(int i=0;i<dw.size(); i++)
-    {
+    for(int i = 0; i < dw.size(); i++)
         dw[i].renameLevel(oldLvl, newLvl);
-    }
 }

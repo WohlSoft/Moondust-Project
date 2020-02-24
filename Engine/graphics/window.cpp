@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -86,10 +86,10 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
     if(*error != '\0')
     {
         PGE_MsgBox::warn(fmt::format_ne("SDL Error: {0}\nFile: {1}\nFunction: {2}\nLine: {3}",
-                                     error,
-                                     fn,
-                                     func,
-                                     line));
+                                        error,
+                                        fn,
+                                        func,
+                                        line));
         SDL_ClearError();
         return true;
     }
@@ -100,16 +100,16 @@ bool PGE_Window::checkSDLError(const char *fn, int line, const char *func)
 void PGE_Window::printSDLWarn(std::string info)
 {
     PGE_MsgBox::warn(fmt::format_ne("{0}\nSDL Error: {1}",
-                                 info,
-                                 SDL_GetError())
+                                    info,
+                                    SDL_GetError())
                     );
 }
 
 void PGE_Window::printSDLError(std::string info)
 {
     PGE_MsgBox::error(fmt::format_ne("{0}\nSDL Error: {1}",
-                                  info,
-                                  SDL_GetError()));
+                                     info,
+                                     SDL_GetError()));
 }
 
 int PGE_Window::msgBoxInfo(std::string title, std::string text)
@@ -205,11 +205,11 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     window = SDL_CreateWindow(WindowTitle.c_str(),
                               SDL_WINDOWPOS_CENTERED,
                               SDL_WINDOWPOS_CENTERED,
-                          #ifdef __EMSCRIPTEN__ //Set canvas be 1/2 size for a faster rendering
+#ifdef __EMSCRIPTEN__ //Set canvas be 1/2 size for a faster rendering
                               Width / 2, Height / 2,
-                          #else
+#else
                               screenWidth, screenHeight,
-                          #endif //__EMSCRIPTEN__
+#endif //__EMSCRIPTEN__
                               SDL_WINDOW_RESIZABLE |
                               SDL_WINDOW_HIDDEN |
                               SDL_WINDOW_ALLOW_HIGHDPI |
@@ -240,7 +240,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     GraphicsHelps::initFreeImage();
 
-#ifdef _WIN32
+#if defined(_WIN32)
     FIBITMAP *img[2];
     img[0] = GraphicsHelps::loadImageRC("cat_16.png");
     img[1] = GraphicsHelps::loadImageRC("cat_32.png");
@@ -261,7 +261,7 @@ bool PGE_Window::init(std::string WindowTitle, int renderType)
 
     GraphicsHelps::closeImage(img[0]);
     GraphicsHelps::closeImage(img[1]);
-#else//IF _WIN32
+#elif !defined __EMSCRIPTEN__ //IF _WIN32
 
     FIBITMAP *img;
 #   ifdef __APPLE__
@@ -521,8 +521,8 @@ int PGE_Window::processEvents(SDL_Event &event)
     {
     case SDL_WINDOWEVENT:
     {
-        if((event.window.event == SDL_WINDOWEVENT_RESIZED)||
-                (event.window.event == SDL_WINDOWEVENT_MOVED))
+        if((event.window.event == SDL_WINDOWEVENT_RESIZED) ||
+           (event.window.event == SDL_WINDOWEVENT_MOVED))
             GlRenderer::resetViewport();
 
         return 1;
@@ -539,7 +539,7 @@ int PGE_Window::processEvents(SDL_Event &event)
             }
 
             break;
-            #ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
+#ifdef PANIC_KEY //Panic! (If you wanna have able to quickly close game
 
         //        from employer - add "DEFINES+=PANIC_KEY" into qmake args
         //        and then you can press NumPad + to instantly close game)
@@ -551,7 +551,7 @@ int PGE_Window::processEvents(SDL_Event &event)
             return 2;
         }
 
-        #endif
+#endif
 
         case SDLK_F2:
         {

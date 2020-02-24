@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -21,6 +21,7 @@
 #include <graphics/window.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
+#include <common_features/pge_delay.h>
 #include <settings/global_settings.h>
 #include <data_configs/config_manager.h>
 #include <gui/pge_msgbox.h>
@@ -505,7 +506,7 @@ int TitleScene::exec()
 
         /****************************************************************************/
         if((!PGE_Window::vsync) && (uTick > times.passedCommonTime()))
-            SDL_Delay(uTick - times.passedCommonTime());
+            PGE_Delay(uTick - times.passedCommonTime());
     }
 
     m_menu.clear();

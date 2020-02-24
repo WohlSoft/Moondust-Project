@@ -3,7 +3,7 @@
 ** Copyright (C) 2016 The Qt Company Ltd.
 ** Contact: https://www.qt.io/licensing/
 **
-** Copyright (C) 2016 Vitaliy Novichkov <admin@wohlnet.ru>
+** Copyright (C) 2016-2019 Vitaliy Novichkov <admin@wohlnet.ru>
 **
 ** This file use a part of the QtCore module of the Qt Toolkit,
 ** ported into pure STL to allow support of qm translations in the non-Qt projects.
@@ -58,13 +58,299 @@
 #endif
 
 #include "qm_translator.h"
-#include "ConvertUTF.h"
+
+
+/* ---------------- UTF converters ------------------*/
+
+/*
+ * Copyright 2001-2004 Unicode, Inc.
+ *
+ * Disclaimer
+ *
+ * This source code is provided as is by Unicode, Inc. No claims are
+ * made as to fitness for any particular purpose. No warranties of any
+ * kind are expressed or implied. The recipient agrees to determine
+ * applicability of information provided. If this file has been
+ * purchased on magnetic or optical media from Unicode, Inc., the
+ * sole remedy for any claim will be exchange of defective media
+ * within 90 days of receipt.
+ *
+ * Limitations on Rights to Redistribute This Code
+ *
+ * Unicode, Inc. hereby grants the right to freely use the information
+ * supplied in this file in the creation of products supporting the
+ * Unicode Standard, and to make copies of this file in any form
+ * for internal or external distribution as long as this notice
+ * remains attached.
+ */
+
+typedef uint32_t  UTF32;  /* at least 32 bits */
+typedef uint16_t  UTF16;  /* at least 16 bits */
+typedef uint8_t   UTF8;   /* typically 8 bits */
+
+/* Some fundamental constants */
+#define UNI_REPLACEMENT_CHAR static_cast<UTF32>(0x0000FFFDu)
+#define UNI_MAX_BMP          static_cast<UTF32>(0x0000FFFFu)
+#define UNI_MAX_UTF16        static_cast<UTF32>(0x0010FFFFu)
+#define UNI_MAX_UTF32        static_cast<UTF32>(0x7FFFFFFFu)
+#define UNI_MAX_LEGAL_UTF32  static_cast<UTF32>(0x0010FFFFu)
+
+typedef enum
+{
+    conversionOK,       /* conversion successful */
+    sourceExhausted,    /* partial character in source, but hit end */
+    targetExhausted,    /* insuff. room in target for conversion */
+    sourceIllegal       /* source sequence is illegal/malformed */
+} qmTrConversionResult;
+
+typedef enum
+{
+    strictConversion = 0,
+    lenientConversion
+} qmTrConversionFlags;
+
+static const int   g_halfShift  = 10; /* used for shifting by 10 bits */
+
+static const UTF32 g_halfBase = 0x0010000UL;
+static const UTF32 g_halfMask = 0x3FFUL;
+
+#define UNI_SUR_HIGH_START  static_cast<UTF32>(0xD800u)
+#define UNI_SUR_HIGH_END    static_cast<UTF32>(0xDBFFu)
+#define UNI_SUR_LOW_START   static_cast<UTF32>(0xDC00u)
+#define UNI_SUR_LOW_END     static_cast<UTF32>(0xDFFFu)
+
+/*
+ * Once the bits are split out into bytes of UTF-8, this is a mask OR-ed
+ * into the first byte, depending on how many bytes follow.  There are
+ * as many entries in this table as there are UTF-8 sequence types.
+ * (I.e., one byte sequence, two byte... etc.). Remember that sequencs
+ * for *legal* UTF-8 will be 4 or fewer bytes total.
+ */
+static const UTF8 g_utf_firstByteMark[7] = { 0x00, 0x00, 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };
+
+/* The interface converts a whole buffer to avoid function-call overhead.
+ * Constants have been gathered. Loops & conditionals have been removed as
+ * much as possible for efficiency, in favor of drop-through switches.
+ * (See "Note A" at the bottom of the file for equivalent code.)
+ * If your compiler supports it, the "isLegalUTF8" call can be turned
+ * into an inline function.
+ */
+static qmTrConversionResult qmTr_ConvertUTF16toUTF8(
+    const std::u16string &sourceStr,
+    std::string &targetStr,
+    qmTrConversionFlags flags
+)
+{
+    qmTrConversionResult result = conversionOK;
+    const UTF16 *source;
+    const UTF16 *sourceEnd;
+    UTF8 *targetStart;
+    UTF8 *target;
+    UTF8 *targetEnd;
+    size_t writeLength = 0;
+
+    if(sourceStr.empty())
+        return result;
+
+    targetStr.clear();
+    targetStr.resize(sourceStr.size() * sizeof(char32_t) + 1);
+
+    source = reinterpret_cast<const UTF16*>(sourceStr.data());
+    sourceEnd = source + sourceStr.size();
+    target = reinterpret_cast<UTF8*>(&targetStr[0]);
+    targetStart = target;
+    targetEnd = target + targetStr.size();
+
+    while(source < sourceEnd)
+    {
+        UTF32 ch;
+        unsigned short bytesToWrite = 0;
+        const UTF32 byteMask = 0xBF;
+        const UTF32 byteMark = 0x80;
+        const UTF16 *oldSource = source; /* In case we have to back up because of target overflow. */
+        ch = *source++;
+        /* If we have a surrogate pair, convert to UTF32 first. */
+        if(ch >= UNI_SUR_HIGH_START && ch <= UNI_SUR_HIGH_END)
+        {
+            /* If the 16 bits following the high surrogate are in the source buffer... */
+            if(source < sourceEnd)
+            {
+                UTF32 ch2 = *source;
+                /* If it's a low surrogate, convert to UTF32. */
+                if(ch2 >= UNI_SUR_LOW_START && ch2 <= UNI_SUR_LOW_END)
+                {
+                    ch = ((ch - UNI_SUR_HIGH_START) << g_halfShift)
+                         + (ch2 - UNI_SUR_LOW_START) + g_halfBase;
+                    ++source;
+                }
+                else if(flags == strictConversion)      /* it's an unpaired high surrogate */
+                {
+                    --source; /* return to the illegal value itself */
+                    result = sourceIllegal;
+                    break;
+                }
+            }
+            else
+            {
+                /* We don't have the 16 bits following the high surrogate. */
+                --source; /* return to the high surrogate */
+                result = sourceExhausted;
+                break;
+            }
+        }
+        else if(flags == strictConversion)
+        {
+            /* UTF-16 surrogate values are illegal in UTF-32 */
+            if(ch >= UNI_SUR_LOW_START && ch <= UNI_SUR_LOW_END)
+            {
+                --source; /* return to the illegal value itself */
+                result = sourceIllegal;
+                break;
+            }
+        }
+        /* Figure out how many bytes the result will require */
+        if(ch < (UTF32)0x80)
+            bytesToWrite = 1;
+        else if(ch < (UTF32)0x800)
+            bytesToWrite = 2;
+        else if(ch < (UTF32)0x10000)
+            bytesToWrite = 3;
+        else if(ch < (UTF32)0x110000)
+            bytesToWrite = 4;
+        else
+        {
+            bytesToWrite = 3;
+            ch = UNI_REPLACEMENT_CHAR;
+        }
+
+        target += bytesToWrite;
+        if(target >= targetEnd)
+        {
+            source = oldSource; /* Back up source pointer! */
+            target -= bytesToWrite;
+            result = targetExhausted;
+            break;
+        }
+        switch(bytesToWrite)    /* note: everything falls through. */
+        {
+        case 4: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
+        case 3: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
+        case 2: *--target = (UTF8)((ch | byteMark) & byteMask); ch >>= 6; /*fallthrough*/
+        case 1: *--target = (UTF8)(ch | g_utf_firstByteMark[bytesToWrite]);  /*fallthrough*/
+        }
+        target += bytesToWrite;
+    }
+
+    writeLength = static_cast<size_t>(target - targetStart);
+
+    targetStr[writeLength] = '\0';
+    targetStr.resize(writeLength);
+
+    return result;
+}
+
+
+static qmTrConversionResult qmTr_ConvertUTF16toUTF32(
+    const std::u16string &sourceStr,
+    std::u32string &targetStr,
+    qmTrConversionFlags flags
+)
+{
+    qmTrConversionResult result = conversionOK;
+    const UTF16 *source;
+    const UTF16 *sourceEnd;
+    UTF32 *targetStart;
+    UTF32 *target;
+    UTF32 *targetEnd;
+    UTF32 ch, ch2;
+    size_t writeLength = 0;
+
+    if(sourceStr.empty())
+        return result;
+
+    targetStr.clear();
+    targetStr.resize(sourceStr.size() * sizeof(char32_t) + 1);
+
+    source = reinterpret_cast<const UTF16*>(sourceStr.data());
+    sourceEnd = source + sourceStr.size();
+    target = reinterpret_cast<UTF32*>(&targetStr[0]);
+    targetStart = target;
+    targetEnd = target + targetStr.size();
+
+    while(source < sourceEnd)
+    {
+        const UTF16 *oldSource = source; /*  In case we have to back up because of target overflow. */
+        ch = *source++;
+        /* If we have a surrogate pair, convert to UTF32 first. */
+        if(ch >= UNI_SUR_HIGH_START && ch <= UNI_SUR_HIGH_END)
+        {
+            /* If the 16 bits following the high surrogate are in the source buffer... */
+            if(source < sourceEnd)
+            {
+                ch2 = *source;
+                /* If it's a low surrogate, convert to UTF32. */
+                if(ch2 >= UNI_SUR_LOW_START && ch2 <= UNI_SUR_LOW_END)
+                {
+                    ch = ((ch - UNI_SUR_HIGH_START) << g_halfShift)
+                         + (ch2 - UNI_SUR_LOW_START) + g_halfBase;
+                    ++source;
+                }
+                else if(flags == strictConversion)      /* it's an unpaired high surrogate */
+                {
+                    --source; /* return to the illegal value itself */
+                    result = sourceIllegal;
+                    break;
+                }
+            }
+            else     /* We don't have the 16 bits following the high surrogate. */
+            {
+                --source; /* return to the high surrogate */
+                result = sourceExhausted;
+                break;
+            }
+        }
+        else if(flags == strictConversion)
+        {
+            /* UTF-16 surrogate values are illegal in UTF-32 */
+            if(ch >= UNI_SUR_LOW_START && ch <= UNI_SUR_LOW_END)
+            {
+                --source; /* return to the illegal value itself */
+                result = sourceIllegal;
+                break;
+            }
+        }
+        if(target >= targetEnd)
+        {
+            source = oldSource; /* Back up source pointer! */
+            result = targetExhausted;
+            break;
+        }
+        *target++ = ch;
+    }
+
+    writeLength = static_cast<size_t>(target - targetStart);
+
+    targetStr[writeLength] = 0;
+    targetStr.resize(writeLength);
+
+#ifdef CVTUTF_DEBUG
+    if(result == sourceIllegal)
+    {
+        fprintf(stderr, "ConvertUTF16toUTF32 illegal seq 0x%04x,%04x\n", ch, ch2);
+        fflush(stderr);
+    }
+#endif
+
+    return result;
+}
+
+/* ---------------- UTF converters --END-------------*/
 
 typedef uint8_t     uchar;
 
 //magic number for the file
-static const int32_t MagicLength = 16;
-static const uint8_t magic[MagicLength] =
+static const int32_t g_qm_magicLength = 16;
+static const uint8_t g_qm_magic[g_qm_magicLength] =
 {
     0x3c, 0xb8, 0x64, 0x18, 0xca, 0xef, 0x9c, 0x95,
     0xcd, 0x21, 0x1c, 0xbf, 0x60, 0xa1, 0xbd, 0xdd
@@ -373,9 +659,9 @@ static uint32_t numerusHelper(int32_t n, const uint8_t *rules, uint32_t rulesSiz
 static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const char *context,
                                  const char *sourceText, const char *comment, uint32_t numerus)
 {
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("-----> Try take message...!\n");
-    #endif
+#endif
 
     const uchar *tn = 0;
     uint32_t tn_length = 0;
@@ -423,9 +709,9 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
                 return std::u16string(u"<qm-error 4>");
             if(!match(m, len, sourceText, sourceTextLen))
             {
-                #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                 printf("-----> Source text doesn't match!\n");
-                #endif
+#endif
                 return std::u16string();
             }
             m += len;
@@ -441,9 +727,9 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
                 return std::u16string(u"<qm-error 6>");
             if(!match(m, len, context, contextLen))
             {
-                #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                 printf("-----> Tag gontext doesn't match!\n");
-                #endif
+#endif
                 return std::u16string();
             }
             m += len;
@@ -463,36 +749,36 @@ static std::u16string getMessage(const uint8_t *m, const uint8_t *end, const cha
         }
         break;
         default:
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("-----> Wrong tag!\n");
-            #endif
+#endif
             return std::u16string();
         }
     }
 end:
     if(!tn)
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("-----> Empty TN!\n");
-        #endif
+#endif
         return std::u16string();
     }
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("-----> Almost got...!\n");
-    #endif
+#endif
 
-    UTF16   *utf16str = reinterpret_cast<UTF16 *>(const_cast<uchar*>(tn));
+    UTF16   *utf16str = reinterpret_cast<UTF16 *>(const_cast<uchar *>(tn));
     size_t  utf16str_len = tn_length / 2;
 
-    #if MACHINE_BYTEORDER == MACHINE_LITTLE_ENDIAN
+#if MACHINE_BYTEORDER == MACHINE_LITTLE_ENDIAN
     std::u16string outStr(reinterpret_cast<char16_t *>(utf16str), utf16str_len);
     char16_t *ustr = &outStr[0];
     for(uint32_t i = 0; i < utf16str_len; i++)
         ustr[i] = ((ustr[i] >> 8) & 0x00FF) + ((ustr[i] << 8) & 0xFF00);
     return outStr;
-    #else
+#else
     return std::u16string((char16_t *)utf16str, utf16str_len);
-    #endif
+#endif
 }
 
 
@@ -521,9 +807,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
 
     if(!m_offsetLength)
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> ZERO OFFSETS LENGTH!");
-        #endif
+#endif
         goto searchDependencies;
     }
 
@@ -533,9 +819,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
     */
     if(m_contextLength)
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> Finding contexts...!");
-        #endif
+#endif
         uint16_t hTableSize = read16be(m_contextArray);
         uint32_t g = elfHash(context) % hTableSize;
         const uint8_t *c = m_contextArray + 2 + (g << 1);
@@ -543,9 +829,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
         c += 2;
         if(off == 0)
         {
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("--> Zero offset...!\n");
-            #endif
+#endif
             return std::u16string();
         }
         c = m_contextArray + (2 + (hTableSize << 1) + (off << 1));
@@ -556,9 +842,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
             uint8_t len = read8(c++);
             if(len == 0)
             {
-                #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                 printf("--> Zero length...!\n");
-                #endif
+#endif
                 return std::u16string();
             }
             if(match(c, len, context, contextLen))
@@ -568,17 +854,17 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
     }
     else
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> Contexts are empty!\n");
-        #endif
+#endif
     }
 
     numItems = m_offsetLength / (2 * sizeof(unsigned));
     if(!numItems)
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("--> NO ITEMS!\n");
-        #endif
+#endif
         goto searchDependencies;
     }
 
@@ -634,9 +920,9 @@ std::u16string QmTranslatorX::do_translate(const char *context, const char *sour
         comment = "";
     }
 
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("--> Nothing found!\n");
-    #endif
+#endif
 
 searchDependencies:
     for(QmTranslatorX *translator : m_subTranslators)
@@ -651,53 +937,34 @@ searchDependencies:
 std::string QmTranslatorX::do_translate8(const char *context, const char *sourceText, const char *comment, int32_t n)
 {
     std::u16string str  = do_translate(context, sourceText, comment, n);
-    size_t utf16len    = str.size();
-    size_t utf8bytelen = str.size() * sizeof(char16_t) + 1;
-    char *utf8str = reinterpret_cast<char *>(std::malloc(utf8bytelen));
-    std::memset(utf8str, 0, utf8bytelen);
-    if(utf16len > 0)
-    {
-        const UTF16 *pUtf16 = reinterpret_cast<const UTF16 *>(str.data());
-        UTF8  *pUtf8  = reinterpret_cast<UTF8 *>(utf8str);
-        ConvertUTF16toUTF8(&pUtf16, pUtf16 + utf16len,
-                           &pUtf8,  pUtf8 + utf8bytelen, lenientConversion);
-    }
-    std::string outstr(utf8str);
-    std::free(utf8str);
+    std::string outstr;
+
+    qmTr_ConvertUTF16toUTF8(str, outstr, lenientConversion);
+
     return outstr;
 }
 
 std::u32string QmTranslatorX::do_translate32(const char *context, const char *sourceText, const char *comment, int32_t n)
 {
     std::u16string str = do_translate(context, sourceText, comment, n);
-    size_t utf16len = str.size();
-    size_t utf32len = str.size() + 1;
-    size_t utf32bytelen = utf32len * sizeof(char32_t);
-    char32_t *utf32str = reinterpret_cast<char32_t *>(std::malloc(utf32bytelen));
-    std::memset(utf32str, 0, utf32bytelen);
-    if(utf16len > 0)
-    {
-        const UTF16 *pUtf16 =  reinterpret_cast<const UTF16 *>(str.data());
-        UTF32 *pUtf32  = reinterpret_cast<UTF32 *>(utf32str);
-        ConvertUTF16toUTF32(&pUtf16, pUtf16 + utf16len,
-                            &pUtf32, pUtf32 + utf32len, lenientConversion);
-    }
-    std::u32string outstr(utf32str);
-    std::free(utf32str);
+    std::u32string outstr;
+
+    qmTr_ConvertUTF16toUTF32(str, outstr, lenientConversion);
+
     return outstr;
 }
 
 bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
 {
-    uint8_t magicBuffer[MagicLength];
+    uint8_t magicBuffer[g_qm_magicLength];
     size_t  fileGotLen = 0;
 
     if(m_fileData)
         close();
 
-    #ifndef _WIN32
+#ifndef _WIN32
     FILE *file = std::fopen(filePath, "rb");
-    #else
+#else
     wchar_t filePathW[MAX_PATH + 1];
     {
         size_t utf8len  = std::strlen(filePath);
@@ -708,17 +975,17 @@ bool QmTranslatorX::loadFile(const char *filePath, uint8_t *directory)
         filePathW[utf16len] = L'\0';
     }
     FILE *file = _wfopen(filePathW, L"rb");
-    #endif
+#endif
     if(!file)
         return false;//err("Can't open file!", 2);
 
-    if(std::fread(magicBuffer, 1, MagicLength, file) < MagicLength)
+    if(std::fread(magicBuffer, 1, g_qm_magicLength, file) < g_qm_magicLength)
     {
         std::fclose(file);
         return false;//err("ERROR READING MAGIC NUMBER!!!", 3);
     }
 
-    if(std::memcmp(magicBuffer, magic, MagicLength) != 0)
+    if(std::memcmp(magicBuffer, g_qm_magic, g_qm_magicLength) != 0)
     {
         std::fclose(file);
         return false;//err("MAGIC NUMBER DOESN'T CASE!", 4);
@@ -769,7 +1036,7 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
     bool ok = true;
     const uint8_t *end = data + len;
 
-    data += MagicLength;
+    data += g_qm_magicLength;
     while(data < end - 4)
     {
         uint8_t  tag = read8(data++);
@@ -787,33 +1054,33 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
         {
             m_contextArray = data;
             m_contextLength = blockLen;
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has contexts array!\n");
-            #endif
+#endif
         }
         else if(tag == QTranslatorEntryTypes::Hashes)
         {
             m_offsetArray = data;
             m_offsetLength = blockLen;
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has hashes! %i\n", offsetLength);
-            #endif
+#endif
         }
         else if(tag == QTranslatorEntryTypes::Messages)
         {
             m_messageArray = data;
             m_messageLength = blockLen;
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has messages! %i\n", messageLength);
-            #endif
+#endif
         }
         else if(tag == QTranslatorEntryTypes::NumerusRules)
         {
             m_numerusRulesArray = data;
             m_numerusRulesLength = blockLen;
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Has numerus rules! %i\n", numerusRulesLength);
-            #endif
+#endif
         }
         else if(tag == QTranslatorEntryTypes::Dependencies)
         {
@@ -830,9 +1097,9 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
                 //Avoid infinite loop if got len is zero or larger than left bytes block
                 if((gotLen == 0) || (gotLen > blockLen))
                 {
-                    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                     printf("Dependencies tag loop: INFINITE LOOP DETECTED!\n");
-                    #endif
+#endif
                     break;
                 }
 
@@ -841,15 +1108,15 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
                 {
                     //List of dependent files
                     dependencies.push_back(dep);
-                    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
                     printf("Dependency: %s\n", dep.c_str());
-                    #endif
+#endif
                 }
                 blockLen -= gotLen;
             }
-            #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
             printf("Had deps!\n");
-            #endif
+#endif
         }
         data += blockLen;
     }
@@ -857,16 +1124,16 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
     if(dependencies.empty() && (!m_offsetArray || !m_messageArray))
         ok = false;
 
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("Dependencies valid: %i\n", ok);
-    #endif
+#endif
 
     if(ok && !isValidNumerusRules(m_numerusRulesArray, m_numerusRulesLength))
         ok = false;
 
-    #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
     printf("Numerus rules valid: %i\n", ok);
-    #endif
+#endif
 
     //Process loading of sub-translators
     if(ok)
@@ -901,16 +1168,16 @@ bool QmTranslatorX::loadDataPrivate(uint8_t *data, size_t len, uint8_t *director
         m_contextLength   = 0;
         m_offsetLength    = 0;
         m_numerusRulesLength = 0;
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("LOADING FAILED!\n");
-        #endif
+#endif
         return false;
     }
     else
     {
-        #ifdef QMTRANSLATPR_DEEP_DEBUG
+#ifdef QMTRANSLATPR_DEEP_DEBUG
         printf("LOADING PASSED!\n");
-        #endif
+#endif
         return true;
     }
 }

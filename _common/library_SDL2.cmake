@@ -52,7 +52,7 @@ if(SDL2_USE_SYSTEM)
     message("== SDL2 will be used from system!")
 
     find_package(SDL2 REQUIRED)
-    message("-- Found SDL2: ${SDL2_LIBRARIES} --")
+    message("-- Found SDL2: ${SDL2_LIBRARIES} ${SDL2_INCLUDE_DIRS} --")
 
     if(TARGET SDL2::SDL2)
         target_link_libraries(PGE_SDL2 INTERFACE SDL2::SDL2)
@@ -101,7 +101,7 @@ elseif(ANDROID)
         COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/include/*.h" "${CMAKE_BINARY_DIR}/include/SDL2"
         # COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2.a" "${CMAKE_BINARY_DIR}/lib/libSDL2${SDL2_DEBUG_SUFFIX}.a"
         COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2main.a" "${CMAKE_BINARY_DIR}/lib/libSDL2main${SDL2_DEBUG_SUFFIX}.a"
-        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libstdc++.a" "${CMAKE_BINARY_DIR}/lib/libstdc++.a"
+        # COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libstdc++.a" "${CMAKE_BINARY_DIR}/lib/libstdc++.a"
         COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
         COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_BINARY_DIR}/lib"
         COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
@@ -264,6 +264,10 @@ if(NOT EMSCRIPTEN AND NOT MSVC)
         list(APPEND SDL2_DEPENDENT_LIBS ${_lib_pthread})
         list(APPEND SDL2_SO_DEPENDENT_LIBS ${_lib_pthread})
     endif()
+endif()
+
+if(NOT USE_SYSTEM_SDL2 AND PGE_SHARED_SDLMIXER AND NOT WIN32)
+    install(FILES ${SDL2_SO_Lib} DESTINATION ${PGE_INSTALL_DIRECTORY})
 endif()
 
 target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_SO_DEPENDENT_LIBS})

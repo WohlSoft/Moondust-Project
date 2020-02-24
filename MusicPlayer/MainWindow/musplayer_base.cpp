@@ -23,7 +23,7 @@ void MusPlayerBase::on_play_clicked()
 
 void MusPlayerBase::on_volume_valueChanged(int value)
 {
-    PGE_MusicPlayer::MUS_changeVolume(value);
+    PGE_MusicPlayer::changeVolume(value);
 }
 
 void MusPlayerBase::on_trackID_editingFinished() {}

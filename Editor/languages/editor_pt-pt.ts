@@ -86,7 +86,7 @@
     </message>
     <message>
         <source>Middle mouse button actions</source>
-        <translation>Recursos para o botão do meio do mouse</translation>
+        <translation>Ações do botão do meio do rato</translation>
     </message>
     <message>
         <source>Duplicate selected items onto the mouse&apos;s position</source>
@@ -94,11 +94,11 @@
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation>Trocar modo de colocação do item selecionado</translation>
+        <translation>Alterar o modo de colocação do item selecionado</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation>Trocar para rolar ao arrastar sem seleção</translation>
+        <translation>Alternar arrastar para deslizar enquanto a seleção está vazia</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -108,11 +108,11 @@
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>A caixa de propriedades não será automaticamente exibida ao selecionar um item para colocar. Por exemplo, clicar num item da caixa de ferramentes de itens ou da caixa de ferramentas de blocos.</translation>
+        <translation>A caixa das propriedades não será mostrada automaticamente quando seleciona um item a colocar.</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation>Não exibir caixa de propiedades ao pegar um item</translation>
+        <translation>Não mostrar a caixa das propriedades quando colocar itens</translation>
     </message>
     <message>
         <source>History</source>
@@ -124,7 +124,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Maximum number of remembered history actions.</source>
-        <translation>O número máximo de ações que serão guardadas no histórico.</translation>
+        <translation>Tamanho máximo da fila do histórico.</translation>
     </message>
     <message>
         <source>Screen capture default size</source>
@@ -148,11 +148,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>Predefinições</translation>
     </message>
     <message>
         <source>Classic Events tabs to auto-expand</source>
-        <translation type="unfinished"></translation>
+        <translation>Separadores &apos;Eventos Clássicos&apos; para auto expandir</translation>
     </message>
     <message>
         <source>Common</source>
@@ -160,19 +160,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Layer movement</source>
-        <translation type="unfinished"></translation>
+        <translation>Movimento da Camada</translation>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation>Ativar evento</translation>
+        <translation>Ativar Evento</translation>
     </message>
     <message>
         <source>Hold buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Manter Botões</translation>
     </message>
     <message>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>Extra</translation>
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
@@ -188,7 +188,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições de NPC</translation>
     </message>
     <message>
         <source>Generator</source>
@@ -208,7 +208,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation>Intervalo:</translation>
+        <translation>Atraso (segundos):</translation>
     </message>
     <message>
         <source>Direction</source>
@@ -224,19 +224,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Direita</translation>
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation>Transportes &amp; Portas</translation>
+        <translation>Transportes e Portas</translation>
     </message>
     <message>
         <source>Warp type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de transporte:</translation>
     </message>
     <message>
         <source>0 - Instant</source>
-        <translation>0 - Instântaneo</translation>
+        <translation>0 - Instantâneo</translation>
     </message>
     <message>
         <source>1 - Pipe</source>
@@ -248,7 +248,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation>3 - Portal</translation>
     </message>
     <message>
         <source>View</source>
@@ -1143,10 +1143,6 @@ Please save them first before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hide editor-only meta-signs pictures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1157,6 +1153,10 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Plano de fundo em tiles</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1351,6 +1351,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>Arquivo de mundo SMBX</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Aguarde...</translation>
     </message>
 </context>
 <context>
@@ -2563,7 +2567,7 @@ Por favor, verifique a pasta do aplicativo.</translation>
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Edição do nível</translation>
+        <translation type="vanished">Edição do nível</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -3006,6 +3010,19 @@ Deseja salvar sua mudanças?</translation>
         <source>Trigger event</source>
         <translation>Ativar evento</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Geral</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LunaTester</name>
@@ -3105,7 +3122,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Violation of SMBX64 standard has beeen found!
+        <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
 Suggested to remove all excess elements.
@@ -3915,11 +3932,11 @@ Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para i
     </message>
     <message>
         <source>Up</source>
-        <translation>Cima</translation>
+        <translation type="vanished">Cima</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Baixo</translation>
+        <translation type="vanished">Baixo</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -4024,6 +4041,51 @@ Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para i
     <message>
         <source>[none]</source>
         <translation>[nada]</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Esquerda</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Cima</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Baixo</translation>
+    </message>
+    <message>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4489,6 +4551,11 @@ para trás)</translation>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>
@@ -4552,7 +4619,7 @@ para trás)</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">3 - Portal</translation>
     </message>
     <message>
         <source>Message which will be shown if the player
@@ -4731,7 +4798,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4741,7 +4808,7 @@ If this flag is enabled, you can only place a warp exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5206,7 +5273,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <extracomment>Edit from the editor</extracomment>
+        <extracomment>Exit from the editor</extracomment>
         <translation type="unfinished">Saída</translation>
     </message>
     <message>
@@ -5738,10 +5805,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5939,19 +6002,19 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Configurações adicionais</translation>
+        <translation type="vanished">Configurações adicionais</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Compilar para:</translation>
+        <translation type="vanished">Compilar para:</translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Linguagem Original LunaDLL]</translation>
+        <translation type="vanished">Autocode [Linguagem Original LunaDLL]</translation>
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
@@ -5975,7 +6038,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Rodar teste em SMBX (Requer LunaDLL)</translation>
+        <translation type="vanished">Rodar teste em SMBX (Requer LunaDLL)</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Starts level testing in the opened SMBX Editor directly.&lt;/p&gt;&lt;p&gt;This feature use a LunaDLL to send command into SMBS, so your SMBX should have a latest LunaDLL build.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Without LunaDLL in your SMBX (starts from LunaLUA v 0.5.3-beta) this feature will not work!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6713,7 +6776,7 @@ Quer continuar?</translation>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Editor de configurações de NPC</translation>
+        <translation type="vanished">Editor de configurações de NPC</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -7419,7 +7482,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Nome do nível</translation>
+        <translation type="vanished">Nome do nível</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -7824,6 +7887,14 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8928,23 +8999,23 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Erro ao ler arquivo</translation>
+        <translation type="vanished">Erro ao ler arquivo</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Não foi possível ler o arquivo %1:
+        <translation type="vanished">Não foi possível ler o arquivo %1:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Configurações não foram carregadas</translation>
+        <translation type="vanished">Configurações não foram carregadas</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Não foi possível abrir o mundo %1:
+        <translation type="vanished">Não foi possível abrir o mundo %1:
 porque as configurações de objeto não foram carregadas.
 Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as configurações de objeto.</translation>
     </message>
@@ -8987,6 +9058,14 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Selecione um ponto no mapa primeiro.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9140,6 +9219,10 @@ Topo:	%1
 Esquera:	%2
 Direita:	%3
 Fundo:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9377,7 +9460,7 @@ Caixas de música:	%5</translation>
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Mapa do mundo</translation>
+        <translation type="vanished">Mapa do mundo</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

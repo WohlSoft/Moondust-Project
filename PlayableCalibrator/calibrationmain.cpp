@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@
 #include "calibrationmain.h"
 #include <ui_calibrationmain.h>
 
+#include "main/app_path.h"
+
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
 #include "animator/animate.h"
@@ -42,111 +44,118 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     ui(new Ui::CalibrationMain)
 {
     MW::p = this;
-    buffer.W=100;
-    buffer.H=100;
-    buffer.offsetX=0;
-    buffer.offsetY=0;
-    buffer.used=true;
-    buffer.isDuck=true;
-    buffer.isRightDir=false;
-    wasCanceled=false;
-    lockControls=false;
-
-    frmX=0;
-    frmY=0;
-
-    currentFile = "";
+    g_buffer.W = 100;
+    g_buffer.H = 100;
+    g_buffer.offsetX = 0;
+    g_buffer.offsetY = 0;
+    g_buffer.used = true;
+    g_buffer.isDuck = true;
+    g_buffer.isRightDir = false;
+    m_wasCanceled = false;
 
     ui->setupUi(this);
+
+    QObject::connect(&m_translator, &Translator::languageSwitched,
+                     this, &CalibrationMain::languageSwitched);
+    ui->language->setMenu(&m_langMenu);
+    m_translator.setSettings(&m_langMenu,
+                             "calibrator",
+                             AppPathManager::languagesDir(),
+                             AppPathManager::settingsFile());
+    m_translator.initTranslator();
+
+    {
+        m_saveMenuQuickSave = m_saveMenu.addAction("");
+        m_saveMenuSaveAs = m_saveMenu.addAction("");
+        translateSaveMenu();
+
+        ui->SaveConfigButton->setMenu(&m_saveMenu);
+
+        QObject::connect(m_saveMenuQuickSave, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            saveConfig(g_currentFile);
+            m_wasModified = false;
+        });
+
+        QObject::connect(m_saveMenuSaveAs, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            if(saveConfig(g_currentFile, true))
+                m_wasModified = false;
+        });
+    }
 
     Graphics::init();
 
     QString inifile = AppPathManager::settingsFile();
     QSettings settings(inifile, QSettings::IniFormat);
-        settings.beginGroup("Main");
-          LastOpenDir = settings.value("lastpath", ".").toString();
-          currentFile = settings.value("lastfile", currentFile).toString();
-          frmX=settings.value("last-frame-x", ui->FrameX->value()).toInt();
-          frmY=settings.value("last-frame-y", ui->FrameY->value()).toInt();
-          lockControls=true;
-          ui->FrameX->setValue(frmX);
-          ui->FrameY->setValue(frmY);
-          lockControls=false;
-        settings.endGroup();
+    settings.beginGroup("Main");
+    g_lastOpenDir = settings.value("lastpath", ".").toString();
+    g_currentFile = settings.value("lastfile", g_currentFile).toString();
+    m_frmX = settings.value("last-frame-x", ui->FrameX->value()).toInt();
+    m_frmY = settings.value("last-frame-y", ui->FrameY->value()).toInt();
+    m_lockControls = true;
+    ui->FrameX->setValue(m_frmX);
+    ui->FrameY->setValue(m_frmY);
+    m_lockControls = false;
+    settings.endGroup();
 
     QVector<frameOpts > framesY;
     frameOpts spriteData;
     // Write default values
-    for(int i=0; i<10; i++)
+    for(int i = 0; i < 10; i++)
     {
         framesY.clear();
-        for(int j=0; j<10; j++)
+        for(int j = 0; j < 10; j++)
         {
-            spriteData=buffer;
+            spriteData = g_buffer;
             framesY.push_back(spriteData);
         }
-        framesX.push_back(framesY);
+        g_framesX.push_back(framesY);
     }
 
 
-    Scene = new QGraphicsScene(ui->PreviewGraph);
+    m_scene = new QGraphicsScene(ui->PreviewGraph);
 
-    ui->PreviewGraph->setScene(Scene);
+    ui->PreviewGraph->setScene(m_scene);
     QGraphicsScene *sc = ui->PreviewGraph->scene();
 
-    currentPixmap = QPixmap(100,100);
-    currentPixmap.fill(Qt::transparent);
-    currentImageItem.setPixmap(currentPixmap);
-    currentImageItem.setZValue(0);
+    m_currentPixmap = QPixmap(100, 100);
+    m_currentPixmap.fill(Qt::transparent);
+    m_currentImageItem.setPixmap(m_currentPixmap);
+    m_currentImageItem.setZValue(0);
 
-    FrameBox_gray.setRect(0,0,100,100);
-    FrameBox_gray.setPen(QPen(Qt::gray, 1));
-    FrameBox_gray.setBrush(Qt::transparent);
-    FrameBox_gray.setZValue(-10);
+    m_frameBox_gray.setRect(0, 0, 100, 100);
+    m_frameBox_gray.setPen(QPen(Qt::gray, 1));
+    m_frameBox_gray.setBrush(Qt::transparent);
+    m_frameBox_gray.setZValue(-10);
 
-    CollisionBox_green.setRect(0,0,frameWidth-1, frameHeight-1);
-    CollisionBox_green.setPen(QPen(Qt::green));
-    CollisionBox_green.setZValue(3);
+    m_hitBox_green.setRect(0, 0, g_frameWidth - 1, g_frameHeight - 1);
+    m_hitBox_green.setPen(QPen(Qt::green));
+    m_hitBox_green.setZValue(3);
 
-    grabLineX.setPen(QPen(Qt::red));
-    grabLineY.setPen(QPen(Qt::red));
+    m_grabLineX.setPen(QPen(Qt::red));
+    m_grabLineY.setPen(QPen(Qt::red));
 
-    grabLineX.setZValue(10);
-    grabLineY.setZValue(10);
+    m_grabLineX.setZValue(10);
+    m_grabLineY.setZValue(10);
 
-    sc->addItem(&FrameBox_gray);
-    sc->addItem(&currentImageItem);
-    sc->addItem(&CollisionBox_green);
-    sc->addItem(&grabLineX);
-    sc->addItem(&grabLineY);
+    sc->addItem(&m_frameBox_gray);
+    sc->addItem(&m_currentImageItem);
+    sc->addItem(&m_hitBox_green);
+    sc->addItem(&m_grabLineX);
+    sc->addItem(&m_grabLineY);
 
-    if(currentFile.isEmpty())
+    if(g_currentFile.isEmpty())
     {
         if(!on_OpenSprite_clicked())
         {
-            wasCanceled=true;
+            m_wasCanceled = true;
             return;
         }
     }
     else
-        OpenFile(currentFile);
-
+        OpenFile(g_currentFile);
 }
-
-void CalibrationMain::closeEvent(QCloseEvent *event)
-{
-    QString config = AppPathManager::settingsFile();
-    QSettings opts(config, QSettings::IniFormat);
-    opts.beginGroup("Main");
-        opts.setValue("lastpath", LastOpenDir);
-        opts.setValue("lastfile", currentFile);
-        opts.setValue("last-frame-x", frmX);
-        opts.setValue("last-frame-y", frmY);
-    opts.endGroup();
-
-    event->accept();
-}
-
 
 CalibrationMain::~CalibrationMain()
 {
@@ -154,74 +163,127 @@ CalibrationMain::~CalibrationMain()
     Graphics::quit();
 }
 
+void CalibrationMain::closeEvent(QCloseEvent *event)
+{
+    QString config = AppPathManager::settingsFile();
+    QSettings opts(config, QSettings::IniFormat);
+    opts.beginGroup("Main");
+    {
+        opts.setValue("lastpath", g_lastOpenDir);
+        opts.setValue("lastfile", g_currentFile);
+        opts.setValue("last-frame-x", m_frmX);
+        opts.setValue("last-frame-y", m_frmY);
+    }
+    opts.endGroup();
+
+    if(!trySave())
+    {
+        event->ignore();
+        return;
+    }
+
+    event->accept();
+}
+
+void CalibrationMain::languageSwitched()
+{
+    ui->retranslateUi(this);
+    translateSaveMenu();
+}
+
+void CalibrationMain::translateSaveMenu()
+{
+    if(m_saveMenuQuickSave)
+        m_saveMenuQuickSave->setText(tr("Save in the same folder with image file"));
+    if(m_saveMenuSaveAs)
+        m_saveMenuSaveAs->setText(tr("Save into custom place..."));
+}
+
 
 void CalibrationMain::on_FrameX_valueChanged(int)
-{ if(lockControls) return; initScene(); updateControls(); updateScene(); }
+{
+    if(m_lockControls) return;
+    initScene();
+    updateControls();
+    updateScene();
+}
 
 void CalibrationMain::on_FrameY_valueChanged(int)
-{ if(lockControls) return; initScene(); updateControls(); updateScene(); }
+{
+    if(m_lockControls) return;
+    initScene();
+    updateControls();
+    updateScene();
+}
 
 
 
 void CalibrationMain::on_Height_valueChanged(int arg1)
 {
-    if(lockControls) return;
-    framesX[frmX][frmY].H = arg1;
-    frameHeight = arg1;
+    if(m_lockControls) return;
+    g_framesX[m_frmX][m_frmY].H = static_cast<unsigned>(arg1);
+    g_frameHeight = arg1;
+    enableFrame();
     updateScene();
 }
 
 
 void CalibrationMain::on_Height_duck_valueChanged(int arg1)
 {
-    if(lockControls) return;
-    frameHeightDuck=arg1;
+    if(m_lockControls) return;
+    g_frameHeightDuck = arg1;
+    enableFrame();
     updateScene();
 }
 
 
 void CalibrationMain::on_Width_valueChanged(int arg1)
 {
-    if(lockControls) return;
-    framesX[frmX][frmY].W = arg1;
-    frameWidth = arg1;
+    if(m_lockControls) return;
+    g_framesX[m_frmX][m_frmY].W = static_cast<unsigned>(arg1);
+    g_frameWidth = arg1;
+    enableFrame();
     updateScene();
 }
 
 
 void CalibrationMain::on_OffsetX_valueChanged(int arg1)
 {
-    if(lockControls) return;
-    framesX[frmX][frmY].offsetX = arg1;
+    if(m_lockControls) return;
+    g_framesX[m_frmX][m_frmY].offsetX = arg1;
+    enableFrame();
     updateScene();
 }
 
 
 void CalibrationMain::on_OffsetY_valueChanged(int arg1)
 {
-    if(lockControls) return;
-    framesX[frmX][frmY].offsetY = arg1;
+    if(m_lockControls) return;
+    g_framesX[m_frmX][m_frmY].offsetY = arg1;
+    enableFrame();
     updateScene();
 }
 
 
 void CalibrationMain::on_CopyButton_clicked()
 {
-    buffer = framesX[frmX][frmY];
+    g_buffer = g_framesX[m_frmX][m_frmY];
 }
 
 
 void CalibrationMain::on_PasteButton_clicked()
 {
-    framesX[frmX][frmY] = buffer;
+    g_framesX[m_frmX][m_frmY] = g_buffer;
 
     updateControls();
     updateScene();
+    m_wasModified = true;
 }
 
 void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 {
-    framesX[frmX][frmY].isDuck = checked;
+    g_framesX[m_frmX][m_frmY].isDuck = checked;
+    enableFrame();
     updateScene();
 }
 
@@ -229,17 +291,23 @@ void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 
 bool CalibrationMain::on_OpenSprite_clicked()
 {
-     QString fileName_DATA = QFileDialog::getOpenFileName(this,
-            tr("Open sprite file"),(LastOpenDir.isEmpty()? AppPathManager::userAppDir() : LastOpenDir),
-            tr("SMBX playble sprite (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;"
-               "GIF images (*.gif);;"
-               "PNG images (*.png);;"
-                "All Files (*.*)"));
+    if(!trySave())
+        return false;
 
-     if(fileName_DATA==NULL) return false;
+    QString fileName_DATA = QFileDialog::getOpenFileName(this,
+                            tr("Open sprite file"), (g_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : g_lastOpenDir),
+                            tr("GIF and PNG images", "Type of image file to open") + " (*.png *.gif);;" +
+                            tr("GIF images", "Type of image file to open") + " (*.gif);;" +
+                            tr("PNG images", "Type of image file to open") + " (*.png);;" +
+                            tr("SMBX playble sprite", "Type of image file to open") + " (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;" +
+                            tr("All Files", "Type of image file to open") + " (*.*)");
 
-     OpenFile(fileName_DATA);
-     return true;
+    if(fileName_DATA == nullptr)
+        return false;
+
+    OpenFile(fileName_DATA);
+    m_wasModified = false;
+    return true;
 }
 
 
@@ -251,52 +319,70 @@ void CalibrationMain::on_AboutButton_clicked()
 }
 
 
-void CalibrationMain::on_SaveConfigButton_clicked()
-{
-    QMenu menu;
-    QAction * qsave = menu.addAction("Save in the same folder with image file");
-    QAction * saveas = menu.addAction("Save into custom place...");
-    QAction *answer=menu.exec( mapToGlobal(ui->SaveConfigButton->pos()) );
-    if(answer==qsave)
-        saveConfig(currentFile);
-    else if(answer==saveas)
-        saveConfig(currentFile, true);
-}
-
 
 // Copy current sizes and offsets to ALL frames
 void CalibrationMain::on_applyToAll_clicked()
 {
-    buffer.H=ui->Height->value();
-    buffer.W=ui->Width->value();
-    buffer.offsetX=ui->OffsetX->value();
-    buffer.offsetY=ui->OffsetY->value();
-    for(int i=0; i<10; i++)
-        for(int j=0; j<10; j++)
-            framesX[i][j] = buffer;
+    int reply = QMessageBox::question(this,
+                                      tr("Warning"),
+                                      tr("This action will copy settings of current hitbox to all other frames. "
+                                         "Settings of all other frames will be overriden with settings of a current frame. "
+                                         "Do you want to continue?"),
+                                      QMessageBox::Yes|QMessageBox::No);
+    if(reply != QMessageBox::Yes)
+        return;
 
+    g_buffer.H = static_cast<unsigned>(ui->Height->value());
+    g_buffer.W = static_cast<unsigned>(ui->Width->value());
+    g_buffer.offsetX = ui->OffsetX->value();
+    g_buffer.offsetY = ui->OffsetY->value();
+
+    for(int i = 0; i < 10; i++)
+        for(int j = 0; j < 10; j++)
+            g_framesX[i][j] = g_buffer;
+    m_wasModified = true;
+}
+
+bool CalibrationMain::trySave()
+{
+    if(m_wasModified)
+    {
+        int ret = QMessageBox::question(this,
+                        tr("Calibration is not saved!"),
+                        tr("Configuration was modified and not saved. Do you want to save it?"),
+                        QMessageBox::Yes|QMessageBox::No|QMessageBox::Cancel);
+        if(ret == QMessageBox::Cancel)
+            return false;
+        else if(ret == QMessageBox::Yes)
+        {
+            if(!saveConfig(g_currentFile, true))
+                return false;
+        }
+    }
+    return true;
 }
 
 //Set using this frame on template
 void CalibrationMain::on_EnableFrame_clicked(bool checked)
 {
     if(ui->EnableFrame->hasFocus())
-    {
-        framesX[frmX][frmY].used = checked;
-    }
+        g_framesX[m_frmX][m_frmY].used = checked;
+    m_wasModified = true;
 }
 
 void CalibrationMain::on_isRightDirect_clicked(bool checked)
 {
-    if(lockControls) return;
-    framesX[frmX][frmY].isRightDir = checked;
+    if(m_lockControls) return;
+    g_framesX[m_frmX][m_frmY].isRightDir = checked;
+    enableFrame();
     updateScene();
 }
 
 void CalibrationMain::on_showGrabItem_clicked(bool checked)
 {
-    if(lockControls) return;
-    framesX[frmX][frmY].showGrabItem = checked;
+    if(m_lockControls) return;
+    g_framesX[m_frmX][m_frmY].showGrabItem = checked;
+    enableFrame();
     updateScene();
 }
 
@@ -307,10 +393,10 @@ void CalibrationMain::on_Matrix_clicked()
     Matrix dialog(this);
     this->hide();
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    dialog.setFrame(frmX, frmY);
+    dialog.setFrame(m_frmX, m_frmY);
     dialog.show();
     dialog.raise();
-    if(dialog.exec()==QDialog::Accepted)
+    if(dialog.exec() == QDialog::Accepted)
     {
         ui->FrameX->setValue(dialog.frameX);
         ui->FrameY->setValue(dialog.frameY);
@@ -318,8 +404,10 @@ void CalibrationMain::on_Matrix_clicked()
     this->show();
     this->raise();
 
-    framesX = dialog.FrameConfig;
-    initScene(); updateControls(); updateScene();
+    g_framesX = dialog.FrameConfig;
+    initScene();
+    updateControls();
+    updateScene();
 }
 
 
@@ -333,46 +421,14 @@ void CalibrationMain::on_AnimatorButton_clicked()
     this->raise();
 }
 
-void CalibrationMain::on_editSizes_clicked()
-{
-    QMessageBox::StandardButton reply;
-      reply = QMessageBox::question(this, "Warning",
-        "This is a physical settings for a sprite, this need only for creation of new character sprite\nIf you want to use this sprite in SMBX, please, don't edit this settings.\nDo you want to continue?",
-                                    QMessageBox::Yes|QMessageBox::No);
-      if (reply == QMessageBox::Yes)
-      {
-
-            ui->Height->setEnabled(true);
-            ui->Height_duck->setEnabled(true);
-            ui->Width->setEnabled(true);
-            ui->grabOffsetX->setEnabled(true);
-            ui->grabOffsetY->setEnabled(true);
-
-            ui->EnableFrame->setEnabled(true);
-            ui->isDuckFrame->setEnabled(true);
-            ui->isRightDirect->setEnabled(true);
-            ui->showGrabItem->setEnabled(true);
-
-            ui->grabType->setEnabled(true);
-
-            ui->OffsetX->setEnabled(true);
-            ui->OffsetY->setEnabled(true);
-
-            ui->CopyButton->setEnabled(true);
-            ui->PasteButton->setEnabled(true);
-            ui->applyToAll->setEnabled(true);
-            ui->editSizes->setVisible(false);
-      }
-}
-
 
 void CalibrationMain::on_calibrateImage_clicked()
 {
     ImageCalibrator imgCalibrator(this);
     imgCalibrator.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    if(!imgCalibrator.init(currentFile)) return;
+    if(!imgCalibrator.init(g_currentFile)) return;
 
-    imgCalibrator.m_scene = Scene;
+    imgCalibrator.m_scene = m_scene;
 
     this->hide();
     imgCalibrator.exec();
@@ -384,123 +440,141 @@ void CalibrationMain::on_calibrateImage_clicked()
 
 
 void CalibrationMain::on_grabOffsetX_valueChanged(int arg1)
-{   if(ui->grabOffsetX->hasFocus())
-    {   frameGrabOffsetX = arg1; updateScene();  }
+{
+    if(ui->grabOffsetX->hasFocus())
+    {
+        g_frameGrabOffsetX = arg1;
+        enableFrame();
+        updateScene();
+    }
 }
 
 void CalibrationMain::on_grabOffsetY_valueChanged(int arg1)
-{   if(ui->grabOffsetY->hasFocus())
-      {   frameGrabOffsetY = arg1; updateScene();    }
+{
+    if(ui->grabOffsetY->hasFocus())
+    {
+        g_frameGrabOffsetY = arg1;
+        enableFrame();
+        updateScene();
+    }
+}
+
+void CalibrationMain::enableFrame()
+{
+    m_wasModified = true;
+    g_framesX[m_frmX][m_frmY].used = true;
+    if(!ui->EnableFrame->isChecked())
+        ui->EnableFrame->setChecked(true);
 }
 
 void CalibrationMain::updateControls()
 {
-    frmX = ui->FrameX->value();
-    frmY = ui->FrameY->value();
-    lockControls=true;
-    ui->Height->setValue(frameHeight);
-    ui->Height_duck->setValue(frameHeightDuck);
-    ui->Width->setValue(frameWidth);
-    ui->OffsetX->setValue(framesX[frmX][frmY].offsetX);
-    ui->OffsetY->setValue(framesX[frmX][frmY].offsetY);
+    m_frmX = ui->FrameX->value();
+    m_frmY = ui->FrameY->value();
+    m_lockControls = true;
+    ui->Height->setValue(g_frameHeight);
+    ui->Height_duck->setValue(g_frameHeightDuck);
+    ui->Width->setValue(g_frameWidth);
+    ui->OffsetX->setValue(g_framesX[m_frmX][m_frmY].offsetX);
+    ui->OffsetY->setValue(g_framesX[m_frmX][m_frmY].offsetY);
 
-    ui->grabOffsetX->setValue(frameGrabOffsetX);
-    ui->grabOffsetY->setValue(frameGrabOffsetY);
+    ui->grabOffsetX->setValue(g_frameGrabOffsetX);
+    ui->grabOffsetY->setValue(g_frameGrabOffsetY);
 
-    if(frameOverTopGrab)
+    if(g_frameOverTopGrab)
         ui->grabTop->setChecked(true);
     else
         ui->grabSide->setChecked(true);
 
-    ui->EnableFrame->setChecked(framesX[frmX][frmY].used);
-    ui->isDuckFrame->setChecked(framesX[frmX][frmY].isDuck);
-    ui->isRightDirect->setChecked(framesX[frmX][frmY].isRightDir);
-    ui->showGrabItem->setChecked(framesX[frmX][frmY].showGrabItem);
-    lockControls=false;
+    ui->EnableFrame->setChecked(g_framesX[m_frmX][m_frmY].used);
+    ui->isDuckFrame->setChecked(g_framesX[m_frmX][m_frmY].isDuck);
+    ui->isRightDirect->setChecked(g_framesX[m_frmX][m_frmY].isRightDir);
+    ui->showGrabItem->setChecked(g_framesX[m_frmX][m_frmY].showGrabItem);
+    m_lockControls = false;
 }
 
 
 void CalibrationMain::updateScene()
 {
-    int x,y,h,w, relX, relY;
+    int x, y, h, w, relX, relY;
     bool isRight;
-    x = framesX[frmX][frmY].offsetX;
-    y = framesX[frmX][frmY].offsetY;
-    h = framesX[frmX][frmY].isDuck?frameHeightDuck:frameHeight;
-    w = frameWidth;
-    isRight = framesX[frmX][frmY].isRightDir;
+    x = g_framesX[m_frmX][m_frmY].offsetX;
+    y = g_framesX[m_frmX][m_frmY].offsetY;
+    h = g_framesX[m_frmX][m_frmY].isDuck ? g_frameHeightDuck : g_frameHeight;
+    w = g_frameWidth;
+    isRight = g_framesX[m_frmX][m_frmY].isRightDir;
 
-    relX = FrameBox_gray.scenePos().x();
-    relY = FrameBox_gray.scenePos().y();
+    relX = m_frameBox_gray.scenePos().x();
+    relY = m_frameBox_gray.scenePos().y();
 
-    CollisionBox_green.setPos(relX + x,
+    m_hitBox_green.setPos(relX + x,
                               relY + y);
-    CollisionBox_green.setRect(0.0, 0.0, w, h);
+    m_hitBox_green.setRect(0.0, 0.0, w, h);
 
-    relX = CollisionBox_green.scenePos().x();
-    relY = CollisionBox_green.scenePos().y();
+    relX = m_hitBox_green.scenePos().x();
+    relY = m_hitBox_green.scenePos().y();
 
-    if(frameOverTopGrab)
+    if(g_frameOverTopGrab)
     {
-        grabLineX.setLine(relX,
-                          relY-1,
-                          relX+w, relY-1);
+        m_grabLineX.setLine(relX,
+                          relY - 1,
+                          relX + w, relY - 1);
 
-        grabLineY.setLine(relX+w/2,
-                          relY-1,
+        m_grabLineY.setLine(relX + w / 2,
+                          relY - 1,
 
-                          relX+w/2,
-                                relY-21);
+                          relX + w / 2,
+                          relY - 21);
 
-        grabLineX.setVisible( framesX[frmX][frmY].showGrabItem );
-        grabLineY.setVisible( framesX[frmX][frmY].showGrabItem );
+        m_grabLineX.setVisible(g_framesX[m_frmX][m_frmY].showGrabItem);
+        m_grabLineY.setVisible(g_framesX[m_frmX][m_frmY].showGrabItem);
 
     }
     else
     {
-        grabLineX.setLine(relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
-                          relY+h/2+frameGrabOffsetY,
-                          relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1)+(isRight?20:-20),
-                                                relY+h/2+frameGrabOffsetY );
+        m_grabLineX.setLine(relX + (isRight ? 0 : w) + g_frameGrabOffsetX * (isRight ? 1 : -1),
+                          relY + h / 2 + g_frameGrabOffsetY,
+                          relX + (isRight ? 0 : w) + g_frameGrabOffsetX * (isRight ? 1 : -1) + (isRight ? 20 : -20),
+                          relY + h / 2 + g_frameGrabOffsetY);
 
-        grabLineY.setLine(relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
-                          relY+h/2+frameGrabOffsetY,
+        m_grabLineY.setLine(relX + (isRight ? 0 : w) + g_frameGrabOffsetX * (isRight ? 1 : -1),
+                          relY + h / 2 + g_frameGrabOffsetY,
 
-                          relX+(isRight?0:w)+frameGrabOffsetX*(isRight?1:-1),
-                                relY+h/2+frameGrabOffsetY-20);
+                          relX + (isRight ? 0 : w) + g_frameGrabOffsetX * (isRight ? 1 : -1),
+                          relY + h / 2 + g_frameGrabOffsetY - 20);
 
-        grabLineX.setVisible( framesX[frmX][frmY].showGrabItem );
-        grabLineY.setVisible( framesX[frmX][frmY].showGrabItem );
+        m_grabLineX.setVisible(g_framesX[m_frmX][m_frmY].showGrabItem);
+        m_grabLineY.setVisible(g_framesX[m_frmX][m_frmY].showGrabItem);
     }
 
 }
 
 void CalibrationMain::initScene()
 {
-    frmX = ui->FrameX->value();
-    frmY = ui->FrameY->value();
+    m_frmX = ui->FrameX->value();
+    m_frmY = ui->FrameY->value();
 
-    m_FramePos.setX( frmX * 100 );
-    m_FramePos.setY( frmY * 100 );
+    m_FramePos.setX(m_frmX * 100);
+    m_FramePos.setY(m_frmY * 100);
 
     QRectF rect = ui->PreviewGraph->scene()->sceneRect();
 
-    FrameBox_gray.setPos(rect.width()/2-50, rect.height()/2-50);
-    currentPixmap = x_imageSprite.copy(QRect(m_FramePos.x(), m_FramePos.y(), 100, 100));
-    currentImageItem.setPixmap(QPixmap(currentPixmap) );
-    currentImageItem.setPos(FrameBox_gray.scenePos().x(), FrameBox_gray.scenePos().y());
+    m_frameBox_gray.setPos(rect.width() / 2 - 50, rect.height() / 2 - 50);
+    m_currentPixmap = m_xImageSprite.copy(QRect(m_FramePos.x(), m_FramePos.y(), 100, 100));
+    m_currentImageItem.setPixmap(QPixmap(m_currentPixmap));
+    m_currentImageItem.setPos(m_frameBox_gray.scenePos().x(), m_frameBox_gray.scenePos().y());
 }
-
-
 
 void CalibrationMain::on_grabTop_clicked()
 {
-    frameOverTopGrab=true;
+    g_frameOverTopGrab = true;
+    enableFrame();
     updateScene();
 }
 
 void CalibrationMain::on_grabSide_clicked()
 {
-    frameOverTopGrab=false;
+    g_frameOverTopGrab = false;
+    enableFrame();
     updateScene();
 }

@@ -7,6 +7,8 @@
 #include <QSyntaxHighlighter>
 #include <QTextEdit>
 
+// TODO: Rework this thing completely and start to use Scintilla!
+
 class Highlighter : public QSyntaxHighlighter
 {
     Q_OBJECT
@@ -60,9 +62,10 @@ public:
     explicit ScriptEditorWindow( QWidget *parent = 0);
     virtual ~ScriptEditorWindow();
     void setLang(ScriptLangs lang);
+
 private:
     void setupEditor();
-    Highlighter *highlighter;
+    Highlighter *m_highLighter = nullptr;
 };
 
 

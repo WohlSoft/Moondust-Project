@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ class MainWindow;
 class LunaWorker : public QObject
 {
     Q_OBJECT
+    QString m_workingPath;
     QProcess *m_process = nullptr;
     QProcess::ProcessState m_lastStatus = QProcess::NotRunning;
     bool m_isRunning = false;
@@ -48,6 +49,7 @@ public:
 
 public slots:
     void setEnv(const QHash<QString, QString> &env);
+    void setWorkPath(const QString &wDir);
     void start(const QString &command, const QStringList &args, bool *ok, QString *errString);
 
     void write(const QString &out, bool *ok);
@@ -216,6 +218,7 @@ private:
 
 signals:
     void engineSetEnv(const QHash<QString, QString> &env);
+    void engineSetWorkPath(const QString &wPath);
     void engineStart(const QString &command, const QStringList &args, bool *ok, QString *errString);
     void engineWrite(const QString &out, bool *ok);
     void engineRead(QString *in, bool *ok);

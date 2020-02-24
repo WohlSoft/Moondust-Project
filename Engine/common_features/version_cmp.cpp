@@ -49,9 +49,7 @@ static bool ver2arr(long *dest, std::string ver)
         }
 
         if((end - beg) == 0)
-        {
             return (iterator > 0);
-        }
 
         try
         {
@@ -59,7 +57,7 @@ static bool ver2arr(long *dest, std::string ver)
             dest[iterator++] = std::strtol(cell.c_str(), nullptr, 10);
             end++;//skip dot
         }
-        catch (...)
+        catch(...)
         {
             return false;
         }

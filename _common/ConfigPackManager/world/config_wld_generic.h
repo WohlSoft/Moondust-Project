@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -65,6 +65,9 @@ struct WldGenericSetup
 
     //! Extra Settings JSON layout file name
     PGEString   extra_settings = "";
+
+    //! Is this a meta-object that should be never shown in game or exported images (screenshots)
+    bool        is_meta_object = false;
 
     //! Has element an animated sprite?
     bool        animated = false;

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -20,6 +20,7 @@
 #include "fader.h"
 #include <stdlib.h>
 #include <math.h>
+#include <Utils/maths.h>
 
 PGE_Fader::PGE_Fader()
 {
@@ -59,7 +60,7 @@ void PGE_Fader::setRatio(double ratio)
 bool PGE_Fader::tickFader(double ticks)
 {
     if(fadeSpeed < 1) return true; //Idling animation
-    if(cur_ratio==target_ratio)
+    if(cur_ratio == target_ratio)
         return true;
 
     manual_ticks -= fabs(ticks);
@@ -68,7 +69,7 @@ bool PGE_Fader::tickFader(double ticks)
         fadeStep();
         manual_ticks += fadeSpeed;
     }
-    return (cur_ratio==target_ratio);
+    return (cur_ratio == target_ratio);
 }
 
 const double &PGE_Fader::fadeRatio()
@@ -78,12 +79,12 @@ const double &PGE_Fader::fadeRatio()
 
 bool PGE_Fader::isFading()
 {
-    return (cur_ratio!=target_ratio);
+    return (cur_ratio != target_ratio);
 }
 
 bool PGE_Fader::isFull()
 {
-    return ((cur_ratio>=1.0) && (!isFading()));
+    return ((cur_ratio >= 1.0) && (!isFading()));
 }
 
 void PGE_Fader::setFull()
@@ -94,7 +95,7 @@ void PGE_Fader::setFull()
 
 bool PGE_Fader::isNull()
 {
-    return ((cur_ratio<=0.0) && (!isFading()));
+    return ((cur_ratio <= 0.0) && (!isFading()));
 }
 
 void PGE_Fader::setNull()
@@ -110,14 +111,13 @@ int PGE_Fader::ticksLeft()
 
 void PGE_Fader::fadeStep()
 {
-    if(cur_ratio==target_ratio)
+    if(cur_ratio == target_ratio)
         return;
     if(cur_ratio < target_ratio)
-        cur_ratio+=fade_step;
+        cur_ratio += fade_step;
     else
-        cur_ratio-=fade_step;
+        cur_ratio -= fade_step;
 
-    if(cur_ratio>1.0) cur_ratio = 1.0;
-    else
-        if(cur_ratio<0.0) cur_ratio = 0.0;
+    if(cur_ratio > 1.0) cur_ratio = 1.0;
+    else if(cur_ratio < 0.0) cur_ratio = 0.0;
 }

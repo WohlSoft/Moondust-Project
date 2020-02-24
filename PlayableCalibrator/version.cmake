@@ -1,9 +1,9 @@
 # Major
 set(CALIBRATOR_VERSION_1 2)
 # Minor
-set(CALIBRATOR_VERSION_2 1)
+set(CALIBRATOR_VERSION_2 2)
 # Revision
-set(CALIBRATOR_VERSION_3 1)
+set(CALIBRATOR_VERSION_3 0)
 # Patch
 set(CALIBRATOR_VERSION_4 0)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"

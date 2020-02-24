@@ -1,6 +1,9 @@
 cmake_minimum_required (VERSION 3.2)
 project(MoondustGIFs2PNG C CXX)
 
+set(CMAKE_INSTALL_RPATH ".")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
@@ -59,6 +62,9 @@ if(WIN32 AND NOT EMSCRIPTEN)
         -D_UNICODE
         -DNOMINMAX
     )
+    if(MSVC)
+        target_compile_definitions(GIFs2PNG PRIVATE -DWIN32_CONSOLE)
+    endif()
 endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
@@ -86,13 +92,13 @@ list(APPEND GIFs2PNG_INSTALLS
     GIFs2PNG
 )
 
-if(NOT APPLE AND NOT MSVC)
-    set_target_properties(GIFs2PNG PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+if(NOT APPLE AND NOT MSVC AND NOT USE_SYSTEM_LIBC)
+    set_property(TARGET GIFs2PNG APPEND_STRING PROPERTY LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(GIFs2PNG PROPERTIES LINK_FLAGS "-mconsole")
+        set_target_properties(GIFs2PNG PROPERTIES WIN32_EXECUTABLE OFF)
         list(APPEND GIFs2PNG_LINK_LIBS "-static")
     endif()
     find_library(_LIB_PTHREAD pthread)

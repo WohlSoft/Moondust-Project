@@ -3,12 +3,19 @@ project(MoondustEngine C CXX)
 
 set(DEPENDENCIES_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
-SET(BUILD_SHARED_LIBRARIES OFF)
+set(BUILD_SHARED_LIBRARIES OFF)
+
+set(CMAKE_INSTALL_RPATH ".")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+if(EMSCRIPTEN)
+    set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+endif()
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
     ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
+    ${CMAKE_CURRENT_SOURCE_DIR}/../_common/ # PGE-FL
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
@@ -32,7 +39,6 @@ include(../_common/build_props.cmake)
 include(../_common/executable_build_props.cmake)
 
 # include shared code modules
-include(../_common/PGE_File_Formats/pge_file_library.cmake)
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
 include(../_common/DirManager/dirman.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
@@ -87,9 +93,26 @@ if(ANDROID)
     file(COPY ${PGE_LANG_BIN_FILES} DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/android-project/moondust/src/main/assets/languages")
 endif()
 
+# ======= embedded resources =======
+add_res_generator(
+    "${CMAKE_CURRENT_SOURCE_DIR}/_resources/"
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/"
+    "engine_resource.h"
+    engine_resource_data
+)
+
+set(PGE_ENGINE_RESOURCES
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/resource.cpp"
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/engine_resource.h"
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/resource_data.h"
+)
+set_source_files_properties(${PGE_ENGINE_RESOURCES} PROPERTIES GENERATED TRUE)
+# ======= embedded resources =======
+
 set(PGE_ENGINE_SRCS)
 
 list(APPEND PGE_ENGINE_SRCS
+    ${PGE_ENGINE_RESOURCES}
     audio/pge_audio.cpp
     audio/play_music.cpp
     audio/play_sfx.cpp
@@ -107,7 +130,6 @@ list(APPEND PGE_ENGINE_SRCS
     common_features/point.cpp
     common_features/pointf.cpp
     common_features/point_mover.cpp
-    common_features/QTranslatorX/ConvertUTF.c
     common_features/QTranslatorX/qm_translator.cpp
     common_features/QuadTree/LooseQuadtree-impl.cpp
     common_features/rect.cpp
@@ -174,7 +196,6 @@ list(APPEND PGE_ENGINE_SRCS
     main.cpp
     networking/editor_pipe.cpp
     networking/intproc.cpp
-    _resources/resource.cpp
     scenes/_base/gfx_effect.cpp
     scenes/_base/msgbox_queue.cpp
     scenes/level/base/lvl_base_physics.cpp
@@ -299,7 +320,6 @@ if(EMSCRIPTEN)
     set(PGE_PRELOAD_CONFIG_PACK_NAME "A2XT" CACHE STRING "Name of folder of embedded config pack")
     set(PGE_PRELOAD_EPISODE "/home/vitaly/.PGE_Project/worlds/Lowsers Conquest Demo v 2.1" CACHE STRING "Path to episode to pack")
     set(PGE_PRELOAD_EPISODE_NAME "lcd" CACHE STRING "Name of folder of episode")
-    set(PGE_RUN_SINGLE_LEVEL "worlds/lcd/Sky Tower.lvl" CACHE STRING "Full path to level which must be ran")
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 #    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2")
     # -DIS_CXX -s USE_PTHREADS=1
@@ -307,12 +327,12 @@ if(EMSCRIPTEN)
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1  -s 'EMTERPRETIFY_FILE=\"pge_engine.binary\"'")
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s ASSERTIONS=1")
     # -s \"EMTERPRETIFY_WHITELIST=['_main']\"
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_SDL=2-s ASYNCIFY")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s ASYNCIFY")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ASYNCIFY=1") #-s USE_SDL=2
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s ASYNCIFY=1")
 #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s 'BINARYEN_TRAP_MODE=\"clamp\"'")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s TOTAL_MEMORY=83886080 --no-heap-copy -s ALLOW_MEMORY_GROWTH=1")
 #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s \"EXTRA_EXPORTED_RUNTIME_METHODS=['Pointer_stringify']\"")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --embed-file \"${CMAKE_CURRENT_SOURCE_DIR}/languages/\"@\"languages/\"")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --embed-file \"${_LANGAUGES_TEMP_FOLDER}\"@\"languages/\"")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_CONFIG_PACK}\"@\"configs/${PGE_PRELOAD_CONFIG_PACK_NAME}/\"")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_EPISODE}\"@\"worlds/${PGE_PRELOAD_EPISODE_NAME}/\"")
     # set(LINK_FLAGS "${LINK_FLAGS} -DIS_LINK -s USE_PTHREADS=1 -s FORCE_FILESYSTEM=1 --embed-file '${CMAKE_CURRENT_SOURCE_DIR}/@languages'")
@@ -329,7 +349,6 @@ set(PGE_ENGINE_SRC_ARGS
     ${FILEMAPPER_SRCS}
     ${FMT_SRCS}
     ${INIPROCESSOR_SRCS}
-    ${PGE_FILE_LIBRARY_SRCS}
     ${PGE_GAMESAVE_SRCS}
     ${STACK_WALKER_SRCS}
     ${UTF8MAIN_SRCS}
@@ -343,6 +362,7 @@ if(ANDROID)
     add_library(pge_engine SHARED
         ${PGE_ENGINE_SRC_ARGS}
     )
+    target_compile_options(pge_engine PRIVATE -fPIC)
     add_library(SDL2 SHARED IMPORTED DEPENDS SDL2_Local)
     set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libSDL2.so)
 
@@ -377,7 +397,6 @@ if(EMSCRIPTEN)
         PRIVATE
         -DPGE_NO_THREADING
         -DLUA_USE_LINUX
-        -DPGE_RUN_SINGLE_LEVEL=\"${PGE_RUN_SINGLE_LEVEL}\"
     )
 endif()
 
@@ -404,7 +423,9 @@ add_dependencies(pge_engine
     LuaBind_Local
     FreeImage_Local
     SQLite_Local
+    PGE_FileFormats
     FREETYPE_Local
+    engine_resource_data
 )
 
 if(NOT SDL2_USE_SYSTEM)
@@ -422,6 +443,7 @@ list(APPEND PGE_ENGINE_INSTALLS
 
 list(APPEND PGE_ENGINE_LINK_LIBS
     ${UTILS_LIBS}
+    PGE_FileFormats
     PGE_FreeImage
     PGE_LuaBind
     PGE_LuaJIT
@@ -435,8 +457,8 @@ else()
     list(APPEND PGE_ENGINE_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
 
-if(NOT APPLE AND NOT MSVC)
-	set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+if(NOT APPLE AND NOT MSVC AND NOT USE_SYSTEM_LIBC)
+    set_property(TARGET pge_engine APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
 endif()
 
 if(ANDROID)
@@ -447,7 +469,8 @@ endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC AND NOT ANDROID)
     if(WIN32)
-        set_target_properties(pge_engine PROPERTIES LINK_FLAGS "-mconsole")
+#        set_property(TARGET pge_engine APPEND_STRING PROPERTY LINK_FLAGS " -mconsole")
+        set_target_properties(pge_engine PROPERTIES WIN32_EXECUTABLE OFF)
         list(APPEND PGE_ENGINE_LINK_LIBS "-static")
     endif()
     find_library(_LIB_PTHREAD pthread)
@@ -477,8 +500,8 @@ if(APPLE)
     if(PGE_USE_LUAJIT)
         # Required to link on 64-bit macOS
         # See: http://luajit.org/install.html
-        set_target_properties(pge_engine PROPERTIES
-            LINK_FLAGS "-pagezero_size 10000 -image_base 100000000"
+        set_property(TARGET pge_engine APPEND_STRING PROPERTY
+            LINK_FLAGS " -pagezero_size 10000 -image_base 100000000"
         )
     endif()
 endif()

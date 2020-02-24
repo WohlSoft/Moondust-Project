@@ -21,6 +21,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/_includes
     ${DEPENDENCIES_INSTALL_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../_common/ # PGE-FL
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
@@ -46,8 +47,6 @@ include(../_common/DirManager/dirman.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
 include(../_common/IniProcessor/IniProcessor.cmake)
-add_definitions(-DPGE_FILES_QT)
-include(../_common/PGE_File_Formats/pge_file_library.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
@@ -105,8 +104,7 @@ qt5_wrap_ui(UIS_HDRS
     data_configs/selection_dialog/config_manager.ui
     dev_console/devconsole.ui
     editing/_dialogs/itemselectdialog.ui
-    editing/_dialogs/levelfilelist.ui
-    editing/_dialogs/musicfilelist.ui
+    editing/_dialogs/file_list_browser.ui
     editing/_dialogs/savingnotificationdialog.ui
     editing/_dialogs/user_data_edit.ui
     editing/_dialogs/wld_setpoint.ui
@@ -175,6 +173,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/bool_reseter.cpp
     common_features/crashhandler.cpp
     common_features/dir_copy.cpp
+    common_features/direction_switch_widget.cpp
     common_features/edit_mode_base.cpp
     common_features/file_keeper.cpp
     common_features/flowlayout.cpp
@@ -242,6 +241,7 @@ list(APPEND PGE_EDITOR_SRCS
     editing/_components/history/ihistoryelement.cpp
     editing/_components/history/itemsearcher.cpp
     editing/_dialogs/itemselectdialog.cpp
+    editing/_dialogs/file_list_browser.cpp
     editing/_dialogs/levelfilelist.cpp
     editing/_dialogs/musicfilelist.cpp
     editing/_dialogs/savingnotificationdialog.cpp
@@ -464,7 +464,6 @@ add_executable(pge_editor
     ${DIRMANAGER_SRCS}
     ${FILEMAPPER_SRCS}
     ${INIPROCESSOR_SRCS}
-    ${PGE_FILE_LIBRARY_SRCS}
     ${STACK_WALKER_SRCS}
     ${UTF8MAIN_SRCS}
     ${UTILS_SRCS}
@@ -474,7 +473,7 @@ add_library(PGE_QtLibs INTERFACE)
 
 target_link_libraries(PGE_QtLibs INTERFACE
     ${QT_EXTRA_LIBS_PRE}
-    PGE_QPropertyBrowser
+    PGE_FileFormatsQt
     ${Qt5Qml_LIBRARIES}
     ${Qt5Concurrent_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
@@ -498,6 +497,7 @@ target_compile_definitions(PGE_QtLibs
     ${Qt5Network_DEFINITIONS}
     ${Qt5Concurrent_DEFINITIONS}
     ${Qt5Qml_DEFINITIONS}
+    -DPGE_FILES_QT
 )
 if(WIN32)
     target_compile_definitions(PGE_QtLibs
@@ -552,7 +552,7 @@ add_dependencies(pge_editor
     FreeImage_Local
     libpng_Local
     FREETYPE_Local
-    QtPropertyBrowser_Local
+    PGE_FileFormatsQt
     editor_translations
 )
 
@@ -565,7 +565,6 @@ list(APPEND PGE_EDITOR_INSTALLS
 
 list(APPEND PGE_EDITOR_LINK_LIBS
     ${UTILS_LIBS}
-    PGE_QPropertyBrowser
     PGE_QtLibs
     PGE_FreeImage
 )
@@ -576,8 +575,8 @@ else()
     list(APPEND PGE_EDITOR_LINK_LIBS PGE_SDLMixerX PGE_SDL2)
 endif()
 
-if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT)
-    set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT AND NOT USE_SYSTEM_LIBC)
+    set_property(TARGET pge_editor APPEND_STRING PROPERTY LINK_FLAGS " -static-libgcc -static-libstdc++")
 endif()
 
 if(WIN32)
@@ -586,7 +585,7 @@ endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_editor PROPERTIES LINK_FLAGS "-mwindows")
+        set_target_properties(pge_editor PROPERTIES WIN32_EXECUTABLE ON)
         if(NOT PGE_ENABLE_STATIC_QT)
             list(APPEND PGE_EDITOR_LINK_LIBS "-static")
         endif()

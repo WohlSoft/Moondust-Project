@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -244,8 +244,8 @@ void TitleScene::processMenu()
             else if(value == "menubox")
             {
                 PGE_MenuBox menuBox = PGE_MenuBox(this, "Select something", PGE_MenuBox::msg_info, PGE_Point(-1, -1),
-                        ConfigManager::setup_menu_box.box_padding,
-                        ConfigManager::setup_message_box.sprite);
+                                                  ConfigManager::setup_menu_box.box_padding,
+                                                  ConfigManager::setup_message_box.sprite);
                 std::vector<std::string> items =
                 {
                     "Menuitem 1",
@@ -380,13 +380,13 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
         m_menu.addMenuItem("videosetup", qtTrId("MAINMENU_OPTIONS_VIDEO"));
         //% "Music volume"
         m_menu.addIntMenuItem(&g_AppSettings.volume_music, 0, 128, "vlm_music", qtTrId("MAINMENU_OPTIONS_MUS_VOL"), false,
-                            []()->void{ PGE_MusPlayer::setVolume(g_AppSettings.volume_music); });
+                              []()->void{ PGE_MusPlayer::setVolume(g_AppSettings.volume_music); });
         //% "Sound volume"
         m_menu.addIntMenuItem(&g_AppSettings.volume_sound, 0, 128, "vlm_sound", qtTrId("MAINMENU_OPTIONS_SND_VOL"), false);
 #ifndef __ANDROID__
         //% "Full Screen mode"
         m_menu.addBoolMenuItem(&g_AppSettings.fullScreen, "full_screen", qtTrId("MAINMENU_OPTIONS_FULLSCR"),
-                             []()->void{ PGE_Window::setFullScreen(g_AppSettings.fullScreen); });
+                               []()->void{ PGE_Window::setFullScreen(g_AppSettings.fullScreen); });
 #endif
         break;
     case menu_tests:
@@ -420,7 +420,7 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
         m_menu.addBoolMenuItem(&g_AppSettings.frameSkip, "frame_skip", qtTrId("VIDEO_ENABLE_FRSKIP"));
         //% "Enable V-Sync"
         m_menu.addBoolMenuItem(&g_AppSettings.vsync, "vsync", qtTrId("VIDEO_ENABLE_VSYNC"),
-                             [this]()->void
+                               [this]()->void
         {
             PGE_Window::vsync = g_AppSettings.vsync;
             PGE_Window::toggleVSync(g_AppSettings.vsync);
@@ -428,11 +428,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
             m_menu.setEnabled("phys_step", !PGE_Window::vsync);
         },
         PGE_Window::vsyncIsSupported
-                            );
+                              );
 
         //% "Frame time (ms.)"
         m_menu.addIntMenuItem(&g_AppSettings.timeOfFrame, 2, 17, "phys_step", qtTrId("VIDEO_FRAME_TIME"), false,
-                            [this]()->void
+                              [this]()->void
         {
             if(!PGE_Window::vsync)
             {
@@ -545,11 +545,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
         m_menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         m_filefind_finished = false;
         m_filefind_folder = ConfigManager::dirs.worlds;
-        #ifndef PGE_NO_THREADING
+#ifndef PGE_NO_THREADING
         m_filefind_thread = SDL_CreateThread(findEpisodes, "EpisodeFinderThread", nullptr);
-        #else
+#else
         findEpisodes(nullptr);
-        #endif
+#endif
     }
     break;
     case menu_playepisode:
@@ -575,11 +575,11 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
         m_menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         m_filefind_finished = false;
         m_filefind_folder = ConfigManager::dirs.worlds;
-        #ifndef PGE_NO_THREADING
+#ifndef PGE_NO_THREADING
         m_filefind_thread = SDL_CreateThread(findLevels, "LevelFinderThread", nullptr);
-        #else
+#else
         findLevels(nullptr);
-        #endif
+#endif
     }
     break;
     case menu_playlevel:

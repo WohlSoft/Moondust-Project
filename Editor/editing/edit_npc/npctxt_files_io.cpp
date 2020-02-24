@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ static int FileName_to_npcID(QString filename)
 {
     QStringList tmp = filename.split(QChar('-'));
 
-    if((tmp.size()==2) && (PGEFile::IsIntU(tmp[1])))
+    if((tmp.size() == 2) && (PGEFile::IsIntU(tmp[1])))
         return tmp[1].toInt();
 
     return 0;
@@ -37,9 +37,9 @@ static int FileName_to_npcID(QString filename)
 
 void NpcEdit::newFile(unsigned long npcID)
 {
-    npc_id = npcID;
+    m_currentNpcId = npcID;
     static int sequenceNumber = 1;
-    ui->CurrentNPCID->setText( QString::number(npcID) );
+    ui->CurrentNPCID->setText(QString::number(npcID));
 
     m_isUntitled = true;
 
@@ -49,8 +49,8 @@ void NpcEdit::newFile(unsigned long npcID)
 
     setDefaultData(npcID);
 
-    NpcData = DefaultNPCData; // create data template
-    StartNPCData = DefaultNPCData;
+    NpcData = m_npcDataDefault; // create data template
+    m_npcDataBackup = m_npcDataDefault;
     setDataBoxes();
 
     documentWasModified();
@@ -64,7 +64,8 @@ bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
 {
     QFile file(fileName);
     NpcData = FileData;
-    if (!file.open(QFile::ReadOnly | QFile::Text)) {
+    if(!file.open(QFile::ReadOnly | QFile::Text))
+    {
         QMessageBox::warning(this, tr("Load file error"),
                              tr("Cannot read file %1:\n%2.")
                              .arg(fileName)
@@ -75,11 +76,11 @@ bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
     QFileInfo fileI(fileName);
 
     //Get NPC-ID from FileName
-    npc_id = FileName_to_npcID(fileI.baseName());
-    setDefaultData(npc_id);
-    ui->CurrentNPCID->setText( QString::number(npc_id) );
+    m_currentNpcId = FileName_to_npcID(fileI.baseName());
+    setDefaultData(m_currentNpcId);
+    ui->CurrentNPCID->setText(QString::number(m_currentNpcId));
 
-    StartNPCData = NpcData; //Save current history for made reset
+    m_npcDataBackup = NpcData; //Save current history for made reset
     setDataBoxes();
 
     setCurrentFile(fileName);
@@ -93,19 +94,18 @@ bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
 
 bool NpcEdit::save(bool savOptionsDialog)
 {
-    if (m_isUntitled) {
+    if(m_isUntitled)
         return saveAs(savOptionsDialog);
-    } else {
+    else
         return saveFile(curFile);
-    }
 }
 
 bool NpcEdit::saveAs(bool savOptionsDialog)
 {
     Q_UNUSED(savOptionsDialog);
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-      (m_isUntitled)?GlobalSettings::savePath_npctxt+QString("/")+curFile:curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
-    if (fileName.isEmpty())
+                       (m_isUntitled) ? GlobalSettings::savePath_npctxt + QString("/") + curFile : curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
+    if(fileName.isEmpty())
         return false;
 
     return saveFile(fileName);
@@ -139,25 +139,23 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
     GlobalSettings::savePath_npctxt = QFileInfo(fileName).path();
 
     QFileInfo fileI(fileName);
-    unsigned long old_npc_id = npc_id;
-    npc_id = static_cast<unsigned long>(FileName_to_npcID(fileI.baseName()));
-    setDefaultData(npc_id);
-    ui->CurrentNPCID->setText( QString::number(npc_id) );
+    unsigned long old_npc_id = m_currentNpcId;
+    m_currentNpcId = static_cast<unsigned long>(FileName_to_npcID(fileI.baseName()));
+    setDefaultData(m_currentNpcId);
+    ui->CurrentNPCID->setText(QString::number(m_currentNpcId));
 
     QApplication::restoreOverrideCursor();
     setCurrentFile(fileName);
 
     documentNotModified();
 
-    if(old_npc_id == npc_id)
+    if(old_npc_id == m_currentNpcId)
     {
         refreshImageFile();
         updatePreview();
     }
     else
-    {
         loadPreview();
-    }
 
     if(addToRecent)
     {
@@ -172,17 +170,18 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 
 bool NpcEdit::maybeSave()
 {
-    if (m_isModyfied) {
-    QMessageBox::StandardButton ret;
-        ret = QMessageBox::warning(this, userFriendlyCurrentFile()+tr(" not saved"),
-                     tr("'%1' has been modified.\n"
-                        "Do you want to save your changes?")
-                     .arg(userFriendlyCurrentFile()),
-                     QMessageBox::Save | QMessageBox::Discard
-             | QMessageBox::Cancel);
-        if (ret == QMessageBox::Save)
+    if(m_isModified)
+    {
+        QMessageBox::StandardButton ret;
+        ret = QMessageBox::warning(this, userFriendlyCurrentFile() + tr(" not saved"),
+                                   tr("'%1' has been modified.\n"
+                                      "Do you want to save your changes?")
+                                   .arg(userFriendlyCurrentFile()),
+                                   QMessageBox::Save | QMessageBox::Discard
+                                   | QMessageBox::Cancel);
+        if(ret == QMessageBox::Save)
             return save();
-        else if (ret == QMessageBox::Cancel)
+        else if(ret == QMessageBox::Cancel)
             return false;
     }
 
@@ -193,22 +192,22 @@ bool NpcEdit::maybeSave()
 void NpcEdit::documentWasModified()
 {
     QFont font;
-    font.setWeight( QFont::Bold );
-    m_isModyfied = true;
+    font.setWeight(QFont::Bold);
+    m_isModified = true;
     setWindowTitle(userFriendlyCurrentFile() + "[*]");
     ui->isModyfiedL->setText("Yes");
-    ui->isModyfiedL->setFont( font );
+    ui->isModyfiedL->setFont(font);
 }
 
 void NpcEdit::documentNotModified()
 {
     QFont font;
-    font.setWeight( QFont::Normal );
+    font.setWeight(QFont::Normal);
 
-    m_isModyfied = false;
+    m_isModified = false;
     setWindowTitle(userFriendlyCurrentFile());
     ui->isModyfiedL->setText("No");
-    ui->isModyfiedL->setFont( font );
+    ui->isModyfiedL->setFont(font);
 }
 
 void NpcEdit::setCurrentFile(const QString &fileName)
@@ -231,7 +230,7 @@ QString NpcEdit::userFriendlyCurrentFile()
 void NpcEdit::makeCrashState()
 {
     this->m_isUntitled = true;
-    this->m_isModyfied = true; //just in case
+    this->m_isModified = true; //just in case
 }
 
 bool NpcEdit::isUntitled()
@@ -241,13 +240,13 @@ bool NpcEdit::isUntitled()
 
 bool NpcEdit::isModified()
 {
-    return m_isModyfied;
+    return m_isModified;
 }
 
 void NpcEdit::markForForceClose()
 {
     m_isUntitled = false;
-    m_isModyfied = false;
+    m_isModified = false;
 }
 
 QString NpcEdit::strippedName(const QString &fullFileName)

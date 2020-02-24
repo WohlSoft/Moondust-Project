@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -94,7 +94,7 @@ void setCursorVisibly(bool viz);
 void clean();
 
 int setFullScreen(bool fs);
-int SDL_ToggleFS(SDL_Window *win = NULL);
+int SDL_ToggleFS(SDL_Window *win = nullptr);
 
 int processEvents(SDL_Event &event);
 

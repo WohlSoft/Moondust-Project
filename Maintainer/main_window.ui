@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>412</width>
-    <height>424</height>
+    <width>381</width>
+    <height>375</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,146 +17,161 @@
    <iconset resource="_resources/maintainer.qrc">
     <normaloff>:/maintainer.ico</normaloff>:/maintainer.ico</iconset>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>391</width>
-     <height>61</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>16</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Welcome to Maintainer toolset!</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QGroupBox" name="groupBox">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>100</y>
-     <width>391</width>
-     <height>281</height>
-    </rect>
-   </property>
-   <property name="title">
-    <string>Converters</string>
-   </property>
-   <widget class="QPushButton" name="music_converter_batch">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>391</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Convert audio files between various formats and converting sample rates</string>
-    </property>
-    <property name="text">
-     <string>Batch conversion of musics</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="episode_converter">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>70</y>
-      <width>391</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Converts levels and episodes between different formats and tries to fix old files with some damages.</string>
-    </property>
-    <property name="text">
-     <string>Levels and Episodes format converting/fixing</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="gifs2png_converter">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>120</y>
-      <width>391</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Converts pair of GIF (frontend and mask) graphics into merged sprite in PNG format with semi-transparency support.</string>
-    </property>
-    <property name="text">
-     <string>GIFs to PNG converter</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="png2gifs_converter">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>170</y>
-      <width>391</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Converts regular PNG graphics into pair of GIF files (frontend and it's mask) compatible with bitblit algorithm (required by SMBX legacy engine).</string>
-    </property>
-    <property name="text">
-     <string>PNG to GIFs converter</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pathcase_fixer">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>220</y>
-      <width>391</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="toolTip">
-     <string>Fixes case mismatches of the paths in file system and in the references in levels, world maps and some config files.</string>
-    </property>
-    <property name="text">
-     <string>Fix case sensitive paths compatibility</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QPushButton" name="quitOut">
-   <property name="geometry">
-    <rect>
-     <x>320</x>
-     <y>390</y>
-     <width>85</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Quit</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>70</y>
-     <width>391</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Choice your action:</string>
-   </property>
-  </widget>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,100,0">
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Welcome to Maintainer toolset!</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Choice your action:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Converters</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="music_converter_batch">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Convert audio files between various formats and converting sample rates</string>
+        </property>
+        <property name="text">
+         <string>Batch conversion of musics</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="episode_converter">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Converts levels and episodes between different formats and tries to fix old files with some damages.</string>
+        </property>
+        <property name="text">
+         <string>Levels and Episodes format converting/fixing</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="gifs2png_converter">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Converts pair of GIF (frontend and mask) graphics into merged sprite in PNG format with semi-transparency support.</string>
+        </property>
+        <property name="text">
+         <string>GIFs to PNG converter</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="png2gifs_converter">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Converts regular PNG graphics into pair of GIF files (frontend and it's mask) compatible with bitblit algorithm (required by SMBX legacy engine).</string>
+        </property>
+        <property name="text">
+         <string>PNG to GIFs converter</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pathcase_fixer">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Fixes case mismatches of the paths in file system and in the references in levels, world maps and some config files.</string>
+        </property>
+        <property name="text">
+         <string>Fix case sensitive paths compatibility</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="language">
+     <property name="text">
+      <string>Language</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>188</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="quitOut">
+     <property name="text">
+      <string>Quit</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

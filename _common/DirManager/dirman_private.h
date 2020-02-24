@@ -19,7 +19,7 @@ static inline void delEnd(std::basic_string<CHAR> &dirPath, CHAR ch)
 {
     if(!dirPath.empty())
     {
-        char last = dirPath[dirPath.size() - 1];
+        CHAR last = dirPath[dirPath.size() - 1];
         if(last == ch)
             dirPath.resize(dirPath.size() - 1);
     }
@@ -32,9 +32,9 @@ class DirMan::DirMan_private
     friend class DirMan;
 
     std::string     m_dirPath;
-    #ifdef _WIN32
+#ifdef _WIN32
     std::wstring    m_dirPathW;
-    #endif
+#endif
 
     struct DirWalkerState
     {

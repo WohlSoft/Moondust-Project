@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -28,8 +28,10 @@
 #ifdef _WIN32
 #   include <windows.h>
 #   include <dbghelp.h>
+#   include <shlobj.h>
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
 #   include <execinfo.h>
+#   include <pwd.h>
 #   include <unistd.h>
 #elif defined(__ANDROID__)
 #   include <unwind.h>
@@ -119,29 +121,29 @@ static bool GetStackWalk(std::string &outWalk)
 #ifdef __ANDROID__
 namespace AndroidStackTrace
 {
-    struct BacktraceState
-    {
-        void** current;
-        void** end;
-    };
+struct BacktraceState
+{
+    void **current;
+    void **end;
+};
 
-    static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context* context, void* arg)
+static _Unwind_Reason_Code unwindCallback(struct _Unwind_Context *context, void *arg)
+{
+    BacktraceState *state = static_cast<BacktraceState *>(arg);
+    uintptr_t pc = _Unwind_GetIP(context);
+    if(pc)
     {
-        BacktraceState* state = static_cast<BacktraceState*>(arg);
-        uintptr_t pc = _Unwind_GetIP(context);
-        if (pc) {
-            if (state->current == state->end) {
-                return _URC_END_OF_STACK;
-            } else {
-                *state->current++ = reinterpret_cast<void*>(pc);
-            }
-        }
-        return _URC_NO_REASON;
+        if(state->current == state->end)
+            return _URC_END_OF_STACK;
+        else
+            *state->current++ = reinterpret_cast<void *>(pc);
     }
+    return _URC_NO_REASON;
+}
 
 }
 
-static size_t captureBacktrace(void** buffer, size_t max)
+static size_t captureBacktrace(void **buffer, size_t max)
 {
     AndroidStackTrace::BacktraceState state = {buffer, buffer + max};
     _Unwind_Backtrace(AndroidStackTrace::unwindCallback, &state);
@@ -151,32 +153,104 @@ static size_t captureBacktrace(void** buffer, size_t max)
 
 static void androidDumpBacktrace(std::ostringstream &os, void **buffer, size_t count)
 {
-    for (size_t idx = 0; idx < count; ++idx) {
-        const void* addr = buffer[idx];
-        const char* symbol = "";
+    for(size_t idx = 0; idx < count; ++idx)
+    {
+        const void *addr = buffer[idx];
+        const char *symbol = "";
 
         Dl_info info;
-        if (dladdr(addr, &info) && info.dli_sname) {
+        if(dladdr(addr, &info) && info.dli_sname)
             symbol = info.dli_sname;
-        }
 
         os << "  #" << std::setw(2) << idx << ": " << addr << "  " << symbol << "\n";
     }
 }
 #endif
 
+static std::string getCurrentUserName()
+{
+    std::string user;
+
+#if defined(_WIN32)
+    char    userName[256];
+    wchar_t userNameW[256];
+    DWORD usernameLen = 256;
+    GetUserNameW(userNameW, &usernameLen);
+    userNameW[usernameLen--] = L'\0';
+    size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, userNameW, usernameLen, userName, 256, 0, 0);
+    userName[nCnt] = '\0';
+    user = std::string(userName);
+#elif defined(__EMSCRIPTEN__) || defined(__ANDROID__)
+    user = "user"; // No way to get user, here is SINGLE generic user
+#else
+    struct passwd *pwd = getpwuid(getuid());
+    if(pwd == nullptr)
+        return "UnknownUser"; // Failed to get a user name!
+    user = std::string(pwd->pw_name);
+#endif
+
+    return user;
+}
+
+static std::string getCurrentHomePath()
+{
+    std::string homedir;
+
+#ifdef _WIN32
+    char    homeDir[MAX_PATH * 4];
+    wchar_t homeDirW[MAX_PATH];
+    SHGetFolderPathW(NULL, CSIDL_PROFILE, NULL, 0, homeDirW);
+    size_t nCnt = WideCharToMultiByte(CP_UTF8, 0, homeDirW, -1, homeDir, MAX_PATH * 4, 0, 0);
+    homeDir[nCnt] = '\0';
+    homedir = std::string(homeDir);
+#elif defined(__EMSCRIPTEN__) || defined(__ANDROID__)
+    homedir = "/"; // No way to get user, here is SINGLE generic user
+#else
+    struct passwd *pwd = getpwuid(getuid());
+    if(pwd == nullptr)
+        return "/home/<unknown>"; // Failed to get a user name!
+    homedir = std::string(pwd->pw_dir);
+
+#endif
+
+    return homedir;
+}
+
+static void replaceStr(std::string &data, std::string toSearch, std::string replaceStr)
+{
+    size_t pos = data.find(toSearch);
+
+    while(pos != std::string::npos)
+    {
+        data.replace(pos, toSearch.size(), replaceStr);
+        pos = data.find(toSearch, pos + replaceStr.size());
+    }
+}
+
+static void removePersonalData(std::string &log)
+{
+    std::string user = getCurrentUserName();
+    std::string homePath = getCurrentHomePath();
+
+    // Replace username
+    if(!homePath.empty())
+    {
+        replaceStr(log, homePath, "{...}");
+#ifdef _WIN32
+        replaceStr(homePath, "\\", "/");
+        replaceStr(log, homePath, "{...}");
+#endif
+    }
+    replaceStr(log, user, "anonymouse");
+}
+
 static std::string getStacktrace()
 {
+    D_pLogDebugNA("Initializing std::string...");
+    std::string bkTrace;
+
 #if defined(_WIN32)
-    //StackTracer tracer;
-    //tracer.runStackTracerForAllThreads();
-    //return tracer.theOutput();
-    //dbg::stack s;
-    //std::stringstream out;
-    //std::copy(s.begin(), s.end(), std::ostream_iterator<dbg::stack_frame>(out, "\n"));
-    std::string stack;
-    GetStackWalk(stack);
-    return stack;
+    GetStackWalk(bkTrace);
 
 #elif (defined(__linux__) && !defined(__ANDROID__) || defined(__APPLE__))
     void  *array[400];
@@ -186,8 +260,6 @@ static std::string getStacktrace()
     size = backtrace(array, 400);
     D_pLogDebugNA("Converting...");
     strings = backtrace_symbols(array, size);
-    D_pLogDebugNA("Initializing std::string...");
-    std::string bkTrace;
     D_pLogDebugNA("Filling std::string...");
 
     for(int j = 0; j < size; j++)
@@ -197,19 +269,21 @@ static std::string getStacktrace()
     }
 
     D_pLogDebugNA("DONE!");
-    return bkTrace;
 
 #elif defined(__ANDROID__)
     const size_t max = 400;
-    void* buffer[max];
+    void *buffer[max];
     std::ostringstream oss;
     androidDumpBacktrace(oss, buffer, captureBacktrace(buffer, max));
     D_pLogDebugNA("DONE!");
-    return oss.str();
+    bkTrace = oss.str();
 
 #else
-    return std::string("<Stack trace not supported for this platform!>");
+    bkTrace = "<Stack trace not supported for this platform!>";
 #endif
+
+    removePersonalData(bkTrace);
+    return bkTrace;
 }
 
 static void msgBox(std::string title, std::string text)

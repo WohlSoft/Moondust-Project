@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -26,24 +26,24 @@ extern std::string  ApplicationPathSTD;
 
 class AppPathManager
 {
-    public:
-        static void initAppPath();
-        static std::string settingsFileSTD();
-        static std::string userAppDirSTD();
-        static std::string languagesDir();
-        static std::string screenshotsDir();
-        static void install();
-        static bool isPortable();
-        static bool userDirIsAvailable();
+public:
+    static void initAppPath();
+    static std::string settingsFileSTD();
+    static std::string userAppDirSTD();
+    static std::string languagesDir();
+    static std::string screenshotsDir();
+    static void install();
+    static bool isPortable();
+    static bool userDirIsAvailable();
 
 private:
-        /**
-         * @brief Makes settings path if not exists
-         */
-        static void initSettingsPath();
-        //! Full path to settings INI file
-        static std::string m_settingsPath;
-        static std::string m_userPath;
+    /**
+     * @brief Makes settings path if not exists
+     */
+    static void initSettingsPath();
+    //! Full path to settings INI file
+    static std::string m_settingsPath;
+    static std::string m_userPath;
 };
 
 #endif // APP_PATH_H

@@ -493,15 +493,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source> blocks</source>
-        <translation>个砖块</translation>
+        <translation> 个砖块</translation>
     </message>
     <message>
         <source>per </source>
-        <translation>每</translation>
+        <translation>每 </translation>
     </message>
     <message>
         <source> second</source>
-        <translation>秒</translation>
+        <translation> 秒</translation>
     </message>
 </context>
 <context>
@@ -746,7 +746,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>啊！PGE 编辑器程序崩溃啦！&lt;br&gt;崩溃详细信息:</translation>
+        <translation>啊！PGE 编辑器程序异常终止！&lt;br&gt;详细信息:</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
@@ -1014,7 +1014,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Hide invisible blocks</source>
-        <translation>隐藏隐形砖块</translation>
+        <translation type="vanished">隐藏隐形砖块</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
@@ -1031,6 +1031,10 @@ Please save them before doing anything else.</source>
     <message>
         <source>Hide grid (if it is shown)</source>
         <translation>隐藏网格</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation>隐藏隐形砖块及元对象</translation>
     </message>
 </context>
 <context>
@@ -1232,12 +1236,16 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <comment>File Types</comment>
         <translation>SMBX 大地图文件</translation>
     </message>
+    <message>
+        <source>Please wait...</source>
+        <translation>请稍候……</translation>
+    </message>
 </context>
 <context>
     <name>ItemBGO</name>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1360,7 +1368,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemBlock</name>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1559,7 +1567,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1781,7 +1789,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemNPC</name>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1967,7 +1975,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemPhysEnv</name>
     <message>
         <source>Layer: </source>
-        <translation>图层：</translation>
+        <translation>图层： </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -2373,7 +2381,7 @@ Please, check the application directory and make sure it is installed properly.<
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>关卡编辑</translation>
+        <translation type="vanished">关卡编辑</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -2409,7 +2417,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Level title: </source>
-        <translation>关卡标题：</translation>
+        <translation>关卡标题： </translation>
     </message>
     <message>
         <source>Make custom folder</source>
@@ -2500,7 +2508,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source> not saved</source>
-        <translation>未保存</translation>
+        <translation> 未保存</translation>
     </message>
     <message>
         <source>1/%1 Loading user data...</source>
@@ -2622,43 +2630,43 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Drop</source>
-        <translation></translation>
+        <translation>Drop 键</translation>
     </message>
     <message>
         <source>Jump</source>
-        <translation></translation>
+        <translation>跳跃键</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation></translation>
+        <translation>左键</translation>
     </message>
     <message>
         <source>Alt-Jump</source>
-        <translation></translation>
+        <translation>第二跳跃键</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation></translation>
+        <translation>右键</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation>开始键</translation>
     </message>
     <message>
         <source>Alt-Run</source>
-        <translation></translation>
+        <translation>第二奔跑键</translation>
     </message>
     <message>
         <source>Run</source>
-        <translation></translation>
+        <translation>奔跑键</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation></translation>
+        <translation>上键</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation></translation>
+        <translation>下键</translation>
     </message>
     <message>
         <source>Title</source>
@@ -2711,6 +2719,20 @@ Do you want to save your changes?</source>
     <message>
         <source>Event:</source>
         <translation>事件：</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>通用</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation>无设置可用</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>文件 %1 出错:
+%2</translation>
     </message>
 </context>
 <context>
@@ -2815,7 +2837,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation>已超出 SMBX64 数量限制！</translation>
     </message>
     <message>
-        <source>Violation of SMBX64 standard has beeen found!
+        <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
 Suggested to remove all excess elements.
@@ -2940,7 +2962,7 @@ You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
         <translation>没有找到 %2！
 您使用的是 SMBX 1.3！&lt;br&gt;
-因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试.</translation>
+因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
     </message>
 </context>
 <context>
@@ -3001,7 +3023,7 @@ That means, impossible to launch level testing on your operating operating. Luna
         <source>Source section is empty!
 Please select another section, or clear.</source>
         <translation>源文件的场景是空的！
-请选择另一个场景或清除场景。</translation>
+请选择另一个场景。</translation>
     </message>
     <message>
         <source>Section is used</source>
@@ -3054,7 +3076,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>bps</source>
-        <translation>bps</translation>
+        <translation>砖块 / 秒</translation>
     </message>
     <message>
         <source>Vertical speed:</source>
@@ -3102,7 +3124,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Top</source>
-        <translation>顶部</translation>
+        <translation>顶端</translation>
     </message>
     <message>
         <source>Define new:</source>
@@ -3110,7 +3132,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Bottom</source>
-        <translation>底部</translation>
+        <translation>底端</translation>
     </message>
     <message>
         <source>Right</source>
@@ -3226,7 +3248,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Copyed Event %1</source>
-        <translation></translation>
+        <translation>已复制的事件 %1</translation>
     </message>
     <message>
         <source>Get section size</source>
@@ -3306,7 +3328,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Destroyed: </source>
-        <translation>砖块破碎：</translation>
+        <translation>砖块破碎： </translation>
     </message>
     <message>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
@@ -3396,11 +3418,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Up</source>
-        <translation>向上</translation>
+        <translation type="vanished">向上</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>向下</translation>
+        <translation type="vanished">向下</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -3506,6 +3528,52 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <source>[none]</source>
         <translation>[无]</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>文件 %1 出错:
+%2</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>向左</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>向右</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>向上</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>向下</translation>
+    </message>
+    <message>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>左上</translation>
+    </message>
+    <message>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>右上</translation>
+    </message>
+    <message>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>左下</translation>
+    </message>
+    <message>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation>右下</translation>
+    </message>
 </context>
 <context>
     <name>LvlLayersBox</name>
@@ -3535,7 +3603,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>New Layer %1</source>
-        <translation></translation>
+        <translation>新建图层 %1</translation>
     </message>
     <message>
         <source>Remove layer</source>
@@ -3685,7 +3753,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>顶砖块事件</translation>
+        <translation>顶砖块事件：</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
@@ -3943,6 +4011,12 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>在此处加入图层，例如：</translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation>文件 %1 出错:
+%2</translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>
@@ -4191,7 +4265,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 如果开启此选项，您只能放置入口点。</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>仅出口</translation>
     </message>
     <message>
@@ -4204,7 +4278,7 @@ If this flag is enabled, you can only place a warp exit.</source>
 如果开启此选项，您只能放置出口点。</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>仅入口</translation>
     </message>
     <message>
@@ -4635,8 +4709,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Section 16</source>
-        <translation>场景 16
-</translation>
+        <translation>场景 16</translation>
     </message>
     <message>
         <source>Section 17</source>
@@ -4788,7 +4861,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;播放动态对象中的动画/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;如果当前地图中对象过多，推荐&lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;关闭&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;此选项！&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;播放动态对象中的动画&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;如果当前地图中对象过多，推荐&lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;关闭&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;此选项。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;empty&gt;</source>
@@ -4982,7 +5055,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Item default</source>
-        <translation>对象默认</translation>
+        <translation type="vanished">对象默认</translation>
     </message>
     <message>
         <source>Welcome dialog</source>
@@ -4999,7 +5072,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <extracomment>Edit from the editor</extracomment>
+        <extracomment>Exit from the editor</extracomment>
         <translation>退出</translation>
     </message>
     <message>
@@ -5221,19 +5294,19 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>其他设置</translation>
+        <translation type="vanished">其他设置</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>编译到：</translation>
+        <translation type="vanished">编译到： </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>LunaDLL 代码</translation>
+        <translation type="vanished">LunaDLL 代码</translation>
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
@@ -5257,7 +5330,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>在 SMBX 测试 （需要 LunaDLL）</translation>
+        <translation type="vanished">在 SMBX 测试 （需要 LunaDLL）</translation>
     </message>
     <message>
         <source>Convert Audio files...</source>
@@ -5285,19 +5358,19 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>打开当前关卡所在的目录</translation>
+        <translation>打开地图目录</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>打开当前已打开关卡所在的目录</translation>
+        <translation>打开当前关卡所在的地图目录。</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>打开自定义目录</translation>
+        <translation>打开关卡目录</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>打开自定义目录：打开与当前关卡同名的自定义目录。</translation>
+        <translation>打开关卡目录。</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
@@ -5642,7 +5715,8 @@ Do you want to clone another section?</source>
     <message>
         <source>File doesn&apos;t use custom graphics.
 </source>
-        <translation>该文件未使用自定义素材。</translation>
+        <translation>该文件未使用自定义素材。
+</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
@@ -5860,7 +5934,7 @@ See %2 for more information.</source>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>编辑 NPC 配置</translation>
+        <translation type="vanished">编辑 NPC 配置</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -6168,7 +6242,7 @@ Error description:
     </message>
     <message>
         <source>Not Moveable</source>
-        <translation></translation>
+        <translation>不可移动</translation>
     </message>
     <message>
         <source>Message</source>
@@ -6472,7 +6546,7 @@ Error description:
     </message>
     <message>
         <source>Level Name</source>
-        <translation>关卡名</translation>
+        <translation type="vanished">关卡名</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -6880,6 +6954,14 @@ The maximum number of Music Boxes is %2.</source>
         <source>LTR</source>
         <translation>从左到右</translation>
     </message>
+    <message>
+        <source>Level Settings</source>
+        <translation>关卡设置</translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
+        <translation>场景附加设置</translation>
+    </message>
 </context>
 <context>
     <name>QtBoolEdit</name>
@@ -7036,7 +7118,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>PLSET_Character</source>
         <comment>Character</comment>
-        <translation>任务</translation>
+        <translation>人物</translation>
     </message>
     <message>
         <source>PLSET_State</source>
@@ -7534,7 +7616,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation></translation>
+        <translation>删除图块组</translation>
     </message>
     <message>
         <source>Add tileset</source>
@@ -7588,7 +7670,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation></translation>
+        <translation>目录排序宽度</translation>
     </message>
 </context>
 <context>
@@ -7599,7 +7681,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Search: </source>
-        <translation>搜索：</translation>
+        <translation>搜索： </translation>
     </message>
     <message>
         <source>New tileset</source>
@@ -7889,11 +7971,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>1 - Card Roulette Exit</source>
-        <translation>1 - SMB3 卡牌过关</translation>
+        <translation>1 - 卡牌过关</translation>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - SMB3 Boss 击败后过关</translation>
+        <translation>2 - Boss 击败后过关</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
@@ -7905,7 +7987,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - SMB2 水晶球过关</translation>
+        <translation>5 - 水晶球过关</translation>
     </message>
     <message>
         <source>6 - Warp Exit</source>
@@ -7917,7 +7999,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>8 - Tape Exit</source>
-        <translation>8 - SMW 终点杆过关</translation>
+        <translation>8 - 终点杆过关</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -7976,23 +8058,23 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>File read error</source>
-        <translation>文件读取失败</translation>
+        <translation type="vanished">文件读取失败</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>读取文件 %1 失败：
+        <translation type="vanished">读取文件 %1 失败：
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>配置加载失败</translation>
+        <translation type="vanished">配置加载失败</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>打开大地图文件 %1 失败：
+        <translation type="vanished">打开大地图文件 %1 失败：
 因为没有读取对象的设置。
 请检查是否存在 config/SMBX 目录以及是否包含 *.INI 文件和对象设置。</translation>
     </message>
@@ -8035,6 +8117,14 @@ because object configurations are not loaded
     <message>
         <source>Select the point on the world map first.</source>
         <translation>请先选择大地图的坐标。</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation>配置包有错误</translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation>无法加载大地图 &quot;%1&quot;，因为配置包有错误。</translation>
     </message>
 </context>
 <context>
@@ -8142,6 +8232,10 @@ Bottom:	%4</source>
 右：	%3
 下：	%4</translation>
     </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation>隐藏元对象</translation>
+    </message>
 </context>
 <context>
     <name>WldScene</name>
@@ -8204,7 +8298,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Type:</source>
-        <translation>类型：</translation>
+        <translation>类型</translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -8335,7 +8429,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>大地图</translation>
+        <translation type="vanished">大地图</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
@@ -8395,7 +8489,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Episode Title: </source>
-        <translation>地图标题：</translation>
+        <translation>地图标题： </translation>
     </message>
     <message>
         <source>Make custom folder</source>
@@ -8483,7 +8577,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source> not saved</source>
-        <translation>文件未保存</translation>
+        <translation> 未保存</translation>
     </message>
     <message>
         <source>World title:</source>
@@ -8549,7 +8643,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>请先保存文件后再选择音乐。</translation>
+        <translation>请先保存文件，再选择音乐。</translation>
     </message>
 </context>
 <context>
@@ -8843,8 +8937,8 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation>拖放项目到此框！
-右击删除！</translation>
+        <translation>拖放项目到此框。
+右击删除。</translation>
     </message>
 </context>
 </TS>

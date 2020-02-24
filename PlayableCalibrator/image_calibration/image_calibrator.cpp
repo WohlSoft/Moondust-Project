@@ -31,7 +31,6 @@ ImageCalibrator::~ImageCalibrator()
 bool ImageCalibrator::init(QString imgPath)
 {
     QString imgFileM;
-    QString imgOrig;
     QFileInfo ourFile(imgPath);
     QString imgBaseName = ourFile.fileName();
     {
@@ -40,24 +39,20 @@ bool ImageCalibrator::init(QString imgPath)
     }
     QString dirPath = ourFile.absoluteDir().path() + "/";
 
-    imgOrig = dirPath + imgBaseName + "_orig.png";
-    bool createOrig = false;
+    m_backupPath = dirPath + imgBaseName + "_orig.png";
 
-    if(!QFile::exists(imgOrig))
-        createOrig = true;
-
-    if(createOrig)
+    if(!QFile::exists(m_backupPath))
     {
         if(!Graphics::loadMaskedImage(dirPath, ourFile.fileName(), imgFileM, m_sprite))
             return false;
-        // Generate a backup image
-        m_sprite.save(imgOrig, "PNG");
     }
     else
-        m_sprite = QPixmap(imgOrig); // load original sprite instead current
+        m_sprite = QPixmap(m_backupPath); // load an original sprite instead of current
 
     if(m_sprite.isNull())
         return false;
+
+    m_spriteOrig = m_sprite;
 
     m_targetPath = imgPath;
     m_pngPath =     dirPath + imgBaseName + ".png";
@@ -89,7 +84,7 @@ bool ImageCalibrator::init(QString imgPath)
         for(int j = 0; j < 10; j++)
             xRow.push_back(xyCell);
 
-        imgOffsets.push_back(xRow);
+        g_imgOffsets.push_back(xRow);
     }
 
     loadCalibrates();
@@ -130,7 +125,7 @@ void ImageCalibrator::on_OffsetX_valueChanged(int arg1)
 {
     if(m_lockUI) return;
 
-    imgOffsets[m_frmX][m_frmY].offsetX = arg1;
+    g_imgOffsets[m_frmX][m_frmY].offsetX = arg1;
     updateScene();
 }
 
@@ -138,7 +133,7 @@ void ImageCalibrator::on_OffsetY_valueChanged(int arg1)
 {
     if(m_lockUI) return;
 
-    imgOffsets[m_frmX][m_frmY].offsetY = arg1;
+    g_imgOffsets[m_frmX][m_frmY].offsetY = arg1;
     updateScene();
 }
 
@@ -146,7 +141,7 @@ void ImageCalibrator::on_CropW_valueChanged(int arg1)
 {
     if(m_lockUI) return;
 
-    imgOffsets[m_frmX][m_frmY].W = static_cast<unsigned int>(arg1);
+    g_imgOffsets[m_frmX][m_frmY].W = static_cast<unsigned int>(arg1);
     updateScene();
 }
 
@@ -154,7 +149,7 @@ void ImageCalibrator::on_CropH_valueChanged(int arg1)
 {
     if(m_lockUI) return;
 
-    imgOffsets[m_frmX][m_frmY].H = static_cast<unsigned int>(arg1);
+    g_imgOffsets[m_frmX][m_frmY].H = static_cast<unsigned int>(arg1);
     updateScene();
 }
 
@@ -181,16 +176,23 @@ void ImageCalibrator::on_Matrix_clicked()
 
 void ImageCalibrator::on_Reset_clicked()
 {
-    imgOffsets[m_frmX][m_frmY].offsetX = 0;
-    imgOffsets[m_frmX][m_frmY].offsetY = 0;
-    imgOffsets[m_frmX][m_frmY].W = 0;
-    imgOffsets[m_frmX][m_frmY].H = 0;
+    g_imgOffsets[m_frmX][m_frmY].offsetX = 0;
+    g_imgOffsets[m_frmX][m_frmY].offsetY = 0;
+    g_imgOffsets[m_frmX][m_frmY].W = 0;
+    g_imgOffsets[m_frmX][m_frmY].H = 0;
     updateControls();
     updateScene();
 }
 
+void ImageCalibrator::makeBackup()
+{
+    if(!QFile::exists(m_backupPath))
+        m_spriteOrig.save(m_backupPath, "PNG");
+}
+
 void ImageCalibrator::on_WritePNG_GIF_clicked()
 {
+    makeBackup();
     QPixmap target = generateTarget();
     target.save(m_pngPath, "PNG");
 
@@ -204,6 +206,7 @@ void ImageCalibrator::on_WritePNG_GIF_clicked()
 
 void ImageCalibrator::on_WritePNG_clicked()
 {
+    makeBackup();
     QPixmap target = generateTarget();
     target.save(m_pngPath, "PNG");
     saveCalibrates();
@@ -214,6 +217,7 @@ void ImageCalibrator::on_WritePNG_clicked()
 
 void ImageCalibrator::on_WriteGIF_clicked()
 {
+    makeBackup();
     QImage target = generateTarget().toImage();
     Graphics::toMaskedGif(target, m_gifPath);
     saveCalibrates();
@@ -225,10 +229,10 @@ void ImageCalibrator::on_WriteGIF_clicked()
 void ImageCalibrator::updateControls()
 {
     m_lockUI = true;
-    ui->OffsetX->setValue(imgOffsets[m_frmX][m_frmY].offsetX);
-    ui->OffsetY->setValue(imgOffsets[m_frmX][m_frmY].offsetY);
-    ui->CropW->setValue(static_cast<int>(imgOffsets[m_frmX][m_frmY].W));
-    ui->CropH->setValue(static_cast<int>(imgOffsets[m_frmX][m_frmY].H));
+    ui->OffsetX->setValue(g_imgOffsets[m_frmX][m_frmY].offsetX);
+    ui->OffsetY->setValue(g_imgOffsets[m_frmX][m_frmY].offsetY);
+    ui->CropW->setValue(static_cast<int>(g_imgOffsets[m_frmX][m_frmY].W));
+    ui->CropH->setValue(static_cast<int>(g_imgOffsets[m_frmX][m_frmY].H));
     m_lockUI = false;
 }
 
@@ -237,16 +241,16 @@ void ImageCalibrator::updateScene()
     m_imgFrame->setPixmap(
         getFrame(m_frmX,
                  m_frmY,
-                 imgOffsets[m_frmX][m_frmY].offsetX,
-                 imgOffsets[m_frmX][m_frmY].offsetY,
-                 static_cast<int>(imgOffsets[m_frmX][m_frmY].W),
-                 static_cast<int>(imgOffsets[m_frmX][m_frmY].H))
+                 g_imgOffsets[m_frmX][m_frmY].offsetX,
+                 g_imgOffsets[m_frmX][m_frmY].offsetY,
+                 static_cast<int>(g_imgOffsets[m_frmX][m_frmY].W),
+                 static_cast<int>(g_imgOffsets[m_frmX][m_frmY].H))
     );
-    m_physics->setRect(framesX[m_frmX][m_frmY].offsetX,
-                       framesX[m_frmX][m_frmY].offsetY,
-                       frameWidth - 1,
-                       (framesX[m_frmX][m_frmY].isDuck ?
-                        frameHeightDuck : frameHeight) - 1);
+    m_physics->setRect(g_framesX[m_frmX][m_frmY].offsetX,
+                       g_framesX[m_frmX][m_frmY].offsetY,
+                       g_frameWidth - 1,
+                       (g_framesX[m_frmX][m_frmY].isDuck ?
+                        g_frameHeightDuck : g_frameHeight) - 1);
 }
 
 void ImageCalibrator::saveCalibrates()
@@ -258,10 +262,10 @@ void ImageCalibrator::saveCalibrates()
         for(int j = 0; j < 10; j++)
         {
             conf.beginGroup(QString::number(i) + "-" + QString::number(j));
-            conf.setValue("x", imgOffsets[i][j].offsetX);
-            conf.setValue("y", imgOffsets[i][j].offsetY);
-            conf.setValue("w", imgOffsets[i][j].W);
-            conf.setValue("h", imgOffsets[i][j].H);
+            conf.setValue("x", g_imgOffsets[i][j].offsetX);
+            conf.setValue("y", g_imgOffsets[i][j].offsetY);
+            conf.setValue("w", g_imgOffsets[i][j].W);
+            conf.setValue("h", g_imgOffsets[i][j].H);
             conf.endGroup();
         }
     }
@@ -276,10 +280,10 @@ void ImageCalibrator::loadCalibrates()
         for(int j = 0; j < 10; j++)
         {
             conf.beginGroup(QString::number(i) + "-" + QString::number(j));
-            imgOffsets[i][j].offsetX = conf.value("x", 0).toInt();
-            imgOffsets[i][j].offsetY = conf.value("y", 0).toInt();
-            imgOffsets[i][j].W = conf.value("w", 0).toUInt();
-            imgOffsets[i][j].H = conf.value("h", 0).toUInt();
+            g_imgOffsets[i][j].offsetX = conf.value("x", 0).toInt();
+            g_imgOffsets[i][j].offsetY = conf.value("y", 0).toInt();
+            g_imgOffsets[i][j].W = conf.value("w", 0).toUInt();
+            g_imgOffsets[i][j].H = conf.value("h", 0).toUInt();
             conf.endGroup();
         }
     }
@@ -296,9 +300,9 @@ QPixmap ImageCalibrator::generateTarget()
         for(int j = 0; j < 10; j++)
         {
             x.drawPixmap(i * 100, j * 100, 100, 100,
-                         getFrame(i, j, imgOffsets[i][j].offsetX, imgOffsets[i][j].offsetY,
-                                  static_cast<int>(imgOffsets[i][j].W),
-                                  static_cast<int>(imgOffsets[i][j].H))
+                         getFrame(i, j, g_imgOffsets[i][j].offsetX, g_imgOffsets[i][j].offsetY,
+                                  static_cast<int>(g_imgOffsets[i][j].W),
+                                  static_cast<int>(g_imgOffsets[i][j].H))
                         );
         }
     }

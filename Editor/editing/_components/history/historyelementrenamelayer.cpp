@@ -38,7 +38,7 @@ void HistoryElementRenameLayer::undo()
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->dock_LvlLayers->ModifyLayer(m_newName, m_oldName);
+    MainWinConnect::pMainWin->dock_LvlLayers->modifyLayer(m_newName, m_oldName);
     MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }
@@ -62,7 +62,7 @@ void HistoryElementRenameLayer::redo()
     MainWinConnect::pMainWin->dock_LvlWarpProps->setDoorData(-2);
 
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(true);
-    MainWinConnect::pMainWin->dock_LvlLayers->ModifyLayer(m_oldName, m_newName);
+    MainWinConnect::pMainWin->dock_LvlLayers->modifyLayer(m_oldName, m_newName);
     MainWinConnect::pMainWin->dock_LvlLayers->setLayersBox();
     MainWinConnect::pMainWin->dock_LvlLayers->setLayerToolsLocked(false);
 }

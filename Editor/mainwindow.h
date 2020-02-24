@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -840,9 +840,13 @@ public:
 
 
 // ///////////////////Section toobar///////////////////////
+    public:
+        const size_t m_sectionButtonsCount = 21;
+        QAction *m_sectionButtons[21] = {0};
+
     public slots:
         //Switch section
-        void SetCurrentLevelSection(int SctId, int open=0);
+        void setCurrentLevelSection(int sectionId, int open = 0);
         void on_actionGotoLeftBottom_triggered();
         void on_actionGotoLeftTop_triggered();
         void on_actionGotoTopRight_triggered();

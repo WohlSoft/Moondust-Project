@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -109,6 +109,7 @@ struct EditorSetup
 
         State level_bgo_z_layer = F_ENABLED;
         State level_bgo_z_position = F_ENABLED;
+        State level_bgo_smbx64_sp = F_ENABLED;
 
         State level_warp_two_way = F_ENABLED;
         State level_warp_portal = F_ENABLED;
@@ -317,6 +318,8 @@ public:
     QString getPathPath();
     QString getWlvlPath();
 
+    bool isExtraSettingsLocalAtRoot();
+
     QString getBgoExtraSettingsPath();
     QString getBlockExtraSettingsPath();
     QString getNpcExtraSettingsPath();
@@ -342,6 +345,8 @@ private:
         QString items;
         QString extraSettings;
     };
+
+    bool m_extraSettingsLocalAtRoot = true;
 
     ResourceFolder folderLvlBgo;
     ResourceFolder folderLvlBG;

@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,7 +89,7 @@ void MainWindow::on_actionReload_triggered()
         int lastSection = 0;
         QHash<int, QPair<long, long> > sectionPoss;
         lastSection = lvlEdit->LvlData.CurSection;
-        SetCurrentLevelSection(lastSection); //Need to remember position of current section
+        setCurrentLevelSection(lastSection); //Need to remember position of current section
 
         for(int i = 0; i < lvlEdit->LvlData.sections.size(); i++)
         {
@@ -135,7 +135,7 @@ void MainWindow::on_actionReload_triggered()
                 }
             }
 
-            SetCurrentLevelSection(lastSection);
+            setCurrentLevelSection(lastSection);
             child->scene->m_viewPort->horizontalScrollBar()->setValue(static_cast<int>(posX));
             child->scene->m_viewPort->verticalScrollBar()->setValue(static_cast<int>(posY));
 
@@ -191,7 +191,7 @@ void MainWindow::on_actionReload_triggered()
         }
 
         wnGeom = LastActiveSubWindow->geometry();
-        npcEdit->m_isModyfied = false;
+        npcEdit->m_isModified = false;
         npcEdit->close();
         //NpcEdit *child = createNPCChild();
         //QMdiSubWindow *npcWindow = LastActiveSubWindow;

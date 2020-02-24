@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,104 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QDir>
-
 #include "levelfilelist.h"
-#include <ui_levelfilelist.h>
+#include <QIcon>
 
-#include <QtConcurrent>
-
-LevelFileList::LevelFileList(QString Folder, QString current, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::LevelFileList)
+LevelFileList::LevelFileList(QString searchDirectory, QString currentFile, QWidget *parent) :
+    FileListBrowser(searchDirectory, currentFile, parent)
 {
-    parentFolder = Folder;
-    lastCurrentFile = current;
-    ui->setupUi(this);
-    connect(this, &LevelFileList::itemAdded, this, &LevelFileList::addItem);
-    connect(this, &LevelFileList::digFinished, this, &LevelFileList::finalizeDig);
-    setCursor(Qt::BusyCursor);
-    fileWalker = QtConcurrent::run(this, &LevelFileList::buildLevelList);
+    setIcon(QIcon(":/lvl16.png"));
+    setWindowTitle(tr("Level files list"));
+    setDescription(tr("Please, select level file from list for use them:"));
+
+    QStringList filters;
+    filters << "*.lvl" << "*.lvlx" << "*.lvlb" << "*.lvlz";
+    setFilters(filters);
+
+    startListBuilder();
 }
 
 LevelFileList::~LevelFileList()
-{
-    if(fileWalker.isRunning())
-        fileWalker.cancel();
-    fileWalker.waitForFinished();
-    delete ui;
-}
-
-void LevelFileList::buildLevelList()
-{
-    QDir musicDir(parentFolder);
-    QStringList filters;
-    filters << "*.lvl" << "*.lvlx" << "*.lvlb" << "*.lvlz";
-    musicDir.setSorting(QDir::Name);
-    musicDir.setNameFilters(filters);
-    QDirIterator dirsList(parentFolder, filters,
-                          QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot,
-                          QDirIterator::Subdirectories);
-
-    while(dirsList.hasNext())
-    {
-        dirsList.next();
-        emit itemAdded(musicDir.relativeFilePath(dirsList.filePath()));
-        if(fileWalker.isCanceled())
-            break;
-    }
-    digFinished();
-}
-
-void LevelFileList::addItem(QString item)
-{
-    ui->FileList->addItem(item);
-    if(lastCurrentFile == item)
-    {
-        QList<QListWidgetItem *> list = ui->FileList->findItems(item, Qt::MatchFixedString);
-        if(!list.isEmpty())
-        {
-            list.first()->setSelected(true);
-            ui->FileList->scrollToItem(list.first());
-        }
-    }
-}
-
-void LevelFileList::finalizeDig()
-{
-    ui->FileList->sortItems(Qt::AscendingOrder);
-    QList<QListWidgetItem *> list = ui->FileList->findItems(lastCurrentFile, Qt::MatchFixedString);
-    if(!list.isEmpty())
-    {
-        list.first()->setSelected(true);
-        ui->FileList->scrollToItem(list.first());
-    }
-    setCursor(Qt::ArrowCursor);
-}
-
-void LevelFileList::on_FileList_itemDoubleClicked(QListWidgetItem *item)
-{
-    SelectedFile = item->text();
-    if(fileWalker.isRunning())
-        fileWalker.cancel();
-    accept();
-}
-
-void LevelFileList::on_buttonBox_accepted()
-{
-    foreach(QListWidgetItem *container, ui->FileList->selectedItems())
-        SelectedFile = container->text();
-    if(SelectedFile != "")
-    {
-        if(fileWalker.isRunning())
-            fileWalker.cancel();
-        accept();
-    }
-}
-
-void LevelFileList::on_buttonBox_rejected()
-{
-    if(fileWalker.isRunning())
-        fileWalker.cancel();
-    reject();
-}
+{}

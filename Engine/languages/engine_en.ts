@@ -17,7 +17,7 @@
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>Engine has crashed because out of memory! Try to close other applications and restart game.</translation>
+        <translation>Engine has crashed because out of memory! Try to close other applications and restart the game.</translation>
     </message>
     <message id="CRASH_KILLED_TITLE">
         <source>Killed!</source>
@@ -65,7 +65,7 @@
     </message>
     <message id="CRASH_ABORT_TITLE.">
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation>Engine has been aborted because critical error was occouped.</translation>
+        <translation>Engine aborted because a critical error occurred.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
         <source>Segmentation fault</source>
@@ -78,9 +78,9 @@ and retry your recent actions to get more detailed information.</source>
         <oldsource>Engine has crashed because Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent action to take more detail info.</oldsource>
-        <translation>Engine has crashed because of a Segmentation fault.
-Run debugging with a built in debug mode application
-and retry your recent actions to get more detailed information.</translation>
+        <translation>Engine has crashed because of a segmentation fault.
+Run debugging with a built-in debug mode application
+and retry your recent actions to get more detailed info.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
         <source>Interrupt</source>
@@ -184,7 +184,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
         <oldsource>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</oldsource>
         <translation>Fatal error: Impossible to find start section.
-Did you place  the player start point (or entrance warp point) too far out of the section(s)?</translation>
+Did you place the player start point (or entrance warp point) too far out of the section(s)?</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">
         <source>Pause</source>
@@ -296,7 +296,7 @@ Did you place  the player start point (or entrance warp point) too far out of th
     </message>
     <message id="MAINMENU_OPTIONS_FULLSCR">
         <source>Full Screen mode</source>
-        <translation>Full Screen mode</translation>
+        <translation>Fullscreen mode</translation>
     </message>
     <message id="TESTSCR_CREDITS">
         <source>Credits</source>
@@ -336,7 +336,7 @@ Did you place  the player start point (or entrance warp point) too far out of th
     </message>
     <message id="VIDEO_ENABLE_VSYNC">
         <source>Enable V-Sync</source>
-        <translation>Enable V-Sync</translation>
+        <translation>Turn on V-sync</translation>
     </message>
     <message id="VIDEO_FRAME_TIME">
         <source>Frame time (ms.)</source>
@@ -390,11 +390,11 @@ Software renderer will be started.</translation>
     </message>
     <message id="WINDOW_ICON_INIT_ERROR">
         <source>Unable to setup window icon!</source>
-        <translation>Unable to setup window icon!</translation>
+        <translation>Cannot set up window icon!</translation>
     </message>
     <message id="RENDERER_CONTEXT_INIT_ERROR">
         <source>Unable to initialize renderer context!</source>
-        <translation>Unable to initialize renderer context!</translation>
+        <translation>Cannot initialize renderer context!</translation>
     </message>
     <message id="CONFIG_SELECT">
         <source>Choose a game:</source>
@@ -435,7 +435,7 @@ configuration packages are not found!</translation>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <source>Config pack data path not exists:
 %1</source>
-        <translation>Config pack data path not exists:
+        <translation>Config pack data path does not exist:
 %1</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
@@ -467,8 +467,8 @@ Please download and install latest version of a configuration package:
 
 Download: %1
 
-Note: most of config packs are updates togeter with PGE,
-therefore you can use same link to get updated version.</translation>
+Note: Most of config packs are updates bundled with PGE,
+therefore you can use same link to get an updated version.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <source>main.ini is invalid</source>
@@ -476,11 +476,11 @@ therefore you can use same link to get updated version.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <source>Error has occouped in main.ini in line %1.</source>
-        <translation>Error has occouped in main.ini in line %1.</translation>
+        <translation>Error has occured in main.ini in line %1.</translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
-        <translation>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</translation>
+        <translation>Detected framerate is too high. V-sync will be turned off to prevent problematic results. Please turn it on in your video driver.</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -27,11 +27,11 @@ class VersionCmp
 public:
     enum VersionSuffix
     {
-        DEV     =0,
-        ALPHA   =0,
-        BETA    =1,
-        RC      =2,
-        RELEASE =3
+        DEV     = 0,
+        ALPHA   = 0,
+        BETA    = 1,
+        RC      = 2,
+        RELEASE = 3
     };
     static std::string compare(std::string ver1, std::string ver2);
 };

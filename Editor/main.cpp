@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@
 #endif
 
 #include <iostream>
+#include <locale.h>
 #include "version.h"
 
 #include <common_features/logger.h>
@@ -50,11 +51,6 @@
 #include <audio/sdl_music_player.h>
 
 #include "mainwindow.h"
-
-#ifdef _WIN32
-#define FREEIMAGE_LIB 1
-//#define DWORD unsigned int //Avoid definition as "unsigned long" while some functions are built as "unsigned int"
-#endif
 
 #include <FreeImageLite.h>
 
@@ -100,7 +96,7 @@ static void pgeEditorQuit()
     {
 #ifdef USE_SDL_MIXER
         LogDebugNC("Free music buffer...");
-        PGE_MusPlayer::MUS_freeStream();
+        PGE_MusPlayer::closeFile();
         LogDebugNC("Free sound buffer...");
         PGE_SfxPlayer::freeBuffer();
         LogDebugNC("Closing audio...");
@@ -163,6 +159,9 @@ int main(int argc, char *argv[])
 
     app     = new PGE_Application(argc, argv);
     args    = app->arguments();
+
+    // Workaround: https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
+    setlocale(LC_NUMERIC, "C");
 
 #ifdef Q_OS_MAC
     QDir dir(QApplication::applicationDirPath());

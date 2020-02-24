@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -23,25 +23,25 @@
 class PGE_PointF;
 class PGE_Point
 {
-        friend class PGE_PointF;
-    public:
-        PGE_Point();
-        PGE_Point(const PGE_Point &p) = default;
-        PGE_Point(const PGE_PointF &p);
-        PGE_Point(int x, int y);
-        ~PGE_Point();
-        void setPoint(int x, int y);
-        void setX(int x);
-        void setY(int y);
-        bool isNull() const;
-        int x() const;
-        int y() const;
-        friend bool operator==(const PGE_Point &lhs, const PGE_Point &rhs);
-        friend bool operator!=(const PGE_Point &lhs, const PGE_Point &rhs);
+    friend class PGE_PointF;
+public:
+    PGE_Point();
+    PGE_Point(const PGE_Point &p) = default;
+    PGE_Point(const PGE_PointF &p);
+    PGE_Point(int x, int y);
+    ~PGE_Point();
+    void setPoint(int x, int y);
+    void setX(int x);
+    void setY(int y);
+    bool isNull() const;
+    int x() const;
+    int y() const;
+    friend bool operator==(const PGE_Point &lhs, const PGE_Point &rhs);
+    friend bool operator!=(const PGE_Point &lhs, const PGE_Point &rhs);
 
-    private:
-        int m_x;
-        int m_y;
+private:
+    int m_x;
+    int m_y;
 };
 
 bool operator==(const PGE_Point &lhs, const PGE_Point &rhs);

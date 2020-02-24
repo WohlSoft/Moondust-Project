@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -19,6 +19,7 @@
 
 #include "../scene_level.h"
 #include <common_features/logger.h>
+#include <common_features/pge_delay.h>
 #include <Utils/files.h>
 #include <Utils/elapsed_timer.h>
 #include <DirManager/dirman.h>
@@ -80,7 +81,7 @@ bool LevelScene::loadFileIP()
             break;
         }
 
-        SDL_Delay(30);
+        PGE_Delay(30);
     }
 
     m_data = IntProc::editor->m_acceptedLevel;

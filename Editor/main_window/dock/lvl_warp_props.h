@@ -5,7 +5,8 @@
 #include <QDockWidget>
 #include "mwdock_base.h"
 
-namespace Ui {
+namespace Ui
+{
 class LvlWarpBox;
 }
 
@@ -22,9 +23,13 @@ private:
     explicit LvlWarpBox(QWidget *parent);
     ~LvlWarpBox();
 
+    void re_translate_widgets();
+
 public:
     QComboBox *cbox_layer();
     QComboBox *cbox_event_enter();
+
+    void setSettingsLock(bool locked);
 
 public slots:
     void setSMBX64Strict(bool en);
@@ -33,18 +38,18 @@ public slots:
 
 public slots:
     // Warps and doors
-    void setDoorData(long index=-1);
+    void setDoorData(long index = -1);
     void SwitchToDoor(long arrayID);
-    QComboBox* getWarpList();
+    QComboBox *getWarpList();
     void setWarpRemoveButtonEnabled(bool isEnabled);
     void removeItemFromWarpList(int index);
 
 private slots:
-    void on_WarpList_currentIndexChanged(int index); //Door list
+    void on_warpsList_currentIndexChanged(int index); //Door list
     void on_WarpLayer_currentIndexChanged(const QString &arg1); //Door's layers list
     void on_WarpEnterEvent_currentIndexChanged(const QString &arg1);
-    void on_WarpAdd_clicked();
-    void on_WarpRemove_clicked();
+    void addWarpEntry();
+    void removeWarpEntry();
 
     void on_WarpSetEntrance_clicked();
     void on_WarpSetExit_clicked();
@@ -62,14 +67,8 @@ private slots:
     void on_WarpNeedAStarsMsg_editingFinished();
     void on_WarpHideStars_clicked(bool checked);
 
-    void on_Entr_Down_clicked();
-    void on_Entr_Right_clicked();
-    void on_Entr_Up_clicked();
-    void on_Entr_Left_clicked();
-    void on_Exit_Up_clicked();
-    void on_Exit_Left_clicked();
-    void on_Exit_Right_clicked();
-    void on_Exit_Down_clicked();
+    void entrance_clicked(int direction);
+    void exit_clicked(int direction);
 
     void on_WarpEnableCannon_clicked(bool checked);
     void on_WarpCannonSpeed_valueChanged(double arg1);
@@ -89,8 +88,10 @@ private slots:
     void on_WarpAllowNPC_IL_clicked(bool checked);
 
 private:
+    unsigned int getWarpId();
     QString doorTitle(LevelDoor &door);
-    bool lockWarpSetSettings;
+    //! Prevent any settings changed slots to write changed settings values
+    bool m_lockSettings = false;
 
     Ui::LvlWarpBox *ui;
 };

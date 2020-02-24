@@ -1,0 +1,189 @@
+{
+	"style" : "tree",
+	"style-bak" : "groupbox",
+	"title" : "Sample setup",
+	"layout": [{
+			"control": "spinBox",
+			"type": "int",
+			"name": "testNumber",
+			"title": "Test integer number value",
+			"value-default": 5,
+			"value-min": -42,
+			"value-max": 42,
+			"single-step": 2,
+			"tooltip" : "Keeek"
+		},
+		{
+			"control": "checkbox",
+			"name": "checkMe",
+			"title": "Check me",
+			"value-default": false,
+			"tooltip" : "Keeek 1"
+		},
+		{
+			"control": "musicFile",
+			"type": "string",
+			"name": "meinMuzik",
+			"title" : "Wie muzik?",
+			"tooltip" : "muzik?????!",
+			"directory" : "episode"
+		},
+		{
+			"control": "checkbox",
+			"name": "checkMeNot",
+			"title": "Don't check me, jerk",
+			"value-default": true,
+			"tooltip" : "Keeek 2"
+		},
+		{
+			"control": "description",
+			"name": "justAText",
+			"text": "Explains <b>THIS</b>, that is not some. HONK HONK, HEAR YE. I have created a goose for your desktop. He'll nab your mouse, track mud on<br>your screen...<br>leave you a message, deliver you memes?",
+			"value-default": false
+		},
+		{
+			"control": "combobox",
+			"name": "choice",
+			"title": "Choose me",
+			"elements": ["zero", "one", "two", "three", "four"],
+			"value-default": 1,
+			"tooltip" : "Keeek 3"
+		},
+		{
+			"control": "color",
+			"name": "colorness",
+			"title": "Color of?",
+			"value-default": "#FF00FF",
+			"tooltip" : "Just a color"
+		},
+		{
+			"control": "color",
+			"name": "colornessOfTea",
+			"title": "Color of Tea?",
+			"value-default": "#FF00FF",
+			"alpha-channel": false,
+			"tooltip" : "Just a color"
+		},
+		{
+			"control": "flagbox",
+			"name": "choice2",
+			"title": "Choose of:",
+			"elements": ["zero", "one", "two", "three", "four"],
+			"value-default": 21,
+			"tooltip" : "Keeek 4"
+		},
+		{
+			"control": "sizebox",
+			"name": "sizeOfMyAss",
+			"title": "Size of?",
+			"value-min": {"w": 2, "h" : 2},
+			"value-max": {"w": 4442,  "h": 4442},
+			"value-default": {"w": 41, "h" : 34},
+			"tooltip" : "Keeek 5"
+		},
+		{
+			"control": "sizebox",
+			"type": "double",
+			"decimals": 4,
+			"name": "floatingBrick",
+			"title": "Floating brick",
+			"value-min": {"w": 2.2, "h" : 2.0},
+			"value-max": {"w": 42.0,  "h": 42.1},
+			"value-default": {"w": 41.52, "h" : 34.2},
+			"tooltip" : "Keeek 6"
+		},
+		{
+			"control": "pointBox",
+			"name": "whereIsMySombrero",
+			"title": "Where?",
+			"value-default" : {"x":12, "y":12},
+			"tooltip" : "Keeek 7"
+		},
+		{
+			"control": "pointBox",
+			"type": "double",
+			"decimals": 3,
+			"name": "floatOfWhere",
+			"title": "Float Where?",
+			"value-default" : {"x":12.02, "y":-12.1},
+			"tooltip" : "Keeek 8"
+		},
+		{
+			"control": "rectBox",
+			"name": "iCanSeeYou",
+			"title": "Rects, Rects.... rects!!!",
+			"value-default": {"x":-12, "y":34, "w":12, "h":12},
+			"tooltip" : "Keeek 9"
+		},
+		{
+			"control": "rectBox",
+			"type": "double",
+			"decimals": 5,
+			"name": "fanSeeYou",
+			"title": "Floating rects!",
+			"value-default": {"x":-1.02, "y":34.0, "w":12.054, "h":12.11},
+			"tooltip" : "Keeek 10"
+		},
+		{
+			"control": "spinBox",
+			"type": "double",
+			"name": "floatTest",
+			"title": "Test floating number value",
+			"value-default": 5.0,
+			"value-min": -42.0,
+			"value-max": 42.0,
+			"single-step": 0.1,
+			"decimals" : 3,
+			"tooltip" : "Keeek 11"
+		},
+		{
+			"control": "group",
+			"name": "alienShit",
+			"title": "Some alien shit",
+			"children": [{
+					"control": "spinBox",
+					"type": "int",
+					"name": "child1",
+					"title" : "Kek",
+					"value-default": 5,
+					"value-min": -42,
+					"value-max": 42
+				},
+				{
+					"control": "lineEdit",
+					"type": "string",
+					"name": "child2",
+					"title" : "Pek",
+					"value-default": "",
+					"max-length": 42,
+					"validator": "^a\\ sh\\dt$",
+        			"tooltip" : "put a KEK here"
+				},
+				{
+					"control": "lineEdit",
+					"type": "string",
+					"name": "child3",
+					"title" : "Tek",
+					"value-default": "",
+					"max-length": 5
+				}
+			]
+		},
+		{
+			"control": "group",
+			"name": "someAnother",
+			"title": "Another...",
+			"children": [{
+					"control": "spinBox",
+					"type": "int",
+					"name": "kekVision",
+					"title" : "Kek",
+					"value-default": 5,
+					"value-min": -42,
+					"value-max": 42,
+        			"tooltip" : "It's a NOOOOOnsese"
+				}
+			]
+		}
+	]
+}

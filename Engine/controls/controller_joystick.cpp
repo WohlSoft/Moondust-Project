@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -211,8 +211,7 @@ bool JoystickController::bindJoystickKey(SDL_Joystick *joy, KM_Key &k)
     for(int i = 0; i < axes; i++)
     {
         val = 0;
-        //Note: SDL_JoystickGetAxisInitialState is a new API function added into dev version
-        //      and doesn't available in already released assemblies
+        //Note: The SDL 2.0.6 and higher is requires to support this function
         if(SDL_JoystickGetAxisInitialState(joy, i, &val_initial) == SDL_FALSE)
             break;
 

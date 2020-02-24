@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ public:
     bool hidePaths = false;
     bool hideMusBoxes = false;
     bool hideGrid = false;
+    bool hideMetas = false;
 
     ~WldSaveImage();
 
@@ -48,6 +49,7 @@ private slots:
     void on_SaveProportion_clicked(bool checked);
     void on_HidePaths_clicked(bool checked);
     void on_HideMusBoxes_clicked(bool checked);
+    void on_hideMetaObjects_clicked(bool checked);
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
 

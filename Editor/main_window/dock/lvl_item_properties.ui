@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>491</height>
+    <width>294</width>
+    <height>537</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -57,9 +57,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-386</y>
-         <width>286</width>
-         <height>1731</height>
+         <y>0</y>
+         <width>280</width>
+         <height>1727</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,100">
@@ -94,19 +94,19 @@
             <enum>QLayout::SetMinimumSize</enum>
            </property>
            <property name="leftMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="topMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="rightMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="bottomMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="spacing">
-            <number>1</number>
+            <number>2</number>
            </property>
            <item row="4" column="0" colspan="2">
             <widget class="QCheckBox" name="PROPS_BlockInvis">
@@ -482,25 +482,112 @@
           <property name="title">
            <string>BGO</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_14" columnstretch="10,80">
+          <layout class="QGridLayout" name="gridLayout_14" columnstretch="10,0">
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
            <property name="leftMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="topMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="rightMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="bottomMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="spacing">
-            <number>1</number>
+            <number>2</number>
            </property>
+           <item row="4" column="0" colspan="2">
+            <widget class="Line" name="line_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0" colspan="2">
+            <widget class="QGroupBox" name="smbx64SpGroup">
+             <property name="title">
+              <string>SMBX64 defines:</string>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="2" column="2">
+               <widget class="QLabel" name="SMBX64_SP_Help">
+                <property name="maximumSize">
+                 <size>
+                  <width>175</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
+This option using the SMBX's bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0" rowspan="2" colspan="2">
+               <spacer name="SMBX64_LeftSpacer">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>74</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="SortPriorityLabel">
+                <property name="text">
+                 <string>Sort priority:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QSpinBox" name="PROPS_BGO_smbx64_sp">
+                <property name="minimum">
+                 <number>-1</number>
+                </property>
+                <property name="maximum">
+                 <number>999999999</number>
+                </property>
+                <property name="singleStep">
+                 <number>1</number>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0" colspan="2">
+            <widget class="QLabel" name="PROPS_BgoID">
+             <property name="text">
+              <string notr="true">BgoID: [z]</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="BgoLayerLabel">
+             <property name="text">
+              <string>Layer:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="2">
+            <widget class="QLabel" name="PROPS_bgoPos">
+             <property name="text">
+              <string notr="true">Pos: [x. y]</string>
+             </property>
+            </widget>
+           </item>
            <item row="3" column="0" colspan="2">
             <widget class="QGroupBox" name="PROPS_BGO_Z_Pos">
              <property name="title">
@@ -565,102 +652,11 @@
                  <double>500.000000000000000</double>
                 </property>
                 <property name="singleStep">
-                 <double>0.0000001</double>
+                 <double>0.000000100000000</double>
                 </property>
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>58</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item row="5" column="0" colspan="2">
-            <widget class="QLabel" name="SMBX64title">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>SMBX64 defines:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="2">
-            <widget class="QLabel" name="PROPS_bgoPos">
-             <property name="text">
-              <string notr="true">Pos: [x. y]</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QSpinBox" name="PROPS_BGO_smbx64_sp">
-             <property name="minimum">
-              <number>-1</number>
-             </property>
-             <property name="maximum">
-              <number>999999999</number>
-             </property>
-             <property name="singleStep">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="SortPriorityLabel">
-             <property name="text">
-              <string>Sort priority:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="2">
-            <widget class="QLabel" name="PROPS_BgoID">
-             <property name="text">
-              <string notr="true">BgoID: [z]</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="1">
-            <widget class="QLabel" name="SMBX64_SP_Help">
-             <property name="maximumSize">
-              <size>
-               <width>175</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
-This option using the SMBX's bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0" colspan="2">
-            <widget class="Line" name="line_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="BgoLayerLabel">
-             <property name="text">
-              <string>Layer:</string>
-             </property>
             </widget>
            </item>
            <item row="2" column="1">
@@ -671,22 +667,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               </property>
              </item>
             </widget>
-           </item>
-           <item row="8" column="0" colspan="2">
-            <spacer name="verticalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
@@ -707,19 +687,19 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <enum>QLayout::SetMinimumSize</enum>
            </property>
            <property name="leftMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="topMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="rightMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="bottomMargin">
-            <number>1</number>
+            <number>2</number>
            </property>
            <property name="spacing">
-            <number>1</number>
+            <number>2</number>
            </property>
            <item row="14" column="0" colspan="3">
             <widget class="QSpinBox" name="PROPS_NPCSpecialSpin"/>
@@ -1014,7 +994,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>54</height>
+               <height>97</height>
               </size>
              </property>
              <property name="title">
@@ -1023,7 +1003,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              <property name="alignment">
               <set>Qt::AlignCenter</set>
              </property>
-             <layout class="QGridLayout" name="gridLayout_3">
+             <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1000,0">
               <property name="sizeConstraint">
                <enum>QLayout::SetDefaultConstraint</enum>
               </property>
@@ -1091,12 +1071,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                   <height>78</height>
                  </size>
                 </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>50</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
                 <property name="title">
                  <string>Direction</string>
                 </property>
@@ -1119,196 +1093,21 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                  <property name="spacing">
                   <number>0</number>
                  </property>
-                 <item row="2" column="4">
-                  <spacer name="horizontalSpacer_3">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
+                 <item row="0" column="0">
+                  <widget class="DirectionSwitchWidget" name="npcGeneratorDirection" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
                    </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="2" column="0">
-                  <spacer name="horizontalSpacer_2">
-                   <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>40</width>
-                     <height>20</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="4" column="2">
-                  <spacer name="verticalSpacer_4">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item row="2" column="2">
-                  <widget class="QLabel" name="label_2">
                    <property name="minimumSize">
                     <size>
-                     <width>16</width>
-                     <height>16</height>
+                     <width>60</width>
+                     <height>60</height>
                     </size>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="pixmap">
-                    <pixmap resource="../../_resources/editor.qrc">:/arrows/arrows/box.png</pixmap>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
                    </property>
                   </widget>
-                 </item>
-                 <item row="2" column="3">
-                  <widget class="QPushButton" name="PROPS_NPCGenRight">
-                   <property name="minimumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Left</string>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../_resources/editor.qrc">
-                     <normaloff>:/arrows/arrows/black_right.png</normaloff>
-                     <normalon>:/arrows/arrows/green_right.png</normalon>:/arrows/arrows/black_right.png</iconset>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="autoExclusive">
-                    <bool>true</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QPushButton" name="PROPS_NPCGenUp">
-                   <property name="minimumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Up</string>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../_resources/editor.qrc">
-                     <normaloff>:/arrows/arrows/black_up.png</normaloff>
-                     <normalon>:/arrows/arrows/green_up.png</normalon>:/arrows/arrows/black_up.png</iconset>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="autoExclusive">
-                    <bool>true</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="2" column="1">
-                  <widget class="QPushButton" name="PROPS_NPCGenLeft">
-                   <property name="minimumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Right</string>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../_resources/editor.qrc">
-                     <normaloff>:/arrows/arrows/black_left.png</normaloff>
-                     <normalon>:/arrows/arrows/green_left.png</normalon>:/arrows/arrows/black_left.png</iconset>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="autoExclusive">
-                    <bool>true</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="3" column="2">
-                  <widget class="QPushButton" name="PROPS_NPCGenDown">
-                   <property name="minimumSize">
-                    <size>
-                     <width>16</width>
-                     <height>16</height>
-                    </size>
-                   </property>
-                   <property name="toolTip">
-                    <string>Down</string>
-                   </property>
-                   <property name="text">
-                    <string notr="true"/>
-                   </property>
-                   <property name="icon">
-                    <iconset resource="../../_resources/editor.qrc">
-                     <normaloff>:/arrows/arrows/black_down.png</normaloff>
-                     <normalon>:/arrows/arrows/green_down.png</normalon>:/arrows/arrows/black_down.png</iconset>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="autoExclusive">
-                    <bool>true</bool>
-                   </property>
-                   <property name="flat">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="2">
-                  <spacer name="verticalSpacer_5">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>40</height>
-                    </size>
-                   </property>
-                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -1526,6 +1325,14 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
    </layout>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DirectionSwitchWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">common_features/direction_switch_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../_resources/editor.qrc"/>
  </resources>

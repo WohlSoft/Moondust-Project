@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -26,7 +26,7 @@
 #include "vsync_validator.h"
 
 VSyncValidator::VSyncValidator(Scene *parent, double tickDelay) :
-        m_parentScene(parent)
+    m_parentScene(parent)
 {
     m_timeLimit = 120;
     m_maxStepsAllowed = static_cast<int>((1000.0 / tickDelay) * (m_timeLimit / 1000.0)) + 20;
@@ -71,14 +71,14 @@ void VSyncValidator::update()
             g_AppSettings.save();
 
             PGE_MsgBox msg2(m_parentScene,
-                    /*% "Detected framerate is too high. "
-                        "V-Sync will be disabled to prevent problematic results. "
-                        "Please enable V-Sync in your video driver." */
+                            /*% "Detected framerate is too high. "
+                                "V-Sync will be disabled to prevent problematic results. "
+                                "Please enable V-Sync in your video driver." */
                             qtTrId("VSYNC_ERROR_INFO"),
                             PGE_BoxBase::msg_info, PGE_Point(-1, -1),
                             ConfigManager::setup_message_box.box_padding,
                             ConfigManager::setup_message_box.sprite
-            );
+                           );
             msg2.exec();
         }
     }

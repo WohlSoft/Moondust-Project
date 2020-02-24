@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ SETTINGS_ScreenGrabSettings GlobalSettings::screenGrab;
 SETTINGS_Extra GlobalSettings::extra;
 
 bool GlobalSettings::autoPlayMusic  = false;
-int  GlobalSettings::musicVolume    = 128;
+int  GlobalSettings::musicVolume    = 54;
 bool GlobalSettings::recentMusicPlayingState = false;
 
 bool GlobalSettings::MidMouse_allowDuplicate    = true;

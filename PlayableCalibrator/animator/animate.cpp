@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,30 +32,31 @@ Animate::Animate(QWidget *parent) :
 
     //Here will be read AniFrames from INI
 
-    AniScene = new AnimationScene();
-    AniScene->setSceneRect(0,0, ui->AnimateView->width()-20, ui->AnimateView->height()-20);
+    m_aniScene = new AnimationScene();
+    m_aniScene->setSceneRect(0, 0, ui->AnimateView->width() - 20, ui->AnimateView->height() - 20);
 
-    ui->AnimateView->setScene(AniScene);
+    ui->AnimateView->setScene(m_aniScene);
 
     aniStyle = "Idle";
     aniDir = 1; //0 - left, 1 - right
 
-    foreach(AniFrameSet frms, AniFrames.set)
+    foreach(AniFrameSet frms, g_aniFrames.set)
         ui->animationsList->addItem(frms.name);
-    QList<QListWidgetItem*> items=ui->animationsList->findItems("*", Qt::MatchWildcard);
+    QList<QListWidgetItem *> items = ui->animationsList->findItems("*", Qt::MatchWildcard);
     if(!items.isEmpty())
         items.first()->setSelected(true);
 
-    AniScene->setAnimation(AniFrames.set[0].R);
+    m_aniScene->setAnimation(g_aniFrames.set[0].R);
 }
 
 Animate::~Animate()
 {
-      int j = ui->animationsList->count() - 1;
-      for(; j>=0; j--) {
+    int j = ui->animationsList->count() - 1;
+    for(; j >= 0; j--)
+    {
         QListWidgetItem *it = ui->animationsList->item(j);
-            delete it;
-      }
+        delete it;
+    }
     delete ui;
 }
 
@@ -81,14 +82,14 @@ void Animate::keyPressEvent(QKeyEvent *e)
 
 void Animate::aniFindSet()
 {
-    foreach(AniFrameSet frms, AniFrames.set)
+    foreach(AniFrameSet frms, g_aniFrames.set)
     {
-        if(frms.name==aniStyle)
+        if(frms.name == aniStyle)
         {
-            if(aniDir==1)
-                AniScene->setAnimation(frms.R);
+            if(aniDir == 1)
+                m_aniScene->setAnimation(frms.R);
             else
-                AniScene->setAnimation(frms.L);
+                m_aniScene->setAnimation(frms.L);
             break;
         }
     }
@@ -100,34 +101,34 @@ void Animate::aniFindSet()
 
 void Animate::on_EditAnimationBtn_clicked()
 {
-    AnimationEdit dialog(AniFrames, this);
+    AnimationEdit dialog(g_aniFrames, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
-    AniFrames = dialog.frameList;
+    g_aniFrames = dialog.frameList;
     aniFindSet();
 }
 
 //Set Direction
 void Animate::on_directLeft_clicked()
 {
-    aniDir=0;
+    aniDir = 0;
     aniFindSet();
 }
 
 void Animate::on_directRight_clicked()
 {
-    aniDir=1;
+    aniDir = 1;
     aniFindSet();
 }
 
 void Animate::on_FrameSpeed_valueChanged(int arg1)
 {
-    AniScene->timer.setInterval(arg1);
+    m_aniScene->setFrameInterval(arg1);
 }
 
 void Animate::on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
 {
     if(!item) return;
-    aniStyle=item->text();
+    aniStyle = item->text();
     aniFindSet();
 }

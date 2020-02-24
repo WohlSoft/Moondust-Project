@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -27,15 +27,17 @@ class PGE_Translator
 public:
     PGE_Translator();
     void init();
-    void toggleLanguage(std::string lang);
+    void toggleLanguage(std::string lang, std::string region = std::string());
 private:
-    friend std::string qtTrId(const char* string);
+    friend std::string qtTrId(const char *string);
 
     bool            m_isInit;
     //QTranslator     m_translator;   /**< contains the translations for this application */
     //QTranslator     m_translatorQt; /**< contains the translations for qt */
     QmTranslatorX   m_translator;   /**< contains the translations for this application */
+    QmTranslatorX   m_translatorEn; /**< contains the English translations as fallback */
     std::string     m_currLang;     /**< contains the currently loaded language */
+    std::string     m_currRegion; /**< contains the currently loaded language */
     std::string     m_langPath;     /**< Path of language files. This is always fixed to /languages. */
 };
 

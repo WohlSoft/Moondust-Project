@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -23,22 +23,22 @@
 class PGE_SizeF;
 class PGE_Size
 {
-        friend class PGE_SizeF;
-    public:
-        PGE_Size();
-        PGE_Size(const PGE_Size &p) = default;
-        PGE_Size(const PGE_SizeF &p);
-        PGE_Size(int w, int h);
-        ~PGE_Size();
-        void setSize(int w, int h);
-        void setWidth(int w);
-        void setHeight(int h);
-        bool isNull() const;
-        int w() const;
-        int h() const;
-    private:
-        int m_w;
-        int m_h;
+    friend class PGE_SizeF;
+public:
+    PGE_Size();
+    PGE_Size(const PGE_Size &p) = default;
+    PGE_Size(const PGE_SizeF &p);
+    PGE_Size(int w, int h);
+    ~PGE_Size();
+    void setSize(int w, int h);
+    void setWidth(int w);
+    void setHeight(int h);
+    bool isNull() const;
+    int w() const;
+    int h() const;
+private:
+    int m_w;
+    int m_h;
 };
 
 #endif // PGE_Size_H

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -536,7 +536,11 @@ void AdvNpcAnimator::createAnimationFrames()
 {
     m_frames.clear();
     for(int i = 0; (m_frameHeight * i < m_spriteHeight); i++)
-        m_frames.push_back(AniPos((m_frameHeight * i) / m_spriteHeight, (m_frameHeight * i + m_frameHeight) / m_spriteHeight));
+    {
+        double ani_t = (m_frameHeight * i) / m_spriteHeight;
+        double ani_b = (m_frameHeight * i + m_frameHeight) / m_spriteHeight;
+        m_frames.push_back(AniPos(ani_t, ani_b));
+    }
 }
 
 int AdvNpcAnimator::getFrameNumL(int num)

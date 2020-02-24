@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -57,6 +57,8 @@ bool WldGenericSetup::parse(IniProcessing *setup,
     setup->read("category", category,   pMergeMe(category));
     setup->read("description", description, pMerge(description, ""));
     setup->read("extra-settings", extra_settings, pMerge(extra_settings, ""));
+    setup->read("is-meta-object", is_meta_object, pMerge(is_meta_object, false));
+    pAlias("hide-on-exported-images", is_meta_object);//Alias
 
     setup->read("image",    image_n,    pMerge(image_n, ""));
     if(!merge_with && !PGE_ImageInfo::getImageSize(imgPath + image_n, &w, &h, &errCode))

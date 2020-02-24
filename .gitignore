@@ -109,6 +109,9 @@ qt_en.qm
 *.db
 *_plugin_import.cpp
 
+# Some tools like astyle may leave these files
+*.orig
+
 #unpacked libraries sources
 /_Libs/_sources/_build_cache*/*
 !/_Libs/_sources
@@ -119,6 +122,9 @@ qt_en.qm
 #Paths config files in the root
 /_paths.bat
 /_paths.sh
+
+#A list of files for lupdate to run
+_lupdate_temp_list.tmp
 
 #Notepad++ Backup files
 *.bak

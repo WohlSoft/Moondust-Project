@@ -4,24 +4,24 @@
 <context>
     <name></name>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="242"/>
+        <location filename="../gui/pge_msgbox.cpp" line="247"/>
         <source>Information</source>
         <translation>信息</translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="257"/>
+        <location filename="../gui/pge_msgbox.cpp" line="262"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="272"/>
+        <location filename="../gui/pge_msgbox.cpp" line="277"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="287"/>
+        <location filename="../gui/pge_msgbox.cpp" line="292"/>
         <source>Fatal error</source>
-        <translation>错误</translation>
+        <translation>致命错误</translation>
     </message>
     <message id="CONFIG_SELECT">
         <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="60"/>
@@ -98,111 +98,111 @@ therefore you can use same link to get updated version.</source>
         <translation>main.ini 在第 %1 行出现错误。</translation>
     </message>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="290"/>
+        <location filename="../common_features/crash_handler.cpp" line="363"/>
         <source>Unhandled exception!</source>
         <translation>未处理异常！</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="292"/>
+        <location filename="../common_features/crash_handler.cpp" line="365"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation>发生未处理异常，因此引擎已崩溃！</translation>
+        <translation>发生未处理异常，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="304"/>
+        <location filename="../common_features/crash_handler.cpp" line="377"/>
         <source>Out of memory!</source>
         <translation>内存不足！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="306"/>
+        <location filename="../common_features/crash_handler.cpp" line="379"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>由于内存不足，因此引擎已崩溃！请关闭其他应用再重新开始游戏。</translation>
+        <translation>由于内存不足，因此引擎已停止运行！请关闭其他应用再重新开始游戏。</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="342"/>
+        <location filename="../common_features/crash_handler.cpp" line="415"/>
         <source>Time out!</source>
         <translation>超时！</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="344"/>
+        <location filename="../common_features/crash_handler.cpp" line="417"/>
         <source>Engine has abourted because alarm() time out!</source>
-        <translation>由于 alarm() 超时，因此引擎已关闭！</translation>
+        <translation>由于 alarm() 超时，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="389"/>
+        <location filename="../common_features/crash_handler.cpp" line="462"/>
         <source>Physical memory address error!</source>
         <translation>物理内存地址错误！</translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="391"/>
+        <location filename="../common_features/crash_handler.cpp" line="464"/>
         <source>Engine has crashed because a physical memory address error</source>
-        <translation>由于物理内存地址错误，因此引擎已崩溃</translation>
+        <translation>由于物理内存地址错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="408"/>
+        <location filename="../common_features/crash_handler.cpp" line="481"/>
         <source>Wrong CPU Instruction!</source>
         <translation>CPU 命令错误！</translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="410"/>
+        <location filename="../common_features/crash_handler.cpp" line="483"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation>由于 CPU 命令错误，因此引擎已崩溃</translation>
+        <translation>由于 CPU 命令错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="465"/>
+        <location filename="../common_features/crash_handler.cpp" line="538"/>
         <source>Wrong arithmetical operation</source>
         <translation>算法错误</translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="467"/>
+        <location filename="../common_features/crash_handler.cpp" line="540"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation>由于算法错误，因此引擎已崩溃！</translation>
+        <translation>由于算法错误，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="479"/>
+        <location filename="../common_features/crash_handler.cpp" line="552"/>
         <source>Aborted</source>
         <translation>异常终止</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="481"/>
+        <location filename="../common_features/crash_handler.cpp" line="554"/>
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation>由于致命错误，因此引擎异常终止。</translation>
+        <translation>由于致命错误，因此引擎已停止运行。</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="526"/>
+        <location filename="../common_features/crash_handler.cpp" line="599"/>
         <source>Segmentation fault</source>
         <translation>段落错误</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="530"/>
+        <location filename="../common_features/crash_handler.cpp" line="603"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
-        <translation>由于段落错误，因此引擎已崩溃。
+        <translation>由于段落错误，因此引擎已停止运行。
 请使用内置调试器进行调试并对最近的操作
 进行重试以获得更多的详细信息。</translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="539"/>
+        <location filename="../common_features/crash_handler.cpp" line="612"/>
         <source>Interrupt</source>
         <translation>中断</translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="541"/>
+        <location filename="../common_features/crash_handler.cpp" line="614"/>
         <source>Engine has been interrupted</source>
         <translation>引擎已损坏</translation>
     </message>
     <message id="GAMEOVER_TITLE">
-        <location filename="../scenes/scene_gameover.cpp" line="54"/>
+        <location filename="../scenes/scene_gameover.cpp" line="56"/>
         <source>Game Over!</source>
         <translation>游戏结束！</translation>
     </message>
     <message id="GAMEOVER_CONTINUE">
-        <location filename="../scenes/scene_gameover.cpp" line="60"/>
+        <location filename="../scenes/scene_gameover.cpp" line="62"/>
         <source>Continue</source>
         <translation>继续</translation>
     </message>
     <message id="GAMEOVER_EXIT">
-        <location filename="../scenes/scene_gameover.cpp" line="62"/>
+        <location filename="../scenes/scene_gameover.cpp" line="64"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
@@ -247,53 +247,53 @@ and retry your recent actions to get more detailed information.</source>
         <translation>重新开始关卡</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="554"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="300"/>
+        <location filename="../scenes/scene_world.cpp" line="550"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="302"/>
         <source>Invalid playable character ID</source>
         <translation>错误的人物编号</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="563"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
+        <location filename="../scenes/scene_world.cpp" line="559"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="311"/>
         <source>Invalid playable character state ID</source>
         <translation>错误的人物形态编号</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="434"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="436"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>错误：无法找到起点。
-请问你将起点（或者传送入口）放置到了场景外的过大范围吗？</translation>
+请问您将起点（或者传送入口）放在场景以外的范围了吗？</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="615"/>
-        <location filename="../scenes/scene_world.cpp" line="642"/>
+        <location filename="../scenes/scene_world.cpp" line="611"/>
+        <location filename="../scenes/scene_world.cpp" line="638"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="623"/>
-        <location filename="../scenes/scene_world.cpp" line="650"/>
+        <location filename="../scenes/scene_world.cpp" line="619"/>
+        <location filename="../scenes/scene_world.cpp" line="646"/>
         <source>Continue</source>
         <translation>继续</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="625"/>
+        <location filename="../scenes/scene_world.cpp" line="621"/>
         <source>Save and continue</source>
         <translation>保存并继续</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="627"/>
+        <location filename="../scenes/scene_world.cpp" line="623"/>
         <source>Save and quit</source>
         <translation>保存并退出</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="629"/>
+        <location filename="../scenes/scene_world.cpp" line="625"/>
         <source>Exit without saving</source>
         <translation>退出而不保存</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="652"/>
+        <location filename="../scenes/scene_world.cpp" line="648"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
@@ -532,7 +532,7 @@ Entrance point: %2</source>
 %1</translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
-        <location filename="../graphics/vsync_validator.cpp" line="70"/>
+        <location filename="../graphics/vsync_validator.cpp" line="77"/>
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
         <translation>检测到帧率过高，为防止出现问题，垂直同步已关闭。请在你的显卡上开启垂直同步。</translation>
     </message>

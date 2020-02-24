@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -183,8 +183,8 @@ void MultilayerBackground::renderLayersList(const MultilayerBackground::LayersLi
 
         const double  sWidth    = box.width();
         const double  sHeight   = box.height();
-        const double  fWidth     = static_cast<double>(layer.texture.frame_w) + layer.setup.margin_x_right + layer.setup.margin_x_left + layer.setup.padding_horizontal;
-        const double  fHeight    = static_cast<double>(layer.texture.frame_h) + layer.setup.margin_y_bottom + layer.setup.margin_y_top + layer.setup.padding_vertical;
+        const double  fWidth    = static_cast<double>(layer.texture.frame_w) + layer.setup.margin_x_right + layer.setup.margin_x_left + layer.setup.padding_horizontal;
+        const double  fHeight   = static_cast<double>(layer.texture.frame_h) + layer.setup.margin_y_bottom + layer.setup.margin_y_top + layer.setup.padding_vertical;
 
         double      pointX = x;
         double      pointY = y;

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -178,8 +178,8 @@ void GameUserDataManager::clear()
 }
 
 GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManager::DataType dataType,
-                                                              const std::string &sectionName,
-                                                              const std::string &fileName) const
+        const std::string &sectionName,
+        const std::string &fileName) const
 {
     switch(dataType)
     {
@@ -214,8 +214,8 @@ GameUserDataManager::DataList GameUserDataManager::getSection(GameUserDataManage
 }
 
 GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDataManager::DataType dataType,
-                                                                      const std::string &sectionName,
-                                                                      const std::string &fileName) const
+        const std::string &sectionName,
+        const std::string &fileName) const
 {
     switch(dataType)
     {
@@ -250,9 +250,9 @@ GameUserDataManager::DataList GameUserDataManager::getVolatileSection(GameUserDa
 }
 
 void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
-                                                              const GameUserDataManager::DataList &list,
-                                                              const std::string &sectionName,
-                                                              const std::string &fileName)
+                                     const GameUserDataManager::DataList &list,
+                                     const std::string &sectionName,
+                                     const std::string &fileName)
 {
     switch(dataType)
     {
@@ -270,9 +270,9 @@ void GameUserDataManager::setSection(GameUserDataManager::DataType dataType,
 }
 
 void GameUserDataManager::setVolatileSection(GameUserDataManager::DataType dataType,
-                                                                      const GameUserDataManager::DataList &list,
-                                                                      const std::string &sectionName,
-                                                                      const std::string &fileName)
+        const GameUserDataManager::DataList &list,
+        const std::string &sectionName,
+        const std::string &fileName)
 {
     switch(dataType)
     {

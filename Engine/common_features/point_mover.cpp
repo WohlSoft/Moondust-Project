@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -41,7 +41,7 @@ void PointMover::setSpeed(double speed)
 void PointMover::setTarget(double toPosX, double toPosY, double speed)
 {
     if(speed <= 0.0)
-         speed = m_speed;
+        speed = m_speed;
     start(m_posX, m_posY, toPosX, toPosY, speed);
 }
 

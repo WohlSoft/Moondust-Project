@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -273,29 +273,29 @@ size_t charsets_utils::utf8len(const char *s)
 
 int charsets_utils::UTF8Str_To_WStr(std::wstring &dest, const std::string &source)
 {
-    #ifdef _WIN32
+#ifdef _WIN32
     dest.resize(source.length());
     int newSize = MultiByteToWideChar(CP_UTF8, 0, source.c_str(), source.length(), (wchar_t *)dest.c_str(), source.length());
     dest.resize(newSize);
     return newSize;
-    #else
+#else
     (void)dest;
     (void)source;
     return static_cast<int>(utf8len(source.c_str()));
-    #endif
+#endif
 }
 
 int charsets_utils::WStr_To_UTF8Str(std::string &dest, const std::wstring &source)
 {
-    #ifdef _WIN32
+#ifdef _WIN32
     int dest_len = source.length() * 2;
     dest.resize(dest_len);
     dest_len = WideCharToMultiByte(CP_UTF8, 0, source.c_str(), source.length(), (LPSTR)dest.c_str(), dest_len, NULL, NULL);
     dest.resize(dest_len);
     return dest_len;
-    #else
+#else
     (void)dest;
     (void)source;
     return static_cast<int>(source.size());
-    #endif
+#endif
 }

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -93,6 +93,11 @@ void PGE_MsgBox::construct(std::string msg,
     /****************Word wrap*end*****************/
     PGE_Size boxSize = FontManager::textSize(m_message, m_fontID, 27);
     setBoxSize(boxSize.w() / 2, boxSize.h() / 2, _padding);
+
+    D_pLogDebug("Message box title sizes: %d x %d (len: %zu)\n"
+                "-------------\n"
+                "%s\n"
+                "-------------", boxSize.w(), boxSize.h(), m_message.size(), m_message.c_str());
 
     if((pos.x() == -1) && (pos.y() == -1))
     {

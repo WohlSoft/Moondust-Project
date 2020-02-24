@@ -982,10 +982,6 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please, select target image size:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -999,6 +995,10 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1193,6 +1193,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2316,10 +2320,6 @@ Please, check the application directory and make sure it is installed properly.<
 <context>
     <name>LevelEdit</name>
     <message>
-        <source>Level edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export current section to image</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2625,6 +2625,19 @@ Do you want to save your changes?</source>
         <source>Event:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LunaTester</name>
@@ -2724,7 +2737,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Violation of SMBX64 standard has beeen found!
+        <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
 Suggested to remove all excess elements.
@@ -3273,14 +3286,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Death:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3382,6 +3387,51 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>[none]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3795,6 +3845,11 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>
@@ -4031,7 +4086,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4041,7 +4096,7 @@ If this flag is enabled, you can only place a warp exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4797,10 +4852,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4815,7 +4866,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <extracomment>Edit from the editor</extracomment>
+        <extracomment>Exit from the editor</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4952,22 +5003,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Additional Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Compile To: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Autocode [Lunadll Original Language]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LunaLua</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Don&apos;t fill out of section</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4985,10 +5020,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Check for updates...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Run testing in the SMBX (LunaDLL required)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5555,10 +5586,6 @@ See %2 for more information.</source>
 </context>
 <context>
     <name>NpcEdit</name>
-    <message>
-        <source>NPC Configuration edit</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>NPC ID</source>
         <translation type="unfinished"></translation>
@@ -6162,10 +6189,6 @@ Error description:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Level Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>BGO Sorting Priority</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6534,6 +6557,14 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7383,25 +7414,6 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File read error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7439,6 +7451,14 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Select the point on the world map first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7541,6 +7561,10 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7727,10 +7751,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 </context>
 <context>
     <name>WorldEdit</name>
-    <message>
-        <source>World Map</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>1/%1 Loading user data</source>
         <translation type="unfinished"></translation>

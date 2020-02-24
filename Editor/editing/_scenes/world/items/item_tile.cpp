@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -331,7 +331,9 @@ void ItemTile::setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet, long *an
     {
         m_localProps = *mergedSet;
         m_gridSize = m_localProps.setup.grid;
+        setData(ITEM_IS_META, m_localProps.setup.is_meta_object);
     }
+
     if(animator_id)
         setAnimator(*animator_id);
 

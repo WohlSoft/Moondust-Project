@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CaseFixer</class>
+ <widget class="QDialog" name="CaseFixer">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>553</width>
+    <height>575</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Case fixer of episode resources</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../_resources/maintainer.qrc">
+    <normaloff>:/maintainer.ico</normaloff>:/maintainer.ico</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="8" column="0" colspan="3">
+    <widget class="QProgressBar" name="progress">
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>This wizard will help to fix an episode which works incorrectly because resource file names has a case missmatch. This shouldn't be a problem on the Windows and on the macOS with a case insensitive HFS+ mode. On Linux, xBSD and like systems with Ext4/3 or XFS file systems, and on the macOS with a case-sensitive HFS+ mode this come this comes into a big problem: files getting be missing up. To avoid any possible issues related to the case missmatch, all filenames should have the matched case with the requested filename.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QGroupBox" name="settings">
+     <property name="title">
+      <string>What episode to fix?</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLineEdit" name="episodeToFix">
+        <property name="placeholderText">
+         <string>Path to an episode directory to process</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="episodeBrowse">
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <widget class="QGroupBox" name="modeBox">
+     <property name="title">
+      <string>Choose the mode:</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QRadioButton" name="modeMatchFS">
+        <property name="text">
+         <string>Match to file system state (don't rename files if possible)</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="modeMatchFields">
+        <property name="text">
+         <string>Match to level/world file content (don't modify levels and worlds)</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="modeAllLower">
+        <property name="text">
+         <string>All to lower if possible</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="3">
+    <widget class="QGroupBox" name="configPack">
+     <property name="title">
+      <string>What configuration package to use?</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0" colspan="2">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>It's needed to verify filenames of customized resources</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="configPackPath">
+        <property name="placeholderText">
+         <string>Path to a configuration package</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="configPackBrowse">
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QComboBox" name="configPacksList"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>313</width>
+       <height>22</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="0" colspan="3">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="1">
+    <widget class="QPushButton" name="close">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="3">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>485</width>
+       <height>61</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="10" column="2">
+    <widget class="QPushButton" name="start">
+     <property name="text">
+      <string>Start</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="3">
+    <widget class="QLabel" name="statusMsg">
+     <property name="text">
+      <string notr="true"/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignHCenter|Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../_resources/maintainer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>close</sender>
+   <signal>clicked()</signal>
+   <receiver>CaseFixer</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>217</x>
+     <y>297</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>162</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

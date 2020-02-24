@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -233,7 +233,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->ResetPosition();
             dock_LvlItemBox->initItemLists();
             statusBar()->showMessage(tr("Level file loaded"), 2000);
-            SetCurrentLevelSection(0);
+            setCurrentLevelSection(0);
             dock_LvlWarpProps->init();
             dock_LvlLayers->setLayersBox();
 

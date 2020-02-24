@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -47,17 +47,17 @@ static char       g_outputBuffer[OUT_BUFFER_SIZE];
 
 class MutexLocker
 {
-        std::mutex *m_mutex;
-    public:
-        MutexLocker(std::mutex *mutex)
-        {
-            m_mutex = mutex;
-            m_mutex->lock();
-        }
-        ~MutexLocker()
-        {
-            m_mutex->unlock();
-        }
+    std::mutex *m_mutex;
+public:
+    MutexLocker(std::mutex *mutex)
+    {
+        m_mutex = mutex;
+        m_mutex->lock();
+    }
+    ~MutexLocker()
+    {
+        m_mutex->unlock();
+    }
 };
 
 std::string     LogWriter::m_logFilePath;
@@ -132,9 +132,7 @@ void LogWriter::LoadLogSettings(bool disableStdOut)
     {
         m_logout = SDL_RWFromFile(m_logFilePath.c_str(), "a");
         if(m_logout)
-        {
             m_logIsOpened = true;
-        }
         else
         {
             std::fprintf(stderr, "Impossible to open %s for write, log printing is disabled!\n", m_logFilePath.c_str());

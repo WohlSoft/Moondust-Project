@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -228,8 +228,8 @@ public:
      */
     static void renderTextureCur(float x, float y,
                                  float w, float h,
-                                 float ani_top=0.0f, float ani_bottom=1.0f,
-                                 float ani_left=0.0f, float ani_right=1.0f);
+                                 float ani_top = 0.0f, float ani_bottom = 1.0f,
+                                 float ani_left = 0.0f, float ani_right = 1.0f);
 
     /**
      * @brief Bind the texture
@@ -365,7 +365,7 @@ public:
      * @param tx Texture context
      * @param pixelData Pointer to array to write raw pixel data
      */
-    static void getPixelData(const PGE_Texture *tx, unsigned char* pixelData);
+    static void getPixelData(const PGE_Texture *tx, unsigned char *pixelData);
 
 private:
     //Virtual resolution of renderable zone
@@ -386,7 +386,7 @@ private:
     //! Keep aspect ratio vertical offset of virtual zone
     static float m_offset_y;
 
-    static SDL_Thread*  m_screenshot_thread;
+    static SDL_Thread  *m_screenshot_thread;
     //! Is rendering engine is ready for work?
     static bool         m_isReady;
 };

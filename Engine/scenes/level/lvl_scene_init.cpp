@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -22,6 +22,7 @@
 #include <settings/global_settings.h>
 #include <common_features/logger.h>
 #include <common_features/tr.h>
+#include <common_features/pge_delay.h>
 #include <Utils/maths.h>
 #include <gui/pge_msgbox.h>
 
@@ -580,7 +581,7 @@ bool LevelScene::init()
 {
     m_isInitFinished = false;
     m_isInitFailed = false;
-    #if 0
+#if 0
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext_background);
     initializer_thread = SDL_CreateThread(init_thread, "LevelInitializer", this);
     setLoaderAnimation(62);
@@ -590,16 +591,16 @@ bool LevelScene::init()
         drawLoader();
         PGE_Window::rePaint();
         //SDL_PumpEvents();
-        SDL_Delay(20);
+        PGE_Delay(20);
     }
 
     stopLoaderAnimation();
     SDL_GL_MakeCurrent(PGE_Window::window, PGE_Window::glcontext);
-    #else
+#else
     //Load everything without loading animation, in the main thread
     //(because in the threaded loading some issues are appearence)
     init_thread(this);
-    #endif
+#endif
 
     if(m_isInitFailed)
         PGE_MsgBox::error(_errorString);

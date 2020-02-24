@@ -1,4 +1,3 @@
-#ifndef MUSPLAY_USE_WINAPI
 #include <QtDebug>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -23,7 +22,9 @@
 
 #include "sfx_tester.h"
 #include "setup_midi.h"
+#include "setup_audio.h"
 #include "seek_bar.h"
+
 
 MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     MusPlayerBase(),
@@ -31,6 +32,7 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
 {
     ui->setupUi(this);
     PGE_MusicPlayer::setMainWindow(this);
+    PGE_MusicPlayer::initHooks();
 #ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_musplay.icns"));
 #endif
@@ -47,12 +49,16 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
              .arg(mixer_ver->minor)
              .arg(mixer_ver->patch);
 #else
-    title += QString(" (SDL Mixer %1.%2.%3)")
+    title += QString(" (SDL2_mixer %1.%2.%3)")
              .arg(mixer_ver->major)
              .arg(mixer_ver->minor)
              .arg(mixer_ver->patch);
 #endif
     setWindowTitle(title);
+
+#ifndef SDL_MIXER_X
+    ui->actionMidiSetup->setEnabled(false);
+#endif
 
     m_sfxTester = new SfxTester(this);
     m_sfxTester->setModal(false);
@@ -86,28 +92,16 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
 
     connect(m_seekBar, &SeekBar::positionSeeked, this, &MusPlayer_Qt::musicPosition_seeked);
 
-
-    //connect(ui->playListPush, &QPushButton::clicked, this, &MusPlayer_Qt::playList_pushCurrent);
-    //connect(ui->playListPop, &QPushButton::clicked, this, &MusPlayer_Qt::playList_popCurrent);
-
-    QApplication::setOrganizationName(V_COMPANY);
-    QApplication::setOrganizationDomain(V_PGE_URL);
-    QApplication::setApplicationName("PGE Music Player");
-    //ui->playList->setModel(&playList);
-
     QSettings setup;
     m_seekBar->setEnabled(false);
     ui->isLooping->setVisible(false);
-    //ui->playList->setVisible(false);
-    //ui->playListPush->setVisible(false);
-    //ui->playListPop->setVisible(false);
 
     ui->volume->setValue(setup.value("Volume", 128).toInt());
-    m_prevTrackID = ui->trackID->value();    
+    m_prevTrackID = ui->trackID->value();
     ui->gme_setup->setEnabled(false);
     ui->tempoFrame->setEnabled(false);
 
-    currentMusic = setup.value("RecentMusic", "").toString();
+    m_currentMusic = setup.value("RecentMusic", "").toString();
     restoreGeometry(setup.value("Window-Geometry").toByteArray());
     layout()->activate();
     adjustSize();
@@ -129,7 +123,7 @@ MusPlayer_Qt::~MusPlayer_Qt()
     QSettings setup;
     setup.setValue("Window-Geometry", saveGeometry());
     setup.setValue("Volume", ui->volume->value());
-    setup.setValue("RecentMusic", currentMusic);
+    setup.setValue("RecentMusic", m_currentMusic);
     setup.sync();
 
     delete ui;
@@ -146,11 +140,11 @@ void MusPlayer_Qt::dropEvent(QDropEvent *e)
     for(const QUrl &url : e->mimeData()->urls())
     {
         const QString &fileName = url.toLocalFile();
-        currentMusic = fileName;
+        m_currentMusic = fileName;
     }
 
-    ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
-    PGE_MusicPlayer::MUS_stopMusic();
+    ui->recordWav->setEnabled(!m_currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
+    PGE_MusicPlayer::stopMusic();
     on_play_clicked();
     this->raise();
     e->accept();
@@ -194,15 +188,13 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
     reverb->setCheckable(true);
     reverb->setChecked(PGE_MusicPlayer::reverbEnabled);
     QAction *assoc_files = x.addAction("Associate files");
-    //QAction *play_list   = x.addAction("Play-list mode [WIP]");
-    //play_list->setCheckable(true);
-    //play_list->setChecked(playListMode);
-
     QAction *sfx_testing_show = x.addAction("Show SFX testing");
     sfx_testing_show->setEnabled(!m_sfxTester->isVisible());
 
+#ifdef SDL_MIXER_X
     QAction *midi_setup_show = x.addAction("Show MIDI setup");
     midi_setup_show->setEnabled(!m_setupMidi->isVisible());
+#endif
 
     x.addSeparator();
     QMenu   *about       = x.addMenu("About");
@@ -228,14 +220,12 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
         ui->tempo->setValue(0);
     else if(assoc_files == ret)
         on_actionFileAssoc_triggered();
-    //    else if(ret == play_list)
-    //    {
-    //        setPlayListMode(!playListMode);
-    //    }
     else if(ret == sfx_testing_show)
         on_actionSfxTesting_triggered();
+#ifdef SDL_MIXER_X
     else if(ret == midi_setup_show)
         on_actionMidiSetup_triggered();
+#endif
     else if(ret == license)
         on_actionHelpLicense_triggered();
     else if(ret == source)
@@ -244,125 +234,33 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
 
 void MusPlayer_Qt::openMusicByArg(QString musPath)
 {
-    if(ui->recordWav->isChecked()) return;
+    if(ui->recordWav->isChecked())
+        return;
 
-    currentMusic = musPath;
-    //ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
-    PGE_MusicPlayer::MUS_stopMusic();
+    m_currentMusic = musPath;
+    PGE_MusicPlayer::stopMusic();
     on_play_clicked();
 }
 
 void MusPlayer_Qt::restartMusic()
 {
-    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
-        PGE_MusicPlayer::MUS_stopMusic();
+        PGE_MusicPlayer::stopMusic();
         on_play_clicked();
     }
 }
 
-//void MusPlayer_Qt::setPlayListMode(bool plMode)
-//{
-//    on_stop_clicked();
-//    playListMode = plMode;
-//    if(!plMode)
-//    {
-//        playList.clear();
-//    } else {
-//        playList_pushCurrent();
-//    }
-
-//    ui->playList->setVisible(plMode);
-//    ui->playListPush->setVisible(plMode);
-//    ui->playListPop->setVisible(plMode);
-//    if(ui->recordWav->isChecked())
-//        ui->recordWav->click();
-//    ui->recordWav->setVisible(!plMode);
-//    PGE_MusicPlayer::setPlayListMode(playListMode);
-
-//    adjustSize();
-//}
-
-//void MusPlayer_Qt::playList_pushCurrent(bool)
-//{
-//    PlayListEntry e;
-
-//    e.name = ui->musTitle->text();
-//    e.fullPath = currentMusic;
-
-//    e.gme_trackNum = ui->trackID->value();
-
-//    e.midi_device = ui->mididevice->currentIndex();
-
-//    e.adl_bankNo = ui->fmbank->currentIndex();
-//    e.adl_cmfVolumes = ui->volumeModel->currentIndex();
-//    e.adl_tremolo = ui->tremolo->isChecked();
-//    e.adl_vibrato = ui->vibrato->isChecked();
-//    e.adl_adlibDrums = ui->adlibMode->isChecked();
-//    e.adl_modulation = ui->modulation->isChecked();
-//    e.adl_cmfVolumes = ui->logVolumes->isChecked();
-
-//    playList.insertEntry(e);
-//}
-
-//void MusPlayer_Qt::playList_popCurrent(bool)
-//{
-//    playList.removeEntry();
-//}
-
-//void MusPlayer_Qt::playListNext()
-//{
-//    PlayListEntry e = playList.nextEntry();
-//    currentMusic = e.fullPath;
-//    switchMidiDevice(e.midi_device);
-//    ui->trackID->setValue(e.gme_trackNum);
-
-//    ui->fmbank->setCurrentIndex(e.adl_bankNo);
-//    ui->volumeModel->setCurrentIndex(e.adl_volumeModel);
-//    ui->tremolo->setChecked(e.adl_tremolo);
-//    ui->vibrato->setChecked(e.adl_vibrato);
-//    ui->adlibMode->setChecked(e.adl_adlibDrums);
-//    ui->modulation->setChecked(e.adl_modulation);
-//    ui->logVolumes->setChecked(e.adl_cmfVolumes);
-
-//    Mix_ADLMIDI_setBankID(e.adl_bankNo);
-//    Mix_ADLMIDI_setVolumeModel(e.adl_volumeModel);
-
-//    Mix_ADLMIDI_setTremolo(static_cast<int>(ui->tremolo->isChecked()));
-//    Mix_ADLMIDI_setVibrato(static_cast<int>(ui->vibrato->isChecked()));
-//    Mix_ADLMIDI_setAdLibMode(static_cast<int>(ui->adlibMode->isChecked()));
-//    Mix_ADLMIDI_setScaleMod(static_cast<int>(ui->modulation->isChecked()));
-//    Mix_ADLMIDI_setLogarithmicVolumes(static_cast<int>(ui->logVolumes->isChecked()));
-
-//    PGE_MusicPlayer::MUS_stopMusic();
-//    on_play_clicked();
-//}
-
-void MusPlayer_Qt::on_open_clicked()
-{
-    QString file = QFileDialog::getOpenFileName(this, tr("Open music file"),
-                   (currentMusic.isEmpty() ? QApplication::applicationDirPath() : currentMusic), "All (*.*)");
-
-    if(file.isEmpty())
-        return;
-
-    currentMusic = file;
-    //ui->recordWav->setEnabled(!currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
-    PGE_MusicPlayer::MUS_stopMusic();
-    on_play_clicked();
-}
-
-void MusPlayer_Qt::on_stop_clicked()
+void MusPlayer_Qt::musicStopped()
 {
     m_positionWatcher.stop();
     ui->playingTimeLabel->setText("--:--:--");
     m_seekBar->setPosition(0.0);
     m_seekBar->setEnabled(false);
-    PGE_MusicPlayer::MUS_stopMusic();
     ui->play->setToolTip(tr("Play"));
     ui->play->setIcon(QIcon(":/buttons/play.png"));
 
-    if(ui->recordWav->isChecked())
+    if(PGE_MusicPlayer::isWavRecordingWorks())
     {
         ui->recordWav->setChecked(false);
         PGE_MusicPlayer::stopWavRecording();
@@ -373,20 +271,43 @@ void MusPlayer_Qt::on_stop_clicked()
     }
 }
 
+void MusPlayer_Qt::on_open_clicked()
+{
+    QString file = QFileDialog::getOpenFileName(this,
+                                                tr("Open music file"),
+                                                (m_currentMusic.isEmpty() ?
+                                                QApplication::applicationDirPath() :
+                                                m_currentMusic),
+                                                "All (*.*)");
+
+    if(file.isEmpty())
+        return;
+
+    m_currentMusic = file;
+    PGE_MusicPlayer::stopMusic();
+    on_play_clicked();
+}
+
+void MusPlayer_Qt::on_stop_clicked()
+{
+    musicStopped();
+    PGE_MusicPlayer::stopMusic();
+}
+
 void MusPlayer_Qt::on_play_clicked()
 {
-    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
-        if(Mix_PausedMusicStream(PGE_MusicPlayer::play_mus))
+        if(Mix_PausedMusicStream(PGE_MusicPlayer::s_playMus))
         {
-            Mix_ResumeMusicStream(PGE_MusicPlayer::play_mus);
+            Mix_ResumeMusicStream(PGE_MusicPlayer::s_playMus);
             ui->play->setToolTip(tr("Pause"));
             ui->play->setIcon(QIcon(":/buttons/pause.png"));
             return;
         }
         else
         {
-            Mix_PauseMusicStream(PGE_MusicPlayer::play_mus);
+            Mix_PauseMusicStream(PGE_MusicPlayer::s_playMus);
             ui->play->setToolTip(tr("Resume"));
             ui->play->setIcon(QIcon(":/buttons/play.png"));
             return;
@@ -400,11 +321,11 @@ void MusPlayer_Qt::on_play_clicked()
 
     bool playSuccess = false;
 
-    QString musicPath = currentMusic;
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
+    QString musicPath = m_currentMusic;
+#ifdef SDL_MIXER_GE21
     QString midiRawArgs = m_setupMidi->getRawMidiArgs();
     if(ui->gme_setup->isEnabled())
-        musicPath += "|" + ui->trackID->text();
+        musicPath += "|" + ui->trackID->text() + ";" + midiRawArgs;
     else if((PGE_MusicPlayer::type == MUS_MID || PGE_MusicPlayer::type == MUS_ADLMIDI))
     {
         if(midiRawArgs.isEmpty())
@@ -416,17 +337,17 @@ void MusPlayer_Qt::on_play_clicked()
         }
     }
 #else
-    currentMusic;
+    Q_UNUSED(m_currentMusic);
 #endif
 
-    if(PGE_MusicPlayer::MUS_openFile(musicPath))
+    if(PGE_MusicPlayer::openFile(musicPath))
     {
         ui->tempo->blockSignals(true);
         ui->tempo->setValue(0);
         ui->tempo->blockSignals(false);
-        ui->tempoFrame->setEnabled((Mix_GetMusicTempo(PGE_MusicPlayer::play_mus) >= 0.0));
-        PGE_MusicPlayer::MUS_changeVolume(ui->volume->value());
-        playSuccess = PGE_MusicPlayer::MUS_playMusic();
+        ui->tempoFrame->setEnabled(Mix_GetMusicTempo(PGE_MusicPlayer::s_playMus) >= 0.0);
+        PGE_MusicPlayer::changeVolume(ui->volume->value());
+        playSuccess = PGE_MusicPlayer::playMusic();
         ui->play->setToolTip(tr("Pause"));
         ui->play->setIcon(QIcon(":/buttons/pause.png"));
     }
@@ -438,28 +359,16 @@ void MusPlayer_Qt::on_play_clicked()
 
     if(playSuccess)
     {
-        double total =
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
-            Mix_GetMusicTotalTime(PGE_MusicPlayer::play_mus);
-#else
-            -1.0;
-#endif
-        double loopStart =
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
-            Mix_GetMusicLoopStartTime(PGE_MusicPlayer::play_mus);
-#else
-            -1.0;
-#endif
-        double loopEnd =
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
-            Mix_GetMusicLoopEndTime(PGE_MusicPlayer::play_mus);
-#else
-            -1.0;
-#endif
+        double total = Mix_GetMusicTotalTime(PGE_MusicPlayer::s_playMus);
+        double curPos = Mix_GetMusicPosition(PGE_MusicPlayer::s_playMus);
+
+        double loopStart = Mix_GetMusicLoopStartTime(PGE_MusicPlayer::s_playMus);
+        double loopEnd = Mix_GetMusicLoopEndTime(PGE_MusicPlayer::s_playMus);
+
         m_seekBar->clearLoopPoints();
         m_seekBar->setEnabled(false);
 
-        if(total > 0)
+        if(total > 0.0 && curPos >= 0.0)
         {
             m_seekBar->setEnabled(true);
             m_seekBar->setLength(total);
@@ -473,26 +382,20 @@ void MusPlayer_Qt::on_play_clicked()
         if(loopStart >= 0.0)
             ui->isLooping->setVisible(true);
 
-        ui->musTitle->setText(PGE_MusicPlayer::MUS_getMusTitle());
-        ui->musArtist->setText(PGE_MusicPlayer::MUS_getMusArtist());
-        ui->musAlbum->setText(PGE_MusicPlayer::MUS_getMusAlbum());
-        ui->musCopyright->setText(PGE_MusicPlayer::MUS_getMusCopy());
+        ui->musTitle->setText(PGE_MusicPlayer::getMusTitle());
+        ui->musArtist->setText(PGE_MusicPlayer::getMusArtist());
+        ui->musAlbum->setText(PGE_MusicPlayer::getMusAlbum());
+        ui->musCopyright->setText(PGE_MusicPlayer::getMusCopy());
 
         ui->gme_setup->setEnabled(false);
 
         ui->smallInfo->setText(PGE_MusicPlayer::musicType());
         ui->gridLayout->update();
 
-        switch(PGE_MusicPlayer::type)
-        {
 #ifdef SDL_MIXER_X
-        case MUS_GME:
+        if(PGE_MusicPlayer::type == MUS_GME)
             ui->gme_setup->setEnabled(true);
-            break;
 #endif
-        default:
-            break;
-        }
     }
     else
     {
@@ -506,11 +409,11 @@ void MusPlayer_Qt::on_play_clicked()
 void MusPlayer_Qt::on_trackID_editingFinished()
 {
 #ifdef SDL_MIXER_X
-    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
         if((PGE_MusicPlayer::type == MUS_GME) && (m_prevTrackID != ui->trackID->value()))
         {
-            PGE_MusicPlayer::MUS_stopMusic();
+            PGE_MusicPlayer::stopMusic();
             on_play_clicked();
         }
     }
@@ -519,22 +422,28 @@ void MusPlayer_Qt::on_trackID_editingFinished()
 
 void MusPlayer_Qt::on_tempo_valueChanged(int tempo)
 {
-    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
+#ifdef SDL_MIXER_X
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
         double tempoFactor = 1.0 + 0.01 * double(tempo);
-        Mix_SetMusicTempo(PGE_MusicPlayer::play_mus, tempoFactor);
+        Mix_SetMusicTempo(PGE_MusicPlayer::s_playMus, tempoFactor);
         qDebug() << "Changed tempo factor: " << tempoFactor;
         QToolTip::showText(QCursor::pos(), QString("%1").arg(tempoFactor), this);
     }
+#else
+    Q_UNUSED(tempo);
+#endif
 }
 
 void MusPlayer_Qt::on_recordWav_clicked(bool checked)
 {
     if(checked)
     {
-        PGE_MusicPlayer::MUS_stopMusic();
+        PGE_MusicPlayer::disableHooks();
+        PGE_MusicPlayer::stopMusic();
+        PGE_MusicPlayer::enableHooks();
         ui->play->setText(tr("Play"));
-        QFileInfo twav(currentMusic);
+        QFileInfo twav(m_currentMusic);
         PGE_MusicPlayer::stopWavRecording();
         QString wavPathBase = twav.absoluteDir().absolutePath() + "/" + twav.baseName();
         QString wavPath = wavPathBase + ".wav";
@@ -570,15 +479,18 @@ void MusPlayer_Qt::_blink_red()
 
 void MusPlayer_Qt::updatePositionSlider()
 {
-    double pos =
-#if defined(SDL_MIXER_X) || defined(SDL_MIXER_GE21)
-        Mix_GetMusicPosition(PGE_MusicPlayer::play_mus);
-#else
-        -1.0;
-#endif
+    const double pos = Mix_GetMusicPosition(PGE_MusicPlayer::s_playMus);
     m_positionWatcherLock = true;
-    m_seekBar->setPosition(pos);
-    ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)std::floor(pos)).toUTC().toString("hh:mm:ss"));
+    if(pos < 0.0)
+    {
+        m_seekBar->setEnabled(false);
+        m_positionWatcher.stop();
+    }
+    else
+    {
+        m_seekBar->setPosition(pos);
+        ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)std::floor(pos)).toUTC().toString("hh:mm:ss"));
+    }
     m_positionWatcherLock = false;
 }
 
@@ -588,16 +500,12 @@ void MusPlayer_Qt::musicPosition_seeked(double value)
         return;
 
     qDebug() << "Seek to: " << value;
-
-    if(Mix_PlayingMusicStream(PGE_MusicPlayer::play_mus))
+    if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
-        Mix_SetMusicStreamPosition(PGE_MusicPlayer::play_mus, value);
+        Mix_SetMusicStreamPosition(PGE_MusicPlayer::s_playMus, value);
         ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)value).toUTC().toString("hh:mm:ss"));
     }
 }
-
-#endif
-
 
 
 void MusPlayer_Qt::on_actionOpen_triggered()
@@ -626,7 +534,7 @@ void MusPlayer_Qt::on_actionHelpAbout_triggered()
              .arg(mixer_ver->minor)
              .arg(mixer_ver->patch);
 #else
-    library += QString("SDL Mixer %1.%2.%3")
+    library += QString("SDL2_mixer %1.%2.%3")
              .arg(mixer_ver->major)
              .arg(mixer_ver->minor)
              .arg(mixer_ver->patch);
@@ -655,6 +563,12 @@ void MusPlayer_Qt::on_actionMidiSetup_triggered()
     m_setupMidi->repaint();
 }
 
+void MusPlayer_Qt::on_actionAudioSetup_triggered()
+{
+    SetupAudio as(this);
+    as.exec();
+}
+
 void MusPlayer_Qt::on_actionSfxTesting_triggered()
 {
     m_sfxTester->show();
@@ -668,7 +582,7 @@ void MusPlayer_Qt::on_actionEnableReverb_triggered(bool checked)
 {
     PGE_MusicPlayer::reverbEnabled = checked;
     if(PGE_MusicPlayer::reverbEnabled)
-        Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, reverbEffectDone, NULL);
+        Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, reverbEffectDone, nullptr);
     else
         Mix_UnregisterEffect(MIX_CHANNEL_POST, reverbEffect);
 }
@@ -678,4 +592,44 @@ void MusPlayer_Qt::on_actionFileAssoc_triggered()
     AssocFiles af(this);
     af.setWindowModality(Qt::WindowModal);
     af.exec();
+}
+
+void MusPlayer_Qt::cleanLoopChecks()
+{
+    ui->actionLoopForever->setChecked(false);
+    ui->actionPlay1Time->setChecked(false);
+    ui->actionPlay2Times->setChecked(false);
+    ui->actionPlay3Times->setChecked(false);
+}
+
+void MusPlayer_Qt::on_actionLoopForever_triggered()
+{
+    cleanLoopChecks();
+    ui->actionLoopForever->setChecked(true);
+    PGE_MusicPlayer::setMusicLoops(-1);
+    restartMusic();
+}
+
+void MusPlayer_Qt::on_actionPlay1Time_triggered()
+{
+    cleanLoopChecks();
+    ui->actionPlay1Time->setChecked(true);
+    PGE_MusicPlayer::setMusicLoops(0);
+    restartMusic();
+}
+
+void MusPlayer_Qt::on_actionPlay2Times_triggered()
+{
+    cleanLoopChecks();
+    ui->actionPlay2Times->setChecked(true);
+    PGE_MusicPlayer::setMusicLoops(2);
+    restartMusic();
+}
+
+void MusPlayer_Qt::on_actionPlay3Times_triggered()
+{
+    cleanLoopChecks();
+    ui->actionPlay3Times->setChecked(true);
+    PGE_MusicPlayer::setMusicLoops(3);
+    restartMusic();
 }

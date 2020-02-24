@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -308,13 +308,14 @@ void ConfigManager::loadConfigPackList()
         guiset.endGroup();
 
         QPixmap cpSplashImg;
+        QString splashData = cpFullDirPath + "data/";
 
         //Default splash image
         if(splash_logo.isEmpty())
             splash_logo = ":/images/splash_editor.png";
         else
         {
-            splash_logo = data_dir + splash_logo;
+            splash_logo = splashData + splash_logo;
             if(QPixmap(splash_logo).isNull())
                 splash_logo = ":/images/splash_editor.png";
         }

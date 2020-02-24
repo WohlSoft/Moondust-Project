@@ -66,7 +66,7 @@
     </message>
     <message id="CRASH_ABORT_TITLE.">
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation>Работа движка была прервана в связи с критической ошибкой.</translation>
+        <translation>Движок завершился в связи с критической ошибкой.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
         <source>Segmentation fault</source>
@@ -185,7 +185,7 @@ Enter to: %2</oldsource>
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <oldsource>Fatal error: Impossible to find start section.
 Are you placed player start point (or entrance warp point) too far off of the section(s)?</oldsource>
-        <translation>Фатальная ошибка: Невозможно найти начальную секцию.
+        <translation>Фатальная ошибка: Невозможно найти стартовую секцию.
 Не поместили ли вы начальную точку игрока (или точку входного прохода) слишком далеко от секции(й)?</translation>
     </message>
     <message id="LVL_MENU_PAUSE_TTL">

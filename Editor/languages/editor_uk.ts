@@ -5,7 +5,7 @@
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation>Настройки</translation>
+        <translation>Параметри</translation>
     </message>
     <message>
         <source>Main</source>
@@ -17,7 +17,7 @@
     </message>
     <message>
         <source>Autoplay music after opening file</source>
-        <translation>Автовмикання музики</translation>
+        <translation>Автозапуск музики після відкриття файлу</translation>
     </message>
     <message>
         <source>Performance</source>
@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation>Межа об&apos;єктів</translation>
+        <translation>Обмеження елементів для анімації</translation>
     </message>
     <message>
         <source>Collision detection</source>
@@ -41,16 +41,16 @@
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Окремі вікна (Классичний стиль)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкладки (Сучасний стиль)</translation>
     </message>
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Музика буде грати автоматично, коли ти відкриеш файл рівня.</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Файли</translation>
     </message>
     <message>
         <source>Associate file extensions</source>
@@ -67,7 +67,7 @@
     </message>
     <message>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор</translation>
     </message>
     <message>
         <source>Middle mouse button actions</source>
@@ -75,7 +75,7 @@
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити режим розміщення вибраного предмета</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
@@ -83,7 +83,7 @@
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим розміщення </translation>
     </message>
     <message>
         <source>Properties box will not be shown atomatically when you select an item to place,
@@ -273,7 +273,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Logging</source>
-        <translation>Журнал</translation>
+        <translation>Ведення журналу</translation>
     </message>
     <message>
         <source>Log level</source>
@@ -971,7 +971,7 @@ Please save them before doing anything else.</source>
     <name>ExportToImage</name>
     <message>
         <source>Export to image</source>
-        <translation>Експорт в зображення</translation>
+        <translation>Експортувати як зображення</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -979,7 +979,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source> px</source>
-        <translation>px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Force vertical background tiling</source>
@@ -992,10 +992,6 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hide invisible blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1032,6 +1028,10 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1226,6 +1226,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2388,10 +2392,6 @@ Please, check the application directory and make sure it is installed properly.<
 <context>
     <name>LevelEdit</name>
     <message>
-        <source>Level edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export current section to image</source>
         <translation type="unfinished">Зробити знімок секції у файл</translation>
     </message>
@@ -2697,6 +2697,19 @@ Do you want to save your changes?</source>
         <source>Trigger event</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LunaTester</name>
@@ -2796,7 +2809,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Violation of SMBX64 standard has beeen found!
+        <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
 Suggested to remove all excess elements.
@@ -3384,14 +3397,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Down</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Death:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3493,6 +3498,51 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>[none]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3914,6 +3964,11 @@ Physical env. zones:	%6
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>
@@ -4150,7 +4205,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4160,7 +4215,7 @@ If this flag is enabled, you can only place a warp exit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4465,7 +4520,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <extracomment>Edit from the editor</extracomment>
+        <extracomment>Exit from the editor</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4781,10 +4836,6 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4970,22 +5021,6 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Additional Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Compile To: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Autocode [Lunadll Original Language]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LunaLua</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Don&apos;t fill out of section</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5003,10 +5038,6 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Check for updates...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Run testing in the SMBX (LunaDLL required)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5703,10 +5734,6 @@ See %2 for more information.</source>
 <context>
     <name>NpcEdit</name>
     <message>
-        <source>NPC Configuration edit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>NPC ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6309,10 +6336,6 @@ Error description:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Level Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>BGO Sorting Priority</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6681,6 +6704,14 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7520,7 +7551,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Режим розміщення </translation>
     </message>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
@@ -7574,25 +7605,6 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File read error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7630,6 +7642,14 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Select the point on the world map first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7752,6 +7772,10 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7942,10 +7966,6 @@ Music boxes:		%5
 </context>
 <context>
     <name>WorldEdit</name>
-    <message>
-        <source>World Map</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>1/%1 Loading user data</source>
         <translation type="unfinished"></translation>

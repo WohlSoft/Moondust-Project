@@ -1,8 +1,7 @@
-#if !defined(MUSPLAYER_QT_H) && !defined(MUSPLAY_USE_WINAPI)
+#ifndef MUSPLAYER_QT_H
 #define MUSPLAYER_QT_H
 
 #include "musplayer_base.h"
-//#include "mw_qt/playlist_model.h"
 
 #include <QMainWindow>
 
@@ -25,7 +24,7 @@ class MusPlayer_Qt : public QMainWindow, public MusPlayerBase
 {
     Q_OBJECT
 public:
-    explicit MusPlayer_Qt(QWidget *parent = 0);
+    explicit MusPlayer_Qt(QWidget *parent = nullptr);
     virtual ~MusPlayer_Qt();
 
 protected:
@@ -59,7 +58,12 @@ public slots:
     //void playListNext();
 
 private slots:
+    void on_actionAudioSetup_triggered();
+
+private slots:
     void restartMusic();
+
+    void musicStopped();
 
     void on_open_clicked();
     void on_stop_clicked();
@@ -88,6 +92,12 @@ private slots:
     void on_actionSfxTesting_triggered();
     void on_actionEnableReverb_triggered(bool checked);
     void on_actionFileAssoc_triggered();
+
+    void cleanLoopChecks();
+    void on_actionLoopForever_triggered();
+    void on_actionPlay1Time_triggered();
+    void on_actionPlay2Times_triggered();
+    void on_actionPlay3Times_triggered();
 
 private:
     bool playListMode = false;

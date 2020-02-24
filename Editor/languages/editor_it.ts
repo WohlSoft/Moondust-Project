@@ -1031,7 +1031,7 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questa è la &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. l&apos;immagine verra&apos; scalata con questa larghezza.&lt;/p&gt;&lt;/bod&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questa è la &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. l&apos;immagine verra&apos; scalata con questa larghezza.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width</source>
@@ -1063,11 +1063,15 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     </message>
     <message>
         <source>Hide invisible blocks</source>
-        <translation>Nascondi blocchi invisibili</translation>
+        <translation type="vanished">Nascondi blocchi invisibili</translation>
     </message>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Sfondo completo</translation>
+    </message>
+    <message>
+        <source>Hide invisible blocks and meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1268,6 +1272,10 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
         <source>SMBX World Map</source>
         <comment>File Types</comment>
         <translation>Mappa SMBX</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Attendere...</translation>
     </message>
 </context>
 <context>
@@ -1749,7 +1757,7 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo è un messaggio, che verrà mostrato se il personaggio parlerà con l&apos;NPC. &lt;/p&gt;&lt;p&gt;&lt;span stile=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt; tutti i &quot; e le lettere con &apos;-&apos; verranno rimosse.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo è un messaggio, che verrà mostrato se il personaggio parlerà con l&apos;NPC. &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Nota:&lt;/span&gt; tutti i &quot; e le lettere con &apos;-&apos; verranno rimosse.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialog message:
@@ -2472,7 +2480,7 @@ Controlla la cartella dell&apos;applicazione e assicurati che sia installata cor
     <name>LevelEdit</name>
     <message>
         <source>Level edit</source>
-        <translation>Modifica del livello</translation>
+        <translation type="vanished">Modifica del livello</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -2821,6 +2829,19 @@ Vuoi salvare i cambiamenti?</translation>
         <source>Trigger event</source>
         <translation>Evento successivo</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Generale</translation>
+    </message>
+    <message>
+        <source>No settings available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LevelToolBox</name>
@@ -2959,7 +2980,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation>I limiti di SMBX64 sono stati superati!</translation>
     </message>
     <message>
-        <source>Violation of SMBX64 standard has beeen found!
+        <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
 Suggested to remove all excess elements.
@@ -3668,11 +3689,11 @@ Questa opzione usa il bug di SMBX del rendering degli oggetti di sfondo. Per far
     </message>
     <message>
         <source>Up</source>
-        <translation>Su</translation>
+        <translation type="vanished">Su</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation>Giù</translation>
+        <translation type="vanished">Giù</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -3777,6 +3798,51 @@ Questa opzione usa il bug di SMBX del rendering degli oggetti di sfondo. Per far
     <message>
         <source>[none]</source>
         <translation>[nessuno]</translation>
+    </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Su</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished">Giù</translation>
+    </message>
+    <message>
+        <source>Up-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Left</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down-Right</source>
+        <comment>Throwing direction of NPC, spawned via Generator object.</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4288,6 +4354,11 @@ Sone di Ambiente Fisico:	%6
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error in the file %1:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlWarpBox</name>
@@ -4538,7 +4609,7 @@ If this flag is enabled, you can only place a warp entrance.</source>
 Se questa opzione è attivata, potrai piazzare solo l&apos;entrata del trasporto.</translation>
     </message>
     <message>
-        <source>Exit only</source>
+        <source>To other level</source>
         <translation>Solo uscita</translation>
     </message>
     <message>
@@ -4550,7 +4621,7 @@ Usato per creare un trasporto da un altro livello.
 Se questa opzione è abilitata, potrai piazzare solo l&apos;uscita del trasporto.</translation>
     </message>
     <message>
-        <source>Enter only</source>
+        <source>From other level</source>
         <translation>Solo entrata</translation>
     </message>
     <message>
@@ -5146,7 +5217,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover�
     <message>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <extracomment>Edit from the editor</extracomment>
+        <extracomment>Exit from the editor</extracomment>
         <translation>Esci</translation>
     </message>
     <message>
@@ -5720,7 +5791,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover�
     </message>
     <message>
         <source>Item default</source>
-        <translation>Oggetto standard</translation>
+        <translation type="vanished">Oggetto standard</translation>
     </message>
     <message>
         <source>Welcome dialog</source>
@@ -5804,19 +5875,19 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover�
     </message>
     <message>
         <source>Additional Settings</source>
-        <translation>Opzioni aggiuntive</translation>
+        <translation type="vanished">Opzioni aggiuntive</translation>
     </message>
     <message>
         <source>Compile To: </source>
-        <translation>Compila a: </translation>
+        <translation type="vanished">Compila a: </translation>
     </message>
     <message>
         <source>Autocode [Lunadll Original Language]</source>
-        <translation>Autocode [Linguaggio Originale Lunadll]</translation>
+        <translation type="vanished">Autocode [Linguaggio Originale Lunadll]</translation>
     </message>
     <message>
         <source>LunaLua</source>
-        <translation>LunaLua</translation>
+        <translation type="vanished">LunaLua</translation>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
@@ -5840,7 +5911,7 @@ Gli oggetti non potranno essere piazzati uno sopra l&apos;altro, e se si prover�
     </message>
     <message>
         <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation>Avvia test in SMBX (LunaDLL richiesto)</translation>
+        <translation type="vanished">Avvia test in SMBX (LunaDLL richiesto)</translation>
     </message>
     <message>
         <source>Convert Audio files...</source>
@@ -6451,7 +6522,7 @@ vuoi continuare lo stesso?</translation>
     <name>NpcEdit</name>
     <message>
         <source>NPC Configuration edit</source>
-        <translation>Modifica configurazione NPC</translation>
+        <translation type="vanished">Modifica configurazione NPC</translation>
     </message>
     <message>
         <source>NPC ID</source>
@@ -7094,7 +7165,7 @@ Descrizione errore:
     </message>
     <message>
         <source>Level Name</source>
-        <translation>Nome livello</translation>
+        <translation type="vanished">Nome livello</translation>
     </message>
     <message>
         <source>BGO Sorting Priority</source>
@@ -7509,6 +7580,14 @@ Il numero massimo di musiche è %2.</translation>
     </message>
     <message>
         <source>NPC user data change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section extra settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8907,23 +8986,23 @@ I dati potrebbero essere corrotti!</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Errore lettura file</translation>
+        <translation type="vanished">Errore lettura file</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Impossibile leggere file: %1:
+        <translation type="vanished">Impossibile leggere file: %1:
 %2.</translation>
     </message>
     <message>
         <source>Configurations not loaded</source>
-        <translation>Configurazioni non caricate</translation>
+        <translation type="vanished">Configurazioni non caricate</translation>
     </message>
     <message>
         <source>Cannot open level world %1:
 because object configurations are not loaded
 .Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation>Impossibile aprire livello del mondo %1:
+        <translation type="vanished">Impossibile aprire livello del mondo %1:
 perché le configurazioni degli oggetti non sono state caricate
 .Controlla che la cartella config/SMBX esista e contenga i file *.INI con le impostazioni degli oggetti.</translation>
     </message>
@@ -8966,6 +9045,14 @@ perché le configurazioni degli oggetti non sono state caricate
     <message>
         <source>Select the point on the world map first.</source>
         <translation>Seleziona prima il punto sulla mappa.</translation>
+    </message>
+    <message>
+        <source>Configuration package has errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9043,7 +9130,7 @@ perché le configurazioni degli oggetti non sono state caricate
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questa è la &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. L&apos;immagine verra&apos; scalata a questa larghezza.&lt;/p&gt;&lt;/bod&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questa è la &lt;span style=&quot; font weight:600;&quot;&gt;larghezza&lt;/span&gt; dell&apos;immagine. L&apos;immagine verra&apos; scalata a questa larghezza.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source> px</source>
@@ -9076,6 +9163,10 @@ Alto:	%1
 Sinistra:	%2
 Destra:	%3
 Basso:	%4</translation>
+    </message>
+    <message>
+        <source>Hide meta-objects</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9290,7 +9381,7 @@ Musiche:		%5
     <name>WorldEdit</name>
     <message>
         <source>World Map</source>
-        <translation>Mappa</translation>
+        <translation type="vanished">Mappa</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>

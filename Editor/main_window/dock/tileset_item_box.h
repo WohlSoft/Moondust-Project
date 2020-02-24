@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,13 +41,13 @@ class TilesetItemBox : public QDockWidget, public MWDock_Base
 
     friend class MainWindow;
 private:
-    explicit TilesetItemBox(QWidget *parent = 0);
+    explicit TilesetItemBox(QWidget *parent = nullptr);
     ~TilesetItemBox();
 
 public slots:
     void re_translate();
 
-    void setTileSetBox(bool force=false);
+    void setTileSetBox(bool force = false);
 
     void on_TilesetItemBox_visibilityChanged(bool visible);
     void on_newTileset_clicked();
@@ -73,7 +73,7 @@ protected:
 
 private:
     Ui::TilesetItemBox *ui;
-    bool lockTilesetBox;
+    bool m_lockSettings = false;
 };
 
 #endif // TILESET_ITEM_BOX_H

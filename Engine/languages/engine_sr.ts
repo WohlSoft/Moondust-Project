@@ -4,94 +4,94 @@
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="290"/>
+        <location filename="../common_features/crash_handler.cpp" line="363"/>
         <source>Unhandled exception!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="292"/>
+        <location filename="../common_features/crash_handler.cpp" line="365"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="304"/>
+        <location filename="../common_features/crash_handler.cpp" line="377"/>
         <source>Out of memory!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="306"/>
+        <location filename="../common_features/crash_handler.cpp" line="379"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="342"/>
+        <location filename="../common_features/crash_handler.cpp" line="415"/>
         <source>Time out!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="344"/>
+        <location filename="../common_features/crash_handler.cpp" line="417"/>
         <source>Engine has abourted because alarm() time out!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="389"/>
+        <location filename="../common_features/crash_handler.cpp" line="462"/>
         <source>Physical memory address error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="391"/>
+        <location filename="../common_features/crash_handler.cpp" line="464"/>
         <source>Engine has crashed because a physical memory address error</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="408"/>
+        <location filename="../common_features/crash_handler.cpp" line="481"/>
         <source>Wrong CPU Instruction!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="410"/>
+        <location filename="../common_features/crash_handler.cpp" line="483"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="465"/>
+        <location filename="../common_features/crash_handler.cpp" line="538"/>
         <source>Wrong arithmetical operation</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="467"/>
+        <location filename="../common_features/crash_handler.cpp" line="540"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="479"/>
+        <location filename="../common_features/crash_handler.cpp" line="552"/>
         <source>Aborted</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="481"/>
+        <location filename="../common_features/crash_handler.cpp" line="554"/>
         <source>Engine has been aborted because critical error was occouped.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="526"/>
+        <location filename="../common_features/crash_handler.cpp" line="599"/>
         <source>Segmentation fault</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="530"/>
+        <location filename="../common_features/crash_handler.cpp" line="603"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="539"/>
+        <location filename="../common_features/crash_handler.cpp" line="612"/>
         <source>Interrupt</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="541"/>
+        <location filename="../common_features/crash_handler.cpp" line="614"/>
         <source>Engine has been interrupted</source>
         <translation type="unfinished"></translation>
     </message>
@@ -229,61 +229,61 @@ Entrance point: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="554"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="300"/>
+        <location filename="../scenes/scene_world.cpp" line="550"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="302"/>
         <source>Invalid playable character ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="563"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
+        <location filename="../scenes/scene_world.cpp" line="559"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="311"/>
         <source>Invalid playable character state ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="615"/>
-        <location filename="../scenes/scene_world.cpp" line="642"/>
+        <location filename="../scenes/scene_world.cpp" line="611"/>
+        <location filename="../scenes/scene_world.cpp" line="638"/>
         <source>Pause</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="623"/>
-        <location filename="../scenes/scene_world.cpp" line="650"/>
+        <location filename="../scenes/scene_world.cpp" line="619"/>
+        <location filename="../scenes/scene_world.cpp" line="646"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="625"/>
+        <location filename="../scenes/scene_world.cpp" line="621"/>
         <source>Save and continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="627"/>
+        <location filename="../scenes/scene_world.cpp" line="623"/>
         <source>Save and quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="629"/>
+        <location filename="../scenes/scene_world.cpp" line="625"/>
         <source>Exit without saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="652"/>
+        <location filename="../scenes/scene_world.cpp" line="648"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="GAMEOVER_TITLE">
-        <location filename="../scenes/scene_gameover.cpp" line="54"/>
+        <location filename="../scenes/scene_gameover.cpp" line="56"/>
         <source>Game Over!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="GAMEOVER_CONTINUE">
-        <location filename="../scenes/scene_gameover.cpp" line="60"/>
+        <location filename="../scenes/scene_gameover.cpp" line="62"/>
         <source>Continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="GAMEOVER_EXIT">
-        <location filename="../scenes/scene_gameover.cpp" line="62"/>
+        <location filename="../scenes/scene_gameover.cpp" line="64"/>
         <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -444,7 +444,7 @@ Entrance point: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="434"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="436"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation type="unfinished"></translation>
@@ -519,27 +519,27 @@ Software renderer will be started.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
-        <location filename="../graphics/vsync_validator.cpp" line="70"/>
+        <location filename="../graphics/vsync_validator.cpp" line="77"/>
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="242"/>
+        <location filename="../gui/pge_msgbox.cpp" line="247"/>
         <source>Information</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="257"/>
+        <location filename="../gui/pge_msgbox.cpp" line="262"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="272"/>
+        <location filename="../gui/pge_msgbox.cpp" line="277"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="287"/>
+        <location filename="../gui/pge_msgbox.cpp" line="292"/>
         <source>Fatal error</source>
         <translation type="unfinished"></translation>
     </message>

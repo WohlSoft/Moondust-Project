@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,8 +63,8 @@ void ItemPhysEnv::construct()
 
     setData(ITEM_TYPE, "Water");
     setData(ITEM_BLOCK_IS_SIZABLE, "sizable");
-    setData(ITEM_WIDTH, (int)m_data.w);
-    setData(ITEM_HEIGHT, (int)m_data.h);
+    setData(ITEM_WIDTH, static_cast<int>(m_data.w));
+    setData(ITEM_HEIGHT, static_cast<int>(m_data.h));
 }
 
 ItemPhysEnv::~ItemPhysEnv()

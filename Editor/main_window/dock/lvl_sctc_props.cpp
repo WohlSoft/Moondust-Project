@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include <audio/music_player.h>
 #include <editing/_dialogs/musicfilelist.h>
 #include <editing/_scenes/level/lvl_history_manager.h>
+#include <common_features/json_settings_widget.h>
 #include <main_window/dock/lvl_events_box.h>
 
 #include <ui_mainwindow.h>
@@ -26,6 +27,8 @@
 
 #include <QDesktopServices>
 #include <QTextStream>
+#include <QMutexLocker>
+#include <QListView>
 
 #include "lvl_sctc_props.h"
 #include "ui_lvl_sctc_props.h"
@@ -41,7 +44,7 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     switchResizeMode(false);
 
-    lockSctSettingsProps = false;
+    m_externalLock = false;
 
     QRect mwg = mw()->geometry();
     int GOffset = 10;
@@ -55,6 +58,8 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
         height()
     );
 
+    m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    
     connect(mw()->ui->ResizingToolbar, SIGNAL(visibilityChanged(bool)),
             this, SLOT(switchResizeMode(bool)));
     connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionSection_Settings, SLOT(setChecked(bool)));
@@ -89,6 +94,11 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
 LvlSectionProps::~LvlSectionProps()
 {
+    if(m_extraSettings.get())
+        ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+    ui->extraSettings->layout()->removeItem(m_extraSettingsSpacer.get());
+    m_extraSettings.reset();
+    m_extraSettingsSpacer.reset();
     delete ui;
 }
 
@@ -108,6 +118,8 @@ void LvlSectionProps::setSMBX64Strict(bool en)
     ui->LVLPropsWrapVertical->setHidden(wrap_vertical_hidden);
     mw()->ui->actionWrapVertically->setEnabled(wrap_vertical_enabled);
     mw()->ui->actionWrapVertically->setVisible(!wrap_vertical_hidden);
+
+    ui->extraSettings->setEnabled(!en);
 }
 
 void LvlSectionProps::re_translate()
@@ -123,6 +135,92 @@ void LvlSectionProps::focusInEvent(QFocusEvent *ev)
     //qApp->setActiveWindow(mw());
 }
 
+void LvlSectionProps::updateExtraSettingsWidget()
+{
+    LevelEdit *edit = nullptr;
+    QString defaultDir = mw()->configs.config_dir;
+
+    if((mw()->activeChildWindow() == MainWindow::WND_Level) && (edit = mw()->activeLvlEditWin()))
+    {
+        QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
+        bool spacerNeeded = false;
+        
+        CustomDirManager uLVL(edit->LvlData.meta.path, edit->LvlData.meta.filename);
+        uLVL.setDefaultDir(defaultDir);
+
+        QString esLayoutFile = uLVL.getCustomFile("lvl_section.json");
+        if(esLayoutFile.isEmpty())
+            return;
+
+        auto &section = edit->LvlData.sections[edit->LvlData.CurSection];
+
+        QFile layoutFile(esLayoutFile);
+        if(!layoutFile.open(QIODevice::ReadOnly))
+            return;
+
+        ui->extraSettings->setToolTip("");
+        ui->extraSettings->setMinimumHeight(0);
+        ui->extraSettings->setStyleSheet("");
+        if(m_extraSettings.get())
+            ui->extraSettings->layout()->removeWidget(m_extraSettings.get()->getWidget());
+        ui->extraSettings->layout()->removeItem(m_extraSettingsSpacer.get());
+        m_extraSettings.reset();
+
+        QByteArray rawLayout = layoutFile.readAll();
+        m_extraSettings.reset(new JsonSettingsWidget(ui->extraSettings));
+        if(m_extraSettings.get())
+        {
+            m_extraSettings->setSearchDirectories(edit->LvlData.meta.path, edit->LvlData.meta.filename);
+            m_extraSettings->setConfigPack(&mw()->configs);
+            if(!m_extraSettings->loadLayout(section.custom_params.toUtf8(), rawLayout))
+            {
+                LogWarning(m_extraSettings->errorString());
+                ui->extraSettings->setToolTip(tr("Error in the file %1:\n%2")
+                                              .arg(esLayoutFile)
+                                              .arg(m_extraSettings->errorString()));
+                ui->extraSettings->setMinimumHeight(12);
+                ui->extraSettings->setStyleSheet("*{background-color: #FF0000;}");
+            }
+            auto *widget = m_extraSettings->getWidget();
+            if(widget)
+            {
+                widget->layout()->setContentsMargins(0, 0, 0, 0);
+                ui->extraSettings->layout()->addWidget(widget);
+                JsonSettingsWidget::connect(m_extraSettings.get(),
+                                            &JsonSettingsWidget::settingsChanged,
+                                            this,
+                                            &LvlSectionProps::onExtraSettingsChanged);
+                spacerNeeded = spacerNeeded || m_extraSettings->spacerNeeded();
+            }
+        }
+        layoutFile.close();
+        
+        ui->extraSettings->setMinimumHeight(spacerNeeded ? 0 : 150);
+        if(spacerNeeded)
+            ui->extraSettings->layout()->addItem(m_extraSettingsSpacer.get());
+    }
+}
+
+void LvlSectionProps::onExtraSettingsChanged()
+{
+    if(mw()->activeChildWindow() == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+        if(!edit)
+            return;
+        auto &section = edit->LvlData.sections[edit->LvlData.CurSection];
+        QString custom_params = m_extraSettings->saveSettings();
+        QList<QVariant> xtraSetupData;
+        xtraSetupData.push_back(section.custom_params);
+        xtraSetupData.push_back(custom_params);
+        edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection,
+                HistorySettings::SETTING_SEC_XTRA,
+                QVariant(xtraSetupData));
+        section.custom_params = custom_params;
+        edit->LvlData.meta.modified = true;
+    }
+}
+
 // Level Section tool box show/hide
 void MainWindow::on_actionSection_Settings_triggered(bool checked)
 {
@@ -133,7 +231,7 @@ void MainWindow::on_actionSection_Settings_triggered(bool checked)
 // ////////////////Set LevelSection data//////////////////////////////////
 void LvlSectionProps::initDefaults()
 {
-    lockSctSettingsProps = true;
+    m_externalLock = true;
     mw()->dock_LvlEvents->setEventToolsLocked(true);
 
     LogDebug(QString("Set level Section Data"));
@@ -241,7 +339,7 @@ void LvlSectionProps::initDefaults()
     }
 
     mw()->dock_LvlEvents->setEventToolsLocked(false);
-    lockSctSettingsProps = false;
+    m_externalLock = false;
 
     //Set current data
     refreshFileData();
@@ -250,14 +348,14 @@ void LvlSectionProps::initDefaults()
 
 void LvlSectionProps::refreshFileData()
 {
-    lockSctSettingsProps = true;
+    m_externalLock = true;
     //Set current data
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
         if(!edit)
         {
-            lockSctSettingsProps = false;
+            m_externalLock = false;
             return;
         }
 
@@ -294,9 +392,11 @@ void LvlSectionProps::refreshFileData()
         ui->LVLPropsMusicCustom->setText(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
         ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw()->configs.music_custom_id));
 
+        updateExtraSettingsWidget();
+
         loadMusic();
     }
-    lockSctSettingsProps = false;
+    m_externalLock = false;
 }
 
 
@@ -375,10 +475,8 @@ void LvlSectionProps::on_ResizeSection_clicked()
         if(!edit) return;
         qApp->setActiveWindow(mw());
         edit->setFocus();
-        if(edit->scene->m_resizeBox == NULL)
-        {
+        if(edit->scene->m_resizeBox == nullptr)
             edit->scene->setSectionResizer(true);
-        }
     }
 }
 
@@ -406,7 +504,7 @@ void LvlSectionProps::on_cancelResize_clicked()
 // ////////////////////////////////////////////////////////////////////////////////
 void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
 {
-    if(lockSctSettingsProps) return;
+    if(m_externalLock) return;
 
     if(mw()->configs.main_bg.stored() == 0)
     {
@@ -526,7 +624,7 @@ void LvlSectionProps::loadMusic()
 
 void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
 {
-    if(lockSctSettingsProps) return;
+    if(m_externalLock) return;
 
     unsigned int test = index;
     ui->LVLPropsMusicCustomEn->setChecked(test == mw()->configs.music_custom_id);
@@ -548,7 +646,7 @@ void LvlSectionProps::on_LVLPropsMusicNumber_currentIndexChanged(int index)
 
 void LvlSectionProps::on_LVLPropsMusicCustomEn_toggled(bool checked)
 {
-    if(lockSctSettingsProps) return;
+    if(m_externalLock) return;
 
     if(ui->LVLPropsMusicCustomEn->hasFocus())
     {
@@ -591,7 +689,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
     MusicFileList musicList(dirPath, ui->LVLPropsMusicCustom->text());
     if(musicList.exec() == QDialog::Accepted)
     {
-        ui->LVLPropsMusicCustom->setText(musicList.SelectedFile);
+        ui->LVLPropsMusicCustom->setText(musicList.currentFile());
         ui->LVLPropsMusicCustom->setModified(true);
         on_LVLPropsMusicCustom_editingFinished();
     }
@@ -600,7 +698,7 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
 
 void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(const QString &arg1)
 {
-    if(lockSctSettingsProps) return;
+    if(m_externalLock) return;
     if(!ui->LVLPropsMusicCustom->isModified()) return;
     ui->LVLPropsMusicCustom->setModified(false);
 

@@ -1,7 +1,7 @@
 /*
  * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2017-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,118 +45,120 @@ Matrix::Matrix(QWidget *parent) :
     image.setPixmap(scaledImage);
     image.setPos(0.0, 0.0);
     MatrixS->addItem(&image);
-    FrameConfig = framesX;
+    FrameConfig = g_framesX;
+    qDebug() << "Building a scene: " << ui->SpriteMatrix->width() << ui->SpriteMatrix->height();
+
     //Set data to matrix:
     // Set Y = 0
-    ui->EnFrame_0_0->setChecked(framesX[0][0].used);
-    ui->EnFrame_0_1->setChecked(framesX[1][0].used);
-    ui->EnFrame_0_2->setChecked(framesX[2][0].used);
-    ui->EnFrame_0_3->setChecked(framesX[3][0].used);
-    ui->EnFrame_0_4->setChecked(framesX[4][0].used);
-    ui->EnFrame_0_5->setChecked(framesX[5][0].used);
-    ui->EnFrame_0_6->setChecked(framesX[6][0].used);
-    ui->EnFrame_0_7->setChecked(framesX[7][0].used);
-    ui->EnFrame_0_8->setChecked(framesX[8][0].used);
-    ui->EnFrame_0_9->setChecked(framesX[9][0].used);
+    ui->EnFrame_0_0->setChecked(g_framesX[0][0].used);
+    ui->EnFrame_0_1->setChecked(g_framesX[1][0].used);
+    ui->EnFrame_0_2->setChecked(g_framesX[2][0].used);
+    ui->EnFrame_0_3->setChecked(g_framesX[3][0].used);
+    ui->EnFrame_0_4->setChecked(g_framesX[4][0].used);
+    ui->EnFrame_0_5->setChecked(g_framesX[5][0].used);
+    ui->EnFrame_0_6->setChecked(g_framesX[6][0].used);
+    ui->EnFrame_0_7->setChecked(g_framesX[7][0].used);
+    ui->EnFrame_0_8->setChecked(g_framesX[8][0].used);
+    ui->EnFrame_0_9->setChecked(g_framesX[9][0].used);
     // Set Y = 1
-    ui->EnFrame_1_0->setChecked(framesX[0][1].used);
-    ui->EnFrame_1_1->setChecked(framesX[1][1].used);
-    ui->EnFrame_1_2->setChecked(framesX[2][1].used);
-    ui->EnFrame_1_3->setChecked(framesX[3][1].used);
-    ui->EnFrame_1_4->setChecked(framesX[4][1].used);
-    ui->EnFrame_1_5->setChecked(framesX[5][1].used);
-    ui->EnFrame_1_6->setChecked(framesX[6][1].used);
-    ui->EnFrame_1_7->setChecked(framesX[7][1].used);
-    ui->EnFrame_1_8->setChecked(framesX[8][1].used);
-    ui->EnFrame_1_9->setChecked(framesX[9][1].used);
+    ui->EnFrame_1_0->setChecked(g_framesX[0][1].used);
+    ui->EnFrame_1_1->setChecked(g_framesX[1][1].used);
+    ui->EnFrame_1_2->setChecked(g_framesX[2][1].used);
+    ui->EnFrame_1_3->setChecked(g_framesX[3][1].used);
+    ui->EnFrame_1_4->setChecked(g_framesX[4][1].used);
+    ui->EnFrame_1_5->setChecked(g_framesX[5][1].used);
+    ui->EnFrame_1_6->setChecked(g_framesX[6][1].used);
+    ui->EnFrame_1_7->setChecked(g_framesX[7][1].used);
+    ui->EnFrame_1_8->setChecked(g_framesX[8][1].used);
+    ui->EnFrame_1_9->setChecked(g_framesX[9][1].used);
     // Set Y = 2
-    ui->EnFrame_2_0->setChecked(framesX[0][2].used);
-    ui->EnFrame_2_1->setChecked(framesX[1][2].used);
-    ui->EnFrame_2_2->setChecked(framesX[2][2].used);
-    ui->EnFrame_2_3->setChecked(framesX[3][2].used);
-    ui->EnFrame_2_4->setChecked(framesX[4][2].used);
-    ui->EnFrame_2_5->setChecked(framesX[5][2].used);
-    ui->EnFrame_2_6->setChecked(framesX[6][2].used);
-    ui->EnFrame_2_7->setChecked(framesX[7][2].used);
-    ui->EnFrame_2_8->setChecked(framesX[8][2].used);
-    ui->EnFrame_2_9->setChecked(framesX[9][2].used);
+    ui->EnFrame_2_0->setChecked(g_framesX[0][2].used);
+    ui->EnFrame_2_1->setChecked(g_framesX[1][2].used);
+    ui->EnFrame_2_2->setChecked(g_framesX[2][2].used);
+    ui->EnFrame_2_3->setChecked(g_framesX[3][2].used);
+    ui->EnFrame_2_4->setChecked(g_framesX[4][2].used);
+    ui->EnFrame_2_5->setChecked(g_framesX[5][2].used);
+    ui->EnFrame_2_6->setChecked(g_framesX[6][2].used);
+    ui->EnFrame_2_7->setChecked(g_framesX[7][2].used);
+    ui->EnFrame_2_8->setChecked(g_framesX[8][2].used);
+    ui->EnFrame_2_9->setChecked(g_framesX[9][2].used);
     // Set Y = 3
-    ui->EnFrame_3_0->setChecked(framesX[0][3].used);
-    ui->EnFrame_3_1->setChecked(framesX[1][3].used);
-    ui->EnFrame_3_2->setChecked(framesX[2][3].used);
-    ui->EnFrame_3_3->setChecked(framesX[3][3].used);
-    ui->EnFrame_3_4->setChecked(framesX[4][3].used);
-    ui->EnFrame_3_5->setChecked(framesX[5][3].used);
-    ui->EnFrame_3_6->setChecked(framesX[6][3].used);
-    ui->EnFrame_3_7->setChecked(framesX[7][3].used);
-    ui->EnFrame_3_8->setChecked(framesX[8][3].used);
-    ui->EnFrame_3_9->setChecked(framesX[9][3].used);
+    ui->EnFrame_3_0->setChecked(g_framesX[0][3].used);
+    ui->EnFrame_3_1->setChecked(g_framesX[1][3].used);
+    ui->EnFrame_3_2->setChecked(g_framesX[2][3].used);
+    ui->EnFrame_3_3->setChecked(g_framesX[3][3].used);
+    ui->EnFrame_3_4->setChecked(g_framesX[4][3].used);
+    ui->EnFrame_3_5->setChecked(g_framesX[5][3].used);
+    ui->EnFrame_3_6->setChecked(g_framesX[6][3].used);
+    ui->EnFrame_3_7->setChecked(g_framesX[7][3].used);
+    ui->EnFrame_3_8->setChecked(g_framesX[8][3].used);
+    ui->EnFrame_3_9->setChecked(g_framesX[9][3].used);
     // Set Y = 4
-    ui->EnFrame_4_0->setChecked(framesX[0][4].used);
-    ui->EnFrame_4_1->setChecked(framesX[1][4].used);
-    ui->EnFrame_4_2->setChecked(framesX[2][4].used);
-    ui->EnFrame_4_3->setChecked(framesX[3][4].used);
-    ui->EnFrame_4_4->setChecked(framesX[4][4].used);
-    ui->EnFrame_4_5->setChecked(framesX[5][4].used);
-    ui->EnFrame_4_6->setChecked(framesX[6][4].used);
-    ui->EnFrame_4_7->setChecked(framesX[7][4].used);
-    ui->EnFrame_4_8->setChecked(framesX[8][4].used);
-    ui->EnFrame_4_9->setChecked(framesX[9][4].used);
+    ui->EnFrame_4_0->setChecked(g_framesX[0][4].used);
+    ui->EnFrame_4_1->setChecked(g_framesX[1][4].used);
+    ui->EnFrame_4_2->setChecked(g_framesX[2][4].used);
+    ui->EnFrame_4_3->setChecked(g_framesX[3][4].used);
+    ui->EnFrame_4_4->setChecked(g_framesX[4][4].used);
+    ui->EnFrame_4_5->setChecked(g_framesX[5][4].used);
+    ui->EnFrame_4_6->setChecked(g_framesX[6][4].used);
+    ui->EnFrame_4_7->setChecked(g_framesX[7][4].used);
+    ui->EnFrame_4_8->setChecked(g_framesX[8][4].used);
+    ui->EnFrame_4_9->setChecked(g_framesX[9][4].used);
     // Set Y = 5
-    ui->EnFrame_5_0->setChecked(framesX[0][5].used);
-    ui->EnFrame_5_1->setChecked(framesX[1][5].used);
-    ui->EnFrame_5_2->setChecked(framesX[2][5].used);
-    ui->EnFrame_5_3->setChecked(framesX[3][5].used);
-    ui->EnFrame_5_4->setChecked(framesX[4][5].used);
-    ui->EnFrame_5_5->setChecked(framesX[5][5].used);
-    ui->EnFrame_5_6->setChecked(framesX[6][5].used);
-    ui->EnFrame_5_7->setChecked(framesX[7][5].used);
-    ui->EnFrame_5_8->setChecked(framesX[8][5].used);
-    ui->EnFrame_5_9->setChecked(framesX[9][5].used);
+    ui->EnFrame_5_0->setChecked(g_framesX[0][5].used);
+    ui->EnFrame_5_1->setChecked(g_framesX[1][5].used);
+    ui->EnFrame_5_2->setChecked(g_framesX[2][5].used);
+    ui->EnFrame_5_3->setChecked(g_framesX[3][5].used);
+    ui->EnFrame_5_4->setChecked(g_framesX[4][5].used);
+    ui->EnFrame_5_5->setChecked(g_framesX[5][5].used);
+    ui->EnFrame_5_6->setChecked(g_framesX[6][5].used);
+    ui->EnFrame_5_7->setChecked(g_framesX[7][5].used);
+    ui->EnFrame_5_8->setChecked(g_framesX[8][5].used);
+    ui->EnFrame_5_9->setChecked(g_framesX[9][5].used);
     // Set Y = 6
-    ui->EnFrame_6_0->setChecked(framesX[0][6].used);
-    ui->EnFrame_6_1->setChecked(framesX[1][6].used);
-    ui->EnFrame_6_2->setChecked(framesX[2][6].used);
-    ui->EnFrame_6_3->setChecked(framesX[3][6].used);
-    ui->EnFrame_6_4->setChecked(framesX[4][6].used);
-    ui->EnFrame_6_5->setChecked(framesX[5][6].used);
-    ui->EnFrame_6_6->setChecked(framesX[6][6].used);
-    ui->EnFrame_6_7->setChecked(framesX[7][6].used);
-    ui->EnFrame_6_8->setChecked(framesX[8][6].used);
-    ui->EnFrame_6_9->setChecked(framesX[9][6].used);
+    ui->EnFrame_6_0->setChecked(g_framesX[0][6].used);
+    ui->EnFrame_6_1->setChecked(g_framesX[1][6].used);
+    ui->EnFrame_6_2->setChecked(g_framesX[2][6].used);
+    ui->EnFrame_6_3->setChecked(g_framesX[3][6].used);
+    ui->EnFrame_6_4->setChecked(g_framesX[4][6].used);
+    ui->EnFrame_6_5->setChecked(g_framesX[5][6].used);
+    ui->EnFrame_6_6->setChecked(g_framesX[6][6].used);
+    ui->EnFrame_6_7->setChecked(g_framesX[7][6].used);
+    ui->EnFrame_6_8->setChecked(g_framesX[8][6].used);
+    ui->EnFrame_6_9->setChecked(g_framesX[9][6].used);
     // Set Y = 7
-    ui->EnFrame_7_0->setChecked(framesX[0][7].used);
-    ui->EnFrame_7_1->setChecked(framesX[1][7].used);
-    ui->EnFrame_7_2->setChecked(framesX[2][7].used);
-    ui->EnFrame_7_3->setChecked(framesX[3][7].used);
-    ui->EnFrame_7_4->setChecked(framesX[4][7].used);
-    ui->EnFrame_7_5->setChecked(framesX[5][7].used);
-    ui->EnFrame_7_6->setChecked(framesX[6][7].used);
-    ui->EnFrame_7_7->setChecked(framesX[7][7].used);
-    ui->EnFrame_7_8->setChecked(framesX[8][7].used);
-    ui->EnFrame_7_9->setChecked(framesX[9][7].used);
+    ui->EnFrame_7_0->setChecked(g_framesX[0][7].used);
+    ui->EnFrame_7_1->setChecked(g_framesX[1][7].used);
+    ui->EnFrame_7_2->setChecked(g_framesX[2][7].used);
+    ui->EnFrame_7_3->setChecked(g_framesX[3][7].used);
+    ui->EnFrame_7_4->setChecked(g_framesX[4][7].used);
+    ui->EnFrame_7_5->setChecked(g_framesX[5][7].used);
+    ui->EnFrame_7_6->setChecked(g_framesX[6][7].used);
+    ui->EnFrame_7_7->setChecked(g_framesX[7][7].used);
+    ui->EnFrame_7_8->setChecked(g_framesX[8][7].used);
+    ui->EnFrame_7_9->setChecked(g_framesX[9][7].used);
     // Set Y = 8
-    ui->EnFrame_8_0->setChecked(framesX[0][8].used);
-    ui->EnFrame_8_1->setChecked(framesX[1][8].used);
-    ui->EnFrame_8_2->setChecked(framesX[2][8].used);
-    ui->EnFrame_8_3->setChecked(framesX[3][8].used);
-    ui->EnFrame_8_4->setChecked(framesX[4][8].used);
-    ui->EnFrame_8_5->setChecked(framesX[5][8].used);
-    ui->EnFrame_8_6->setChecked(framesX[6][8].used);
-    ui->EnFrame_8_7->setChecked(framesX[7][8].used);
-    ui->EnFrame_8_8->setChecked(framesX[8][8].used);
-    ui->EnFrame_8_9->setChecked(framesX[9][8].used);
+    ui->EnFrame_8_0->setChecked(g_framesX[0][8].used);
+    ui->EnFrame_8_1->setChecked(g_framesX[1][8].used);
+    ui->EnFrame_8_2->setChecked(g_framesX[2][8].used);
+    ui->EnFrame_8_3->setChecked(g_framesX[3][8].used);
+    ui->EnFrame_8_4->setChecked(g_framesX[4][8].used);
+    ui->EnFrame_8_5->setChecked(g_framesX[5][8].used);
+    ui->EnFrame_8_6->setChecked(g_framesX[6][8].used);
+    ui->EnFrame_8_7->setChecked(g_framesX[7][8].used);
+    ui->EnFrame_8_8->setChecked(g_framesX[8][8].used);
+    ui->EnFrame_8_9->setChecked(g_framesX[9][8].used);
     // Set Y = 9
-    ui->EnFrame_9_0->setChecked(framesX[0][9].used);
-    ui->EnFrame_9_1->setChecked(framesX[1][9].used);
-    ui->EnFrame_9_2->setChecked(framesX[2][9].used);
-    ui->EnFrame_9_3->setChecked(framesX[3][9].used);
-    ui->EnFrame_9_4->setChecked(framesX[4][9].used);
-    ui->EnFrame_9_5->setChecked(framesX[5][9].used);
-    ui->EnFrame_9_6->setChecked(framesX[6][9].used);
-    ui->EnFrame_9_7->setChecked(framesX[7][9].used);
-    ui->EnFrame_9_8->setChecked(framesX[8][9].used);
-    ui->EnFrame_9_9->setChecked(framesX[9][9].used);
+    ui->EnFrame_9_0->setChecked(g_framesX[0][9].used);
+    ui->EnFrame_9_1->setChecked(g_framesX[1][9].used);
+    ui->EnFrame_9_2->setChecked(g_framesX[2][9].used);
+    ui->EnFrame_9_3->setChecked(g_framesX[3][9].used);
+    ui->EnFrame_9_4->setChecked(g_framesX[4][9].used);
+    ui->EnFrame_9_5->setChecked(g_framesX[5][9].used);
+    ui->EnFrame_9_6->setChecked(g_framesX[6][9].used);
+    ui->EnFrame_9_7->setChecked(g_framesX[7][9].used);
+    ui->EnFrame_9_8->setChecked(g_framesX[8][9].used);
+    ui->EnFrame_9_9->setChecked(g_framesX[9][9].used);
 }
 
 Matrix::~Matrix()

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -313,57 +313,57 @@ struct EventQueueEntry
 template<class T>
 class EventQueue
 {
-    public:
-        EventQueue()
-        {
-            left_time = 0;
-        }
+public:
+    EventQueue()
+    {
+        left_time = 0;
+    }
 
-        EventQueue(const EventQueue &eq)
-        {
-            left_time = eq.left_time;
-            events = eq.events;
-        }
+    EventQueue(const EventQueue &eq)
+    {
+        left_time = eq.left_time;
+        events = eq.events;
+    }
 
-        ~EventQueue() = default;
+    ~EventQueue() = default;
 
-        void processEvents(double timeStep = 1.0)
-        {
-            left_time = 0.0;
+    void processEvents(double timeStep = 1.0)
+    {
+        left_time = 0.0;
 process_event:
 
-            if(events.empty())
-            {
-                left_time = 0.0;
-                return;
-            }
-
-            left_time = events.front().trigger(timeStep);
-            Maths::clearPrecision(left_time);
-
-            if(left_time <= 0.0)
-            {
-                events.pop_front();
-
-                do
-                {
-                    timeStep = (left_time + timeStep);
-                    Maths::clearPrecision(timeStep);
-                }
-                while((timeStep != 0.0) && (timeStep < 0.0));
-
-                goto process_event;
-            }
-        }
-
-        void abort()
+        if(events.empty())
         {
-            events.clear();
-            left_time = 0;
+            left_time = 0.0;
+            return;
         }
 
-        double left_time;
-        std::deque<EventQueueEntry<T > > events;
+        left_time = events.front().trigger(timeStep);
+        Maths::clearPrecision(left_time);
+
+        if(left_time <= 0.0)
+        {
+            events.pop_front();
+
+            do
+            {
+                timeStep = (left_time + timeStep);
+                Maths::clearPrecision(timeStep);
+            }
+            while((timeStep != 0.0) && (timeStep < 0.0));
+
+            goto process_event;
+        }
+    }
+
+    void abort()
+    {
+        events.clear();
+        left_time = 0;
+    }
+
+    double left_time;
+    std::deque<EventQueueEntry<T > > events;
 };
 
 #endif // EVENTQUEUE_H

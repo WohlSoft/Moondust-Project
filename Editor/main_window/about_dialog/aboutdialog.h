@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,9 @@
 
 #include <QDialog>
 
-namespace Ui {
-class aboutDialog;
+namespace Ui
+{
+    class aboutDialog;
 }
 
 class aboutDialog : public QDialog
@@ -37,7 +38,7 @@ public:
 private slots:
     void on_pushButton_clicked();
 
-//    void on_actionCloseDialog_activated();
+    //void on_actionCloseDialog_activated();
 
 private:
     Ui::aboutDialog *ui;

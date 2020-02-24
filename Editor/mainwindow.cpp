@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -171,7 +171,7 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         //dock_LvlItemBox->setLvlItemBoxes();
         //dock_WldItemBox->setWldItemBoxes();
         dock_LvlEvents->reloadSoundsList();
-        dock_WldItemProps->WldLvlExitTypeListReset();
+        dock_WldItemProps->resetExitTypesList();
         dock_TilesetBox->setTileSetBox(true);
 
         splash.progressTitle(tr("Initalizing plugins..."));

@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -36,9 +36,6 @@
 
 #include "../gl_debug.h"
 
-#ifdef _WIN32
-#define FREEIMAGE_LIB
-#endif
 #include <FreeImageLite.h>
 
 Render_OpenGL31::Render_OpenGL31() : Render_Base("OpenGL 3.1"),
@@ -148,7 +145,7 @@ void Render_OpenGL31::initDummyTexture()
     if(!image)
     {
         std::string msg = fmt::format_ne("Can't initialize dummy texture!\n"
-                                      "In file: {0}:{1}", __FILE__, __LINE__);
+                                         "In file: {0}:{1}", __FILE__, __LINE__);
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING,
                                  "OpenGL Error", msg.c_str(), NULL);
         abort();
@@ -598,8 +595,8 @@ PGE_Point Render_OpenGL31::MapToScr(PGE_Point point)
 PGE_Point Render_OpenGL31::MapToScr(int x, int y)
 {
     return PGE_Point(
-               static_cast<int>( (static_cast<float>(x) - offset_x) / viewport_scale_x),
-               static_cast<int>( (static_cast<float>(y) - offset_y) / viewport_scale_y)
+               static_cast<int>((static_cast<float>(x) - offset_x) / viewport_scale_x),
+               static_cast<int>((static_cast<float>(y) - offset_y) / viewport_scale_y)
            );
 }
 

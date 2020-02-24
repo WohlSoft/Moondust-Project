@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -76,8 +76,11 @@ static bool tryBMP(SDL_RWops* file, uint32_t *w, uint32_t *h)
         return false;
 
 #define UINT(d) static_cast<unsigned int>(d)
-    *w = ((UINT(size[3]) & 0xFF) | ((UINT(size[2]) << 8) & 0xFF00) | ((UINT(size[1]) << 16) & 0xFF0000) | ((UINT(size[0]) << 24) & 0xFF000000));
-    *h = ((UINT(size[7]) & 0xFF) | ((UINT(size[6]) << 8) & 0xFF00) | ((UINT(size[5]) << 16) & 0xFF0000) | ((UINT(size[4]) << 24) & 0xFF000000));
+    *w = ((UINT(size[0]) & 0xFF) | ((UINT(size[1]) << 8) & 0xFF00) |
+         ((UINT(size[2]) << 16) & 0xFF0000) | ((UINT(size[3]) << 24) & 0xFF000000));
+
+    *h = ((UINT(size[4]) & 0xFF) | ((UINT(size[5]) << 8) & 0xFF00) |
+         ((UINT(size[6]) << 16) & 0xFF0000) | ((UINT(size[7]) << 24) & 0xFF000000));
 #undef UINT
 
     return true;

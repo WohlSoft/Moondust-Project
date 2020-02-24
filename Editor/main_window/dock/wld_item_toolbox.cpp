@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -374,7 +374,7 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
             QString dirPath = edit->WldData.meta.path;
             MusicFileList musicList(dirPath, "");
             if(musicList.exec() == QDialog::Accepted)
-                customMusicFile = musicList.SelectedFile;
+                customMusicFile = musicList.currentFile();
             else
                 return;
         }

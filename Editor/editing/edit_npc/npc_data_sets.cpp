@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,492 +26,492 @@ void NpcEdit::setDataBoxes()
 {
 
     //Apply NPC data
-    ui->en_GFXOffsetX->setChecked(StartNPCData.en_gfxoffsetx);
-    ui->offsetx_label->setEnabled(StartNPCData.en_gfxoffsetx);
-    ui->GFXOffSetX->setEnabled(StartNPCData.en_gfxoffsetx);
-    if(!StartNPCData.en_gfxoffsetx)
+    ui->en_GFXOffsetX->setChecked(m_npcDataBackup.en_gfxoffsetx);
+    ui->offsetx_label->setEnabled(m_npcDataBackup.en_gfxoffsetx);
+    ui->GFXOffSetX->setEnabled(m_npcDataBackup.en_gfxoffsetx);
+    if(!m_npcDataBackup.en_gfxoffsetx)
     {
-        ui->GFXOffSetX->setValue(DefaultNPCData.gfxoffsetx);
-        NpcData.gfxoffsetx=DefaultNPCData.gfxoffsetx;
+        ui->GFXOffSetX->setValue(m_npcDataDefault.gfxoffsetx);
+        NpcData.gfxoffsetx = m_npcDataDefault.gfxoffsetx;
     }
     else
-        ui->GFXOffSetX->setValue(StartNPCData.gfxoffsetx);
+        ui->GFXOffSetX->setValue(m_npcDataBackup.gfxoffsetx);
 
 
-    ui->en_GFXOffsetY->setChecked(StartNPCData.en_gfxoffsety);
-    ui->offsety_label->setEnabled(StartNPCData.en_gfxoffsety);
-    ui->GFXOffSetY->setEnabled(StartNPCData.en_gfxoffsety);
-    if(!StartNPCData.en_gfxoffsety)
+    ui->en_GFXOffsetY->setChecked(m_npcDataBackup.en_gfxoffsety);
+    ui->offsety_label->setEnabled(m_npcDataBackup.en_gfxoffsety);
+    ui->GFXOffSetY->setEnabled(m_npcDataBackup.en_gfxoffsety);
+    if(!m_npcDataBackup.en_gfxoffsety)
     {
-        ui->GFXOffSetY->setValue(DefaultNPCData.gfxoffsety);
-        NpcData.gfxoffsety=DefaultNPCData.gfxoffsety;
+        ui->GFXOffSetY->setValue(m_npcDataDefault.gfxoffsety);
+        NpcData.gfxoffsety = m_npcDataDefault.gfxoffsety;
     }
     else
-        ui->GFXOffSetY->setValue(StartNPCData.gfxoffsety);
+        ui->GFXOffSetY->setValue(m_npcDataBackup.gfxoffsety);
 
 
-    ui->En_IsForeground->setChecked(StartNPCData.en_foreground);
-    ui->IsForeground->setEnabled(StartNPCData.en_foreground);
-    if(!StartNPCData.en_foreground)
+    ui->En_IsForeground->setChecked(m_npcDataBackup.en_foreground);
+    ui->IsForeground->setEnabled(m_npcDataBackup.en_foreground);
+    if(!m_npcDataBackup.en_foreground)
     {
-        ui->IsForeground->setChecked(DefaultNPCData.foreground);
-        NpcData.foreground=DefaultNPCData.foreground;
+        ui->IsForeground->setChecked(m_npcDataDefault.foreground);
+        NpcData.foreground = m_npcDataDefault.foreground;
     }
     else
-        ui->IsForeground->setChecked(StartNPCData.foreground);
+        ui->IsForeground->setChecked(m_npcDataBackup.foreground);
 
 
-    ui->En_GFXh->setChecked(StartNPCData.en_gfxheight);
-    ui->gheight_label->setEnabled(StartNPCData.en_gfxheight);
-    ui->GFXh->setEnabled(StartNPCData.en_gfxheight);
-    if(!StartNPCData.en_gfxheight)
+    ui->En_GFXh->setChecked(m_npcDataBackup.en_gfxheight);
+    ui->gheight_label->setEnabled(m_npcDataBackup.en_gfxheight);
+    ui->GFXh->setEnabled(m_npcDataBackup.en_gfxheight);
+    if(!m_npcDataBackup.en_gfxheight)
     {
-        ui->GFXh->setValue(DefaultNPCData.gfxheight);
-        NpcData.gfxheight=DefaultNPCData.gfxheight;
+        ui->GFXh->setValue(m_npcDataDefault.gfxheight);
+        NpcData.gfxheight = m_npcDataDefault.gfxheight;
     }
     else
-        ui->GFXh->setValue(StartNPCData.gfxheight);
+        ui->GFXh->setValue(m_npcDataBackup.gfxheight);
 
 
-    ui->En_GFXw->setChecked(StartNPCData.en_gfxwidth);
-    ui->gwidth_label->setEnabled(StartNPCData.en_gfxwidth);
-    ui->GFXw->setEnabled(StartNPCData.en_gfxwidth);
-    if(!StartNPCData.en_gfxwidth)
+    ui->En_GFXw->setChecked(m_npcDataBackup.en_gfxwidth);
+    ui->gwidth_label->setEnabled(m_npcDataBackup.en_gfxwidth);
+    ui->GFXw->setEnabled(m_npcDataBackup.en_gfxwidth);
+    if(!m_npcDataBackup.en_gfxwidth)
     {
-        ui->GFXw->setValue(DefaultNPCData.gfxwidth);
-        NpcData.gfxwidth=DefaultNPCData.gfxwidth;
+        ui->GFXw->setValue(m_npcDataDefault.gfxwidth);
+        NpcData.gfxwidth = m_npcDataDefault.gfxwidth;
     }
     else
-        ui->GFXw->setValue(StartNPCData.gfxwidth);
+        ui->GFXw->setValue(m_npcDataBackup.gfxwidth);
 
 
-    ui->En_Framestyle->setChecked(StartNPCData.en_framestyle);
-    ui->framestyle_label->setEnabled(StartNPCData.en_framestyle);
-    ui->FrameStyle->setEnabled(StartNPCData.en_framestyle);
-    if(!StartNPCData.en_framestyle)
+    ui->En_Framestyle->setChecked(m_npcDataBackup.en_framestyle);
+    ui->framestyle_label->setEnabled(m_npcDataBackup.en_framestyle);
+    ui->FrameStyle->setEnabled(m_npcDataBackup.en_framestyle);
+    if(!m_npcDataBackup.en_framestyle)
     {
-        ui->FrameStyle->setCurrentIndex(DefaultNPCData.framestyle);
-        NpcData.framestyle=DefaultNPCData.framestyle;
+        ui->FrameStyle->setCurrentIndex(m_npcDataDefault.framestyle);
+        NpcData.framestyle = m_npcDataDefault.framestyle;
     }
     else
-        ui->FrameStyle->setCurrentIndex(StartNPCData.framestyle);
+        ui->FrameStyle->setCurrentIndex(m_npcDataBackup.framestyle);
 
 
-    ui->En_Framespeed->setChecked(StartNPCData.en_framespeed);
-    ui->framespeed_label->setEnabled(StartNPCData.en_framespeed);
-    ui->Framespeed->setEnabled(StartNPCData.en_framespeed);
-    if(!StartNPCData.en_framespeed)
+    ui->En_Framespeed->setChecked(m_npcDataBackup.en_framespeed);
+    ui->framespeed_label->setEnabled(m_npcDataBackup.en_framespeed);
+    ui->Framespeed->setEnabled(m_npcDataBackup.en_framespeed);
+    if(!m_npcDataBackup.en_framespeed)
     {
-        ui->Framespeed->setValue(DefaultNPCData.framespeed);
-        NpcData.framespeed=DefaultNPCData.framespeed;
+        ui->Framespeed->setValue(m_npcDataDefault.framespeed);
+        NpcData.framespeed = m_npcDataDefault.framespeed;
     }
     else
-        ui->Framespeed->setValue(StartNPCData.framespeed);
+        ui->Framespeed->setValue(m_npcDataBackup.framespeed);
 
 
-    ui->En_Frames->setChecked(StartNPCData.en_frames);
-    ui->frames_label->setEnabled(StartNPCData.en_frames);
-    ui->Frames->setEnabled(StartNPCData.en_frames);
-    if(!StartNPCData.en_frames)
+    ui->En_Frames->setChecked(m_npcDataBackup.en_frames);
+    ui->frames_label->setEnabled(m_npcDataBackup.en_frames);
+    ui->Frames->setEnabled(m_npcDataBackup.en_frames);
+    if(!m_npcDataBackup.en_frames)
     {
-        ui->Frames->setValue(DefaultNPCData.frames);
-        NpcData.frames=DefaultNPCData.frames;
+        ui->Frames->setValue(m_npcDataDefault.frames);
+        NpcData.frames = m_npcDataDefault.frames;
     }
     else
-        ui->Frames->setValue(StartNPCData.frames);
+        ui->Frames->setValue(m_npcDataBackup.frames);
 
 
-    ui->En_Score->setChecked(StartNPCData.en_score);
-    ui->score_label->setEnabled(StartNPCData.en_score);
-    ui->Score->setEnabled(StartNPCData.en_score);
-    if(!StartNPCData.en_score)
+    ui->En_Score->setChecked(m_npcDataBackup.en_score);
+    ui->score_label->setEnabled(m_npcDataBackup.en_score);
+    ui->Score->setEnabled(m_npcDataBackup.en_score);
+    if(!m_npcDataBackup.en_score)
     {
-        ui->Score->setCurrentIndex(DefaultNPCData.score);
-        NpcData.score=DefaultNPCData.score;
+        ui->Score->setCurrentIndex(m_npcDataDefault.score);
+        NpcData.score = m_npcDataDefault.score;
     }
     else
-        ui->Score->setCurrentIndex(StartNPCData.score);
+        ui->Score->setCurrentIndex(m_npcDataBackup.score);
 
 
-    ui->En_Health->setChecked(StartNPCData.en_health);
-    ui->health_label->setEnabled(StartNPCData.en_health);
-    ui->Health->setEnabled(StartNPCData.en_health);
-    if(!StartNPCData.en_health)
+    ui->En_Health->setChecked(m_npcDataBackup.en_health);
+    ui->health_label->setEnabled(m_npcDataBackup.en_health);
+    ui->Health->setEnabled(m_npcDataBackup.en_health);
+    if(!m_npcDataBackup.en_health)
     {
-        ui->Health->setValue(DefaultNPCData.health);
-        NpcData.health=DefaultNPCData.health;
+        ui->Health->setValue(m_npcDataDefault.health);
+        NpcData.health = m_npcDataDefault.health;
     }
     else
-        ui->Health->setValue(StartNPCData.health);
+        ui->Health->setValue(m_npcDataBackup.health);
 
 
-    ui->En_JumpHurt->setChecked(StartNPCData.en_jumphurt);
-    ui->JumpHurt->setEnabled(StartNPCData.en_jumphurt);
-    if(!StartNPCData.en_jumphurt)
+    ui->En_JumpHurt->setChecked(m_npcDataBackup.en_jumphurt);
+    ui->JumpHurt->setEnabled(m_npcDataBackup.en_jumphurt);
+    if(!m_npcDataBackup.en_jumphurt)
     {
-        ui->JumpHurt->setChecked(DefaultNPCData.jumphurt);
-        NpcData.jumphurt=DefaultNPCData.jumphurt;
+        ui->JumpHurt->setChecked(m_npcDataDefault.jumphurt);
+        NpcData.jumphurt = m_npcDataDefault.jumphurt;
     }
     else
-        ui->JumpHurt->setChecked(StartNPCData.jumphurt);
+        ui->JumpHurt->setChecked(m_npcDataBackup.jumphurt);
 
 
-    ui->En_GrabTop->setChecked(StartNPCData.en_grabtop);
-    ui->GrabTop->setEnabled(StartNPCData.en_grabtop);
-    if(!StartNPCData.en_grabtop)
+    ui->En_GrabTop->setChecked(m_npcDataBackup.en_grabtop);
+    ui->GrabTop->setEnabled(m_npcDataBackup.en_grabtop);
+    if(!m_npcDataBackup.en_grabtop)
     {
-        ui->GrabTop->setChecked(DefaultNPCData.grabtop);
-        NpcData.grabtop=DefaultNPCData.grabtop;
+        ui->GrabTop->setChecked(m_npcDataDefault.grabtop);
+        NpcData.grabtop = m_npcDataDefault.grabtop;
     }
     else
-        ui->GrabTop->setChecked(StartNPCData.grabtop);
+        ui->GrabTop->setChecked(m_npcDataBackup.grabtop);
 
 
-    ui->En_GrabSide->setChecked(StartNPCData.en_grabside);
-    ui->GrabSide->setEnabled(StartNPCData.en_grabside);
-    if(!StartNPCData.en_grabside)
+    ui->En_GrabSide->setChecked(m_npcDataBackup.en_grabside);
+    ui->GrabSide->setEnabled(m_npcDataBackup.en_grabside);
+    if(!m_npcDataBackup.en_grabside)
     {
-        ui->GrabSide->setChecked(DefaultNPCData.grabside);
-        NpcData.grabside=DefaultNPCData.grabside;
+        ui->GrabSide->setChecked(m_npcDataDefault.grabside);
+        NpcData.grabside = m_npcDataDefault.grabside;
     }
     else
-        ui->GrabSide->setChecked(StartNPCData.grabside);
+        ui->GrabSide->setChecked(m_npcDataBackup.grabside);
 
 
-    ui->En_NoFireball->setChecked(StartNPCData.en_nofireball);
-    ui->NoFireball->setEnabled(StartNPCData.en_nofireball);
-    if(!StartNPCData.en_nofireball)
+    ui->En_NoFireball->setChecked(m_npcDataBackup.en_nofireball);
+    ui->NoFireball->setEnabled(m_npcDataBackup.en_nofireball);
+    if(!m_npcDataBackup.en_nofireball)
     {
-        ui->NoFireball->setChecked(DefaultNPCData.nofireball);
-        NpcData.nofireball=DefaultNPCData.nofireball;
+        ui->NoFireball->setChecked(m_npcDataDefault.nofireball);
+        NpcData.nofireball = m_npcDataDefault.nofireball;
     }
     else
-        ui->NoFireball->setChecked(StartNPCData.nofireball);
+        ui->NoFireball->setChecked(m_npcDataBackup.nofireball);
 
 
-    ui->En_DontHurt->setChecked(StartNPCData.en_nohurt);
-    ui->DontHurt->setEnabled(StartNPCData.en_nohurt);
-    if(!StartNPCData.en_nohurt)
+    ui->En_DontHurt->setChecked(m_npcDataBackup.en_nohurt);
+    ui->DontHurt->setEnabled(m_npcDataBackup.en_nohurt);
+    if(!m_npcDataBackup.en_nohurt)
     {
-        ui->DontHurt->setChecked(DefaultNPCData.nohurt);
-        NpcData.nohurt=DefaultNPCData.nohurt;
+        ui->DontHurt->setChecked(m_npcDataDefault.nohurt);
+        NpcData.nohurt = m_npcDataDefault.nohurt;
     }
     else
-        ui->DontHurt->setChecked(StartNPCData.nohurt);
+        ui->DontHurt->setChecked(m_npcDataBackup.nohurt);
 
 
-    ui->En_NoEat->setChecked(StartNPCData.en_noyoshi);
-    ui->NoEat->setEnabled(StartNPCData.en_noyoshi);
-    if(!StartNPCData.en_noyoshi)
+    ui->En_NoEat->setChecked(m_npcDataBackup.en_noyoshi);
+    ui->NoEat->setEnabled(m_npcDataBackup.en_noyoshi);
+    if(!m_npcDataBackup.en_noyoshi)
     {
-        ui->NoEat->setChecked(DefaultNPCData.noyoshi);
-        NpcData.noyoshi=DefaultNPCData.noyoshi;
+        ui->NoEat->setChecked(m_npcDataDefault.noyoshi);
+        NpcData.noyoshi = m_npcDataDefault.noyoshi;
     }
     else
-        ui->NoEat->setChecked(StartNPCData.noyoshi);
+        ui->NoEat->setChecked(m_npcDataBackup.noyoshi);
 
 
-    ui->En_NoIceball->setChecked(StartNPCData.en_noiceball);
-    ui->NoIceball->setEnabled(StartNPCData.en_noiceball);
-    if(!StartNPCData.en_noiceball)
+    ui->En_NoIceball->setChecked(m_npcDataBackup.en_noiceball);
+    ui->NoIceball->setEnabled(m_npcDataBackup.en_noiceball);
+    if(!m_npcDataBackup.en_noiceball)
     {
-        ui->NoIceball->setChecked(DefaultNPCData.noiceball);
-        NpcData.noiceball=DefaultNPCData.noiceball;
+        ui->NoIceball->setChecked(m_npcDataDefault.noiceball);
+        NpcData.noiceball = m_npcDataDefault.noiceball;
     }
     else
-        ui->NoIceball->setChecked(StartNPCData.noiceball);
+        ui->NoIceball->setChecked(m_npcDataBackup.noiceball);
 
 
-    ui->En_Height->setChecked(StartNPCData.en_height);
-    ui->height_label->setEnabled(StartNPCData.en_height);
-    ui->Height->setEnabled(StartNPCData.en_height);
-    if(!StartNPCData.en_height)
+    ui->En_Height->setChecked(m_npcDataBackup.en_height);
+    ui->height_label->setEnabled(m_npcDataBackup.en_height);
+    ui->Height->setEnabled(m_npcDataBackup.en_height);
+    if(!m_npcDataBackup.en_height)
     {
-        ui->Height->setValue(DefaultNPCData.height);
-        NpcData.height=DefaultNPCData.height;
+        ui->Height->setValue(m_npcDataDefault.height);
+        NpcData.height = m_npcDataDefault.height;
     }
     else
-        ui->Height->setValue(StartNPCData.height);
+        ui->Height->setValue(m_npcDataBackup.height);
 
 
-    ui->En_Width->setChecked(StartNPCData.en_width);
-    ui->width_label->setEnabled(StartNPCData.en_width);
-    ui->Width->setEnabled(StartNPCData.en_width);
-    if(!StartNPCData.en_width)
+    ui->En_Width->setChecked(m_npcDataBackup.en_width);
+    ui->width_label->setEnabled(m_npcDataBackup.en_width);
+    ui->Width->setEnabled(m_npcDataBackup.en_width);
+    if(!m_npcDataBackup.en_width)
     {
-        ui->Width->setValue(DefaultNPCData.width);
-        NpcData.width=DefaultNPCData.width;
+        ui->Width->setValue(m_npcDataDefault.width);
+        NpcData.width = m_npcDataDefault.width;
     }
     else
-        ui->Width->setValue(StartNPCData.width);
+        ui->Width->setValue(m_npcDataBackup.width);
 
 
-    ui->En_NPCBlock->setChecked(StartNPCData.en_npcblock);
-    ui->NPCBlock->setEnabled(StartNPCData.en_npcblock);
-    if(!StartNPCData.en_npcblock)
+    ui->En_NPCBlock->setChecked(m_npcDataBackup.en_npcblock);
+    ui->NPCBlock->setEnabled(m_npcDataBackup.en_npcblock);
+    if(!m_npcDataBackup.en_npcblock)
     {
-        ui->NPCBlock->setChecked(DefaultNPCData.npcblock);
-        NpcData.npcblock=DefaultNPCData.npcblock;
+        ui->NPCBlock->setChecked(m_npcDataDefault.npcblock);
+        NpcData.npcblock = m_npcDataDefault.npcblock;
     }
     else
-        ui->NPCBlock->setChecked(StartNPCData.npcblock);
+        ui->NPCBlock->setChecked(m_npcDataBackup.npcblock);
 
 
-    ui->En_NPCBlockTop->setChecked(StartNPCData.en_npcblocktop);
-    ui->NPCBlockTop->setEnabled(StartNPCData.en_npcblocktop);
-    if(!StartNPCData.en_npcblocktop)
+    ui->En_NPCBlockTop->setChecked(m_npcDataBackup.en_npcblocktop);
+    ui->NPCBlockTop->setEnabled(m_npcDataBackup.en_npcblocktop);
+    if(!m_npcDataBackup.en_npcblocktop)
     {
-        ui->NPCBlockTop->setChecked(DefaultNPCData.npcblocktop);
-        NpcData.npcblocktop=DefaultNPCData.npcblocktop;
+        ui->NPCBlockTop->setChecked(m_npcDataDefault.npcblocktop);
+        NpcData.npcblocktop = m_npcDataDefault.npcblocktop;
     }
     else
-        ui->NPCBlockTop->setChecked(StartNPCData.npcblocktop);
+        ui->NPCBlockTop->setChecked(m_npcDataBackup.npcblocktop);
 
 
-    ui->En_Speed->setChecked(StartNPCData.en_speed);
-    ui->speed_label->setEnabled(StartNPCData.en_speed);
-    ui->Speed->setEnabled(StartNPCData.en_speed);
-    if(!StartNPCData.en_speed)
+    ui->En_Speed->setChecked(m_npcDataBackup.en_speed);
+    ui->speed_label->setEnabled(m_npcDataBackup.en_speed);
+    ui->Speed->setEnabled(m_npcDataBackup.en_speed);
+    if(!m_npcDataBackup.en_speed)
     {
-        NpcData.speed=DefaultNPCData.speed;
-        ui->Speed->setValue(DefaultNPCData.speed);
+        NpcData.speed = m_npcDataDefault.speed;
+        ui->Speed->setValue(m_npcDataDefault.speed);
     }
     else
-        ui->Speed->setValue(StartNPCData.speed);
+        ui->Speed->setValue(m_npcDataBackup.speed);
 
 
-    ui->En_PlayerBlock->setChecked(StartNPCData.en_playerblock);
-    ui->PlayerBlock->setEnabled(StartNPCData.en_playerblock);
-    if(!StartNPCData.en_playerblock)
+    ui->En_PlayerBlock->setChecked(m_npcDataBackup.en_playerblock);
+    ui->PlayerBlock->setEnabled(m_npcDataBackup.en_playerblock);
+    if(!m_npcDataBackup.en_playerblock)
     {
-        ui->PlayerBlock->setChecked(DefaultNPCData.playerblock);
-        NpcData.playerblock=DefaultNPCData.playerblock;
+        ui->PlayerBlock->setChecked(m_npcDataDefault.playerblock);
+        NpcData.playerblock = m_npcDataDefault.playerblock;
     }
     else
-        ui->PlayerBlock->setChecked(StartNPCData.playerblock);
+        ui->PlayerBlock->setChecked(m_npcDataBackup.playerblock);
 
 
-    ui->En_PlayerBlockTop->setChecked(StartNPCData.en_playerblocktop);
-    ui->PlayerBlockTop->setEnabled(StartNPCData.en_playerblocktop);
-    if(!StartNPCData.en_playerblocktop)
+    ui->En_PlayerBlockTop->setChecked(m_npcDataBackup.en_playerblocktop);
+    ui->PlayerBlockTop->setEnabled(m_npcDataBackup.en_playerblocktop);
+    if(!m_npcDataBackup.en_playerblocktop)
     {
-        ui->PlayerBlockTop->setChecked(DefaultNPCData.playerblocktop);
-        NpcData.playerblocktop=DefaultNPCData.playerblocktop;
+        ui->PlayerBlockTop->setChecked(m_npcDataDefault.playerblocktop);
+        NpcData.playerblocktop = m_npcDataDefault.playerblocktop;
     }
     else
-        ui->PlayerBlockTop->setChecked(StartNPCData.playerblocktop);
+        ui->PlayerBlockTop->setChecked(m_npcDataBackup.playerblocktop);
 
 
-    ui->En_NoBlockCollision->setChecked(StartNPCData.en_noblockcollision);
-    ui->NoBlockCollision->setEnabled(StartNPCData.en_noblockcollision);
-    if(!StartNPCData.en_noblockcollision)
+    ui->En_NoBlockCollision->setChecked(m_npcDataBackup.en_noblockcollision);
+    ui->NoBlockCollision->setEnabled(m_npcDataBackup.en_noblockcollision);
+    if(!m_npcDataBackup.en_noblockcollision)
     {
-        ui->NoBlockCollision->setChecked(DefaultNPCData.noblockcollision);
-        NpcData.noblockcollision=DefaultNPCData.noblockcollision;
+        ui->NoBlockCollision->setChecked(m_npcDataDefault.noblockcollision);
+        NpcData.noblockcollision = m_npcDataDefault.noblockcollision;
     }
     else
-        ui->NoBlockCollision->setChecked(StartNPCData.noblockcollision);
+        ui->NoBlockCollision->setChecked(m_npcDataBackup.noblockcollision);
 
 
-    ui->En_NoGravity->setChecked(StartNPCData.en_nogravity);
-    ui->NoGravity->setEnabled(StartNPCData.en_nogravity);
-    if(!StartNPCData.en_nogravity)
+    ui->En_NoGravity->setChecked(m_npcDataBackup.en_nogravity);
+    ui->NoGravity->setEnabled(m_npcDataBackup.en_nogravity);
+    if(!m_npcDataBackup.en_nogravity)
     {
-        ui->NoGravity->setChecked(DefaultNPCData.nogravity);
-        NpcData.nogravity=DefaultNPCData.nogravity;
+        ui->NoGravity->setChecked(m_npcDataDefault.nogravity);
+        NpcData.nogravity = m_npcDataDefault.nogravity;
     }
     else
-        ui->NoGravity->setChecked(StartNPCData.nogravity);
+        ui->NoGravity->setChecked(m_npcDataBackup.nogravity);
 
 
-    ui->En_TurnCliff->setChecked(StartNPCData.en_cliffturn);
-    ui->TurnCliff->setEnabled(StartNPCData.en_cliffturn);
-    if(!StartNPCData.en_cliffturn)
+    ui->En_TurnCliff->setChecked(m_npcDataBackup.en_cliffturn);
+    ui->TurnCliff->setEnabled(m_npcDataBackup.en_cliffturn);
+    if(!m_npcDataBackup.en_cliffturn)
     {
-        ui->TurnCliff->setChecked(DefaultNPCData.cliffturn);
-        NpcData.cliffturn=DefaultNPCData.cliffturn;
+        ui->TurnCliff->setChecked(m_npcDataDefault.cliffturn);
+        NpcData.cliffturn = m_npcDataDefault.cliffturn;
     }
     else
-        ui->TurnCliff->setChecked(StartNPCData.cliffturn);
+        ui->TurnCliff->setChecked(m_npcDataBackup.cliffturn);
 
     //Extended
 
-    ui->En_NoHammer->setChecked(StartNPCData.en_nohammer);
-    ui->NoHammer->setEnabled(StartNPCData.en_nohammer);
-    if(!StartNPCData.en_nohammer)
+    ui->En_NoHammer->setChecked(m_npcDataBackup.en_nohammer);
+    ui->NoHammer->setEnabled(m_npcDataBackup.en_nohammer);
+    if(!m_npcDataBackup.en_nohammer)
     {
-        ui->NoHammer->setChecked(DefaultNPCData.nohammer);
-        NpcData.nohammer=DefaultNPCData.nohammer;
+        ui->NoHammer->setChecked(m_npcDataDefault.nohammer);
+        NpcData.nohammer = m_npcDataDefault.nohammer;
     }
     else
-        ui->NoHammer->setChecked(StartNPCData.nohammer);
+        ui->NoHammer->setChecked(m_npcDataBackup.nohammer);
 
-    ui->En_NoShell->setChecked(StartNPCData.en_noshell);
-    ui->NoShell->setEnabled(StartNPCData.en_noshell);
-    if(!StartNPCData.en_noshell)
+    ui->En_NoShell->setChecked(m_npcDataBackup.en_noshell);
+    ui->NoShell->setEnabled(m_npcDataBackup.en_noshell);
+    if(!m_npcDataBackup.en_noshell)
     {
-        ui->NoShell->setChecked(DefaultNPCData.noshell);
-        NpcData.noshell=DefaultNPCData.noshell;
+        ui->NoShell->setChecked(m_npcDataDefault.noshell);
+        NpcData.noshell = m_npcDataDefault.noshell;
     }
     else
-        ui->NoShell->setChecked(StartNPCData.noshell);
+        ui->NoShell->setChecked(m_npcDataBackup.noshell);
 
 
-    ui->En_Name->setChecked(StartNPCData.en_name);
-    ui->Name->setEnabled(StartNPCData.en_name);
-    if(!StartNPCData.en_name)
+    ui->En_Name->setChecked(m_npcDataBackup.en_name);
+    ui->Name->setEnabled(m_npcDataBackup.en_name);
+    if(!m_npcDataBackup.en_name)
     {
-        ui->Name->setText(DefaultNPCData.name);
-        NpcData.name=DefaultNPCData.name;
+        ui->Name->setText(m_npcDataDefault.name);
+        NpcData.name = m_npcDataDefault.name;
     }
     else
-        ui->Name->setText(StartNPCData.name);
+        ui->Name->setText(m_npcDataBackup.name);
 
-    ui->En_Health->setChecked(StartNPCData.en_health);
-    ui->Health->setEnabled(StartNPCData.en_health);
-    if(!StartNPCData.en_health)
+    ui->En_Health->setChecked(m_npcDataBackup.en_health);
+    ui->Health->setEnabled(m_npcDataBackup.en_health);
+    if(!m_npcDataBackup.en_health)
     {
-        ui->Health->setValue(DefaultNPCData.health);
-        NpcData.health=DefaultNPCData.health;
+        ui->Health->setValue(m_npcDataDefault.health);
+        NpcData.health = m_npcDataDefault.health;
     }
     else
-        ui->Health->setValue(StartNPCData.health);
+        ui->Health->setValue(m_npcDataBackup.health);
 
-    ui->En_GridSize->setChecked(StartNPCData.en_grid);
-    ui->GridSize->setEnabled(StartNPCData.en_grid);
-    if(!StartNPCData.en_grid)
+    ui->En_GridSize->setChecked(m_npcDataBackup.en_grid);
+    ui->GridSize->setEnabled(m_npcDataBackup.en_grid);
+    if(!m_npcDataBackup.en_grid)
     {
-        ui->GridSize->setValue(DefaultNPCData.grid);
-        NpcData.grid=DefaultNPCData.grid;
+        ui->GridSize->setValue(m_npcDataDefault.grid);
+        NpcData.grid = m_npcDataDefault.grid;
     }
     else
-        ui->GridSize->setValue(StartNPCData.grid);
+        ui->GridSize->setValue(m_npcDataBackup.grid);
 
-    int offsetMin = -1*(abs(ui->GridSize->value())/2)+1;
-    int offsetMax = (abs(ui->GridSize->value())/2)-1;
+    int offsetMin = -1 * (abs(ui->GridSize->value()) / 2) + 1;
+    int offsetMax = (abs(ui->GridSize->value()) / 2) - 1;
     ui->GridOffsetX->setMinimum(offsetMin);
     ui->GridOffsetX->setMaximum(offsetMax);
     ui->GridOffsetY->setMinimum(offsetMin);
     ui->GridOffsetY->setMaximum(offsetMax);
 
-    ui->En_GridOffsetX->setChecked(StartNPCData.en_gridoffsetx);
-    ui->GridOffsetX->setEnabled(StartNPCData.en_gridoffsetx);
-    if(!StartNPCData.en_gridoffsetx)
+    ui->En_GridOffsetX->setChecked(m_npcDataBackup.en_gridoffsetx);
+    ui->GridOffsetX->setEnabled(m_npcDataBackup.en_gridoffsetx);
+    if(!m_npcDataBackup.en_gridoffsetx)
     {
-        ui->GridOffsetX->setValue(DefaultNPCData.gridoffsetx);
-        NpcData.gridoffsetx=DefaultNPCData.gridoffsetx;
+        ui->GridOffsetX->setValue(m_npcDataDefault.gridoffsetx);
+        NpcData.gridoffsetx = m_npcDataDefault.gridoffsetx;
     }
     else
-        ui->GridOffsetX->setValue(StartNPCData.gridoffsetx);
+        ui->GridOffsetX->setValue(m_npcDataBackup.gridoffsetx);
 
-    ui->En_GridOffsetY->setChecked(StartNPCData.en_gridoffsety);
-    ui->GridOffsetY->setEnabled(StartNPCData.en_gridoffsety);
-    if(!StartNPCData.en_gridoffsety)
+    ui->En_GridOffsetY->setChecked(m_npcDataBackup.en_gridoffsety);
+    ui->GridOffsetY->setEnabled(m_npcDataBackup.en_gridoffsety);
+    if(!m_npcDataBackup.en_gridoffsety)
     {
-        ui->GridOffsetY->setValue(DefaultNPCData.gridoffsety);
-        NpcData.gridoffsety=DefaultNPCData.gridoffsety;
+        ui->GridOffsetY->setValue(m_npcDataDefault.gridoffsety);
+        NpcData.gridoffsety = m_npcDataDefault.gridoffsety;
     }
     else
-        ui->GridOffsetY->setValue(StartNPCData.gridoffsety);
+        ui->GridOffsetY->setValue(m_npcDataBackup.gridoffsety);
 
-    ui->En_AlignAt->setChecked(StartNPCData.en_gridalign);
-    ui->AlignAt->setEnabled(StartNPCData.en_gridalign);
-    if(!StartNPCData.en_gridalign)
+    ui->En_AlignAt->setChecked(m_npcDataBackup.en_gridalign);
+    ui->AlignAt->setEnabled(m_npcDataBackup.en_gridalign);
+    if(!m_npcDataBackup.en_gridalign)
     {
-        ui->AlignAt->setCurrentIndex(DefaultNPCData.gridalign);
-        NpcData.gridalign=DefaultNPCData.gridalign;
+        ui->AlignAt->setCurrentIndex(m_npcDataDefault.gridalign);
+        NpcData.gridalign = m_npcDataDefault.gridalign;
     }
     else
-        ui->AlignAt->setCurrentIndex(StartNPCData.gridalign);
+        ui->AlignAt->setCurrentIndex(m_npcDataBackup.gridalign);
 }
 
 void NpcEdit::setDefaultData(unsigned long npc_id)
 {
 
-    DefaultNPCData = FileFormats::CreateEmpytNpcTXT();
+    m_npcDataDefault = FileFormats::CreateEmpytNpcTXT();
 
-    if((npc_id==0)||(npc_id > (unsigned long)pConfigs->main_npc.stored()))
+    if((npc_id == 0) || (npc_id > (unsigned long)m_configPack->main_npc.stored()))
     {
-        DefaultNPCData.gfxoffsetx=0;
-        DefaultNPCData.gfxoffsety=0;
-        DefaultNPCData.width=0;
-        DefaultNPCData.height=0;
-        DefaultNPCData.gfxwidth=0;
-        DefaultNPCData.gfxheight=0;
-        DefaultNPCData.score=0;
-        DefaultNPCData.playerblock=0;
-        DefaultNPCData.playerblocktop=0;
-        DefaultNPCData.npcblock=0;
-        DefaultNPCData.npcblocktop=0;
-        DefaultNPCData.grabside=0;
-        DefaultNPCData.grabtop=0;
-        DefaultNPCData.jumphurt=0;
-        DefaultNPCData.nohurt=0;
-        DefaultNPCData.noblockcollision=0;
-        DefaultNPCData.cliffturn=0;
-        DefaultNPCData.noyoshi=0;
-        DefaultNPCData.foreground=0;
-        DefaultNPCData.speed=1.0;
-        DefaultNPCData.nofireball=0;
-        DefaultNPCData.nogravity=0;
-        DefaultNPCData.frames=0;
-        DefaultNPCData.framespeed=8;
-        DefaultNPCData.framestyle=0;
-        DefaultNPCData.noiceball=0;
-        DefaultNPCData.nohammer=0;
-        DefaultNPCData.name="";
-        DefaultNPCData.health=1;
-        DefaultNPCData.script="";
-        DefaultNPCData.image="";
-        DefaultNPCData.grid=32;
-        DefaultNPCData.gridoffsetx=0;
-        DefaultNPCData.gridoffsety=0;
-        DefaultNPCData.gridalign=0;
+        m_npcDataDefault.gfxoffsetx = 0;
+        m_npcDataDefault.gfxoffsety = 0;
+        m_npcDataDefault.width = 0;
+        m_npcDataDefault.height = 0;
+        m_npcDataDefault.gfxwidth = 0;
+        m_npcDataDefault.gfxheight = 0;
+        m_npcDataDefault.score = 0;
+        m_npcDataDefault.playerblock = 0;
+        m_npcDataDefault.playerblocktop = 0;
+        m_npcDataDefault.npcblock = 0;
+        m_npcDataDefault.npcblocktop = 0;
+        m_npcDataDefault.grabside = 0;
+        m_npcDataDefault.grabtop = 0;
+        m_npcDataDefault.jumphurt = 0;
+        m_npcDataDefault.nohurt = 0;
+        m_npcDataDefault.noblockcollision = 0;
+        m_npcDataDefault.cliffturn = 0;
+        m_npcDataDefault.noyoshi = 0;
+        m_npcDataDefault.foreground = 0;
+        m_npcDataDefault.speed = 1.0;
+        m_npcDataDefault.nofireball = 0;
+        m_npcDataDefault.nogravity = 0;
+        m_npcDataDefault.frames = 0;
+        m_npcDataDefault.framespeed = 8;
+        m_npcDataDefault.framestyle = 0;
+        m_npcDataDefault.noiceball = 0;
+        m_npcDataDefault.nohammer = 0;
+        m_npcDataDefault.name = "";
+        m_npcDataDefault.health = 1;
+        m_npcDataDefault.script = "";
+        m_npcDataDefault.image = "";
+        m_npcDataDefault.grid = 32;
+        m_npcDataDefault.gridoffsetx = 0;
+        m_npcDataDefault.gridoffsety = 0;
+        m_npcDataDefault.gridalign = 0;
     }
     else
     {
-        obj_npc &t_npc = pConfigs->main_npc[npc_id];
+        obj_npc &t_npc = m_configPack->main_npc[npc_id];
 
-        DefaultNPCData.gfxoffsetx=t_npc.setup.gfx_offset_x;
-        DefaultNPCData.gfxoffsety=t_npc.setup.gfx_offset_y;
-        DefaultNPCData.width=t_npc.setup.width;
-        DefaultNPCData.height=t_npc.setup.height;
-        DefaultNPCData.gfxwidth=t_npc.setup.gfx_w;
-        DefaultNPCData.gfxheight=t_npc.setup.gfx_h;
-        DefaultNPCData.score=t_npc.setup.score;
-        DefaultNPCData.playerblock=(int)t_npc.setup.block_player;
-        DefaultNPCData.playerblocktop=(int)t_npc.setup.block_player_top;
-        DefaultNPCData.npcblock=(int)t_npc.setup.block_npc;
-        DefaultNPCData.npcblocktop=(int)t_npc.setup.block_player_top;
-        DefaultNPCData.grabside=(int)t_npc.setup.grab_side;
-        DefaultNPCData.grabtop=(int)t_npc.setup.grab_top;
-        DefaultNPCData.jumphurt=(int)(
-                    (t_npc.setup.hurt_player)
-                                      &&
-                                      (!t_npc.setup.kill_on_jump));
-        DefaultNPCData.nohurt=(int)(!t_npc.setup.hurt_player);
-        DefaultNPCData.noblockcollision=(int)(!t_npc.setup.collision_with_blocks);
-        DefaultNPCData.cliffturn=(int)t_npc.setup.turn_on_cliff_detect;
-        DefaultNPCData.noyoshi=(int)(!t_npc.setup.can_be_eaten);
-        DefaultNPCData.foreground=(int)t_npc.setup.foreground;
-        DefaultNPCData.speed=1.0;
-        DefaultNPCData.nofireball=(int)(!t_npc.setup.kill_by_fireball);
-        DefaultNPCData.nogravity=(int)(!t_npc.setup.gravity);
-        DefaultNPCData.frames=t_npc.setup.frames;
-        DefaultNPCData.framespeed=8;
-        DefaultNPCData.framestyle=t_npc.setup.framestyle;
-        DefaultNPCData.noiceball=(int)(!t_npc.setup.freeze_by_iceball);
+        m_npcDataDefault.gfxoffsetx = t_npc.setup.gfx_offset_x;
+        m_npcDataDefault.gfxoffsety = t_npc.setup.gfx_offset_y;
+        m_npcDataDefault.width = t_npc.setup.width;
+        m_npcDataDefault.height = t_npc.setup.height;
+        m_npcDataDefault.gfxwidth = t_npc.setup.gfx_w;
+        m_npcDataDefault.gfxheight = t_npc.setup.gfx_h;
+        m_npcDataDefault.score = t_npc.setup.score;
+        m_npcDataDefault.playerblock = (int)t_npc.setup.block_player;
+        m_npcDataDefault.playerblocktop = (int)t_npc.setup.block_player_top;
+        m_npcDataDefault.npcblock = (int)t_npc.setup.block_npc;
+        m_npcDataDefault.npcblocktop = (int)t_npc.setup.block_player_top;
+        m_npcDataDefault.grabside = (int)t_npc.setup.grab_side;
+        m_npcDataDefault.grabtop = (int)t_npc.setup.grab_top;
+        m_npcDataDefault.jumphurt = (int)(
+                                        (t_npc.setup.hurt_player)
+                                        &&
+                                        (!t_npc.setup.kill_on_jump));
+        m_npcDataDefault.nohurt = (int)(!t_npc.setup.hurt_player);
+        m_npcDataDefault.noblockcollision = (int)(!t_npc.setup.collision_with_blocks);
+        m_npcDataDefault.cliffturn = (int)t_npc.setup.turn_on_cliff_detect;
+        m_npcDataDefault.noyoshi = (int)(!t_npc.setup.can_be_eaten);
+        m_npcDataDefault.foreground = (int)t_npc.setup.foreground;
+        m_npcDataDefault.speed = 1.0;
+        m_npcDataDefault.nofireball = (int)(!t_npc.setup.kill_by_fireball);
+        m_npcDataDefault.nogravity = (int)(!t_npc.setup.gravity);
+        m_npcDataDefault.frames = t_npc.setup.frames;
+        m_npcDataDefault.framespeed = 8;
+        m_npcDataDefault.framestyle = t_npc.setup.framestyle;
+        m_npcDataDefault.noiceball = (int)(!t_npc.setup.freeze_by_iceball);
         //Extended
-        DefaultNPCData.nohammer=(int)(!t_npc.setup.kill_hammer);
-        DefaultNPCData.noshell=(int)(!t_npc.setup.kill_by_npc);
-        DefaultNPCData.name=t_npc.setup.name;
-        DefaultNPCData.health=t_npc.setup.health;
-        DefaultNPCData.script=t_npc.setup.algorithm_script;
-        DefaultNPCData.image=t_npc.setup.image_n;
-        DefaultNPCData.grid=t_npc.setup.grid;
-        DefaultNPCData.gridoffsetx=0;
-        DefaultNPCData.gridoffsety=0;
-        DefaultNPCData.gridalign=t_npc.setup.grid_attach_style;
+        m_npcDataDefault.nohammer = (int)(!t_npc.setup.kill_hammer);
+        m_npcDataDefault.noshell = (int)(!t_npc.setup.kill_by_npc);
+        m_npcDataDefault.name = t_npc.setup.name;
+        m_npcDataDefault.health = t_npc.setup.health;
+        m_npcDataDefault.script = t_npc.setup.algorithm_script;
+        m_npcDataDefault.image = t_npc.setup.image_n;
+        m_npcDataDefault.grid = t_npc.setup.grid;
+        m_npcDataDefault.gridoffsetx = 0;
+        m_npcDataDefault.gridoffsety = 0;
+        m_npcDataDefault.gridalign = t_npc.setup.grid_attach_style;
     }
 }
 

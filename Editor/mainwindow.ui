@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>1675</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -715,7 +715,7 @@
   </action>
   <action name="Exit">
    <property name="text">
-    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Edit from the editor">Exit</string>
+    <string comment="Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;" extracomment="Exit from the editor">Exit</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+Q</string>
@@ -2664,56 +2664,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <string>Delete section</string>
    </property>
   </action>
-  <action name="actionAdditional_Settings">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Additional Settings</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionCompile_To">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>Compile To: </string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionAutocode_Lunadll_Original_Language">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Autocode [Lunadll Original Language]</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionLunaLua">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>LunaLua</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
   <action name="actionFloodSectionOnly">
    <property name="checkable">
     <bool>true</bool>
@@ -2752,18 +2702,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
   <action name="actionCheckUpdates">
    <property name="text">
     <string>Check for updates...</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::NoRole</enum>
-   </property>
-  </action>
-  <action name="actionRunTestSMBX">
-   <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/mushroom16.png</normaloff>:/images/mushroom16.png</iconset>
-   </property>
-   <property name="text">
-    <string>Run testing in the SMBX (LunaDLL required)</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -2976,11 +2914,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="toolTip">
     <string>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</string>
-   </property>
-  </action>
-  <action name="actionSetGridItemDefault">
-   <property name="text">
-    <string>Item default</string>
    </property>
   </action>
   <action name="actionWelcome">

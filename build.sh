@@ -10,10 +10,12 @@ CMAKE_GENERATOR="Unix Makefiles"
 flag_debugThisScript=false
 flag_debugDependencies=false
 flag_pack_src=false
+flag_pack_src_gz=false
 flag_cmake_it_ninja=false
 flag_cmake_deploy=false
 flag_cmake_static_qt=false
 flag_debug_build=false
+flag_portable=false
 
 for var in "$@"
 do
@@ -46,7 +48,8 @@ do
                 printf " \E[0;4;44;37m<To use LDoc you need to build the project first!>\E[0m\n"
             fi
 
-            printf " \E[1;4mpack-src\E[0m         - Create the source code archive (git-archive-all is required!)'\n"
+            printf " \E[1;4mpack-src\E[0m         - Create the source code archive\n"
+            printf "                    (git-archive-all is required!)\n"
             if [[ "$(which git-archive-all)" == "" ]]; then
                 printf " \E[0;4;41;37m<git-archive-all is not installed!>\E[0m\n"
             fi
@@ -62,7 +65,7 @@ do
                 printf " \E[0;4;41;37m<ninja is not installed!>\E[0m\n"
             fi
 
-            printf " \E[1;4mdeploy\E[0m           - Automatically run a deploymed (CMake only build)'\n"
+            printf " \E[1;4mdeploy\E[0m           - Automatically run a deploymed'\n"
             printf " \E[1;4muse-ccache\E[0m       - Use the CCache to speed-up build process\n"
             if [[ "$(which ccache)" == "" ]]; then
                 printf " \E[0;4;41;37m<ccache is not installed!>\E[0m"
@@ -76,11 +79,20 @@ do
             printf "\n"
             echo ""
 
+            echo "--- Deployment options ---"
+            printf " \E[1;4mportable\E[0m         - Deploy a portable installation that will don't store\n"
+            printf "                    settings, logs, and game saves in system or home directory.\n"
+            if [[ "$OSTYPE" == "darwin"* ]]; then
+                printf " \E[0;4;44;37m<Not supported on macOS, this option will take no effect>\E[0m\n"
+            fi
+            printf "\n"
+            echo ""
+
             echo "--- Disable building of components ---"
             printf " \E[1;4mnoqt\E[0m             - Skip building of components are using Qt\n"
             printf " \E[1;4mnoeditor\E[0m         - Skip building of PGE Editor compoment (Qt5)\n"
             printf " \E[1;4mnoengine\E[0m         - Skip building of PGE Engine compoment (SDL2)\n"
-            printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator compoment (Qt5)\n"
+            printf " \E[1;4mnocalibrator\E[0m     - Skip building of Playable Character Calibrator (Qt5)\n"
             printf " \E[1;4mnomaintainer\E[0m     - Skip building of PGE Maintainer compoment (Qt5)\n"
             printf " \E[1;4mnomanager\E[0m        - Skip building of PGE Manager compoment (Qt5)\n"
             printf " \E[1;4mnomusicplayer\E[0m    - Skip building of PGE MusPlay compoment (Qt5)\n"
@@ -90,12 +102,14 @@ do
             echo ""
 
             echo "--- Special ---"
-            printf " \E[1;4mdebug-script\E[0m      - Show some extra information to debug this script\n"
+            printf " \E[1;4mdebug-script\E[0m     - Show some extra information to debug this script\n"
             echo ""
 
             echo "--- For fun ---"
-            printf " \E[1;4mcolors\E[0m           - Prints various blocks of different color with showing their codes\n"
-            printf " \E[1;4mcool\E[0m             - Prints some strings inside the lines (test of printLine command)\n"
+            printf " \E[1;4mcolors\E[0m           - Prints various blocks of different color\n"
+            printf "                    with showing their codes\n"
+            printf " \E[1;4mcool\E[0m             - Prints some strings inside the lines\n"
+            printf "                    (test of printLine command)\n"
             echo ""
 
             #printf "==== \e[43mIMPORTANT!\e[0m ====\n"
@@ -115,6 +129,9 @@ do
         pack-src)
                 flag_pack_src=true
             ;;
+        gz)
+                flag_pack_src_gz=true
+            ;;
         cmake-it)
                 # dummy
             ;;
@@ -129,6 +146,9 @@ do
             ;;
         deploy)
                 flag_cmake_deploy=true
+            ;;
+        portable)
+                flag_portable=true
             ;;
         static-qt)
                 flag_cmake_static_qt=true
@@ -258,7 +278,7 @@ do
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBPNG=ON"
             ;;
         system-libs)
-            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBFREETYPE=ON -DUSE_SYSTEM_LIBPNG=ON -DUSE_SYSTEM_SDL2=ON -DUSE_SYSTEM_SQLITE=ON"
+            CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DUSE_SYSTEM_LIBC=ON -DUSE_SYSTEM_LIBFREETYPE=ON -DUSE_SYSTEM_LIBPNG=ON -DUSE_SYSTEM_SDL2=ON -DUSE_SYSTEM_SQLITE=ON -DPGE_STATIC_SDLMIXER=OFF -DUSE_SHARED_FREEIMAGE=ON"
             ;;
         noqt)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_ENABLE_QT=OFF"
@@ -345,27 +365,52 @@ do
             echo ""
             echo "Running translation refreshing...";
 
-            printLine "Editor" "\E[0;42;37m" "\E[0;34m"
-            # ${QT_PATH}/lupdate -locations none -no-ui-lines Editor/pge_editor.pro
+            LANGS_LIST="bg bs de en es fr he-il id it ja nl nb-no pl pt-br pt-pt ru sv sr uk zh"
 
+            printLine "Editor" "\E[0;42;37m" "\E[0;34m"
             cd Editor
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
             find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
-            for lang in bg bs de en es fr "he-il" "id" it ja "nl" pl "pt-br" "pt-pt" ru sv sr uk zh; do
+            for lang in ${LANGS_LIST}; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/editor_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp
 
             cd ..
 
-            printLine "Engine" "\E[0;42;37m" "\E[0;34m"
-            # ${QT_PATH}/lupdate -locations none Engine/pge_engine.pro
+            printLine "Maintainer" "\E[0;42;37m" "\E[0;34m"
+            cd Maintainer
 
+            find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
+            find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
+            sed -i '/_common\/data_functions/d' _lupdate_temp_list.tmp
+            for lang in ${LANGS_LIST}; do
+                ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/maintainer_$lang.ts -I .
+            done
+            rm _lupdate_temp_list.tmp
+
+            cd ..
+
+            printLine "PlayableCalibrator" "\E[0;42;37m" "\E[0;34m"
+            cd PlayableCalibrator
+
+            find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
+            find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
+            sed -i '/_common\/data_functions/d' _lupdate_temp_list.tmp
+            for lang in ${LANGS_LIST}; do
+                ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/calibrator_$lang.ts -I .
+            done
+            rm _lupdate_temp_list.tmp
+
+            cd ..
+
+
+            printLine "Engine" "\E[0;42;37m" "\E[0;34m"
             cd Engine
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
-            for lang in de bs en es "he-il" it jp "nl" pl "pt" ru sv sr zh; do
+            for lang in ${LANGS_LIST}; do
                 ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/engine_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp
@@ -390,9 +435,14 @@ if ${flag_pack_src} ; then
     if [[ ! -d bin-archives ]]; then
         mkdir bin-archives
     fi
+    if ${flag_pack_src_gz} ; then
+        ARFORMAT=gz
+    else
+        ARFORMAT=bz2
+    fi
 
     echo "Packing source code..."
-    git archive-all -v --force-submodules bin-archives/pge-project-full-src.tar.bz2
+    git archive-all -v --force-submodules bin-archives/pge-project-full-src.tar.${ARFORMAT}
     checkState
 
     printLine "Packed!" "\E[0;42;37m" "\E[0;32m"
@@ -493,7 +543,7 @@ if ${flag_cmake_deploy} ; then
     echo "Deploying..."
     cmake --build . --target put_online_help
     checkState
-    if [[ "$OSTYPE" != "darwin"* ]]; then
+    if [[ ${flag_portable} == true && "$OSTYPE" != "darwin"* ]]; then
         cmake --build . --target enable_portable
         checkState
     fi

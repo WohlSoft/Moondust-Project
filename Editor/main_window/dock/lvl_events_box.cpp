@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,18 +53,18 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
         height()
     );
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)),
-            this, SLOT(DragAndDroppedEvent(QModelIndex, int, int, QModelIndex, int)));
+            this, SLOT(dragAndDroppedEvent(QModelIndex, int, int, QModelIndex, int)));
     m_lastVisibilityState = isVisible();
     mw()->docks_level.
     addState(this, &m_lastVisibilityState);
-    LvlEventBoxLock = false;
-    currentEventArrayID = 0;
-    lockSetEventSettings = false;
-    lockEventSectionDataList = false;
-    curSectionField = 0;
-    cloneEvent = false;
-    cloneEventId = 0;
-    newEventCounter = 1;
+    m_externalLock = false;
+    m_currentEventArrayID = 0;
+    m_internalLock = false;
+    m_lockEventSectionDataList = false;
+    m_curSectionField = 0;
+    m_cloneEvent = false;
+    m_cloneEventId = 0;
+    m_newEventCounter = 1;
     /**Initializing spoilers**/
     refreshShownTabs(FileFormats::CreateLvlEvent(), true);
 }
@@ -110,14 +110,14 @@ QPushButton *LvlEventsBox::button_event_dupe()
 
 void LvlEventsBox::re_translate()
 {
-    LvlEventBoxLock = true;
-    lockSetEventSettings = true;
+    m_externalLock = true;
+    m_internalLock = true;
     ui->retranslateUi(this);
-    EventListsSync();
+    eventListsSync();
     setEventData(-1);
     reloadSoundsList();
-    lockSetEventSettings = false;
-    LvlEventBoxLock = false;
+    m_internalLock = false;
+    m_externalLock = false;
 }
 
 void MainWindow::on_actionLevelEvents_triggered(bool checked)
@@ -162,7 +162,7 @@ void LvlEventsBox::setEventsBox()
     }
 }
 
-void LvlEventsBox::EventListsSync()
+void LvlEventsBox::eventListsSync()
 {
     mw()->EventListsSync();
 }
@@ -170,9 +170,9 @@ void LvlEventsBox::EventListsSync()
 void MainWindow::EventListsSync()
 {
     dock_LvlItemProps->hide();
-    dock_LvlItemProps->LvlItemPropsLock = true;
-    dock_LvlEvents->lockSetEventSettings = true;
-    dock_LvlWarpProps->lockWarpSetSettings = true;
+    dock_LvlItemProps->setSettingsLock(true);
+    dock_LvlEvents->m_internalLock = true;
+    dock_LvlWarpProps->setSettingsLock(true);
     QComboBox *_ip_block_d = dock_LvlItemProps->cbox_event_block_dest();
     QComboBox *_ip_block_h = dock_LvlItemProps->cbox_event_block_hit();
     QComboBox *_ip_block_l = dock_LvlItemProps->cbox_event_block_le();
@@ -260,16 +260,16 @@ void MainWindow::EventListsSync()
     _sb_npc_t->setCurrentText(curTalkNpc);
     _sb_npc_el->setCurrentText(curEmptyLayerNpc);
     _w_ent->setCurrentText(curEnterEventWarp);
-    dock_LvlEvents->lockSetEventSettings = false;
-    dock_LvlWarpProps->lockWarpSetSettings = false;
+    dock_LvlEvents->m_internalLock = false;
+    dock_LvlWarpProps->setSettingsLock(false);
 
-    if(dock_LvlEvents->currentEventArrayID > 0)
-        dock_LvlEvents->setEventData(dock_LvlEvents->currentEventArrayID);
+    if(dock_LvlEvents->m_currentEventArrayID > 0)
+        dock_LvlEvents->setEventData(dock_LvlEvents->m_currentEventArrayID);
 }
 
 void LvlEventsBox::reloadSoundsList()
 {
-    lockSetEventSettings = true;
+    m_internalLock = true;
     ui->LVLEvent_Cmn_PlaySnd->clear();
     ui->LVLEvent_Cmn_PlaySnd->addItem(tr("[Silence]"), "0");
 
@@ -283,13 +283,13 @@ void LvlEventsBox::reloadSoundsList()
             ui->LVLEvent_Cmn_PlaySnd->addItem(snd.name, QString::number(snd.id));
     }
 
-    lockSetEventSettings = false;
+    m_internalLock = false;
 }
 
 
 void LvlEventsBox::setEventData(long index)
 {
-    lockSetEventSettings = true;
+    m_internalLock = true;
     long cIndex = index;
     bool found = false;
 
@@ -301,7 +301,7 @@ void LvlEventsBox::setEventData(long index)
             cIndex = ui->LVLEvents_List->currentItem()->data(Qt::UserRole).toInt();
         else
         {
-            cIndex = currentEventArrayID;
+            cIndex = m_currentEventArrayID;
 
             for(int q = 0; q < ui->LVLEvents_List->count(); q++) //Select if not selected
             {
@@ -324,13 +324,13 @@ void LvlEventsBox::setEventData(long index)
 
         if((edit->LvlData.events.size() > 0) && (cIndex >= 0))
         {
-            currentEventArrayID = cIndex;
+            m_currentEventArrayID = cIndex;
 
             foreach(LevelSMBX64Event event, edit->LvlData.events)
             {
                 if(event.meta.array_id == (unsigned int)cIndex)
                 {
-                    currentEventArrayID = event.meta.array_id;
+                    m_currentEventArrayID = event.meta.array_id;
                     //Enable controls
                     ui->LVLEvents_Settings->setEnabled(true);
                     ui->LVLEvent_AutoStart->setEnabled(true);
@@ -369,7 +369,7 @@ void LvlEventsBox::setEventData(long index)
                         if(ui->LVLEvent_Sct_list->itemData(i).toInt() == edit->LvlData.CurSection)
                         {
                             ui->LVLEvent_Sct_list->setCurrentIndex(i);
-                            curSectionField = i;
+                            m_curSectionField = i;
                             break;
                         }
                     }
@@ -436,10 +436,10 @@ void LvlEventsBox::setEventData(long index)
             ui->LVLEvent_AutoStart->setEnabled(false);
         }
 
-        currentEventArrayID = cIndex;
+        m_currentEventArrayID = cIndex;
     }
 
-    lockSetEventSettings = false;
+    m_internalLock = false;
 }
 
 void LvlEventsBox::refreshShownTabs(LevelSMBX64Event event, bool hideAll)
@@ -574,7 +574,7 @@ void LvlEventsBox::eventSectionSettingsSync()
         if(i < 0) return;
 
         int sectionID = ui->LVLEvent_Sct_list->currentData().toInt();
-        checkSectionSet(edit->LvlData.events[i].sets, curSectionField);
+        checkSectionSet(edit->LvlData.events[i].sets, m_curSectionField);
         LevelEvent_Sets &SectionSet = edit->LvlData.events[i].sets[sectionID];
         ui->LVLEvent_SctSize_left->setText("");
         ui->LVLEvent_SctSize_top->setText("");
@@ -598,7 +598,7 @@ void LvlEventsBox::eventSectionSettingsSync()
 
         default:
             ui->LVLEvent_SctSize_define->setChecked(true);
-            lockEventSectionDataList = true;
+            m_lockEventSectionDataList = true;
             ui->LVLEvent_SctSize_left->setText(QString::number(SectionSet.position_left));
             ui->LVLEvent_SctSize_top->setText(QString::number(SectionSet.position_top));
             ui->LVLEvent_SctSize_bottom->setText(QString::number(SectionSet.position_bottom));
@@ -627,7 +627,7 @@ void LvlEventsBox::eventSectionSettingsSync()
         default:
             ui->LVLEvent_SctMus_define->setChecked(true);
             ui->LVLEvent_SctMus_List->setEnabled(true);
-            lockEventSectionDataList = true;
+            m_lockEventSectionDataList = true;
             ui->LVLEvent_SctMus_List->setCurrentIndex(0);
 
             for(int q = 0; q < ui->LVLEvent_SctMus_List->count(); q++)
@@ -658,7 +658,7 @@ void LvlEventsBox::eventSectionSettingsSync()
         default:
             ui->LVLEvent_SctBg_define->setChecked(true);
             ui->LVLEvent_SctBg_List->setEnabled(true);
-            lockEventSectionDataList = true;
+            m_lockEventSectionDataList = true;
             ui->LVLEvent_SctBg_List->setCurrentIndex(0);
 
             for(int q = 0; q < ui->LVLEvent_SctBg_List->count(); q++)
@@ -674,7 +674,7 @@ void LvlEventsBox::eventSectionSettingsSync()
         }
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::eventLayerVisiblySyncList()
@@ -783,9 +783,9 @@ void LvlEventsBox::on_LVLEvents_List_itemSelectionChanged()
 
 void LvlEventsBox::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    lockSetEventSettings = true;
+    m_internalLock = true;
     int WinType = mw()->activeChildWindow();
 
     if(WinType == MainWindow::WND_Level)
@@ -796,17 +796,17 @@ void LvlEventsBox::on_LVLEvents_List_itemChanged(QListWidgetItem *item)
 
         QString eventName = item->text();
         QString oldEventName = item->text();
-        ModifyEventItem(item, oldEventName, eventName);
+        modifyEventItem(item, oldEventName, eventName);
         edit->LvlData.meta.modified = true;
     }//if WinType==1
 
-    EventListsSync();
-    lockSetEventSettings = false;
+    eventListsSync();
+    m_internalLock = false;
 }
 
-void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/, int sourceStart, int sourceEnd, QModelIndex /*destinationParent*/, int destinationRow)
+void LvlEventsBox::dragAndDroppedEvent(QModelIndex /*sourceParent*/, int sourceStart, int sourceEnd, QModelIndex /*destinationParent*/, int destinationRow)
 {
-    lockSetEventSettings = true;
+    m_internalLock = true;
     LogDebug("Row Change at " + QString::number(sourceStart) +
              " " + QString::number(sourceEnd) +
              " to " + QString::number(destinationRow));
@@ -828,8 +828,8 @@ void LvlEventsBox::DragAndDroppedEvent(QModelIndex /*sourceParent*/, int sourceS
         }
     }
 
-    lockSetEventSettings = false;
-    EventListsSync();  //Sync comboboxes in properties
+    m_internalLock = false;
+    eventListsSync();  //Sync comboboxes in properties
 }
 
 long LvlEventsBox::getEventArrayIndex()
@@ -845,7 +845,7 @@ long LvlEventsBox::getEventArrayIndex()
 
     for(i = 0; i < edit->LvlData.events.size(); i++)
     {
-        if((unsigned long)currentEventArrayID == edit->LvlData.events[i].meta.array_id)
+        if((unsigned long)m_currentEventArrayID == edit->LvlData.events[i].meta.array_id)
         {
             found = true;
             break;
@@ -859,9 +859,9 @@ long LvlEventsBox::getEventArrayIndex()
 }
 
 
-void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
+void LvlEventsBox::addNewEvent(QString eventName, bool setEdited)
 {
-    lockSetEventSettings = true;
+    m_internalLock = true;
 
     if(mw()->activeChildWindow() != MainWindow::WND_Level) return;
 
@@ -881,22 +881,22 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
     if(eventIsExist(item->text()))
     {
         delete item;
-        lockSetEventSettings = false;
-        cloneEvent = false; //Reset state
+        m_internalLock = false;
+        m_cloneEvent = false; //Reset state
         return;
     }
     else
     {
         LevelSMBX64Event NewEvent = FileFormats::CreateLvlEvent();
 
-        if(cloneEvent)
+        if(m_cloneEvent)
         {
             bool found = false;
             long i;
 
             for(i = 0; i < edit->LvlData.events.size(); i++)
             {
-                if((unsigned long)cloneEventId == edit->LvlData.events[i].meta.array_id)
+                if((unsigned long)m_cloneEventId == edit->LvlData.events[i].meta.array_id)
                 {
                     found = true;
                     break;
@@ -911,14 +911,14 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
         NewEvent.meta.array_id = edit->LvlData.events_array_id;
         item->setData(Qt::UserRole, QString::number(NewEvent.meta.array_id));
 
-        if(!cloneEvent)
+        if(!m_cloneEvent)
             edit->scene->m_history->addAddEvent(NewEvent);
         else
             edit->scene->m_history->addDuplicateEvent(NewEvent);
 
         edit->LvlData.events.push_back(NewEvent);
         edit->LvlData.meta.modified = true;
-        cloneEvent = false; //Reset state
+        m_cloneEvent = false; //Reset state
 
         if(setEdited)
         {
@@ -928,13 +928,13 @@ void LvlEventsBox::AddNewEvent(QString eventName, bool setEdited)
         }
     }
 
-    lockSetEventSettings = false;
-    EventListsSync();  //Sync comboboxes in properties
+    m_internalLock = false;
+    eventListsSync();  //Sync comboboxes in properties
 }
 
-void LvlEventsBox::ModifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName)
+void LvlEventsBox::modifyEventItem(QListWidgetItem *item, QString oldEventName, QString newEventName)
 {
-    lockSetEventSettings = true;
+    m_internalLock = true;
     //Find layer enrty in array and apply settings
     LevelEdit *edit = mw()->activeLvlEditWin();
 
@@ -951,9 +951,9 @@ void LvlEventsBox::ModifyEventItem(QListWidgetItem *item, QString oldEventName, 
             if(newEventName.isEmpty())
             {
                 //Discard change to empty
-                lockSetEventSettings = true;
+                m_internalLock = true;
                 item->setText(oldEventName);
-                lockSetEventSettings = false;
+                m_internalLock = false;
                 return;
             }
 
@@ -975,9 +975,9 @@ void LvlEventsBox::ModifyEventItem(QListWidgetItem *item, QString oldEventName, 
             if(exist)
             {
                 //Discard change to exist event
-                lockSetEventSettings = true;
+                m_internalLock = true;
                 item->setText(oldEventName);
-                lockSetEventSettings = false;
+                m_internalLock = false;
                 return;
             }
 
@@ -986,10 +986,10 @@ void LvlEventsBox::ModifyEventItem(QListWidgetItem *item, QString oldEventName, 
         }
     }
 
-    lockSetEventSettings = false;
+    m_internalLock = false;
     //Update event name in items
     ModifyEvent(oldEventName, newEventName);
-    EventListsSync();  //Sync comboboxes in properties
+    eventListsSync();  //Sync comboboxes in properties
 }
 
 void LvlEventsBox::ModifyEvent(QString eventName, QString newEventName)
@@ -1094,10 +1094,10 @@ QListWidget *LvlEventsBox::getEventList()
 
 void LvlEventsBox::setEventToolsLocked(bool locked)
 {
-    lockSetEventSettings = locked;
+    m_internalLock = locked;
 }
 
-void LvlEventsBox::RemoveEvent(QString eventName)
+void LvlEventsBox::removeEvent(QString eventName)
 {
     if(eventName.isEmpty()) return;
 
@@ -1107,13 +1107,13 @@ void LvlEventsBox::RemoveEvent(QString eventName)
 
 void LvlEventsBox::on_LVLEvents_add_clicked()
 {
-    newEventCounter = 1;
+    m_newEventCounter = 1;
     QString newEventName = tr("New Event %1");
 
-    while(eventIsExist(newEventName.arg(newEventCounter)))
-        newEventCounter++;
+    while(eventIsExist(newEventName.arg(m_newEventCounter)))
+        m_newEventCounter++;
 
-    AddNewEvent(newEventName.arg(newEventCounter), true);
+    addNewEvent(newEventName.arg(m_newEventCounter), true);
 }
 
 void LvlEventsBox::on_LVLEvents_del_clicked()
@@ -1149,7 +1149,7 @@ void LvlEventsBox::on_LVLEvents_del_clicked()
         }
     }
 
-    EventListsSync();
+    eventListsSync();
 }
 
 
@@ -1157,22 +1157,22 @@ void LvlEventsBox::on_LVLEvents_duplicate_clicked()
 {
     if(ui->LVLEvents_List->selectedItems().isEmpty()) return;
 
-    cloneEvent = true;
-    cloneEventId = ui->LVLEvents_List->selectedItems()[0]->data(Qt::UserRole).toInt();
-    newEventCounter = 1;
+    m_cloneEvent = true;
+    m_cloneEventId = ui->LVLEvents_List->selectedItems()[0]->data(Qt::UserRole).toInt();
+    m_newEventCounter = 1;
     QString copiedEventName = tr("Copyed Event %1");
 
-    while(eventIsExist(copiedEventName.arg(newEventCounter)))
-        newEventCounter++;
+    while(eventIsExist(copiedEventName.arg(m_newEventCounter)))
+        m_newEventCounter++;
 
-    AddNewEvent(copiedEventName.arg(ui->LVLEvents_List->count() + 1), true);
+    addNewEvent(copiedEventName.arg(ui->LVLEvents_List->count() + 1), true);
 }
 
 
 
 void LvlEventsBox::on_LVLEvent_AutoStart_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1200,7 +1200,7 @@ void LvlEventsBox::on_LVLEvent_AutoStart_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1225,7 +1225,7 @@ void LvlEventsBox::on_LVLEvent_disableSmokeEffect_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Layer_HideAdd_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1251,7 +1251,7 @@ void LvlEventsBox::on_LVLEvent_Layer_HideAdd_clicked()
 
 void LvlEventsBox::on_LVLEvent_Layer_HideDel_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1285,7 +1285,7 @@ void LvlEventsBox::on_LVLEvent_Layer_HideDel_clicked()
 
 void LvlEventsBox::on_LVLEvent_Layer_ShowAdd_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1311,7 +1311,7 @@ void LvlEventsBox::on_LVLEvent_Layer_ShowAdd_clicked()
 
 void LvlEventsBox::on_LVLEvent_Layer_ShowDel_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1345,7 +1345,7 @@ void LvlEventsBox::on_LVLEvent_Layer_ShowDel_clicked()
 
 void LvlEventsBox::on_LVLEvent_Layer_TogAdd_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1371,7 +1371,7 @@ void LvlEventsBox::on_LVLEvent_Layer_TogAdd_clicked()
 
 void LvlEventsBox::on_LVLEvent_Layer_TogDel_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1410,7 +1410,7 @@ void LvlEventsBox::on_LVLEvent_Layer_TogDel_clicked()
 
 void LvlEventsBox::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     if(index < 0) return;
 
@@ -1437,7 +1437,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_List_currentIndexChanged(int index)
 
 void LvlEventsBox::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1462,7 +1462,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_spX_valueChanged(double arg1)
 
 void LvlEventsBox::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1493,7 +1493,7 @@ void LvlEventsBox::on_LVLEvent_LayerMov_spY_valueChanged(double arg1)
 
 void LvlEventsBox::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1518,7 +1518,7 @@ void LvlEventsBox::on_LVLEvent_Scroll_Sct_valueChanged(int arg1)
 
 void LvlEventsBox::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1543,7 +1543,7 @@ void LvlEventsBox::on_LVLEvent_Scroll_spX_valueChanged(double arg1)
 
 void LvlEventsBox::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1571,17 +1571,17 @@ void LvlEventsBox::on_LVLEvent_Scroll_spY_valueChanged(double arg1)
 
 void LvlEventsBox::on_LVLEvent_Sct_list_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     if(index < 0) return;
 
-    curSectionField = index;
+    m_curSectionField = index;
     eventSectionSettingsSync();
 }
 
 void LvlEventsBox::on_LVLEvent_SctSize_none_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1591,16 +1591,16 @@ void LvlEventsBox::on_LVLEvent_SctSize_none_clicked()
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> sizeData;
-        sizeData.push_back((qlonglong)curSectionField);
+        sizeData.push_back((qlonglong)m_curSectionField);
         sizeData.push_back((qlonglong)SectionSet.position_top);
         sizeData.push_back((qlonglong)SectionSet.position_right);
         sizeData.push_back((qlonglong)SectionSet.position_bottom);
@@ -1626,12 +1626,12 @@ void LvlEventsBox::on_LVLEvent_SctSize_none_clicked()
         edit->LvlData.meta.modified = true;
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctSize_reset_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1641,16 +1641,16 @@ void LvlEventsBox::on_LVLEvent_SctSize_reset_clicked()
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> sizeData;
-        sizeData.push_back((qlonglong)curSectionField);
+        sizeData.push_back((qlonglong)m_curSectionField);
         sizeData.push_back((qlonglong)SectionSet.position_top);
         sizeData.push_back((qlonglong)SectionSet.position_right);
         sizeData.push_back((qlonglong)SectionSet.position_bottom);
@@ -1676,12 +1676,12 @@ void LvlEventsBox::on_LVLEvent_SctSize_reset_clicked()
         edit->LvlData.meta.modified = true;
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctSize_define_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1691,49 +1691,49 @@ void LvlEventsBox::on_LVLEvent_SctSize_define_clicked()
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> sizeData;
-        sizeData.push_back((qlonglong)curSectionField);
+        sizeData.push_back((qlonglong)m_curSectionField);
         sizeData.push_back((qlonglong)SectionSet.position_top);
         sizeData.push_back((qlonglong)SectionSet.position_right);
         sizeData.push_back((qlonglong)SectionSet.position_bottom);
         sizeData.push_back((qlonglong)SectionSet.position_left);
-        sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_top);
-        sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_right);
-        sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_bottom);
-        sizeData.push_back((qlonglong)edit->LvlData.sections[curSectionField].size_left);
+        sizeData.push_back((qlonglong)edit->LvlData.sections[m_curSectionField].size_top);
+        sizeData.push_back((qlonglong)edit->LvlData.sections[m_curSectionField].size_right);
+        sizeData.push_back((qlonglong)edit->LvlData.sections[m_curSectionField].size_bottom);
+        sizeData.push_back((qlonglong)edit->LvlData.sections[m_curSectionField].size_left);
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECSIZE, QVariant(sizeData));
         ui->LVLEvent_SctSize_left->setEnabled(true);
         ui->LVLEvent_SctSize_top->setEnabled(true);
         ui->LVLEvent_SctSize_bottom->setEnabled(true);
         ui->LVLEvent_SctSize_right->setEnabled(true);
         ui->LVLEvent_SctSize_Set->setEnabled(true);
-        ui->LVLEvent_SctSize_left->setText(QString::number(edit->LvlData.sections[curSectionField].size_left));
-        ui->LVLEvent_SctSize_top->setText(QString::number(edit->LvlData.sections[curSectionField].size_top));
-        ui->LVLEvent_SctSize_bottom->setText(QString::number(edit->LvlData.sections[curSectionField].size_bottom));
-        ui->LVLEvent_SctSize_right->setText(QString::number(edit->LvlData.sections[curSectionField].size_right));
-        SectionSet.position_left = edit->LvlData.sections[curSectionField].size_left;
-        SectionSet.position_right = edit->LvlData.sections[curSectionField].size_right;
-        SectionSet.position_bottom = edit->LvlData.sections[curSectionField].size_bottom;
-        SectionSet.position_top = edit->LvlData.sections[curSectionField].size_top;
+        ui->LVLEvent_SctSize_left->setText(QString::number(edit->LvlData.sections[m_curSectionField].size_left));
+        ui->LVLEvent_SctSize_top->setText(QString::number(edit->LvlData.sections[m_curSectionField].size_top));
+        ui->LVLEvent_SctSize_bottom->setText(QString::number(edit->LvlData.sections[m_curSectionField].size_bottom));
+        ui->LVLEvent_SctSize_right->setText(QString::number(edit->LvlData.sections[m_curSectionField].size_right));
+        SectionSet.position_left = edit->LvlData.sections[m_curSectionField].size_left;
+        SectionSet.position_right = edit->LvlData.sections[m_curSectionField].size_right;
+        SectionSet.position_bottom = edit->LvlData.sections[m_curSectionField].size_bottom;
+        SectionSet.position_top = edit->LvlData.sections[m_curSectionField].size_top;
         edit->LvlData.meta.modified = true;
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1743,16 +1743,16 @@ void LvlEventsBox::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> sizeData;
-        sizeData.push_back(qlonglong(curSectionField));
+        sizeData.push_back(qlonglong(m_curSectionField));
         sizeData.push_back(qlonglong(SectionSet.position_top));
         sizeData.push_back(qlonglong(SectionSet.position_right));
         sizeData.push_back(qlonglong(SectionSet.position_bottom));
@@ -1765,14 +1765,14 @@ void LvlEventsBox::on_LVLEvent_SctSize_left_textEdited(const QString &arg1)
         SectionSet.position_left = arg1.toInt();
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1782,16 +1782,16 @@ void LvlEventsBox::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> sizeData;
-        sizeData.push_back(qlonglong(curSectionField));
+        sizeData.push_back(qlonglong(m_curSectionField));
         sizeData.push_back(qlonglong(SectionSet.position_top));
         sizeData.push_back(qlonglong(SectionSet.position_right));
         sizeData.push_back(qlonglong(SectionSet.position_bottom));
@@ -1804,14 +1804,14 @@ void LvlEventsBox::on_LVLEvent_SctSize_top_textEdited(const QString &arg1)
         SectionSet.position_top = arg1.toInt();
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1821,16 +1821,16 @@ void LvlEventsBox::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> sizeData;
-        sizeData.push_back(qlonglong(curSectionField));
+        sizeData.push_back(qlonglong(m_curSectionField));
         sizeData.push_back(qlonglong(SectionSet.position_top));
         sizeData.push_back(qlonglong(SectionSet.position_right));
         sizeData.push_back(qlonglong(SectionSet.position_bottom));
@@ -1843,14 +1843,14 @@ void LvlEventsBox::on_LVLEvent_SctSize_bottom_textEdited(const QString &arg1)
         SectionSet.position_bottom = arg1.toInt();
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1860,16 +1860,16 @@ void LvlEventsBox::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> sizeData;
-        sizeData.push_back(qlonglong(curSectionField));
+        sizeData.push_back(qlonglong(m_curSectionField));
         sizeData.push_back(qlonglong(SectionSet.position_top));
         sizeData.push_back(qlonglong(SectionSet.position_right));
         sizeData.push_back(qlonglong(SectionSet.position_bottom));
@@ -1882,14 +1882,14 @@ void LvlEventsBox::on_LVLEvent_SctSize_right_textEdited(const QString &arg1)
         SectionSet.position_right = arg1.toInt();
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1899,10 +1899,10 @@ void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
 
         if(!edit) return;
 
-        if(curSectionField != edit->LvlData.CurSection)
+        if(m_curSectionField != edit->LvlData.CurSection)
         {
             QMessageBox::information(this, tr("Get section size"),
-                                     tr("Please, set current section to %1 for capture data for this event").arg(curSectionField + 1),
+                                     tr("Please, set current section to %1 for capture data for this event").arg(m_curSectionField),
                                      QMessageBox::Ok);
             return;
         }
@@ -1912,8 +1912,8 @@ void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         edit->setFocus();
 
         if(edit->scene->m_resizeBox == NULL)
@@ -1929,9 +1929,9 @@ void LvlEventsBox::on_LVLEvent_SctSize_Set_clicked()
 
 void LvlEventsBox::on_LVLEvent_SctMus_none_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1942,30 +1942,30 @@ void LvlEventsBox::on_LVLEvent_SctMus_none_clicked()
         if(!edit) return;
 
         ui->LVLEvent_SctMus_List->setEnabled(false);
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> musData;
-        musData.push_back((qlonglong)curSectionField);
+        musData.push_back((qlonglong)m_curSectionField);
         musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong) - 1);
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
         SectionSet.music_id = -1;
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctMus_reset_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -1976,30 +1976,30 @@ void LvlEventsBox::on_LVLEvent_SctMus_reset_clicked()
         if(!edit) return;
 
         ui->LVLEvent_SctMus_List->setEnabled(false);
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> musData;
-        musData.push_back(qlonglong(curSectionField));
+        musData.push_back(qlonglong(m_curSectionField));
         musData.push_back(qlonglong(SectionSet.music_id));
         musData.push_back(qlonglong(-2));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
         SectionSet.music_id = -2;
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctMus_define_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2010,30 +2010,30 @@ void LvlEventsBox::on_LVLEvent_SctMus_define_clicked()
         if(!edit) return;
 
         ui->LVLEvent_SctMus_List->setEnabled(true);
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> musData;
-        musData.push_back((qlonglong)curSectionField);
+        musData.push_back((qlonglong)m_curSectionField);
         musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong)ui->LVLEvent_SctMus_List->currentData().toInt());
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
         SectionSet.music_id = ui->LVLEvent_SctMus_List->currentData().toInt();
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     if(index < 0) return;
 
@@ -2045,30 +2045,30 @@ void LvlEventsBox::on_LVLEvent_SctMus_List_currentIndexChanged(int index)
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> musData;
-        musData.push_back((qlonglong)curSectionField);
+        musData.push_back((qlonglong)m_curSectionField);
         musData.push_back((qlonglong)SectionSet.music_id);
         musData.push_back((qlonglong)ui->LVLEvent_SctMus_List->itemData(index).toInt());
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECMUS, QVariant(musData));
         SectionSet.music_id = ui->LVLEvent_SctMus_List->itemData(index).toInt();
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctBg_none_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2079,30 +2079,30 @@ void LvlEventsBox::on_LVLEvent_SctBg_none_clicked()
         if(!edit) return;
 
         ui->LVLEvent_SctBg_List->setEnabled(false);
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> bgData;
-        bgData.push_back(qlonglong(curSectionField));
+        bgData.push_back(qlonglong(m_curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(-1));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
         SectionSet.background_id = -1;
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctBg_reset_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2113,30 +2113,30 @@ void LvlEventsBox::on_LVLEvent_SctBg_reset_clicked()
         if(!edit) return;
 
         ui->LVLEvent_SctBg_List->setEnabled(false);
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> bgData;
-        bgData.push_back(qlonglong(curSectionField));
+        bgData.push_back(qlonglong(m_curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(-2));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
         SectionSet.background_id = -2;
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2147,30 +2147,30 @@ void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
         if(!edit) return;
 
         ui->LVLEvent_SctBg_List->setEnabled(true);
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> bgData;
-        bgData.push_back(qlonglong(curSectionField));
+        bgData.push_back(qlonglong(m_curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(ui->LVLEvent_SctBg_List->currentData().toInt()));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
         SectionSet.background_id = ui->LVLEvent_SctBg_List->currentData().toInt();
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
-    if(lockEventSectionDataList) return;
+    if(m_lockEventSectionDataList) return;
 
     if(index < 0) return;
 
@@ -2182,23 +2182,23 @@ void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
 
         if(!edit) return;
 
-        lockEventSectionDataList = true;
+        m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
-        checkSectionSet(event.sets, curSectionField);
-        LevelEvent_Sets &SectionSet = event.sets[curSectionField];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
         QList<QVariant> bgData;
-        bgData.push_back(qlonglong(curSectionField));
+        bgData.push_back(qlonglong(m_curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(ui->LVLEvent_SctBg_List->itemData(index).toInt()));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
         SectionSet.background_id = ui->LVLEvent_SctBg_List->itemData(index).toInt();
     }
 
-    lockEventSectionDataList = false;
+    m_lockEventSectionDataList = false;
 }
 
 
@@ -2207,7 +2207,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
 
 void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
 {
-    if(currentEventArrayID < 0) return;
+    if(m_currentEventArrayID < 0) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2251,7 +2251,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_Msg_clicked()
 
 void LvlEventsBox::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     if(index < 0) return;
 
@@ -2297,7 +2297,7 @@ void LvlEventsBox::on_LVLEvent_playSnd_clicked()
 
     if(!QFileInfo::exists(sndPath)) return;
 
-    PGE_SfxPlayer::SND_PlaySnd(sndPath);
+    PGE_SfxPlayer::playFile(sndPath);
     LogDebug(QString("Test Sound -> done!"));
 }
 
@@ -2305,7 +2305,7 @@ void LvlEventsBox::on_LVLEvent_playSnd_clicked()
 
 void LvlEventsBox::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     if(index < 0) return;
 
@@ -2334,7 +2334,7 @@ void LvlEventsBox::on_LVLEvent_Cmn_EndGame_currentIndexChanged(int index)
 
 void LvlEventsBox::on_LVLEvent_Key_Up_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2356,7 +2356,7 @@ void LvlEventsBox::on_LVLEvent_Key_Up_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_Down_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2378,7 +2378,7 @@ void LvlEventsBox::on_LVLEvent_Key_Down_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_Left_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2400,7 +2400,7 @@ void LvlEventsBox::on_LVLEvent_Key_Left_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_Right_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2422,7 +2422,7 @@ void LvlEventsBox::on_LVLEvent_Key_Right_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_Run_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2444,7 +2444,7 @@ void LvlEventsBox::on_LVLEvent_Key_Run_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_AltRun_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2466,7 +2466,7 @@ void LvlEventsBox::on_LVLEvent_Key_AltRun_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_Jump_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2488,7 +2488,7 @@ void LvlEventsBox::on_LVLEvent_Key_Jump_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_AltJump_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2510,7 +2510,7 @@ void LvlEventsBox::on_LVLEvent_Key_AltJump_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_Drop_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2532,7 +2532,7 @@ void LvlEventsBox::on_LVLEvent_Key_Drop_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_Key_Start_clicked(bool checked)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 
@@ -2557,7 +2557,7 @@ void LvlEventsBox::on_LVLEvent_Key_Start_clicked(bool checked)
 
 void LvlEventsBox::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     if(index < 0) return;
 
@@ -2589,7 +2589,7 @@ void LvlEventsBox::on_LVLEvent_TriggerEvent_currentIndexChanged(int index)
 
 void LvlEventsBox::on_LVLEvent_TriggerDelay_valueChanged(double arg1)
 {
-    if(lockSetEventSettings || LvlEventBoxLock) return;
+    if(m_internalLock || m_externalLock) return;
 
     int WinType = mw()->activeChildWindow();
 

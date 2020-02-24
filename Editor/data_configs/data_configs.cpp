@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@
 #include <QFileInfo>
 #include <QDir>
 
+#include <DirManager/dirman.h>
+#include <Utils/files.h>
 #include <common_features/app_path.h>
 #include <common_features/version_cmp.h>
 #include <main_window/global_settings.h>
@@ -228,6 +230,7 @@ bool dataconfigs::loadBasics()
 
         guiset.readEnum("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-bgo-z-position", editor.supported_features.level_bgo_z_position, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-bgo-smbx64-sp", editor.supported_features.level_bgo_smbx64_sp, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
         guiset.readEnum("level-warp-two-way", editor.supported_features.level_warp_two_way, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-portal", editor.supported_features.level_warp_portal, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
@@ -240,6 +243,13 @@ bool dataconfigs::loadBasics()
         guiset.readEnum("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
     }
+    guiset.endGroup();
+
+    guiset.beginGroup("compatibility");
+    {
+        guiset.read("extra-settings-local-at-root", m_extraSettingsLocalAtRoot, true);
+    }
+    guiset.endGroup();
 
     if(!openSection(&guiset, "main"))
         return false;
@@ -288,7 +298,8 @@ bool dataconfigs::loadBasics()
 
     if(!splash_logo.isEmpty())
     {
-        splash_logo = data_dir + splash_logo;
+        QString config_data = config_dir + "data/";
+        splash_logo = config_data + splash_logo;
         if(QPixmap(splash_logo).isNull())
         {
             LogWarning(QString("Wrong splash image: %1, using internal default").arg(splash_logo));
@@ -305,7 +316,7 @@ bool dataconfigs::loadBasics()
                 QString img =   guiset.value("image", "").toQString();
                 if(img.isEmpty())
                     goto skip;
-                tempAni.img = QPixmap(data_dir + img);
+                tempAni.img = QPixmap(config_data + img);
                 if(tempAni.img.isNull())
                     goto skip;
                 guiset.read("frames", tempAni.frames, 1);
@@ -613,13 +624,22 @@ QString dataconfigs::getWlvlPath()
     return folderWldLevelPoints.graphics;
 }
 
+bool dataconfigs::isExtraSettingsLocalAtRoot()
+{
+    return m_extraSettingsLocalAtRoot;
+}
+
 
 QString dataconfigs::getBgoExtraSettingsPath()
 {
     if(folderLvlBgo.extraSettings.isEmpty())
         return config_dir + "items/bgo";
     else
+    {
+        if(Files::isAbsolute(folderLvlBgo.extraSettings.toStdString()))
+            return folderLvlBgo.extraSettings;
         return config_dir + folderLvlBgo.extraSettings;
+    }
 }
 
 QString dataconfigs::getBlockExtraSettingsPath()
@@ -627,7 +647,11 @@ QString dataconfigs::getBlockExtraSettingsPath()
     if(folderLvlBlocks.extraSettings.isEmpty())
         return config_dir + "items/blocks";
     else
+    {
+        if(Files::isAbsolute(folderLvlBlocks.extraSettings.toStdString()))
+            return folderLvlBlocks.extraSettings;
         return config_dir + folderLvlBlocks.extraSettings;
+    }
 }
 
 QString dataconfigs::getNpcExtraSettingsPath()
@@ -635,7 +659,11 @@ QString dataconfigs::getNpcExtraSettingsPath()
     if(folderLvlNPC.extraSettings.isEmpty())
         return config_dir + "items/npc";
     else
+    {
+        if(Files::isAbsolute(folderLvlNPC.extraSettings.toStdString()))
+            return folderLvlNPC.extraSettings;
         return config_dir + folderLvlNPC.extraSettings;
+    }
 }
 
 QString dataconfigs::getTileExtraSettingsPath()
@@ -643,7 +671,11 @@ QString dataconfigs::getTileExtraSettingsPath()
     if(folderWldTerrain.extraSettings.isEmpty())
         return config_dir + "items/terrain";
     else
+    {
+        if(Files::isAbsolute(folderWldTerrain.extraSettings.toStdString()))
+            return folderWldTerrain.extraSettings;
         return config_dir + folderWldTerrain.extraSettings;
+    }
 }
 
 QString dataconfigs::getSceneExtraSettingsPath()
@@ -651,7 +683,11 @@ QString dataconfigs::getSceneExtraSettingsPath()
     if(folderWldScenery.extraSettings.isEmpty())
         return config_dir + "items/scenery";
     else
+    {
+        if(Files::isAbsolute(folderWldScenery.extraSettings.toStdString()))
+            return folderWldScenery.extraSettings;
         return config_dir + folderWldScenery.extraSettings;
+    }
 }
 
 QString dataconfigs::getPathExtraSettingsPath()
@@ -659,7 +695,11 @@ QString dataconfigs::getPathExtraSettingsPath()
     if(folderWldPaths.extraSettings.isEmpty())
         return config_dir + "items/paths";
     else
+    {
+        if(Files::isAbsolute(folderWldPaths.extraSettings.toStdString()))
+            return folderWldPaths.extraSettings;
         return config_dir + folderWldPaths.extraSettings;
+    }
 }
 
 QString dataconfigs::getWlvlExtraSettingsPath()
@@ -667,5 +707,9 @@ QString dataconfigs::getWlvlExtraSettingsPath()
     if(folderWldLevelPoints.extraSettings.isEmpty())
         return config_dir + "items/levels";
     else
+    {
+        if(Files::isAbsolute(folderWldLevelPoints.extraSettings.toStdString()))
+            return folderWldLevelPoints.extraSettings;
         return config_dir + folderWldLevelPoints.extraSettings;
+    }
 }

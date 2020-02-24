@@ -18,8 +18,7 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${DEPENDENCIES_INSTALL_DIR}/include
-    ${DEPENDENCIES_INSTALL_DIR}/include/freetype2
-    ${DEPENDENCIES_INSTALL_DIR}/include/lua_includes
+    ${DEPENDENCIES_INSTALL_DIR}/include/SDL2
 )
 link_directories(${DEPENDENCIES_INSTALL_DIR}/lib)
 
@@ -58,6 +57,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} $
 qt5_wrap_ui(UIS_HDRS
     MainWindow/mainwindow.ui
     MainWindow/sfx_tester.ui
+    MainWindow/setup_audio.ui
     MainWindow/setup_midi.ui
     AssocFiles/assoc_files.ui
 )
@@ -81,6 +81,7 @@ list(APPEND SDLMixer_MusPlay_SRC
     MainWindow/musplayer_base.cpp
     MainWindow/musplayer_qt.cpp
     MainWindow/seek_bar.cpp
+    MainWindow/setup_audio.cpp
     MainWindow/setup_midi.cpp
     MainWindow/sfx_tester.cpp
     Player/mus_player.cpp
@@ -144,6 +145,10 @@ target_compile_definitions(PGE_MusPlay_QtLibs
     ${Qt5Network_DEFINITIONS}
 )
 
+if(MINGW) # Required for SDL_Main
+    target_compile_definitions(pge_musplay PRIVATE -DSDL_MAIN_HANDLED)
+endif()
+
 target_link_libraries(PGE_MusPlay_QtLibs
     INTERFACE
     ${QT_EXTRA_LIBS_PRE}
@@ -181,13 +186,13 @@ else()
     endif()
 endif()
 
-if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT)
-    set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-static-libgcc -static-libstdc++")
+if(NOT APPLE AND NOT MSVC AND NOT PGE_ENABLE_STATIC_QT AND NOT USE_SYSTEM_LIBC)
+    set_property(TARGET pge_musplay APPEND_STRING PROPERTY LINK_FLAGS "-static-libgcc -static-libstdc++")
 endif()
 
 if(NOT EMSCRIPTEN AND NOT MSVC)
     if(WIN32)
-        set_target_properties(pge_musplay PROPERTIES LINK_FLAGS "-mwindows")
+        set_target_properties(pge_musplay PROPERTIES WIN32_EXECUTABLE ON)
         if(NOT PGE_ENABLE_STATIC_QT)
             list(APPEND PGE_MUSPLAY_LINK_LIBS "-static")
         endif()
@@ -205,8 +210,8 @@ if(APPLE)
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/musplay.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_musplay"
         MACOSX_BUNDLE_GUI_IDENTIFIER "ru.wohlsoft.pge-musplay"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "1.3.0"
-        MACOSX_BUNDLE_LONG_VERSION_STRING "1.3.0"
+        MACOSX_BUNDLE_SHORT_VERSION_STRING "${MUSPLAY_VERSION_1}.${MUSPLAY_VERSION_2}.${MUSPLAY_VERSION_3}"
+        MACOSX_BUNDLE_LONG_VERSION_STRING "${MUSPLAY_VERSION_1}.${MUSPLAY_VERSION_2}.${MUSPLAY_VERSION_3}"
         MACOSX_BUNDLE_ICON_FILE "cat_musplay.icns"
         CPACK_BUNDLE_NAME "PGE Music Player"
         MACOSX_BUNDLE_INFO_STRING "A simple looped music player working on SDL Mixer X"

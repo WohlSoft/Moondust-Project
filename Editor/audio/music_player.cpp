@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,12 +36,12 @@ QString LvlMusPlay::currentMusicPath;
 QString LvlMusPlay::lastMusicPath;
 
 
-long LvlMusPlay::currentMusicId=0;
-long LvlMusPlay::currentWldMusicId=0;
-long LvlMusPlay::currentSpcMusicId=0;
+long LvlMusPlay::currentMusicId = 0;
+long LvlMusPlay::currentWldMusicId = 0;
+long LvlMusPlay::currentSpcMusicId = 0;
 bool LvlMusPlay::musicButtonChecked;
-bool LvlMusPlay::musicForceReset=false;
-int LvlMusPlay::musicType=LvlMusPlay::LevelMusic;
+bool LvlMusPlay::musicForceReset = false;
+int LvlMusPlay::musicType = LvlMusPlay::LevelMusic;
 
 
 void MainWindow::on_actionPlayMusic_triggered(bool checked)
@@ -54,10 +54,10 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
 void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cmus)
 {
     QString root = ".";
-    MainWindow  *mw = MainWinConnect::pMainWin;
+    MainWindow *mw = MainWinConnect::pMainWin;
     if(!mw) return;
 
-    if(id==0)
+    if(id == 0)
     {
         setNoMusic();
         return;
@@ -66,13 +66,12 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
     if(mw->activeChildWindow() == MainWindow::WND_Level)
     {
         if(mw->activeLvlEditWin() != nullptr)
-            root = mw->activeLvlEditWin()->LvlData.meta.path+"/";
+            root = mw->activeLvlEditWin()->LvlData.meta.path + "/";
     }
-    else
-    if(mw->activeChildWindow() == MainWindow::WND_World)
+    else if(mw->activeChildWindow() == MainWindow::WND_World)
     {
         if(mw->activeWldEditWin() != nullptr)
-            root = mw->activeWldEditWin()->WldData.meta.path+"/";
+            root = mw->activeWldEditWin()->WldData.meta.path + "/";
     }
 
     //Force correction of Windows paths into UNIX style
@@ -80,63 +79,57 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
 
     switch(mt)
     {
-        case LevelMusic:
-            if(id==mw->configs.music_custom_id)
+    case LevelMusic:
+        if(id == mw->configs.music_custom_id)
+        {
+            LogDebug(QString("get Custom music path"));
+            currentMusicPath = root + cmus;
+        }
+        else
+        {
+            LogDebug(QString("get standart music path (level)"));
+            QString musicFile;
+            long j = mw->configs.getMusLvlI(id);
+            if(j >= 0)
             {
-                LogDebug(QString("get Custom music path"));
-                currentMusicPath = root + cmus;
+                if(id == mw->configs.main_music_lvl[static_cast<int>(j)].id)
+                    musicFile = mw->configs.main_music_lvl[static_cast<int>(j)].file;
             }
-            else
+            currentMusicPath = mw->configs.dirs.music + musicFile;
+        }
+        break;
+    case WorldMusic:
+        if(id == mw->configs.music_w_custom_id)
+        {
+            LogDebug(QString("get Custom music path"));
+            currentMusicPath = root + cmus;
+        }
+        else
+        {
+            LogDebug(QString("get standart music path (world)"));
+            QString musicFile;
+            long j = mw->configs.getMusWldI(id);
+            if(j >= 0)
             {
-                LogDebug(QString("get standart music path (level)"));
-                QString musicFile;
-                long j = mw->configs.getMusLvlI(id);
-                if(j>=0)
-                {
-                    if(id==mw->configs.main_music_lvl[j].id)
-                    {
-                        musicFile = mw->configs.main_music_lvl[j].file;
-                    }
-                }
-                currentMusicPath = mw->configs.dirs.music + musicFile;
+                if(id == mw->configs.main_music_wld[static_cast<int>(j)].id)
+                    musicFile = mw->configs.main_music_wld[static_cast<int>(j)].file;
             }
-            break;
-        case WorldMusic:
-            if(id==mw->configs.music_w_custom_id)
-            {
-                LogDebug(QString("get Custom music path"));
-                currentMusicPath = root + cmus;
-            }
-            else
-            {
-                LogDebug(QString("get standart music path (world)"));
-                QString musicFile;
-                long j = mw->configs.getMusWldI(id);
-                if(j>=0)
-                {
-                    if(id==mw->configs.main_music_wld[j].id)
-                    {
-                        musicFile = mw->configs.main_music_wld[j].file;
-                    }
-                }
-                currentMusicPath = mw->configs.dirs.music + musicFile;
-            }
-            break;
-        case SpecialMusic:
-            {
-                LogDebug(QString("get standart music path (special)"));
-                QString musicFile;
-                long j = mw->configs.getMusSpcI(id);
-                if(j>=0)
-                {
-                    if(id==mw->configs.main_music_spc[j].id)
-                    {
-                        musicFile = mw->configs.main_music_spc[j].file;
-                    }
-                }
-                currentMusicPath = mw->configs.dirs.music + musicFile;
-            }
-            break;
+            currentMusicPath = mw->configs.dirs.music + musicFile;
+        }
+        break;
+    case SpecialMusic:
+    {
+        LogDebug(QString("get standart music path (special)"));
+        QString musicFile;
+        long j = mw->configs.getMusSpcI(id);
+        if(j >= 0)
+        {
+            if(id == mw->configs.main_music_spc[static_cast<int>(j)].id)
+                musicFile = mw->configs.main_music_spc[static_cast<int>(j)].file;
+        }
+        currentMusicPath = mw->configs.dirs.music + musicFile;
+    }
+    break;
     }
 
     LogDebug(QString("path is %1").arg(currentMusicPath));
@@ -144,21 +137,17 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
     QString trackNum;
     if(currentMusicPath.contains('|'))
     {
-        QStringList x=currentMusicPath.split("|");
-        currentMusicPath=x[0];
-        trackNum=x[1];
+        QStringList x = currentMusicPath.split("|");
+        currentMusicPath = x[0];
+        trackNum = x[1];
     }
     QFileInfo mus(currentMusicPath);
-    if((!mus.exists())||(!mus.isFile()))
-    {
+    if((!mus.exists()) || (!mus.isFile()))
         currentMusicPath.clear();
-    }
     else
     {
         if(!trackNum.isEmpty())
-        {
-            currentMusicPath=currentMusicPath+"|"+trackNum;
-        }
+            currentMusicPath = currentMusicPath + "|" + trackNum;
     }
 }
 
@@ -186,15 +175,16 @@ void LvlMusPlay::updateMusic()
         updatePlayerState(false);
         break;
     case MainWindow::WND_World:
-        {
-            WorldEdit *w = MainWinConnect::pMainWin->activeWldEditWin();
-            if(!w)
-                return;
-            setMusic(LvlMusPlay::WorldMusic, static_cast<unsigned long>(w->currentMusic), w->currentCustomMusic);
-            MainWinConnect::pMainWin->setMusic();
-        }
+    {
+        WorldEdit *w = MainWinConnect::pMainWin->activeWldEditWin();
+        if(!w)
+            return;
+        setMusic(LvlMusPlay::WorldMusic, static_cast<unsigned long>(w->currentMusic), w->currentCustomMusic);
+        MainWinConnect::pMainWin->setMusic();
+    }
+    break;
+    default:
         break;
-    default: break;
     }
 
 }
@@ -205,27 +195,23 @@ void LvlMusPlay::updatePlayerState(bool playing)
     {
         if(
             (!lastMusicPath.isNull()) &&
-            (lastMusicPath == currentMusicPath)&&
+            (lastMusicPath == currentMusicPath) &&
             (musicButtonChecked == playing)
-                )
-                return;
+        )
+            return;
 
     }
     else
-    {
-        musicForceReset=false;
-    }
+        musicForceReset = false;
 
-    if((playing==false) || (currentMusicPath.isNull()))
-    {
-        PGE_MusPlayer::MUS_stopMusic();
-    }
+    if((playing == false) || (currentMusicPath.isNull()))
+        PGE_MusPlayer::stop();
     else
     {
-        PGE_MusPlayer::MUS_stopMusic();
-        PGE_MusPlayer::MUS_openFile( currentMusicPath );
-        PGE_MusPlayer::MUS_changeVolume(MainWinConnect::pMainWin->musicVolume());
-        PGE_MusPlayer::MUS_playMusic();
+        PGE_MusPlayer::stop();
+        PGE_MusPlayer::openFile(currentMusicPath);
+        PGE_MusPlayer::changeVolume(MainWinConnect::pMainWin->musicVolume());
+        PGE_MusPlayer::play();
     }
 
     lastMusicPath = currentMusicPath;
@@ -243,7 +229,7 @@ void MainWindow::setMusic(bool checked)
 {
     checked = ui->actionPlayMusic->isChecked();
 
-    if( configs.check() )
+    if(configs.check())
     {
         LogCritical(QString("Error! *.INI Configs for music not loaded"));
         return;

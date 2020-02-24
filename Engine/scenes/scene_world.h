@@ -1,6 +1,6 @@
 /*
  * Moondust, a free game engine for platform game making
- * Copyright (c) 2014-2019 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This software is licensed under a dual license system (MIT or GPL version 3 or later).
  * This means you are free to choose with which of both licenses (MIT or GPL version 3 or later)
@@ -200,7 +200,7 @@ private:
     VPtrList<WldMusicBoxItem >      m_itemsMusicBoxes;
     EventQueue<WorldScene >         m_events;
 
-    std::vector<WorldNode*>         m_itemsToRender;
+    std::vector<WorldNode *>         m_itemsToRender;
 
 
     /*****************Pause Menu*******************/

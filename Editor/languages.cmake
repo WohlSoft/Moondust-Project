@@ -9,6 +9,7 @@ set(EDITOR_LANGUAGES
     editor_it.ts
     editor_ja.ts
     editor_nl.ts
+    editor_nb-no.ts
     editor_pl.ts
     editor_pt-br.ts
     editor_pt-pt.ts
