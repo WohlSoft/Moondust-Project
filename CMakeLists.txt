@@ -138,6 +138,12 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
         add_subdirectory(LazyFixTool)
         InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/LazyFixTool_Readme.txt" RENAME "LazyFixTool.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
     endif()
+
+    option(PGE_BUILD_PALETTEFILTER "Build the PaletteFilter utility component" ON)
+    if(PGE_BUILD_PALETTEFILTER)
+        add_subdirectory(PaletteFilter)
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/Content/readmes/PaletteFilter_Readme.txt" RENAME "PaletteFilter.readme.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+    endif()
 endif()
 
 if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
