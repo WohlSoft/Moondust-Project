@@ -133,6 +133,7 @@ artifacts:
   - path: '$(BIN_DIR)\_packed\pge-calibrator-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'     #Standalone package of Playable Character calibration tool (work outside PGE)
   - path: '$(BIN_DIR)\_packed\GIFs2PNG-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
   - path: '$(BIN_DIR)\_packed\PNG2GIFs-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
+  - path: '$(BIN_DIR)\_packed\PalleteFilter-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
   - path: '$(BIN_DIR)\_packed\LazyFixTool-$(APPVEYOR_REPO_BRANCH)-$(WINXX_ARCH).zip'
   - path: 'build_date_$(APPVEYOR_REPO_BRANCH)_$(WINXX_ARCH).txt'
 

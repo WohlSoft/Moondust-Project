@@ -84,6 +84,10 @@ if(SevenZipProgram)
         "${ZIP_SRC_DIR}/GIFs2PNG.readme.txt"
     )
 
+    set(PGE_PalleteFilterFiles
+        "${ZIP_SRC_DIR}/PalleteFilter.exe"
+    )
+
     set(PGE_Png2GifsFiles
         "${ZIP_SRC_DIR}/PNG2GIFs.exe"
         "${ZIP_SRC_DIR}/PNG2GIFs.readme.txt"
@@ -98,6 +102,7 @@ if(SevenZipProgram)
         ${PGE_CommonQtFiles}
         "${ZIP_SRC_DIR}/tools"
         ${PGE_Gifs2PngFiles}
+        ${PGE_PalleteFilterFiles}
         ${PGE_Png2GifsFiles}
         "${ZIP_SRC_DIR}/pge_maintainer.exe"
     )
@@ -127,6 +132,7 @@ if(SevenZipProgram)
         "${ZIP_SRC_DIR}/PNG2GIFs.readme.txt"
         "${ZIP_SRC_DIR}/LazyFixTool.exe"
         "${ZIP_SRC_DIR}/LazyFixTool.readme.txt"
+        "${ZIP_SRC_DIR}/PalleteFilter.exe"
         "${ZIP_SRC_DIR}/pge_musplay.exe"
         "${ZIP_SRC_DIR}/pge_calibrator.exe"
         "${ZIP_SRC_DIR}/pge_maintainer.exe"
@@ -164,6 +170,9 @@ if(SevenZipProgram)
         COMMAND ${SevenZipProgram} a -tzip -mx9
             "${ZIP_PACK_DIR}/GIFs2PNG-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
             ${PGE_Gifs2PngFiles}
+        COMMAND ${SevenZipProgram} a -tzip -mx9
+            "${ZIP_PACK_DIR}/PalleteFilter-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
+            ${PGE_PalleteFilterFiles}
         COMMAND ${SevenZipProgram} a -tzip -mx9
             "${ZIP_PACK_DIR}/PNG2GIFs-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
             ${PGE_Png2GifsFiles}
