@@ -50,23 +50,40 @@ QString CustomDirManager::getCustomFile(QString name, bool ignoreDefaultDirector
     }
 
     QString target;
-tryBackup:
-    if((QFile::exists(dirCustom)) &&
-       (QFile::exists(dirCustom + "/" + name)))
-        target = dirCustom + "/" + name;
-    else if(QFile::exists(dirEpisode + "/" + name))
-        target = dirEpisode + "/" + name;
-    else
-        target = findFileInExtraDirs(name);
 
-    if(target.isEmpty() && (!ignoreDefaultDirectory) &&
-      (!defaultDirectory.isEmpty()) && (QFile::exists(defaultDirectory + "/" + name)))
-        target = defaultDirectory + "/" + name;
-
-    if((target.isEmpty()) && (!backupName.isEmpty()) && (backupName != name))
+    while(1)
     {
-        name = backupName;
-        goto tryBackup;
+        if(!dirCustom.isEmpty()) // Don't try to search in custom directory when it wasn't specified
+        {
+            const QFileInfo dCustom(dirCustom);
+            const QFileInfo dCustomFile(dirCustom + "/" + name);
+            const QFileInfo dEpisode(dirEpisode);
+            const QFileInfo dEpisodeFile(dirEpisode + "/" + name);
+
+            if(dCustom.exists() && dCustom.isDir() && dCustomFile.exists())
+                target = dCustomFile.absoluteFilePath();
+            else if(dEpisode.exists() && dEpisode.isDir() && dEpisodeFile.exists())
+                target = dEpisodeFile.absoluteFilePath();
+            else
+                target = findFileInExtraDirs(name);
+        }
+
+        if(!ignoreDefaultDirectory && target.isEmpty() && !defaultDirectory.isEmpty())
+        {
+            const QFileInfo dDefault(defaultDirectory);
+            const QFileInfo dDefaultFile(defaultDirectory + "/" + name);
+
+            if(dDefault.exists() && dDefault.isDir() && dDefaultFile.exists())
+                target = dDefaultFile.absoluteFilePath();
+        }
+
+        if((target.isEmpty()) && (!backupName.isEmpty()) && (backupName != name))
+        {
+            name = backupName;
+            continue;
+        }
+
+        break;
     }
 
     return target;
@@ -86,6 +103,12 @@ QStringList CustomDirManager::getCustomFiles(QString nameBase, QStringList exten
 
 void CustomDirManager::setCustomDirs(QString path, QString name)
 {
+    if(path.isEmpty())
+    {
+        dirCustom.clear();
+        dirEpisode.clear();
+        return; // Don't even try to search here if path is blank
+    }
     dirCustom = path + "/" + name;
     dirEpisode = path;
 }
