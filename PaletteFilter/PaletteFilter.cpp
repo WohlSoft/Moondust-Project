@@ -20,6 +20,8 @@
 
 #include <locale>
 #include <iostream>
+#include <cmath>
+#include <unordered_map>
 #include <stdio.h>
 
 #include <FileMapper/file_mapper.h>
@@ -31,23 +33,32 @@
 
 #include <FreeImageLite.h>
 
+typedef std::unordered_map<uint32_t, RGBQUAD> Pallete_t;
+
+static uint32_t rgbToInt(const RGBQUAD &q) // without alpha-channel
+{
+    return (uint32_t(q.rgbRed << 0) & 0xFF) |
+           (uint32_t(q.rgbGreen << 8) & 0xFF00) |
+           (uint32_t(q.rgbBlue << 16) & 0xFF0000);
+}
+
 static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
 {
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
     FileMapper fileMap;
     if(!fileMap.open_file(file.c_str()))
-        return NULL;
+        return nullptr;
 
     FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
                                             (unsigned int)fileMap.size());
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
     if(formato  == FIF_UNKNOWN)
-        return NULL;
+        return nullptr;
     FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
     FreeImage_CloseMemory(imgMEM);
     fileMap.close_file();
     if(!img)
-        return NULL;
+        return nullptr;
 #else
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
     if(formato  == FIF_UNKNOWN)
@@ -62,117 +73,89 @@ static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
         FIBITMAP *temp;
         temp = FreeImage_ConvertTo32Bits(img);
         if(!temp)
-            return NULL;
+            return nullptr;
         FreeImage_Unload(img);
         img = temp;
     }
     return img;
 }
 
-static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
+static bool buildPallete(FIBITMAP *image, Pallete_t &dst)
+{
+    if(!image)
+        return false;
+    unsigned int img_w  = FreeImage_GetWidth(image);
+    unsigned int img_h  = FreeImage_GetHeight(image);
+
+    RGBQUAD pix = {0x0, 0x0, 0x0, 0xFF};
+
+    dst.clear();
+    for(unsigned int y = 0; y < img_h; y++)
+    {
+        for(unsigned int x = 0; x < img_w; x++)
+        {
+            FreeImage_GetPixelColor(image, x, y, &pix);
+            uint32_t pix_i = rgbToInt(pix);
+            if(dst.find(pix_i) == dst.end())
+                dst.insert({pix_i, pix});
+        }
+    }
+
+    return true;
+}
+
+static int colorCmp(const RGBQUAD &q1, const RGBQUAD &q2)
+{
+    return std::abs(int(q1.rgbRed) - int(q2.rgbRed)) +
+           std::abs(int(q1.rgbGreen) - int(q2.rgbGreen)) +
+           std::abs(int(q1.rgbBlue) - int(q2.rgbBlue));
+}
+
+static bool filterImage(FIBITMAP *image, const Pallete_t &dst)
 {
     if(!image)
         return false;
 
-    if(!Files::fileExists(pathToMask))
-        return false; //Nothing to do
-
-    FIBITMAP *mask = loadImage(pathToMask);
-
-    if(!mask)
-        return false;//Nothing to do
+    if(dst.empty())
+        return false; // Impossible tp process with a blank pallete;
 
     unsigned int img_w  = FreeImage_GetWidth(image);
     unsigned int img_h  = FreeImage_GetHeight(image);
-    unsigned int mask_w = FreeImage_GetWidth(mask);
-    unsigned int mask_h = FreeImage_GetHeight(mask);
 
-    RGBQUAD Fpix;
-    RGBQUAD Bpix;
-    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
+    RGBQUAD pix = {0x0, 0x0, 0x0, 0xFF};
 
-    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
+    for(unsigned int y = 0; y < img_h; y++)
     {
-        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
+        for(unsigned int x = 0; x < img_w; x++)
         {
-
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-            FreeImage_GetPixelColor(mask, x, y, &Bpix);
-
-            Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
-            Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
-            Npix.rgbBlue    = ((0x7F & Bpix.rgbBlue) | Fpix.rgbBlue);
-            int newAlpha = 255 -
-                           ((int(Bpix.rgbRed) +
-                             int(Bpix.rgbGreen) +
-                             int(Bpix.rgbBlue)) / 3);
-            if((Bpix.rgbRed > 240u) //is almost White
-               && (Bpix.rgbGreen > 240u)
-               && (Bpix.rgbBlue > 240u))
-                newAlpha = 0;
-
-            newAlpha = newAlpha + ((int(Fpix.rgbRed) +
-                                    int(Fpix.rgbGreen) +
-                                    int(Fpix.rgbBlue)) / 3);
-            if(newAlpha > 255)
-                newAlpha = 255;
-            Npix.rgbReserved = static_cast<BYTE>(newAlpha);
-
-            FreeImage_SetPixelColor(image, x, y, &Npix);
+            FreeImage_GetPixelColor(image, x, y, &pix);
+            int minDiff = 0;
+            RGBQUAD theBest = {0x0, 0x0, 0x0, 0xFF};
+            bool first = true;
+            for(auto &c : dst)
+            {
+                const RGBQUAD &q = c.second;
+                int diff = colorCmp(q, pix);
+                if(first || (std::abs(minDiff) > std::abs(diff)))
+                {
+                    minDiff = diff;
+                    theBest = q;
+                    theBest.rgbReserved = pix.rgbReserved; // keep an original alpha-channel
+                    first = false;
+                }
+            }
+            FreeImage_SetPixelColor(image, x, y, &theBest);
         }
     }
-    FreeImage_Unload(mask);
+
     return true;
 }
 
-static inline uint8_t subtractAlpha(const uint8_t channel, const uint8_t alpha)
+struct PalleteFilter_Setup
 {
-    int16_t ch = static_cast<int16_t>(channel) - static_cast<int16_t>(alpha);
-    if(ch < 0)
-        ch = 0;
-    return static_cast<uint8_t>(ch);
-}
+    std::string palleteFile;
+    Pallete_t   pallete;
 
-static void splitRGBAtoBitBlt(FIBITMAP * &image, FIBITMAP *&mask)
-{
-    unsigned int img_w   = FreeImage_GetWidth(image);
-    unsigned int img_h   = FreeImage_GetHeight(image);
-
-    mask = FreeImage_AllocateT(FIT_BITMAP,
-                               img_w, img_h,
-                               FreeImage_GetBPP(image),
-                               FreeImage_GetRedMask(image),
-                               FreeImage_GetGreenMask(image),
-                               FreeImage_GetBlueMask(image));
-
-    RGBQUAD Fpix;
-    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
-
-    for(unsigned int y = 0; (y < img_h); y++)
-    {
-        for(unsigned int x = 0; (x < img_w); x++)
-        {
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-
-            uint8_t grey = (255 - Fpix.rgbReserved);
-            Npix.rgbRed  = grey;
-            Npix.rgbGreen= grey;
-            Npix.rgbBlue = grey;
-            Npix.rgbReserved = 255;
-
-            Fpix.rgbRed  = subtractAlpha(Fpix.rgbRed, grey);
-            Fpix.rgbGreen= subtractAlpha(Fpix.rgbGreen, grey);
-            Fpix.rgbBlue = subtractAlpha(Fpix.rgbBlue, grey);
-            Fpix.rgbReserved = 255;
-
-            FreeImage_SetPixelColor(image, x, y, &Fpix);
-            FreeImage_SetPixelColor(mask,  x, y, &Npix);
-        }
-    }
-}
-
-struct LazyFixTool_Setup
-{
     std::string pathIn;
     bool listOfFiles        = false;
 
@@ -183,7 +166,6 @@ struct LazyFixTool_Setup
     bool walkSubDirs        = false;
     unsigned int count_success  = 0;
     unsigned int count_backups  = 0;
-    unsigned int count_nomask   = 0;
     unsigned int count_failed   = 0;
 };
 
@@ -197,40 +179,22 @@ static inline void delEndSlash(std::string &dirPath)
     }
 }
 
-static inline void getGifMask(std::string &mask, const std::string &front)
+void doPalleteFilter(std::string pathIn,  std::string imgFileIn,
+                     std::string pathOut,
+                     PalleteFilter_Setup &setup)
 {
-    mask = front;
-    //Make mask filename
-    size_t dotPos = mask.find_last_of('.');
-    if(dotPos == std::string::npos)
-        mask.push_back('m');
-    else
-        mask.insert(mask.begin() + dotPos, 'm');
-}
-
-void doLazyFixer(std::string pathIn,  std::string imgFileIn,
-                std::string pathOut,
-                LazyFixTool_Setup &setup)
-{
-    if(Files::hasSuffix(imgFileIn, "m.gif"))
-        return; //Skip mask files
+    if(Files::hasSuffix(imgFileIn, ".gif"))
+        return; //Skip any GIF files, unsupported!
 
     std::string imgPathIn = pathIn + "/" + imgFileIn;
-    std::string maskPathIn;
 
     std::cout << imgPathIn;
     std::cout.flush();
-
-    std::string maskFileIn;
-    getGifMask(maskFileIn, imgFileIn);
-
-    maskPathIn = pathIn + "/" + maskFileIn;
 
     //Create backup in case of source and target are same
     if(!setup.noMakeBackup && (pathIn == pathOut))
     {
         DirMan backupDir(pathIn + "/_backup");
-        bool ret = false;
         if(!backupDir.exists())
         {
             std::cout << ".MKDIR.";
@@ -242,10 +206,8 @@ void doLazyFixer(std::string pathIn,  std::string imgFileIn,
                 goto skipBackpDir;
             }
         }
-        ret |= Files::copyFile(backupDir.absolutePath() + "/" + imgFileIn,  imgPathIn,  false);
-        ret |= Files::copyFile(backupDir.absolutePath() + "/" + maskFileIn, maskPathIn, false);
 
-        if(ret)
+        if(Files::copyFile(backupDir.absolutePath() + "/" + imgFileIn,  imgPathIn,  false))
             setup.count_backups++;
         skipBackpDir:;
     }
@@ -259,58 +221,23 @@ void doLazyFixer(std::string pathIn,  std::string imgFileIn,
         return;
     }
 
-    FIBITMAP *mask = NULL;
-    if(Files::fileExists(maskPathIn))
-    {
-        bool hasMask = mergeBitBltToRGBA(image, maskPathIn);
-        if(hasMask) // Split in case is mask presented
-            splitRGBAtoBitBlt(image, mask);
-    }
-
     bool isFail = false;
     if(image)
     {
-        std::string outPathF = pathOut + "/" + imgFileIn;
-        FIBITMAP *image8 = FreeImage_ColorQuantize(image, FIQ_WUQUANT);
-        if(image8)
-        {
-            int ret = FreeImage_Save(FIF_GIF, image8, outPathF.c_str());
-            if(!ret)
-            {
-                std::cout << "...F-WRT FAILED!\n";
-                isFail = true;
-            }
-            FreeImage_Unload(image8);
-        }
-        else
-            isFail = true;
-        FreeImage_Unload(image);
+        filterImage(image, setup.pallete);
 
+        std::string outPathF = pathOut + "/" + imgFileIn;
+        int ret = FreeImage_Save(FIF_PNG, image, outPathF.c_str());
+        if(!ret)
+        {
+            std::cout << "...F-WRT FAILED!\n";
+            isFail = true;
+        }
+        FreeImage_Unload(image);
     }
     else
     {
         isFail = true;
-    }
-
-    if(mask)
-    {
-        std::string outPathB = pathOut + "/" + maskFileIn;
-        FIBITMAP *mask8  = FreeImage_ColorQuantize(mask, FIQ_WUQUANT);
-        if(mask8)
-        {
-            int ret = FreeImage_Save(FIF_GIF, mask8, outPathB.c_str());
-            if(!ret)
-            {
-                std::cout << "...B-WRT FAILED!\n";
-                isFail = true;
-            }
-            FreeImage_Unload(mask8);
-        }
-        else
-            isFail = true;
-        FreeImage_Unload(mask);
-    } else {
-        setup.count_nomask++;
     }
 
     if(isFail)
@@ -336,7 +263,7 @@ int main(int argc, char *argv[])
     std::vector<std::string> fileList;
     FreeImage_Initialise();
 
-    LazyFixTool_Setup setup;
+    PalleteFilter_Setup setup;
 
     try
     {
@@ -353,13 +280,17 @@ int main(int argc, char *argv[])
                 "path to a directory where the fixed images will be saved",
                 false, "", "/path/to/output/directory/");
         TCLAP::UnlabeledMultiArg<std::string> inputFileNames("filePath(s)",
-                "Input GIF file(s)",
+                "Input PNG file(s) (GIFs are not supported by this tool)",
                 true,
                 "Input file path(s)");
+        TCLAP::ValueArg<std::string> palleteFile("P", "pallete",
+                "Path to the reference PNG or GIF image file for a role of a pallete",
+                true, "", "pallete.png");
 
         cmd.add(&switchNoBackups);
         cmd.add(&switchDigRecursive);
         cmd.add(&switchDigRecursiveDEP);
+        cmd.add(&palleteFile);
         cmd.add(&outputDirectory);
         cmd.add(&inputFileNames);
 
@@ -371,9 +302,11 @@ int main(int argc, char *argv[])
 
         setup.pathOut     = outputDirectory.getValue();
 
+        setup.palleteFile = palleteFile.getValue();
+
         for(const std::string &fpath : inputFileNames.getValue())
         {
-            if(Files::hasSuffix(fpath, "m.gif"))
+            if(Files::hasSuffix(fpath, "m.png"))
                 continue;
             else if(DirMan::exists(fpath))
                 setup.pathIn = fpath;
@@ -391,6 +324,13 @@ int main(int argc, char *argv[])
                             "Type \"%s --help\" to display usage.\n\n", argv[0]);
             return 2;
         }
+
+        if(setup.palleteFile.empty() || !Files::fileExists(setup.palleteFile))
+        {
+            fprintf(stderr, "\n"
+                            "ERROR: Missing pallete file (file not exist)!\n");
+            return 2;
+        }
     }
     catch(TCLAP::ArgException &e)   // catch any exceptions
     {
@@ -399,7 +339,7 @@ int main(int argc, char *argv[])
     }
 
     fprintf(stderr, "============================================================================\n"
-                    "Lazily-made image masks fix tool by Wohlstand. Version " V_FILE_VERSION V_FILE_RELEASE "\n"
+                    "Pallete filter tool by Wohlstand. Version " V_FILE_VERSION V_FILE_RELEASE "\n"
                     "============================================================================\n"
                     "This program is distributed under the GNU GPLv3 license \n"
                     "============================================================================\n");
@@ -434,7 +374,35 @@ int main(int argc, char *argv[])
     delEndSlash(setup.pathOut);
 
     printf("============================================================================\n"
-           "Converting images...\n"
+           "Pallete initializing (%s) ...\n"
+           "============================================================================\n",
+           setup.palleteFile.c_str());
+    fflush(stdout);
+
+    {
+        FIBITMAP *image = loadImage(setup.palleteFile);
+        if(!image)
+        {
+            setup.count_failed++;
+            std::cout << "FATAL ERROR: CAN'T OPEN PALETTE FILE!\n";
+            std::cout.flush();
+            return 1;
+        }
+        bool isValid = buildPallete(image, setup.pallete);
+        FreeImage_Unload(image);
+        if(!isValid)
+        {
+            std::cout << "FATAL ERROR: INVALID PALETTE FILE!\n";
+            std::cout.flush();
+            return 1;
+        }
+        printf("Done, %zu colors in a pallete\n"
+               "============================================================================\n", setup.pallete.size());
+        fflush(stdout);
+    }
+
+    printf("============================================================================\n"
+           "Filtering images...\n"
            "============================================================================\n");
     fflush(stdout);
 
@@ -454,20 +422,20 @@ int main(int argc, char *argv[])
             setup.pathIn = DirMan(Files::dirname(file)).absolutePath();
             if(setup.pathOutSame)
                 setup.pathOut = DirMan(Files::dirname(file)).absolutePath();
-            doLazyFixer(setup.pathIn, fname , setup.pathOut, setup);
+            doPalleteFilter(setup.pathIn, fname , setup.pathOut, setup);
         }
     }
     else // Process directories with a source files
     {
-        imagesDir.getListOfFiles(fileList, {".gif"});
+        imagesDir.getListOfFiles(fileList, {".png"});
         if(!setup.walkSubDirs) //By directories
         {
             for(std::string &fname : fileList)
-                doLazyFixer(setup.pathIn, fname, setup.pathOut, setup);
+                doPalleteFilter(setup.pathIn, fname, setup.pathOut, setup);
         }
         else
         {
-            imagesDir.beginWalking({".gif"});
+            imagesDir.beginWalking({".png"});
             std::string curPath;
             while(imagesDir.fetchListFromWalker(curPath, fileList))
             {
@@ -477,7 +445,7 @@ int main(int argc, char *argv[])
                 {
                     if(setup.pathOutSame)
                         setup.pathOut = curPath;
-                    doLazyFixer(curPath, file, setup.pathOut, setup);
+                    doPalleteFilter(curPath, file, setup.pathOut, setup);
                 }
             }
         }
@@ -487,12 +455,10 @@ int main(int argc, char *argv[])
            "                      Conversion has been completed!\n"
            "============================================================================\n"
            "Successfully fixed:         %d\n"
-           "Masks are not found:        %d\n"
            "Backups created:            %d\n"
            "Fixes failed:               %d\n"
            "\n",
            setup.count_success,
-           setup.count_nomask,
            setup.count_backups,
            setup.count_failed);
     fflush(stdout);
