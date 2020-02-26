@@ -161,8 +161,8 @@ void GraphicsHelps::getMaskFromRGBA(FIBITMAP *&image, FIBITMAP *&mask)
     unsigned int img_h   = FreeImage_GetHeight(image);
 
     mask = FreeImage_AllocateT(FIT_BITMAP,
-                               img_w, img_h,
-                               FreeImage_GetBPP(image),
+                               int(img_w), int(img_h),
+                               int(FreeImage_GetBPP(image)),
                                FreeImage_GetRedMask(image),
                                FreeImage_GetGreenMask(image),
                                FreeImage_GetBlueMask(image));
@@ -226,8 +226,12 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::
     RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   //Destination pixel color
     unsigned short newAlpha = 0xFF; //Calculated destination alpha-value
 
-    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
+    unsigned int ym = mask_h - 1;
+    unsigned int y = img_h - 1;
+    while(1)
     {
+        FPixP = img_bits + (img_w * y * 4);
+        SPixP = mask_bits + (mask_w * ym * 4);
         for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
         {
             Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
@@ -255,6 +259,10 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::
             FPixP += 4;
             SPixP += 4;
         }
+
+        if(y == 0 || ym == 0)
+            break;
+        y--; ym--;
     }
 
     FreeImage_Unload(mask);
@@ -262,7 +270,6 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::
 
 bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size *imgSize)
 {
-
     if(!imgSize)
         return false;
 
@@ -272,7 +279,7 @@ bool GraphicsHelps::getImageMetrics(std::string imageFile, PGE_Size *imgSize)
     if(!PGE_ImageInfo::getImageSize(imageFile, &w, &h, &errorCode))
         return false;
 
-    imgSize->setSize(w, h);
+    imgSize->setSize(int(w), int(h));
     return true;
 }
 
@@ -308,12 +315,12 @@ void GraphicsHelps::getMaskedImageInfo(std::string rootDir, std::string in_imgNa
     }
 
     out_maskName = PGE_ImageInfo::getMaskName(in_imgName);
-    out_errStr = "";
+    out_errStr.clear();
 
     if(imgSize)
     {
-        imgSize->setWidth(w);
-        imgSize->setHeight(h);
+        imgSize->setWidth(int(w));
+        imgSize->setHeight(int(h));
     }
 }
 

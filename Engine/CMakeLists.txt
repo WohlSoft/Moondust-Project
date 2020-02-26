@@ -7,6 +7,9 @@ set(BUILD_SHARED_LIBRARIES OFF)
 
 set(CMAKE_INSTALL_RPATH ".")
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+if(EMSCRIPTEN)
+    set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+endif()
 
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -317,7 +320,6 @@ if(EMSCRIPTEN)
     set(PGE_PRELOAD_CONFIG_PACK_NAME "A2XT" CACHE STRING "Name of folder of embedded config pack")
     set(PGE_PRELOAD_EPISODE "/home/vitaly/.PGE_Project/worlds/Lowsers Conquest Demo v 2.1" CACHE STRING "Path to episode to pack")
     set(PGE_PRELOAD_EPISODE_NAME "lcd" CACHE STRING "Name of folder of episode")
-    set(PGE_RUN_SINGLE_LEVEL "worlds/lcd/Sky Tower.lvl" CACHE STRING "Full path to level which must be ran")
     set(CMAKE_EXECUTABLE_SUFFIX ".html")
 #    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msse -msse2")
     # -DIS_CXX -s USE_PTHREADS=1
@@ -325,12 +327,12 @@ if(EMSCRIPTEN)
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s EMTERPRETIFY=1 -s EMTERPRETIFY_ASYNC=1  -s 'EMTERPRETIFY_FILE=\"pge_engine.binary\"'")
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s ASSERTIONS=1")
     # -s \"EMTERPRETIFY_WHITELIST=['_main']\"
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_SDL=2-s ASYNCIFY")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s ASYNCIFY")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ASYNCIFY=1") #-s USE_SDL=2
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s ASYNCIFY=1")
 #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s 'BINARYEN_TRAP_MODE=\"clamp\"'")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s TOTAL_MEMORY=83886080 --no-heap-copy -s ALLOW_MEMORY_GROWTH=1")
 #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s \"EXTRA_EXPORTED_RUNTIME_METHODS=['Pointer_stringify']\"")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --embed-file \"${CMAKE_CURRENT_SOURCE_DIR}/languages/\"@\"languages/\"")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --embed-file \"${_LANGAUGES_TEMP_FOLDER}\"@\"languages/\"")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_CONFIG_PACK}\"@\"configs/${PGE_PRELOAD_CONFIG_PACK_NAME}/\"")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --preload-file \"${PGE_PRELOAD_EPISODE}\"@\"worlds/${PGE_PRELOAD_EPISODE_NAME}/\"")
     # set(LINK_FLAGS "${LINK_FLAGS} -DIS_LINK -s USE_PTHREADS=1 -s FORCE_FILESYSTEM=1 --embed-file '${CMAKE_CURRENT_SOURCE_DIR}/@languages'")
@@ -360,6 +362,7 @@ if(ANDROID)
     add_library(pge_engine SHARED
         ${PGE_ENGINE_SRC_ARGS}
     )
+    target_compile_options(pge_engine PRIVATE -fPIC)
     add_library(SDL2 SHARED IMPORTED DEPENDS SDL2_Local)
     set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libSDL2.so)
 
@@ -394,7 +397,6 @@ if(EMSCRIPTEN)
         PRIVATE
         -DPGE_NO_THREADING
         -DLUA_USE_LINUX
-        -DPGE_RUN_SINGLE_LEVEL=\"${PGE_RUN_SINGLE_LEVEL}\"
     )
 endif()
 

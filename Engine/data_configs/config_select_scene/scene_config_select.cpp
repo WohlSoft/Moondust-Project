@@ -27,6 +27,7 @@
 #include <gui/pge_menubox.h>
 #include <fontman/font_manager.h>
 #include <settings/global_settings.h>
+#include <common_features/pge_delay.h>
 
 #include <Utils/files.h>
 #include <Utils/open_url.h>
@@ -438,13 +439,8 @@ void configSelectSceneLoopStep(void *scene)
     }
 
     /****************************************************************************/
-    #ifndef __EMSCRIPTEN__
     if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
-        SDL_Delay(s->uTick - s->times.passedCommonTime());
-    #else
-    if(!s->m_isRunning)
-        emscripten_cancel_main_loop();
-    #endif
+        PGE_Delay(s->uTick - s->times.passedCommonTime());
 }
 
 int32_t ConfigSelectScene::exec()

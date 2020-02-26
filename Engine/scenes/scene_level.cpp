@@ -21,6 +21,7 @@
 
 #include <common_features/app_path.h>
 #include <common_features/graphics_funcs.h>
+#include <common_features/pge_delay.h>
 #include <settings/debugger.h>
 
 #include <graphics/gl_renderer.h>
@@ -921,12 +922,12 @@ void levelSceneLoopStep(void *scene)
     if((!PGE_Window::vsync) && (s->uTick > s->times.passedCommonTime()))
     {
         if(!s->m_debug_slowTimeMode)
-            SDL_Delay(s->uTick - s->times.passedCommonTime());
+            PGE_Delay(s->uTick - s->times.passedCommonTime());
         else
-            SDL_Delay(s->uTick - s->times.passedCommonTime() + 300);
+            PGE_Delay(s->uTick - s->times.passedCommonTime() + 300);
     }
     else if(s->m_debug_slowTimeMode) {
-        SDL_Delay(s->uTick - s->times.passedCommonTime() + 300);
+        PGE_Delay(s->uTick - s->times.passedCommonTime() + 300);
     }
 #endif
 }

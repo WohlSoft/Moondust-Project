@@ -17,7 +17,11 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+#include <SDL2/SDL_stdinc.h>
+#include <Utils/strings.h>
 #include <locale>
+#include <cctype>
+#include <algorithm>
 
 #include "translator.h"
 #include "app_path.h"
@@ -81,31 +85,32 @@ void PGE_Translator::init()
     defaultLocale = "en";
 #else
     // Generic way
-    try
+    const char *langEnv = SDL_getenv("LANGUAGE");
+    defaultLocale = "en";
+    defaultRegion = "us";
+
+    if(langEnv)
+        defaultLocale = std::string(langEnv);
+
+    std::transform(defaultLocale.begin(), defaultLocale.end(), defaultLocale.begin(), [](unsigned char c){ return std::tolower(c); });
+
+    if(defaultLocale.find('_') != std::string::npos)
     {
-        std::locale the_global_locale("");
-        defaultLocale = the_global_locale.name();
-        if(defaultLocale.size() > 2)
-            defaultLocale.erase(defaultLocale.begin() + defaultLocale.find_last_of('_'), defaultLocale.end());
-        else if(defaultLocale == "C")
-            defaultLocale = "en";
-    }
-    catch(const std::runtime_error &err)
-    {
-        pLogCritical("Can't recognize locale by std::locale: %s", err.what());
-        defaultLocale = "en";
-    }
-    catch(...)
-    {
-        pLogCritical("Can't recognize locale by std::locale: Unknown error");
-        defaultLocale = "en";
+        std::vector<std::string> s;
+        Strings::split(s, defaultLocale, "_");
+        if(s.size() >= 2)
+        {
+            defaultLocale = s[0];
+            defaultRegion = s[1];
+        }
     }
 #endif
 
     m_langPath = AppPathManager::languagesDir();
     pLogDebug("Initializing translator in the path: %s", m_langPath.c_str());
     toggleLanguage(defaultLocale, defaultRegion);
-    pLogDebug("Locale detected: %s", m_currLang.c_str());
+    pLogDebug("Locale detected: %s %s", m_currLang.c_str(), m_currRegion.c_str());
+
 #ifdef __EMSCRIPTEN__
     printf("Using English language file %s\n", m_langPath.c_str());
     fflush(stdout);
@@ -155,6 +160,7 @@ static bool loadTranslationFile(QmTranslatorX &tr, const std::string &path, unsi
 
 void PGE_Translator::toggleLanguage(std::string lang, std::string region)
 {
+    pLogDebug("Loading lang file: lang=%s, region=%s", lang.c_str(), lang.c_str());
     if(!m_isInit || (m_currLang != lang) || (m_currRegion != region))
     {
         if(m_isInit)
@@ -173,6 +179,8 @@ void PGE_Translator::toggleLanguage(std::string lang, std::string region)
         unsigned char *dirPath = reinterpret_cast<unsigned char *>(&m_langPath[0]);
         bool ok = false, okEn = false;
 
+        pLogDebug("Loading English fallback translation file %s!", langFileEnPath.c_str());
+
         // Loading English separately as a fallback
         okEn = loadTranslationFile(m_translatorEn, langFileEnPath, dirPath);
         if(!okEn)
@@ -180,10 +188,14 @@ void PGE_Translator::toggleLanguage(std::string lang, std::string region)
 
         if(!isEnglish)
         {
+            pLogDebug("Trying to load language-region translation file %s!", langFileRegPath.c_str());
             // Try "lang-region"
             ok = loadTranslationFile(m_translator, langFileRegPath, dirPath);
             if(!ok)// Try "lang"
+            {
+                pLogDebug("Loading translation file %s!", langFilePath.c_str());
                 ok = loadTranslationFile(m_translator, langFilePath, dirPath);
+            }
             if(!ok)
                 pLogWarning("Can't open one of translation files (%s or %s)!", langFilePath.c_str(), langFileRegPath.c_str());
         }
@@ -195,7 +207,7 @@ void PGE_Translator::toggleLanguage(std::string lang, std::string region)
 std::string qtTrId(const char *string)
 {
     if(!g_translator)
-        return string;
+        return std::string(string);
 
     std::string out;
 
@@ -206,7 +218,7 @@ std::string qtTrId(const char *string)
             return out;
     }
 
-    if(g_translator->m_translatorEn.isEmpty())
+    if(!g_translator->m_translatorEn.isEmpty())
     {
         out = g_translator->m_translatorEn.do_translate8(nullptr, string, nullptr, -1);
         if(!out.empty())

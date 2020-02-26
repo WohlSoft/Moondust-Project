@@ -36,25 +36,25 @@ static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
     FileMapper fileMap;
     if(!fileMap.open_file(file.c_str()))
-        return NULL;
+        return nullptr;
 
     FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
                                             (unsigned int)fileMap.size());
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
     if(formato  == FIF_UNKNOWN)
-        return NULL;
+        return nullptr;
     FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
     FreeImage_CloseMemory(imgMEM);
     fileMap.close_file();
     if(!img)
-        return NULL;
+        return nullptr;
 #else
     FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
     if(formato  == FIF_UNKNOWN)
-        return NULL;
+        return nullptr;
     FIBITMAP *img = FreeImage_Load(formato, file.c_str());
     if(!img)
-        return NULL;
+        return nullptr;
 #endif
 
     if(convertTo32bit)
@@ -62,7 +62,7 @@ static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
         FIBITMAP *temp;
         temp = FreeImage_ConvertTo32Bits(img);
         if(!temp)
-            return NULL;
+            return nullptr;
         FreeImage_Unload(img);
         img = temp;
     }
@@ -91,13 +91,15 @@ static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
     RGBQUAD Bpix;
     RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
 
-    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
+    unsigned int ym = mask_h - 1;
+    unsigned int y = img_h - 1;
+    while(1)
     {
         for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
         {
 
             FreeImage_GetPixelColor(image, x, y, &Fpix);
-            FreeImage_GetPixelColor(mask, x, y, &Bpix);
+            FreeImage_GetPixelColor(mask, x, ym, &Bpix);
 
             Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
             Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
@@ -120,6 +122,10 @@ static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
 
             FreeImage_SetPixelColor(image, x, y, &Npix);
         }
+
+        if(y == 0 || ym == 0)
+            break;
+        y--; ym--;
     }
     FreeImage_Unload(mask);
     return true;
@@ -139,8 +145,8 @@ static void splitRGBAtoBitBlt(FIBITMAP * &image, FIBITMAP *&mask)
     unsigned int img_h   = FreeImage_GetHeight(image);
 
     mask = FreeImage_AllocateT(FIT_BITMAP,
-                               img_w, img_h,
-                               FreeImage_GetBPP(image),
+                               int(img_w), int(img_h),
+                               int(FreeImage_GetBPP(image)),
                                FreeImage_GetRedMask(image),
                                FreeImage_GetGreenMask(image),
                                FreeImage_GetBlueMask(image));
@@ -205,7 +211,7 @@ static inline void getGifMask(std::string &mask, const std::string &front)
     if(dotPos == std::string::npos)
         mask.push_back('m');
     else
-        mask.insert(mask.begin() + dotPos, 'm');
+        mask.insert(mask.begin() + std::string::difference_type(dotPos), 'm');
 }
 
 void doLazyFixer(std::string pathIn,  std::string imgFileIn,
@@ -259,7 +265,7 @@ void doLazyFixer(std::string pathIn,  std::string imgFileIn,
         return;
     }
 
-    FIBITMAP *mask = NULL;
+    FIBITMAP *mask = nullptr;
     if(Files::fileExists(maskPathIn))
     {
         bool hasMask = mergeBitBltToRGBA(image, maskPathIn);

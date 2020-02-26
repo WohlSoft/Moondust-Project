@@ -375,6 +375,7 @@ void LunaWorker::read(QString *in, bool *ok)
         *ok = false;
         return;
     }
+    // NOTE: This wait does not guarantee the /whole/ message has arrived yet, so readIPC uses blocking reads. 
     m_process->waitForReadyRead();
     *in = QString::fromStdString(readIPC(m_process));
     *ok = !in->isEmpty();
@@ -398,6 +399,7 @@ void LunaWorker::readStd(std::string *in, bool *ok)
         *ok = false;
         return;
     }
+    // NOTE: This wait does not guarantee the /whole/ message has arrived yet, so readIPC uses blocking reads.
     m_process->waitForReadyRead();
     *in = readIPC(m_process);
     *ok = !in->empty();
@@ -936,6 +938,20 @@ static bool stringToJson(const std::string &message, QJsonDocument &out, QJsonPa
     return (err.error == QJsonParseError::NoError);
 }
 
+static bool readProcessCharBlocking(QProcess *input, char *c)
+{
+    qint64 bytesRead = input->read(c, 1);
+    while (bytesRead == 0)
+    {
+        // No data? Block before trying again.
+        input->waitForReadyRead();
+        bytesRead = input->read(c, 1);
+    }
+    
+    // At this point bytesRead is expected to be 1 of successful, or -1 if failed (i.e. the pipe was closed)
+    return (bytesRead == 1);
+}
+
 static std::string readIPC(QProcess *input)
 {
     // Note: This is not written to be particularly efficient right now. Just
@@ -951,8 +967,7 @@ static std::string readIPC(QProcess *input)
         bool err = false;
         while(true)
         {
-            qint64 bytesRead = input->read(&c, 1);
-            if(bytesRead != 1)
+            if (!readProcessCharBlocking(input, &c))
                 return "";
             if(c == ':')
                 break;
@@ -980,15 +995,13 @@ static std::string readIPC(QProcess *input)
             data.resize(static_cast<size_t>(byteCount));
             while(byteCursor < byteCount)
             {
-                qint64 bytesRead = input->read(&data[static_cast<size_t>(byteCursor)], 1);
-                if(bytesRead == 0)
+                if (!readProcessCharBlocking(input, &data[static_cast<size_t>(byteCursor)]))
                     return "";
-                byteCursor += bytesRead;
+                byteCursor += 1;
             }
             // Get following comma
             {
-                qint64 bytesRead = input->read(&c, 1);
-                if(bytesRead != 1)
+                if (!readProcessCharBlocking(input, &c))
                     return "";
                 if(c != ',')
                     continue;

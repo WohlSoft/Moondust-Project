@@ -19,6 +19,7 @@
 
 #include "../scene_level.h"
 #include <common_features/logger.h>
+#include <common_features/pge_delay.h>
 #include <Utils/files.h>
 #include <Utils/elapsed_timer.h>
 #include <DirManager/dirman.h>
@@ -80,7 +81,7 @@ bool LevelScene::loadFileIP()
             break;
         }
 
-        SDL_Delay(30);
+        PGE_Delay(30);
     }
 
     m_data = IntProc::editor->m_acceptedLevel;

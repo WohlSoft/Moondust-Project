@@ -24,6 +24,7 @@
 #include <settings/global_settings.h>
 #include <common_features/graphics_funcs.h>
 #include <common_features/logger.h>
+#include <common_features/pge_delay.h>
 #include <data_configs/config_manager.h>
 #include <audio/pge_audio.h>
 #include <Utils/maths.h>
@@ -254,7 +255,7 @@ int CreditsScene::exec()
         /****************************************************************************/
 
         if((!PGE_Window::vsync) && (uTick > times.passedCommonTime()))
-            SDL_Delay(uTick - times.passedCommonTime());
+            PGE_Delay(uTick - times.passedCommonTime());
     }
 
     return 0;

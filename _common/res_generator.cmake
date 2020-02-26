@@ -7,14 +7,20 @@ endif()
 
 set(RES_GENERATOR_PATH ${CMAKE_CURRENT_BINARY_DIR}/res_generator/${RES_GENERATOR_EXE})
 
-if (NOT CMAKE_CROSSCOMPILING)
+if(NOT CMAKE_CROSSCOMPILING AND NOT EMSCRIPTEN)
     add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/res_generator)
     set(RES_GENERATOR_PATH $<TARGET_FILE:res_generator>)
 else()
+    set(HOST_PATH_ENV "$ENV{PATH}" CACHE STRING "Bypass the host path environment")
+    set(HOST_CMAKE_COMMAND "cmake" CACHE STRING "Bypass the host CMake command")
+    set(HOST_C_COMPILER "gcc" CACHE STRING "Bypass the host C compiler command")
+    set(HOST_CXX_COMPILER "g++" CACHE STRING "Bypass the host C++ compiler command")
     make_directory(${CMAKE_CURRENT_BINARY_DIR}/res_generator)
     add_custom_command(OUTPUT ${RES_GENERATOR_PATH}
-        COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_LIST_DIR}/res_generator
-        COMMAND ${CMAKE_COMMAND} --build ${CMAKE_CURRENT_BINARY_DIR}/res_generator
+        COMMAND ${HOST_CMAKE_COMMAND} -E env PATH="${HOST_PATH_ENV}" CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
+                ${HOST_CMAKE_COMMAND} ${CMAKE_CURRENT_LIST_DIR}/res_generator
+        COMMAND ${HOST_CMAKE_COMMAND} -E env PATH="${HOST_PATH_ENV}" CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
+                ${HOST_CMAKE_COMMAND} --build ${CMAKE_CURRENT_BINARY_DIR}/res_generator
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/res_generator"
     )
     add_custom_target(res_generator ALL
