@@ -41,7 +41,7 @@ list(APPEND PaletteFilter_SRCS
 
 if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PaletteFilter_SRCS
-        _resources/lazyfix_tool.rc
+        _resources/pallete_filter.rc
     )
 endif()
 
