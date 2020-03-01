@@ -35,6 +35,9 @@ public:
     static void install();
     static bool isPortable();
     static bool userDirIsAvailable();
+#ifdef __EMSCRIPTEN__
+    static void syncFs();
+#endif
 
 private:
     /**

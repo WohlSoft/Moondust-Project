@@ -42,6 +42,50 @@
 #include <algorithm> // std::replace from \\ into /
 #endif
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+
+static bool loadingLocked = false;
+
+extern "C" void unlockLoadingCustomState()
+{
+    loadingLocked = false;
+}
+
+static void loadCustomState()
+{
+    loadingLocked = true;
+    EM_ASM(
+        FS.mkdir('/settings');
+        FS.mount(IDBFS, {}, '/settings');
+
+        // sync from persisted state into memory and then
+        // run the 'test' function
+        FS.syncfs(true, function (err) {
+            assert(!err);
+            ccall('unlockLoadingCustomState', 'v');
+        });
+    );
+
+    while(loadingLocked)
+        emscripten_sleep(10);
+}
+
+static void saveCustomState()
+{
+    loadingLocked = true;
+    EM_ASM(
+        FS.syncfs(function (err) {
+            assert(!err);
+            ccall('unlockLoadingCustomState', 'v');
+        });
+    );
+
+    while(loadingLocked)
+        emscripten_sleep(10);
+}
+#endif
+
 #include "app_path.h"
 #include "../version.h"
 
@@ -142,6 +186,10 @@ void AppPathManager::initAppPath()
     std::replace(ApplicationPathSTD.begin(), ApplicationPathSTD.end(), '\\', '/');
 #   endif
     SDL_free(path);
+#endif
+
+#ifdef __EMSCRIPTEN__
+    loadCustomState();
 #endif
 
     if(isPortable())
@@ -271,6 +319,13 @@ bool AppPathManager::userDirIsAvailable()
 {
     return (m_userPath != ApplicationPathSTD);
 }
+
+#ifdef __EMSCRIPTEN__
+void AppPathManager::syncFs()
+{
+    saveCustomState();
+}
+#endif
 
 
 void AppPathManager::initSettingsPath()

@@ -167,6 +167,10 @@ void GlobalSettings::save()
     }
 
     setup.writeIniFile();
+
+#ifdef __EMSCRIPTEN__
+    AppPathManager::syncFs();
+#endif
 }
 
 void GlobalSettings::resetDefaults()
