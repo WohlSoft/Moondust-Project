@@ -266,7 +266,7 @@ std::string AppPathManager::languagesDir()
 std::string AppPathManager::screenshotsDir()
 {
 #ifndef __APPLE__
-    return m_userPath + "/screenshots";
+    return m_userPath + "screenshots";
 #else
     std::string path = m_userPath;
     char *base_path = getScreenCaptureDir();
@@ -277,6 +277,11 @@ std::string AppPathManager::screenshotsDir()
     }
     return path + "/Moondust Game Screenshots";
 #endif
+}
+
+std::string AppPathManager::gameSaveRootDir()
+{
+    return m_settingsPath + "gamesaves";
 }
 
 void AppPathManager::install()
@@ -337,4 +342,8 @@ void AppPathManager::initSettingsPath()
 
     if(!DirMan::exists(m_settingsPath))
         DirMan::mkAbsPath(m_settingsPath);
+
+    // Also make the gamesaves root folder to be exist
+    if(!DirMan::exists(gameSaveRootDir()))
+        DirMan::mkAbsPath(gameSaveRootDir());
 }

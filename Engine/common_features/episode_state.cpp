@@ -22,6 +22,9 @@
 
 #include <gui/pge_msgbox.h>
 #include <Utils/files.h>
+#include <DirManager/dirman.h>
+#include <common_features/app_path.h>
+#include <common_features/logger.h>
 
 
 void GameUserDataManager::importData(const saveUserData &in)
@@ -317,12 +320,25 @@ void EpisodeState::reset()
     m_episodePath = "";
 }
 
+static std::string makeGameSavePath(std::string world, std::string saveFile)
+{
+    std::string gameSaveDir = AppPathManager::gameSaveRootDir() + "/"+ Files::basename(Files::dirname(world));
+    if(!DirMan::exists(gameSaveDir))
+        DirMan::mkAbsPath(gameSaveDir);
+
+    return gameSaveDir + "/"+ Files::basename(world) + "-" + saveFile;
+}
+
 bool EpisodeState::load()
 {
-    std::string file = m_episodePath + m_saveFileName;
+    std::string file = makeGameSavePath(m_worldFileName, m_saveFileName);
 
-    if(!Files::fileExists(file))
-        return false;
+    if(!Files::fileExists(file)) // Try to load gamesave from old location (keep a compatibility)
+    {
+        file = m_episodePath + m_saveFileName;
+        if(!Files::fileExists(file))
+            return false;
+    }
 
     GamesaveData FileData;
 
@@ -333,6 +349,7 @@ bool EpisodeState::load()
             m_gameSave = FileData;
             m_userData.importData(m_gameSave.userData);
             m_episodeIsStarted = true;
+            pLogDebug("Game save loaded: %s", file.c_str());
             return true;
         }
         else
@@ -349,8 +366,14 @@ bool EpisodeState::save()
     if(!m_isEpisode)
         return false;
     m_userData.exportData(m_gameSave.userData);
-    std::string file = m_episodePath + m_saveFileName;
-    return FileFormats::WriteExtendedSaveFileF(file, m_gameSave);
+//    std::string file = m_episodePath + m_saveFileName;
+    std::string file = makeGameSavePath(m_worldFileName, m_saveFileName);
+    bool ret = FileFormats::WriteExtendedSaveFileF(file, m_gameSave);
+    pLogDebug("Game has been saved: %s", file.c_str());
+#ifdef __EMSCRIPTEN__
+    AppPathManager::syncFs();
+#endif
+    return ret;
 }
 
 PlayerState EpisodeState::getPlayerState(int playerID)

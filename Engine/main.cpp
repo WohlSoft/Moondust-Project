@@ -257,6 +257,7 @@ static void pgeMainMenuScreen(AppInstance &a)
         a.gameState.m_isEpisode = true;
         g_Episode = res_episode;
         a.gameState.m_episodePath = DirMan(Files::dirname(g_Episode.worldfile)).absolutePath() + "/";
+        a.gameState.m_worldFileName = g_Episode.worldfile;
         a.gameState.m_saveFileName = g_Episode.savefile;
         a.gameState.load();
 

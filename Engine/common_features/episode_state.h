@@ -249,6 +249,8 @@ public:
     std::string m_currentWorldPath;
     //! Name of game save file
     std::string m_saveFileName;
+    //! Name of world map file that used to begin play this episode
+    std::string m_worldFileName;
     //! Path to currently playing episode
     std::string m_episodePath;
 
