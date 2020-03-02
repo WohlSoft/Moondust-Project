@@ -256,7 +256,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Level Item toolbox</source>
-        <translation>Level Item toolbox</translation>
+        <translation>Level Item Toolbox</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
