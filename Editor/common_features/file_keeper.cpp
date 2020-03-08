@@ -21,6 +21,13 @@
 #include <QFileInfo>
 #include <QDir>
 
+#ifndef __WIN32
+#include <fcntl.h>
+#include <sys/types.h>
+#include <unistd.h>
+#endif
+
+
 static QString getRandomString()
 {
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
@@ -89,6 +96,14 @@ void FileKeeper::restore()
         return;
     if(!m_origPath.isEmpty() && !m_tempPath.isEmpty() && QFile::exists(m_tempPath))
     {
+#ifndef __WIN32
+        int fd = open(m_tempPath.toUtf8().data(), O_FSYNC | O_APPEND, 0660);
+        if(fd)
+        {
+            fsync(fd);
+            close(fd);
+        }
+#endif
         if(QFile::exists(m_origPath))
             QFile::remove(m_origPath);// Clean up for just a case
         QFile::rename(m_tempPath, m_origPath);
