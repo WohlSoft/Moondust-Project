@@ -27,9 +27,10 @@
 void MainWindow::save()
 {
     qApp->setActiveWindow(this);
-    bool saved=false;
+    bool saved = false;
     int WinType = activeChildWindow();
-    if (WinType != WND_NoWindow)
+
+    if(WinType != WND_NoWindow)
     {
         QProgressDialog progress(tr("Saving of file..."), tr("Abort"), 0, 1, this);
         progress.setWindowTitle(tr("Saving"));
@@ -45,39 +46,39 @@ void MainWindow::save()
 
         if(WinType == WND_World)
             saved = activeWldEditWin()->save(true);
-        if(WinType == WND_NpcTxt)
+        else if(WinType == WND_NpcTxt)
             saved = activeNpcEditWin()->save();
-        if(WinType == WND_Level)
+        else if(WinType == WND_Level)
             saved = activeLvlEditWin()->save(true);
 
-        if(saved) statusBar()->showMessage(tr("File saved"), 2000);
+        if(saved)
+            statusBar()->showMessage(tr("File saved"), 2000);
     }
 }
 
 void MainWindow::save_as()
 {
-    bool saved=false;
+    bool saved = false;
     int WinType = activeChildWindow();
-    if (WinType!=0)
+
+    if(WinType != WND_NoWindow)
     {
-        if(WinType==3)
+        if(WinType == WND_World)
             saved = activeWldEditWin()->saveAs(true);
-        if(WinType==2)
+        else if(WinType == WND_NpcTxt)
             saved = activeNpcEditWin()->saveAs();
-        if(WinType==1)
+        else if(WinType == WND_Level)
             saved = activeLvlEditWin()->saveAs(true);
 
-        if(saved) statusBar()->showMessage(tr("File saved"), 2000);
+        if(saved)
+            statusBar()->showMessage(tr("File saved"), 2000);
     }
 }
 
 void MainWindow::save_all()
 {
-    LevelEdit *ChildWindow0=NULL;
-    NpcEdit *ChildWindow2=NULL;
-    WorldEdit *ChildWindow3=NULL;
-
     QProgressDialog progress(tr("Saving of files..."), tr("Abort"), 0, ui->centralWidget->subWindowList().size(), this);
+    {
          progress.setWindowTitle(tr("Saving"));
          progress.setWindowModality(Qt::WindowModal);
          progress.setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint | Qt::WindowStaysOnTopHint);
@@ -85,27 +86,31 @@ void MainWindow::save_all()
          progress.setGeometry(util::alignToScreenCenter(progress.size()));
          progress.setMinimumDuration(0);
          progress.setAutoClose(false);
-         progress.setCancelButton(NULL);
+         progress.setCancelButton(nullptr);
+    }
     progress.show();
     qApp->processEvents();
 
-    int counter=0;
-    foreach (QMdiSubWindow *window, ui->centralWidget->subWindowList())
+    int counter = 0;
+    for(QMdiSubWindow *window : ui->centralWidget->subWindowList())
     {
-        if(QString(window->widget()->metaObject()->className())==WORLD_EDIT_CLASS)
+        if(QString(window->widget()->metaObject()->className()) == WORLD_EDIT_CLASS)
         {
-        ChildWindow3 = qobject_cast<WorldEdit *>(window->widget());
-            ChildWindow3->save();
+            auto *w = qobject_cast<WorldEdit *>(window->widget());
+            Q_ASSERT(w);
+            w->save();
         }
-        if(QString(window->widget()->metaObject()->className())==LEVEL_EDIT_CLASS)
+        else if(QString(window->widget()->metaObject()->className()) == LEVEL_EDIT_CLASS)
         {
-        ChildWindow0 = qobject_cast<LevelEdit *>(window->widget());
-            ChildWindow0->save();
+            auto *w = qobject_cast<LevelEdit *>(window->widget());
+            Q_ASSERT(w);
+            w->save();
         }
-        else if(QString(window->widget()->metaObject()->className())==NPC_EDIT_CLASS)
+        else if(QString(window->widget()->metaObject()->className()) == NPC_EDIT_CLASS)
         {
-        ChildWindow2 = qobject_cast<NpcEdit *>(window->widget());
-            ChildWindow2->save();
+            auto *w = qobject_cast<NpcEdit *>(window->widget());
+            Q_ASSERT(w);
+            w->save();
         }
 
         progress.setValue(++counter);
