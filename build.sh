@@ -20,6 +20,12 @@ flag_portable=false
 for var in "$@"
 do
     case "$var" in
+        lupdate)
+            #dummy
+        ;;
+        lrelease)
+            #dummy
+        ;;
         --help)
             echo ""
             printf "=== \e[44mBuild script for PGE Project for UNIX-Like operating\e[0m ===\n"
@@ -235,25 +241,9 @@ do
             exit 0
             ;;
         repair-submodules)
-            #!!FIXME!! Implement parsing of submodules list and fill this array automatically
-            #NOTE: Don't use "git submodule foreach" because broken submodule will not shown in it's list!
-            SUBMODULES="_Libs/FreeImage"
-            SUBMODULES="${SUBMODULES} _Libs/QtPropertyBrowser"
-            SUBMODULES="${SUBMODULES} _Libs/sqlite3"
-            SUBMODULES="${SUBMODULES} _common/PGE_File_Formats"
-            SUBMODULES="${SUBMODULES} _common/PgeGameSave/submodule"
-            SUBMODULES="${SUBMODULES} _Libs/AudioCodecs"
-            SUBMODULES="${SUBMODULES} _Libs/SDL_Mixer_X"
-            SUBMODULES="${SUBMODULES} Content/help"
-            # \===============================================================================
-            for s in ${SUBMODULES}
-            do
-                if [[ -d ${s} ]];then
-                    echo "Remove folder ${s}..."
-                    rm -Rf ${s}
-                fi
-            done
-            echo "Fetching new submodules..."
+            echo "=== Cleaning-up old state..."
+            git submodule foreach 'pwd; rm -Rf * .git*;'
+            echo "=== Fetching new submodules..."
             git submodule init
             git submodule update
             echo ""
@@ -312,6 +302,12 @@ do
         nomusicplayer)
             CMAKE_EXTRA_ARGS="${CMAKE_EXTRA_ARGS} -DPGE_BUILD_MUSICPLAYER=OFF"
             ;;
+        *)
+            echo "--------------------------------------------------------------------"
+            echo "Invalid argument '$var', please type '$0 --help' to get the usage."
+            echo "--------------------------------------------------------------------"
+            exit 1;
+        ;;
     esac
 done
 
