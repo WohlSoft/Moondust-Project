@@ -27,8 +27,6 @@
 #include <common_features/logger_sets.h>
 #include <common_features/main_window_ptr.h>
 
-#include <main_window/testing/luna_tester.h>
-
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
 
@@ -51,8 +49,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     LogDebug(QString("Setting Lang..."));
     setDefLang();
-
-    m_luna = new LunaTester;
 
     LogDebug(QString("Setting UI Defaults..."));
     setUiDefults(); //Apply default UI settings
@@ -153,17 +149,12 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
             on_actionCurConfig_triggered();
         }
 
+        LogDebug(QString("Loading theme..."));
         splash.progressTitle(tr("Loading theme..."));
 
         applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
 
-        m_luna->initLunaMenu(this,
-                             ui->menuTest,
-                             ui->action_Start_Engine,
-                             ui->action_doTest,
-                             ui->action_doSafeTest,
-                             ui->action_Start_Engine);
-
+        LogDebug(QString("Initializing dock widgets..."));
         splash.progressTitle(tr("Initializing dock widgets..."));
 
         //Apply objects into tools
@@ -174,9 +165,14 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         dock_WldItemProps->resetExitTypesList();
         dock_TilesetBox->setTileSetBox(true);
 
+        LogDebug(QString("Initialize the testing sub-system..."));
+        initTesting();
+
+        LogDebug(QString("Initalizing plugins..."));
         splash.progressTitle(tr("Initalizing plugins..."));
         initPlugins();
 
+        LogDebug(QString("Finishing loading..."));
         splash.progressTitle(tr("Finishing loading..."));
 
         m_isAppInited = true;
@@ -233,15 +229,9 @@ MainWindow::~MainWindow()
         delete pge_thumbbar;
 #endif
     m_messageBoxer.disconnectAll();
-    if(m_luna)
-    {
-        m_luna->unInitRuntime();
-        delete m_luna;
-    }
+    closeTesting();
     delete ui;
-
     MainWinConnect::pMainWin = nullptr;
-
 }
 
 

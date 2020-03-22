@@ -35,6 +35,8 @@
 #include <audio/sdl_music_player.h>
 #include <PGE_File_Formats/file_formats.h>
 
+#include <main_window/testing/engines/pge_engine.h>
+
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
@@ -186,7 +188,6 @@ void MainWindow::setUiDefults()
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow *)), this, SLOT(updateMenus(QMdiSubWindow *)));
     //connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
-    connect(&engine_proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(testingFinished()));
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptLocal, &QAction::setDisabled);
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptEpisode, &QAction::setDisabled);
 
@@ -481,7 +482,12 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setVisible);
 
-    connect(this, &MainWindow::windowActiveLevelWorld,  ui->action_doSafeTest, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,  ui->action_doSafeTest, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,  ui->action_doSafeTest, &QAction::setVisible);
+
+    connect(this, &MainWindow::windowActiveWorld,  ui->action_doSafeTestWld, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveWorld,  ui->action_doSafeTestWld, &QAction::setVisible);
+
     connect(this, &MainWindow::windowActiveLevel, ui->LevelObjectToolbar, &QWidget::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->WorldObjectToolbar, &QWidget::setVisible);
 

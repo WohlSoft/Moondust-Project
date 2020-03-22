@@ -73,6 +73,17 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     emit windowActiveWorld( WinType == WND_World );
     emit windowActiveNPC( WinType == WND_NpcTxt );
 
+    if(m_testEngine)
+    {
+        ui->action_doTest->setEnabled(WinType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+        ui->action_doSafeTest->setEnabled(WinType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
+        if(ConfStatus::SmbxTest_HidePgeEngine)
+            ui->action_doSafeTest->setVisible(false);
+
+        ui->action_doTestWld->setEnabled(WinType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+        ui->action_doSafeTestWld->setEnabled(WinType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+    }
+
     ui->PlacingToolbar->setVisible(false);
     ui->ResizingToolbar->setVisible(false);
 

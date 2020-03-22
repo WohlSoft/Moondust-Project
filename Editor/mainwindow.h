@@ -20,6 +20,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <memory>
+
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QPixmap>
@@ -40,7 +42,6 @@
 #include <windows.h>
 #include <QWinThumbnailToolBar>
 #endif
-class LunaTester;
 
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <PGE_File_Formats/wld_filedata.h>
@@ -62,6 +63,7 @@ class LunaTester;
 #include <main_window/dock/_dock_vizman.h>
 
 #include <main_window/plugins/pge_editorpluginmanager.h>
+#include <main_window/testing/engines/abstract_engine.h>
 
 QT_BEGIN_NAMESPACE
     class QMimeData;
@@ -1065,6 +1067,10 @@ public:
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Testing////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////
+    private:
+        void initTesting();
+        void closeTesting();
+
     private slots:
         /*!
          * \brief Unlocks music button and starts music if that was started pre-testing state
@@ -1076,17 +1082,21 @@ public:
         void stopMusicForTesting();
 
         /*!
-         * \brief Starts level testing in PGE Engine with interprocess communication (File saving is not needed)
+         * \brief Starts level testing with interprocess communication (File saving is not needed)
          */
         void on_action_doTest_triggered();
         /*!
-         * \brief Starts world map testing in PGE Engine with interprocess communication (File saving is not needed)
+         * \brief Starts world map testing with interprocess communication (File saving is not needed)
          */
         void on_action_doTestWld_triggered();
         /*!
-         * \brief Starts level testing in PGE Engine without interprocess communication (File saving is needed)
+         * \brief Starts level testing without interprocess communication (File saving is needed)
          */
         void on_action_doSafeTest_triggered();
+        /*!
+         * \brief Starts world map testing without interprocess communication (File saving is needed)
+         */
+        void on_action_doSafeTestWld_triggered();
 
         /*!
          * \brief Starts PGE Engine with current configuration package selected
@@ -1098,12 +1108,14 @@ public:
         void on_action_testSettings_triggered();
 
     private:
-        //! Engine application handler
-        QProcess engine_proc;
-        //! Mutex which helps to avoid multiple launches of engine
-        QMutex   engine_mutex;
-        //! LunaTester sub-system
-        LunaTester * m_luna;
+        friend class PgeEngine;
+        friend class LunaTesterEngine;
+        //! Default testing engine
+        AbstractRuntimeEngine *m_testEngine;
+        //! PGE Engine
+        std::unique_ptr<AbstractRuntimeEngine> m_testPGE;
+        //! LunaTester
+        std::unique_ptr<AbstractRuntimeEngine> m_testLunaTester;
 
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Plugins////////////////////////////////////////
