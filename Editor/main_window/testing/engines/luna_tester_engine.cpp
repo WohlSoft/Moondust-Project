@@ -1603,9 +1603,9 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
 
             QProcess::startDetached(smbxPath + ConfStatus::SmbxEXE_Name, params, smbxPath);
             //Stop music playback in the PGE Editor!
-            QMetaObject::invokeMethod(m_mw, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+            QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
             // not sure how efficient it is
-            QMetaObject::invokeMethod(m_mw, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+            QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
 #else // _WIN32
             {
                 int msgRet = msg.richBox(LunaTesterEngine::tr("Vanilla SMBX detected!"),
