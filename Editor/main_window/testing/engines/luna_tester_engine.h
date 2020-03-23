@@ -39,6 +39,7 @@ class LunaEngineWorker : public QObject
 {
     Q_OBJECT
     QString m_workingPath;
+    QString m_lunaExecPath;
     QProcess *m_process = nullptr;
     QProcess::ProcessState m_lastStatus = QProcess::NotRunning;
     bool m_isRunning = false;
@@ -46,9 +47,9 @@ class LunaEngineWorker : public QObject
 public:
     explicit LunaEngineWorker(QObject *parent = nullptr);
     ~LunaEngineWorker() override;
-
 public slots:
     void setEnv(const QHash<QString, QString> &env);
+    void setExecPath(const QString &path);
     void setWorkPath(const QString &wDir);
     void start(const QString &command, const QStringList &args, bool *ok, QString *errString);
 
@@ -101,7 +102,7 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     //! Pointer to main window
     MainWindow *m_w = nullptr;
     //! List of registered menu items
-    QAction *m_menuItems[7];
+    QAction *m_menuItems[8];
 
     //! LunaTester process handler
     QSharedPointer<LunaEngineWorker> m_worker;
@@ -115,7 +116,10 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     QMutex              m_engine_mutex;
     //! Disable OpenGL on LunaLua side
     bool                m_noGL = false;
+    //! Don't re-use running instance, always start testing from scratch
     bool                m_killPreviousSession = false;
+    //! Custom path to LunaTester
+    QString             m_customLunaPath;
 
 #ifndef _WIN32
     QString                 m_wineBinDir;
@@ -123,6 +127,12 @@ class LunaTesterEngine : public AbstractRuntimeEngine
 #endif
     void useWine(QString &command, QStringList &args);
     QString pathUnixToWine(const QString &unixPath);
+
+    /**
+     * @brief Returns a path to a directory where LunaTester is installed
+     * @return path to LunaTester directory
+     */
+    QString getEnginePath();
 
     bool isEngineActive();
     bool isInPipeOpen();
@@ -153,6 +163,8 @@ public slots:
      * @brief Kill running background instance
      */
     void killBackgroundInstance();
+
+    void chooseEnginePath();
 
 private:
     /********Internal private functions*******/
@@ -224,6 +236,7 @@ private slots:
     void retranslateMenu();
 
 signals:
+    void engineSetExecPath(const QString &path);
     void engineSetEnv(const QHash<QString, QString> &env);
     void engineSetWorkPath(const QString &wPath);
     void engineStart(const QString &command, const QStringList &args, bool *ok, QString *errString);

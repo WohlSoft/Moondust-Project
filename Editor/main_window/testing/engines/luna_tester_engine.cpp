@@ -47,6 +47,13 @@
 #include <QMenu>
 #include <QAction>
 #include <QtConcurrentRun>
+#include <QGridLayout>
+#include <QRadioButton>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFileDialog>
+#include <QGroupBox>
+#include <QSpacerItem>
 
 #if !defined(_WIN32)
 #include <QProcessEnvironment>
@@ -243,6 +250,11 @@ LunaEngineWorker::~LunaEngineWorker()
     unInit();
 }
 
+void LunaEngineWorker::setExecPath(const QString &path)
+{
+    m_lunaExecPath = path;
+}
+
 void LunaEngineWorker::setEnv(const QHash<QString, QString> &env)
 {
     if(!m_process)
@@ -284,7 +296,7 @@ void LunaEngineWorker::terminate()
         // Kill everything that has "smbx.exe"
         DWORD proc_id[1024];
         DWORD proc_count = 0;
-        QString smbxPath = ConfStatus::configDataPath + ConfStatus::SmbxEXE_Name;
+        QString smbxPath = m_lunaExecPath + ConfStatus::SmbxEXE_Name;
         smbxPath.replace('/', '\\');
         proc_count = getPidsByPath(smbxPath.toStdWString(), proc_id, 1024);
         if(proc_count > 0)
@@ -337,7 +349,7 @@ void LunaEngineWorker::terminate()
             }
         }
 #   else
-        pid_t pid = find_pid(ConfStatus::configDataPath + ConfStatus::SmbxEXE_Name);
+        pid_t pid = find_pid(m_lunaExecPath + ConfStatus::SmbxEXE_Name);
         LogDebugNC(QString("LunaEngineWorker: Killing %1 by pid %2...")
             .arg(ConfStatus::SmbxEXE_Name)
             .arg(pid));
@@ -493,7 +505,8 @@ QString LunaTesterEngine::pathUnixToWine(const QString &unixPath)
     QString windowsPath = winePath.readAllStandardOutput();
     return windowsPath;
 }
-#else
+
+#else // _WIN32
 void LunaTesterEngine::useWine(QString &, QStringList &) // Dummy
 {}
 
@@ -502,8 +515,17 @@ QString LunaTesterEngine::pathUnixToWine(const QString &unixPath)
     // dummy, no need on real Windows
     return unixPath;
 }
-#endif
+#endif //_WIN32
 
+QString LunaTesterEngine::getEnginePath()
+{
+    if(ConfStatus::SmbxTest_By_Default)
+        return ConfStatus::configDataPath; // Ignore custom path
+
+    return m_customLunaPath.isEmpty() ?
+                ConfStatus::configDataPath :
+                m_customLunaPath + "/";
+}
 
 
 
@@ -544,6 +566,8 @@ void LunaTesterEngine::initRuntime()
                 &LunaEngineWorker::setEnv, Qt::BlockingQueuedConnection);
         QObject::connect(this, &LunaTesterEngine::engineSetWorkPath, worker_ptr,
                 &LunaEngineWorker::setWorkPath, Qt::BlockingQueuedConnection);
+        QObject::connect(this, &LunaTesterEngine::engineSetExecPath, worker_ptr,
+                &LunaEngineWorker::setExecPath, Qt::BlockingQueuedConnection);
         QObject::connect(this, &LunaTesterEngine::engineStart, worker_ptr,
                 &LunaEngineWorker::start, Qt::BlockingQueuedConnection);
         QObject::connect(this, &LunaTesterEngine::engineWrite, worker_ptr,
@@ -663,7 +687,17 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
     }
     {
         lunaMenu->addSeparator();
-        QAction *runLegacyEngine = lunaMenu->addAction("startLegacyEngine");
+        QAction *choosEnginePath = lunaMenu->addAction("changePath");
+        QObject::connect(choosEnginePath,   &QAction::triggered,
+                    this,                   &LunaTesterEngine::chooseEnginePath,
+                    Qt::QueuedConnection);
+        m_menuItems[menuItemId++] = choosEnginePath;
+    }
+
+    QAction *runLegacyEngine;
+    {
+        lunaMenu->addSeparator();
+        runLegacyEngine = lunaMenu->addAction("startLegacyEngine");
         QObject::connect(runLegacyEngine,   &QAction::triggered,
                     this,              &LunaTesterEngine::lunaRunGame,
                     Qt::QueuedConnection);
@@ -675,6 +709,7 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
 
     if(ConfStatus::SmbxTest_By_Default)
     {
+        runLegacyEngine->setVisible(false); // Don't show this when LunaTester is a default engine
         ResetCheckPoints->setShortcut(QStringLiteral("Ctrl+F5"));
         ResetCheckPoints->setShortcutContext(Qt::WindowShortcut);
     }
@@ -723,6 +758,12 @@ void LunaTesterEngine::retranslateMenu()
                                            "Ends the LunaTester process, regardless of whether it's in \n"
                                            "the background or foreground, so the engine can be loaded from scratch."));
         KillBackgroundInstance->setToolTip(tr("Ends the LunaTester process so the engine can be loaded from scratch."));
+    }
+    {
+        QAction *chooseEnginePath = m_menuItems[menuItemId++];
+        chooseEnginePath->setText(tr("Select LunaTester path...",
+                                    "Select a path to LunaTester for use."));
+        chooseEnginePath->setToolTip(tr("Select a path to LunaTester for use."));
     }
     {
         QAction *runLegacyEngine = m_menuItems[menuItemId++];
@@ -903,6 +944,82 @@ void LunaTesterEngine::killBackgroundInstance()
     }
 }
 
+void LunaTesterEngine::chooseEnginePath()
+{
+    QDialog d(m_w);
+    d.setWindowTitle(tr("LunaTester path select"));
+    d.setModal(true);
+
+    QGridLayout *g = new QGridLayout(&d);
+    d.setLayout(g);
+
+    QGroupBox *gr = new QGroupBox(&d);
+    gr->setTitle(tr("Please select a path to LunaTester:"));
+    g->addWidget(gr, 0, 0, 1, 2);
+    QGridLayout *gd = new QGridLayout(gr);
+    gr->setLayout(gd);
+
+    g->setColumnStretch(0, 1000);
+    g->setColumnStretch(1, 0);
+
+    QRadioButton *useDefault = new QRadioButton(gr);
+    useDefault->setText(tr("Use default", "Using default LunaTester path, specified by a config pack"));
+
+    QRadioButton *useCustom = new QRadioButton(gr);
+    useCustom->setText(tr("Custom", "Using a user selected LunaTester path"));
+    QLineEdit *c = new QLineEdit(gr);
+    QPushButton *br = new QPushButton(gr);
+    br->setText(tr("Browse..."));
+
+    gd->addWidget(useDefault, 0, 0, 1, 3);
+    gd->addWidget(useCustom, 1, 0);
+    gd->addWidget(c, 1, 1);
+    gd->addWidget(br, 1, 2);
+
+    gd->setColumnStretch(0, 0);
+    gd->setColumnStretch(1, 1000);
+    gd->setColumnStretch(2, 0);
+
+    if(m_customLunaPath.isEmpty())
+    {
+        useDefault->setChecked(true);
+        c->setText(ConfStatus::configDataPath);
+        c->setEnabled(false);
+    }
+    else
+    {
+        useCustom->setChecked(true);
+        c->setText(m_customLunaPath);
+    }
+
+    QPushButton *save = new QPushButton(&d);
+    save->setText(tr("Save"));
+    g->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding), 1, 0);
+    g->addWidget(save, 1, 1);
+
+    QObject::connect(useCustom, &QRadioButton::toggled, c, &QLineEdit::setEnabled);
+    QObject::connect(useCustom, &QRadioButton::toggled, br, &QPushButton::setEnabled);
+
+    QObject::connect(save, &QPushButton::clicked, &d, &QDialog::accept);
+    QObject::connect(br, &QPushButton::clicked,
+                     [&d, c](bool)->void
+    {
+        QString p = QFileDialog::getExistingDirectory(&d, tr("Select a LunaTester path"), c->text());
+        if(!p.isEmpty())
+            c->setText(p);
+    });
+
+    int ret = d.exec();
+
+    if(ret == QDialog::Accepted)
+    {
+        if(useCustom->isChecked())
+            m_customLunaPath = c->text();
+        else
+            m_customLunaPath.clear();
+    }
+}
+
 /*****************************************Private functions*************************************************/
 
 /**
@@ -1072,7 +1189,7 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl, QString levelPath, bool isU
 
     QJsonObject JSONparams;
     QString levelPathOut;
-    QString smbxPath = ConfStatus::configDataPath;
+    QString smbxPath = getEnginePath();
 
     if(!isUntitled)
     {
@@ -1155,6 +1272,7 @@ void LunaTesterEngine::loadSetup()
     {
         m_noGL = settings.value("nogl", false).toBool();
         m_killPreviousSession = settings.value("kill-engine-on-every-test", false).toBool();
+        m_customLunaPath = settings.value("custom-runtime-path", QString()).toString();
     }
     settings.endGroup();
 }
@@ -1168,6 +1286,7 @@ void LunaTesterEngine::saveSetup()
     {
         settings.setValue("nogl", m_noGL);
         settings.setValue("kill-engine-on-every-test", m_killPreviousSession);
+        settings.setValue("custom-runtime-path", m_customLunaPath);
     }
     settings.endGroup();
 }
@@ -1389,7 +1508,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
 
     // Launch LunaLoader
     {
-        QString smbxPath = ConfStatus::configDataPath;
+        QString smbxPath = getEnginePath();
         if(!QFile(smbxPath + ConfStatus::SmbxEXE_Name).exists())
         {
             msg.warning(LunaTesterEngine::tr("SMBX Directory wasn't configured right"),
@@ -1642,6 +1761,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
             bool engineStartedSuccess = true;
             QString engineStartupErrorString;
             useWine(command, params);
+            emit engineSetExecPath(getEnginePath());
             emit engineSetWorkPath(smbxPath);
             emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
 
@@ -1674,7 +1794,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
 
 void LunaTesterEngine::lunaRunGame()
 {
-    QString smbxPath = ConfStatus::configDataPath;
+    QString smbxPath = getEnginePath();
     QString command = smbxPath + "LunaLoader-exec.exe";
 
     if(!QFile(command).exists())
@@ -1708,6 +1828,7 @@ void LunaTesterEngine::lunaRunGame()
         QString engineStartupErrorString;
         killEngine();// Kill previously running game
         useWine(command, params);
+        emit engineSetExecPath(getEnginePath());
         emit engineSetWorkPath(smbxPath);
         emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
 
