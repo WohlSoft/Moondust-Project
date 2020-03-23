@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>AbstractRuntimeEngine</name>
+    <message>
+        <source>World map testing via IPC is not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map testing is not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature is not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AdditionalSettings</name>
     <message>
         <source>Additional settings</source>
@@ -1035,6 +1050,21 @@ Please save them before doing anything else.</source>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
         <translation>隐藏隐形砖块及元对象</translation>
+    </message>
+</context>
+<context>
+    <name>FileListBrowser</name>
+    <message>
+        <source>Files list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是当前文件所在目录中的所有关卡文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Please select a file from the list:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2303,6 +2333,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
 </context>
 <context>
+    <name>JsonSettingsWidget</name>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">浏览</translation>
+    </message>
+    <message>
+        <source>Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[empty]</source>
+        <translation type="unfinished">[空]</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Width, shortly</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>H</source>
+        <comment>Height, shortly</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
@@ -2548,7 +2603,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是当前文件所在目录中的所有关卡文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是当前文件所在目录中的所有关卡文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
@@ -2963,6 +3018,266 @@ That means, impossible to launch level testing on your operating operating. Luna
         <translation>没有找到 %2！
 您使用的是 SMBX 1.3！&lt;br&gt;
 因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
+    </message>
+</context>
+<context>
+    <name>LunaTesterEngine</name>
+    <message>
+        <source>Test level</source>
+        <comment>Run the LunaTester based level testing.</comment>
+        <translation type="unfinished">测试关卡</translation>
+    </message>
+    <message>
+        <source>Starts level testing in the legacy engine.
+To have this feature work, latest LunaLUA must be installed.
+Otherwise, it will be very limited.</source>
+        <translation type="unfinished">在 SMBX 引擎测试关卡，
+需要 LunaLua 的支持。</translation>
+    </message>
+    <message>
+        <source>Reset checkpoints</source>
+        <translation type="unfinished">重置存档点</translation>
+    </message>
+    <message>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation type="unfinished">重置所有存档点。</translation>
+    </message>
+    <message>
+        <source>Disable OpenGL</source>
+        <comment>Disable OpenGL on LunaTester side</comment>
+        <translation type="unfinished">禁用 OpenGL</translation>
+    </message>
+    <message>
+        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
+        <translation type="unfinished">如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，此时改用 GDI 渲染。</translation>
+    </message>
+    <message>
+        <source>Keep running in background</source>
+        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
+        <translation type="unfinished">后台运行</translation>
+    </message>
+    <message>
+        <source>Allows to start level testing very fast after first launch.
+Requires powerful computer, otherwise engine will freeze on next test launch.
+Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
+        <translation type="unfinished">允许启动引擎后直接测试关卡。
+需要很高的配置，否则下次执行可能将会死机。
+对于低端电脑推荐禁用此项。</translation>
+    </message>
+    <message>
+        <source>Terminate frozen loader</source>
+        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
+        <translation type="unfinished">结束被冻结的进程</translation>
+    </message>
+    <message>
+        <source>Termiates frozen thread to allow you to run a test again.</source>
+        <translation type="unfinished">结束进程以允许你再测试关卡。</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished">结束进程</translation>
+    </message>
+    <message>
+        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
+        <translation type="unfinished">结束 LunaTester 进程，使引擎重新开始。</translation>
+    </message>
+    <message>
+        <source>Select LunaTester path...</source>
+        <comment>Select a path to LunaTester for use.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a path to LunaTester for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch LunaTester as a normal game.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launch LunaTester as a normal game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
+        <translation type="unfinished">LunaLua 测试器进程很忙，请重试或使用“结束被冻结的进程”功能！</translation>
+    </message>
+    <message>
+        <source>Are you really want to terminate loader thread?</source>
+        <translation type="unfinished">你想结束进程吗？</translation>
+    </message>
+    <message>
+        <source>Loader thread is not running.</source>
+        <comment>LunaTester thread now doing nothing.
+This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
+        <translation type="unfinished">启动器进程未执行。</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
+        <translation type="unfinished">你确定关闭 LunaTester 吗？这会在当你测试关卡时直接结束进程！</translation>
+    </message>
+    <message>
+        <source>LunaTester has been successfully closed.</source>
+        <translation type="unfinished">LunaTester 已成功关闭。</translation>
+    </message>
+    <message>
+        <source>LunaTester is not running.</source>
+        <translation type="unfinished">LunaTester 未运行。</translation>
+    </message>
+    <message>
+        <source>LunaTester path select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a path to LunaTester:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default LunaTester path, specified by a config pack</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation type="unfinished">自定义</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished">浏览……</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <source>Select a LunaTester path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checkpoints successfully reseted!</source>
+        <translation type="unfinished">存档点已成功重置！</translation>
+    </message>
+    <message>
+        <source>LunaTester error!</source>
+        <translation type="unfinished">LunaTester 错误！</translation>
+    </message>
+    <message>
+        <source>LunaLUA tester is not started!</source>
+        <translation type="unfinished">未启动 LunaLua 测试器！</translation>
+    </message>
+    <message>
+        <source>SMBX64 limits are excited!</source>
+        <translation type="unfinished">已超出 SMBX64 数量限制！</translation>
+    </message>
+    <message>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Are you want continue process?</source>
+        <translation type="unfinished">发现超出 SMBX64 标准的元素！
+%1
+，可能会使 SMBX 1.3 引擎崩溃！
+建议移除所有已超出元素的对象。
+你还要继续测试吗？</translation>
+    </message>
+    <message>
+        <source>SMBX Directory wasn&apos;t configured right</source>
+        <translation type="unfinished">SMBX 目录未配置正确</translation>
+    </message>
+    <message>
+        <source>%1 not found!
+To run testing via SMBX you should have right SMBX Integration configuration package!</source>
+        <translation type="unfinished">未找到 %1！
+你必须使用 SMBX 集成配置包才能在 SMBX 上测试！</translation>
+    </message>
+    <message>
+        <source>SMBX Test is already runned</source>
+        <translation type="unfinished">SMBX 测试已经执行</translation>
+    </message>
+    <message>
+        <source>SMBX Engine is already testing another level.
+Do you want to abort current testing process?</source>
+        <translation type="unfinished">该引擎已在测试另一个关卡。
+你要取消当前的测试进度吗？</translation>
+    </message>
+    <message>
+        <source>Vanilla SMBX detected!</source>
+        <translation type="unfinished">检测到 SMBX 1.3！</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
+&lt;br&gt;
+Name of episode to generate: %1&lt;br&gt;
+&lt;br&gt;
+Are you still want to launch a test?&lt;br&gt;
+&lt;br&gt;
+If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
+%3</source>
+        <translation type="unfinished">未找到 %2 ！
+你使用的是 SMBX 1.3！&lt;br&gt;
+因此不能自动执行关卡测试，此时将会产生一个空白地图以手动开始并选择它们。&lt;br&gt;
+&lt;br&gt;
+生成的地图名称： %1&lt;br&gt;
+&lt;br&gt;
+你还要这样做吗？&lt;br&gt;
+&lt;br&gt;
+请下载 LunaLua 以体验完整功能的 SMBX 关卡测试：&lt;br&gt;
+%3</translation>
+    </message>
+    <message>
+        <source>File save error</source>
+        <translation type="unfinished">保存文件出错</translation>
+    </message>
+    <message>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation type="unfinished">保存文件 %1 失败：
+%2。</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation type="unfinished">没有找到 %2！
+您使用的是 SMBX 1.3！&lt;br&gt;
+因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
+    </message>
+    <message>
+        <source>LunaTesterEngine error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to send level into LunaLUA-SMBX!</source>
+        <translation type="unfinished">发送关卡到 LunaLua 失败！</translation>
+    </message>
+    <message>
+        <source>LunaTester error</source>
+        <translation type="unfinished">LunaTester 错误</translation>
+    </message>
+    <message>
+        <source>Impossible to launch SMBX Engine, because %1</source>
+        <translation type="unfinished">启动 SMBX 引擎失败，原因： %1</translation>
+    </message>
+    <message>
+        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
+        <translation type="unfinished">SMBX 引擎所在目录配置错误</translation>
+    </message>
+    <message>
+        <source>%1 not found!
+To use LunaTester you should have right Integration configuration package!</source>
+        <translation type="unfinished">未找到 %1！
+你必须使用 SMBX 集成配置包才能在 LunaTester 上测试！</translation>
+    </message>
+    <message>
+        <source>Impossible to launch Legacy Engine, because %1</source>
+        <translation type="unfinished">启动 SMBX 引擎失败，原因： %1</translation>
     </message>
 </context>
 <context>
@@ -5063,7 +5378,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Test world map (Alpha)</source>
-        <translation>测试大地图 （内测）</translation>
+        <translation type="vanished">测试大地图 （内测）</translation>
     </message>
     <message>
         <source>Overwrite mode</source>
@@ -5222,7 +5537,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Test level (Alpha)</source>
-        <translation>测试关卡 （内测）</translation>
+        <translation type="vanished">测试关卡 （内测）</translation>
     </message>
     <message>
         <source>Fill</source>
@@ -5350,7 +5665,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Start Engine</source>
-        <translation>启动引擎</translation>
+        <translation type="vanished">启动引擎</translation>
     </message>
     <message>
         <source>Launch game engine application.</source>
@@ -5914,6 +6229,22 @@ See %2 for more information.</source>
 %1.
 请查看 %2 以获取更多信息。</translation>
     </message>
+    <message>
+        <source>Test level</source>
+        <translation type="unfinished">测试关卡</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test world map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;no extra settings&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -5923,11 +6254,23 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这里是文件所在路径中所有的音乐列表，包含子目录。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这里是文件所在路径中所有的音乐列表，包含子目录。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select music file for use as custom</source>
-        <translation>请选择音乐文件</translation>
+        <translation type="vanished">请选择音乐文件</translation>
+    </message>
+    <message>
+        <source>Select SFX file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select SFX file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select music file to use as custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6205,6 +6548,32 @@ Error description:
     <message>
         <source>%1 at line %2</source>
         <translation>%1在第%2行</translation>
+    </message>
+</context>
+<context>
+    <name>PgeEngine</name>
+    <message>
+        <source>Test level/world</source>
+        <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in PGE Engine from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch PGE Engine as a normal game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

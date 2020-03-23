@@ -353,13 +353,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="254"/>
+        <location filename="../main/settings.cpp" line="270"/>
         <location filename="../main/files_io.cpp" line="101"/>
         <source>Saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="254"/>
+        <location filename="../main/settings.cpp" line="270"/>
         <source>Configuration saved in file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -369,52 +369,68 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="189"/>
+        <location filename="../calibrationmain.cpp" line="197"/>
         <source>Save in the same folder with image file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="191"/>
+        <location filename="../calibrationmain.cpp" line="199"/>
         <source>Save into custom place...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="280"/>
+        <location filename="../calibrationmain.cpp" line="298"/>
         <source>Open sprite file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="281"/>
+        <location filename="../calibrationmain.cpp" line="302"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="282"/>
+        <location filename="../calibrationmain.cpp" line="300"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="283"/>
+        <location filename="../calibrationmain.cpp" line="299"/>
+        <source>GIF and PNG images</source>
+        <comment>Type of image file to open</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.cpp" line="301"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="284"/>
+        <location filename="../calibrationmain.cpp" line="303"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="307"/>
+        <location filename="../calibrationmain.cpp" line="327"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="308"/>
+        <location filename="../calibrationmain.cpp" line="328"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.cpp" line="351"/>
+        <source>Calibration is not saved!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.cpp" line="352"/>
+        <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

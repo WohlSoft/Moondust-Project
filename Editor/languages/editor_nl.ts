@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="nl_NL">
 <context>
+    <name>AbstractRuntimeEngine</name>
+    <message>
+        <location filename="../main_window/testing/engines/abstract_engine.cpp" line="87"/>
+        <source>World map testing via IPC is not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/abstract_engine.cpp" line="94"/>
+        <source>World map testing is not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/abstract_engine.cpp" line="100"/>
+        <source>This feature is not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AppSettings</name>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="20"/>
@@ -893,12 +911,12 @@ Gelieve deze te downloaded en instaleren in deze directory&lt;br&gt;
 U kunt hier configuratiepakketten vinden:&lt;br&gt;%2</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="354"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="355"/>
         <source>No config packs were found</source>
         <translation>Geen configuratiepakket gevonden</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="360"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="361"/>
         <source>No configuration packages were found!&lt;br&gt;
 Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
@@ -913,31 +931,31 @@ Gelieve er te downloaden en instaleren in deze map&lt;br&gt;
 Je kan de volgende pakketten gebruiken:&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="493"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="494"/>
         <source>Configuration package is not configured!</source>
         <translation>Configuratiepakket is niet geconfigureerd!</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="494"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="495"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>Het &quot;%1&quot; configuratiepakket is nog niet geconfigureerd.
 Wilt u het nu configureren?</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="541"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="542"/>
         <source>Configuration script failed</source>
         <translation>Het configuratiescript is mislukt</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="542"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="543"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>Het configuratieprogramma heeft een fout aangetroffen: %1 op regel %2.
 Bestandspad: %3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="554"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="555"/>
         <source>No configuration needed</source>
         <translation>Geen configuratie nodig</translation>
     </message>
@@ -956,7 +974,7 @@ Bestandspad:%3</translation>
         <translation type="vanished">Configureren niet nodig</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="555"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="556"/>
         <source>This config pack has no configuring tool.</source>
         <translation>Dit configuratiepakket heeft geen configuratieprogramma.</translation>
     </message>
@@ -1592,6 +1610,25 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <source>Tiled background</source>
         <translation type="vanished">Getegelde achtergrond</translation>
+    </message>
+</context>
+<context>
+    <name>FileListBrowser</name>
+    <message>
+        <location filename="../editing/_dialogs/file_list_browser.ui" line="20"/>
+        <source>Files list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/file_list_browser.ui" line="30"/>
+        <location filename="../editing/_dialogs/file_list_browser.ui" line="49"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met niveau-bestanden die in dezelfde map zitten als het huidige bestand. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/file_list_browser.ui" line="33"/>
+        <source>Please select a file from the list:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3084,7 +3121,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <translation>[Alles]</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="180"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="175"/>
         <source>[Empty]</source>
         <translation>[Leeg]</translation>
     </message>
@@ -3129,22 +3166,22 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <translation>Extra Data:</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="251"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="246"/>
         <source>NPC from List</source>
         <translation>Van NPC lijst</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="252"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="247"/>
         <source>Coins</source>
         <translation>Munten</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="917"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="920"/>
         <source>Please, save file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="917"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="920"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Sla het bestand op om eigen muziek te gebruiken.</translation>
     </message>
@@ -3213,6 +3250,48 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="124"/>
         <source>Preferences have been copied: %1</source>
         <translation>Instellingen zijn gekopiëerd: %1</translation>
+    </message>
+</context>
+<context>
+    <name>JsonSettingsWidget</name>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="964"/>
+        <source>Browse</source>
+        <translation type="unfinished">Bladeren</translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="973"/>
+        <source>Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1080"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1082"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1084"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1086"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1088"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1090"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1092"/>
+        <source>[empty]</source>
+        <translation type="unfinished">[leeg]</translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1319"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1372"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1597"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1697"/>
+        <source>W</source>
+        <comment>Width, shortly</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1331"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1383"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1609"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1708"/>
+        <source>H</source>
+        <comment>Height, shortly</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3511,18 +3590,16 @@ Wilt u uw wijzigingen opslaan?</translation>
 <context>
     <name>LevelFileList</name>
     <message>
-        <location filename="../editing/_dialogs/levelfilelist.ui" line="20"/>
+        <location filename="../editing/_dialogs/levelfilelist.cpp" line="26"/>
         <source>Level files list</source>
         <translation>Niveau-bestandenlijst</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/levelfilelist.ui" line="30"/>
-        <location filename="../editing/_dialogs/levelfilelist.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met niveau-bestanden die in dezelfde map zitten als het huidige bestand. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met niveau-bestanden die in dezelfde map zitten als het huidige bestand. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/levelfilelist.ui" line="33"/>
+        <location filename="../editing/_dialogs/levelfilelist.cpp" line="27"/>
         <source>Please, select level file from list for use them:</source>
         <translation>Gelieve een niveau-bestand te kiezen uit deze lijst:</translation>
     </message>
@@ -3730,7 +3807,7 @@ Wilt u uw wijzigingen opslaan?</translation>
         <translation>Event activeren</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.cpp" line="86"/>
+        <location filename="../editing/edit_level/levelprops.cpp" line="94"/>
         <source>Error in the file %1:
 %2</source>
         <translation>Fout in het bestand %1:
@@ -3740,40 +3817,40 @@ Wilt u uw wijzigingen opslaan?</translation>
 <context>
     <name>LunaTester</name>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="704"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="706"/>
         <source>Reset checkpoints</source>
         <translation>Herstartpunten resetten</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="705"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="707"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation>Alle herstartpunten resetten.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1628"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1636"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1687"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1641"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1649"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1700"/>
         <source>LunaTester error</source>
         <translation>LunaTester fout</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="726"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="728"/>
         <source>Termiates frozen thread to allow you to run a test again.</source>
         <translation>Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="807"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="809"/>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
         <translation>LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="696"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="698"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
         <translation>Niveau Testen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="698"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="700"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
@@ -3781,24 +3858,24 @@ Otherwise, it will be very limited.</source>
 Deze functie vereist LunaLua.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="709"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="711"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
         <translation>OpenGL uitschakelen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="710"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="712"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
         <translation>Schakel het OpenGL beeldenprogramma uit en gebruik GDI in plaats daarvan. Handig als uw grafische kaart geen ondersteuning biedt voor OpenGL of LunaLua crasht bij elke poging tot gebruik. Dit zal in sterk verminderde functies resulteren.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="716"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="718"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
         <translation>In de achtergrond blijven draaien</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="718"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="720"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
@@ -3807,88 +3884,88 @@ Dit veriest een krachtige computer, anders kan het programma hangen bij de volge
 Het is aanbevolen om deze functie uit te schakelen op tragere machines of wanneer er problemen voorkomen bij het opnieuw testen van niveaus.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="724"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="726"/>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
         <translation>Hangende lader beïndigen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="730"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="732"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>Lopend proces beëindigen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="733"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="735"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="737"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="739"/>
         <source>Start Legacy Engine</source>
         <comment>Launch legacy engine in game mode</comment>
         <translation>SMBX programma opstarten</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="739"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="741"/>
         <source>Launch legacy engine in game mode.</source>
         <translation>Oud SMBX programma in spelmodus gebruiken.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="842"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="844"/>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
         <translation>LunaTester kan niet gebruikt worden op de wereldkaart omdat het SMBX programma niet toelaat om mappen te testen. Laad de map in de episode zelf, of gebruik het PGE programma om je wereldkaart bestand te testen.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="865"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="867"/>
         <source>Are you really want to terminate loader thread?</source>
         <translation>Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="876"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="878"/>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
         <translation>Laad-draad (thread) is niet actief.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="891"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="893"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation>Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="898"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="900"/>
         <source>LunaTester has been successfully closed.</source>
         <translation>LunaTester is succesvol afgesloten.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="906"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="908"/>
         <source>LunaTester is not running.</source>
         <translation>LuneTester is niet actief.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1184"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1197"/>
         <source>Checkpoints successfully reseted!</source>
         <translation>Herstartpunten succesvol gereset!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1196"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1209"/>
         <source>LunaTester error!</source>
         <translation>LunaTester fout!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1208"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1221"/>
         <source>LunaLUA tester is not started!</source>
         <translation>LunaTester kon niet gestart worden!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1347"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1360"/>
         <source>SMBX64 limits are excited!</source>
         <translation>SMBX64 limieten overschreden!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1348"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1361"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -3900,37 +3977,37 @@ Het is aanbevolen om alle overtollige elementen te verwijderen.
 Wilt u doorgaan met het proces?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1364"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1377"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
         <translation>SMBX map was niet correct geconfigureerd</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1365"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1378"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
         <translation>%1 niet gevonden!
 Voor het uitvoeren van testen in SMBX moet u het SMBX-integratie configuratiepakket gebruiken!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1388"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1401"/>
         <source>SMBX Test is already runned</source>
         <translation>SMBX-test is al actief</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1389"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1402"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation>Het SMBX programma is al een ander niveau aan het testen.
 Wilt u het huidige testproces sluiten?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1408"/>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1580"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1421"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1593"/>
         <source>Vanilla SMBX detected!</source>
         <translation>Vanilla SMBX gedetecteerd!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1409"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1422"/>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
@@ -3953,19 +4030,19 @@ Als u een volledige testomgeving wilt hebben, installeer dan LunaLua: &lt;br&gt;
 %3</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1565"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1578"/>
         <source>File save error</source>
         <translation>Fout bij het opslaan van het bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1566"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1579"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>Kan %1 bestand niet opslaan:
 %2.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1581"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1594"/>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
@@ -3974,31 +4051,342 @@ Je hebt een vanilla SMBX! &lt;br&gt;
 Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1629"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1642"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation>Kon niveau niet naar LunaLua sturen!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1637"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1650"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
         <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1652"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1665"/>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
         <translation>SMBX programma-map was niet correct geconfigureerd</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1653"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1666"/>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
         <translation>%1 niet gevonden!
 Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/luna_tester.cpp" line="1688"/>
+        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1701"/>
         <source>Impossible to launch Legacy Engine, because %1</source>
         <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
+    </message>
+</context>
+<context>
+    <name>LunaTesterEngine</name>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="723"/>
+        <source>Test level</source>
+        <comment>Run the LunaTester based level testing.</comment>
+        <translation type="unfinished">Niveau Testen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="725"/>
+        <source>Starts level testing in the legacy engine.
+To have this feature work, latest LunaLUA must be installed.
+Otherwise, it will be very limited.</source>
+        <translation type="unfinished">Start het niveau in het SMBX programma.
+Deze functie vereist LunaLua.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="731"/>
+        <source>Reset checkpoints</source>
+        <translation type="unfinished">Herstartpunten resetten</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="732"/>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation type="unfinished">Alle herstartpunten resetten.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="736"/>
+        <source>Disable OpenGL</source>
+        <comment>Disable OpenGL on LunaTester side</comment>
+        <translation type="unfinished">OpenGL uitschakelen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="737"/>
+        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
+        <translation type="unfinished">Schakel het OpenGL beeldenprogramma uit en gebruik GDI in plaats daarvan. Handig als uw grafische kaart geen ondersteuning biedt voor OpenGL of LunaLua crasht bij elke poging tot gebruik. Dit zal in sterk verminderde functies resulteren.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="743"/>
+        <source>Keep running in background</source>
+        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
+        <translation type="unfinished">In de achtergrond blijven draaien</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="745"/>
+        <source>Allows to start level testing very fast after first launch.
+Requires powerful computer, otherwise engine will freeze on next test launch.
+Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
+        <translation type="unfinished">Dit laat toe om niveaus sneller te openen na de eerste opstarting.
+Dit veriest een krachtige computer, anders kan het programma hangen bij de volgende test start.
+Het is aanbevolen om deze functie uit te schakelen op tragere machines of wanneer er problemen voorkomen bij het opnieuw testen van niveaus.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="751"/>
+        <source>Terminate frozen loader</source>
+        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
+        <translation type="unfinished">Hangende lader beïndigen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="753"/>
+        <source>Termiates frozen thread to allow you to run a test again.</source>
+        <translation type="unfinished">Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="757"/>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished">Lopend proces beëindigen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="760"/>
+        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
+        <translation type="unfinished">Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="764"/>
+        <source>Select LunaTester path...</source>
+        <comment>Select a path to LunaTester for use.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="766"/>
+        <source>Select a path to LunaTester for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="770"/>
+        <source>Start Game</source>
+        <comment>Launch LunaTester as a normal game.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="772"/>
+        <source>Launch LunaTester as a normal game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="840"/>
+        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
+        <translation type="unfinished">LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="901"/>
+        <source>Are you really want to terminate loader thread?</source>
+        <translation type="unfinished">Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="912"/>
+        <source>Loader thread is not running.</source>
+        <comment>LunaTester thread now doing nothing.
+This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
+        <translation type="unfinished">Laad-draad (thread) is niet actief.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="927"/>
+        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
+        <translation type="unfinished">Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="934"/>
+        <source>LunaTester has been successfully closed.</source>
+        <translation type="unfinished">LunaTester is succesvol afgesloten.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="942"/>
+        <source>LunaTester is not running.</source>
+        <translation type="unfinished">LuneTester is niet actief.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="950"/>
+        <source>LunaTester path select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="957"/>
+        <source>Please select a path to LunaTester:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="966"/>
+        <source>Use default</source>
+        <comment>Using default LunaTester path, specified by a config pack</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="969"/>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation type="unfinished">Eigen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="972"/>
+        <source>Browse...</source>
+        <translation type="unfinished">Bladeren...</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="996"/>
+        <source>Save</source>
+        <translation type="unfinished">Opslaan</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1007"/>
+        <source>Select a LunaTester path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1334"/>
+        <source>Checkpoints successfully reseted!</source>
+        <translation type="unfinished">Herstartpunten succesvol gereset!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1346"/>
+        <source>LunaTester error!</source>
+        <translation type="unfinished">LunaTester fout!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1358"/>
+        <source>LunaLUA tester is not started!</source>
+        <translation type="unfinished">LunaTester kon niet gestart worden!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1497"/>
+        <source>SMBX64 limits are excited!</source>
+        <translation type="unfinished">SMBX64 limieten overschreden!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1498"/>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Are you want continue process?</source>
+        <translation type="unfinished">Er is een overtreding van SMBX64 standaard gebeurd!
+%1, oorspronkelijke programma kan vastlopen!
+Het is aanbevolen om alle overtollige elementen te verwijderen.
+Wilt u doorgaan met het proces?</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1514"/>
+        <source>SMBX Directory wasn&apos;t configured right</source>
+        <translation type="unfinished">SMBX map was niet correct geconfigureerd</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1515"/>
+        <source>%1 not found!
+To run testing via SMBX you should have right SMBX Integration configuration package!</source>
+        <translation type="unfinished">%1 niet gevonden!
+Voor het uitvoeren van testen in SMBX moet u het SMBX-integratie configuratiepakket gebruiken!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1538"/>
+        <source>SMBX Test is already runned</source>
+        <translation type="unfinished">SMBX-test is al actief</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1539"/>
+        <source>SMBX Engine is already testing another level.
+Do you want to abort current testing process?</source>
+        <translation type="unfinished">Het SMBX programma is al een ander niveau aan het testen.
+Wilt u het huidige testproces sluiten?</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1558"/>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1730"/>
+        <source>Vanilla SMBX detected!</source>
+        <translation type="unfinished">Vanilla SMBX gedetecteerd!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1559"/>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
+&lt;br&gt;
+Name of episode to generate: %1&lt;br&gt;
+&lt;br&gt;
+Are you still want to launch a test?&lt;br&gt;
+&lt;br&gt;
+If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
+%3</source>
+        <translation type="unfinished">%2 niet gevonden!
+Je hebt een vanilla SMBX! &lt;br&gt;
+Dat betekent dat het onmogelijk is om het testen niveaus automatisch te starten. Om uw niveau te testen, wordt een dummy episode gegenereerd, die u handmatig starten en selecteren. &lt;br&gt;
+&lt;br&gt;
+Naam van de te genereren episode: %1 &lt;br&gt;
+&lt;br&gt;
+Wilt u nog een test lanceren? &lt;br&gt;
+&lt;br&gt;
+Als u een volledige testomgeving wilt hebben, installeer dan LunaLua: &lt;br&gt;
+%3</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1715"/>
+        <source>File save error</source>
+        <translation type="unfinished">Fout bij het opslaan van het bestand</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1716"/>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation type="unfinished">Kan %1 bestand niet opslaan:
+%2.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1731"/>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation type="unfinished">%2 niet gevonden!
+Je hebt een vanilla SMBX! &lt;br&gt;
+Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1779"/>
+        <source>LunaTesterEngine error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1780"/>
+        <source>Failed to send level into LunaLUA-SMBX!</source>
+        <translation type="unfinished">Kon niveau niet naar LunaLua sturen!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1787"/>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1839"/>
+        <source>LunaTester error</source>
+        <translation type="unfinished">LunaTester fout</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1788"/>
+        <source>Impossible to launch SMBX Engine, because %1</source>
+        <translation type="unfinished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1803"/>
+        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
+        <translation type="unfinished">SMBX programma-map was niet correct geconfigureerd</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1804"/>
+        <source>%1 not found!
+To use LunaTester you should have right Integration configuration package!</source>
+        <translation type="unfinished">%1 niet gevonden!
+Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1840"/>
+        <source>Impossible to launch Legacy Engine, because %1</source>
+        <translation type="unfinished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
 </context>
 <context>
@@ -4478,7 +4866,7 @@ Wilt u toch doorgaan?</translation>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="737"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="761"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="957"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1121"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1127"/>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
         <translation>Event niet resetten naar &apos;none&apos;</translation>
     </message>
@@ -4622,25 +5010,25 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1075"/>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1171"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1177"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="655"/>
         <source>Direction</source>
         <translation>Richting</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1198"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1204"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="656"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1205"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1211"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="658"/>
         <source>Random</source>
         <translation>Willekeurig</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1212"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1218"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="659"/>
         <source>Right</source>
         <translation>Rechts</translation>
@@ -4672,22 +5060,22 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Huidige blokinhoud</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1261"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1267"/>
         <source>Auto-increment</source>
         <translation>Automatisch incrementeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1145"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1151"/>
         <source>Talk message:</source>
         <translation>Praatbericht:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1254"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1260"/>
         <source>Friendly</source>
         <translation>Vriendelijk</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.ui" line="1152"/>
+        <location filename="../main_window/dock/lvl_item_properties.ui" line="1158"/>
         <source>Doesn&apos;t move</source>
         <translation>Beweegt niet</translation>
     </message>
@@ -4758,16 +5146,16 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="426"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1320"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1325"/>
         <source>%1 coins</source>
         <translation>%1 munt(en)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="427"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="681"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1321"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1728"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2083"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1326"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1733"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2088"/>
         <source>[empty]</source>
         <translation>[leeg]</translation>
     </message>
@@ -4783,13 +5171,13 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="688"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1975"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1980"/>
         <source>[none]</source>
         <translation>[geen]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="917"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="967"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="920"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="973"/>
         <source>Error in the file %1:
 %2</source>
         <translation>Fout in het bestand %1:
@@ -5216,163 +5604,163 @@ Fysieke omgevingszones:	%6
     <name>LvlSectionProps</name>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="30"/>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="456"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="462"/>
         <source>Section Settings</source>
         <translation>Sectie Instellingen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="474"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="480"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
         <translation>Bij het verlaten van het scherm, zal de speler aan de andere kant verschijnen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="494"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="500"/>
         <source>Off screen exit</source>
         <translation>Schermgrens uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="425"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="431"/>
         <source>Browse...</source>
         <translation>Bladeren...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="288"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="294"/>
         <source>Edit a custom background config...</source>
         <translation>Een zelfgemaakte achtergrondsconfiguratie aanpassen...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="504"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="510"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
         <translation>Éénrichtingscamera (geen terugkering)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="514"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="520"/>
         <source>Underwater</source>
         <translation>Onderwater</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="477"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="483"/>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
         <translation>Horizontale schermgrens aansluiting</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="487"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="493"/>
         <source>Wrap vertically</source>
         <translation>Verticale schermgrens aansluiting</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="115"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="121"/>
         <source>Current Section</source>
         <translation>Huidige sectie</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="146"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="152"/>
         <source>Section:</source>
         <translation>Sectie:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="257"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="263"/>
         <source>Style</source>
         <translation>Stijl</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="281"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="287"/>
         <source>Background image</source>
         <translation>Achtergrondsafbeelding</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="229"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="235"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="206"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="212"/>
         <source>Resize section</source>
         <translation>Sectiegrootte wijzigen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="222"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="228"/>
         <source>Apply</source>
         <translation>Doorvoeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="351"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="357"/>
         <source>Music</source>
         <translation>Muziek</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="399"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="405"/>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
         <translation>Eigen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="415"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="421"/>
         <source>Music file:</source>
         <translation>Muziekbestand:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="169"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="178"/>
         <source>Error in the file %1:
 %2</source>
         <translation>Fout in het bestand %1:
 %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="233"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="234"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="247"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="248"/>
         <source>[No image]</source>
         <translation>[Geen afbeelding]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="235"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="236"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="249"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="250"/>
         <source>[Silence]</source>
         <translation>[Stilte]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="531"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="671"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="545"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="685"/>
         <source>Please, save file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="531"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="545"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation>Gelieve het bestand eerst op te slaan, zodat u uw eigen achtergondsconfiguaratie bestanden kan wijzigen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="539"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="553"/>
         <source>Choose a background first</source>
         <translation>Kies eerst een achtergrond</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="540"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="554"/>
         <source>Please, choose the background image first.</source>
         <translation>Gelieve eerst een achtergrondsafbeelding te kiezen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="567"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="581"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Naam dat in het programma zal verschijnen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="571"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="585"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Achtergrond vulkleur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="576"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="590"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Voeg hier lagen toe, bijvoorbeeld:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="671"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="685"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>U moet eerst het bestand opslaan voordat u uw eigen muziekbestanden kan selecteren.</translation>
     </message>
@@ -5883,73 +6271,73 @@ Selecteer de wereldkaart die u wilt gebruiken:</translation>
         <translation>Bewerken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="444"/>
+        <location filename="../mainwindow.ui" line="448"/>
         <source>General</source>
         <translation>Algemeen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="472"/>
+        <location filename="../mainwindow.ui" line="476"/>
         <source>CommonEdit Bar</source>
         <translation>Bewerken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="501"/>
+        <location filename="../mainwindow.ui" line="505"/>
         <source>EditingTools</source>
         <translation>Gereedschap</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="536"/>
+        <location filename="../mainwindow.ui" line="540"/>
         <source>LevelObj Tools</source>
         <translation>Niveau</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="603"/>
+        <location filename="../mainwindow.ui" line="607"/>
         <source>Level Sections Switch</source>
         <translation>Van niveau-sectie veranderen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1440"/>
+        <location filename="../mainwindow.ui" line="1444"/>
         <source>Level items browser</source>
         <translation>Niveau voorwerpendoos Browser</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1443"/>
-        <location filename="../mainwindow.ui" line="1461"/>
+        <location filename="../mainwindow.ui" line="1447"/>
+        <location filename="../mainwindow.ui" line="1465"/>
         <source>Items browser with a search</source>
         <translation>Browser van beschikbare items via zoekopdrachten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1458"/>
+        <location filename="../mainwindow.ui" line="1462"/>
         <source>World map items browser</source>
         <translation>Wereldkaart voorwerpendoos Browser</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1524"/>
+        <location filename="../mainwindow.ui" line="1528"/>
         <source>Section Settings</source>
         <translation>Sectie-Instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1376"/>
+        <location filename="../mainwindow.ui" line="1380"/>
         <source>Underwater</source>
         <translation>Onderwater</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2299"/>
+        <location filename="../mainwindow.ui" line="2303"/>
         <source>Apply</source>
         <translation>Doorvoeren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2314"/>
+        <location filename="../mainwindow.ui" line="2318"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2097"/>
+        <location filename="../mainwindow.ui" line="2101"/>
         <source>Events</source>
         <translation>Events</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1995"/>
+        <location filename="../mainwindow.ui" line="1999"/>
         <source>Layers</source>
         <translation>Lagen</translation>
     </message>
@@ -5959,32 +6347,32 @@ Selecteer de wereldkaart die u wilt gebruiken:</translation>
         <translation>Test</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="651"/>
+        <location filename="../mainwindow.ui" line="655"/>
         <source>Placing</source>
         <translation>Plaatsen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="675"/>
+        <location filename="../mainwindow.ui" line="679"/>
         <source>Resizing</source>
         <translation>Vergroten/kleinen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1420"/>
+        <location filename="../mainwindow.ui" line="1424"/>
         <source>Restart level after fail</source>
         <translation>Niveau herstarten na dood</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1792"/>
+        <location filename="../mainwindow.ui" line="1796"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schakel animaties in voor voorwerpen&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Als de map te veel voorwerpen bezit, is het aanbevolen om deze optie &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;uit te schakelen&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2108"/>
+        <location filename="../mainwindow.ui" line="2112"/>
         <source>Current configuration status...</source>
         <translation>Huidige configuratiestatus...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1774"/>
+        <location filename="../mainwindow.ui" line="1778"/>
         <source>Warps and Doors</source>
         <translation>Portalen en Deuren</translation>
     </message>
@@ -5994,7 +6382,7 @@ Selecteer de wereldkaart die u wilt gebruiken:</translation>
         <translation>Externe werktuigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="570"/>
+        <location filename="../mainwindow.ui" line="574"/>
         <source>World map Toolbar</source>
         <translation>Wereldkaart werkbalk</translation>
     </message>
@@ -6019,79 +6407,79 @@ Selecteer de wereldkaart die u wilt gebruiken:</translation>
         <translation>Eigen data</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="382"/>
+        <location filename="../mainwindow.ui" line="386"/>
         <source>Script</source>
         <translation>Script</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1538"/>
+        <location filename="../mainwindow.ui" line="1542"/>
         <source>Reload configuration pack</source>
         <translation>Configuratiepakket herladen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1556"/>
+        <location filename="../mainwindow.ui" line="1560"/>
         <source>Go to left-bottom of the section</source>
         <translation>Ga naar de linkeronderhoek van de sectie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1559"/>
+        <location filename="../mainwindow.ui" line="1563"/>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
         <translation>Keer terug naar linkeronderhoek van de niveau-sectie, of op punt (0,0) van de wereldkaart</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1931"/>
+        <location filename="../mainwindow.ui" line="1935"/>
         <source>Prevent overlap</source>
         <translation>Overlapping voorkomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1934"/>
+        <location filename="../mainwindow.ui" line="1938"/>
         <source>Prevents similar items from overlapping each other.
 Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
         <translation>Hiermee voorkomt u dat soortgelijke voorwerpen elkaar overlappen.
 Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden dat het geselecteerde object terugkeert naar zijn oorspronkelijke positie. Als deze vlag is uitgevinkt, kunt u elementen zonder beperking op elkaar plaatsen. Objecten kunnen nooit overlappen bij het plaatsen van nieuwe objecten, tenzij u van het klembord dupliceert of plakt, waar overlappingen altijd mogelijk is.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2082"/>
+        <location filename="../mainwindow.ui" line="2086"/>
         <source>Go to the left-top of the section</source>
         <translation>ga naa de linkerbovenhoek van de sectie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2085"/>
+        <location filename="../mainwindow.ui" line="2089"/>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
         <translation>Keer terug naar de linkerbovenhoek van de niveau-sectie, of op punt (0,0) van de wereldkaart</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2221"/>
+        <location filename="../mainwindow.ui" line="2225"/>
         <source>Lock Scenery tiles</source>
         <translation>Achtergrondsvoorwerpen vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2272"/>
+        <location filename="../mainwindow.ui" line="2276"/>
         <source>Rectangular fill</source>
         <translation>Rechthoek vulling</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2275"/>
+        <location filename="../mainwindow.ui" line="2279"/>
         <source>Rectangular Fill (Shift+S)</source>
         <translation>Rechthoek Gereedschap (Shift+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2417"/>
+        <location filename="../mainwindow.ui" line="2421"/>
         <source>Tileset Item Box</source>
         <translation>Voorwerpen Gereedschapskist</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2429"/>
+        <location filename="../mainwindow.ui" line="2433"/>
         <source>Debugger</source>
         <translation>Debugger</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2550"/>
+        <location filename="../mainwindow.ui" line="2554"/>
         <source>Position bookmarks</source>
         <translation>Bladwijzerposities</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="701"/>
+        <location filename="../mainwindow.ui" line="705"/>
         <source>Open...</source>
         <translation>Openen...</translation>
     </message>
@@ -6106,539 +6494,553 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation>Rastergrootte instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="386"/>
+        <location filename="../mainwindow.ui" line="390"/>
         <source>LunaLUA scripts</source>
         <translation>LunaLua scripts</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="404"/>
+        <location filename="../mainwindow.ui" line="408"/>
         <source>Configuration</source>
         <translation>Configuratie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="414"/>
+        <location filename="../mainwindow.ui" line="418"/>
         <source>Plugins</source>
         <translation>Plugins</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="704"/>
+        <location filename="../mainwindow.ui" line="708"/>
         <source>Open (Ctrl+O)</source>
         <translation>Openen (Ctrl+O)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="718"/>
+        <location filename="../mainwindow.ui" line="722"/>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <extracomment>Exit from the editor</extracomment>
         <translation>Afsluiten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="733"/>
+        <location filename="../mainwindow.ui" line="737"/>
         <source>Level...</source>
         <translation>Niveau...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="745"/>
+        <location filename="../mainwindow.ui" line="749"/>
         <source>World map...</source>
         <translation>Wereldkaart...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="757"/>
+        <location filename="../mainwindow.ui" line="761"/>
         <source>NPC config...</source>
         <translation>NPC configuratie...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="772"/>
+        <location filename="../mainwindow.ui" line="776"/>
         <location filename="../main_window/windows_extras.cpp" line="20"/>
         <source>Save</source>
         <translation>Opslaan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="775"/>
+        <location filename="../mainwindow.ui" line="779"/>
         <source>Save (Ctrl+S)</source>
         <translation>Opslaan (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="796"/>
+        <location filename="../mainwindow.ui" line="800"/>
         <source>Save as...</source>
         <translation>Opslaan als...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="799"/>
+        <location filename="../mainwindow.ui" line="803"/>
         <source>Save as (Ctrl+Shift+S)</source>
         <translation>Opslaan als (Ctrl+Shift+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="816"/>
+        <location filename="../mainwindow.ui" line="820"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="824"/>
+        <location filename="../mainwindow.ui" line="828"/>
         <source>Save all</source>
         <translation>Alles opslaan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="827"/>
+        <location filename="../mainwindow.ui" line="831"/>
         <source>Save all (Ctrl+Alt+S)</source>
         <translation>Alles opslaan (Ctrl+Alt+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="835"/>
+        <location filename="../mainwindow.ui" line="839"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="849"/>
+        <location filename="../mainwindow.ui" line="853"/>
         <source>Contents</source>
         <translation>Inhoud</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="852"/>
+        <location filename="../mainwindow.ui" line="856"/>
         <source>Contents (F1)</source>
         <translation>Inhoud (F1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="874"/>
-        <location filename="../mainwindow.ui" line="877"/>
+        <location filename="../mainwindow.ui" line="878"/>
+        <location filename="../mainwindow.ui" line="881"/>
         <source>Section 0</source>
         <translation>Sectie 0</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="896"/>
-        <location filename="../mainwindow.ui" line="899"/>
+        <location filename="../mainwindow.ui" line="900"/>
+        <location filename="../mainwindow.ui" line="903"/>
         <source>Section 1</source>
         <translation>Sectie 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="918"/>
-        <location filename="../mainwindow.ui" line="921"/>
+        <location filename="../mainwindow.ui" line="922"/>
+        <location filename="../mainwindow.ui" line="925"/>
         <source>Section 2</source>
         <translation>Sectie 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="940"/>
-        <location filename="../mainwindow.ui" line="943"/>
+        <location filename="../mainwindow.ui" line="944"/>
+        <location filename="../mainwindow.ui" line="947"/>
         <source>Section 3</source>
         <translation>Sectie 3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="962"/>
-        <location filename="../mainwindow.ui" line="965"/>
+        <location filename="../mainwindow.ui" line="966"/>
+        <location filename="../mainwindow.ui" line="969"/>
         <source>Section 4</source>
         <translation>Sectie 4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="984"/>
-        <location filename="../mainwindow.ui" line="987"/>
+        <location filename="../mainwindow.ui" line="988"/>
+        <location filename="../mainwindow.ui" line="991"/>
         <source>Section 5</source>
         <translation>Sectie 5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1006"/>
-        <location filename="../mainwindow.ui" line="1009"/>
+        <location filename="../mainwindow.ui" line="1010"/>
+        <location filename="../mainwindow.ui" line="1013"/>
         <source>Section 6</source>
         <translation>Sectie 6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1028"/>
-        <location filename="../mainwindow.ui" line="1031"/>
+        <location filename="../mainwindow.ui" line="1032"/>
+        <location filename="../mainwindow.ui" line="1035"/>
         <source>Section 7</source>
         <translation>Sectie 7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1050"/>
-        <location filename="../mainwindow.ui" line="1053"/>
+        <location filename="../mainwindow.ui" line="1054"/>
+        <location filename="../mainwindow.ui" line="1057"/>
         <source>Section 8</source>
         <translation>Sectie 8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1072"/>
-        <location filename="../mainwindow.ui" line="1075"/>
+        <location filename="../mainwindow.ui" line="1076"/>
+        <location filename="../mainwindow.ui" line="1079"/>
         <source>Section 9</source>
         <translation>Sectie 9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1094"/>
-        <location filename="../mainwindow.ui" line="1097"/>
+        <location filename="../mainwindow.ui" line="1098"/>
+        <location filename="../mainwindow.ui" line="1101"/>
         <source>Section 10</source>
         <translation>Sectie 10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1116"/>
-        <location filename="../mainwindow.ui" line="1119"/>
+        <location filename="../mainwindow.ui" line="1120"/>
+        <location filename="../mainwindow.ui" line="1123"/>
         <source>Section 11</source>
         <translation>Sectie 11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1138"/>
-        <location filename="../mainwindow.ui" line="1141"/>
+        <location filename="../mainwindow.ui" line="1142"/>
+        <location filename="../mainwindow.ui" line="1145"/>
         <source>Section 12</source>
         <translation>Sectie 12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1160"/>
-        <location filename="../mainwindow.ui" line="1163"/>
+        <location filename="../mainwindow.ui" line="1164"/>
+        <location filename="../mainwindow.ui" line="1167"/>
         <source>Section 13</source>
         <translation>Sectie 13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1182"/>
-        <location filename="../mainwindow.ui" line="1185"/>
+        <location filename="../mainwindow.ui" line="1186"/>
+        <location filename="../mainwindow.ui" line="1189"/>
         <source>Section 14</source>
         <translation>Sectie 14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1204"/>
-        <location filename="../mainwindow.ui" line="1207"/>
+        <location filename="../mainwindow.ui" line="1208"/>
+        <location filename="../mainwindow.ui" line="1211"/>
         <source>Section 15</source>
         <translation>Sectie 15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1226"/>
-        <location filename="../mainwindow.ui" line="1229"/>
+        <location filename="../mainwindow.ui" line="1230"/>
+        <location filename="../mainwindow.ui" line="1233"/>
         <source>Section 16</source>
         <translation>Sectie 16</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1248"/>
-        <location filename="../mainwindow.ui" line="1251"/>
+        <location filename="../mainwindow.ui" line="1252"/>
+        <location filename="../mainwindow.ui" line="1255"/>
         <source>Section 17</source>
         <translation>Sectie 17</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1270"/>
-        <location filename="../mainwindow.ui" line="1273"/>
+        <location filename="../mainwindow.ui" line="1274"/>
+        <location filename="../mainwindow.ui" line="1277"/>
         <source>Section 18</source>
         <translation>Sectie 18</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1292"/>
-        <location filename="../mainwindow.ui" line="1295"/>
+        <location filename="../mainwindow.ui" line="1296"/>
+        <location filename="../mainwindow.ui" line="1299"/>
         <source>Section 19</source>
         <translation>Sectie 19</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1314"/>
-        <location filename="../mainwindow.ui" line="1317"/>
+        <location filename="../mainwindow.ui" line="1318"/>
+        <location filename="../mainwindow.ui" line="1321"/>
         <source>Section 20</source>
         <translation>Sectie 20</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1331"/>
+        <location filename="../mainwindow.ui" line="1335"/>
         <source>Wrap Horizontally</source>
         <translation>Scherm horizontaal aansluiten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1348"/>
+        <location filename="../mainwindow.ui" line="1352"/>
         <source>Offscreen exit</source>
         <translation>Schermgrens uitgang</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1362"/>
+        <location filename="../mainwindow.ui" line="1366"/>
         <source>No turn back</source>
         <translation>Eenrichtingscamera</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1387"/>
+        <location filename="../mainwindow.ui" line="1391"/>
         <source>Export to image...</source>
         <translation>Exporteer naar afbeelding...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1390"/>
+        <location filename="../mainwindow.ui" line="1394"/>
         <source>Export current section to image (F12)</source>
         <translation>Exporteer huidige sectie naar afbeelding (F12)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1401"/>
-        <location filename="../mainwindow.ui" line="1425"/>
+        <location filename="../mainwindow.ui" line="1405"/>
+        <location filename="../mainwindow.ui" line="1429"/>
         <source>Properties...</source>
         <translation>Instelllingen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1412"/>
+        <location filename="../mainwindow.ui" line="1416"/>
         <source>Disable world map</source>
         <translation>Wereldkaart uitschakelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1482"/>
+        <location filename="../mainwindow.ui" line="1486"/>
         <source>Select and Move</source>
         <translation>Selecteren en verplaatsen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1485"/>
+        <location filename="../mainwindow.ui" line="1489"/>
         <source>Select (S)</source>
         <translation>Selecteren (S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1506"/>
+        <location filename="../mainwindow.ui" line="1510"/>
         <source>Eriser</source>
         <translation>Wisser</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1509"/>
+        <location filename="../mainwindow.ui" line="1513"/>
         <source>Eriser (E)</source>
         <translation>Wisser (E)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1574"/>
+        <location filename="../mainwindow.ui" line="1578"/>
         <source>Attach to grid</source>
         <translation>Uitlijnen op raster</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1590"/>
+        <location filename="../mainwindow.ui" line="1594"/>
         <source>Lock all Blocks</source>
         <translation>Alle blokken vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1603"/>
+        <location filename="../mainwindow.ui" line="1607"/>
         <source>Lock all BGO</source>
         <translation>Alle BGO&apos;s vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1616"/>
+        <location filename="../mainwindow.ui" line="1620"/>
         <source>Lock all NPC</source>
         <translation>Alle NPC&apos;s vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1629"/>
+        <location filename="../mainwindow.ui" line="1633"/>
         <source>Lock all door objects</source>
         <translation>Alle deuren en portalen vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1642"/>
+        <location filename="../mainwindow.ui" line="1646"/>
         <source>Lock all water squares</source>
         <translation>Water/drijfzand vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1654"/>
+        <location filename="../mainwindow.ui" line="1658"/>
         <source>Set first player position</source>
         <translation>Speler 1 positie instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1657"/>
+        <location filename="../mainwindow.ui" line="1661"/>
         <source>Set first player start point</source>
         <translation>Startpunt voor speler 1 instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1669"/>
+        <location filename="../mainwindow.ui" line="1673"/>
         <source>Set second player position</source>
         <translation>Speler 2 positie instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1672"/>
+        <location filename="../mainwindow.ui" line="1676"/>
         <source>Set second player start point</source>
         <translation>Startpunt van speler 2 instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1684"/>
+        <location filename="../mainwindow.ui" line="1688"/>
         <source>Play music</source>
         <translation>Muziek afspelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1687"/>
+        <location filename="../mainwindow.ui" line="1691"/>
         <source>Play music (F11)</source>
         <translation>Muziek afspelen (F11)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1702"/>
+        <location filename="../mainwindow.ui" line="1706"/>
         <source>Reload file data</source>
         <translation>Huidig bestand opnieuw laden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1705"/>
+        <location filename="../mainwindow.ui" line="1709"/>
         <source>Reload current file data</source>
         <translation>Huidig bestand opnieuw laden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1726"/>
+        <location filename="../mainwindow.ui" line="1730"/>
         <source>Scroll hand</source>
         <translation>Cursor scrollen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1729"/>
+        <location filename="../mainwindow.ui" line="1733"/>
         <source>Scrolling (D)</source>
         <translation>Camera verplaatsen (D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1744"/>
+        <location filename="../mainwindow.ui" line="1748"/>
         <source>Undo</source>
         <translation>Ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1759"/>
+        <location filename="../mainwindow.ui" line="1763"/>
         <source>Redo</source>
         <translation>Herhalen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1789"/>
+        <location filename="../mainwindow.ui" line="1793"/>
         <source>Animation</source>
         <translation>Animatie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1803"/>
-        <location filename="../mainwindow.ui" line="1814"/>
-        <location filename="../mainwindow.ui" line="1825"/>
-        <location filename="../mainwindow.ui" line="1836"/>
-        <location filename="../mainwindow.ui" line="1847"/>
-        <location filename="../mainwindow.ui" line="1858"/>
-        <location filename="../mainwindow.ui" line="1869"/>
-        <location filename="../mainwindow.ui" line="1880"/>
-        <location filename="../mainwindow.ui" line="1891"/>
-        <location filename="../mainwindow.ui" line="1902"/>
+        <location filename="../mainwindow.ui" line="1807"/>
+        <location filename="../mainwindow.ui" line="1818"/>
+        <location filename="../mainwindow.ui" line="1829"/>
+        <location filename="../mainwindow.ui" line="1840"/>
+        <location filename="../mainwindow.ui" line="1851"/>
+        <location filename="../mainwindow.ui" line="1862"/>
+        <location filename="../mainwindow.ui" line="1873"/>
+        <location filename="../mainwindow.ui" line="1884"/>
+        <location filename="../mainwindow.ui" line="1895"/>
+        <location filename="../mainwindow.ui" line="1906"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;leeg&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1917"/>
+        <location filename="../mainwindow.ui" line="1921"/>
         <source>Copy</source>
         <translation>Kopiëren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1920"/>
+        <location filename="../mainwindow.ui" line="1924"/>
         <source>Copy selected items</source>
         <translation>Geselecteerde items kopiëren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1950"/>
+        <location filename="../mainwindow.ui" line="1954"/>
         <source>Draw Water zone</source>
         <translation>Waterzone tekenen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1953"/>
+        <location filename="../mainwindow.ui" line="1957"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
         <translation>Klik en sleep de cursor over het gebied dat u met water wilt vullen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1965"/>
+        <location filename="../mainwindow.ui" line="1969"/>
         <source>Draw QuickSand zone</source>
         <translation>Drijfzand zone tekenen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1968"/>
+        <location filename="../mainwindow.ui" line="1972"/>
         <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
         <translation>Klik en sleep de cursor over het gebied dat u wilt vullen met drijfzand</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1980"/>
+        <location filename="../mainwindow.ui" line="1984"/>
         <source>Paste</source>
         <translation>Plakken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2006"/>
+        <location filename="../mainwindow.ui" line="2010"/>
         <source>[No opened files]</source>
         <translation>[Geen geopende bestanden]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2024"/>
+        <location filename="../mainwindow.ui" line="2028"/>
         <source>Cut</source>
         <translation>Knippen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2056"/>
+        <location filename="../mainwindow.ui" line="2060"/>
         <source>Select only</source>
         <translation>Alleen selecteren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2064"/>
+        <location filename="../mainwindow.ui" line="2068"/>
         <source>Application settings</source>
         <translation>Applicatie instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2123"/>
+        <location filename="../mainwindow.ui" line="2127"/>
         <source>Level Search</source>
         <translation>Zoeken naar voorwerpen in het niveau</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2126"/>
+        <location filename="../mainwindow.ui" line="2130"/>
         <source>Search for an Item on the Level</source>
         <translation>Zoekt naar voorwerpen in dit niveau</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2134"/>
+        <location filename="../mainwindow.ui" line="2138"/>
         <source>Refresh menus</source>
         <translation>Menu&apos;s herladen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2145"/>
+        <location filename="../mainwindow.ui" line="2149"/>
         <source>Fullscreen</source>
         <translation>Fullscreen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2153"/>
+        <location filename="../mainwindow.ui" line="2157"/>
         <source>Tilesets Editor</source>
         <translation>Tegelset Bewerker</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2161"/>
+        <location filename="../mainwindow.ui" line="2165"/>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
         <translation>Herstel slordige graphics (LazyFixTool)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2169"/>
+        <location filename="../mainwindow.ui" line="2173"/>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
         <translation>Converteer gif met masker tot PNG (GIFs2PNG)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2177"/>
+        <location filename="../mainwindow.ui" line="2181"/>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
         <translation>Converteer PNG tot gif met masker (PNG2GIFs)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2192"/>
+        <location filename="../mainwindow.ui" line="2196"/>
         <source>World settings</source>
         <translation>Wereld instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2208"/>
+        <location filename="../mainwindow.ui" line="2212"/>
         <source>Lock Terrain tiles</source>
         <translation>Terreintegels vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2234"/>
+        <location filename="../mainwindow.ui" line="2238"/>
         <source>Lock Paths</source>
         <translation>Alle paden vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2247"/>
+        <location filename="../mainwindow.ui" line="2251"/>
         <source>Lock Levels</source>
         <translation>Alle niveaus vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2260"/>
+        <location filename="../mainwindow.ui" line="2264"/>
         <source>Lock Music Boxes</source>
         <translation>Alle muziekdozen vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2358"/>
+        <location filename="../mainwindow.ui" line="2362"/>
         <source>Show Developer Console</source>
         <translation>Ontwikkelaarsconsole weergeven</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2434"/>
+        <location filename="../mainwindow.ui" line="2438"/>
         <source>Change configuration pack...</source>
         <translation>Van configuratiepakket veranderen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2458"/>
-        <source>Test level (Alpha)</source>
-        <translation>Niveau testen (Alpha)</translation>
+        <location filename="../mainwindow.ui" line="2929"/>
+        <source>Test world map</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2472"/>
-        <location filename="../mainwindow.ui" line="2475"/>
+        <location filename="../mainwindow.ui" line="2971"/>
+        <source>&lt;no extra settings&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test level (Alpha)</source>
+        <translation type="vanished">Niveau testen (Alpha)</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2476"/>
+        <location filename="../mainwindow.ui" line="2479"/>
         <source>Testing options...</source>
         <translation>Testopties....</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2553"/>
+        <location filename="../mainwindow.ui" line="2557"/>
         <source>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</source>
         <translation>Sla specifieke camera posities als bladwijzer op. U kunt dan deze bladwijzers gebruiken om snel naar belangrijke posities terug te keren op grote mappen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2712"/>
+        <location filename="../mainwindow.ui" line="2716"/>
         <source>Convert Audio files...</source>
         <translation>Audio bestanden converteren...</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2754"/>
+        <source>Start Game</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2776"/>
@@ -6711,9 +7113,8 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation>Welkom dialoog</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2929"/>
         <source>Test world map (Alpha)</source>
-        <translation>Test wereldkaart (Alpha)</translation>
+        <translation type="vanished">Test wereldkaart (Alpha)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2947"/>
@@ -6756,200 +7157,205 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation>Globale wereldkaart script. Nieuwe script bestandsnaam om het oude &quot;lunaoverworld.lua&quot; te vervangen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2290"/>
+        <location filename="../mainwindow.ui" line="2294"/>
         <source>Overwrite mode</source>
         <translation>Overschrijf modus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2302"/>
+        <location filename="../mainwindow.ui" line="2306"/>
         <source>Apply (Enter)</source>
         <translation>Doorvoeren (Enter)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2317"/>
+        <location filename="../mainwindow.ui" line="2321"/>
         <source>Cancel (Esc)</source>
         <translation>Annuleren (Esc)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2332"/>
+        <location filename="../mainwindow.ui" line="2336"/>
         <source>Line</source>
         <translation>Lijn Gereedschap</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2335"/>
+        <location filename="../mainwindow.ui" line="2339"/>
         <source>Line (Shift+D)</source>
         <translation>Lijn (Shift+D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2350"/>
+        <location filename="../mainwindow.ui" line="2354"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
         <translation>Zoeken op wereldkaart</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2366"/>
+        <location filename="../mainwindow.ui" line="2370"/>
         <source>Tileset Groups Editor</source>
         <translation>Tegelgroep Bewerker</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2378"/>
+        <location filename="../mainwindow.ui" line="2382"/>
         <source>Zoom In</source>
         <translation>Inzoomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2390"/>
+        <location filename="../mainwindow.ui" line="2394"/>
         <source>Zoom Out</source>
         <translation>Uitzoomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2402"/>
+        <location filename="../mainwindow.ui" line="2406"/>
         <source>Reset Zoom</source>
         <translation>Standaard Zoom</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2445"/>
+        <location filename="../mainwindow.ui" line="2449"/>
         <source>Semi-transparent paths</source>
         <translation>Semi-transparante paden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2450"/>
+        <location filename="../mainwindow.ui" line="2454"/>
         <source>Export section to image...</source>
         <translation>Exporteer sectie naar afbeelding....</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2453"/>
+        <location filename="../mainwindow.ui" line="2457"/>
         <source>Export whole level section to image</source>
         <translation>Exporteer het hele niveau sectie naar afbeelding</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2490"/>
+        <location filename="../mainwindow.ui" line="2462"/>
+        <source>Test level</source>
+        <translation type="unfinished">Niveau Testen</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2494"/>
         <source>Fill</source>
         <translation>Opvul gereedschap</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2498"/>
+        <location filename="../mainwindow.ui" line="2502"/>
         <source>Clear unused data</source>
         <translation>Ongebruikte gegevens wissen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2513"/>
+        <location filename="../mainwindow.ui" line="2517"/>
         <source>Show properties</source>
         <translation>Eigenschappen weergeven</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2516"/>
+        <location filename="../mainwindow.ui" line="2520"/>
         <source>Show properties of item</source>
         <translation>Eigenschappen van voorwerp weergeven</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2524"/>
+        <location filename="../mainwindow.ui" line="2528"/>
         <source>Sprite Editor</source>
         <translation>Sprite Bewerken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2532"/>
+        <location filename="../mainwindow.ui" line="2536"/>
         <source>Import...</source>
         <translation>Importeren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2535"/>
+        <location filename="../mainwindow.ui" line="2539"/>
         <source>Import</source>
         <translation>Importeren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2561"/>
+        <location filename="../mainwindow.ui" line="2565"/>
         <source>Clone section to...</source>
         <translation>Sectie klonen naar ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2572"/>
-        <location filename="../mainwindow.ui" line="2621"/>
+        <location filename="../mainwindow.ui" line="2576"/>
+        <location filename="../mainwindow.ui" line="2625"/>
         <source>Rotate left</source>
         <translation>Linksom draaien</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2580"/>
-        <location filename="../mainwindow.ui" line="2629"/>
+        <location filename="../mainwindow.ui" line="2584"/>
+        <location filename="../mainwindow.ui" line="2633"/>
         <source>Rotate right</source>
         <translation>Rechtsom roteren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2591"/>
-        <location filename="../mainwindow.ui" line="2637"/>
+        <location filename="../mainwindow.ui" line="2595"/>
+        <location filename="../mainwindow.ui" line="2641"/>
         <source>Flip horizontal</source>
         <translation>Horizontaal spiegelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2602"/>
-        <location filename="../mainwindow.ui" line="2645"/>
+        <location filename="../mainwindow.ui" line="2606"/>
+        <location filename="../mainwindow.ui" line="2649"/>
         <source>Flip vertical</source>
         <translation>Verticaal spiegelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2613"/>
+        <location filename="../mainwindow.ui" line="2617"/>
         <source>Align selected</source>
         <translation>Selectie aligneren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2650"/>
+        <location filename="../mainwindow.ui" line="2654"/>
         <source>Fix wrong masks</source>
         <translation>Slechte maskers herstellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2653"/>
+        <location filename="../mainwindow.ui" line="2657"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
         <translation>Dit werktuig herstelt visuele bugs veroorzaakt door afbeeldingen met slechte maskers</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2664"/>
+        <location filename="../mainwindow.ui" line="2668"/>
         <source>Delete section</source>
         <translation>Sectie verwijderen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2675"/>
+        <location filename="../mainwindow.ui" line="2679"/>
         <source>Don&apos;t fill out of section</source>
         <translation>Niet buiten de sectie vullen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2680"/>
+        <location filename="../mainwindow.ui" line="2684"/>
         <source>SMBX-like GUI</source>
         <translation>Oorspronkelijke GUI</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2688"/>
+        <location filename="../mainwindow.ui" line="2692"/>
+        <location filename="../mainwindow.ui" line="2963"/>
         <source>Run testing of saved file</source>
         <translation>Een opgeslagen bestand testen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2696"/>
+        <location filename="../mainwindow.ui" line="2700"/>
         <source>Change log</source>
         <translation>Wijzigingenlogboek</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2704"/>
+        <location filename="../mainwindow.ui" line="2708"/>
         <source>Check for updates...</source>
         <translation>Controleer of er updates zijn....</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2720"/>
+        <location filename="../mainwindow.ui" line="2724"/>
         <source>Clear NPC garbadge...</source>
         <translation>NPC&apos;s opruimen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2731"/>
-        <location filename="../mainwindow.ui" line="2737"/>
+        <location filename="../mainwindow.ui" line="2735"/>
+        <location filename="../mainwindow.ui" line="2741"/>
         <source>More sections...</source>
         <translation>Meer secties...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2742"/>
+        <location filename="../mainwindow.ui" line="2746"/>
         <source>Tip of the day...</source>
         <translation>Tip van de dag...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2754"/>
         <source>Start Engine</source>
-        <translation>Programma Opstarten</translation>
+        <translation type="vanished">Programma Opstarten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2757"/>
@@ -6984,7 +7390,7 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
-        <location filename="../main_window/file/file_save.cpp" line="34"/>
+        <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
@@ -7169,19 +7575,19 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
         <translation>Dit bestand heeft een onbekende extensie</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="34"/>
+        <location filename="../main_window/file/file_save.cpp" line="35"/>
         <source>Saving of file...</source>
         <translation>Bestand wordt opgeslagen...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="35"/>
-        <location filename="../main_window/file/file_save.cpp" line="81"/>
+        <location filename="../main_window/file/file_save.cpp" line="36"/>
+        <location filename="../main_window/file/file_save.cpp" line="82"/>
         <source>Saving</source>
         <translation>Aan het opslagen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="53"/>
-        <location filename="../main_window/file/file_save.cpp" line="70"/>
+        <location filename="../main_window/file/file_save.cpp" line="55"/>
+        <location filename="../main_window/file/file_save.cpp" line="74"/>
         <source>File saved</source>
         <translation>Bestand opgeslagen</translation>
     </message>
@@ -7201,32 +7607,32 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
         <translation>Huidige taal gewijzigd naar %1</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="230"/>
+        <location filename="../main_window/menubar.cpp" line="241"/>
         <source>Sub-windows</source>
         <translation>Aparte vensters</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="236"/>
+        <location filename="../main_window/menubar.cpp" line="247"/>
         <source>Tab Windows</source>
         <translation>Getabde venster</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="245"/>
+        <location filename="../main_window/menubar.cpp" line="256"/>
         <source>Close current</source>
         <translation>Huidig bestand sluiten</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="251"/>
+        <location filename="../main_window/menubar.cpp" line="262"/>
         <source>Cascade</source>
         <translation>Trapsgewijs</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="255"/>
+        <location filename="../main_window/menubar.cpp" line="266"/>
         <source>Tiled</source>
         <translation>Betegeld</translation>
     </message>
     <message>
-        <location filename="../main_window/menubar.cpp" line="261"/>
+        <location filename="../main_window/menubar.cpp" line="272"/>
         <source>[No files open]</source>
         <translation>[Geen geopende bestanden]</translation>
     </message>
@@ -7267,7 +7673,7 @@ Het configuratiepakket bevat fouten.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="75"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
         <source>[all]</source>
         <translation>[Alle]</translation>
     </message>
@@ -7292,19 +7698,19 @@ Het configuratiepakket bevat fouten.</translation>
         <translation>%1 tegels, %2 decoraties, %3 paden, %4 niveaus, %5 muziekdozen objecten zijn verplaatst naar het klembord</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="160"/>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="131"/>
         <source>Engine is not found</source>
         <translation>Programma niet gevonden</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="80"/>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="77"/>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation>Hallo! U bent op het punt om een niveau in het PGE Programma te testen.
 Het PGE Programma is nog steeds vrij vroeg in de ntwikkelingsstadium, en er zullen vele functie missen of niet correct werken. Als u een niveau of episode aan het maken bent in het oorspronkelijk SMBX programma die je wilt uittesten met een compleet werkend programma, gelieve dan SMBX zelf te gebruiken. Gebruik PGE Testen voor gevallen waarbij je het PGE Programma zelf of componenten van het programma wilt testen.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="161"/>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="132"/>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
@@ -7313,57 +7719,53 @@ Please, choose the engine application yourself!</source>
 Gelieve de de applicatie te kiezen!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="165"/>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="136"/>
         <source>Choose the Engine application</source>
         <translation>Kies het Programma applicatie</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="193"/>
-        <location filename="../main_window/testing/testing.cpp" line="299"/>
+        <location filename="../main_window/testing/engines/abstract_engine.cpp" line="33"/>
         <source>Engine already runned</source>
         <translation>Programma is al open</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="194"/>
-        <location filename="../main_window/testing/testing.cpp" line="300"/>
+        <location filename="../main_window/testing/engines/abstract_engine.cpp" line="34"/>
         <source>Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation>Het programma is al een ander niveau aan het testen.
 Wilt ut het huidige testproces afbreken?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="264"/>
+        <location filename="../main_window/testing/testing.cpp" line="172"/>
         <source>World map testing of saved file</source>
         <translation>Wereldkaart testen van opgeslagen bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="265"/>
+        <location filename="../main_window/testing/testing.cpp" line="173"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>Bestand is niet opgeslagen!
 Wilt u het bestand opslaan of wilt u een test uitvoeren op een kopie dat momenteel op de schijf is opgeslagen?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="335"/>
-        <location filename="../main_window/testing/testing.cpp" line="348"/>
+        <location filename="../main_window/testing/engines/abstract_engine.cpp" line="46"/>
         <source>Save file first</source>
         <translation>Sla eerst het bestand op</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="336"/>
-        <location filename="../main_window/testing/testing.cpp" line="349"/>
+        <location filename="../main_window/testing/engines/abstract_engine.cpp" line="47"/>
         <source>To run testing of saved file, please save them into disk first!
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
         <translation>Om een opgeslagen bestand te testen, gelieve het eerst op te slaan op de schijf!
 U kan testen zonder op te slaan met behulp van het menu-item &quot;Niveau Testen (F5)&quot;.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="75"/>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="72"/>
         <source>PGE Engine testing</source>
         <translation>PGE Programma testen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="78"/>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="75"/>
         <source>Don&apos;t show this message again.</source>
         <translation>Dit bericht niet meer weergeven.</translation>
     </message>
@@ -7474,35 +7876,35 @@ Please reload current file to apply result.</source>
 Laad het huidige bestand opnieuw om de wijzigingen te zien.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="151"/>
-        <location filename="../mainwindow.cpp" line="187"/>
-        <location filename="../mainwindow.cpp" line="202"/>
+        <location filename="../mainwindow.cpp" line="147"/>
+        <location filename="../mainwindow.cpp" line="183"/>
+        <location filename="../mainwindow.cpp" line="198"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="195"/>
         <source>Configuration error</source>
         <translation>Configuratiefout</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="156"/>
+        <location filename="../mainwindow.cpp" line="153"/>
         <source>Loading theme...</source>
         <translation>Thema aan het laden...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="167"/>
+        <location filename="../mainwindow.cpp" line="158"/>
         <source>Initializing dock widgets...</source>
         <translation>Dock-widgets aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="177"/>
+        <location filename="../mainwindow.cpp" line="172"/>
         <source>Initalizing plugins...</source>
         <translation>Plugins aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="176"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="188"/>
+        <location filename="../mainwindow.cpp" line="184"/>
         <source>Configuration can&apos;t be loaded:
 %1.
 See %2 for more information.</source>
@@ -7511,14 +7913,14 @@ See %2 for more information.</source>
 Zie %2 voor meer informatie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="203"/>
+        <location filename="../mainwindow.cpp" line="199"/>
         <source>Configuration can&apos;t be loaded.
 See %1 for more information.</source>
         <translation>Configuratie kan niet worden geladen.
 Zie %1 voor meer informatie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="152"/>
+        <location filename="../mainwindow.cpp" line="148"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="196"/>
         <source>Configuration package is loaded with errors.</source>
         <translation>Configuratiepakket is geladen, maar bevat fouten.</translation>
@@ -7583,74 +7985,74 @@ Please save the file first.</source>
 Gelieve het bestand eerst op te slagen.</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="213"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="214"/>
         <source>Default by item</source>
         <translation>Standardiseren volgens voorwerp</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="234"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="235"/>
         <source>Custom...</source>
         <translation>Aangepast...</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="245"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="247"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="246"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="248"/>
         <source>Select</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>Selecteren</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="258"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="260"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="259"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="261"/>
         <source>Erase</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>Wissen</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="271"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="273"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="272"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="274"/>
         <source>Items</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>Voorwerpen</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="284"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="286"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="285"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="287"/>
         <source>Player</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>Speler</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="300"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="302"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="301"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="303"/>
         <source>Section</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>Sectie</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="312"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="314"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="313"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="315"/>
         <source>World settings</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>Wereld instellingen</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="324"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="326"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="325"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="327"/>
         <source>Warps and Doors</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>Portalen en deuren</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="336"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="338"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="337"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="339"/>
         <source>Water</source>
         <comment>Vanilla-like toolbar</comment>
         <translation>Water</translation>
     </message>
     <message>
-        <location filename="../main_window/_settings/defaults.cpp" line="364"/>
-        <location filename="../main_window/_settings/defaults.cpp" line="366"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="365"/>
+        <location filename="../main_window/_settings/defaults.cpp" line="367"/>
         <source>Options</source>
         <translation>Opties</translation>
     </message>
@@ -7668,20 +8070,32 @@ Gelieve het bestand eerst op te slagen.</translation>
 <context>
     <name>MusicFileList</name>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.ui" line="20"/>
+        <location filename="../editing/_dialogs/musicfilelist.cpp" line="33"/>
+        <source>Select SFX file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/musicfilelist.cpp" line="34"/>
+        <source>Please select SFX file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/musicfilelist.cpp" line="47"/>
         <source>Select Custom music</source>
         <translation>Selecteer eigen muziek</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.ui" line="36"/>
-        <location filename="../editing/_dialogs/musicfilelist.ui" line="55"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met muziekbestanden die zich in dezelfde map bevinden als het huidige bestand, evenals eventuele submappen. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <location filename="../editing/_dialogs/musicfilelist.cpp" line="48"/>
+        <source>Please select music file to use as custom</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.ui" line="42"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met muziekbestanden die zich in dezelfde map bevinden als het huidige bestand, evenals eventuele submappen. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+    </message>
+    <message>
         <source>Please, select music file for use as custom</source>
-        <translation>Gelieve uw muziekbestand te selecteren</translation>
+        <translation type="vanished">Gelieve uw muziekbestand te selecteren</translation>
     </message>
 </context>
 <context>
@@ -8025,6 +8439,37 @@ Foutbeschrijving:
         <location filename="../main_window/plugins/pge_editorpluginmanager.cpp" line="46"/>
         <source>%1 at line %2</source>
         <translation>%1 op regel %2</translation>
+    </message>
+</context>
+<context>
+    <name>PgeEngine</name>
+    <message>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="216"/>
+        <source>Test level/world</source>
+        <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="221"/>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in PGE Engine from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="226"/>
+        <source>Start Game</source>
+        <comment>Launch PGE Engine as a normal game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="247"/>
+        <source>Unsupported yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/pge_engine.cpp" line="248"/>
+        <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8724,24 +9169,24 @@ Reden: %1
         <translation>Tegels aan het laden...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="259"/>
+        <location filename="../mainwindow.cpp" line="249"/>
         <source>Bad File</source>
         <translation>Slecht Bestand</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="260"/>
+        <location filename="../mainwindow.cpp" line="250"/>
         <source>Bad file format
 File: %1</source>
         <translation>Slecht bestandsformaat
 Bestand: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="262"/>
+        <location filename="../mainwindow.cpp" line="252"/>
         <source>Line Number: %1</source>
         <translation>Regel Nummer: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="263"/>
+        <location filename="../mainwindow.cpp" line="253"/>
         <source>Line Data: %1</source>
         <translation>Regel Data: %1</translation>
     </message>
@@ -8896,7 +9341,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <translation>Tegelset categoriën aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="515"/>
+        <location filename="../data_configs/data_configs.cpp" line="518"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>
@@ -10903,7 +11348,7 @@ Wilt u uw wijzigingen opslaan?</translation>
 <context>
     <name>dataconfigs</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="285"/>
+        <location filename="../data_configs/data_configs.cpp" line="287"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;

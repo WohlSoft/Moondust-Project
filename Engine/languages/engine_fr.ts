@@ -4,82 +4,82 @@
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="363"/>
+        <location filename="../common_features/crash_handler.cpp" line="371"/>
         <source>Unhandled exception!</source>
         <translation>Exception non gérée !</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="365"/>
+        <location filename="../common_features/crash_handler.cpp" line="373"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
         <translation>Le moteur a planté en raison d&apos;une exception non gérée !</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="377"/>
+        <location filename="../common_features/crash_handler.cpp" line="385"/>
         <source>Out of memory!</source>
         <translation>Mémoire insuffisante !</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="379"/>
+        <location filename="../common_features/crash_handler.cpp" line="387"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
         <translation>Le moteur a planté en raison d&apos;une mémoire insuffisante ! Essayez de fermer d&apos;autres applications et redémarrez le jeu.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="415"/>
+        <location filename="../common_features/crash_handler.cpp" line="423"/>
         <source>Time out!</source>
         <translation>Temps écoulé !</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="417"/>
+        <location filename="../common_features/crash_handler.cpp" line="425"/>
         <source>Engine has abourted because alarm() time out!</source>
         <translation>Le moteur s&apos;est interrompu car le signal alarm() s&apos;est écoulé !</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="462"/>
+        <location filename="../common_features/crash_handler.cpp" line="470"/>
         <source>Physical memory address error!</source>
         <translation>Erreur d&apos;adresse mémoire physique !</translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="464"/>
+        <location filename="../common_features/crash_handler.cpp" line="472"/>
         <source>Engine has crashed because a physical memory address error</source>
         <translation>Le moteur a planté en raison d&apos;une erreur d&apos;adresse de mémoire physique</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="481"/>
+        <location filename="../common_features/crash_handler.cpp" line="489"/>
         <source>Wrong CPU Instruction!</source>
         <translation>Mauvaise instruction CPU !</translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="483"/>
+        <location filename="../common_features/crash_handler.cpp" line="491"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
         <translation>Le moteur a planté en raison d&apos;une mauvaise instruction CPU</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="538"/>
+        <location filename="../common_features/crash_handler.cpp" line="546"/>
         <source>Wrong arithmetical operation</source>
         <translation>Mauvaise opération arithmétique</translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="540"/>
+        <location filename="../common_features/crash_handler.cpp" line="548"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
         <translation>Le moteur a planté en raison d&apos;une mauvaise opération arithmétique !</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="552"/>
+        <location filename="../common_features/crash_handler.cpp" line="560"/>
         <source>Aborted</source>
         <translation>Abandon</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="554"/>
+        <location filename="../common_features/crash_handler.cpp" line="562"/>
         <source>Engine has been aborted because critical error was occouped.</source>
         <translation>Le moteur a été interrompu car une erreur critique s&apos;est produite.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="599"/>
+        <location filename="../common_features/crash_handler.cpp" line="607"/>
         <source>Segmentation fault</source>
         <translation>Erreur de segmentation</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="603"/>
+        <location filename="../common_features/crash_handler.cpp" line="611"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
@@ -88,12 +88,12 @@ Exécutez le débogage avec une application intégrée en mode de débogage
 et recommencez vos dernières actions pour obtenir des informations plus détaillées.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="612"/>
+        <location filename="../common_features/crash_handler.cpp" line="620"/>
         <source>Interrupt</source>
         <translation>Interrompu</translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="614"/>
+        <location filename="../common_features/crash_handler.cpp" line="622"/>
         <source>Engine has been interrupted</source>
         <translation>Le moteur a été interrompu</translation>
     </message>
@@ -168,40 +168,40 @@ Cependant vous pouvez utiliser le même lien pour obtenir un version plus récen
         <translation>Un erreur s&apos;est produite dans le fichier main.ini à la ligne %1.</translation>
     </message>
     <message id="CONFIG_SELECT">
-        <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="60"/>
+        <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="61"/>
         <source>Choose a game:</source>
         <translation>Sélectionner un jeu :</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="116"/>
+        <location filename="../main.cpp" line="680"/>
         <source>Unable to init SDL!</source>
         <translation>Impossible d&apos;initialiser SDL !</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="177"/>
+        <location filename="../main.cpp" line="741"/>
         <source>Config packs not found</source>
         <translation>Paquets de configuration introuvables</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="180"/>
+        <location filename="../main.cpp" line="744"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>Impossible de lancer le jeu, car les
 paquets de configuration sont introuvables !</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="190"/>
+        <location filename="../main.cpp" line="754"/>
         <source>Choose a game to test:</source>
         <translation>Sélectionner un jeu à tester :</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="417"/>
-        <location filename="../main.cpp" line="561"/>
+        <location filename="../main.cpp" line="286"/>
+        <location filename="../main.cpp" line="452"/>
         <source>No opened files</source>
         <translation>Aucun fichier ouvert</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="432"/>
+        <location filename="../main.cpp" line="307"/>
         <source>ERROR:
 Fail to start world map
 
@@ -212,26 +212,26 @@ Fail to start world map
 %1</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="450"/>
+        <location filename="../main.cpp" line="325"/>
         <source>World map was closed with error.
 %1</source>
         <translation>La carte de monde a été fermée avec des erreurs.
 %1</translation>
     </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="467"/>
+        <location filename="../main.cpp" line="343"/>
         <source>Start level
 %1</source>
         <translation>Démarrer le niveau
 %1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="469"/>
+        <location filename="../main.cpp" line="345"/>
         <source>Type an exit code (signed integer)</source>
         <translation>Tapez un code de sortie (entier signé)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="639"/>
+        <location filename="../main.cpp" line="532"/>
         <source>Warp exit
 
 Exit into:
@@ -246,53 +246,53 @@ Sortie vers :
 Point d&apos;entrée N° : %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="698"/>
+        <location filename="../main.cpp" line="601"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Le niveau s&apos;est fermé avec une erreur.
 %1</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="550"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="302"/>
+        <location filename="../scenes/scene_world.cpp" line="551"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="303"/>
         <source>Invalid playable character ID</source>
         <translation>ID de personnage jouable invalide</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="559"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="311"/>
+        <location filename="../scenes/scene_world.cpp" line="560"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="312"/>
         <source>Invalid playable character state ID</source>
         <translation>ID de personnage jouable invalide</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="611"/>
-        <location filename="../scenes/scene_world.cpp" line="638"/>
+        <location filename="../scenes/scene_world.cpp" line="612"/>
+        <location filename="../scenes/scene_world.cpp" line="639"/>
         <source>Pause</source>
         <translation>Mettre en pause</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="619"/>
-        <location filename="../scenes/scene_world.cpp" line="646"/>
+        <location filename="../scenes/scene_world.cpp" line="620"/>
+        <location filename="../scenes/scene_world.cpp" line="647"/>
         <source>Continue</source>
         <translation>Continuer</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="621"/>
+        <location filename="../scenes/scene_world.cpp" line="622"/>
         <source>Save and continue</source>
         <translation>Sauvegarder et continuer</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="623"/>
+        <location filename="../scenes/scene_world.cpp" line="624"/>
         <source>Save and quit</source>
         <translation>Sauvegarder et quitter</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="625"/>
+        <location filename="../scenes/scene_world.cpp" line="626"/>
         <source>Exit without saving</source>
         <translation>Quitter sans sauvegarder</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="648"/>
+        <location filename="../scenes/scene_world.cpp" line="649"/>
         <source>Quit</source>
         <translation>Quitter</translation>
     </message>
@@ -468,7 +468,7 @@ Point d&apos;entrée N° : %2</translation>
         <translation>&lt;niveaux introuvables&gt;</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="436"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="437"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Erreur fatale : Impossible de trouver la section de démarrage.

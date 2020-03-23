@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="es_ES">
 <context>
+    <name>AbstractRuntimeEngine</name>
+    <message>
+        <source>World map testing via IPC is not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map testing is not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This feature is not implemented</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AdditionalSettings</name>
     <message>
         <source>Additional settings</source>
@@ -1310,6 +1325,21 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
         <translation>Ocultar bloques y metaobjetos invisibles</translation>
+    </message>
+</context>
+<context>
+    <name>FileListBrowser</name>
+    <message>
+        <source>Files list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es una lista de archivos de nivel que se encuentran en la misma carpeta que el archivo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Please select a file from the list:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2670,6 +2700,31 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
 </context>
 <context>
+    <name>JsonSettingsWidget</name>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Explorar</translation>
+    </message>
+    <message>
+        <source>Play</source>
+        <translation type="unfinished">Reproducir</translation>
+    </message>
+    <message>
+        <source>[empty]</source>
+        <translation type="unfinished">[vacío]</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Width, shortly</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>H</source>
+        <comment>Height, shortly</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
@@ -3061,7 +3116,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es una lista de archivos de nivel que se encuentran en la misma carpeta que el archivo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es una lista de archivos de nivel que se encuentran en la misma carpeta que el archivo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
@@ -3606,6 +3661,266 @@ That means, impossible to launch level testing on your operating operating. Luna
         <translation>¡%2 no encontrado!
 ¡Usted tiene un SMBX obsoleto!&lt;br&gt;
 Eso significa que es imposible lanzar una prueba de nivel en su sistema operativo. LunaLua se requiere para ejecutar la prueba con SMBX en sistemas operativos no-Windows.</translation>
+    </message>
+</context>
+<context>
+    <name>LunaTesterEngine</name>
+    <message>
+        <source>Test level</source>
+        <comment>Run the LunaTester based level testing.</comment>
+        <translation type="unfinished">Probar nivel</translation>
+    </message>
+    <message>
+        <source>Starts level testing in the legacy engine.
+To have this feature work, latest LunaLUA must be installed.
+Otherwise, it will be very limited.</source>
+        <translation type="unfinished">Comienza las pruebas en el motor clásico.
+Para que funcione, LunaLUA debe estar actualizado.
+De otra manera, estará limitado.</translation>
+    </message>
+    <message>
+        <source>Reset checkpoints</source>
+        <translation type="unfinished">Reiniciar checkpoints</translation>
+    </message>
+    <message>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation type="unfinished">Reiniciar todos los checkpoints a su estado inicial.</translation>
+    </message>
+    <message>
+        <source>Disable OpenGL</source>
+        <comment>Disable OpenGL on LunaTester side</comment>
+        <translation type="unfinished">Deshabilitar OpenGL</translation>
+    </message>
+    <message>
+        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
+        <translation type="unfinished">Deshabilitar OpenGL y usar GDI. Útil si su placa gráfica no soporta OpenGL o LunaLua colapsa al usarlo.</translation>
+    </message>
+    <message>
+        <source>Keep running in background</source>
+        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
+        <translation type="unfinished">Ejecutar en segundo plano</translation>
+    </message>
+    <message>
+        <source>Allows to start level testing very fast after first launch.
+Requires powerful computer, otherwise engine will freeze on next test launch.
+Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
+        <translation type="unfinished">Permite probar el nivel mucho más rapido despues de la primer ejecución.
+Requiere una poderosa computadora, de otra manera el motor se congelará en la siguiente ejecución.
+Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente algún problema al probar.</translation>
+    </message>
+    <message>
+        <source>Terminate frozen loader</source>
+        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
+        <translation type="unfinished">Terminar proceso congelado</translation>
+    </message>
+    <message>
+        <source>Termiates frozen thread to allow you to run a test again.</source>
+        <translation type="unfinished">Finaliza el proceso congelado para volver a comenzar una prueba.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished">Terminar proceso ejecutado</translation>
+    </message>
+    <message>
+        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
+        <translation type="unfinished">Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
+    </message>
+    <message>
+        <source>Select LunaTester path...</source>
+        <comment>Select a path to LunaTester for use.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a path to LunaTester for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch LunaTester as a normal game.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Launch LunaTester as a normal game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
+        <translation type="unfinished">El proceso de pruebas de LunaLUA está en ejecución, ¡intente de nuevo o finalice el proceso!</translation>
+    </message>
+    <message>
+        <source>Are you really want to terminate loader thread?</source>
+        <translation type="unfinished">¿De verdad quiere finalizar el proceso?</translation>
+    </message>
+    <message>
+        <source>Loader thread is not running.</source>
+        <comment>LunaTester thread now doing nothing.
+This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
+        <translation type="unfinished">El proceso no se está ejecutando.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
+        <translation type="unfinished">¿Está seguro de querer cerrar LunaTester? Si está probando un nivel, ¡esto lo terminará inmediatamente!</translation>
+    </message>
+    <message>
+        <source>LunaTester has been successfully closed.</source>
+        <translation type="unfinished">Se terminó el proceso de LunaTester exitosamente.</translation>
+    </message>
+    <message>
+        <source>LunaTester is not running.</source>
+        <translation type="unfinished">LunaTester no está siendo ejecutado.</translation>
+    </message>
+    <message>
+        <source>LunaTester path select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a path to LunaTester:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default LunaTester path, specified by a config pack</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation type="unfinished">Personalizado</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished">Explorar...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Guardar</translation>
+    </message>
+    <message>
+        <source>Select a LunaTester path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checkpoints successfully reseted!</source>
+        <translation type="unfinished">¡Checkpoints reiniciados!</translation>
+    </message>
+    <message>
+        <source>LunaTester error!</source>
+        <translation type="unfinished">¡Error de LunaTester!</translation>
+    </message>
+    <message>
+        <source>LunaLUA tester is not started!</source>
+        <translation type="unfinished">¡Las pruebas no empezaron!</translation>
+    </message>
+    <message>
+        <source>SMBX64 limits are excited!</source>
+        <translation type="unfinished">¡Los límites de SMBX64 fueron sobrepasados!</translation>
+    </message>
+    <message>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Are you want continue process?</source>
+        <translation type="unfinished">¡Violación del formato SMBX64 fue encontrada!
+%1, el motor podría colapsar!
+Se sugiere remover los objetos en exceso.
+¿Desea continuar el proceso?</translation>
+    </message>
+    <message>
+        <source>SMBX Directory wasn&apos;t configured right</source>
+        <translation type="unfinished">El directorio de SMBX no fue configurado correctamente</translation>
+    </message>
+    <message>
+        <source>%1 not found!
+To run testing via SMBX you should have right SMBX Integration configuration package!</source>
+        <translation type="unfinished">¡%1 no encontrado!
+¡Para probar por SMBX debe tener el paquete SMBX Integrado!</translation>
+    </message>
+    <message>
+        <source>SMBX Test is already runned</source>
+        <translation type="unfinished">La prueba de SMBX ya está en ejecución</translation>
+    </message>
+    <message>
+        <source>SMBX Engine is already testing another level.
+Do you want to abort current testing process?</source>
+        <translation type="unfinished">El motor SMBX ya está probando otro nivel.
+¿Desea abortar el proceso de prueba actual?</translation>
+    </message>
+    <message>
+        <source>Vanilla SMBX detected!</source>
+        <translation type="unfinished">¡SMBX estándar detectado!</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
+&lt;br&gt;
+Name of episode to generate: %1&lt;br&gt;
+&lt;br&gt;
+Are you still want to launch a test?&lt;br&gt;
+&lt;br&gt;
+If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
+%3</source>
+        <translation type="unfinished">¡%2 no encontrado!
+¡Usted tiene un SMBX obsoleto!&lt;br&gt;
+Eso significa, imposible ejecutar una prueba automáticamente. Para probar un nivel, se generará un episodio genérico que puede seleccionar manualmente.&lt;br&gt;
+&lt;br&gt;
+Nombre del episodio a generar: %1&lt;br&gt;
+&lt;br&gt;
+¿Aún desea ejecutar una prueba?&lt;br&gt;
+&lt;br&gt;
+Si desea tener pruebas de forma completa, necesita obtener LunaLUA de acá:&lt;br&gt;
+%3</translation>
+    </message>
+    <message>
+        <source>File save error</source>
+        <translation type="unfinished">Error de escritura</translation>
+    </message>
+    <message>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation type="unfinished">No se puede escribir archivo %1:
+%2.</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation type="unfinished">¡%2 no encontrado!
+¡Usted tiene un SMBX obsoleto!&lt;br&gt;
+Eso significa que es imposible lanzar una prueba de nivel en su sistema operativo. LunaLua se requiere para ejecutar la prueba con SMBX en sistemas operativos no-Windows.</translation>
+    </message>
+    <message>
+        <source>LunaTesterEngine error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to send level into LunaLUA-SMBX!</source>
+        <translation type="unfinished">¡Error al enviar nivel a LunaLUA-SMBX!</translation>
+    </message>
+    <message>
+        <source>LunaTester error</source>
+        <translation type="unfinished">Error de LunaTester</translation>
+    </message>
+    <message>
+        <source>Impossible to launch SMBX Engine, because %1</source>
+        <translation type="unfinished">Imposible ejecutar motor SMBX, porque %1</translation>
+    </message>
+    <message>
+        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
+        <translation type="unfinished">El directorio en Motor clásico no se configuró correctamente</translation>
+    </message>
+    <message>
+        <source>%1 not found!
+To use LunaTester you should have right Integration configuration package!</source>
+        <translation type="unfinished">¡%1 no hallado!
+¡Para usar LunaTester debería tener un paquete de configuración de Integración correcto!</translation>
+    </message>
+    <message>
+        <source>Impossible to launch Legacy Engine, because %1</source>
+        <translation type="unfinished">Imposible lanzar el motor SMBX, porque %1</translation>
     </message>
 </context>
 <context>
@@ -7144,7 +7459,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Test world map (Alpha)</source>
-        <translation>Probar mapamundi (Alfa)</translation>
+        <translation type="vanished">Probar mapamundi (Alfa)</translation>
     </message>
     <message>
         <source>Lock tiles</source>
@@ -7237,7 +7552,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Test level (Alpha)</source>
-        <translation>Ejecutar prueba &lt;Alpha&gt;</translation>
+        <translation type="vanished">Ejecutar prueba &lt;Alpha&gt;</translation>
     </message>
     <message>
         <source>Testing options...</source>
@@ -7257,7 +7572,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Start Engine</source>
-        <translation>Iniciar motor</translation>
+        <translation type="vanished">Iniciar motor</translation>
     </message>
     <message>
         <source>Launch game engine application.</source>
@@ -8718,6 +9033,22 @@ See %2 for more information.</source>
 %1.
 Consulte %2 para obtener más información.</translation>
     </message>
+    <message>
+        <source>Test level</source>
+        <translation type="unfinished">Probar nivel</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test world map</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;no extra settings&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -8727,11 +9058,11 @@ Consulte %2 para obtener más información.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es una lista de archivos de música localizados en la misma carpeta que el archivo actual, así como cualquier subdirectorio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es una lista de archivos de música localizados en la misma carpeta que el archivo actual, así como cualquier subdirectorio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select music file for use as custom</source>
-        <translation>Por favor, seleccionar archivo para usarlo como personalizado</translation>
+        <translation type="vanished">Por favor, seleccionar archivo para usarlo como personalizado</translation>
     </message>
     <message>
         <source>Too many subfolders</source>
@@ -8741,6 +9072,18 @@ Consulte %2 para obtener más información.</translation>
         <source>If you contunue this operation, application can be frozen.
 Do you want to continue?</source>
         <translation type="vanished">Si continúa esta operación, la aplicación se congelará. ¿Desea Continuar?</translation>
+    </message>
+    <message>
+        <source>Select SFX file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select SFX file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select music file to use as custom</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9069,6 +9412,32 @@ Descripción del error:
     <message>
         <source>%1 at line %2</source>
         <translation>%1 en línea %2</translation>
+    </message>
+</context>
+<context>
+    <name>PgeEngine</name>
+    <message>
+        <source>Test level/world</source>
+        <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in PGE Engine from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch PGE Engine as a normal game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
