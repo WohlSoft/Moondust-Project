@@ -22,6 +22,7 @@
 
 #include <QProcess>
 #include <QMutex>
+#include <networking/engine_intproc.h>
 
 #include "abstract_engine.h"
 
@@ -32,15 +33,17 @@ class TheXTechEngine : public AbstractRuntimeEngine
     Q_OBJECT
 
     //! Engine application handler
-    QProcess engine_proc;
+    QProcess m_engineProc;
     //! Mutex which helps to avoid multiple launches of engine
-    QMutex   engine_mutex;
+    QMutex   m_engineMutex;
 
     MainWindow *m_w = nullptr;
     //! List of registered menu items
     QAction *m_menuItems[7];
     //! Path to custom TheXTech executable
     QString m_customEnginePath;
+
+    IntEngine interface;
 
     QString getEnginePath();
 

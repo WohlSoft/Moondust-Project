@@ -549,7 +549,7 @@ void DevConsole::doSendCheat(const QStringList &args)
     src.replace('\n', ' ');
     src.replace("\\n", "\n");
 
-    if(IntEngine::sendMessageBox(src))
+    if(g_intEngine.sendMessageBox(src))
         log(QString("-> command sent"), ui->tabWidget->tabText(0));
     else
         log(QString("-> Fail to send command: engine is not running"), ui->tabWidget->tabText(0));

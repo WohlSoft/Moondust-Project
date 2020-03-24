@@ -78,7 +78,7 @@ void LocalServer::exec()
     {
         {
             PGE_SemaphoreLocker semaLock(&m_sema);
-            Q_UNUSED(semaLock);
+            Q_UNUSED(semaLock)
             typedef char *pchar;
             typedef int  *pint;
             char *inData = pchar(m_shmem.data());
@@ -87,8 +87,8 @@ void LocalServer::exec()
                 char out[4095 - sizeof(int)];
                 int  size = *pint(inData + 1);
                 size = qMin(size, int(4095 - sizeof(int)));
-                memcpy(out, inData + 1 + sizeof(int), size);
-                memset(m_shmem.data(), 0, 4096);
+                std::memcpy(out, inData + 1 + sizeof(int), size_t(size));
+                std::memset(m_shmem.data(), 0, 4096);
                 QMetaObject::invokeMethod(this,
                                           "slotOnData",
                                           Qt::QueuedConnection,
@@ -162,6 +162,7 @@ void LocalServer::onCMD(QString data)
         IPCCMD cmdID = IPCCMD(m_commands.key(cmd, int(IPCCMD::Unknown)));
 
         if((cmdID == IPCCMD::EngineClosed) || (MainWinConnect::pMainWin->m_isAppInited))
+        {
             switch(cmdID)
             {
             case IPCCMD::ShowUP:
@@ -179,17 +180,18 @@ void LocalServer::onCMD(QString data)
                 qApp->setActiveWindow(MainWinConnect::pMainWin);
                 break;
             }
-            case IPCCMD::ConnectToEngine:
-            {
-                IntEngine::sendLevelBuffer();
-                MainWinConnect::pMainWin->showMinimized();
-                break;
-            }
-            case IPCCMD::EngineClosed:
-            {
-                IntEngine::quit();
-                break;
-            }
+// DEPRECATED
+//            case IPCCMD::ConnectToEngine:
+//            {
+//                IntEngine::sendLevelBuffer();
+//                MainWinConnect::pMainWin->showMinimized();
+//                break;
+//            }
+//            case IPCCMD::EngineClosed:
+//            {
+//                IntEngine::quit();
+//                break;
+//            }
             case IPCCMD::TestSetup:
             {
                 QStringList args = argsPart.split(',');
@@ -220,9 +222,10 @@ void LocalServer::onCMD(QString data)
             }
             default:
                 emit acceptedCommand(data);
+                break;
             }
+        }
     }
     else
         emit acceptedCommand(data);
-
 }

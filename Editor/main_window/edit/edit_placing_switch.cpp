@@ -168,8 +168,9 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
             ui->actionFill->setChecked(false);
             ui->actionFill->setEnabled(true);
 
+            break;
         default:
-            ;
+            break;
         }
 
         Placing_ShowProperties_lastType = itemType;
@@ -190,17 +191,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                                              dont_reset_props,
                                              GlobalSettings::Placing_dontShowPropertiesBox);
 
-                if(IntEngine::isWorking())
-                {
-                    LevelData buffer;
-                    FileFormats::CreateLevelData(buffer);
-                    buffer.blocks.push_back(LvlPlacingItems::blockSet);
-                    buffer.layers.clear();
-                    buffer.events.clear();
-                    QString encoded;
-                    if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
-                        IntEngine::sendItemPlacing("BLOCK_PLACE\nBLOCK_PLACE_END\n" + encoded);
-                }
+                g_intEngine.sendPlacingBlock(LvlPlacingItems::blockSet);
                 break;
             }
             case ItemTypes::LVL_BGO:
@@ -212,18 +203,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                                            dont_reset_props,
                                            GlobalSettings::Placing_dontShowPropertiesBox);
 
-                if(IntEngine::isWorking())
-                {
-                    LevelData buffer;
-                    FileFormats::CreateLevelData(buffer);
-                    buffer.bgo.push_back(LvlPlacingItems::bgoSet);
-                    buffer.layers.clear();
-                    buffer.events.clear();
-                    QString encoded;
-                    if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
-                        IntEngine::sendItemPlacing("BGO_PLACE\nBGO_PLACE_END\n" + encoded);
-                }
-
+                g_intEngine.sendPlacingBGO(LvlPlacingItems::bgoSet);
                 break;
             }
             case ItemTypes::LVL_NPC:
@@ -240,20 +220,11 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                                            dont_reset_props,
                                            GlobalSettings::Placing_dontShowPropertiesBox);
 
-                if(IntEngine::isWorking())
-                {
-                    LevelData buffer;
-                    FileFormats::CreateLevelData(buffer);
-                    buffer.npc.push_back(LvlPlacingItems::npcSet);
-                    buffer.layers.clear();
-                    buffer.events.clear();
-                    QString encoded;
-                    if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
-                        IntEngine::sendItemPlacing("NPC_PLACE\nNPC_PLACE_END\n" + encoded);
-                }
-
+                g_intEngine.sendPlacingNPC(LvlPlacingItems::npcSet);
                 break;
             }
+            default:
+                break;
             }
             qApp->setActiveWindow(this);
             raise();

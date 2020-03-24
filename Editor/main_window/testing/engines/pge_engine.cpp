@@ -165,13 +165,15 @@ void PgeEngine::init()
 
     m_w = w;
 
-    QObject::connect(&engine_proc, SIGNAL(finished(int, QProcess::ExitStatus)),
+    QObject::connect(&m_engineProc, SIGNAL(finished(int, QProcess::ExitStatus)),
                      this, SLOT(testFinished()));
+    interface.init(&m_engineProc);
 }
 
 void PgeEngine::unInit()
 {
     this->terminate();
+    interface.quit();
 }
 
 void PgeEngine::initMenu(QMenu *destmenu)
@@ -299,13 +301,11 @@ bool PgeEngine::doTestLevelIPC(const LevelData &d)
 
     QString command;
 
-    QMutexLocker mlocker(&engine_mutex);
+    QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
 
     if(!findEngine(m_w, command))
         return false;
-
-    IntEngine::init(&engine_proc);
 
     LevelData data = d;
 
@@ -336,11 +336,11 @@ bool PgeEngine::doTestLevelIPC(const LevelData &d)
         args << "--debug-print=no";
 
     edit->prepareLevelFile(data);
-    IntEngine::setTestLvlBuffer(data);
+    interface.setTestLvlBuffer(data);
 
     qDebug() << "Executing engine..." << command;
-    engine_proc.start(command, args);
-    if(engine_proc.waitForStarted())
+    m_engineProc.start(command, args);
+    if(m_engineProc.waitForStarted())
     {
         qDebug() << "Started";
         testStarted();
@@ -363,7 +363,7 @@ bool PgeEngine::doTestLevelFile(const QString &levelFile)
 
     QString command = ApplicationPath + QStringLiteral("/") + PGE_ENGINE_EXE;
 
-    QMutexLocker mlocker(&engine_mutex);
+    QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
 
     if(!findEngine(m_w, command))
@@ -391,8 +391,8 @@ bool PgeEngine::doTestLevelFile(const QString &levelFile)
 
     args << levelFile;
 
-    engine_proc.start(command, args);
-    if(engine_proc.waitForStarted())
+    m_engineProc.start(command, args);
+    if(m_engineProc.waitForStarted())
     {
         testStarted();
         return true;
@@ -411,7 +411,7 @@ bool PgeEngine::doTestWorldFile(const QString &worldFile)
 
     QString command = ApplicationPath + QStringLiteral("/") + PGE_ENGINE_EXE;
 
-    QMutexLocker mlocker(&engine_mutex);
+    QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
 
     if(!findEngine(m_w, command))
@@ -439,8 +439,8 @@ bool PgeEngine::doTestWorldFile(const QString &worldFile)
 
     args << worldFile;
 
-    engine_proc.start(command, args);
-    if(engine_proc.waitForStarted())
+    m_engineProc.start(command, args);
+    if(m_engineProc.waitForStarted())
     {
         testStarted();
         return true;
@@ -454,7 +454,7 @@ bool PgeEngine::runNormalGame()
     Q_ASSERT(m_w);
     QString command = ApplicationPath + QStringLiteral("/") + PGE_ENGINE_EXE;
 
-    QMutexLocker mlocker(&engine_mutex);
+    QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
 
     if(!findEngine(m_w, command))
@@ -474,13 +474,13 @@ bool PgeEngine::runNormalGame()
 
 void PgeEngine::terminate()
 {
-    engine_proc.terminate();
-    engine_proc.close();
+    m_engineProc.terminate();
+    m_engineProc.close();
 }
 
 bool PgeEngine::isRunning()
 {
-    return (engine_proc.state() == QProcess::Running);
+    return (m_engineProc.state() == QProcess::Running);
 }
 
 int PgeEngine::capabilities()

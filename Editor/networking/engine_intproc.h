@@ -22,8 +22,27 @@
 
 #include <QObject>
 #include <QProcess>
+#include <PGE_File_Formats/lvl_filedata.h>
 
 struct LevelData;
+
+class IntEngineSignals : public QObject
+{
+    Q_OBJECT
+public:
+    explicit IntEngineSignals(QObject *parent = nullptr);
+    ~IntEngineSignals();
+
+signals:
+    bool sendCheat(QString _args);
+    bool sendMessageBox(QString _args);
+    void sendPlacingBlock(const LevelBlock &block);
+    void sendPlacingBGO(const LevelBGO &bgo);
+    void sendPlacingNPC(const LevelNPC &npc);
+};
+
+extern IntEngineSignals g_intEngine;
+
 
 class IntEngine: public QObject
 {
@@ -31,22 +50,28 @@ class IntEngine: public QObject
 public:
     IntEngine();
     ~IntEngine() override = default;
-    static void init(QProcess *engine_proc);
 
-    static void quit();
-    static bool isWorking();
+    void init(QProcess *engine);
+    void quit();
 
-    static bool sendCheat(QString _args);
-    static bool sendMessageBox(QString _args);
-    static bool sendItemPlacing(QString _args);
-    static void sendLevelBuffer();
+    bool isWorking();
 
-    static void setTestLvlBuffer(LevelData &buffer);
+    bool sendCheat(QString _args);
+    bool sendMessageBox(QString _args);
 
-    static bool sendMessage(const char *msg);
-    static bool sendMessage(QString &msg);
+    void sendPlacingBlock(const LevelBlock &block);
+    void sendPlacingBGO(const LevelBGO &bgo);
+    void sendPlacingNPC(const LevelNPC &npc);
 
-    static LevelData testBuffer;
+    void sendLevelBuffer();
+
+    void setTestLvlBuffer(LevelData &buffer);
+
+    bool sendMessage(const char *msg);
+    bool sendMessage(QString &msg);
+
+    LevelData testBuffer;
+
 signals:
     void engineInputMsg(QString msg);
 
@@ -54,7 +79,9 @@ private slots:
     void onData();
 
 private:
-    static QProcess *engine;
+    bool sendItemPlacing(QString _args);
+
+    QProcess *m_engine = nullptr;
 };
 
 #endif // ENGINE_INTPROCINTPROC_H

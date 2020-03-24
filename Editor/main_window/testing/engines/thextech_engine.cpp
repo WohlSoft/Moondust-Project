@@ -215,8 +215,9 @@ void TheXTechEngine::init()
 
     m_w = w;
 
-    QObject::connect(&engine_proc, SIGNAL(finished(int, QProcess::ExitStatus)),
+    QObject::connect(&m_engineProc, SIGNAL(finished(int, QProcess::ExitStatus)),
                      this, SLOT(testFinished()));
+    interface.init(&m_engineProc);
 
     loadSetup();
 }
@@ -224,6 +225,7 @@ void TheXTechEngine::init()
 void TheXTechEngine::unInit()
 {
     this->terminate();
+    interface.quit();
     saveSetup();
 }
 
@@ -303,10 +305,8 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
 
     QString command = getEnginePath();
 
-    QMutexLocker mlocker(&engine_mutex);
+    QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
-
-    IntEngine::init(&engine_proc);
 
     LevelData data = d;
 
@@ -340,11 +340,11 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
     if(t.xtra_showFPS) args << "--show-fps";
 
     edit->prepareLevelFile(data);
-    IntEngine::setTestLvlBuffer(data);
+    interface.setTestLvlBuffer(data);
 
     qDebug() << "Executing engine..." << command;
-    engine_proc.start(command, args);
-    if(engine_proc.waitForStarted())
+    m_engineProc.start(command, args);
+    if(m_engineProc.waitForStarted())
     {
         qDebug() << "Started";
         testStarted();
@@ -366,7 +366,7 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
 
     QString command = getEnginePath();
 
-    QMutexLocker mlocker(&engine_mutex);
+    QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
 
     QStringList args;
@@ -391,8 +391,8 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
 
     args << "-l" << levelFile;
 
-    engine_proc.start(command, args);
-    if(engine_proc.waitForStarted())
+    m_engineProc.start(command, args);
+    if(m_engineProc.waitForStarted())
     {
         testStarted();
         return true;
@@ -409,7 +409,7 @@ bool TheXTechEngine::runNormalGame()
     Q_ASSERT(m_w);
     QString command = getEnginePath();
 
-    QMutexLocker mlocker(&engine_mutex);
+    QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
 
 //    QStringList args;
@@ -426,13 +426,13 @@ bool TheXTechEngine::runNormalGame()
 
 void TheXTechEngine::terminate()
 {
-    engine_proc.terminate();
-    engine_proc.close();
+    m_engineProc.terminate();
+    m_engineProc.close();
 }
 
 bool TheXTechEngine::isRunning()
 {
-    return (engine_proc.state() == QProcess::Running);
+    return (m_engineProc.state() == QProcess::Running);
 }
 
 int TheXTechEngine::capabilities()
@@ -455,4 +455,3 @@ void TheXTechEngine::testFinished()
     Q_ASSERT(m_w);
     m_w->testingFinished();
 }
-
