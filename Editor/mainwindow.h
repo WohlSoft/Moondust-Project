@@ -1110,12 +1110,17 @@ public:
     private:
         friend class PgeEngine;
         friend class LunaTesterEngine;
+        friend class TheXTechEngine;
         //! Default testing engine
         AbstractRuntimeEngine *m_testEngine;
+        //! All available engines
+        QVector<std::unique_ptr<AbstractRuntimeEngine> *> m_testAllEngines;
         //! PGE Engine
         std::unique_ptr<AbstractRuntimeEngine> m_testPGE;
         //! LunaTester
         std::unique_ptr<AbstractRuntimeEngine> m_testLunaTester;
+        //! TheXTech
+        std::unique_ptr<AbstractRuntimeEngine> m_testTheXTech;
 
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Plugins////////////////////////////////////////

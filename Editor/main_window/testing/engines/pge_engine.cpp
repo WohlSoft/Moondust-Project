@@ -494,6 +494,7 @@ int PgeEngine::capabilities()
 
 void PgeEngine::testStarted()
 {
+    Q_ASSERT(m_w);
     //Stop music playback in the PGE Editor!
     m_w->stopMusicForTesting();
 }

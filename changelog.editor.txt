@@ -24,6 +24,8 @@ Editor 0.3.2-dev
 - Fixed unnecessary music enabling bug on a world map
 - Added "is-meta-object" element option in a config pack to hide elements from exported images or from the game entirely
 - Added French translation by NathanBnm
+- Reworked a testing sub-system to make it be more modular
+- Added a level testing integration with the TheXTech engine
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu

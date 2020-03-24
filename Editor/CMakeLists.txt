@@ -400,6 +400,7 @@ list(APPEND PGE_EDITOR_SRCS
     main_window/testing/engines/abstract_engine.cpp
     main_window/testing/engines/pge_engine.cpp
     main_window/testing/engines/luna_tester_engine.cpp
+    main_window/testing/engines/thextech_engine.cpp
     main_window/tip_of_day/tip_of_day.cpp
     main_window/tools/app_settings.cpp
     main_window/tools/data_configs_mgr.cpp

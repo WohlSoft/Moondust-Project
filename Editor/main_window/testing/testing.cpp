@@ -41,6 +41,7 @@
 
 #include "engines/pge_engine.h"
 #include "engines/luna_tester_engine.h"
+#include "engines/thextech_engine.h"
 
 
 void MainWindow::initTesting()
@@ -49,6 +50,7 @@ void MainWindow::initTesting()
 
     m_testPGE.reset(new PgeEngine(this));
     m_testPGE->init();
+    m_testAllEngines.push_back(&m_testPGE);
     if(!ConfStatus::SmbxTest_HidePgeEngine)
     {
         ui->sepEngineExtras->setVisible(false);
@@ -68,8 +70,28 @@ void MainWindow::initTesting()
         menuNext = sep;
     }
 
+    m_testTheXTech.reset(new TheXTechEngine(this));
+    m_testTheXTech->init();
+    m_testAllEngines.push_back(&m_testTheXTech);
+    if(!ConfStatus::SmbxTest_HidePgeEngine)
+    {
+        ui->sepEngineExtras->setVisible(false);
+        QIcon theXTech;
+
+        QMenu *theXTechMenu = ui->menuTest->addMenu(theXTech, "TheXTech");
+        ui->menuTest->insertMenu(menuNext, theXTechMenu);
+
+        m_testTheXTech->initMenu(theXTechMenu);
+
+        QAction *sep = theXTechMenu->addSeparator();
+        ui->menuTest->insertAction(menuNext, sep);
+
+        menuNext = sep;
+    }
+
     m_testLunaTester.reset(new LunaTesterEngine(this));
     m_testLunaTester->init();
+    m_testAllEngines.push_back(&m_testLunaTester);
     {
         ui->sepEngineExtras->setVisible(false);
         QIcon lunaIcon(":/lunalua.ico");
@@ -97,16 +119,10 @@ void MainWindow::initTesting()
 
 void MainWindow::closeTesting()
 {
-    if(m_testPGE.get())
+    for(auto *e : m_testAllEngines)
     {
-        m_testPGE->unInit();
-        m_testPGE.reset();
-    }
-
-    if(m_testLunaTester.get())
-    {
-        m_testLunaTester->unInit();
-        m_testLunaTester.reset();
+        (*e)->unInit();
+        (*e).reset();
     }
 }
 
