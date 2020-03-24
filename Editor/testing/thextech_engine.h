@@ -39,11 +39,25 @@ class TheXTechEngine : public AbstractRuntimeEngine
 
     MainWindow *m_w = nullptr;
     //! List of registered menu items
-    QAction *m_menuItems[7];
+    QAction *m_menuItems[20];
+
+    /************** Settings **************/
     //! Path to custom TheXTech executable
     QString m_customEnginePath;
+    //! Enable magic-hand functionality (IPC mode only)
+    bool    m_enableMagicHand = true;
+    //! Enable magic-hand functionality (IPC mode only)
+    bool    m_enableMaxFps = false;
+    //! Enable ability of player to grab everything
+    bool    m_enableGrabAll = false;
+    //! Renderer type
+    int     m_renderType = -1;
+    //! Start game in battle mode
+    bool    m_battleMode = false;
+    /************** Settings **************/
 
-    IntEngine interface;
+
+    PgeEngineIpcClient interface;
 
     QString getEnginePath();
 
@@ -57,6 +71,7 @@ public slots:
     /********Menu items*******/
     void startTestAction();
     void startSafeTestAction();
+    void startBattleTestAction();
     void chooseEnginePath();
     void startGameAction();
 public:

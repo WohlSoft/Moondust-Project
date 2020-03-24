@@ -88,6 +88,7 @@ void TheXTechEngine::startTestAction()
         if(!edit)
             return;
 
+        m_battleMode = false;
         doTestLevelIPC(edit->LvlData);
     }
 }
@@ -109,7 +110,24 @@ void TheXTechEngine::startSafeTestAction()
             return;
         }
 
+        m_battleMode = false;
         doTestLevelFile(edit->curFile);
+    }
+}
+
+void TheXTechEngine::startBattleTestAction()
+{
+    if(!AbstractRuntimeEngine::checkIsEngineRunning(this, m_w))
+        return;
+
+    if(m_w->activeChildWindow() == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = m_w->activeLvlEditWin();
+        if(!edit)
+            return;
+
+        m_battleMode = true;
+        doTestLevelIPC(edit->LvlData);
     }
 }
 
@@ -232,23 +250,67 @@ void TheXTechEngine::unInit()
 void TheXTechEngine::initMenu(QMenu *destmenu)
 {
     size_t menuItemId = 0;
-    QAction *RunLevelTest;
     {
-        RunLevelTest = destmenu->addAction("runTesting");
+        QAction *RunLevelTest = destmenu->addAction("runTesting");
         QObject::connect(RunLevelTest,   &QAction::triggered,
                     this,               &TheXTechEngine::startTestAction,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = RunLevelTest;
     }
-
-    QAction *RunLevelSafeTest;
     {
-        RunLevelSafeTest = destmenu->addAction("runSafeTesting");
+        QAction *RunBattleLevelTest = destmenu->addAction("runBattleTest");
+        QObject::connect(RunBattleLevelTest,   &QAction::triggered,
+                    this,               &TheXTechEngine::startBattleTestAction,
+                    Qt::QueuedConnection);
+        m_menuItems[menuItemId++] = RunBattleLevelTest;
+    }
+    {
+        QAction *RunLevelSafeTest = destmenu->addAction("runSafeTesting");
         QObject::connect(RunLevelSafeTest,   &QAction::triggered,
                     this,               &TheXTechEngine::startSafeTestAction,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = RunLevelSafeTest;
     }
+
+
+    {
+        destmenu->addSeparator();
+        QAction *enableMagicHand;
+        enableMagicHand = destmenu->addAction("enableMagicHand");
+        enableMagicHand->setCheckable(true);
+        enableMagicHand->setChecked(m_enableMagicHand);
+        QObject::connect(enableMagicHand,   &QAction::toggled,
+                    [this](bool state)
+        {
+            m_enableMagicHand = state;
+        });
+        m_menuItems[menuItemId++] = enableMagicHand;
+    }
+    {
+        QAction *enableMaxFps;
+        enableMaxFps = destmenu->addAction("enableMaxFps");
+        enableMaxFps->setCheckable(true);
+        enableMaxFps->setChecked(m_enableMaxFps);
+        QObject::connect(enableMaxFps,   &QAction::toggled,
+                    [this](bool state)
+        {
+            m_enableMaxFps = state;
+        });
+        m_menuItems[menuItemId++] = enableMaxFps;
+    }
+    {
+        QAction *enableGrabAll;
+        enableGrabAll = destmenu->addAction("enableGrabAll");
+        enableGrabAll->setCheckable(true);
+        enableGrabAll->setChecked(m_enableGrabAll);
+        QObject::connect(enableGrabAll,   &QAction::toggled,
+                    [this](bool state)
+        {
+            m_enableGrabAll = state;
+        });
+        m_menuItems[menuItemId++] = enableGrabAll;
+    }
+
 
     {
         destmenu->addSeparator();
@@ -281,9 +343,38 @@ void TheXTechEngine::retranslateMenu()
     }
     {
         QAction *RunLunaTest = m_menuItems[menuItemId++];
+        RunLunaTest->setText(tr("Test level in battle mode",
+                                "Run a battle testing of current file in TheXTech via interprocessing tunnel."));
+    }
+    {
+        QAction *RunLunaTest = m_menuItems[menuItemId++];
         RunLunaTest->setText(tr("Test saved level",
                                 "Run the testing of current file in TheXTech from disk."));
     }
+
+    {
+        QAction *enableMagicHand = m_menuItems[menuItemId++];
+        enableMagicHand->setText(tr("Enable magic hand",
+                                "Allow real-time picking-up of elements while playing a level test."));
+        enableMagicHand->setToolTip(tr("Allows real-time editing: picking-up elements from a level scene, "
+                                       "placing new elements, selected at back in the editor, and erasing. "
+                                       "Doesn't works when running a test of a saved file."));
+    }
+    {
+        QAction *enableMagicHand = m_menuItems[menuItemId++];
+        enableMagicHand->setText(tr("Enable max FPS",
+                                "When running non-vsync, run game with a maximum possible frame-rate"));
+        enableMagicHand->setToolTip(tr("When playing a game without V-Sync, run a game with a maximum possible frame-rate."));
+    }
+    {
+        QAction *enableMagicHand = m_menuItems[menuItemId++];
+        enableMagicHand->setText(tr("Enable grab all",
+                                "Allow player to grab absolutely any NPCs in a game."));
+        enableMagicHand->setToolTip(tr("Allow player to grab any NPCs in a game."));
+    }
+
+
+
     {
         QAction *chooseEnginePath = m_menuItems[menuItemId++];
         chooseEnginePath->setText(tr("Select TheXTech path...",
@@ -319,7 +410,8 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
 //    args << "--debug";
 //    args << "--config=\"" + m_w->configs.config_dir + "\"";
     args << "--interprocessing";//activeLvlEditWin()->curFile;
-    args << "--magic-hand";
+    if(m_enableMagicHand) args << "--magic-hand";
+    if(m_battleMode) args << "--battle";
 
     args << "--never-pause";
 
@@ -338,6 +430,8 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
 
     if(t.xtra_god) args << "--god-mode";
     if(t.xtra_showFPS) args << "--show-fps";
+    if(m_enableMaxFps) args << "--max-fps";
+    if(m_enableGrabAll) args << "--grab-all";
 
     edit->prepareLevelFile(data);
     interface.setTestLvlBuffer(data);
@@ -388,6 +482,8 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
 
     if(t.xtra_god) args << "--god-mode";
     if(t.xtra_showFPS) args << "--show-fps";
+    if(m_enableMaxFps) args << "--max-fps";
+    if(m_enableGrabAll) args << "--grab-all";
 
     args << "-l" << levelFile;
 

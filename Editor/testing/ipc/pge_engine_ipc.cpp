@@ -41,23 +41,23 @@ static void base64_encode(QByteArray &out, const char *msg)
  * @param out output QByteArray container to write an output result
  * @param string Input string message, encoded with a Base64
  */
-static void base64_encode(QByteArray &out, QString &string)
+static void base64_encode(QByteArray &out, const QString &string)
 {
     QByteArray ba(string.toUtf8());
     out = ba.toBase64();
 }
 
 
-IntEngine::IntEngine(QObject *parent) :
+PgeEngineIpcClient::PgeEngineIpcClient(QObject *parent) :
     QObject(parent)
 {}
 
-void IntEngine::setMainWindow(QWidget *mw)
+void PgeEngineIpcClient::setMainWindow(QWidget *mw)
 {
     m_mainWindow = mw;
 }
 
-void IntEngine::onData()
+void PgeEngineIpcClient::onInputData()
 {
     if(!isWorking())
         return;
@@ -84,52 +84,57 @@ void IntEngine::onData()
         }
     }
     else
+    {
+        // Any unknown commands
         emit engineInputMsg(QString::fromUtf8(msg));
+    }
 }
 
-void IntEngine::init(QProcess *engine)
+void PgeEngineIpcClient::init(QProcess *engine)
 {
     m_engine = engine;
     if(m_engine)
-        QObject::connect(m_engine, &QProcess::readyReadStandardOutput, this, &IntEngine::onData);
+        QObject::connect(m_engine, &QProcess::readyReadStandardOutput,
+                         this, &PgeEngineIpcClient::onInputData);
 
     QObject::connect(&g_intEngine, &IntEngineSignals::sendCheat,
-                     this, &IntEngine::sendCheat);
+                     this, &PgeEngineIpcClient::sendCheat);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendMessageBox,
-                     this, &IntEngine::sendMessageBox);
+                     this, &PgeEngineIpcClient::sendMessageBox);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingBlock,
-                     this, &IntEngine::sendPlacingBlock);
+                     this, &PgeEngineIpcClient::sendPlacingBlock);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingBGO,
-                     this, &IntEngine::sendPlacingBGO);
+                     this, &PgeEngineIpcClient::sendPlacingBGO);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingNPC,
-                     this, &IntEngine::sendPlacingNPC);
+                     this, &PgeEngineIpcClient::sendPlacingNPC);
 }
 
-void IntEngine::quit()
+void PgeEngineIpcClient::quit()
 {
-    FileFormats::CreateLevelData(testBuffer);
+    FileFormats::CreateLevelData(m_levelTestBuffer);
 
     QObject::disconnect(&g_intEngine, &IntEngineSignals::sendCheat,
-                        this, &IntEngine::sendCheat);
+                        this, &PgeEngineIpcClient::sendCheat);
     QObject::disconnect(&g_intEngine, &IntEngineSignals::sendMessageBox,
-                        this, &IntEngine::sendMessageBox);
+                        this, &PgeEngineIpcClient::sendMessageBox);
     QObject::disconnect(&g_intEngine, &IntEngineSignals::sendPlacingBlock,
-                        this, &IntEngine::sendPlacingBlock);
+                        this, &PgeEngineIpcClient::sendPlacingBlock);
     QObject::disconnect(&g_intEngine, &IntEngineSignals::sendPlacingBGO,
-                        this, &IntEngine::sendPlacingBGO);
+                        this, &PgeEngineIpcClient::sendPlacingBGO);
     QObject::disconnect(&g_intEngine, &IntEngineSignals::sendPlacingNPC,
-                        this, &IntEngine::sendPlacingNPC);
+                        this, &PgeEngineIpcClient::sendPlacingNPC);
     if(m_engine)
-        QObject::disconnect(m_engine, &QProcess::readyReadStandardOutput, this, &IntEngine::onData);
+        QObject::disconnect(m_engine, &QProcess::readyReadStandardOutput,
+                            this, &PgeEngineIpcClient::onInputData);
     m_engine = nullptr;
 }
 
-bool IntEngine::isWorking()
+bool PgeEngineIpcClient::isWorking()
 {
     return ((m_engine != nullptr) && (m_engine->state() == QProcess::Running));
 }
 
-bool IntEngine::sendCheat(QString _args)
+bool PgeEngineIpcClient::sendCheat(QString _args)
 {
     if(isWorking())
     {
@@ -144,7 +149,7 @@ bool IntEngine::sendCheat(QString _args)
         return false;
 }
 
-bool IntEngine::sendMessageBox(QString _args)
+bool PgeEngineIpcClient::sendMessageBox(QString _args)
 {
     if(isWorking())
     {
@@ -159,7 +164,7 @@ bool IntEngine::sendMessageBox(QString _args)
         return false;
 }
 
-void IntEngine::sendPlacingBlock(const LevelBlock &block)
+void PgeEngineIpcClient::sendPlacingBlock(const LevelBlock &block)
 {
     if(!isWorking())
         return;
@@ -173,7 +178,7 @@ void IntEngine::sendPlacingBlock(const LevelBlock &block)
         sendItemPlacing("BLOCK_PLACE\nBLOCK_PLACE_END\n" + encoded);
 }
 
-void IntEngine::sendPlacingBGO(const LevelBGO &bgo)
+void PgeEngineIpcClient::sendPlacingBGO(const LevelBGO &bgo)
 {
     if(!isWorking())
         return;
@@ -187,7 +192,7 @@ void IntEngine::sendPlacingBGO(const LevelBGO &bgo)
         sendItemPlacing("BGO_PLACE\nBGO_PLACE_END\n" + encoded);
 }
 
-void IntEngine::sendPlacingNPC(const LevelNPC &npc)
+void PgeEngineIpcClient::sendPlacingNPC(const LevelNPC &npc)
 {
     if(!isWorking())
         return;
@@ -201,30 +206,30 @@ void IntEngine::sendPlacingNPC(const LevelNPC &npc)
         sendItemPlacing("NPC_PLACE\nNPC_PLACE_END\n" + encoded);
 }
 
-bool IntEngine::sendItemPlacing(QString _args)
+bool PgeEngineIpcClient::sendItemPlacing(const QString &rawData)
 {
     if(!isWorking())
         return false;
-    LogDebug("ENGINE: Place item command: " + _args);
-    QString out = QString("PLACEITEM: %1").arg(_args);
+    LogDebug("ENGINE: Place item command: " + rawData);
+    QString out = QString("PLACEITEM: %1").arg(rawData);
     bool ret = sendMessage(out);
     return ret;
 }
 
-void IntEngine::sendLevelBuffer()
+void PgeEngineIpcClient::sendLevelBuffer()
 {
     if(!isWorking())
         return;
 
     LogDebug("Attempt to send LVLX buffer");
     QString output;
-    FileFormats::WriteExtendedLvlFileRaw(testBuffer, output);
+    FileFormats::WriteExtendedLvlFileRaw(m_levelTestBuffer, output);
     QString sendLvlx;
 
-    if(!testBuffer.meta.path.isEmpty())
+    if(!m_levelTestBuffer.meta.path.isEmpty())
         sendLvlx = QString("SEND_LVLX: %1/%2\n")
-                   .arg(testBuffer.meta.path)
-                   .arg(testBuffer.meta.filename + ".lvlx");
+                   .arg(m_levelTestBuffer.meta.path)
+                   .arg(m_levelTestBuffer.meta.filename + ".lvlx");
     else
         sendLvlx = QString("SEND_LVLX: %1/%2\n")
                    .arg(ApplicationPath)
@@ -245,12 +250,12 @@ void IntEngine::sendLevelBuffer()
     LogDebug("LVLX buffer sent");
 }
 
-void IntEngine::setTestLvlBuffer(LevelData &buffer)
+void PgeEngineIpcClient::setTestLvlBuffer(const LevelData &buffer)
 {
-    testBuffer = buffer;
+    m_levelTestBuffer = buffer;
 }
 
-bool IntEngine::sendMessage(const char *msg)
+bool PgeEngineIpcClient::sendMessage(const char *msg)
 {
     if(!isWorking())
         return false;
@@ -261,8 +266,7 @@ bool IntEngine::sendMessage(const char *msg)
     return (m_engine->write(output_e) > 0);
 }
 
-
-bool IntEngine::sendMessage(QString &msg)
+bool PgeEngineIpcClient::sendMessage(const QString &msg)
 {
     if(!isWorking())
         return false;
