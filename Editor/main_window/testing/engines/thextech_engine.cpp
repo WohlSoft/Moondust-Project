@@ -117,14 +117,14 @@ void TheXTechEngine::startSafeTestAction()
 void TheXTechEngine::chooseEnginePath()
 {
     QDialog d(m_w);
-    d.setWindowTitle(tr("LunaTester path select"));
+    d.setWindowTitle(tr("TheXTech path select"));
     d.setModal(true);
 
     QGridLayout *g = new QGridLayout(&d);
     d.setLayout(g);
 
     QGroupBox *gr = new QGroupBox(&d);
-    gr->setTitle(tr("Please select a path to LunaTester:"));
+    gr->setTitle(tr("Please select a path to TheXTech executable:"));
     g->addWidget(gr, 0, 0, 1, 2);
     QGridLayout *gd = new QGridLayout(gr);
     gr->setLayout(gd);
@@ -133,10 +133,10 @@ void TheXTechEngine::chooseEnginePath()
     g->setColumnStretch(1, 0);
 
     QRadioButton *useDefault = new QRadioButton(gr);
-    useDefault->setText(tr("Use default", "Using default LunaTester path, specified by a config pack"));
+    useDefault->setText(tr("Use default", "Using default TheXTech path, specified by an applcation path of Editor"));
 
     QRadioButton *useCustom = new QRadioButton(gr);
-    useCustom->setText(tr("Custom", "Using a user selected LunaTester path"));
+    useCustom->setText(tr("Custom", "Using a user selected TheXTech path"));
     QLineEdit *c = new QLineEdit(gr);
     QPushButton *br = new QPushButton(gr);
     br->setText(tr("Browse..."));
@@ -174,7 +174,7 @@ void TheXTechEngine::chooseEnginePath()
     QObject::connect(br, &QPushButton::clicked,
                      [&d, c](bool)->void
     {
-        QString p = QFileDialog::getOpenFileName(&d, tr("Select a LunaTester path"), c->text());
+        QString p = QFileDialog::getOpenFileName(&d, tr("Select a path to TheXTech executable", "File dialog title"), c->text());
         if(!p.isEmpty())
             c->setText(p);
     });
