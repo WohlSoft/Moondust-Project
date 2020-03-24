@@ -5,15 +5,15 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Тестирование карт мира через IPC не поддерживается</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Тестирование карт мира не поддерживается</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта возможность ещё не реализована</translation>
     </message>
 </context>
 <context>
@@ -1279,15 +1279,15 @@ Please save them first before doing anything else.</source>
     <name>FileListBrowser</name>
     <message>
         <source>Files list</source>
-        <translation type="unfinished"></translation>
+        <translation>Список файлов</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это список файлов уровней, которые размещены в той же папки, что и текущий файл&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это список файлов уровней, которые размещены в той же папки, что и текущий файл&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please select a file from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, выберите файлв из списка:</translation>
     </message>
 </context>
 <context>
@@ -3400,11 +3400,11 @@ To have this feature work, latest LunaLUA must be installed.</source>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation>Сбросить контрольные точки</translation>
+        <translation type="vanished">Сбросить контрольные точки</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation>Сбросить все контрольные точки в исходное состояние.</translation>
+        <translation type="vanished">Сбросить все контрольные точки в исходное состояние.</translation>
     </message>
     <message>
         <source>Kill frozen runner</source>
@@ -3420,7 +3420,7 @@ To have this feature work, latest LunaLUA must be installed.</source>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation>Ошибка LunaTester</translation>
+        <translation type="vanished">Ошибка LunaTester</translation>
     </message>
     <message>
         <source>:P</source>
@@ -3452,15 +3452,15 @@ Otherwise it will be very limited.</source>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>Прерывание зависшего потока позволяет запустить тест заново.</translation>
+        <translation type="vanished">Прерывание зависшего потока позволяет запустить тест заново.</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation>Поток загрузчика LunaLUA-теста занят, попробуйте ещё раз, или попробуйте прервать зависший загрузчик!</translation>
+        <translation type="vanished">Поток загрузчика LunaLUA-теста занят, попробуйте ещё раз, или попробуйте прервать зависший загрузчик!</translation>
     </message>
     <message>
         <source>Are you really want to terminate loader thread?</source>
-        <translation>Действительно ли вы хотите прервать поток загрузчика?</translation>
+        <translation type="vanished">Действительно ли вы хотите прервать поток загрузчика?</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
@@ -3469,77 +3469,77 @@ Otherwise it will be very limited.</source>
     <message>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation>Тестировать уровень</translation>
+        <translation type="vanished">Тестировать уровень</translation>
     </message>
     <message>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation>Запустить тест уровня в устаревшем движке.
+        <translation type="vanished">Запустить тест уровня в устаревшем движке.
 Чтобы эта возможность работала, требуется наличие последней версии LunaLua.
 Иначе, эта возможность будет работать очень ограниченно.</translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation>Отключить OpenGL</translation>
+        <translation type="vanished">Отключить OpenGL</translation>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation>Отключить отрисовку через OpenGL и использовать GDI. Полезно в случае если ваша видеокарта не поддерживает OpenGL или LunaLua аварийно завершается при попытке его использовать.</translation>
+        <translation type="vanished">Отключить отрисовку через OpenGL и использовать GDI. Полезно в случае если ваша видеокарта не поддерживает OpenGL или LunaLua аварийно завершается при попытке его использовать.</translation>
     </message>
     <message>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation>Оставить работать фоном</translation>
+        <translation type="vanished">Оставить работать фоном</translation>
     </message>
     <message>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation>Позволяет запускать уровни очень быстро после первого запуска.
+        <translation type="vanished">Позволяет запускать уровни очень быстро после первого запуска.
 Требуется мощный компьютер, иначе движок зависнет при повторной попытке запуска тестирования.
 Желательно отключать эту опцию на медленных компьютерах или если имеются какие-нибудь трудности при попытках запуска тестирования.</translation>
     </message>
     <message>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation>Прервать зависший загрузчик</translation>
+        <translation type="vanished">Прервать зависший загрузчик</translation>
     </message>
     <message>
         <source>Start Legacy Engine</source>
         <comment>Launch legacy engine in game mode</comment>
-        <translation>Запустить устаревший движок</translation>
+        <translation type="vanished">Запустить устаревший движок</translation>
     </message>
     <message>
         <source>Launch legacy engine in game mode.</source>
-        <translation>Запустить старый движок в режиме игры.</translation>
+        <translation type="vanished">Запустить старый движок в режиме игры.</translation>
     </message>
     <message>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation>LunaTester не может тестировать карты мира, потому что устаревший движок не поддерживает такую возможность. Для этого вы можете использовать движок PGE (пункт меню &quot;Тест&quot; -&gt; &quot;Тестировать сохранённый файл&quot;), чтобы тестировать карту мира в действии без запуска эпизода.</translation>
+        <translation type="vanished">LunaTester не может тестировать карты мира, потому что устаревший движок не поддерживает такую возможность. Для этого вы можете использовать движок PGE (пункт меню &quot;Тест&quot; -&gt; &quot;Тестировать сохранённый файл&quot;), чтобы тестировать карту мира в действии без запуска эпизода.</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation>Поток загрузчика не запущен.</translation>
+        <translation type="vanished">Поток загрузчика не запущен.</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation>Контрольные точки успешно сброшены!</translation>
+        <translation type="vanished">Контрольные точки успешно сброшены!</translation>
     </message>
     <message>
         <source>LunaTester error!</source>
-        <translation>Ошибка LunaTester!</translation>
+        <translation type="vanished">Ошибка LunaTester!</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
-        <translation>Тестировщик LunaLUA не запущен!</translation>
+        <translation type="vanished">Тестировщик LunaLUA не запущен!</translation>
     </message>
     <message>
         <source>SMBX64 limits are excited!</source>
-        <translation>Превышены ограничения SMBX64!</translation>
+        <translation type="vanished">Превышены ограничения SMBX64!</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3547,34 +3547,34 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation>Обнаружено нарушение стандарта SMBX64!
+        <translation type="vanished">Обнаружено нарушение стандарта SMBX64!
 %1, устаревший движок может не заработать!
 Рекомендуется удалить все лишние элементы.
 Хотите продолжить процесс?</translation>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation>Папка SMBX сконфигурирована неверно</translation>
+        <translation type="vanished">Папка SMBX сконфигурирована неверно</translation>
     </message>
     <message>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation>Файл %1 не найден!
+        <translation type="vanished">Файл %1 не найден!
 Чтобы запустить тест SMBX, вы должны иметь корректную конфигурацию &quot;SMBX Integration&quot;!</translation>
     </message>
     <message>
         <source>SMBX Test is already runned</source>
-        <translation>SMBX-тест уже запущен</translation>
+        <translation type="vanished">SMBX-тест уже запущен</translation>
     </message>
     <message>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation>SMBX-Движок уже тестирует другой уровень.
+        <translation type="vanished">SMBX-Движок уже тестирует другой уровень.
 Хотите ли вы прервать процесс тестирования?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation>Обнаружена устаревшая сборка SMBX!</translation>
+        <translation type="vanished">Обнаружена устаревшая сборка SMBX!</translation>
     </message>
     <message>
         <source>%2 not found!
@@ -3587,7 +3587,7 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation>%2 не найден!
+        <translation type="vanished">%2 не найден!
 Обнаружен устаревшая сборка SMBX (&quot;ванильный&quot;, &quot;vanilla&quot;)!&lt;br&gt;
 Это значит, что автозапуск теста уровня невозможен. Из-за чего для возможности запустить тестовый уровень, будет сгенерирован временный эпизод, который вы сможете запустить, выбрав вручную.&lt;br&gt;
 &lt;br&gt;
@@ -3600,17 +3600,17 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>File save error</source>
-        <translation>Ошибка сохранения файла</translation>
+        <translation type="vanished">Ошибка сохранения файла</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>Невозможно сохранить файл %1:
+        <translation type="vanished">Невозможно сохранить файл %1:
 %2.</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation>Неудачная попытка отправить данные в LunaLUA-SMBX!</translation>
+        <translation type="vanished">Неудачная попытка отправить данные в LunaLUA-SMBX!</translation>
     </message>
     <message>
         <source>process execution is failed.</source>
@@ -3622,7 +3622,7 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation>Невозможно запустить SMBX-Движок, потому что %1</translation>
+        <translation type="vanished">Невозможно запустить SMBX-Движок, потому что %1</translation>
     </message>
     <message>
         <source>Save file first</source>
@@ -3656,17 +3656,17 @@ Will be created a temporary file. Do you want to continue?</source>
     </message>
     <message>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation>Папка Устаревшего Движка не настроена</translation>
+        <translation type="vanished">Папка Устаревшего Движка не настроена</translation>
     </message>
     <message>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation>Файл %1 не найден!
+        <translation type="vanished">Файл %1 не найден!
 Чтобы работать с LunaTester, вы должны иметь корректный интеграционный пакет конфигурации!</translation>
     </message>
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation>Невозможно запустить SMBX-движок, потому что %1</translation>
+        <translation type="vanished">Невозможно запустить SMBX-движок, потому что %1</translation>
     </message>
     <message>
         <source>SMBX Level test</source>
@@ -3706,31 +3706,31 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation>Прерывает работающий процесс LunaTester, после чего движок можно заново запустить.</translation>
+        <translation type="vanished">Прерывает работающий процесс LunaTester, после чего движок можно заново запустить.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation>Вы уверены, что хотите завершить LunaTester? Это также прервёт запущенный тест уровня!</translation>
+        <translation type="vanished">Вы уверены, что хотите завершить LunaTester? Это также прервёт запущенный тест уровня!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation>LunaTester успешно завершён.</translation>
+        <translation type="vanished">LunaTester успешно завершён.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation>LunaTester не запущен.</translation>
+        <translation type="vanished">LunaTester не запущен.</translation>
     </message>
     <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Прервать запущенный процесс</translation>
+        <translation type="vanished">Прервать запущенный процесс</translation>
     </message>
     <message>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation>%2 не найден!
+        <translation type="vanished">%2 не найден!
 У Вас устаревшая сборка SMBX (&quot;ванильная&quot;, &quot;Vanilla&quot;)&lt;br&gt;!
 Это значит, что с данной сборкой невозможно запустить тестовый уровень на вашей операционной системе. LunaLua требуется для возможности запуска тестов через SMBX на не-Windows операционных системах.</translation>
     </message>
@@ -3806,7 +3806,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Select a path to LunaTester for use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите путь к LunaTester для работы.</translation>
     </message>
     <message>
         <source>Start Game</source>
@@ -3815,7 +3815,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустить LunaTester как обычную игру.</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
@@ -3845,21 +3845,21 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>LunaTester path select</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор пути к LunaTester</translation>
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, укажите путь к LunaTester:</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation>По-умолчанию</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
-        <translation>Своя</translation>
+        <translation>Другой</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -3871,7 +3871,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>Select a LunaTester path</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажите путь к LunaTester</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
@@ -3922,7 +3922,7 @@ Do you want to abort current testing process?</source>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Обнаружен старый SMBX (Vanilla SMBX)!</translation>
     </message>
     <message>
         <source>%2 not found!
@@ -3935,7 +3935,16 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%2 не найден!
+Обнаружен устаревшая сборка SMBX (&quot;ванильный&quot;, &quot;vanilla&quot;)!&lt;br&gt;
+Это значит, что автозапуск теста уровня невозможен. Из-за чего для возможности запустить тестовый уровень, будет сгенерирован временный эпизод, который вы сможете запустить, выбрав вручную.&lt;br&gt;
+&lt;br&gt;
+Имя генерируемого эпизода: %1&lt;br&gt;
+&lt;br&gt;
+Вы уверены, что всё ещё хотите запустить тест?&lt;br&gt;
+&lt;br&gt;
+Если вы хотите полноценный тест уровней, вам нужно загрузить LunaLUA здесь:&lt;br&gt;
+%3</translation>
     </message>
     <message>
         <source>File save error</source>
@@ -3954,10 +3963,6 @@ That means, impossible to launch level testing on your operating operating. Luna
         <translation>%2 не найден!
 У Вас устаревшая сборка SMBX (&quot;ванильная&quot;, &quot;Vanilla&quot;)&lt;br&gt;!
 Это значит, что с данной сборкой невозможно запустить тестовый уровень на вашей операционной системе. LunaLua требуется для возможности запуска тестов через SMBX на не-Windows операционных системах.</translation>
-    </message>
-    <message>
-        <source>LunaTesterEngine error</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
@@ -9409,15 +9414,15 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Select SFX file</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор звукового файла</translation>
     </message>
     <message>
         <source>Please select SFX file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, выберите звуковой файл</translation>
     </message>
     <message>
         <source>Please select music file to use as custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, выберите файл музыки</translation>
     </message>
 </context>
 <context>
@@ -11235,58 +11240,58 @@ Those preferences will makes no effect on a testing process before it will be fi
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Сохранить</translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished">Тестировать уровень</translation>
+        <translation>Тестировать уровень</translation>
     </message>
     <message>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тестировать сохранённый уровень</translation>
     </message>
     <message>
         <source>Select TheXTech path...</source>
         <comment>Select a path to TheXTech for use.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Указать путь к TheXTech...</translation>
     </message>
     <message>
         <source>Select a path to TheXTech for use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите путь к TheXTech для работы.</translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
-        <translation type="unfinished">Запустить игру</translation>
+        <translation>Запустить игру</translation>
     </message>
     <message>
         <source>TheXTech path select</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор пути к TheXTech</translation>
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
-        <translation type="unfinished"></translation>
+        <translation>Пожалуйста, укажите путь к исполняемому файлу TheXTech:</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation>По-умолчанию</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
-        <translation type="unfinished">Своя</translation>
+        <translation>Другой</translation>
     </message>
     <message>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выбор пути к TheXTech</translation>
     </message>
 </context>
 <context>

@@ -3817,197 +3817,161 @@ Wilt u uw wijzigingen opslaan?</translation>
 <context>
     <name>LunaTester</name>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="706"/>
         <source>Reset checkpoints</source>
-        <translation>Herstartpunten resetten</translation>
+        <translation type="vanished">Herstartpunten resetten</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="707"/>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation>Alle herstartpunten resetten.</translation>
+        <translation type="vanished">Alle herstartpunten resetten.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1641"/>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1649"/>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1700"/>
         <source>LunaTester error</source>
-        <translation>LunaTester fout</translation>
+        <translation type="vanished">LunaTester fout</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="728"/>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
+        <translation type="vanished">Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="809"/>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation>LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
+        <translation type="vanished">LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="698"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation>Niveau Testen</translation>
+        <translation type="vanished">Niveau Testen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="700"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation>Start het niveau in het SMBX programma.
+        <translation type="vanished">Start het niveau in het SMBX programma.
 Deze functie vereist LunaLua.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="711"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation>OpenGL uitschakelen</translation>
+        <translation type="vanished">OpenGL uitschakelen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="712"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation>Schakel het OpenGL beeldenprogramma uit en gebruik GDI in plaats daarvan. Handig als uw grafische kaart geen ondersteuning biedt voor OpenGL of LunaLua crasht bij elke poging tot gebruik. Dit zal in sterk verminderde functies resulteren.</translation>
+        <translation type="vanished">Schakel het OpenGL beeldenprogramma uit en gebruik GDI in plaats daarvan. Handig als uw grafische kaart geen ondersteuning biedt voor OpenGL of LunaLua crasht bij elke poging tot gebruik. Dit zal in sterk verminderde functies resulteren.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="718"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation>In de achtergrond blijven draaien</translation>
+        <translation type="vanished">In de achtergrond blijven draaien</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="720"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation>Dit laat toe om niveaus sneller te openen na de eerste opstarting.
+        <translation type="vanished">Dit laat toe om niveaus sneller te openen na de eerste opstarting.
 Dit veriest een krachtige computer, anders kan het programma hangen bij de volgende test start.
 Het is aanbevolen om deze functie uit te schakelen op tragere machines of wanneer er problemen voorkomen bij het opnieuw testen van niveaus.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="726"/>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation>Hangende lader beïndigen</translation>
+        <translation type="vanished">Hangende lader beïndigen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="732"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Lopend proces beëindigen</translation>
+        <translation type="vanished">Lopend proces beëindigen</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="735"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation>Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
+        <translation type="vanished">Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="739"/>
         <source>Start Legacy Engine</source>
         <comment>Launch legacy engine in game mode</comment>
-        <translation>SMBX programma opstarten</translation>
+        <translation type="vanished">SMBX programma opstarten</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="741"/>
         <source>Launch legacy engine in game mode.</source>
-        <translation>Oud SMBX programma in spelmodus gebruiken.</translation>
+        <translation type="vanished">Oud SMBX programma in spelmodus gebruiken.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="844"/>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation>LunaTester kan niet gebruikt worden op de wereldkaart omdat het SMBX programma niet toelaat om mappen te testen. Laad de map in de episode zelf, of gebruik het PGE programma om je wereldkaart bestand te testen.</translation>
+        <translation type="vanished">LunaTester kan niet gebruikt worden op de wereldkaart omdat het SMBX programma niet toelaat om mappen te testen. Laad de map in de episode zelf, of gebruik het PGE programma om je wereldkaart bestand te testen.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="867"/>
         <source>Are you really want to terminate loader thread?</source>
-        <translation>Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
+        <translation type="vanished">Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="878"/>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation>Laad-draad (thread) is niet actief.</translation>
+        <translation type="vanished">Laad-draad (thread) is niet actief.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="893"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation>Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
+        <translation type="vanished">Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="900"/>
         <source>LunaTester has been successfully closed.</source>
-        <translation>LunaTester is succesvol afgesloten.</translation>
+        <translation type="vanished">LunaTester is succesvol afgesloten.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="908"/>
         <source>LunaTester is not running.</source>
-        <translation>LuneTester is niet actief.</translation>
+        <translation type="vanished">LuneTester is niet actief.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1197"/>
         <source>Checkpoints successfully reseted!</source>
-        <translation>Herstartpunten succesvol gereset!</translation>
+        <translation type="vanished">Herstartpunten succesvol gereset!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1209"/>
         <source>LunaTester error!</source>
-        <translation>LunaTester fout!</translation>
+        <translation type="vanished">LunaTester fout!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1221"/>
         <source>LunaLUA tester is not started!</source>
-        <translation>LunaTester kon niet gestart worden!</translation>
+        <translation type="vanished">LunaTester kon niet gestart worden!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1360"/>
         <source>SMBX64 limits are excited!</source>
-        <translation>SMBX64 limieten overschreden!</translation>
+        <translation type="vanished">SMBX64 limieten overschreden!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1361"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation>Er is een overtreding van SMBX64 standaard gebeurd!
+        <translation type="vanished">Er is een overtreding van SMBX64 standaard gebeurd!
 %1, oorspronkelijke programma kan vastlopen!
 Het is aanbevolen om alle overtollige elementen te verwijderen.
 Wilt u doorgaan met het proces?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1377"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation>SMBX map was niet correct geconfigureerd</translation>
+        <translation type="vanished">SMBX map was niet correct geconfigureerd</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1378"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation>%1 niet gevonden!
+        <translation type="vanished">%1 niet gevonden!
 Voor het uitvoeren van testen in SMBX moet u het SMBX-integratie configuratiepakket gebruiken!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1401"/>
         <source>SMBX Test is already runned</source>
-        <translation>SMBX-test is al actief</translation>
+        <translation type="vanished">SMBX-test is al actief</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1402"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation>Het SMBX programma is al een ander niveau aan het testen.
+        <translation type="vanished">Het SMBX programma is al een ander niveau aan het testen.
 Wilt u het huidige testproces sluiten?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1421"/>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1593"/>
         <source>Vanilla SMBX detected!</source>
-        <translation>Vanilla SMBX gedetecteerd!</translation>
+        <translation type="vanished">Vanilla SMBX gedetecteerd!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1422"/>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
@@ -4018,7 +3982,7 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation>%2 niet gevonden!
+        <translation type="vanished">%2 niet gevonden!
 Je hebt een vanilla SMBX! &lt;br&gt;
 Dat betekent dat het onmogelijk is om het testen niveaus automatisch te starten. Om uw niveau te testen, wordt een dummy episode gegenereerd, die u handmatig starten en selecteren. &lt;br&gt;
 &lt;br&gt;
@@ -4030,52 +3994,44 @@ Als u een volledige testomgeving wilt hebben, installeer dan LunaLua: &lt;br&gt;
 %3</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1578"/>
         <source>File save error</source>
-        <translation>Fout bij het opslaan van het bestand</translation>
+        <translation type="vanished">Fout bij het opslaan van het bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1579"/>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>Kan %1 bestand niet opslaan:
+        <translation type="vanished">Kan %1 bestand niet opslaan:
 %2.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1594"/>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation>%2 niet gevonden!
+        <translation type="vanished">%2 niet gevonden!
 Je hebt een vanilla SMBX! &lt;br&gt;
 Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1642"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation>Kon niveau niet naar LunaLua sturen!</translation>
+        <translation type="vanished">Kon niveau niet naar LunaLua sturen!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1650"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
+        <translation type="vanished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1665"/>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation>SMBX programma-map was niet correct geconfigureerd</translation>
+        <translation type="vanished">SMBX programma-map was niet correct geconfigureerd</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1666"/>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation>%1 niet gevonden!
+        <translation type="vanished">%1 niet gevonden!
 Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/_old/luna_tester.cpp" line="1701"/>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
+        <translation type="vanished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
 </context>
 <context>
@@ -4351,16 +4307,12 @@ Je hebt een vanilla SMBX! &lt;br&gt;
 Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1779"/>
-        <source>LunaTesterEngine error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1780"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation type="unfinished">Kon niveau niet naar LunaLua sturen!</translation>
     </message>
     <message>
+        <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1779"/>
         <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1787"/>
         <location filename="../main_window/testing/engines/luna_tester_engine.cpp" line="1839"/>
         <source>LunaTester error</source>

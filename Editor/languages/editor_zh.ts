@@ -2794,102 +2794,102 @@ Do you want to save your changes?</source>
     <name>LunaTester</name>
     <message>
         <source>Reset checkpoints</source>
-        <translation>重置存档点</translation>
+        <translation type="vanished">重置存档点</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation>重置所有存档点。</translation>
+        <translation type="vanished">重置所有存档点。</translation>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation>LunaTester 错误</translation>
+        <translation type="vanished">LunaTester 错误</translation>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>结束进程以允许你再测试关卡。</translation>
+        <translation type="vanished">结束进程以允许你再测试关卡。</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
         <translatorcomment>&quot;Terminate Frozen Loader&quot; 是什么意思？我也不知道……</translatorcomment>
-        <translation>LunaLua 测试器进程很忙，请重试或使用“结束被冻结的进程”功能！</translation>
+        <translation type="vanished">LunaLua 测试器进程很忙，请重试或使用“结束被冻结的进程”功能！</translation>
     </message>
     <message>
         <source>Are you really want to terminate loader thread?</source>
-        <translation>你想结束进程吗？</translation>
+        <translation type="vanished">你想结束进程吗？</translation>
     </message>
     <message>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation>测试关卡</translation>
+        <translation type="vanished">测试关卡</translation>
     </message>
     <message>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation>在 SMBX 引擎测试关卡，
+        <translation type="vanished">在 SMBX 引擎测试关卡，
 需要 LunaLua 的支持。</translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation>禁用 OpenGL</translation>
+        <translation type="vanished">禁用 OpenGL</translation>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation>如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，此时改用 GDI 渲染。</translation>
+        <translation type="vanished">如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，此时改用 GDI 渲染。</translation>
     </message>
     <message>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation>后台运行</translation>
+        <translation type="vanished">后台运行</translation>
     </message>
     <message>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation>允许启动引擎后直接测试关卡。
+        <translation type="vanished">允许启动引擎后直接测试关卡。
 需要很高的配置，否则下次执行可能将会死机。
 对于低端电脑推荐禁用此项。</translation>
     </message>
     <message>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation>结束被冻结的进程</translation>
+        <translation type="vanished">结束被冻结的进程</translation>
     </message>
     <message>
         <source>Start Legacy Engine</source>
         <comment>Launch legacy engine in game mode</comment>
-        <translation>启动 SMBX 引擎</translation>
+        <translation type="vanished">启动 SMBX 引擎</translation>
     </message>
     <message>
         <source>Launch legacy engine in game mode.</source>
-        <translation>在游戏模式里执行 SMBX 1.3 引擎。</translation>
+        <translation type="vanished">在游戏模式里执行 SMBX 1.3 引擎。</translation>
     </message>
     <message>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation>SMBX 引擎中不能直接测试大地图，因此 LunaTester 不能在大地图上使用，请从主菜单加载或者使用 PGE 引擎测试你的地图文件。</translation>
+        <translation type="vanished">SMBX 引擎中不能直接测试大地图，因此 LunaTester 不能在大地图上使用，请从主菜单加载或者使用 PGE 引擎测试你的地图文件。</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation>启动器进程未执行。</translation>
+        <translation type="vanished">启动器进程未执行。</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation>存档点已成功重置！</translation>
+        <translation type="vanished">存档点已成功重置！</translation>
     </message>
     <message>
         <source>LunaTester error!</source>
-        <translation>LunaTester 错误！</translation>
+        <translation type="vanished">LunaTester 错误！</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
-        <translation>未启动 LunaLua 测试器！</translation>
+        <translation type="vanished">未启动 LunaLua 测试器！</translation>
     </message>
     <message>
         <source>SMBX64 limits are excited!</source>
-        <translation>已超出 SMBX64 数量限制！</translation>
+        <translation type="vanished">已超出 SMBX64 数量限制！</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -2897,7 +2897,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation>发现超出 SMBX64 标准的元素！
+        <translation type="vanished">发现超出 SMBX64 标准的元素！
 %1
 ，可能会使 SMBX 1.3 引擎崩溃！
 建议移除所有已超出元素的对象。
@@ -2905,27 +2905,27 @@ Are you want continue process?</source>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation>SMBX 目录未配置正确</translation>
+        <translation type="vanished">SMBX 目录未配置正确</translation>
     </message>
     <message>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation>未找到 %1！
+        <translation type="vanished">未找到 %1！
 你必须使用 SMBX 集成配置包才能在 SMBX 上测试！</translation>
     </message>
     <message>
         <source>SMBX Test is already runned</source>
-        <translation>SMBX 测试已经执行</translation>
+        <translation type="vanished">SMBX 测试已经执行</translation>
     </message>
     <message>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation>该引擎已在测试另一个关卡。
+        <translation type="vanished">该引擎已在测试另一个关卡。
 你要取消当前的测试进度吗？</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation>检测到 SMBX 1.3！</translation>
+        <translation type="vanished">检测到 SMBX 1.3！</translation>
     </message>
     <message>
         <source>%2 not found!
@@ -2938,7 +2938,7 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation>未找到 %2 ！
+        <translation type="vanished">未找到 %2 ！
 你使用的是 SMBX 1.3！&lt;br&gt;
 因此不能自动执行关卡测试，此时将会产生一个空白地图以手动开始并选择它们。&lt;br&gt;
 &lt;br&gt;
@@ -2951,17 +2951,17 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>File save error</source>
-        <translation>保存文件出错</translation>
+        <translation type="vanished">保存文件出错</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>保存文件 %1 失败：
+        <translation type="vanished">保存文件 %1 失败：
 %2。</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation>发送关卡到 LunaLua 失败！</translation>
+        <translation type="vanished">发送关卡到 LunaLua 失败！</translation>
     </message>
     <message>
         <source>process execution is failed.</source>
@@ -2973,49 +2973,49 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation>启动 SMBX 引擎失败，原因： %1</translation>
+        <translation type="vanished">启动 SMBX 引擎失败，原因： %1</translation>
     </message>
     <message>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation>SMBX 引擎所在目录配置错误</translation>
+        <translation type="vanished">SMBX 引擎所在目录配置错误</translation>
     </message>
     <message>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation>未找到 %1！
+        <translation type="vanished">未找到 %1！
 你必须使用 SMBX 集成配置包才能在 LunaTester 上测试！</translation>
     </message>
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation>启动 SMBX 引擎失败，原因： %1</translation>
+        <translation type="vanished">启动 SMBX 引擎失败，原因： %1</translation>
     </message>
     <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>结束进程</translation>
+        <translation type="vanished">结束进程</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation>结束 LunaTester 进程，使引擎重新开始。</translation>
+        <translation type="vanished">结束 LunaTester 进程，使引擎重新开始。</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation>你确定关闭 LunaTester 吗？这会在当你测试关卡时直接结束进程！</translation>
+        <translation type="vanished">你确定关闭 LunaTester 吗？这会在当你测试关卡时直接结束进程！</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation>LunaTester 已成功关闭。</translation>
+        <translation type="vanished">LunaTester 已成功关闭。</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation>LunaTester 未运行。</translation>
+        <translation type="vanished">LunaTester 未运行。</translation>
     </message>
     <message>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation>没有找到 %2！
+        <translation type="vanished">没有找到 %2！
 您使用的是 SMBX 1.3！&lt;br&gt;
 因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
     </message>
@@ -3248,10 +3248,6 @@ That means, impossible to launch level testing on your operating operating. Luna
         <translation type="unfinished">没有找到 %2！
 您使用的是 SMBX 1.3！&lt;br&gt;
 因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
-    </message>
-    <message>
-        <source>LunaTesterEngine error</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>

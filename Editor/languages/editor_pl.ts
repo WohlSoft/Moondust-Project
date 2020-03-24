@@ -2992,15 +2992,15 @@ Czy chcesz zapisać zmiany?</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation>Zresetuj checkpointy</translation>
+        <translation type="vanished">Zresetuj checkpointy</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation>Zresetuj wszystkie checkpointy do pierwotnego stanu.</translation>
+        <translation type="vanished">Zresetuj wszystkie checkpointy do pierwotnego stanu.</translation>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation>Błąd LunaTester</translation>
+        <translation type="vanished">Błąd LunaTester</translation>
     </message>
     <message>
         <source>Starts testing in the legacy engine.
@@ -3016,91 +3016,47 @@ W innym wypadku testowanie będzie bardzo ograniczone.</translation>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>Zakańcza zamrożony proces, aby zezwolić na kolejne testowanie.</translation>
+        <translation type="vanished">Zakańcza zamrożony proces, aby zezwolić na kolejne testowanie.</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation>LunaLua test loader jest zajęty, spróbuj później lub zakończ jego proces!</translation>
+        <translation type="vanished">LunaLua test loader jest zajęty, spróbuj później lub zakończ jego proces!</translation>
     </message>
     <message>
         <source>Are you really want to terminate loader thread?</source>
-        <translation>Czy na pewno chcesz zakończyć proces loadera?</translation>
+        <translation type="vanished">Czy na pewno chcesz zakończyć proces loadera?</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
         <translation type="vanished">Loader nie jest aktualnie uruchomiony.</translation>
     </message>
     <message>
-        <source>Test level</source>
-        <comment>Run the LunaTester based level testing.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Starts level testing in the legacy engine.
-To have this feature work, latest LunaLUA must be installed.
-Otherwise, it will be very limited.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable OpenGL</source>
-        <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keep running in background</source>
-        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allows to start level testing very fast after first launch.
-Requires powerful computer, otherwise engine will freeze on next test launch.
-Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="unfinished">Zakończ zamrożony loader</translation>
-    </message>
-    <message>
-        <source>Start Legacy Engine</source>
-        <comment>Launch legacy engine in game mode</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Launch legacy engine in game mode.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Zakończ zamrożony loader</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="unfinished">Loader nie jest aktualnie uruchomiony.</translation>
+        <translation type="obsolete">Loader nie jest aktualnie uruchomiony.</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation>Checkpointy pomyślnie zresetowane!</translation>
+        <translation type="vanished">Checkpointy pomyślnie zresetowane!</translation>
     </message>
     <message>
         <source>LunaTester error!</source>
-        <translation>Błąd LunaTester!</translation>
+        <translation type="vanished">Błąd LunaTester!</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
-        <translation>LunaLUA tester nie jest uruchomiony!</translation>
+        <translation type="vanished">LunaLUA tester nie jest uruchomiony!</translation>
     </message>
     <message>
         <source>SMBX64 limits are excited!</source>
         <translatorcomment>Albo limity SMBX64 są podekscytowane xDDDDDDDDDDDDDDDDDDDDDDDDD</translatorcomment>
-        <translation>Przekroczone zostały limity SMBX64!</translation>
+        <translation type="vanished">Przekroczone zostały limity SMBX64!</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3108,34 +3064,34 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation>Przekroczenie standardów SMBX64 zostało wykryte!
+        <translation type="vanished">Przekroczenie standardów SMBX64 zostało wykryte!
 %1
 , silnik może zcrashować.
 Czy chcesz  kontynuować?</translation>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation>Folder SMBX nie jest poprawnie skonfigurowany</translation>
+        <translation type="vanished">Folder SMBX nie jest poprawnie skonfigurowany</translation>
     </message>
     <message>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation>%1 nie znaleziony!
+        <translation type="vanished">%1 nie znaleziony!
 Aby testować w SMBX musisz mieć poprawną paczkę konfiguracyjną!</translation>
     </message>
     <message>
         <source>SMBX Test is already runned</source>
-        <translation>SMBX już działa</translation>
+        <translation type="vanished">SMBX już działa</translation>
     </message>
     <message>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation>SMBX testuje inny poziom.
+        <translation type="vanished">SMBX testuje inny poziom.
 Przerwać proces testowania?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation>Wykryto Vanilla SMBX!</translation>
+        <translation type="vanished">Wykryto Vanilla SMBX!</translation>
     </message>
     <message>
         <source>%2 not found!
@@ -3148,7 +3104,7 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation>%2 nie znaleziony!
+        <translation type="vanished">%2 nie znaleziony!
 Masz Vanilla SMBX!&lt;br&gt;
 To oznacza, że nie możesz testować poziomu automatycnie. DO testu zostanie stworzony epizod, który możesz uruchomić manualnie.&lt;br&gt;
 &lt;br&gt;
@@ -3161,17 +3117,17 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
     </message>
     <message>
         <source>File save error</source>
-        <translation>Błąd zapisywania pliku</translation>
+        <translation type="vanished">Błąd zapisywania pliku</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>Nie można zapisać pliku %1:
+        <translation type="vanished">Nie można zapisać pliku %1:
 %2.</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation>Nie udało się wysłać pliku do LunaLUA-SMBX!</translation>
+        <translation type="vanished">Nie udało się wysłać pliku do LunaLUA-SMBX!</translation>
     </message>
     <message>
         <source>process execution is failed.</source>
@@ -3183,7 +3139,7 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation>Nie można uruchomić SMBX, ponieważ %1</translation>
+        <translation type="vanished">Nie można uruchomić SMBX, ponieważ %1</translation>
     </message>
     <message>
         <source>Save file first</source>
@@ -3216,19 +3172,6 @@ Zostanie stworzony plik tymczasowy. Czy chcesz kontynuować@?</translation>
         <translation type="vanished">Test poziomu w LunaLUA</translation>
     </message>
     <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>SMBX Level test</source>
         <translation type="obsolete">Test poziomu w SMBX</translation>
     </message>
@@ -3257,34 +3200,6 @@ To use LunaTester you should have right Integration configuration package!</sour
     <message>
         <source>Failed to find SMBX Window</source>
         <translation type="vanished">Nie udało się znaleźć okna SMBX</translation>
-    </message>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3508,10 +3423,6 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LunaTesterEngine error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
