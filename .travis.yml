@@ -173,6 +173,7 @@ matrix:
             - gnu-sed
             - lftp
             - axel
+          update: true
 
 before_install:
   - bash _common/travis-ci/before-install.sh
