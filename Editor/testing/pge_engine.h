@@ -16,19 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-#ifndef THEXTECHENGINE_H
-#define THEXTECHENGINE_H
+#ifndef PGEENGINE_H
+#define PGEENGINE_H
 
 #include <QProcess>
 #include <QMutex>
-#include <networking/engine_intproc.h>
 
+#include "ipc/pge_engine_ipc.h"
 #include "abstract_engine.h"
 
 class MainWindow;
 
-class TheXTechEngine : public AbstractRuntimeEngine
+class PgeEngine : public AbstractRuntimeEngine
 {
     Q_OBJECT
 
@@ -40,28 +39,19 @@ class TheXTechEngine : public AbstractRuntimeEngine
     MainWindow *m_w = nullptr;
     //! List of registered menu items
     QAction *m_menuItems[7];
-    //! Path to custom TheXTech executable
-    QString m_customEnginePath;
 
     IntEngine interface;
-
-    QString getEnginePath();
-
-    void loadSetup();
-    void saveSetup();
-
 private slots:
     void retranslateMenu();
 
-public slots:
     /********Menu items*******/
     void startTestAction();
     void startSafeTestAction();
-    void chooseEnginePath();
     void startGameAction();
+
 public:
-    explicit TheXTechEngine(QObject *parent = nullptr);
-    ~TheXTechEngine();
+    explicit PgeEngine(QObject *parent = nullptr);
+    ~PgeEngine();
 
     virtual void init();
     virtual void unInit();
@@ -71,8 +61,13 @@ public:
     virtual bool doTestLevelIPC(const LevelData &d);
     virtual bool doTestLevelFile(const QString &levelFile);
 
+    /*
+        FIXME!!! Implement the right world map testing via interprocess
+        with ability to start player at absolutely any position on it
+    */
 //    virtual bool doTestWorldIPC(const WorldData &d);
-//    virtual bool doTestWorldFile(const QString &worldFile);
+
+    virtual bool doTestWorldFile(const QString &worldFile);
 
     virtual bool runNormalGame();
 
@@ -87,4 +82,4 @@ private slots:
     void testFinished();
 };
 
-#endif // THEXTECHENGINE_H
+#endif // PGEENGINE_H

@@ -28,7 +28,6 @@
 #include <mainwindow.h>
 #include <common_features/app_path.h>
 
-#include <networking/engine_intproc.h>
 
 #ifdef _WIN32
 #define THEXTECH_EXE "thextech.exe"
@@ -196,7 +195,8 @@ void TheXTechEngine::startGameAction()
 }
 
 TheXTechEngine::TheXTechEngine(QObject *parent) :
-    AbstractRuntimeEngine(parent)
+    AbstractRuntimeEngine(parent),
+    interface(parent)
 {}
 
 TheXTechEngine::~TheXTechEngine()

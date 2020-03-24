@@ -25,19 +25,14 @@
 #include <QStandardPaths>
 #endif
 
+#include "pge_engine.h"
+#include <mainwindow.h>
 #include <common_features/app_path.h>
 #include <common_features/logger.h>
-#include <common_features/logger_sets.h>
 #include <common_features/util.h>
 #include <main_window/global_settings.h>
 #include <dev_console/devconsole.h>
-#include <audio/sdl_music_player.h>
 
-#include <networking/engine_intproc.h>
-
-#include <mainwindow.h>
-
-#include "pge_engine.h"
 
 #ifdef _WIN32
 #define PGE_ENGINE_EXE "pge_engine.exe"
@@ -146,7 +141,8 @@ static bool findEngine(MainWindow *parent, QString &command)
 
 
 PgeEngine::PgeEngine(QObject *parent) :
-    AbstractRuntimeEngine(parent)
+    AbstractRuntimeEngine(parent),
+    interface(parent)
 {}
 
 PgeEngine::~PgeEngine()

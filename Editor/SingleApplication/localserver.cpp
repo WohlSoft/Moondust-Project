@@ -20,7 +20,6 @@
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/logger.h>
-#include <networking/engine_intproc.h>
 
 #include "localserver.h"
 
@@ -128,8 +127,6 @@ void LocalServer::slotOnData(QString data)
 void LocalServer::initCommands()
 {
     m_commands[int(IPCCMD::ShowUP)]             = "showUp";
-    m_commands[int(IPCCMD::ConnectToEngine)]    = "CONNECT_TO_ENGINE";
-    m_commands[int(IPCCMD::EngineClosed)]       = "ENGINE_CLOSED";
     m_commands[int(IPCCMD::TestSetup)]          = "testSetup";
 }
 
@@ -161,7 +158,7 @@ void LocalServer::onCMD(QString data)
 
         IPCCMD cmdID = IPCCMD(m_commands.key(cmd, int(IPCCMD::Unknown)));
 
-        if((cmdID == IPCCMD::EngineClosed) || (MainWinConnect::pMainWin->m_isAppInited))
+        if(MainWinConnect::pMainWin->m_isAppInited)
         {
             switch(cmdID)
             {
@@ -180,18 +177,7 @@ void LocalServer::onCMD(QString data)
                 qApp->setActiveWindow(MainWinConnect::pMainWin);
                 break;
             }
-// DEPRECATED
-//            case IPCCMD::ConnectToEngine:
-//            {
-//                IntEngine::sendLevelBuffer();
-//                MainWinConnect::pMainWin->showMinimized();
-//                break;
-//            }
-//            case IPCCMD::EngineClosed:
-//            {
-//                IntEngine::quit();
-//                break;
-//            }
+
             case IPCCMD::TestSetup:
             {
                 QStringList args = argsPart.split(',');

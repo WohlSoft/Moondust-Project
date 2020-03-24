@@ -35,8 +35,6 @@
 #include <audio/sdl_music_player.h>
 #include <PGE_File_Formats/file_formats.h>
 
-#include <main_window/testing/engines/pge_engine.h>
-
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
@@ -244,7 +242,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *select = new QPushButton(m_toolbarVanilla);
         select->setText(tr("Select", "Vanilla-like toolbar"));
-        select->connect(this, &MainWindow::languageSwitched, [this, select](){
+        select->connect(this, &MainWindow::languageSwitched, [select](){
                                 select->setText(tr("Select", "Vanilla-like toolbar"));
                            });
         select->setCheckable(true);
@@ -257,7 +255,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *erase  = new QPushButton(m_toolbarVanilla);
         erase->setText(tr("Erase", "Vanilla-like toolbar"));
-        erase->connect(this, &MainWindow::languageSwitched, [this, erase](){
+        erase->connect(this, &MainWindow::languageSwitched, [erase](){
                                 erase->setText(tr("Erase", "Vanilla-like toolbar"));
                            });
         erase->setCheckable(true);
@@ -270,7 +268,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *items  = new QPushButton(m_toolbarVanilla);
         items->setText(tr("Items", "Vanilla-like toolbar"));
-        items->connect(this, &MainWindow::languageSwitched, [this, items](){
+        items->connect(this, &MainWindow::languageSwitched, [items](){
                                 items->setText(tr("Items", "Vanilla-like toolbar"));
                            });
         items->setCheckable(true);
@@ -283,7 +281,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *player  = new QPushButton(m_toolbarVanilla);
         player->setText(tr("Player", "Vanilla-like toolbar"));
-        player->connect(this, &MainWindow::languageSwitched, [this, player]() {
+        player->connect(this, &MainWindow::languageSwitched, [player]() {
                                 player->setText(tr("Player", "Vanilla-like toolbar"));
                            });
         connect(player, &QPushButton::clicked, [ = ](bool)
@@ -299,7 +297,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *section  = new QPushButton(m_toolbarVanilla);
         section->setText(tr("Section", "Vanilla-like toolbar"));
-        section->connect(this, &MainWindow::languageSwitched, [this, section](){
+        section->connect(this, &MainWindow::languageSwitched, [section](){
                                 section->setText(tr("Section", "Vanilla-like toolbar"));
                            });
         section->setCheckable(true);
@@ -311,7 +309,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *wldProps  = new QPushButton(m_toolbarVanilla);
         wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
-        wldProps->connect(this, &MainWindow::languageSwitched, [this, wldProps](){
+        wldProps->connect(this, &MainWindow::languageSwitched, [wldProps](){
                                 wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
                            });
         wldProps->setCheckable(true);
@@ -323,7 +321,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *doors  = new QPushButton(m_toolbarVanilla);
         doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
-        doors->connect(this, &MainWindow::languageSwitched, [this, doors](){
+        doors->connect(this, &MainWindow::languageSwitched, [doors](){
                                 doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
                            });
         doors->setCheckable(true);
@@ -335,7 +333,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *water  = new QPushButton(m_toolbarVanilla);
         water->setText(tr("Water", "Vanilla-like toolbar"));
-        water->connect(this, &MainWindow::languageSwitched, [this, water](){
+        water->connect(this, &MainWindow::languageSwitched, [water](){
                                 water->setText(tr("Water", "Vanilla-like toolbar"));
                            });
         connect(water, &QPushButton::clicked, [ = ](bool)
@@ -363,7 +361,7 @@ void MainWindow::setUiDefults()
 
             options->setMenu(menu);
             options->setText(tr("Options"));
-            options->connect(this, &MainWindow::languageSwitched, [this, options](){
+            options->connect(this, &MainWindow::languageSwitched, [options](){
                                     options->setText(tr("Options"));
                                });
             options->setPopupMode(QToolButton::InstantPopup);

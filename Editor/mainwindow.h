@@ -63,7 +63,7 @@
 #include <main_window/dock/_dock_vizman.h>
 
 #include <main_window/plugins/pge_editorpluginmanager.h>
-#include <main_window/testing/engines/abstract_engine.h>
+#include <testing/abstract_engine.h>
 
 QT_BEGIN_NAMESPACE
     class QMimeData;

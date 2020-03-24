@@ -397,10 +397,6 @@ list(APPEND PGE_EDITOR_SRCS
     main_window/sub_windows.cpp
     main_window/testing/testing.cpp
     main_window/testing/testing_settings.cpp
-    main_window/testing/engines/abstract_engine.cpp
-    main_window/testing/engines/pge_engine.cpp
-    main_window/testing/engines/luna_tester_engine.cpp
-    main_window/testing/engines/thextech_engine.cpp
     main_window/tip_of_day/tip_of_day.cpp
     main_window/tools/app_settings.cpp
     main_window/tools/data_configs_mgr.cpp
@@ -419,6 +415,11 @@ list(APPEND PGE_EDITOR_SRCS
     SingleApplication/editor_application.cpp
     SingleApplication/localserver.cpp
     SingleApplication/singleapplication.cpp
+    testing/abstract_engine.cpp
+    testing/pge_engine.cpp
+    testing/luna_tester_engine.cpp
+    testing/thextech_engine.cpp
+    testing/ipc/pge_engine_ipc.cpp
     tools/async/asyncstarcounter.cpp
     tools/debugger/custom_counter.cpp
     tools/debugger/custom_counter_gui.cpp

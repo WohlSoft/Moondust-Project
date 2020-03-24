@@ -47,7 +47,6 @@
 
 #include <data_configs/selection_dialog/config_manager.h>
 
-#include <networking/engine_intproc.h>
 #include <audio/sdl_music_player.h>
 
 #include "mainwindow.h"

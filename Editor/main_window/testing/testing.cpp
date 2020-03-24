@@ -36,12 +36,11 @@
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
-#include <networking/engine_intproc.h>
 #include <PGE_File_Formats/file_formats.h>
 
-#include "engines/pge_engine.h"
-#include "engines/luna_tester_engine.h"
-#include "engines/thextech_engine.h"
+#include <testing/pge_engine.h>
+#include <testing/luna_tester_engine.h>
+#include <testing/thextech_engine.h>
 
 
 void MainWindow::initTesting()
@@ -77,6 +76,8 @@ void MainWindow::initTesting()
     {
         ui->sepEngineExtras->setVisible(false);
         QIcon theXTech;
+        theXTech.addPixmap(QPixmap(":/images/mushroom.png"));
+        theXTech.addPixmap(QPixmap(":/images/mushroom16.png"));
 
         QMenu *theXTechMenu = ui->menuTest->addMenu(theXTech, "TheXTech");
         ui->menuTest->insertMenu(menuNext, theXTechMenu);

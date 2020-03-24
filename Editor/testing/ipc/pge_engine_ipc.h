@@ -17,31 +17,57 @@
  */
 
 #pragma once
-#ifndef ENGINE_INTPROCINTPROC_H
-#define ENGINE_INTPROCINTPROC_H
+#ifndef PGE_ENGINE_IPC_H
+#define PGE_ENGINE_IPC_H
 
 #include <QObject>
 #include <QProcess>
 #include <PGE_File_Formats/lvl_filedata.h>
 
 /**
- * @brief Global re-usable IPC interface
+ * @brief PGE-Engine compatible IPC client
  */
-class IntEngineSignals : public QObject
+class IntEngine: public QObject
 {
     Q_OBJECT
 public:
-    explicit IntEngineSignals(QObject *parent = nullptr);
-    ~IntEngineSignals();
+    explicit IntEngine(QObject *parent);
+    ~IntEngine() override = default;
 
-signals:
+    void setMainWindow(QWidget *mw);
+
+    void init(QProcess *engine);
+    void quit();
+
+    bool isWorking();
+
     bool sendCheat(QString _args);
     bool sendMessageBox(QString _args);
+
     void sendPlacingBlock(const LevelBlock &block);
     void sendPlacingBGO(const LevelBGO &bgo);
     void sendPlacingNPC(const LevelNPC &npc);
+
+    void sendLevelBuffer();
+
+    void setTestLvlBuffer(LevelData &buffer);
+
+    bool sendMessage(const char *msg);
+    bool sendMessage(QString &msg);
+
+    LevelData testBuffer;
+
+signals:
+    void engineInputMsg(QString msg);
+
+private slots:
+    void onData();
+
+private:
+    bool sendItemPlacing(QString _args);
+
+    QWidget *m_mainWindow = nullptr;
+    QProcess *m_engine = nullptr;
 };
 
-extern IntEngineSignals g_intEngine;
-
-#endif // ENGINE_INTPROCINTPROC_H
+#endif // PGE_ENGINE_IPC_H
