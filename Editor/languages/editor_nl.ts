@@ -3403,8 +3403,8 @@ Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd i
         <translation>Sectie-afbeelding aan het opslagen...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>
@@ -7388,11 +7388,11 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation>Bij het opnieuw laden van de configuratie worden alle geopende bestanden gesloten en na het opnieuw laden terug geopened. Doorgaan met deze actie?</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>
@@ -7637,11 +7637,11 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
         <translation>[Geen geopende bestanden]</translation>
     </message>
     <message>
+        <location filename="../main_window/file/file_open.cpp" line="138"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="138"/>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <source>Configuration is loaded with errors</source>
         <translation>Configuratiepakket bevat fouten</translation>
     </message>
@@ -7672,8 +7672,8 @@ Het configuratiepakket bevat fouten.</translation>
         <translation>Nieuw NPC-configuratiebestand aanmaken</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <source>[all]</source>
         <translation>[Alle]</translation>
     </message>
@@ -7736,12 +7736,12 @@ Do you want to abort current testing process?</source>
 Wilt ut het huidige testproces afbreken?</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="172"/>
+        <location filename="../main_window/testing/testing.cpp" line="188"/>
         <source>World map testing of saved file</source>
         <translation>Wereldkaart testen van opgeslagen bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="173"/>
+        <location filename="../main_window/testing/testing.cpp" line="189"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation>Bestand is niet opgeslagen!
@@ -9613,6 +9613,81 @@ Het maximum aantal muziekdozen is %2.</translation>
     </message>
 </context>
 <context>
+    <name>TheXTechEngine</name>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation type="obsolete">Eigen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="142"/>
+        <source>Browse...</source>
+        <translation type="unfinished">Bladeren...</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="166"/>
+        <source>Save</source>
+        <translation type="unfinished">Opslaan</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="120"/>
+        <source>TheXTech path select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="127"/>
+        <source>Please select a path to TheXTech executable:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="136"/>
+        <source>Use default</source>
+        <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="139"/>
+        <source>Custom</source>
+        <comment>Using a user selected TheXTech path</comment>
+        <translation type="unfinished">Eigen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="177"/>
+        <source>Select a path to TheXTech executable</source>
+        <comment>File dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="277"/>
+        <source>Test level</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation type="unfinished">Niveau Testen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="282"/>
+        <source>Test saved level</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="287"/>
+        <source>Select TheXTech path...</source>
+        <comment>Select a path to TheXTech for use.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="289"/>
+        <source>Select a path to TheXTech for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="293"/>
+        <source>Start Game</source>
+        <comment>Launch TheXTech as a normal game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TilesetEditor</name>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="14"/>
@@ -11163,8 +11238,8 @@ LunaLua installeren kan deze limieten deels verhogen.</translation>
         <translation>Wereldkaart data aan het laden</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="411"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>

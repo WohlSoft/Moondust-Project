@@ -370,8 +370,8 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Save hitbox map as image</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="270"/>
         <location filename="../main/files_io.cpp" line="101"/>
+        <location filename="../main/settings.cpp" line="270"/>
         <source>Saved</source>
         <translation>Saved</translation>
     </message>

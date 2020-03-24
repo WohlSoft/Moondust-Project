@@ -11247,6 +11247,86 @@ Those preferences will makes no effect on a testing process before it will be fi
     </message>
 </context>
 <context>
+    <name>TheXTechEngine</name>
+    <message>
+        <source>LunaTester path select</source>
+        <translation type="obsolete">LunaTester path select</translation>
+    </message>
+    <message>
+        <source>Please select a path to LunaTester:</source>
+        <translation type="obsolete">Please select a path to LunaTester:</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default LunaTester path, specified by a config pack</comment>
+        <translation type="obsolete">Use default</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation type="obsolete">Custom</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished">Browse...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Save</translation>
+    </message>
+    <message>
+        <source>Select a LunaTester path</source>
+        <translation type="obsolete">Select a LunaTester path</translation>
+    </message>
+    <message>
+        <source>Test level</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation type="unfinished">Test level</translation>
+    </message>
+    <message>
+        <source>Test saved level</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select TheXTech path...</source>
+        <comment>Select a path to TheXTech for use.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a path to TheXTech for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch TheXTech as a normal game</comment>
+        <translation type="unfinished">Start Game</translation>
+    </message>
+    <message>
+        <source>TheXTech path select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a path to TheXTech executable:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
+        <translation type="unfinished">Use default</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected TheXTech path</comment>
+        <translation type="unfinished">Custom</translation>
+    </message>
+    <message>
+        <source>Select a path to TheXTech executable</source>
+        <comment>File dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TilesetConfigureDialog</name>
     <message>
         <source>Tileset name:</source>

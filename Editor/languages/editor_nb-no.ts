@@ -3120,8 +3120,8 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="503"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <source>Abort</source>
         <translation type="unfinished">Avbryt</translation>
     </message>
@@ -6894,8 +6894,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6975,11 +6975,11 @@ See %1 for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation type="unfinished">Avbryt</translation>
     </message>
@@ -7130,12 +7130,12 @@ Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="172"/>
+        <location filename="../main_window/testing/testing.cpp" line="188"/>
         <source>World map testing of saved file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="173"/>
+        <location filename="../main_window/testing/testing.cpp" line="189"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation type="unfinished"></translation>
@@ -7410,11 +7410,11 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/file/file_open.cpp" line="138"/>
+        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="138"/>
-        <location filename="../main_window/file/file_open.cpp" line="181"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9056,6 +9056,76 @@ The maximum number of Music Boxes is %2.</source>
     </message>
 </context>
 <context>
+    <name>TheXTechEngine</name>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="142"/>
+        <source>Browse...</source>
+        <translation type="unfinished">Utforsk…</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="166"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="120"/>
+        <source>TheXTech path select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="127"/>
+        <source>Please select a path to TheXTech executable:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="136"/>
+        <source>Use default</source>
+        <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="139"/>
+        <source>Custom</source>
+        <comment>Using a user selected TheXTech path</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="177"/>
+        <source>Select a path to TheXTech executable</source>
+        <comment>File dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="277"/>
+        <source>Test level</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="282"/>
+        <source>Test saved level</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="287"/>
+        <source>Select TheXTech path...</source>
+        <comment>Select a path to TheXTech for use.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="289"/>
+        <source>Select a path to TheXTech for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/engines/thextech_engine.cpp" line="293"/>
+        <source>Start Game</source>
+        <comment>Launch TheXTech as a normal game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TilesetEditor</name>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="14"/>
@@ -10521,8 +10591,8 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="411"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="122"/>
         <source>Abort</source>
         <translation type="unfinished">Avbryt</translation>
     </message>

@@ -7067,6 +7067,64 @@ The maximum number of Music Boxes is %2.</source>
     </message>
 </context>
 <context>
+    <name>TheXTechEngine</name>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished">Bläddra...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test level</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test saved level</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select TheXTech path...</source>
+        <comment>Select a path to TheXTech for use.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a path to TheXTech for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch TheXTech as a normal game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TheXTech path select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a path to TheXTech executable:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected TheXTech path</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a path to TheXTech executable</source>
+        <comment>File dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TilesetEditor</name>
     <message>
         <source>Tileset Editor</source>

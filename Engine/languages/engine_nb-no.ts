@@ -248,14 +248,14 @@ og prøv å kjøre nylige handlinger igjen for å innhente mer info.</translatio
         <translation>Start nivå på ny</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="551"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="303"/>
+        <location filename="../scenes/scene_world.cpp" line="551"/>
         <source>Invalid playable character ID</source>
         <translation>Ugyldig spillbar karakter-ID</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="560"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="312"/>
+        <location filename="../scenes/scene_world.cpp" line="560"/>
         <source>Invalid playable character state ID</source>
         <translation>Ugyldig spillbar karaktertilstands-ID</translation>
     </message>
