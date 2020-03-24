@@ -1776,7 +1776,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
                 }
                 else
                 {
-                    msg.warning(LunaTesterEngine::tr("LunaTesterEngine error"),
+                    msg.warning(LunaTesterEngine::tr("LunaEngine error"),
                                 LunaTesterEngine::tr("Failed to send level into LunaLUA-SMBX!"),
                                 QMessageBox::Ok);
                 }
