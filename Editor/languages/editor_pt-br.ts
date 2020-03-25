@@ -8397,6 +8397,63 @@ ao salvar o arquivo</translation>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Test level in battle mode</source>
+        <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Graphics type</source>
+        <comment>Choose a rendering system: software or accelerated</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Automatically selected rendering engine</comment>
+        <translation type="unfinished">Padrão</translation>
+    </message>
+    <message>
+        <source>Software</source>
+        <comment>Software rendering</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accelerated</source>
+        <comment>Hardware accelerated rendering</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Accelerated with V-Sync</source>
+        <comment>Hardware accelerated rendering with vertical synchronization support</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable magic hand</source>
+        <comment>Allow real-time picking-up of elements while playing a level test.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable max FPS</source>
+        <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable grab all</source>
+        <comment>Allow player to grab absolutely any NPCs in a game.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow player to grab any NPCs in a game.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TilesetConfigureDialog</name>
