@@ -92,7 +92,8 @@ QString ConfStatus::configPath;
 QString ConfStatus::configDataPath;
 
 QString ConfStatus::SmbxEXE_Name;
-bool    ConfStatus::SmbxTest_By_Default = false;
-bool    ConfStatus::SmbxTest_HidePgeEngine = false;
+
+ConfStatus::TestEngineType ConfStatus::defaultTestEngine = ConfStatus::ENGINE_PGE;
+bool ConfStatus::hideNonDefaultEngines = false;
 
 QString ConfStatus::defaultTheme;

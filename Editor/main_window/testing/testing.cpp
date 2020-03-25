@@ -47,10 +47,13 @@ void MainWindow::initTesting()
 {
     QAction *menuNext = ui->sepEngineExtras;
 
+    bool noDefault = ConfStatus::hideNonDefaultEngines;
+    auto defEngine = ConfStatus::defaultTestEngine;
+
     m_testPGE.reset(new PgeEngine(this));
     m_testPGE->init();
     m_testAllEngines.push_back(&m_testPGE);
-    if(!ConfStatus::SmbxTest_HidePgeEngine)
+    if(!noDefault || defEngine == ConfStatus::ENGINE_PGE)
     {
         ui->sepEngineExtras->setVisible(false);
         QIcon pgeEngine;
@@ -72,7 +75,7 @@ void MainWindow::initTesting()
     m_testTheXTech.reset(new TheXTechEngine(this));
     m_testTheXTech->init();
     m_testAllEngines.push_back(&m_testTheXTech);
-    if(!ConfStatus::SmbxTest_HidePgeEngine)
+    if(!noDefault || defEngine == ConfStatus::ENGINE_THEXTECH)
     {
         ui->sepEngineExtras->setVisible(false);
         QIcon theXTech;
@@ -93,6 +96,7 @@ void MainWindow::initTesting()
     m_testLunaTester.reset(new LunaTesterEngine(this));
     m_testLunaTester->init();
     m_testAllEngines.push_back(&m_testLunaTester);
+    if(!noDefault || defEngine == ConfStatus::ENGINE_LUNA)
     {
         ui->sepEngineExtras->setVisible(false);
         QIcon lunaIcon(":/lunalua.ico");
@@ -106,10 +110,23 @@ void MainWindow::initTesting()
         menuNext = sep;
     }
 
-    if(ConfStatus::SmbxTest_By_Default)
-        m_testEngine = m_testLunaTester.get();
-    else
+    switch(defEngine)
+    {
+    case ConfStatus::ENGINE_PGE:
+    default:
         m_testEngine = m_testPGE.get();
+        break;
+    case ConfStatus::ENGINE_LUNA:
+        m_testEngine = m_testLunaTester.get();
+        break;
+    case ConfStatus::ENGINE_THEXTECH:
+        m_testEngine = m_testTheXTech.get();
+        break;
+    case ConfStatus::ENGINE_38A:
+        // m_testEngine = m_test38A.get(); // TODO: uncomment this when 38A tester will be implemented
+        m_testEngine = m_testPGE.get();//TEMPORARELY
+        break;
+    }
 
     ui->action_doTest->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
     ui->action_doSafeTest->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));

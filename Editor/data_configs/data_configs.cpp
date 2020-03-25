@@ -384,8 +384,38 @@ bool DataConfig::loadFullConfig()
         mainSet.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
         // For LunaTester
         mainSet.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
-        mainSet.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
-        mainSet.read("smbx-test-hide-pge-engine-menu", ConfStatus::SmbxTest_HidePgeEngine, false);
+
+        mainSet.readEnum("default-engine-type",
+                         ConfStatus::defaultTestEngine,
+                         ConfStatus::ENGINE_PGE,
+        {
+            {"pge", ConfStatus::ENGINE_PGE},
+
+            {"luna", ConfStatus::ENGINE_LUNA},
+            {"lunatester", ConfStatus::ENGINE_LUNA},
+            {"smbx", ConfStatus::ENGINE_LUNA},
+
+            {"xtech", ConfStatus::ENGINE_THEXTECH},
+            {"thextech", ConfStatus::ENGINE_THEXTECH},
+
+            {"38a", ConfStatus::ENGINE_38A},
+            {"smbx38a", ConfStatus::ENGINE_38A},
+        });
+        mainSet.read("hide-non-default-engines", ConfStatus::hideNonDefaultEngines, false);
+
+        { // Deprecated, kept for compatibility
+            bool lunaDefault = false;
+            bool hidePgeEngine = false;
+
+            mainSet.read("smbx-test-by-default", lunaDefault, false);
+            mainSet.read("smbx-test-hide-pge-engine-menu", hidePgeEngine, false);
+
+            if(lunaDefault)
+            {
+                ConfStatus::defaultTestEngine = ConfStatus::ENGINE_LUNA;
+                ConfStatus::hideNonDefaultEngines = hidePgeEngine;
+            }
+        }
 
         dirs.worlds     = data_dir + mainSet.value("worlds", "worlds").toQString() + "/";
 

@@ -77,7 +77,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     {
         ui->action_doTest->setEnabled(WinType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
         ui->action_doSafeTest->setEnabled(WinType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
-        if(ConfStatus::SmbxTest_HidePgeEngine)
+        if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA)
             ui->action_doSafeTest->setVisible(false);
 
         ui->action_doTestWld->setEnabled(WinType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));

@@ -519,7 +519,7 @@ QString LunaTesterEngine::pathUnixToWine(const QString &unixPath)
 
 QString LunaTesterEngine::getEnginePath()
 {
-    if(ConfStatus::SmbxTest_By_Default)
+    if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA)
         return ConfStatus::configDataPath; // Ignore custom path
 
     return m_customLunaPath.isEmpty() ?
@@ -685,19 +685,22 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = KillBackgroundInstance;
     }
-    {
+
+    if(ConfStatus::defaultTestEngine != ConfStatus::ENGINE_LUNA)
         lunaMenu->addSeparator();
-        QAction *choosEnginePath = lunaMenu->addAction("changePath");
+
+    QAction *choosEnginePath;
+    {
+        choosEnginePath = lunaMenu->addAction("changePath");
         QObject::connect(choosEnginePath,   &QAction::triggered,
                     this,                   &LunaTesterEngine::chooseEnginePath,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = choosEnginePath;
     }
 
-    QAction *runLegacyEngine;
+    lunaMenu->addSeparator();
     {
-        lunaMenu->addSeparator();
-        runLegacyEngine = lunaMenu->addAction("startLegacyEngine");
+        QAction *runLegacyEngine = lunaMenu->addAction("startLegacyEngine");
         QObject::connect(runLegacyEngine,   &QAction::triggered,
                     this,              &LunaTesterEngine::lunaRunGame,
                     Qt::QueuedConnection);
@@ -707,9 +710,9 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
     retranslateMenu();
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &LunaTesterEngine::retranslateMenu);
 
-    if(ConfStatus::SmbxTest_By_Default)
+    if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA)
     {
-        runLegacyEngine->setVisible(false); // Don't show this when LunaTester is a default engine
+        choosEnginePath->setVisible(false); // Don't show this when LunaTester is a default engine
         ResetCheckPoints->setShortcut(QStringLiteral("Ctrl+F5"));
         ResetCheckPoints->setShortcutContext(Qt::WindowShortcut);
     }

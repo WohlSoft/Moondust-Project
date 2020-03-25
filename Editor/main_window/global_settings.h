@@ -186,8 +186,16 @@ public:
     static QString configDataPath;
 
     static QString SmbxEXE_Name;
-    static bool    SmbxTest_By_Default;
-    static bool    SmbxTest_HidePgeEngine;
+
+    enum TestEngineType
+    {
+        ENGINE_PGE,
+        ENGINE_LUNA,
+        ENGINE_THEXTECH,
+        ENGINE_38A
+    };
+    static TestEngineType defaultTestEngine;
+    static bool           hideNonDefaultEngines;
 };
 
 #endif // GLOBAL_SETTINGS_H
