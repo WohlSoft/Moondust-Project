@@ -60,6 +60,8 @@ void TheXTechEngine::loadSetup()
     settings.beginGroup("TheXTech");
     {
         m_customEnginePath = settings.value("custom-runtime-path", QString()).toString();
+        m_enableMagicHand = settings.value("enable-magic-hand", true).toBool();
+        m_renderType = settings.value("render-type", -1).toInt();
     }
     settings.endGroup();
 }
@@ -72,6 +74,8 @@ void TheXTechEngine::saveSetup()
     settings.beginGroup("TheXTech");
     {
         settings.setValue("custom-runtime-path", m_customEnginePath);
+        settings.setValue("enable-magic-hand", m_enableMagicHand);
+        settings.setValue("render-type", m_renderType);
     }
     settings.endGroup();
 }
@@ -272,9 +276,73 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         m_menuItems[menuItemId++] = RunLevelSafeTest;
     }
 
+    destmenu->addSeparator();
 
     {
-        destmenu->addSeparator();
+        QMenu *renderType = destmenu->addMenu("renderType");
+        m_menuItems[menuItemId++] = renderType->menuAction();
+
+        QAction *r_d, *r_s, *r_a, *r_v;
+
+        r_d = renderType->addAction("renderDefault");
+        r_d->setCheckable(true);
+        r_d->setChecked(m_renderType == -1);
+        m_menuItems[menuItemId++] = r_d;
+
+        r_s = renderType->addAction("renderSoftware");
+        r_s->setCheckable(true);
+        r_s->setChecked(m_renderType == 0);
+        m_menuItems[menuItemId++] = r_s;
+
+        r_a = renderType->addAction("renderAccelerated");
+        r_a->setCheckable(true);
+        r_a->setChecked(m_renderType == 1);
+        m_menuItems[menuItemId++] = r_a;
+
+        r_v = renderType->addAction("renderVSync");
+        r_v->setCheckable(true);
+        r_v->setChecked(m_renderType == 2);
+        m_menuItems[menuItemId++] = r_v;
+
+        QObject::connect(r_d,   &QAction::triggered,
+                    [this, r_d, r_s, r_a, r_v](bool)
+        {
+            r_d->setChecked(true);
+            r_s->setChecked(false);
+            r_a->setChecked(false);
+            r_v->setChecked(false);
+            m_renderType = -1;
+        });
+        QObject::connect(r_s,   &QAction::triggered,
+                    [this, r_d, r_s, r_a, r_v](bool)
+        {
+            r_d->setChecked(false);
+            r_s->setChecked(true);
+            r_a->setChecked(false);
+            r_v->setChecked(false);
+            m_renderType = 0;
+        });
+        QObject::connect(r_a,   &QAction::triggered,
+                    [this, r_d, r_s, r_a, r_v](bool)
+        {
+            r_d->setChecked(false);
+            r_s->setChecked(false);
+            r_a->setChecked(true);
+            r_v->setChecked(false);
+            m_renderType = 1;
+        });
+        QObject::connect(r_v,   &QAction::triggered,
+                    [this, r_d, r_s, r_a, r_v](bool)
+        {
+            r_d->setChecked(false);
+            r_s->setChecked(false);
+            r_a->setChecked(true);
+            r_v->setChecked(false);
+            m_renderType = 2;
+        });
+    }
+
+    {
         QAction *enableMagicHand;
         enableMagicHand = destmenu->addAction("enableMagicHand");
         enableMagicHand->setCheckable(true);
@@ -311,17 +379,19 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         m_menuItems[menuItemId++] = enableGrabAll;
     }
 
+    destmenu->addSeparator();
 
     {
-        destmenu->addSeparator();
         QAction *choosEnginePath = destmenu->addAction("changePath");
         QObject::connect(choosEnginePath,   &QAction::triggered,
                     this,                   &TheXTechEngine::chooseEnginePath,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = choosEnginePath;
     }
+
+    destmenu->addSeparator();
+
     {
-        destmenu->addSeparator();
         QAction *startGame = destmenu->addAction("startLegacyEngine");
         QObject::connect(startGame,   &QAction::triggered,
                     this,             &TheXTechEngine::startGameAction,
@@ -350,6 +420,33 @@ void TheXTechEngine::retranslateMenu()
         QAction *RunLunaTest = m_menuItems[menuItemId++];
         RunLunaTest->setText(tr("Test saved level",
                                 "Run the testing of current file in TheXTech from disk."));
+    }
+
+    {
+        QAction *renderType = m_menuItems[menuItemId++];
+        renderType->setText(tr("Graphics type",
+                               "Choose a rendering system: software or accelerated"));
+        //  Sub-menu
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Default",
+                                   "Automatically selected rendering engine"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Software",
+                                   "Software rendering"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Accelerated",
+                                   "Hardware accelerated rendering"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Accelerated with V-Sync",
+                                   "Hardware accelerated rendering with vertical synchronization support"));
+        }
     }
 
     {
@@ -433,6 +530,22 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
     if(m_enableMaxFps) args << "--max-fps";
     if(m_enableGrabAll) args << "--grab-all";
 
+    if(m_renderType >= 0)
+    {
+        switch(m_renderType)
+        {
+        case 0:
+            args << "--render" << "sw";
+            break;
+        case 1:
+            args << "--render" << "hw";
+            break;
+        case 2:
+            args << "--render" << "vsync";
+            break;
+        }
+    }
+
     edit->prepareLevelFile(data);
     interface.setTestLvlBuffer(data);
 
@@ -484,6 +597,22 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     if(t.xtra_showFPS) args << "--show-fps";
     if(m_enableMaxFps) args << "--max-fps";
     if(m_enableGrabAll) args << "--grab-all";
+
+    if(m_renderType >= 0)
+    {
+        switch(m_renderType)
+        {
+        case 0:
+            args << "--render" << "sw";
+            break;
+        case 1:
+            args << "--render" << "hw";
+            break;
+        case 2:
+            args << "--render" << "vsync";
+            break;
+        }
+    }
 
     args << "-l" << levelFile;
 
