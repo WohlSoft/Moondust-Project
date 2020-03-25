@@ -37,8 +37,11 @@ namespace IntProc
 
     enum ExternalCommands
     {
+        //! Show messag ebox
         MsgBox = 0,
+        //! Cheat code proxy
         Cheat = 1,
+        //! Place item (magic-hand only)
         PlaceItem = 2
     };
 
@@ -47,6 +50,17 @@ namespace IntProc
         std::string cmd;
         ExternalCommands type;
     };
+
+    /**
+     * @brief IPC interface has accepted level data
+     * @return true if IPC interface keeps a complete level data buffer
+     */
+    bool hasLevelData();
+    /**
+     * @brief Is level data in process of receiving
+     * @return true if receiving is in process
+     */
+    bool levelReceivingInProcess();
 
     bool sendMessage(const char *command);
     bool sendMessageS(const std::string &command);

@@ -57,9 +57,10 @@ bool LevelScene::loadFileIP()
     //wait for accepting of level data
     bool timeOut = false;
     int attempts = 0;
-    pLogDebug("ICP: Waiting reply....");
 
-    while(!IntProc::editor->levelIsLoad())
+    pLogDebug("ICP: Waiting reply....");
+    IntProc::setState("Waiting for input data...");
+    while(!IntProc::hasLevelData())
     {
         loaderStep();
 
@@ -67,9 +68,10 @@ bool LevelScene::loadFileIP()
         if(!m_isLevelContinues)
             return false;
 
-        if(time.elapsed() > 1500)
+        if(!IntProc::levelReceivingInProcess() && time.elapsed() > 1500)
         {
             pLogDebug("ICP: Waiting #%d....", attempts);
+            IntProc::sendMessage("CMD:CONNECT_TO_ENGINE"); // Re-ask again
             time.restart();
             attempts += 1;
         }
