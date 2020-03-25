@@ -82,7 +82,7 @@ void LevelEdit::prepareLevelFile(LevelData &data)
     if(!sceneCreated || !scene)
         return;
 
-    dataconfigs *config = scene->m_configs;
+    DataConfig *config = scene->m_configs;
 
     FileFormats::arrayIdLevelSortBGOs(data);
 

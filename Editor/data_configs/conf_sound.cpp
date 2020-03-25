@@ -20,14 +20,14 @@
 #include <main_window/global_settings.h>
 #include "data_configs.h"
 
-long dataconfigs::getSndI(unsigned long itemID)
+long DataConfig::getSndI(unsigned long itemID)
 {
     if((itemID>0) && main_sound.contains(int(itemID)))
         return long(itemID);
     return 0;
 }
 
-void dataconfigs::loadSound()
+void DataConfig::loadSound()
 {
     unsigned int i;
 

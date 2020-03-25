@@ -22,7 +22,7 @@
 
 #include "data_configs.h"
 
-void dataconfigs::loadTilesets()
+void DataConfig::loadTilesets()
 {
     main_tilesets.clear();
     main_tilesets_grp.clear();

@@ -57,7 +57,7 @@ class WldScene : public QGraphicsScene
     friend class WorldEdit;
     friend class WldHistoryManager;
 public:
-    WldScene(MainWindow *mw, GraphicsWorkspace *parentView, dataconfigs &configs, WorldData &FileData, QObject *parent = 0);
+    WldScene(MainWindow *mw, GraphicsWorkspace *parentView, DataConfig &configs, WorldData &FileData, QObject *parent = 0);
     ~WldScene();
 
     /* //////////////////////Contents/////////////////////////////
@@ -97,7 +97,7 @@ public:
     //! Main window pointer
     MainWindow         *m_mw;
     //! Pointer to global configuration in the main window
-    dataconfigs        *m_configs;
+    DataConfig        *m_configs;
     //! Pointer to level data storage in the sub-window class
     WorldData          *m_data;
     //! Pointer to parent graphics view

@@ -93,7 +93,7 @@ public:
     bool initEverything(const QString &configDir, const QString &themePack);
 
     //! Global game configucrations
-    dataconfigs configs;
+    DataConfig configs;
 
 /* //////////////////////Contents/////////////////////////////
  * COMMON

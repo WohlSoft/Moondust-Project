@@ -64,7 +64,7 @@ class LvlScene : public QGraphicsScene
     friend class LevelEdit;
     friend class LvlHistoryManager;
 public:
-    LvlScene(MainWindow *mw, GraphicsWorkspace *parentView, dataconfigs &configs, LevelData &FileData, QObject *parent = 0);
+    LvlScene(MainWindow *mw, GraphicsWorkspace *parentView, DataConfig &configs, LevelData &FileData, QObject *parent = 0);
     ~LvlScene();
 
     /* //////////////////////Contents/////////////////////////////
@@ -106,7 +106,7 @@ public:
     //! Main window pointer
     MainWindow         *m_mw;
     //! Pointer to global configuration in the main window
-    dataconfigs        *m_configs;
+    DataConfig        *m_configs;
     //! Pointer to level data storage in the sub-window class
     LevelData          *m_data;
     //! Pointer to parent graphics view

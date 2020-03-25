@@ -36,7 +36,7 @@
 
 WldScene::WldScene(MainWindow *mw,
                    GraphicsWorkspace * parentView,
-                   dataconfigs &configs,
+                   DataConfig &configs,
                    WorldData &FileData,
                    QObject *parent) :
     QGraphicsScene(parent),

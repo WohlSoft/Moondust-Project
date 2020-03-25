@@ -35,7 +35,7 @@
 
 LvlScene::LvlScene(MainWindow* mw,
                    GraphicsWorkspace * parentView,
-                   dataconfigs &configs,
+                   DataConfig &configs,
                    LevelData &FileData,
                    QObject *parent) :
     QGraphicsScene(parent),

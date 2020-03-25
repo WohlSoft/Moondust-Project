@@ -19,7 +19,7 @@
 #include <common_features/items.h>
 #include "data_configs.h"
 
-void dataconfigs::loadRotationTable()
+void DataConfig::loadRotationTable()
 {
     size_t i = 0;
     obj_rotation_table rTable;

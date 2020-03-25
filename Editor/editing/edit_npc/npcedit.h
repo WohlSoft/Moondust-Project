@@ -45,7 +45,7 @@ class NpcEdit : public EditBase
 
     friend class MainWindow;
 public:
-    explicit NpcEdit(MainWindow *mw, dataconfigs *configs, QWidget *parent = 0);
+    explicit NpcEdit(MainWindow *mw, DataConfig *configs, QWidget *parent = 0);
     ~NpcEdit();
 
 public slots:
@@ -180,7 +180,7 @@ private:
 
     unsigned int    m_fileType = 2;
 
-    dataconfigs     *m_configPack = nullptr;
+    DataConfig     *m_configPack = nullptr;
     NPCConfigFile   m_npcDataBackup;
     NPCConfigFile   m_npcDataDefault;
     void setDefaultData(unsigned long m_currentNpcId);

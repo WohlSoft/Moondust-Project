@@ -58,8 +58,8 @@ public:
     long    currentMusic;
     QString currentCustomMusic;
 
-    bool newFile(dataconfigs &configs, EditingSettings options);
-    bool loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options);
+    bool newFile(DataConfig &configs, EditingSettings options);
+    bool loadFile(const QString &fileName, WorldData FileData, DataConfig &configs, EditingSettings options);
     void showCustomStuffWarnings();
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);

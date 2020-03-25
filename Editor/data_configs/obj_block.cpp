@@ -53,7 +53,7 @@ void obj_block::copyTo(obj_block &block)
  * \param setup loaded INI-file descriptor to load from global nested INI-file
  * \return true on success loading, false if error has occouped
  */
-bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
@@ -81,7 +81,7 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
 }
 
 
-void dataconfigs::loadLevelBlocks()
+void DataConfig::loadLevelBlocks()
 {
     unsigned int i;
 

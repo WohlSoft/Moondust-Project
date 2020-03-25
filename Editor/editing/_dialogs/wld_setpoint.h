@@ -30,7 +30,7 @@ public:
     WorldData m_worldData;
 
     bool loadFile(const WorldData &FileData,
-                  dataconfigs &configs,
+                  DataConfig &configs,
                   EditingSettings options);
 
     void resetPosition();

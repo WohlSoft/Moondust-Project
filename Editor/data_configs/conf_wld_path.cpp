@@ -23,7 +23,7 @@
 
 #include "data_configs.h"
 
-bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
@@ -50,7 +50,7 @@ bool dataconfigs::loadWorldPath(obj_w_path &spath, QString section, obj_w_path *
     return valid;
 }
 
-void dataconfigs::loadWorldPaths()
+void DataConfig::loadWorldPaths()
 {
     unsigned int i;
 

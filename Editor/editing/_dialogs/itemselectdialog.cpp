@@ -55,7 +55,7 @@ static QPixmap emptyPixmap(QSize size)
     return QPixmap::fromImage(img);
 }
 
-ItemSelectDialog::ItemSelectDialog(dataconfigs *conf, int tabs, int npcExtraData,
+ItemSelectDialog::ItemSelectDialog(DataConfig *conf, int tabs, int npcExtraData,
                                    int curSelIDBlock, int curSelIDBGO, int curSelIDNPC,
                                    int curSelIDTile, int curSelIDScenery, int curSelIDPath,
                                    int curSelIDLevel, int curSelIDMusic,

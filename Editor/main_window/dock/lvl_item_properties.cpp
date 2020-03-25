@@ -207,7 +207,7 @@ QComboBox *LvlItemProperties::cbox_event_npc_le()
 
 void LvlItemProperties::setSMBX64Strict(bool en)
 {
-    dataconfigs &c = mw()->configs;
+    DataConfig &c = mw()->configs;
     bool zLayer_hide = (c.editor.supported_features.level_bgo_z_layer == EditorSetup::FeaturesSupport::F_HIDDEN);
     bool zLayer_active = (c.editor.supported_features.level_bgo_z_layer == EditorSetup::FeaturesSupport::F_ENABLED);
 

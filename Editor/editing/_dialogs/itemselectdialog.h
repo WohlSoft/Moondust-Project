@@ -45,7 +45,7 @@ class ItemSelectDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ItemSelectDialog(dataconfigs *configs, int tabs, int npcExtraData = 0,
+    explicit ItemSelectDialog(DataConfig *configs, int tabs, int npcExtraData = 0,
                               int curSelIDBlock = 0, int curSelIDBGO = 0, int curSelIDNPC = 0,
                               int curSelIDTile = 0, int curSelIDScenery = 0, int curSelIDPath = 0,
                               int curSelIDLevel = 0, int curSelIDMusic = 0, QWidget *parent = nullptr,
@@ -166,7 +166,7 @@ private:
 
     QString worldMapRoot;
 
-    dataconfigs *conf;
+    DataConfig *conf;
     Ui::ItemSelectDialog *ui;
 };
 

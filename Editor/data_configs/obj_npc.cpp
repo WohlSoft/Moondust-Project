@@ -48,7 +48,7 @@ void obj_npc::copyTo(obj_npc &npc)
     npc.setup = setup;
 }
 
-bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool internal = !setup;
     QString errStr;
@@ -79,7 +79,7 @@ bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_wi
 
 
 
-void dataconfigs::loadLevelNPC()
+void DataConfig::loadLevelNPC()
 {
     unsigned long i;
     obj_npc snpc;

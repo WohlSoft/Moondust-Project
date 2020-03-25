@@ -68,7 +68,7 @@ public:
         Sort_ById
     };
 
-    explicit ElementsListModel(dataconfigs* conf, ElementType pieceType, int pieceSize = 32, QGraphicsScene *scene=0, QObject *parent = 0);
+    explicit ElementsListModel(DataConfig* conf, ElementType pieceType, int pieceSize = 32, QGraphicsScene *scene=0, QObject *parent = 0);
 
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -119,7 +119,7 @@ private:
     void    updateSort();
 
     int m_PieceSize;
-    dataconfigs* m_conf;
+    DataConfig* m_conf;
     ElementType m_type;
 };
 

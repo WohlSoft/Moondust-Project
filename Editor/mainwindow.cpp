@@ -117,7 +117,7 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
 
         /*********************Loading of config pack**********************/
         // Do the loading in a thread
-        QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
+        QFuture<bool> isOk = QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig);
         /*********************Loading of config pack**********************/
 
         /*********************Splash Screen**********************/

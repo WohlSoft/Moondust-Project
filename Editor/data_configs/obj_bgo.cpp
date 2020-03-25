@@ -51,7 +51,7 @@ void obj_bgo::copyTo(obj_bgo &bgo)
  * \param setup loaded INI-file descriptor to load from global nested INI-file
  * \return true on success loading, false if error has occouped
  */
-bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
@@ -79,7 +79,7 @@ bool dataconfigs::loadLevelBGO(obj_bgo &sbgo, QString section, obj_bgo *merge_wi
 }
 
 
-void dataconfigs::loadLevelBGO()
+void DataConfig::loadLevelBGO()
 {
     unsigned long i;
 

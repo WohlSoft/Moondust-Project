@@ -109,7 +109,7 @@ void Items::getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGra
 {
     LvlScene *scene_lvl = dynamic_cast<LvlScene *>(scene);
     WldScene *scene_wld = dynamic_cast<WldScene *>(scene);
-    dataconfigs &config = MainWinConnect::pMainWin->configs;
+    DataConfig &config = MainWinConnect::pMainWin->configs;
     switch(itemType)
     {
     case ItemTypes::LVL_Block:
@@ -164,7 +164,7 @@ QString Items::getTilesetToolTip(int itemType, unsigned long ItemID, QGraphicsSc
 {
     LvlScene *scene_lvl = dynamic_cast<LvlScene *>(scene);
     WldScene *scene_wld = dynamic_cast<WldScene *>(scene);
-    dataconfigs &config = MainWinConnect::pMainWin->configs;
+    DataConfig &config = MainWinConnect::pMainWin->configs;
     switch(itemType)
     {
     case ItemTypes::LVL_Block:

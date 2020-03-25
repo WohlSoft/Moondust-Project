@@ -38,7 +38,7 @@ void obj_BG::copyTo(obj_BG &bg)
     bg.setup = setup;
 }
 
-bool dataconfigs::loadLevelBackground(obj_BG &sbg,
+bool DataConfig::loadLevelBackground(obj_BG &sbg,
                                       QString section,
                                       obj_BG *merge_with,
                                       QString iniFile,
@@ -78,7 +78,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg,
 }
 
 
-void dataconfigs::loadLevelBackgrounds()
+void DataConfig::loadLevelBackgrounds()
 {
     unsigned int i;
     obj_BG sbg;

@@ -23,7 +23,7 @@
 
 #include "data_configs.h"
 
-bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_scenery *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_scenery *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
@@ -51,7 +51,7 @@ bool dataconfigs::loadWorldScene(obj_w_scenery &sScene, QString section, obj_w_s
 }
 
 
-void dataconfigs::loadWorldScene()
+void DataConfig::loadWorldScene()
 {
     unsigned int i;
 

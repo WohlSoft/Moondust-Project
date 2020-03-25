@@ -178,14 +178,14 @@ struct obj_blockGlobalSetup
     int32_t sizable_block_border_size = -1;
 };
 
-class dataconfigs : public QObject
+class DataConfig : public QObject
 {
     Q_OBJECT
 public:
-    dataconfigs();
-    ~dataconfigs() override = default;
+    DataConfig();
+    ~DataConfig() override = default;
 
-    bool loadconfigs();
+    bool loadFullConfig();
     DataFolders dirs;
     QString config_dir;
     QString data_dir;

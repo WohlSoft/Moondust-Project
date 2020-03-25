@@ -36,7 +36,7 @@
 
 #include "data_configs.h"
 
-dataconfigs::dataconfigs()
+DataConfig::DataConfig()
 {
     total_data = 0;
 
@@ -72,7 +72,7 @@ frames = 1          ; default = 1
 frame-speed=125         ; default = 125 ms, etc. 8 frames per sec
 */
 
-QString dataconfigs::getFullIniPath(QString iniFileName)
+QString DataConfig::getFullIniPath(QString iniFileName)
 {
     QString path_ini = config_dir + iniFileName;
     if(!QFile::exists(path_ini))
@@ -83,7 +83,7 @@ QString dataconfigs::getFullIniPath(QString iniFileName)
     return path_ini;
 }
 
-bool dataconfigs::openSection(IniProcessing *config, const std::string &section, bool tryGeneral)
+bool DataConfig::openSection(IniProcessing *config, const std::string &section, bool tryGeneral)
 {
     //Check for availability of the INI section
     if(!config->beginGroup(section))
@@ -99,20 +99,20 @@ bool dataconfigs::openSection(IniProcessing *config, const std::string &section,
     return true;
 }
 
-void dataconfigs::addError(QString bug, PGE_LogLevel level)
+void DataConfig::addError(QString bug, PGE_LogLevel level)
 {
     WriteToLog(level, QString("LoadConfig -> %1").arg(bug));
     errorsList[m_errOut] << bug;
 }
 
-void dataconfigs::setConfigPath(QString p)
+void DataConfig::setConfigPath(QString p)
 {
     config_dir = p;
     if(!config_dir.endsWith('/'))
         config_dir.append('/');
 }
 
-bool dataconfigs::loadBasics()
+bool DataConfig::loadBasics()
 {
     errorsList[ERR_GLOBAL].clear();
     errorsList[ERR_CUSTOM].clear();
@@ -333,7 +333,7 @@ bool dataconfigs::loadBasics()
     return true;
 }
 
-bool dataconfigs::loadconfigs()
+bool DataConfig::loadFullConfig()
 {
     total_data = 0;
     defaultGrid.general = 0;
@@ -541,7 +541,7 @@ bool dataconfigs::loadconfigs()
     return true;
 }
 
-bool dataconfigs::check()
+bool DataConfig::check()
 {
     return
         (
@@ -561,12 +561,12 @@ bool dataconfigs::check()
                 )/* && (!m_isValid)*/;
 }
 
-bool dataconfigs::checkCustom()
+bool DataConfig::checkCustom()
 {
     return !errorsList[ERR_CUSTOM].isEmpty();
 }
 
-long dataconfigs::getCharacterI(unsigned long itemID)
+long DataConfig::getCharacterI(unsigned long itemID)
 {
     int j;
     bool found = false;
@@ -584,53 +584,53 @@ long dataconfigs::getCharacterI(unsigned long itemID)
 }
 
 
-QString dataconfigs::getBgoPath()
+QString DataConfig::getBgoPath()
 {
     return folderLvlBgo.graphics;
 }
 
-QString dataconfigs::getBGPath()
+QString DataConfig::getBGPath()
 {
     return folderLvlBG.graphics;
 }
 
-QString dataconfigs::getBlockPath()
+QString DataConfig::getBlockPath()
 {
     return folderLvlBlocks.graphics;
 }
 
-QString dataconfigs::getNpcPath()
+QString DataConfig::getNpcPath()
 {
     return folderLvlNPC.graphics;
 }
 
-QString dataconfigs::getTilePath()
+QString DataConfig::getTilePath()
 {
     return folderWldTerrain.graphics;
 }
 
-QString dataconfigs::getScenePath()
+QString DataConfig::getScenePath()
 {
     return folderWldScenery.graphics;
 }
 
-QString dataconfigs::getPathPath()
+QString DataConfig::getPathPath()
 {
     return folderWldPaths.graphics;
 }
 
-QString dataconfigs::getWlvlPath()
+QString DataConfig::getWlvlPath()
 {
     return folderWldLevelPoints.graphics;
 }
 
-bool dataconfigs::isExtraSettingsLocalAtRoot()
+bool DataConfig::isExtraSettingsLocalAtRoot()
 {
     return m_extraSettingsLocalAtRoot;
 }
 
 
-QString dataconfigs::getBgoExtraSettingsPath()
+QString DataConfig::getBgoExtraSettingsPath()
 {
     if(folderLvlBgo.extraSettings.isEmpty())
         return config_dir + "items/bgo";
@@ -642,7 +642,7 @@ QString dataconfigs::getBgoExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getBlockExtraSettingsPath()
+QString DataConfig::getBlockExtraSettingsPath()
 {
     if(folderLvlBlocks.extraSettings.isEmpty())
         return config_dir + "items/blocks";
@@ -654,7 +654,7 @@ QString dataconfigs::getBlockExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getNpcExtraSettingsPath()
+QString DataConfig::getNpcExtraSettingsPath()
 {
     if(folderLvlNPC.extraSettings.isEmpty())
         return config_dir + "items/npc";
@@ -666,7 +666,7 @@ QString dataconfigs::getNpcExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getTileExtraSettingsPath()
+QString DataConfig::getTileExtraSettingsPath()
 {
     if(folderWldTerrain.extraSettings.isEmpty())
         return config_dir + "items/terrain";
@@ -678,7 +678,7 @@ QString dataconfigs::getTileExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getSceneExtraSettingsPath()
+QString DataConfig::getSceneExtraSettingsPath()
 {
     if(folderWldScenery.extraSettings.isEmpty())
         return config_dir + "items/scenery";
@@ -690,7 +690,7 @@ QString dataconfigs::getSceneExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getPathExtraSettingsPath()
+QString DataConfig::getPathExtraSettingsPath()
 {
     if(folderWldPaths.extraSettings.isEmpty())
         return config_dir + "items/paths";
@@ -702,7 +702,7 @@ QString dataconfigs::getPathExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getWlvlExtraSettingsPath()
+QString DataConfig::getWlvlExtraSettingsPath()
 {
     if(folderWldLevelPoints.extraSettings.isEmpty())
         return config_dir + "items/levels";
