@@ -123,6 +123,11 @@ LevelScene::LevelScene()
     m_debug_event_delay = 0;
 }
 
+LevelData *LevelScene::levelData()
+{
+    return &m_data;
+}
+
 void LevelScene::processPhysics(double ticks)
 {
     //Iterate layer movement

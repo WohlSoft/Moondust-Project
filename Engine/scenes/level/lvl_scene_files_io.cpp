@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Moondust, a free game engine for platform game making
  * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
@@ -46,7 +46,8 @@ bool LevelScene::loadFile(const std::string &filePath)
 
 bool LevelScene::loadFileIP()
 {
-    if(!IntProc::isEnabled()) return false;
+    if(!IntProc::isEnabled())
+        return false;
 
     FileFormats::CreateLevelData(m_data);
     m_data.meta.ReadFileValid = false;
@@ -66,7 +67,10 @@ bool LevelScene::loadFileIP()
 
         //Abort loading process and exit from game if window was closed
         if(!m_isLevelContinues)
+        {
+            stopLoaderAnimation();
             return false;
+        }
 
         if(!IntProc::levelReceivingInProcess() && time.elapsed() > 1500)
         {
@@ -83,7 +87,7 @@ bool LevelScene::loadFileIP()
             break;
         }
 
-        PGE_Delay(30);
+        PGE_Delay(2);
     }
 
     m_data = IntProc::editor->m_acceptedLevel;

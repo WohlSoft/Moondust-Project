@@ -428,6 +428,8 @@ static void pgeLevelPlayScreen(AppInstance &a)
         lScene->setGameState(&a.gameState);
         bool sceneResult = true;
 
+        lScene->setLoaderAnimation(15);
+
         if(a.gameState.m_nextLevelFile.empty())
         {
             if(g_AppSettings.interprocessing && IntProc::isEnabled())
@@ -472,6 +474,8 @@ static void pgeLevelPlayScreen(AppInstance &a)
 
         if(sceneResult)
             sceneResult = lScene->init();
+
+        lScene->stopLoaderAnimation();
 
         if(sceneResult)
         {
