@@ -6,17 +6,17 @@
     <message>
         <location filename="../testing/abstract_engine.cpp" line="87"/>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Testen van wereldkaart is niet ondersteund voor IPC</translation>
     </message>
     <message>
         <location filename="../testing/abstract_engine.cpp" line="94"/>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Testen van wereldkaart is niet ondersteund</translation>
     </message>
     <message>
         <location filename="../testing/abstract_engine.cpp" line="100"/>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Deze functie is niet geïimplementeerd</translation>
     </message>
 </context>
 <context>
@@ -1617,18 +1617,18 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../editing/_dialogs/file_list_browser.ui" line="20"/>
         <source>Files list</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestandslijst</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/file_list_browser.ui" line="30"/>
         <location filename="../editing/_dialogs/file_list_browser.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met niveau-bestanden die in dezelfde map zitten als het huidige bestand. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
+        <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt;Dit is een lijst met niveau-bestanden die in dezelfde map zitten als het huidige bestand. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/file_list_browser.ui" line="33"/>
         <source>Please select a file from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve een bestand te kiezen uit de lijst:</translation>
     </message>
 </context>
 <context>
@@ -3257,12 +3257,12 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="964"/>
         <source>Browse</source>
-        <translation type="unfinished">Bladeren</translation>
+        <translation>Bladeren</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="973"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Spelen</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="1080"/>
@@ -3273,7 +3273,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../common_features/json_settings_widget.cpp" line="1090"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1092"/>
         <source>[empty]</source>
-        <translation type="unfinished">[leeg]</translation>
+        <translation>[leeg]</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="1319"/>
@@ -3282,7 +3282,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../common_features/json_settings_widget.cpp" line="1697"/>
         <source>W</source>
         <comment>Width, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation>b</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="1331"/>
@@ -3291,7 +3291,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../common_features/json_settings_widget.cpp" line="1708"/>
         <source>H</source>
         <comment>Height, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation>h</translation>
     </message>
 </context>
 <context>
@@ -4040,185 +4040,185 @@ Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!<
         <location filename="../testing/luna_tester_engine.cpp" line="723"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation type="unfinished">Niveau Testen</translation>
+        <translation>Niveau Testen</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="725"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation type="unfinished">Start het niveau in het SMBX programma.
+        <translation>Test het niveau in het SMBX programma.
 Deze functie vereist LunaLua.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="731"/>
         <source>Reset checkpoints</source>
-        <translation type="unfinished">Herstartpunten resetten</translation>
+        <translation>Herstartpunten resetten</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="732"/>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished">Alle herstartpunten resetten.</translation>
+        <translation>Alle herstartpunten resetten.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="736"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="unfinished">OpenGL uitschakelen</translation>
+        <translation>OpenGL uitschakelen</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="737"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="unfinished">Schakel het OpenGL beeldenprogramma uit en gebruik GDI in plaats daarvan. Handig als uw grafische kaart geen ondersteuning biedt voor OpenGL of LunaLua crasht bij elke poging tot gebruik. Dit zal in sterk verminderde functies resulteren.</translation>
+        <translation>Schakel het OpenGL beeldenprogramma uit en gebruik GDI in plaats daarvan. Handig als uw grafische kaart geen ondersteuning biedt voor OpenGL of LunaLua crasht bij elke poging tot gebruik. Dit zal in sterk verminderde functies resulteren.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="743"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="unfinished">In de achtergrond blijven draaien</translation>
+        <translation>In de achtergrond open laten staan</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="745"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished">Dit laat toe om niveaus sneller te openen na de eerste opstarting.
-Dit veriest een krachtige computer, anders kan het programma hangen bij de volgende test start.
+        <translation>Dit laat toe om niveaus sneller te openen na de eerste opstarting.
+Dit veriest een krachtige computer, anders kan het programma hangen bij de volgende poging to testen.
 Het is aanbevolen om deze functie uit te schakelen op tragere machines of wanneer er problemen voorkomen bij het opnieuw testen van niveaus.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="751"/>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="unfinished">Hangende lader beïndigen</translation>
+        <translation>Hangende lader beïndigen</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="753"/>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="unfinished">Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
+        <translation>Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="757"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished">Lopend proces beëindigen</translation>
+        <translation>Lopend proces beëindigen</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="760"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished">Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
+        <translation>Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="764"/>
         <source>Select LunaTester path...</source>
         <comment>Select a path to LunaTester for use.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer het LunaTester pad...</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="766"/>
         <source>Select a path to LunaTester for use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een pad naar LunaTester voor gebruik.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="770"/>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spel Starten</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="772"/>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester als een normaal spel lanceren.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="840"/>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="unfinished">LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
+        <translation>LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="901"/>
         <source>Are you really want to terminate loader thread?</source>
-        <translation type="unfinished">Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
+        <translation>Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="912"/>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="unfinished">Laad-draad (thread) is niet actief.</translation>
+        <translation>Laad-draad (thread) is niet actief.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="927"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished">Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
+        <translation>Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="934"/>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished">LunaTester is succesvol afgesloten.</translation>
+        <translation>LunaTester is succesvol afgesloten.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="942"/>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished">LuneTester is niet actief.</translation>
+        <translation>LunaTester is niet actief.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="950"/>
         <source>LunaTester path select</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester pad selectie</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="957"/>
         <source>Please select a path to LunaTester:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve een pad te selecteren naar LunaTester:</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="966"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation>Standaardinstellingen gebruiken</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="969"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
-        <translation type="unfinished">Eigen</translation>
+        <translation>Eigen</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="972"/>
         <source>Browse...</source>
-        <translation type="unfinished">Bladeren...</translation>
+        <translation>Bladeren...</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="996"/>
         <source>Save</source>
-        <translation type="unfinished">Opslaan</translation>
+        <translation>Opslaan</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1007"/>
         <source>Select a LunaTester path</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer het LunaTester pad</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1334"/>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished">Herstartpunten succesvol gereset!</translation>
+        <translation>Herstartpunten succesvol gereset!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1346"/>
         <source>LunaTester error!</source>
-        <translation type="unfinished">LunaTester fout!</translation>
+        <translation>LunaTester fout!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1358"/>
         <source>LunaLUA tester is not started!</source>
-        <translation type="unfinished">LunaTester kon niet gestart worden!</translation>
+        <translation>LunaTester kon niet gestart worden!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1497"/>
         <source>SMBX64 limits are excited!</source>
-        <translation type="unfinished">SMBX64 limieten overschreden!</translation>
+        <translation>SMBX64 limieten overschreden!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1498"/>
@@ -4227,7 +4227,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation type="unfinished">Er is een overtreding van SMBX64 standaard gebeurd!
+        <translation>Er werd een overtreding van de SMBX64 standaard gevonden!
 %1, oorspronkelijke programma kan vastlopen!
 Het is aanbevolen om alle overtollige elementen te verwijderen.
 Wilt u doorgaan met het proces?</translation>
@@ -4235,32 +4235,32 @@ Wilt u doorgaan met het proces?</translation>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1514"/>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="unfinished">SMBX map was niet correct geconfigureerd</translation>
+        <translation>SMBX map was niet correct geconfigureerd</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1515"/>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="unfinished">%1 niet gevonden!
+        <translation>%1 niet gevonden!
 Voor het uitvoeren van testen in SMBX moet u het SMBX-integratie configuratiepakket gebruiken!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1538"/>
         <source>SMBX Test is already runned</source>
-        <translation type="unfinished">SMBX-test is al actief</translation>
+        <translation>SMBX-test is al actief</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1539"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation type="unfinished">Het SMBX programma is al een ander niveau aan het testen.
+        <translation>Het SMBX programma is al een ander niveau aan het testen.
 Wilt u het huidige testproces sluiten?</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1558"/>
         <location filename="../testing/luna_tester_engine.cpp" line="1730"/>
         <source>Vanilla SMBX detected!</source>
-        <translation type="unfinished">Vanilla SMBX gedetecteerd!</translation>
+        <translation>Vanilla SMBX gedetecteerd!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1559"/>
@@ -4274,9 +4274,9 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation type="unfinished">%2 niet gevonden!
-Je hebt een vanilla SMBX! &lt;br&gt;
-Dat betekent dat het onmogelijk is om het testen niveaus automatisch te starten. Om uw niveau te testen, wordt een dummy episode gegenereerd, die u handmatig starten en selecteren. &lt;br&gt;
+        <translation>%2 niet gevonden!
+U hebt een vanilla SMBX! &lt;br&gt;
+Dat betekent dat het onmogelijk is om het testen van niveaus automatisch te starten. Om uw niveau te testen, wordt een dummy episode gegenereerd, die u handmatig kan starten en selecteren. &lt;br&gt;
 &lt;br&gt;
 Naam van de te genereren episode: %1 &lt;br&gt;
 &lt;br&gt;
@@ -4288,13 +4288,13 @@ Als u een volledige testomgeving wilt hebben, installeer dan LunaLua: &lt;br&gt;
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1715"/>
         <source>File save error</source>
-        <translation type="unfinished">Fout bij het opslaan van het bestand</translation>
+        <translation>Fout bij het opslaan van het bestand</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1716"/>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished">Kan %1 bestand niet opslaan:
+        <translation>Kan %1 bestand niet opslaan:
 %2.</translation>
     </message>
     <message>
@@ -4302,43 +4302,43 @@ Als u een volledige testomgeving wilt hebben, installeer dan LunaLua: &lt;br&gt;
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="unfinished">%2 niet gevonden!
-Je hebt een vanilla SMBX! &lt;br&gt;
+        <translation>%2 niet gevonden!
+U hebt een vanilla SMBX! &lt;br&gt;
 Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1780"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished">Kon niveau niet naar LunaLua sturen!</translation>
+        <translation>Kon niveau niet naar LunaLua SMBX sturen!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1779"/>
         <location filename="../testing/luna_tester_engine.cpp" line="1787"/>
         <location filename="../testing/luna_tester_engine.cpp" line="1839"/>
         <source>LunaTester error</source>
-        <translation type="unfinished">LunaTester fout</translation>
+        <translation>LunaTester fout</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1788"/>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="unfinished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
+        <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1803"/>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="unfinished">SMBX programma-map was niet correct geconfigureerd</translation>
+        <translation>SMBX programma-map was niet correct geconfigureerd</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1804"/>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="unfinished">%1 niet gevonden!
+        <translation>%1 niet gevonden!
 Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1840"/>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="unfinished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
+        <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
 </context>
 <context>
@@ -6962,12 +6962,12 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
     <message>
         <location filename="../mainwindow.ui" line="2929"/>
         <source>Test world map</source>
-        <translation type="unfinished"></translation>
+        <translation>Wereldkaart Testen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2971"/>
         <source>&lt;no extra settings&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;geen extra instellingen&gt;</translation>
     </message>
     <message>
         <source>Test level (Alpha)</source>
@@ -6992,7 +6992,7 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
     <message>
         <location filename="../mainwindow.ui" line="2754"/>
         <source>Start Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Spel Starten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2776"/>
@@ -7177,7 +7177,7 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
     <message>
         <location filename="../mainwindow.ui" line="2462"/>
         <source>Test level</source>
-        <translation type="unfinished">Niveau Testen</translation>
+        <translation>Niveau Testen</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2494"/>
@@ -8024,12 +8024,12 @@ Gelieve het bestand eerst op te slagen.</translation>
     <message>
         <location filename="../editing/_dialogs/musicfilelist.cpp" line="33"/>
         <source>Select SFX file</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer een SFX bestand</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/musicfilelist.cpp" line="34"/>
         <source>Please select SFX file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve een SFX file te selecteren voor gebruik</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/musicfilelist.cpp" line="47"/>
@@ -8039,7 +8039,7 @@ Gelieve het bestand eerst op te slagen.</translation>
     <message>
         <location filename="../editing/_dialogs/musicfilelist.cpp" line="48"/>
         <source>Please select music file to use as custom</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve een muziekbestand te selecteren om als eigen muziek te gebruiken</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8399,29 +8399,29 @@ Foutbeschrijving:
         <location filename="../testing/pge_engine.cpp" line="214"/>
         <source>Test level/world</source>
         <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Niveau/wereld testen</translation>
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="219"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in PGE Engine from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opgeslagen niveau/wereld testen</translation>
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="224"/>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spel Starten</translation>
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="245"/>
         <source>Unsupported yet</source>
-        <translation type="unfinished"></translation>
+        <translation>Nog niet ondersteund</translation>
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="246"/>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
-        <translation type="unfinished"></translation>
+        <translation>Momenteel is dit nog niet ondersteund voor wereldkaarten. Gebruik de &apos;Opgeslagen niveau/werld testen&apos; optie om een wereldkaart te testen.</translation>
     </message>
 </context>
 <context>
@@ -9574,138 +9574,139 @@ Het maximum aantal muziekdozen is %2.</translation>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="163"/>
         <source>Browse...</source>
-        <translation type="unfinished">Bladeren...</translation>
+        <translation>Bladeren...</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="187"/>
         <source>Save</source>
-        <translation type="unfinished">Opslaan</translation>
+        <translation>Opslaan</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="141"/>
         <source>TheXTech path select</source>
-        <translation type="unfinished"></translation>
+        <translation>TheXTech pad selectie</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="148"/>
         <source>Please select a path to TheXTech executable:</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelieve een pad te kiezen naar het TheXTech uitvoerbaar bestand:</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="157"/>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation>Standaardinstellingen gebruiken</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="160"/>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
-        <translation type="unfinished">Eigen</translation>
+        <translation>Aangepast</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="198"/>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer en pad naar het TheXTech uitvoerbaar bestand</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="411"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished">Niveau Testen</translation>
+        <translation>Niveau Testen</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="416"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Niveau in gevechtmodus testen</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="421"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Opgeslagen niveau testen</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="427"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
-        <translation type="unfinished"></translation>
+        <translation>Graphics opties</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="432"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
-        <translation type="unfinished">Standaard</translation>
+        <translation>Standaard</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="437"/>
         <source>Software</source>
         <comment>Software rendering</comment>
-        <translation type="unfinished"></translation>
+        <translation>Software rendering</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="442"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
-        <translation type="unfinished"></translation>
+        <translation>Accelerated (versnelde)</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="447"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
-        <translation type="unfinished"></translation>
+        <translation>Versneld met V-Sync</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="454"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Magische hand inschakelen</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="456"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laat real-time bewerking toe: Verplaatsen van, plaatsen van nieuwe en verwijderen van voowerpen.
+Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="462"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maximum FPS inschakelen</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="464"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wanneer het spel wordt gespeeld zonder V-Sync, voer het spel uit op de hoogst mogelijke frame-rate.</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="468"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alles grijpbaar maken</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="470"/>
         <source>Allow player to grab any NPCs in a game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Laat de speler toe om alle NPC&apos;s in een spel te kunnen grijpen.</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="477"/>
         <source>Select TheXTech path...</source>
         <comment>Select a path to TheXTech for use.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer het TheXTech pad...</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="479"/>
         <source>Select a path to TheXTech for use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer het pad naa TheXTech voor gebruik.</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="483"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation>Spel Starten</translation>
     </message>
 </context>
 <context>
