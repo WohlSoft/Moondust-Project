@@ -825,7 +825,7 @@ void LvlLayersBox::on_LvlLayerList_itemClicked(QListWidgetItem *item)
     LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
-    mw()->dock_LvlItemProps->LvlItemProps_updateLayer(LvlPlacingItems::layer);
+    mw()->dock_LvlItemProps->syncLayerFields(LvlPlacingItems::layer);
 }
 
 void LvlLayersBox::on_LvlLayerList_itemSelectionChanged()

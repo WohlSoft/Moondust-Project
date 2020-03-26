@@ -121,7 +121,7 @@ void LvlScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     //Close properties box
     if( (m_editMode==MODE_Selecting) || (m_editMode==MODE_SelectingOnly) )
-        m_mw->dock_LvlItemProps->CloseBox();
+        m_mw->dock_LvlItemProps->closeProps();
 
     QGraphicsScene::mousePressEvent(mouseEvent);
 
@@ -294,24 +294,24 @@ void LvlScene::openProps()
     {
         if(items.first()->data(ITEM_TYPE).toString()=="Block")
         {
-            m_mw->dock_LvlItemProps->OpenBlock(dynamic_cast<ItemBlock *>(items.first())->m_data);
+            m_mw->dock_LvlItemProps->openBlockProps(dynamic_cast<ItemBlock *>(items.first())->m_data);
         }
         else
         if(items.first()->data(ITEM_TYPE).toString()=="BGO")
         {
-            m_mw->dock_LvlItemProps->OpenBGO(dynamic_cast<ItemBGO *>(items.first())->m_data);
+            m_mw->dock_LvlItemProps->openBgoProps(dynamic_cast<ItemBGO *>(items.first())->m_data);
         }
         else
         if(items.first()->data(ITEM_TYPE).toString()=="NPC")
         {
-            m_mw->dock_LvlItemProps->OpenNPC(dynamic_cast<ItemNPC *>(items.first())->m_data);
+            m_mw->dock_LvlItemProps->openNpcProps(dynamic_cast<ItemNPC *>(items.first())->m_data);
         }
         else
-        m_mw->dock_LvlItemProps->CloseBox();
+        m_mw->dock_LvlItemProps->closeProps();
     }
     else
     {
-        m_mw->dock_LvlItemProps->CloseBox();
+        m_mw->dock_LvlItemProps->closeProps();
     }
 
     QGraphicsScene::selectionChanged();

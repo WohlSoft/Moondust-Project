@@ -186,7 +186,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
                 //Switch scene to placing mode:
                 activeLvlEditWin()->scene->setItemPlacer(0, itemID);
                 //Open block properties toolbox for define placing properties
-                dock_LvlItemProps->OpenBlock(LvlPlacingItems::blockSet,
+                dock_LvlItemProps->openBlockProps(LvlPlacingItems::blockSet,
                                              true,
                                              dont_reset_props,
                                              GlobalSettings::Placing_dontShowPropertiesBox);
@@ -198,7 +198,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
             {
                 ui->action_Placing_ShowProperties->setEnabled(true);
                 activeLvlEditWin()->scene->setItemPlacer(1, itemID);
-                dock_LvlItemProps->OpenBGO(LvlPlacingItems::bgoSet,
+                dock_LvlItemProps->openBgoProps(LvlPlacingItems::bgoSet,
                                            true,
                                            dont_reset_props,
                                            GlobalSettings::Placing_dontShowPropertiesBox);
@@ -215,7 +215,7 @@ void MainWindow::SwitchPlacingItem(int itemType, unsigned long itemID, bool dont
 
                 activeLvlEditWin()->scene->setItemPlacer(2, itemID);
 
-                dock_LvlItemProps->OpenNPC(LvlPlacingItems::npcSet,
+                dock_LvlItemProps->openNpcProps(LvlPlacingItems::npcSet,
                                            true,
                                            dont_reset_props,
                                            GlobalSettings::Placing_dontShowPropertiesBox);

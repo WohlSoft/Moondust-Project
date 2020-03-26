@@ -251,45 +251,460 @@ void LvlItemProperties::re_translate()
     m_externalLock = false;
 }
 
-// Dummy objects
-static LevelBlock   dummyBlock = FileFormats::CreateLvlBlock();
-static LevelBGO     dummyBgo   = FileFormats::CreateLvlBgo();
-static LevelNPC     dummyNpc   = FileFormats::CreateLvlNpc();
 
-void LvlItemProperties::OpenBlock(LevelBlock &block, bool newItem, bool dont_reset_props, bool dontShow)
+void LvlItemProperties::openBlockProps(LevelBlock &block, bool isPlacingNew, bool dontResetProps, bool dontShowToolbox)
 {
-    openPropertiesFor(ItemTypes::LVL_Block,
-                 block,
-                 dummyBgo,
-                 dummyNpc,
-                 newItem,
-                 dont_reset_props,
-                 dontShow);
+    QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
+    const QString &configDir = mw()->configs.config_dir;
+
+    resetBox(isPlacingNew);
+
+    m_curItemType = ItemTypes::LVL_Block;
+
+    if(isPlacingNew)
+        m_currentBlockArrayId = -1;
+    else
+        m_currentBlockArrayId = block.meta.array_id;
+
+    ui->PROPS_BlockID->setText(tr("Block ID: %1, Array ID: %2").arg(block.id).arg(block.meta.array_id));
+
+    bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
+
+    obj_block &t_block = isLvlWin ?
+                         mw()->activeLvlEditWin()->scene->m_localConfigBlocks[block.id] :
+                         mw()->configs.main_block[block.id];
+    if(!t_block.isValid)
+        t_block = mw()->configs.main_block[1];
+
+
+    if(isPlacingNew && (!dontResetProps))
+    {
+        LvlPlacingItems::blockSet.invisible = t_block.setup.default_invisible_value;
+        block.invisible = t_block.setup.default_invisible_value;
+
+        LvlPlacingItems::blockSet.slippery = t_block.setup.default_slippery_value;
+        block.slippery = t_block.setup.default_slippery_value;
+
+        LvlPlacingItems::blockSet.npc_id = t_block.setup.default_content_value;
+        block.npc_id = t_block.setup.default_content_value;
+
+        LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
+        block.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
+        LvlPlacingItems::layer = block.layer;
+
+        if(ui->PROPS_BlkEventDestroyedLock->isChecked())
+            LvlPlacingItems::blockSet.event_destroy = m_recentBlockEventDestroy;
+        else
+            LvlPlacingItems::blockSet.event_destroy = "";
+        block.event_destroy = LvlPlacingItems::blockSet.event_destroy;
+
+        if(ui->PROPS_BlkEventHitLock->isChecked())
+            LvlPlacingItems::blockSet.event_hit = m_recentBlockEventHit;
+        else
+            LvlPlacingItems::blockSet.event_hit = "";
+        block.event_hit = LvlPlacingItems::blockSet.event_hit;
+
+        if(ui->PROPS_BlkEventLEmptyLock->isChecked())
+            LvlPlacingItems::blockSet.event_emptylayer = m_recentBlockEventLayerEmpty;
+        else
+            LvlPlacingItems::blockSet.event_emptylayer = "";
+        block.event_emptylayer = LvlPlacingItems::blockSet.event_emptylayer;
+    }
+
+
+    ui->PROPS_blockPos->setText(tr("Position: [%1, %2]").arg(block.x).arg(block.y));
+    ui->PROPS_BlockResize->setVisible(t_block.setup.sizable);
+    ui->sizeOfBlock->setVisible(t_block.setup.sizable && (!isPlacingNew));
+    ui->BLOCK_Width->setValue(block.w);
+    ui->BLOCK_Height->setValue(block.h);
+
+    ui->PROPS_BlockInvis->setChecked(block.invisible);
+    ui->PROPS_BlkSlippery->setChecked(block.slippery);
+
+    //ui->PROPS_BlockSquareFill->setVisible( newItem );
+    //ui->PROPS_BlockSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
+
+    ui->PROPS_BlockIncludes->setText(
+        ((block.npc_id != 0) ?
+         ((block.npc_id > 0) ? QString("NPC-%1").arg(block.npc_id) : tr("%1 coins").arg(block.npc_id * -1))
+         : tr("[empty]")
+        ));
+
+    ui->PROPS_BlockLayer->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_BlockLayer->count(); i++)
+    {
+        if(ui->PROPS_BlockLayer->itemText(i) == block.layer)
+        {
+            ui->PROPS_BlockLayer->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    ui->PROPS_BlkEventDestroy->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_BlkEventDestroy->count(); i++)
+    {
+        if(ui->PROPS_BlkEventDestroy->itemText(i) == block.event_destroy)
+        {
+            ui->PROPS_BlkEventDestroy->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    ui->PROPS_BlkEventHited->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_BlkEventHited->count(); i++)
+    {
+        if(ui->PROPS_BlkEventHited->itemText(i) == block.event_hit)
+        {
+            ui->PROPS_BlkEventHited->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    ui->PROPS_BlkEventLayerEmpty->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_BlkEventLayerEmpty->count(); i++)
+    {
+        if(ui->PROPS_BlkEventLayerEmpty->itemText(i) == block.event_emptylayer)
+        {
+            ui->PROPS_BlkEventLayerEmpty->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    initExtraSettingsWidget(mw()->configs.getBlockExtraSettingsPath(),
+                            configDir,
+                            t_block.setup.extra_settings,
+                            "global_block.json",
+                            block.meta.custom_params,
+                            &LvlItemProperties::onExtraSettingsBlockChanged);
+    ui->blockProp->show();
+    ui->blockProp->adjustSize();
+
+    resetBoxEnd(dontShowToolbox);
 }
 
-void LvlItemProperties::OpenBGO(LevelBGO &bgo, bool newItem, bool dont_reset_props, bool dontShow)
+void LvlItemProperties::openBgoProps(LevelBGO &bgo, bool isPlacingNew, bool dontResetProps, bool dontShowToolbox)
 {
-    openPropertiesFor(ItemTypes::LVL_BGO,
-                 dummyBlock,
-                 bgo,
-                 dummyNpc,
-                 newItem,
-                 dont_reset_props,
-                 dontShow);
+    QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
+    const QString &configDir = mw()->configs.config_dir;
+
+    resetBox(isPlacingNew);
+
+    m_curItemType = ItemTypes::LVL_BGO;
+//    openPropertiesFor(ItemTypes::LVL_BGO,
+//                 dummyBlock,
+//                 bgo,
+//                 dummyNpc,
+//                 newItem,
+//                 dont_reset_props,
+//                 dontShow);
+    if(isPlacingNew)
+        m_currentBgoArrayId = -1;
+    else
+        m_currentBgoArrayId = bgo.meta.array_id;
+
+    if((m_currentBgoArrayId < 0) && (!dontResetProps))
+    {
+        LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
+        bgo.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
+        LvlPlacingItems::layer = bgo.layer;
+    }
+
+    ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.meta.array_id));
+
+    bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
+
+    obj_bgo &t_bgo   = isLvlWin ?
+                       mw()->activeLvlEditWin()->scene->m_localConfigBGOs[bgo.id] :
+                       mw()->configs.main_bgo[bgo.id];
+
+    if(!t_bgo.isValid)
+        t_bgo = mw()->configs.main_bgo[1];
+
+    //ui->PROPS_BGOSquareFill->setVisible( newItem );
+    //ui->PROPS_BGOSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
+
+    ui->PROPS_bgoPos->setText(tr("Position: [%1, %2]").arg(bgo.x).arg(bgo.y));
+
+    ui->PROPS_BGOLayer->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_BGOLayer->count(); i++)
+    {
+        if(ui->PROPS_BGOLayer->itemText(i) == bgo.layer)
+        {
+            ui->PROPS_BGOLayer->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    //PGE-X values
+    int zMode = 2;
+    switch(bgo.z_mode)
+    {
+    case LevelBGO::Background2:
+        zMode = 0;
+        break;
+    case LevelBGO::Background1:
+        zMode = 1;
+        break;
+    case LevelBGO::Foreground1:
+        zMode = 3;
+        break;
+    case LevelBGO::Foreground2:
+        zMode = 4;
+        break;
+    case LevelBGO::ZDefault:
+    default:
+        zMode = 2;
+        break;
+    }
+
+    ui->PROPS_BGO_Z_Layer->setCurrentIndex(zMode);
+
+    ui->PROPS_BGO_Z_Offset->setValue(bgo.z_offset);
+    //PGE-X values
+
+    ui->PROPS_BGO_smbx64_sp->setValue(bgo.smbx64_sp);
+
+    initExtraSettingsWidget(mw()->configs.getBgoExtraSettingsPath(),
+                            configDir,
+                            t_bgo.setup.extra_settings,
+                            "global_bgo.json",
+                            bgo.meta.custom_params,
+                            &LvlItemProperties::onExtraSettingsBGOChanged);
+
+    ui->bgoProps->show();
+    ui->bgoProps->adjustSize();
+
+    resetBoxEnd(dontShowToolbox);
 }
 
-void LvlItemProperties::OpenNPC(LevelNPC &npc, bool newItem, bool dont_reset_props, bool dontShow)
+void LvlItemProperties::openNpcProps(LevelNPC &npc, bool isPlacingNew, bool dontResetProps, bool dontShowToolbox)
 {
-    openPropertiesFor(ItemTypes::LVL_NPC,
-                 dummyBlock,
-                 dummyBgo,
-                 npc,
-                 newItem,
-                 dont_reset_props,
-                 dontShow);
+    QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
+    const QString &configDir = mw()->configs.config_dir;
+
+    resetBox(isPlacingNew);
+
+    m_curItemType = ItemTypes::LVL_NPC;
+
+    if(isPlacingNew)
+        m_currentNpcArrayId = -1;
+    else
+        m_currentNpcArrayId = npc.meta.array_id;
+
+    ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.meta.array_id));
+
+    bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
+    obj_npc &t_npc   = isLvlWin ?
+                       mw()->activeLvlEditWin()->scene->m_localConfigNPCs[npc.id] :
+                       mw()->configs.main_npc[npc.id];
+
+    if(!t_npc.isValid)
+        t_npc = mw()->configs.main_npc[1];
+
+    ui->PROPS_NPCContaiter->hide();
+    ui->PROPS_NpcContainsLabel->hide();
+
+    ui->PROPS_NPCSpecialNPC->hide();
+    ui->PROPS_NPCNpcLabel->hide();
+
+    ui->PROPS_NPCBoxLabel->hide();
+    ui->PROPS_NPCSpecialBox->hide();
+
+    ui->PROPS_NpcSpinLabel->hide();
+    ui->PROPS_NPCSpecialSpin->hide();
+    ui->PROPS_NPCSpecialSpin_Auto->hide();
+
+    ui->line_6->hide();
+
+    if((m_currentNpcArrayId < 0) && (!dontResetProps))
+    {
+        LvlPlacingItems::npcSet.msg = "";
+        npc.msg = "";
+
+        LvlPlacingItems::npcSet.friendly = t_npc.setup.default_friendly_value;
+        npc.friendly = t_npc.setup.default_friendly_value;
+
+        LvlPlacingItems::npcSet.nomove = t_npc.setup.default_nomovable_value;
+        npc.nomove = t_npc.setup.default_nomovable_value;
+
+        LvlPlacingItems::npcSet.is_boss = t_npc.setup.default_boss_value;
+        npc.is_boss = t_npc.setup.default_boss_value;
+
+        if(t_npc.setup.default_special)
+        {
+            LvlPlacingItems::npcSet.special_data = t_npc.setup.default_special_value;
+            npc.special_data = t_npc.setup.default_special_value;
+        }
+        LvlPlacingItems::npcSet.special_data2 = 0;
+        npc.special_data2 = 0;
+
+        LvlPlacingItems::npcSet.generator = false;
+        npc.generator = false;
+
+        LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
+        npc.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
+        LvlPlacingItems::layer = npc.layer;
+
+        npc.attach_layer = "";
+        LvlPlacingItems::npcSet.attach_layer = "";
+
+        LvlPlacingItems::npcSet.event_activate = ui->PROPS_NpcEventActovateLock->isChecked() ? m_recentNpcEventActivated : "";
+        npc.event_activate = LvlPlacingItems::npcSet.event_activate;
+
+        LvlPlacingItems::npcSet.event_die = ui->PROPS_NpcEventDeathLock->isChecked() ? m_recentNpcEventDeath : "";
+        npc.event_die = LvlPlacingItems::npcSet.event_die;
+
+        LvlPlacingItems::npcSet.event_talk = ui->PROPS_NpcEventTalkLock->isChecked() ? m_recentNpcEventTalk : "";
+        npc.event_talk = LvlPlacingItems::npcSet.event_talk;
+
+        LvlPlacingItems::npcSet.event_emptylayer = ui->PROPS_NpcEventLEmptyLock->isChecked() ? m_recentNpcEventLayerEmpty : "";
+        npc.event_emptylayer = LvlPlacingItems::npcSet.event_emptylayer;
+    }
+
+    ui->PROPS_NpcPos->setText(tr("Position: [%1, %2]").arg(npc.x).arg(npc.y));
+    ui->PROPS_NpcDir->setTitle(t_npc.setup.direct_alt_title.isEmpty() ? tr("Direction") : t_npc.setup.direct_alt_title);
+    ui->PROPS_NPCDirLeft->setText(t_npc.setup.direct_alt_left.isEmpty() ? tr("Left") : t_npc.setup.direct_alt_left);
+    ui->PROPS_NPCDirRand->setEnabled(!t_npc.setup.direct_disable_random);
+    ui->PROPS_NPCDirRand->setText(t_npc.setup.direct_alt_rand.isEmpty() ? tr("Random") : t_npc.setup.direct_alt_rand);
+    ui->PROPS_NPCDirRight->setText(t_npc.setup.direct_alt_right.isEmpty() ? tr("Right") : t_npc.setup.direct_alt_right);
+
+    switch(npc.direct)
+    {
+    case -1:
+        ui->PROPS_NPCDirLeft->setChecked(true);
+        break;
+    default:
+    case 0:
+        ui->PROPS_NPCDirRand->setChecked(true);
+        break;
+    case 1:
+        ui->PROPS_NPCDirRight->setChecked(true);
+        break;
+    }
+
+    if(t_npc.setup.container)
+    {
+        ui->PROPS_NpcContainsLabel->show();
+        ui->PROPS_NPCContaiter->show();
+        ui->PROPS_NPCContaiter->setText(
+            ((npc.contents > 0) ? QString("NPC-%1").arg(npc.contents)
+             : tr("[empty]")
+            ));
+    }
+
+    //refresh special option 1
+    refreshFirstNpcSpecialOption(npc, isPlacingNew, dontResetProps);
+
+    QString npcmsg = (npc.msg.isEmpty() ? tr("[none]") : npc.msg);
+    if(npcmsg.size() > 20)
+    {
+        npcmsg.resize(18);
+        npcmsg.push_back("...");
+    }
+    ui->PROPS_NpcTMsg->setText(npcmsg.replace("&", "&&&"));
+
+    ui->PROPS_NpcFri->setChecked(npc.friendly);
+    ui->PROPS_NPCNoMove->setChecked(npc.nomove);
+    ui->PROPS_NpcBoss->setChecked(npc.is_boss);
+
+    ui->PROPS_NpcGenerator->setChecked(npc.generator);
+    ui->PROPS_NPCGenBox->setVisible(npc.generator);
+    if(npc.generator)
+    {
+        switch(npc.generator_type)
+        {
+        case 1:
+            ui->PROPS_NPCGenType->setCurrentIndex(0);
+            break;
+        case 2:
+        default:
+            ui->PROPS_NPCGenType->setCurrentIndex(1);
+            break;
+        }
+
+        ui->PROPS_NPCGenTime->setValue((double)npc.generator_period / 10);
+
+        ui->npcGeneratorDirection->setDirection(npc.generator_direct);
+    }
+    else
+    {
+        ui->npcGeneratorDirection->setDirection(LevelNPC::NPC_GEN_UP);
+        ui->PROPS_NPCGenType->setCurrentIndex(0);
+    }
+
+    ui->PROPS_NpcLayer->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_NpcLayer->count(); i++)
+    {
+        if(ui->PROPS_NpcLayer->itemText(i) == npc.layer)
+        {
+            ui->PROPS_NpcLayer->setCurrentIndex(i);
+            break;
+        }
+    }
+    ui->PROPS_NpcAttachLayer->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_NpcAttachLayer->count(); i++)
+    {
+        if(ui->PROPS_NpcAttachLayer->itemText(i) == npc.attach_layer)
+        {
+            ui->PROPS_NpcAttachLayer->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    ui->PROPS_NpcEventActivate->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_NpcEventActivate->count(); i++)
+    {
+        if(ui->PROPS_NpcEventActivate->itemText(i) == npc.event_activate)
+        {
+            ui->PROPS_NpcEventActivate->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    ui->PROPS_NpcEventDeath->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_NpcEventDeath->count(); i++)
+    {
+        if(ui->PROPS_NpcEventDeath->itemText(i) == npc.event_die)
+        {
+            ui->PROPS_NpcEventDeath->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    ui->PROPS_NpcEventTalk->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_NpcEventTalk->count(); i++)
+    {
+        if(ui->PROPS_NpcEventTalk->itemText(i) == npc.event_talk)
+        {
+            ui->PROPS_NpcEventTalk->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    ui->PROPS_NpcEventEmptyLayer->setCurrentIndex(0);
+    for(int i = 0; i < ui->PROPS_NpcEventEmptyLayer->count(); i++)
+    {
+        if(ui->PROPS_NpcEventEmptyLayer->itemText(i) == npc.event_emptylayer)
+        {
+            ui->PROPS_NpcEventEmptyLayer->setCurrentIndex(i);
+            break;
+        }
+    }
+
+    initExtraSettingsWidget(mw()->configs.getNpcExtraSettingsPath(),
+                            configDir,
+                            t_npc.setup.extra_settings,
+                            "global_npc.json",
+                            npc.meta.custom_params,
+                            &LvlItemProperties::onExtraSettingsNPCChanged);
+
+    ui->npcProps->show();
+    ui->npcProps->adjustSize();
+
+    resetBoxEnd(dontShowToolbox);
 }
 
-void LvlItemProperties::CloseBox()
+void LvlItemProperties::closeProps()
 {
     hide();
     ui->blockProp->setVisible(false);
@@ -301,15 +716,8 @@ void LvlItemProperties::CloseBox()
     LvlPlacingItems::npcSpecialAutoIncrement = false;
 }
 
-void LvlItemProperties::openPropertiesFor(int Type,
-                                     LevelBlock &block,
-                                     LevelBGO &bgo,
-                                     LevelNPC &npc,
-                                     bool isPlacingNew,
-                                     bool dontResetProps,
-                                     bool dontShowToolbox)
+void LvlItemProperties::resetBox(bool isPlacingNew)
 {
-    QMutexLocker mlock(&m_mutex); Q_UNUSED(mlock)
 
     mw()->LayerListsSync();
     mw()->EventListsSync();
@@ -343,475 +751,34 @@ void LvlItemProperties::openPropertiesFor(int Type,
     ui->PROPS_NpcEventTalkLock->setVisible(isPlacingNew);
     ui->PROPS_NpcEventLEmptyLock->setVisible(isPlacingNew);
 
-    QString configDir = mw()->configs.config_dir;
-
     /*
     long blockPtr; //ArrayID of editing item (-1 - use system)
     long bgoPtr; //ArrayID of editing item
     long npcPtr; //ArrayID of editing item
     */
     m_externalLock = true;
+}
 
-    m_curItemType = Type;
+void LvlItemProperties::resetBoxEnd(bool dontShowToolbox)
+{
+    m_externalLock = false;
+    m_internalLock = false;
 
-    switch(Type)
+    if(!dontShowToolbox)
     {
-    case ItemTypes::LVL_Block:
-    {
-        if(isPlacingNew)
-            m_currentBlockArrayId = -1;
-        else
-            m_currentBlockArrayId = block.meta.array_id;
-
-        ui->PROPS_BlockID->setText(tr("Block ID: %1, Array ID: %2").arg(block.id).arg(block.meta.array_id));
-
-        bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
-
-        obj_block &t_block = isLvlWin ?
-                             mw()->activeLvlEditWin()->scene->m_localConfigBlocks[block.id] :
-                             mw()->configs.main_block[block.id];
-        if(!t_block.isValid)
-            t_block = mw()->configs.main_block[1];
-
-
-        if(isPlacingNew && (!dontResetProps))
-        {
-            LvlPlacingItems::blockSet.invisible = t_block.setup.default_invisible_value;
-            block.invisible = t_block.setup.default_invisible_value;
-
-            LvlPlacingItems::blockSet.slippery = t_block.setup.default_slippery_value;
-            block.slippery = t_block.setup.default_slippery_value;
-
-            LvlPlacingItems::blockSet.npc_id = t_block.setup.default_content_value;
-            block.npc_id = t_block.setup.default_content_value;
-
-            LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
-            block.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
-            LvlPlacingItems::layer = block.layer;
-
-            if(ui->PROPS_BlkEventDestroyedLock->isChecked())
-                LvlPlacingItems::blockSet.event_destroy = m_recentBlockEventDestroy;
-            else
-                LvlPlacingItems::blockSet.event_destroy = "";
-            block.event_destroy = LvlPlacingItems::blockSet.event_destroy;
-
-            if(ui->PROPS_BlkEventHitLock->isChecked())
-                LvlPlacingItems::blockSet.event_hit = m_recentBlockEventHit;
-            else
-                LvlPlacingItems::blockSet.event_hit = "";
-            block.event_hit = LvlPlacingItems::blockSet.event_hit;
-
-            if(ui->PROPS_BlkEventLEmptyLock->isChecked())
-                LvlPlacingItems::blockSet.event_emptylayer = m_recentBlockEventLayerEmpty;
-            else
-                LvlPlacingItems::blockSet.event_emptylayer = "";
-            block.event_emptylayer = LvlPlacingItems::blockSet.event_emptylayer;
-        }
-
-
-        ui->PROPS_blockPos->setText(tr("Position: [%1, %2]").arg(block.x).arg(block.y));
-        ui->PROPS_BlockResize->setVisible(t_block.setup.sizable);
-        ui->sizeOfBlock->setVisible(t_block.setup.sizable && (!isPlacingNew));
-        ui->BLOCK_Width->setValue(block.w);
-        ui->BLOCK_Height->setValue(block.h);
-
-        ui->PROPS_BlockInvis->setChecked(block.invisible);
-        ui->PROPS_BlkSlippery->setChecked(block.slippery);
-
-        //ui->PROPS_BlockSquareFill->setVisible( newItem );
-        //ui->PROPS_BlockSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
-
-        ui->PROPS_BlockIncludes->setText(
-            ((block.npc_id != 0) ?
-             ((block.npc_id > 0) ? QString("NPC-%1").arg(block.npc_id) : tr("%1 coins").arg(block.npc_id * -1))
-             : tr("[empty]")
-            ));
-
-        ui->PROPS_BlockLayer->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_BlockLayer->count(); i++)
-        {
-            if(ui->PROPS_BlockLayer->itemText(i) == block.layer)
-            {
-                ui->PROPS_BlockLayer->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        ui->PROPS_BlkEventDestroy->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_BlkEventDestroy->count(); i++)
-        {
-            if(ui->PROPS_BlkEventDestroy->itemText(i) == block.event_destroy)
-            {
-                ui->PROPS_BlkEventDestroy->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        ui->PROPS_BlkEventHited->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_BlkEventHited->count(); i++)
-        {
-            if(ui->PROPS_BlkEventHited->itemText(i) == block.event_hit)
-            {
-                ui->PROPS_BlkEventHited->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        ui->PROPS_BlkEventLayerEmpty->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_BlkEventLayerEmpty->count(); i++)
-        {
-            if(ui->PROPS_BlkEventLayerEmpty->itemText(i) == block.event_emptylayer)
-            {
-                ui->PROPS_BlkEventLayerEmpty->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        initExtraSettingsWidget(mw()->configs.getBlockExtraSettingsPath(),
-                                configDir,
-                                t_block.setup.extra_settings,
-                                "global_block.json",
-                                block.meta.custom_params,
-                                &LvlItemProperties::onExtraSettingsBlockChanged);
-        m_externalLock = false;
-        m_internalLock = false;
-
-        ui->blockProp->show();
-        ui->blockProp->adjustSize();
-        if(!dontShowToolbox)
-        {
-            show();
-            raise();
-        }
-        break;
-    }
-    case ItemTypes::LVL_BGO:
-    {
-        if(isPlacingNew)
-            m_currentBgoArrayId = -1;
-        else
-            m_currentBgoArrayId = bgo.meta.array_id;
-
-
-        if((m_currentBgoArrayId < 0) && (!dontResetProps))
-        {
-            LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
-            bgo.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
-            LvlPlacingItems::layer = bgo.layer;
-        }
-
-        ui->PROPS_BgoID->setText(tr("BGO ID: %1, Array ID: %2").arg(bgo.id).arg(bgo.meta.array_id));
-
-        bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
-
-        obj_bgo &t_bgo   = isLvlWin ?
-                           mw()->activeLvlEditWin()->scene->m_localConfigBGOs[bgo.id] :
-                           mw()->configs.main_bgo[bgo.id];
-
-        if(!t_bgo.isValid)
-            t_bgo = mw()->configs.main_bgo[1];
-
-        //ui->PROPS_BGOSquareFill->setVisible( newItem );
-        //ui->PROPS_BGOSquareFill->setChecked( LvlPlacingItems::placingMode==LvlPlacingItems::PMODE_Square );
-
-        ui->PROPS_bgoPos->setText(tr("Position: [%1, %2]").arg(bgo.x).arg(bgo.y));
-
-        ui->PROPS_BGOLayer->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_BGOLayer->count(); i++)
-        {
-            if(ui->PROPS_BGOLayer->itemText(i) == bgo.layer)
-            {
-                ui->PROPS_BGOLayer->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        //PGE-X values
-        int zMode = 2;
-        switch(bgo.z_mode)
-        {
-        case LevelBGO::Background2:
-            zMode = 0;
-            break;
-        case LevelBGO::Background1:
-            zMode = 1;
-            break;
-        case LevelBGO::Foreground1:
-            zMode = 3;
-            break;
-        case LevelBGO::Foreground2:
-            zMode = 4;
-            break;
-        case LevelBGO::ZDefault:
-        default:
-            zMode = 2;
-            break;
-        }
-
-        ui->PROPS_BGO_Z_Layer->setCurrentIndex(zMode);
-
-        ui->PROPS_BGO_Z_Offset->setValue(bgo.z_offset);
-        //PGE-X values
-
-        ui->PROPS_BGO_smbx64_sp->setValue(bgo.smbx64_sp);
-
-        initExtraSettingsWidget(mw()->configs.getBgoExtraSettingsPath(),
-                                configDir,
-                                t_bgo.setup.extra_settings,
-                                "global_bgo.json",
-                                bgo.meta.custom_params,
-                                &LvlItemProperties::onExtraSettingsBGOChanged);
-
-        m_externalLock = false;
-        m_internalLock = false;
-
-        ui->bgoProps->show();
-        ui->bgoProps->adjustSize();
-        if(!dontShowToolbox)
-        {
-            show();
-            raise();
-        }
-        break;
-    }
-    case ItemTypes::LVL_NPC:
-    {
-        if(isPlacingNew)
-            m_currentNpcArrayId = -1;
-        else
-            m_currentNpcArrayId = npc.meta.array_id;
-
-        ui->PROPS_NpcID->setText(tr("NPC ID: %1, Array ID: %2").arg(npc.id).arg(npc.meta.array_id));
-
-        bool isLvlWin = ((mw()->activeChildWindow() == MainWindow::WND_Level) && (mw()->activeLvlEditWin()));
-        obj_npc &t_npc   = isLvlWin ?
-                           mw()->activeLvlEditWin()->scene->m_localConfigNPCs[npc.id] :
-                           mw()->configs.main_npc[npc.id];
-
-        if(!t_npc.isValid)
-            t_npc = mw()->configs.main_npc[1];
-
-        ui->PROPS_NPCContaiter->hide();
-        ui->PROPS_NpcContainsLabel->hide();
-
-        ui->PROPS_NPCSpecialNPC->hide();
-        ui->PROPS_NPCNpcLabel->hide();
-
-        ui->PROPS_NPCBoxLabel->hide();
-        ui->PROPS_NPCSpecialBox->hide();
-
-        ui->PROPS_NpcSpinLabel->hide();
-        ui->PROPS_NPCSpecialSpin->hide();
-        ui->PROPS_NPCSpecialSpin_Auto->hide();
-
-        ui->line_6->hide();
-
-        if((m_currentNpcArrayId < 0) && (!dontResetProps))
-        {
-            LvlPlacingItems::npcSet.msg = "";
-            npc.msg = "";
-
-            LvlPlacingItems::npcSet.friendly = t_npc.setup.default_friendly_value;
-            npc.friendly = t_npc.setup.default_friendly_value;
-
-            LvlPlacingItems::npcSet.nomove = t_npc.setup.default_nomovable_value;
-            npc.nomove = t_npc.setup.default_nomovable_value;
-
-            LvlPlacingItems::npcSet.is_boss = t_npc.setup.default_boss_value;
-            npc.is_boss = t_npc.setup.default_boss_value;
-
-            if(t_npc.setup.default_special)
-            {
-                LvlPlacingItems::npcSet.special_data = t_npc.setup.default_special_value;
-                npc.special_data = t_npc.setup.default_special_value;
-            }
-            LvlPlacingItems::npcSet.special_data2 = 0;
-            npc.special_data2 = 0;
-
-            LvlPlacingItems::npcSet.generator = false;
-            npc.generator = false;
-
-            LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
-            npc.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
-            LvlPlacingItems::layer = npc.layer;
-
-            npc.attach_layer = "";
-            LvlPlacingItems::npcSet.attach_layer = "";
-
-            LvlPlacingItems::npcSet.event_activate = ui->PROPS_NpcEventActovateLock->isChecked() ? m_recentNpcEventActivated : "";
-            npc.event_activate = LvlPlacingItems::npcSet.event_activate;
-
-            LvlPlacingItems::npcSet.event_die = ui->PROPS_NpcEventDeathLock->isChecked() ? m_recentNpcEventDeath : "";
-            npc.event_die = LvlPlacingItems::npcSet.event_die;
-
-            LvlPlacingItems::npcSet.event_talk = ui->PROPS_NpcEventTalkLock->isChecked() ? m_recentNpcEventTalk : "";
-            npc.event_talk = LvlPlacingItems::npcSet.event_talk;
-
-            LvlPlacingItems::npcSet.event_emptylayer = ui->PROPS_NpcEventLEmptyLock->isChecked() ? m_recentNpcEventLayerEmpty : "";
-            npc.event_emptylayer = LvlPlacingItems::npcSet.event_emptylayer;
-        }
-
-        ui->PROPS_NpcPos->setText(tr("Position: [%1, %2]").arg(npc.x).arg(npc.y));
-        ui->PROPS_NpcDir->setTitle(t_npc.setup.direct_alt_title.isEmpty() ? tr("Direction") : t_npc.setup.direct_alt_title);
-        ui->PROPS_NPCDirLeft->setText(t_npc.setup.direct_alt_left.isEmpty() ? tr("Left") : t_npc.setup.direct_alt_left);
-        ui->PROPS_NPCDirRand->setEnabled(!t_npc.setup.direct_disable_random);
-        ui->PROPS_NPCDirRand->setText(t_npc.setup.direct_alt_rand.isEmpty() ? tr("Random") : t_npc.setup.direct_alt_rand);
-        ui->PROPS_NPCDirRight->setText(t_npc.setup.direct_alt_right.isEmpty() ? tr("Right") : t_npc.setup.direct_alt_right);
-
-        switch(npc.direct)
-        {
-        case -1:
-            ui->PROPS_NPCDirLeft->setChecked(true);
-            break;
-        default:
-        case 0:
-            ui->PROPS_NPCDirRand->setChecked(true);
-            break;
-        case 1:
-            ui->PROPS_NPCDirRight->setChecked(true);
-            break;
-        }
-
-        if(t_npc.setup.container)
-        {
-            ui->PROPS_NpcContainsLabel->show();
-            ui->PROPS_NPCContaiter->show();
-            ui->PROPS_NPCContaiter->setText(
-                ((npc.contents > 0) ? QString("NPC-%1").arg(npc.contents)
-                 : tr("[empty]")
-                ));
-        }
-
-        //refresh special option 1
-        refreshFirstNpcSpecialOption(npc, isPlacingNew, dontResetProps);
-
-        QString npcmsg = (npc.msg.isEmpty() ? tr("[none]") : npc.msg);
-        if(npcmsg.size() > 20)
-        {
-            npcmsg.resize(18);
-            npcmsg.push_back("...");
-        }
-        ui->PROPS_NpcTMsg->setText(npcmsg.replace("&", "&&&"));
-
-        ui->PROPS_NpcFri->setChecked(npc.friendly);
-        ui->PROPS_NPCNoMove->setChecked(npc.nomove);
-        ui->PROPS_NpcBoss->setChecked(npc.is_boss);
-
-        ui->PROPS_NpcGenerator->setChecked(npc.generator);
-        ui->PROPS_NPCGenBox->setVisible(npc.generator);
-        if(npc.generator)
-        {
-            switch(npc.generator_type)
-            {
-            case 1:
-                ui->PROPS_NPCGenType->setCurrentIndex(0);
-                break;
-            case 2:
-            default:
-                ui->PROPS_NPCGenType->setCurrentIndex(1);
-                break;
-            }
-
-            ui->PROPS_NPCGenTime->setValue((double)npc.generator_period / 10);
-
-            ui->npcGeneratorDirection->setDirection(npc.generator_direct);
-        }
-        else
-        {
-            ui->npcGeneratorDirection->setDirection(LevelNPC::NPC_GEN_UP);
-            ui->PROPS_NPCGenType->setCurrentIndex(0);
-        }
-
-        ui->PROPS_NpcLayer->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_NpcLayer->count(); i++)
-        {
-            if(ui->PROPS_NpcLayer->itemText(i) == npc.layer)
-            {
-                ui->PROPS_NpcLayer->setCurrentIndex(i);
-                break;
-            }
-        }
-        ui->PROPS_NpcAttachLayer->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_NpcAttachLayer->count(); i++)
-        {
-            if(ui->PROPS_NpcAttachLayer->itemText(i) == npc.attach_layer)
-            {
-                ui->PROPS_NpcAttachLayer->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        ui->PROPS_NpcEventActivate->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_NpcEventActivate->count(); i++)
-        {
-            if(ui->PROPS_NpcEventActivate->itemText(i) == npc.event_activate)
-            {
-                ui->PROPS_NpcEventActivate->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        ui->PROPS_NpcEventDeath->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_NpcEventDeath->count(); i++)
-        {
-            if(ui->PROPS_NpcEventDeath->itemText(i) == npc.event_die)
-            {
-                ui->PROPS_NpcEventDeath->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        ui->PROPS_NpcEventTalk->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_NpcEventTalk->count(); i++)
-        {
-            if(ui->PROPS_NpcEventTalk->itemText(i) == npc.event_talk)
-            {
-                ui->PROPS_NpcEventTalk->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        ui->PROPS_NpcEventEmptyLayer->setCurrentIndex(0);
-        for(int i = 0; i < ui->PROPS_NpcEventEmptyLayer->count(); i++)
-        {
-            if(ui->PROPS_NpcEventEmptyLayer->itemText(i) == npc.event_emptylayer)
-            {
-                ui->PROPS_NpcEventEmptyLayer->setCurrentIndex(i);
-                break;
-            }
-        }
-
-        initExtraSettingsWidget(mw()->configs.getNpcExtraSettingsPath(),
-                                configDir,
-                                t_npc.setup.extra_settings,
-                                "global_npc.json",
-                                npc.meta.custom_params,
-                                &LvlItemProperties::onExtraSettingsNPCChanged);
-
-        m_externalLock = false;
-        m_internalLock = false;
-
-        ui->npcProps->show();
-        ui->npcProps->adjustSize();
-        if(!dontShowToolbox)
-        {
-            show();
-            raise();
-        }
-        break;
-    }
-    case -1: //Nothing to edit
-    default:
-        hide();
+        show();
+        raise();
     }
 }
 
-void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
+void LvlItemProperties::syncLayerFields(const QString &layerName)
 {
     if(m_externalLock) return;
     m_externalLock = true;
 
-    if(lname.isEmpty())
+    QString lname = layerName;
+
+    if(layerName.isEmpty())
         lname = LvlPlacingItems::layer;
 
     switch(m_curItemType)
@@ -855,6 +822,7 @@ void LvlItemProperties::LvlItemProps_updateLayer(QString lname)
         }
     }
     }
+
     m_externalLock = false;
 }
 

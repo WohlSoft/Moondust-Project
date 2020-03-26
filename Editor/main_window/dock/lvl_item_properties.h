@@ -72,19 +72,22 @@ public slots:
     void setSMBX64Strict(bool en);
     void re_translate();
 
-    void LvlItemProps_updateLayer(QString lname);
-    void OpenBlock(LevelBlock& block, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
-    void OpenBGO(LevelBGO& bgo, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
-    void OpenNPC(LevelNPC& npc, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
-    void CloseBox();
+public:
+    /**
+     * @brief Synchronize active layer fields after changing of layers
+     * @param Name of affected layer
+     */
+    void syncLayerFields(const QString &layerName = QString());
 
-    void openPropertiesFor(int Type,
-                      LevelBlock& block,
-                      LevelBGO& bgo,
-                      LevelNPC& npc,
-                      bool isPlacingNew=false,
-                      bool dontResetProps=false,
-                      bool dontShowToolbox=false);
+    void openBlockProps(LevelBlock& block, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
+    void openBgoProps(LevelBGO& bgo, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
+    void openNpcProps(LevelNPC& npc, bool newItem=false, bool dont_reset_props=false, bool dontShow=false);
+
+    void closeProps();
+
+private:
+    void resetBox(bool isPlacingNew);
+    void resetBoxEnd(bool dontShowToolbox);
 
     void refreshFirstNpcSpecialOption(LevelNPC &npc, bool newItem=false, bool dont_reset_props=false);
 
