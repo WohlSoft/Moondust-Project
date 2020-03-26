@@ -1324,7 +1324,7 @@ Please save them before doing anything else.</translation>
     <name>FileListBrowser</name>
     <message>
         <source>Files list</source>
-        <translation>Files list</translation>
+        <translation>File list</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -9421,15 +9421,15 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Select SFX file</source>
-        <translation>Select SFX file</translation>
+        <translation>Select an SFX file</translation>
     </message>
     <message>
         <source>Please select SFX file to use</source>
-        <translation>Please select SFX file to use</translation>
+        <translation>Please select an SFX file to use</translation>
     </message>
     <message>
         <source>Please select music file to use as custom</source>
-        <translation>Please select music file to use as custom</translation>
+        <translation>Please select a music file to use as custom</translation>
     </message>
 </context>
 <context>
@@ -9807,7 +9807,7 @@ Error description:
     </message>
     <message>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
-        <translation>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</translation>
+        <translation>Currently this is not yet supported for world maps. Please use &apos;Test saved level/world&apos; action tu run a world map test.</translation>
     </message>
 </context>
 <context>
