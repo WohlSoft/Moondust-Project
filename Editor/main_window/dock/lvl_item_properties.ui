@@ -57,9 +57,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>280</width>
-         <height>1727</height>
+         <y>-280</y>
+         <width>286</width>
+         <height>1902</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,100">
@@ -482,7 +482,7 @@
           <property name="title">
            <string>BGO</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_14" columnstretch="10,0">
+          <layout class="QGridLayout" name="gridLayout_14" columnstretch="0,1000">
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
