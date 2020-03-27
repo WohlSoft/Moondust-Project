@@ -98,7 +98,9 @@ if(WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5WinExtras_EXECUTABLE_COMPILE_FLAGS}")
 endif()
 
-qt5_wrap_ui(UIS_HDRS
+set(PGE_EDITOR_UI)
+
+list(APPEND PGE_EDITOR_UI
     common_features/crashhandler.ui
     data_configs/config_status/config_status.ui
     data_configs/selection_dialog/config_manager.ui
@@ -434,10 +436,16 @@ list(APPEND PGE_EDITOR_SRCS
     tools/tilesets/tileset.cpp
     tools/tilesets/tilesetgroupeditor.cpp
     tools/tilesets/tilesetitembutton.cpp
-    ${UIS_HDRS}
-    ${RESOURCE_ADDED}
-    ${QT_PLUGINS_CPP}
 )
+
+if(NOT WIN32) # Wine setup dialog
+    list(APPEND PGE_EDITOR_SRCS
+        testing/wine/wine_setup.cpp
+    )
+    list(APPEND PGE_EDITOR_UI
+        testing/wine/wine_setup.ui
+    )
+endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
@@ -453,6 +461,14 @@ endif()
 if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_EDITOR_SRCS _resources/pge_editor.rc)
 endif()
+
+qt5_wrap_ui(PGE_EDITOR_UI_HDRS ${PGE_EDITOR_UI})
+
+list(APPEND PGE_EDITOR_SRCS
+    ${PGE_EDITOR_UI_HDRS}
+    ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
+)
 
 add_executable(pge_editor
     ${PGE_EDITOR_SRCS}
