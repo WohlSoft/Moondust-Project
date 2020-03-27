@@ -57,7 +57,7 @@ class TheXTechEngine : public AbstractRuntimeEngine
     /************** Settings **************/
 
 
-    PgeEngineIpcClient interface;
+    PgeEngineIpcClient m_interface;
 
     QString getEnginePath();
 

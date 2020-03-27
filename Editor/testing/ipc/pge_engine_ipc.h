@@ -31,7 +31,7 @@ class PgeEngineIpcClient: public QObject
 {
     Q_OBJECT
 public:
-    explicit PgeEngineIpcClient(QObject *parent);
+    explicit PgeEngineIpcClient(QObject *parent = nullptr);
     ~PgeEngineIpcClient() override = default;
 
     /**

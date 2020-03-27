@@ -142,7 +142,7 @@ static bool findEngine(MainWindow *parent, QString &command)
 
 PgeEngine::PgeEngine(QObject *parent) :
     AbstractRuntimeEngine(parent),
-    interface(parent)
+    m_interface(parent)
 {}
 
 PgeEngine::~PgeEngine()
@@ -163,13 +163,13 @@ void PgeEngine::init()
 
     QObject::connect(&m_engineProc, SIGNAL(finished(int, QProcess::ExitStatus)),
                      this, SLOT(testFinished()));
-    interface.init(&m_engineProc);
+    m_interface.init(&m_engineProc);
 }
 
 void PgeEngine::unInit()
 {
     this->terminate();
-    interface.quit();
+    m_interface.quit();
 }
 
 void PgeEngine::initMenu(QMenu *destmenu)
@@ -332,7 +332,7 @@ bool PgeEngine::doTestLevelIPC(const LevelData &d)
         args << "--debug-print=no";
 
     edit->prepareLevelFile(data);
-    interface.setTestLvlBuffer(data);
+    m_interface.setTestLvlBuffer(data);
 
     qDebug() << "Executing engine..." << command;
     m_engineProc.start(command, args);

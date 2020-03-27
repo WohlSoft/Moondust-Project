@@ -218,7 +218,7 @@ void TheXTechEngine::startGameAction()
 
 TheXTechEngine::TheXTechEngine(QObject *parent) :
     AbstractRuntimeEngine(parent),
-    interface(parent)
+    m_interface(parent)
 {}
 
 TheXTechEngine::~TheXTechEngine()
@@ -239,7 +239,7 @@ void TheXTechEngine::init()
 
     QObject::connect(&m_engineProc, SIGNAL(finished(int, QProcess::ExitStatus)),
                      this, SLOT(testFinished()));
-    interface.init(&m_engineProc);
+    m_interface.init(&m_engineProc);
 
     loadSetup();
 }
@@ -247,7 +247,7 @@ void TheXTechEngine::init()
 void TheXTechEngine::unInit()
 {
     this->terminate();
-    interface.quit();
+    m_interface.quit();
     saveSetup();
 }
 
@@ -547,7 +547,7 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
     }
 
     edit->prepareLevelFile(data);
-    interface.setTestLvlBuffer(data);
+    m_interface.setTestLvlBuffer(data);
 
     qDebug() << "Executing engine..." << command;
     m_engineProc.start(command, args);

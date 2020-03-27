@@ -40,7 +40,7 @@ class PgeEngine : public AbstractRuntimeEngine
     //! List of registered menu items
     QAction *m_menuItems[7];
 
-    PgeEngineIpcClient interface;
+    PgeEngineIpcClient m_interface;
 private slots:
     void retranslateMenu();
 
