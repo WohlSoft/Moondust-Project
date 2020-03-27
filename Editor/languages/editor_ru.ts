@@ -3746,9 +3746,8 @@ That means, impossible to launch level testing on your operating operating. Luna
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation>Запустить тест уровня в устаревшем движке.
-Чтобы эта возможность работала, требуется наличие последней версии LunaLua.
-Иначе, эта возможность будет работать очень ограниченно.</translation>
+        <translation>Запустить тест уровня на движке SMBX.
+Эта возможность требует LunaLua.</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
@@ -7263,7 +7262,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Открыть папку эпизода, который содержит текущий файл</translation>
+        <translation>Открыть папку эпизода, который содержит текущий файл.</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
