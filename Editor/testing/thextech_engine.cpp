@@ -495,6 +495,8 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
 
     QString command = getEnginePath();
 
+    // TODO: Make a fail check, show message box when executable was not found
+
     QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
 
@@ -561,6 +563,7 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
     }
     else
     {
+        // TODO: Show a message box with a reason why game didn't started
         m_errorString = "Failed to start TheXTech!" + command + "with args" + args.join(" ");
         qWarning() << m_errorString;
         return false;
@@ -574,6 +577,8 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     m_errorString.clear();
 
     QString command = getEnginePath();
+
+    // TODO: Make a fail check, show message box when executable was not found
 
     QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
@@ -626,6 +631,7 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     }
     else
     {
+        // TODO: Show a message box with a reason why game didn't started
         m_errorString = "Failed to start TheXTech!" + command + "with args" + args.join(" ");
         return false;
     }
@@ -635,6 +641,8 @@ bool TheXTechEngine::runNormalGame()
 {
     Q_ASSERT(m_w);
     QString command = getEnginePath();
+
+    // TODO: Make a fail check, show message box when executable was not found
 
     QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
