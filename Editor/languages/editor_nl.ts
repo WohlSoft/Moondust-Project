@@ -4135,12 +4135,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <location filename="../testing/luna_tester_engine.cpp" line="766"/>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer het LunaTester pad...</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="768"/>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Selecteer een pad naar LunaTester voor gebruik.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="842"/>
@@ -4157,12 +4157,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <location filename="../testing/luna_tester_engine.cpp" line="1011"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gelieve een pad te selecteren naar LunaTester</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1511"/>
         <source>SMBX64 limits are exceeded!</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 limieten overschreden!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1512"/>
@@ -4171,7 +4171,10 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Do you want to continue the process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Er werd een overtreding van de SMBX64 standaard gevonden!
+%1, oorspronkelijke programma kan vastlopen!
+Het is aanbevolen om alle overtollige elementen te verwijderen.
+Wilt u doorgaan met het proces?</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1555"/>
@@ -4205,13 +4208,15 @@ Do you want to continue the process?</source>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&quot;%1&quot; niet gevonden!
+U hebt een vanilla SMBX! &lt;br&gt;
+Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1687"/>
         <location filename="../testing/luna_tester_engine.cpp" line="1743"/>
         <source>Impossible to launch LunaTester, due to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1706"/>

@@ -1098,7 +1098,7 @@ Please save them before doing anything else.</translation>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished">You have a legacy configuration package.
+        <translation>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may encounter problems with items or settings.
 &lt;br&gt;
 &lt;br&gt;Please download and install the latest version of your configuration package:
@@ -4054,29 +4054,29 @@ To use LunaTester you must use the Integration configuration package!</translati
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation type="unfinished"></translation>
+        <translation>Change the path to LunaTester...</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation>Select the location of LunaTester.</translation>
     </message>
     <message>
         <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Path to LunaTester</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Select a location of LunaTester</translation>
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 limits are exceeded!</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -4084,48 +4084,57 @@ To use LunaTester you must use the Integration configuration package!</translati
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Do you want to continue the process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Do you want to continue the process?</translation>
     </message>
     <message>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester directory check failed</translation>
     </message>
     <message>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</translation>
     </message>
     <message>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
+- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</translation>
     </message>
     <message>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; not found!
+You have a Vanilla SMBX!
+That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</translation>
     </message>
     <message>
         <source>Impossible to launch LunaTester, due to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible to launch LunaTester, due to %1</translation>
     </message>
     <message>
         <source>LunaTester Directory wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester Directory wasn&apos;t configured right</translation>
     </message>
     <message>
         <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</translation>
     </message>
 </context>
 <context>
