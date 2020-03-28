@@ -192,16 +192,15 @@ static pid_t find_pid(const QString &proc_name)
                 c = '/';
         }
 
-        /*
-        If exe matches our process path, extract the process ID from the
-        path, convert it to a pid_t, and return it.
-        */
+        // If exe matches our process path, extract the process ID from the
+        // path, convert it to a pid_t, and return it.
         if(nullptr != std::strstr(cmdline_buffer, process_name.c_str()))
         {
             pid = static_cast<pid_t>(std::atoi(pglob.gl_pathv[i] + strlen("/proc/")));
             break;
         }
     }
+
     /* Clean up. */
     globfree(&pglob);
     return pid;
@@ -764,9 +763,9 @@ void LunaTesterEngine::retranslateMenu()
     }
     {
         QAction *chooseEnginePath = m_menuItems[menuItemId++];
-        chooseEnginePath->setText(tr("Select LunaTester path...",
-                                    "Select a path to LunaTester for use."));
-        chooseEnginePath->setToolTip(tr("Select a path to LunaTester for use."));
+        chooseEnginePath->setText(tr("Change the path to LunaTester...",
+                                     "Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory)."));
+        chooseEnginePath->setToolTip(tr("Select the location of LunaTester."));
     }
     {
         QAction *runLegacyEngine = m_menuItems[menuItemId++];
@@ -840,7 +839,7 @@ inline void busyThreadBox(MainWindow *mw)
 {
     QMessageBox::warning(mw,
                          "LunaTester",
-                         LunaTesterEngine::tr("LunaLUA test loader thread is busy, try again or try termiate frozen loader!"),
+                         LunaTesterEngine::tr("LunaTester loader thread is busy, try again or use the \"terminate frozen loader\" option!"),
                          QMessageBox::Ok);
 }
 
@@ -950,7 +949,7 @@ void LunaTesterEngine::killBackgroundInstance()
 void LunaTesterEngine::chooseEnginePath()
 {
     QDialog d(m_w);
-    d.setWindowTitle(tr("LunaTester path select"));
+    d.setWindowTitle(tr("Path to LunaTester", "Title of dialog"));
     d.setModal(true);
 
     QGridLayout *g = new QGridLayout(&d);
@@ -1000,6 +999,8 @@ void LunaTesterEngine::chooseEnginePath()
     g->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding), 1, 0);
     g->addWidget(save, 1, 1);
 
+    save->setFocus(Qt::TabFocusReason);
+
     QObject::connect(useCustom, &QRadioButton::toggled, c, &QLineEdit::setEnabled);
     QObject::connect(useCustom, &QRadioButton::toggled, br, &QPushButton::setEnabled);
 
@@ -1007,7 +1008,7 @@ void LunaTesterEngine::chooseEnginePath()
     QObject::connect(br, &QPushButton::clicked,
                      [&d, c](bool)->void
     {
-        QString p = QFileDialog::getExistingDirectory(&d, tr("Select a LunaTester path"), c->text());
+        QString p = QFileDialog::getExistingDirectory(&d, tr("Select a location of LunaTester", "Directory select dialog title"), c->text());
         if(!p.isEmpty())
             c->setText(p);
     });
@@ -1356,13 +1357,16 @@ void LunaTesterEngine::lunaChkResetThread()
     }
     else
         goto failed;
+
     return;
 failed:
     msg.warning("LunaTester", tr("LunaLUA tester is not started!"), QMessageBox::Ok);
 }
 
+#if 0
 bool LunaTesterEngine::closeSmbxWindow()
 {
+#ifdef _WIN32 // Windows-only trick
     if(m_killPreviousSession || (!isOutPipeOpen()) || (!isInPipeOpen()))
         return false;
 
@@ -1392,14 +1396,14 @@ bool LunaTesterEngine::closeSmbxWindow()
             QJsonObject obj = jsonOut.object();
             if(obj["error"].isNull())
             {
-#ifdef _WIN32 // Windows-only trick
+// #ifdef _WIN32 // Windows-only trick
                 uintptr_t smbxHwnd = uintptr_t(obj["result"].toVariant().toULongLong());
                 HWND wSmbx = HWND(smbxHwnd);
                 //Close SMBX's window
                 PostMessage(wSmbx, WM_CLOSE, 0, 0);
                 //Wait half of second to avoid racings
                 Sleep(500);
-#endif
+// #endif
             }
             else
                 LogWarningQD("LunaTester (closeSmbxWindow, obj[\"error\"]): "
@@ -1415,13 +1419,18 @@ bool LunaTesterEngine::closeSmbxWindow()
         return true;
     }
     return false;
+#else
+    return true; // Windows-only trick
+#endif
 }
+#endif
 
 bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
 {
     if(!isOutPipeOpen() || !isInPipeOpen())
         return false;
 
+#ifdef _WIN32 // Windows-only trick
     QJsonDocument jsonOut;
     QJsonObject jsonObj;
     jsonObj["jsonrpc"]  = "2.0";
@@ -1448,7 +1457,6 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
             QJsonObject obj = jsonOut.object();
             if(obj["error"].isNull())
             {
-#ifdef _WIN32 // Windows-only trick
                 uintptr_t smbxHwnd = uintptr_t(obj["result"].toVariant().toULongLong());
                 HWND wSmbx = HWND(smbxHwnd);
                 //msg.warning("Test2", QString("Received: %1, from: %2").arg(smbxHwnd).arg(QString::fromStdString(inMessage)), QMessageBox::Ok);
@@ -1459,7 +1467,6 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
                 SetForegroundWindow(wSmbx);
                 SetActiveWindow(wSmbx);
                 SetFocus(wSmbx);
-#endif
             }
             else
                 msg.warning("LunaTester (switchToSmbxWindow, obj[\"error\"])",
@@ -1478,6 +1485,10 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
         return true;
     }
     return false;
+#else // _WIN32
+    Q_UNUSED(msg)
+    return true;
+#endif
 }
 
 void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &levelPath, bool isUntitled)
@@ -1497,320 +1508,209 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
     int smbx64limits = FileFormats::smbx64LevelCheckLimits(in_levelData);
     if(smbx64limits != FileFormats::SMBX64_FINE)
     {
-        int reply = msg.warning(tr("SMBX64 limits are excited!"),
+        int reply = msg.warning(tr("SMBX64 limits are exceeded!"),
                                 tr("Violation of SMBX64 standard has been found!\n"
                                    "%1\n"
                                    ", legacy engine may crash!\n"
                                    "Suggested to remove all excess elements.\n"
-                                   "Are you want continue process?")
+                                   "Do you want to continue the process?")
                                 .arg(smbx64ErrMsgs(in_levelData, smbx64limits)),
                                 QMessageBox::Yes | QMessageBox::No);
         if(reply != QMessageBox::Yes)
             return;
     }
 
-    // Launch LunaLoader
+    //-----------------------------------------------------------------
+
+    //! Path to SMBX root
+    const QString smbxPath = getEnginePath();
+    //! Full path to SMBX executable
+    const QString smbxExePath = smbxPath + ConfStatus::SmbxEXE_Name;
+    //! Full path to LunaDLL library
+    const QString lunaDllPath = smbxPath + "LunaDll.dll";
+    //! Full path to LunaTester proxy executable
+    const QString execProxy = smbxPath + "LunaLoader-exec.exe";
+
+    const QStringList smbxFiles =
     {
-        QString smbxPath = getEnginePath();
-        if(!QFile(smbxPath + ConfStatus::SmbxEXE_Name).exists())
+        smbxExePath,
+        execProxy
+    };
+    //! Extra checks of SMBX path
+    const QStringList smbxDirs =
+    {
+        smbxPath,
+        smbxPath + "graphics",
+        smbxPath + "graphics/background",
+        smbxPath + "graphics/background2",
+        smbxPath + "graphics/block",
+        smbxPath + "graphics/npc",
+        smbxPath + "graphics/tile",
+        smbxPath + "graphics/scene",
+        smbxPath + "graphics/path",
+        smbxPath + "graphics/level",
+        smbxPath + "graphics/player"
+    };
+
+    const QString notFoundErrorTitle = LunaTesterEngine::tr("LunaTester directory check failed",
+                                                            "A title of a message box that shows when some of the files or directories not exist.");
+    const QString notFoundErrorText = LunaTesterEngine::tr("Can't start LunaTester because \"%1\" is not found! That might happen due to any of the following reasons:",
+                                                           "A text of a message box that shows when some of the files or directories not exist.");
+
+    const QString explanationGeneric =
+            LunaTesterEngine::tr("- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.\n"
+                                 "- Possible removal of files by your antivirus (false positive or an infection of the file), "
+                                 "please check your antivirus' quarantine or report of recently removed threats.\n"
+                                 "- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.",
+                                 "Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.");
+
+    const QString explanationSMBX2 =
+            LunaTesterEngine::tr("- Possible removal of files by your antivirus (false positive or an infection of the file), "
+                                 "please check your antivirus' quarantine or report of recently removed threats.\n"
+                                 "- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.",
+                                 "Description of a problem, showing when LunaTester is a default engine in a current config pack.");
+
+    for(auto &f : smbxFiles)
+    {
+        if(!QFile::exists(f))
         {
-            msg.warning(LunaTesterEngine::tr("SMBX Directory wasn't configured right"),
-                        LunaTesterEngine::tr("%1 not found!\nTo run testing via SMBX you should have right SMBX Integration configuration package!")
-                        .arg(smbxPath + ConfStatus::SmbxEXE_Name),
+            msg.warning(notFoundErrorTitle,
+                        QString("%1\n%2")
+                        .arg(notFoundErrorText.arg(smbxExePath))
+                        .arg((ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA) ? explanationSMBX2 : explanationGeneric),
                         QMessageBox::Ok);
             return;
         }
+    }
 
-        if(isEngineActive())
+    for(auto &d : smbxDirs)
+    {
+        QFileInfo i(d);
+        if(!i.exists() || !i.isDir())
         {
-            if(isOutPipeOpen())
-            {
-                //Workaround to avoid weird crash
-                closeSmbxWindow();
-                //Then send level data to SMBX Engine
-                if(sendLevelData(in_levelData, levelPath, isUntitled))
-                {
-                    //Stop music playback in the PGE Editor!
-                    QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-                    // not sure how efficient it is
-                    QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-                    //Attempt to switch SMBX Window
-                    switchToSmbxWindow(msg);
-                }
-            }
-            else if(msg.warning(LunaTesterEngine::tr("SMBX Test is already runned"),
-                                LunaTesterEngine::tr("SMBX Engine is already testing another level.\n"
-                                               "Do you want to abort current testing process?"),
-                                QMessageBox::Abort | QMessageBox::Cancel) == QMessageBox::Abort)
-            {
-                killEngine();
-            }
+            msg.warning(notFoundErrorTitle,
+                        QString("%1\n%2")
+                        .arg(notFoundErrorText.arg(smbxExePath))
+                        .arg((ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA) ? explanationSMBX2 : explanationGeneric),
+                        QMessageBox::Ok);
             return;
         }
+    }
 
-        QString command = smbxPath + "LunaLoader-exec.exe";
-        QStringList params;
+    if(!QFile::exists(lunaDllPath))
+    {
+        msg.warning(LunaTesterEngine::tr("Vanilla SMBX detected!"),
+                    LunaTesterEngine::tr("\"%1\" not found!\n"
+                                         "You have a Vanilla SMBX!\n"
+                                         "That means, impossible to launch level testing with a LunaTester. "
+                                         "LunaLua is required to run level testing with SMBX Engine.")
+                    .arg(lunaDllPath),
+                    QMessageBox::Close);
+        return;
+    }
 
-        if(!QFile(smbxPath + "LunaDll.dll").exists())
+    if(isEngineActive())
+    {
+        if(isOutPipeOpen())
         {
-#ifdef _WIN32
-            /**********************************************
-             *****Do Vanilla test with dummy episode!******
-             **********************************************/
+#if 0 // Obsolete
+            //Workaround to avoid weird crash
+            closeSmbxWindow();
+#endif
+            //Then send level data to SMBX Engine
+            if(sendLevelData(in_levelData, levelPath, isUntitled))
             {
-                int msgRet = msg.richBox(LunaTesterEngine::tr("Vanilla SMBX detected!"),
-                                         LunaTesterEngine::tr("%2 not found!\nYou have a Vanilla SMBX!<br>\n"
-                                                        "That means, impossible to launch level testing automatically. "
-                                                        "To launch a level testing, will be generated a dummy episode which you can "
-                                                        "start and select manually.<br>\n<br>\n"
-                                                        "Name of episode to generate: %1<br>\n<br>\n"
-                                                        "Are you still want to launch a test?<br>\n<br>\n"
-                                                        "If you want to have a full featured level testing, you need to get a LunaLUA here:<br>\n"
-                                                        "%3")
-                                         .arg("\"_temp_episode_pge\"")
-                                         .arg(smbxPath + "LunaDll.dll")
-                                         .arg("<a href=\"http://wohlsoft.ru/LunaLua/\">http://wohlsoft.ru/LunaLua/</a>"),
-                                         QMessageBox::Yes | QMessageBox::No, QMessageBox::Warning);
-
-                if(msgRet != QMessageBox::Yes)
-                    return;
+                //Stop music playback in the PGE Editor!
+                QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+                // not sure how efficient it is
+                QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+                //Attempt to switch SMBX Window
+                switchToSmbxWindow(msg);
             }
+        }
+        else if(msg.warning(LunaTesterEngine::tr("SMBX Test is already runned"),
+                            LunaTesterEngine::tr("SMBX Engine is already testing another level.\n"
+                                                 "Do you want to abort current testing process?"),
+                            QMessageBox::Abort | QMessageBox::Cancel) == QMessageBox::Abort)
+        {
+            killEngine();
+        }
+        return;
+    }
 
-            QString tempPath        = smbxPath + "/worlds/";
-            QString tempName        = "tmp.PgeWorld.DeleteMe";
-            QString dst_Episode     = tempPath + tempName + "/";
-            QString src_episodePath = in_levelData.meta.path;
-            QString src_customPath  = in_levelData.meta.path + "/" + in_levelData.meta.filename;
+    QString command = execProxy;
+    QStringList params;
 
-            QDir dummyWorld(dst_Episode);
-            if(dummyWorld.exists(dst_Episode))
-            {
-                QString testFolder = dst_Episode + "templevel/";
-                RemoveDirectoryW(testFolder.toStdWString().c_str());//Remove symblic link if possible
-                //Clean-up old stuff
-                dummyWorld.removeRecursively();
-            }
-            dummyWorld.mkpath(dst_Episode);
+    /**********************************************
+     **********Do LunaLUA testing launch!**********
+     **********************************************/
+    params << (m_killPreviousSession ? "--patch" : "--hideOnCloseIPC");
 
-            FileFormats::WriteSMBX64LvlFileF(dst_Episode + "/templevel.lvl", in_levelData, 64);
+    if(m_noGL)
+        params << "--nogl";
 
-            if(!isUntitled)
-            {
-                //Copy available custom stuff into temp directory
-                QDir episodeDir(src_episodePath);
-                QDir customDir(src_customPath);
+    QString argString;
+    for(int i = 0; i < params.length(); i++)
+    {
+        if(i > 0)
+            argString += " ";
+        argString += params[i];
+    }
 
-                QStringList fileters;
-                fileters << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.bmp";
-                QStringList fileters_cdir;
-                fileters_cdir << "*.txt" << "*.ini" << "*.lua" << "*.gif" << "*.png" << "*.mp3"
-                              //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
-                              << "*.ogg" << "*.flac"
-                              //Uncompressed audio data
-                              << "*.wav" << "*.voc" << "*.aiff"
-                              //MIDI
-                              << "*.mid" << "*.cmf"
-                              //MikMod (Modules)
-                              << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
-                              << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.imf" << "*.mtm"
-                              << "*.okt" << "*.stm" << "*.stx" << "*.ult" << "*.uni"
-                              //GAME EMU
-                              << "*.ay" << "*.gbs" << "*.gym" << "*.hes" << "*.kss" << "*.nsf" << "*.nsfe" << "*.sap" << "*.spc" << "*.vgm" << "*.vgz"
-                              //Rockythechao's extensions
-                              << "*.anim";
-                episodeDir.setNameFilters(fileters);
-                customDir.setNameFilters(fileters_cdir);
+    bool engineStartedSuccess = true;
+    QString engineStartupErrorString;
+    useWine(command, params);
+    emit engineSetExecPath(getEnginePath());
+    emit engineSetWorkPath(smbxPath);
+    emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
 
-                //***********************Attempt to make symbolic link*******************************/
-                bool needToCopyEverything = true;
-                typedef BOOL *(WINAPI * FUNK_OF_SYMLINKS)(wchar_t *linkFileName, wchar_t *existingFileName, DWORD flags);
-                HMODULE hKernel32 = nullptr;
-                FUNK_OF_SYMLINKS fCreateSymbolicLink = nullptr;
-                hKernel32 = LoadLibraryW(L"KERNEL32.DLL");
-                if(hKernel32)
-                {
-                    fCreateSymbolicLink = reinterpret_cast<FUNK_OF_SYMLINKS>(reinterpret_cast<void*>(GetProcAddress(hKernel32, "CreateSymbolicLinkW")));
-                    if(fCreateSymbolicLink) //Try to make a symblic link
-                    {
-                        QString newPath = dst_Episode + "templevel/";
-                        if(fCreateSymbolicLink(const_cast<wchar_t *>(newPath.toStdWString().c_str()),
-                                               const_cast<wchar_t *>(src_customPath.toStdWString().c_str()), 0x1))
-                            needToCopyEverything = false;
-                    }
-                }
-                //************Copy images and scripts from episode folder**********************/
-                QStringList files = episodeDir.entryList(QDir::Files);
-                foreach(QString filex, files)
-                    QFile::copy(src_episodePath + "/" + filex, dst_Episode + filex);
-
-                //********************Copy images and scripts from custom folder*****************/
-                //***************for case where impossible to make a symbolic link***************/
-                if(needToCopyEverything)
-                {
-                    customDir.setSorting(QDir::NoSort);
-                    QDirIterator dirsList(src_customPath, fileters_cdir,
-                                          QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot,
-                                          QDirIterator::Subdirectories);
-                    while(dirsList.hasNext())
-                    {
-                        dirsList.next();
-                        QString relativeDir = customDir.relativeFilePath(dirsList.fileInfo().absoluteDir().absolutePath());
-                        QString filex = dirsList.fileName();//customDir.relativeFilePath(dirsList.filePath());
-                        QString relNewPath = dst_Episode + "templevel/" + relativeDir;
-                        QDir newRelDir(relNewPath);
-                        if(!newRelDir.exists())
-                            newRelDir.mkpath(relNewPath);
-                        QFile::copy(src_customPath + "/" + relativeDir + "/" + filex, relNewPath + "/" + filex);
-                    }
-                }
-                /*********************************************************************************/
-
-                //Copy custom musics if possible
-                foreach(LevelSection sec, in_levelData.sections)
-                {
-                    if(sec.music_file.isEmpty())
-                        continue;
-
-                    QString musFile = sec.music_file;
-                    for(int i = 0; i < musFile.size(); i++)
-                    {
-                        if(musFile[i] == '|')
-                            musFile.remove(i, musFile.size() - i);
-                    }
-                    QString MusicFileName = src_episodePath + "/" + musFile;
-                    QString MusicNewPath = dst_Episode + musFile;
-
-                    QFile mus(MusicFileName);
-                    if(!mus.exists(MusicFileName))
-                        continue;
-
-                    QFileInfo inf(MusicNewPath);
-                    if(!needToCopyEverything)
-                    {
-                        if(inf.absoluteDir().absolutePath().contains((dst_Episode + "templevel/"), Qt::CaseInsensitive))
-                            continue; //Don't copy musics to the same directory!
-                    }
-                    if(!inf.absoluteDir().exists())
-                        inf.absoluteDir().mkpath(inf.absoluteDir().absolutePath());
-                    if(!needToCopyEverything)
-                    {
-                        if(fCreateSymbolicLink(const_cast<wchar_t*>(MusicNewPath.toStdWString().c_str()),
-                                               const_cast<wchar_t*>(MusicFileName.toStdWString().c_str()), 0x0) == FALSE)
-                        {
-                            mus.copy(MusicNewPath);//Copy file if impossible to make symbolic link to it
-                        }
-                    }
-                    else
-                        mus.copy(MusicNewPath);
-                }
-                if(hKernel32)
-                    FreeLibrary(hKernel32);
-            }
-
-            WorldData worldmap;
-            FileFormats::CreateWorldData(worldmap);
-            worldmap.EpisodeTitle = "_temp_episode_pge";
-            worldmap.IntroLevel_file = "templevel.lvl";
-            worldmap.restartlevel = true;
-
-            if(!FileFormats::WriteSMBX64WldFileF(dst_Episode + "/tempworld.wld", worldmap, 64))
-            {
-                msg.warning(LunaTesterEngine::tr("File save error"),
-                            LunaTesterEngine::tr("Cannot save file %1:\n%2.")
-                            .arg(dst_Episode + "/tempworld.wld")
-                            .arg(worldmap.meta.ERROR_info),
-                            QMessageBox::Ok);
-                return;
-            }
-
-            QProcess::startDetached(smbxPath + ConfStatus::SmbxEXE_Name, params, smbxPath);
+    if(engineStartedSuccess)
+    {
+        if(sendLevelData(in_levelData, levelPath, isUntitled))
+        {
+            //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
             //Stop music playback in the PGE Editor!
             QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-            // not sure how efficient it is
             QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-#else // _WIN32
-            {
-                int msgRet = msg.richBox(LunaTesterEngine::tr("Vanilla SMBX detected!"),
-                                         LunaTesterEngine::tr("%2 not found!\nYou have a Vanilla SMBX!<br>\n"
-                                                        "That means, impossible to launch level testing on your operating operating. "
-                                                        "LunaLua is required to run level testing with SMBX on a non-Windows "
-                                                        "operating systems."),
-                                         QMessageBox::Close, QMessageBox::Warning);
-
-                if(msgRet != QMessageBox::Yes)
-                    return;
-            }
-#endif // _WIN32
-            return;
         }
         else
         {
-            /**********************************************
-             **********Do LunaLUA testing launch!**********
-             **********************************************/
-            params << (m_killPreviousSession ? "--patch" : "--hideOnCloseIPC");
-
-            if(m_noGL)
-                params << "--nogl";
-
-            QString argString;
-            for(int i = 0; i < params.length(); i++)
-            {
-                if(i > 0)
-                    argString += " ";
-                argString += params[i];
-            }
-
-            bool engineStartedSuccess = true;
-            QString engineStartupErrorString;
-            useWine(command, params);
-            emit engineSetExecPath(getEnginePath());
-            emit engineSetWorkPath(smbxPath);
-            emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
-
-            if(engineStartedSuccess)
-            {
-                if(sendLevelData(in_levelData, levelPath, isUntitled))
-                {
-                    //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
-                    //Stop music playback in the PGE Editor!
-                    QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-                    QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-                }
-                else
-                {
-                    msg.warning(LunaTesterEngine::tr("LunaTester error"),
-                                LunaTesterEngine::tr("Failed to send level into LunaLUA-SMBX!"),
-                                QMessageBox::Ok);
-                }
-            }
-            else
-            {
-                QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
-                msg.warning(LunaTesterEngine::tr("LunaTester error"),
-                            LunaTesterEngine::tr("Impossible to launch SMBX Engine, because %1").arg(luna_error),
-                            QMessageBox::Ok);
-            }
-        }//Do LunaLUA direct testing launch
+            msg.warning(LunaTesterEngine::tr("LunaTester error"),
+                        LunaTesterEngine::tr("Failed to send level into LunaLUA-SMBX!"),
+                        QMessageBox::Ok);
+        }
+    }
+    else
+    {
+        QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
+        msg.warning(LunaTesterEngine::tr("LunaTester error"),
+                    LunaTesterEngine::tr("Impossible to launch LunaTester, due to %1").arg(luna_error),
+                    QMessageBox::Ok);
     }
 }
 
 void LunaTesterEngine::lunaRunGame()
 {
-    QString smbxPath = getEnginePath();
-    QString command = smbxPath + "LunaLoader-exec.exe";
+    //! Path to SMBX root
+    const QString smbxPath = getEnginePath();
+    //! Full path to SMBX executable
+    const QString smbxExePath = smbxPath + ConfStatus::SmbxEXE_Name;
+    //! Full path to LunaDLL library
+    const QString lunaDllPath = smbxPath + "LunaDll.dll";
+    //! Full path to LunaTester proxy executable
+    const QString execProxy = smbxPath + "LunaLoader-exec.exe";
 
-    if(!QFile(command).exists())
+    if(!QFile::exists(execProxy))
     {
         QMessageBox::warning(m_w,
-                             LunaTesterEngine::tr("Directory of Legacy Engine wasn't configured right"),
-                             LunaTesterEngine::tr("%1 not found!\nTo use LunaTester you should have right "
-                                            "Integration configuration package!")
-                             .arg(command),
+                             LunaTesterEngine::tr("LunaTester Directory wasn't configured right"),
+                             LunaTesterEngine::tr("%1 not found! To run testing with LunaTester, you should specify the right SMBX location.")
+                                .arg(execProxy),
                              QMessageBox::Ok);
         return;
     }
 
+    QString command = execProxy;
     QStringList params;
     params << "--patch";
     params << "--game";
@@ -1818,7 +1718,7 @@ void LunaTesterEngine::lunaRunGame()
     if(m_noGL)
         params << "--nogl";
 
-    if(!QFile(smbxPath + "LunaDll.dll").exists())
+    if(!QFile::exists(lunaDllPath))
     {
         useWine(command, params);
         QProcess::startDetached(command, params, pathUnixToWine(smbxPath));
@@ -1840,8 +1740,7 @@ void LunaTesterEngine::lunaRunGame()
             QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
             QMessageBox::warning(m_w,
                                  LunaTesterEngine::tr("LunaTester error"),
-                                 LunaTesterEngine::tr("Impossible to launch Legacy Engine, because %1")
-                                 .arg(luna_error),
+                                 LunaTesterEngine::tr("Impossible to launch LunaTester, due to %1").arg(luna_error),
                                  QMessageBox::Ok);
             return;
         }
