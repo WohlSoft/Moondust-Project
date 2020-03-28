@@ -72,9 +72,9 @@ void PgeEngineIpcClient::onInputData()
         LogDebug(msgP);
         LogDebug("<<ENGINE COMMAND END");
 
-        if(strcmp(msgP, "CONNECT_TO_ENGINE") == 0)
+        if(std::strcmp(msgP, "CONNECT_TO_ENGINE") == 0)
             sendLevelBuffer();
-        else if(strcmp(msgP, "ENGINE_CLOSED") == 0)
+        else if(std::strcmp(msgP, "ENGINE_CLOSED") == 0)
         {
             if(m_mainWindow)
             {
