@@ -1019,6 +1019,21 @@ Please save them before doing anything else.</source>
     </message>
 </context>
 <context>
+    <name>DataConfig</name>
+    <message>
+        <location filename="../data_configs/data_configs.cpp" line="287"/>
+        <source>You have a legacy configuration package.
+&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
+&lt;br&gt;
+&lt;br&gt;Please download and install latest version of a configuration package:
+&lt;br&gt;
+&lt;br&gt;Download: %1
+&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
+therefore you can use same link to get updated version</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DebuggerBox</name>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="33"/>
@@ -3430,286 +3445,273 @@ Do you want to save your changes?</source>
 <context>
     <name>LunaTesterEngine</name>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="723"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="725"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="725"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="727"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="731"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="733"/>
         <source>Reset checkpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="732"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="734"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="736"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="738"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="737"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="739"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="743"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="745"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="745"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="747"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="751"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="753"/>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="753"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="755"/>
         <source>Termiates frozen thread to allow you to run a test again.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="757"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="759"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="760"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="762"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="764"/>
-        <source>Select LunaTester path...</source>
-        <comment>Select a path to LunaTester for use.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../testing/luna_tester_engine.cpp" line="766"/>
-        <source>Select a path to LunaTester for use.</source>
+        <source>Change the path to LunaTester...</source>
+        <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="770"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="768"/>
+        <source>Select the location of LunaTester.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="842"/>
+        <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="952"/>
+        <source>Path to LunaTester</source>
+        <comment>Title of dialog</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1011"/>
+        <source>Select a location of LunaTester</source>
+        <comment>Directory select dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1511"/>
+        <source>SMBX64 limits are exceeded!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1512"/>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Do you want to continue the process?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1555"/>
+        <source>LunaTester directory check failed</source>
+        <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1557"/>
+        <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
+        <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1561"/>
+        <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
+- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
+        <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1568"/>
+        <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
+        <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1603"/>
+        <source>&quot;%1&quot; not found!
+You have a Vanilla SMBX!
+That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1687"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1743"/>
+        <source>Impossible to launch LunaTester, due to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1706"/>
+        <source>LunaTester Directory wasn&apos;t configured right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1707"/>
+        <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="772"/>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="772"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="774"/>
         <source>Launch LunaTester as a normal game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="840"/>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="901"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="903"/>
         <source>Are you really want to terminate loader thread?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="912"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="914"/>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="927"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="929"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="934"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="936"/>
         <source>LunaTester has been successfully closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="942"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="944"/>
         <source>LunaTester is not running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="950"/>
-        <source>LunaTester path select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="957"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="959"/>
         <source>Please select a path to LunaTester:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="966"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="968"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="969"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="971"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="972"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="974"/>
         <source>Browse...</source>
         <translation type="unfinished">Utforsk…</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="996"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="998"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1007"/>
-        <source>Select a LunaTester path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1334"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1338"/>
         <source>Checkpoints successfully reseted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1346"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1350"/>
         <source>LunaTester error!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1358"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1363"/>
         <source>LunaLUA tester is not started!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1497"/>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1498"/>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1514"/>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1515"/>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1538"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1631"/>
         <source>SMBX Test is already runned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1539"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1632"/>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1558"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1730"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1602"/>
         <source>Vanilla SMBX detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1559"/>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1715"/>
-        <source>File save error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1716"/>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1731"/>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1780"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1679"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1779"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1787"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1839"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1678"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1686"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1742"/>
         <source>LunaTester error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1788"/>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1803"/>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1804"/>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1840"/>
-        <source>Impossible to launch Legacy Engine, because %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4354,19 +4356,19 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1075"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1177"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="655"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="567"/>
         <source>Direction</source>
         <translation type="unfinished">Varighet</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1204"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="656"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="568"/>
         <source>Left</source>
         <translation type="unfinished">Venstre</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1218"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="659"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="571"/>
         <source>Right</source>
         <translation type="unfinished">Høyre</translation>
     </message>
@@ -4382,7 +4384,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1211"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="658"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="570"/>
         <source>Random</source>
         <translation type="unfinished">Tilfeldig</translation>
     </message>
@@ -4397,99 +4399,99 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="147"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="149"/>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished">Venstre</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="148"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="150"/>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished">Høyre</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="149"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="151"/>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="150"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="152"/>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="151"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="153"/>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="152"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="154"/>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="153"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="155"/>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="154"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="156"/>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="366"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="271"/>
         <source>Block ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="412"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="517"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="654"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="317"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="428"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="566"/>
         <source>Position: [%1, %2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="426"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1325"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="331"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1302"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="427"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="681"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1326"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1733"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2088"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="332"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="593"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1303"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1726"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2090"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="503"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="414"/>
         <source>BGO ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="584"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="496"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="688"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1980"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="600"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1981"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="920"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="973"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="890"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="943"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
@@ -6883,12 +6885,12 @@ Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="189"/>
+        <location filename="../main_window/testing/testing.cpp" line="206"/>
         <source>World map testing of saved file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="190"/>
+        <location filename="../main_window/testing/testing.cpp" line="207"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation type="unfinished"></translation>
@@ -8291,7 +8293,7 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="518"/>
+        <location filename="../data_configs/data_configs.cpp" line="548"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8822,7 +8824,8 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="141"/>
-        <source>TheXTech path select</source>
+        <source>Path to TheXTech</source>
+        <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8843,105 +8846,105 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="198"/>
+        <location filename="../testing/thextech_engine.cpp" line="200"/>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="411"/>
+        <location filename="../testing/thextech_engine.cpp" line="413"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="416"/>
+        <location filename="../testing/thextech_engine.cpp" line="418"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="421"/>
+        <location filename="../testing/thextech_engine.cpp" line="423"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="427"/>
+        <location filename="../testing/thextech_engine.cpp" line="429"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="432"/>
+        <location filename="../testing/thextech_engine.cpp" line="434"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="437"/>
+        <location filename="../testing/thextech_engine.cpp" line="439"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="442"/>
+        <location filename="../testing/thextech_engine.cpp" line="444"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="447"/>
+        <location filename="../testing/thextech_engine.cpp" line="449"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="454"/>
+        <location filename="../testing/thextech_engine.cpp" line="456"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="456"/>
+        <location filename="../testing/thextech_engine.cpp" line="458"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="462"/>
+        <location filename="../testing/thextech_engine.cpp" line="464"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="464"/>
+        <location filename="../testing/thextech_engine.cpp" line="466"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="468"/>
+        <location filename="../testing/thextech_engine.cpp" line="470"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="470"/>
+        <location filename="../testing/thextech_engine.cpp" line="472"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="477"/>
-        <source>Select TheXTech path...</source>
-        <comment>Select a path to TheXTech for use.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../testing/thextech_engine.cpp" line="479"/>
-        <source>Select a path to TheXTech for use.</source>
+        <source>Change the path to TheXTech...</source>
+        <comment>Select the path to TheXTech executable.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="483"/>
+        <location filename="../testing/thextech_engine.cpp" line="481"/>
+        <source>Select the path to TheXTech executable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="485"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation type="unfinished"></translation>
@@ -10628,21 +10631,6 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.ui" line="147"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>dataconfigs</name>
-    <message>
-        <location filename="../data_configs/data_configs.cpp" line="287"/>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

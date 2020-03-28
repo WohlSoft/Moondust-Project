@@ -872,6 +872,20 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     </message>
 </context>
 <context>
+    <name>DataConfig</name>
+    <message>
+        <source>You have a legacy configuration package.
+&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
+&lt;br&gt;
+&lt;br&gt;Please download and install latest version of a configuration package:
+&lt;br&gt;
+&lt;br&gt;Download: %1
+&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
+therefore you can use same link to get updated version</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DebuggerBox</name>
     <message>
         <source>Debugger</source>
@@ -3253,15 +3267,6 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select LunaTester path...</source>
-        <comment>Select a path to LunaTester for use.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a path to LunaTester for use.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
         <translation type="unfinished"></translation>
@@ -3272,7 +3277,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="unfinished">Il test loader di LunaLUA è occupato, riprova o prova a terminarlo!</translation>
+        <translation type="obsolete">Il test loader di LunaLUA è occupato, riprova o prova a terminarlo!</translation>
     </message>
     <message>
         <source>Are you really want to terminate loader thread?</source>
@@ -3294,10 +3299,6 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LunaTester path select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3323,10 +3324,6 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation type="unfinished">Salva</translation>
     </message>
     <message>
-        <source>Select a LunaTester path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Checkpoints successfully reseted!</source>
         <translation type="unfinished">Checkpoint resettati con successo!</translation>
     </message>
@@ -3340,7 +3337,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>SMBX64 limits are excited!</source>
-        <translation type="unfinished">I limiti di SMBX64 sono stati superati!</translation>
+        <translation type="obsolete">I limiti di SMBX64 sono stati superati!</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3348,7 +3345,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation type="unfinished">E&apos; stata trovata una violazione degli standard di SMBX64!
+        <translation type="obsolete">E&apos; stata trovata una violazione degli standard di SMBX64!
 %1
 Il vecchio sistema potrebbe crashare!
 E&apos; consigliato rimuovere tutti gli elementi in eccesso.
@@ -3356,12 +3353,12 @@ Procedere?</translation>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="unfinished">La cartella di SMBX non è stata configurata correttamente</translation>
+        <translation type="obsolete">La cartella di SMBX non è stata configurata correttamente</translation>
     </message>
     <message>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="unfinished">%1 non trovato!
+        <translation type="obsolete">%1 non trovato!
 Per testare attraverso SMBX devi avere il pacchetto di configurazione SMBX Integration!</translation>
     </message>
     <message>
@@ -3388,7 +3385,7 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation type="unfinished">%2 non trovato!
+        <translation type="obsolete">%2 non trovato!
 Hai un SMBX Vanilla!&lt;br&gt;
 Quindi è impossibile iniziare il test automaticamente. Per iniziare un test, verrà generato un episodio di bozza che puoi avviare e selezionare manualmente.&lt;br&gt;
 &lt;br&gt;
@@ -3400,20 +3397,10 @@ Se vuoi fare un test completo di tutte le funzioni, devi prendere LunaLUA qui:&l
 %3</translation>
     </message>
     <message>
-        <source>File save error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished">Impossibile salvare file %1:
+        <translation type="obsolete">Impossibile salvare file %1:
 %2.</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
@@ -3425,21 +3412,97 @@ That means, impossible to launch level testing on your operating operating. Luna
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="unfinished">Impossibile avviare il sistema di SMBX, a causa di %1</translation>
+        <translation type="obsolete">Impossibile avviare il sistema di SMBX, a causa di %1</translation>
     </message>
     <message>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="unfinished">La cartella del vecchio sistema non è stata configurata correttamente</translation>
+        <translation type="obsolete">La cartella del vecchio sistema non è stata configurata correttamente</translation>
     </message>
     <message>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="unfinished">%1 non trovato!
+        <translation type="obsolete">%1 non trovato!
 Per usare LunaTester devi avere il giusto pacchetto di configurazione Integration!</translation>
     </message>
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="unfinished">Impossibile avviare il vecchio sistema, perché %1</translation>
+        <translation type="obsolete">Impossibile avviare il vecchio sistema, perché %1</translation>
+    </message>
+    <message>
+        <source>Change the path to LunaTester...</source>
+        <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the location of LunaTester.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path to LunaTester</source>
+        <comment>Title of dialog</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a location of LunaTester</source>
+        <comment>Directory select dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SMBX64 limits are exceeded!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Do you want to continue the process?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester directory check failed</source>
+        <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
+        <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
+- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
+        <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
+        <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; not found!
+You have a Vanilla SMBX!
+That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to launch LunaTester, due to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester Directory wasn&apos;t configured right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8504,21 +8567,8 @@ file: %1</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select TheXTech path...</source>
-        <comment>Select a path to TheXTech for use.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select a path to TheXTech for use.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TheXTech path select</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8595,6 +8645,20 @@ file: %1</translation>
     </message>
     <message>
         <source>Allow player to grab any NPCs in a game.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path to TheXTech</source>
+        <comment>Title of dialog</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the path to TheXTech...</source>
+        <comment>Select the path to TheXTech executable.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the path to TheXTech executable.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10129,20 +10193,6 @@ Vuoi salvare le modifiche?</translation>
     <message>
         <source>Close</source>
         <translation>Chiudi</translation>
-    </message>
-</context>
-<context>
-    <name>dataconfigs</name>
-    <message>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
-        <translation></translation>
     </message>
 </context>
 <context>
