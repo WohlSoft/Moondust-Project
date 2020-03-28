@@ -138,7 +138,7 @@ void TheXTechEngine::startBattleTestAction()
 void TheXTechEngine::chooseEnginePath()
 {
     QDialog d(m_w);
-    d.setWindowTitle(tr("TheXTech path select"));
+    d.setWindowTitle(tr("Path to TheXTech", "Title of dialog"));
     d.setModal(true);
 
     QGridLayout *g = new QGridLayout(&d);
@@ -187,6 +187,8 @@ void TheXTechEngine::chooseEnginePath()
     save->setText(tr("Save"));
     g->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding), 1, 0);
     g->addWidget(save, 1, 1);
+
+    save->setFocus(Qt::TabFocusReason);
 
     QObject::connect(useCustom, &QRadioButton::toggled, c, &QLineEdit::setEnabled);
     QObject::connect(useCustom, &QRadioButton::toggled, br, &QPushButton::setEnabled);
@@ -452,7 +454,7 @@ void TheXTechEngine::retranslateMenu()
     {
         QAction *enableMagicHand = m_menuItems[menuItemId++];
         enableMagicHand->setText(tr("Enable magic hand",
-                                "Allow real-time picking-up of elements while playing a level test."));
+                                    "Allow real-time picking-up of elements while playing a level test."));
         enableMagicHand->setToolTip(tr("Allows real-time editing: picking-up elements from a level scene, "
                                        "placing new elements, selected at back in the editor, and erasing. "
                                        "Doesn't works when running a test of a saved file."));
@@ -460,13 +462,13 @@ void TheXTechEngine::retranslateMenu()
     {
         QAction *enableMagicHand = m_menuItems[menuItemId++];
         enableMagicHand->setText(tr("Enable max FPS",
-                                "When running non-vsync, run game with a maximum possible frame-rate"));
+                                    "When running non-vsync, run game with a maximum possible frame-rate"));
         enableMagicHand->setToolTip(tr("When playing a game without V-Sync, run a game with a maximum possible frame-rate."));
     }
     {
         QAction *enableMagicHand = m_menuItems[menuItemId++];
         enableMagicHand->setText(tr("Enable grab all",
-                                "Allow player to grab absolutely any NPCs in a game."));
+                                    "Allow player to grab absolutely any NPCs in a game."));
         enableMagicHand->setToolTip(tr("Allow player to grab any NPCs in a game."));
     }
 
@@ -474,9 +476,9 @@ void TheXTechEngine::retranslateMenu()
 
     {
         QAction *chooseEnginePath = m_menuItems[menuItemId++];
-        chooseEnginePath->setText(tr("Select TheXTech path...",
-                                    "Select a path to TheXTech for use."));
-        chooseEnginePath->setToolTip(tr("Select a path to TheXTech for use."));
+        chooseEnginePath->setText(tr("Change the path to TheXTech...",
+                                     "Select the path to TheXTech executable."));
+        chooseEnginePath->setToolTip(tr("Select the path to TheXTech executable."));
     }
     {
         QAction *RunLunaTest = m_menuItems[menuItemId++];
@@ -492,6 +494,8 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
     m_errorString.clear();
 
     QString command = getEnginePath();
+
+    // TODO: Make a fail check, show message box when executable was not found
 
     QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
@@ -559,6 +563,7 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
     }
     else
     {
+        // TODO: Show a message box with a reason why game didn't started
         m_errorString = "Failed to start TheXTech!" + command + "with args" + args.join(" ");
         qWarning() << m_errorString;
         return false;
@@ -572,6 +577,8 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     m_errorString.clear();
 
     QString command = getEnginePath();
+
+    // TODO: Make a fail check, show message box when executable was not found
 
     QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)
@@ -624,6 +631,7 @@ bool TheXTechEngine::doTestLevelFile(const QString &levelFile)
     }
     else
     {
+        // TODO: Show a message box with a reason why game didn't started
         m_errorString = "Failed to start TheXTech!" + command + "with args" + args.join(" ");
         return false;
     }
@@ -633,6 +641,8 @@ bool TheXTechEngine::runNormalGame()
 {
     Q_ASSERT(m_w);
     QString command = getEnginePath();
+
+    // TODO: Make a fail check, show message box when executable was not found
 
     QMutexLocker mlocker(&m_engineMutex);
     Q_UNUSED(mlocker)

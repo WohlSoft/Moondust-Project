@@ -93,10 +93,24 @@ public:
      */
     void setTestLvlBuffer(const LevelData &buffer);
 
+private:
+    /**
+     * @brief Read all input data before last delimeter character
+     * @param out A target buffer to store an output data
+     */
+    void readInputStream(QByteArray &out);
+
 private slots:
+    /**
+     * @brief Event call, triggered when input data comes up
+     */
     void onInputData();
 
 signals:
+    /**
+     * @brief A hook for any unrecognized engine commands
+     * @param msg Raw engine message text
+     */
     void engineInputMsg(const QString &msg);
 
 private:

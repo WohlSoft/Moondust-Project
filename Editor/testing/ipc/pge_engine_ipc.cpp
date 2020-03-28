@@ -57,12 +57,40 @@ void PgeEngineIpcClient::setMainWindow(QWidget *mw)
     m_mainWindow = mw;
 }
 
+void PgeEngineIpcClient::readInputStream(QByteArray &out)
+{
+    char c = 0;
+
+    out.clear();
+    out.reserve(100);
+
+    while(true)
+    {
+        qint64 bytesRead = m_engine->read(&c, 1);
+        while(bytesRead == 0)
+        {
+            // No data? Block before trying again.
+            m_engine->waitForReadyRead();
+            bytesRead = m_engine->read(&c, 1);
+        }
+
+        if(bytesRead != 1)
+            break; // error
+
+        if(c == '\n')
+            break; // complete
+        out.push_back(c);
+    }
+}
+
 void PgeEngineIpcClient::onInputData()
 {
     if(!isWorking())
         return;
 
-    QByteArray strData = m_engine->readAllStandardOutput();
+    QByteArray strData;
+    readInputStream(strData);
+
     QByteArray msg = QByteArray::fromBase64(strData);
 
     if(msg.startsWith("CMD:"))
@@ -72,9 +100,9 @@ void PgeEngineIpcClient::onInputData()
         LogDebug(msgP);
         LogDebug("<<ENGINE COMMAND END");
 
-        if(strcmp(msgP, "CONNECT_TO_ENGINE") == 0)
+        if(std::strcmp(msgP, "CONNECT_TO_ENGINE") == 0)
             sendLevelBuffer();
-        else if(strcmp(msgP, "ENGINE_CLOSED") == 0)
+        else if(std::strcmp(msgP, "ENGINE_CLOSED") == 0)
         {
             if(m_mainWindow)
             {

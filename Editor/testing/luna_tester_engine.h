@@ -186,17 +186,22 @@ private:
      * @brief Process checkpoints resetting
      */
     void lunaChkResetThread();
+
+#if 0 // Unused
     /**
      * @brief Try to close SMBX's window
      * @return true if window successfully switched, false on failure
      */
     bool closeSmbxWindow();
+#endif
+
     /**
      * @brief Switch to active LunaLUA testing window
      * @param msg Safe message box interface (to spawn message boxes at main window in main thread)
      * @return true if window successfully switched, false on failure
      */
     bool switchToSmbxWindow(SafeMsgBoxInterface &msg);
+
     /**
      * @brief Sends level data to LunaLUA
      * @param lvl Level data to send
