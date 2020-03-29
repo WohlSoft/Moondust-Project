@@ -3353,25 +3353,28 @@ Souhaitez-vous continuer le processus ?</translation>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>- Il est possible que votre antivirus supprime des fichiers (faux positif ou infection du fichier), veuillez vérifier la quarantaine de votre antivirus ou les rapports de dernières menaces éliminées.
+- Une installation incorrecte de SMBX2 peut amener à des fichiers manquants, veuillez réinstaller SMBX2 pour corriger votre problème.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
-        <translation type="unfinished"></translation>
+        <translation>« %1 » introuvable !
+Vous avez un SMBX vierge !
+Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec LunaTester. LunaLua est requis pour lancer les tests de niveaux avec le moteur SMBX.</translation>
     </message>
     <message>
         <source>Impossible to launch LunaTester, due to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer LunaTester, en raison de %1</translation>
     </message>
     <message>
         <source>LunaTester Directory wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
+        <translation>Le répertoire de LunaTester n&apos;a pas été configuré correctement</translation>
     </message>
     <message>
         <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 introuvable ! Pour lancer les tests avec LunaTester, vous devez spécifier le bon emplacement pour SMBX.</translation>
     </message>
 </context>
 <context>
@@ -7583,28 +7586,28 @@ Motif : %1
     <message>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Chemin vers TheXTech</translation>
     </message>
     <message>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le chemin vers TheXTech…</translation>
     </message>
     <message>
         <source>Select the path to TheXTech executable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le chemin de l&apos;exécutable TheXTech.</translation>
     </message>
     <message>
         <source>Executable not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Exécutable introuvable</translation>
     </message>
     <message>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer la partie TheXTech car « %1 » est introuvable. Cela peut se produire à cause d&apos;un chemin vers l&apos;exécutable TheXTech spécifié incorrect, veuillez vérifier la configuration du chemin vers TheXTech.</translation>
     </message>
     <message>
         <source>TheXtech start failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Échec du lancement de TheXTech</translation>
     </message>
     <message>
         <source>Can&apos;t start TheXTech because of following reason:
@@ -7612,7 +7615,11 @@ Motif : %1
 
 Command: &quot;%1&quot;
 Arguments: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer TheXTech pour l&apos;une des raisons suivantes :
+%3.
+
+Commande : « %1 »
+Arguments : %2</translation>
     </message>
 </context>
 <context>
