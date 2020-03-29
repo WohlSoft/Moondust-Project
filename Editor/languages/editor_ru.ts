@@ -11457,28 +11457,28 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Путь к TheXTech</translation>
     </message>
     <message>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Изменить путь к TheXTech...</translation>
     </message>
     <message>
         <source>Select the path to TheXTech executable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор пути к исполняемому файлу TheXTech.</translation>
     </message>
     <message>
         <source>Executable not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Исполняемый файл не найден</translation>
     </message>
     <message>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить TheXTech, потому что файл &quot;%1&quot; не найден. Это могло произойти, потому что путь к исполняемому файлу TheXTech был задан неправильно. Прожалуйста, проверьте настройки пути к TheXTech.</translation>
     </message>
     <message>
         <source>TheXtech start failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка запуска TheXTech</translation>
     </message>
     <message>
         <source>Can&apos;t start TheXTech because of following reason:
@@ -11486,7 +11486,11 @@ Those preferences will makes no effect on a testing process before it will be fi
 
 Command: &quot;%1&quot;
 Arguments: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить TheXTech по следующей причине:
+%3
+
+Команда: %1
+Агрументы: %2</translation>
     </message>
 </context>
 <context>

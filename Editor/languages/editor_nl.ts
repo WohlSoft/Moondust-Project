@@ -9690,7 +9690,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <location filename="../testing/thextech_engine.cpp" line="141"/>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">TheXTech pad</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="148"/>
@@ -9801,12 +9801,12 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <location filename="../testing/thextech_engine.cpp" line="479"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Selecteer het TheXTech pad...</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="481"/>
         <source>Select the path to TheXTech executable.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gelieve een pad te kiezen naar het TheXTech uitvoerbaar bestand.</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="494"/>
