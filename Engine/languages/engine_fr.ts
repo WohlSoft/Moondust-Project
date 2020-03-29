@@ -173,30 +173,30 @@ Cependant vous pouvez utiliser le même lien pour obtenir un version plus récen
         <translation>Sélectionner un jeu :</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="680"/>
+        <location filename="../main.cpp" line="684"/>
         <source>Unable to init SDL!</source>
         <translation>Impossible d&apos;initialiser SDL !</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="741"/>
+        <location filename="../main.cpp" line="745"/>
         <source>Config packs not found</source>
         <translation>Paquets de configuration introuvables</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="744"/>
+        <location filename="../main.cpp" line="748"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>Impossible de lancer le jeu, car les
 paquets de configuration sont introuvables !</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="754"/>
+        <location filename="../main.cpp" line="758"/>
         <source>Choose a game to test:</source>
         <translation>Sélectionner un jeu à tester :</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
         <location filename="../main.cpp" line="286"/>
-        <location filename="../main.cpp" line="452"/>
+        <location filename="../main.cpp" line="454"/>
         <source>No opened files</source>
         <translation>Aucun fichier ouvert</translation>
     </message>
@@ -231,7 +231,7 @@ Fail to start world map
         <translation>Tapez un code de sortie (entier signé)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="532"/>
+        <location filename="../main.cpp" line="536"/>
         <source>Warp exit
 
 Exit into:
@@ -246,20 +246,20 @@ Sortie vers :
 Point d&apos;entrée N° : %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="601"/>
+        <location filename="../main.cpp" line="605"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Le niveau s&apos;est fermé avec une erreur.
 %1</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="303"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <location filename="../scenes/scene_world.cpp" line="551"/>
         <source>Invalid playable character ID</source>
         <translation>ID de personnage jouable invalide</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="312"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <location filename="../scenes/scene_world.cpp" line="560"/>
         <source>Invalid playable character state ID</source>
         <translation>ID de personnage jouable invalide</translation>
@@ -468,7 +468,7 @@ Point d&apos;entrée N° : %2</translation>
         <translation>&lt;niveaux introuvables&gt;</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="437"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="445"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Erreur fatale : Impossible de trouver la section de démarrage.

@@ -9809,6 +9809,30 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../testing/thextech_engine.cpp" line="494"/>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="495"/>
+        <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="504"/>
+        <source>TheXtech start failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="505"/>
+        <source>Can&apos;t start TheXTech because of following reason:
+%3.
+
+Command: &quot;%1&quot;
+Arguments: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Select TheXTech path...</source>
         <comment>Select a path to TheXTech for use.</comment>
         <translation type="vanished">Selecteer het TheXTech pad...</translation>

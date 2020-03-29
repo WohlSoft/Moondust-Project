@@ -8465,6 +8465,26 @@ ao salvar o arquivo</translation>
         <source>Select the path to TheXTech executable.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TheXtech start failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start TheXTech because of following reason:
+%3.
+
+Command: &quot;%1&quot;
+Arguments: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TilesetConfigureDialog</name>

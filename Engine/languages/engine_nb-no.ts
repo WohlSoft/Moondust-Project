@@ -248,19 +248,19 @@ og prøv å kjøre nylige handlinger igjen for å innhente mer info.</translatio
         <translation>Start nivå på ny</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="303"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <location filename="../scenes/scene_world.cpp" line="551"/>
         <source>Invalid playable character ID</source>
         <translation>Ugyldig spillbar karakter-ID</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="312"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <location filename="../scenes/scene_world.cpp" line="560"/>
         <source>Invalid playable character state ID</source>
         <translation>Ugyldig spillbar karaktertilstands-ID</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="437"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="445"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation type="unfinished">Fatal feil: Kunne ikke finne startdel.
@@ -455,30 +455,30 @@ Plasserte du spillerens startpunkt (eller inngangsoverføringspunkt) for langt u
         <translation>&lt;nivåer ble ikke funnet&gt;</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="680"/>
+        <location filename="../main.cpp" line="684"/>
         <source>Unable to init SDL!</source>
         <translation>Kunne ikke igangsette SDL.</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="741"/>
+        <location filename="../main.cpp" line="745"/>
         <source>Config packs not found</source>
         <translation>Fant ikke oppsettspakker</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="744"/>
+        <location filename="../main.cpp" line="748"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>Kan ikke starte spill, fordi tilgjengelig
 oppsettspakker ikke ble funnet.</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="754"/>
+        <location filename="../main.cpp" line="758"/>
         <source>Choose a game to test:</source>
         <translation>Velg et spill å teste:</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
         <location filename="../main.cpp" line="286"/>
-        <location filename="../main.cpp" line="452"/>
+        <location filename="../main.cpp" line="454"/>
         <source>No opened files</source>
         <translation>Ingen åpnede filer</translation>
     </message>
@@ -513,7 +513,7 @@ Klarte ikke å starte verdenskart
         <translation>Skriv inn avslutningskode (signert heltall)</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="532"/>
+        <location filename="../main.cpp" line="536"/>
         <source>Warp exit
 
 Exit into:
@@ -528,7 +528,7 @@ Utgang inn i
 Inngangspunk #: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="601"/>
+        <location filename="../main.cpp" line="605"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Nivå avsluttet med feil.
