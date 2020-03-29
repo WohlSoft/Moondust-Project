@@ -36,9 +36,11 @@
 
 void MainWindow::openFilesByArgs(QStringList args, int startAt)
 {
+    qDebug() << "Attempt to open files by arguments:" << args;
     for(int i = startAt; i < args.size(); i++)
     {
-        if(QFile::exists(args[i])) OpenFile(args[i]);
+        if(QFile::exists(args[i]))
+            OpenFile(args[i]);
     }
 }
 

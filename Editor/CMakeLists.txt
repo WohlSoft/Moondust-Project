@@ -47,7 +47,6 @@ include(../_common/DirManager/dirman.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
 include(../_common/IniProcessor/IniProcessor.cmake)
-include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
 if(WIN32)
@@ -461,7 +460,6 @@ add_executable(pge_editor
     ${FILEMAPPER_SRCS}
     ${INIPROCESSOR_SRCS}
     ${STACK_WALKER_SRCS}
-    ${UTF8MAIN_SRCS}
     ${UTILS_SRCS}
 )
 

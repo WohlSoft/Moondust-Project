@@ -148,12 +148,17 @@ elseif(SDL2_VIA_AUTOTOOLS)
             "${SDL2_A_Lib}"
             "${SDL2_main_Lib}"
     )
-    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
-    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
+
+    if(MINGW) # Required for SDL_Main
+        target_link_libraries(PGE_SDL2 INTERFACE -lmingw32)
+        target_link_libraries(PGE_SDL2_static INTERFACE -lmingw32)
+    endif()
     if((WIN32 OR HAIKU) AND NOT EMSCRIPTEN)
         target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_main_Lib})
         target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
     endif()
+    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
+    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
 
 else()
     # ============================================================
@@ -187,12 +192,16 @@ else()
             "${SDL2_main_Lib}"
     )
 
-    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
-    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
+    if(MINGW) # Required for SDL_Main
+        target_link_libraries(PGE_SDL2 INTERFACE -lmingw32)
+        target_link_libraries(PGE_SDL2_static INTERFACE -lmingw32)
+    endif()
     if((WIN32 OR HAIKU) AND NOT EMSCRIPTEN)
         target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_main_Lib})
         target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
     endif()
+    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
+    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
 endif()
 
 set(SDL2_DEPENDENT_LIBS)

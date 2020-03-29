@@ -652,6 +652,7 @@ static void pgeLevelPlayScreen(AppInstance &a)
 }
 
 
+extern "C"
 int main(int argc, char *argv[])
 {
     std::vector<std::string> args;
