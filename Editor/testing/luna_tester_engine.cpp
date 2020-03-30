@@ -1576,7 +1576,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
         {
             msg.warning(notFoundErrorTitle,
                         QString("%1\n%2")
-                        .arg(notFoundErrorText.arg(smbxExePath))
+                        .arg(notFoundErrorText.arg(f))
                         .arg((ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA) ? explanationSMBX2 : explanationGeneric),
                         QMessageBox::Ok);
             return;
@@ -1590,7 +1590,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
         {
             msg.warning(notFoundErrorTitle,
                         QString("%1\n%2")
-                        .arg(notFoundErrorText.arg(smbxExePath))
+                        .arg(notFoundErrorText.arg(d))
                         .arg((ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA) ? explanationSMBX2 : explanationGeneric),
                         QMessageBox::Ok);
             return;
