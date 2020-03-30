@@ -1505,6 +1505,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
     // Prepare level file for SMBX-64 format
     FileFormats::smbx64LevelPrepare(in_levelData);
 
+#if 0 // TODO: On reorganizing, call this in only of a condition that target LunaLua build doesn't support LVLX
     int smbx64limits = FileFormats::smbx64LevelCheckLimits(in_levelData);
     if(smbx64limits != FileFormats::SMBX64_FINE)
     {
@@ -1519,6 +1520,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
         if(reply != QMessageBox::Yes)
             return;
     }
+#endif
 
     //-----------------------------------------------------------------
 
