@@ -34,7 +34,7 @@
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <source>Engine has abourted because alarm() time out!</source>
-        <translation>Работа движок была прервана в связи с истечением времени alarm()!</translation>
+        <translation>Работа движка была прервана в связи с истечением времени alarm()!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <source>Physical memory address error!</source>
