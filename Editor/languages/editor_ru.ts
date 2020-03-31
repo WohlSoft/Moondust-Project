@@ -438,7 +438,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Make backup</source>
-        <translation>сделать резервную копию</translation>
+        <translation>Создать резервную копию</translation>
     </message>
     <message>
         <source>Resample to</source>
@@ -961,7 +961,7 @@ Are you want to configure it?</source>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>После недавней аварии, редактор восстановил некоторые файлы.
-Пожалуйста сохраните их прежде чем делать что либо.</translation>
+Пожалуйста, сохраните их, прежде чем делать что либо.</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recorved some files.
@@ -1058,7 +1058,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;Пожалуйста, загрузите и установите последнюю версию вашего конфиг-пакета:
 &lt;br&gt;
 &lt;br&gt;Загрузить: %1
-&lt;br&gt;Примечание: большинство конфиг-пакетов обновляются вместе с клмплектом PGE,&lt;br&gt;
+&lt;br&gt;Примечание: большинство конфиг-пакетов обновляются вместе с комплектом PGE,&lt;br&gt;
 поэтому вы можете использовать ту же самую ссылку чтобы получить обновлённую версию</translation>
     </message>
 </context>
@@ -1189,7 +1189,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Агрументы: {команды движка} Отправить команду или сообщение в запущенный движок</translation>
+        <translation>Аргументы: {команды движка} Отправить команду или сообщение в запущенный движок</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1241,7 +1241,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;С этой опцией будут автоматически рассчитаны значения ширины или высоты. чтобы размер конечного изображения был пропорционален&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;С этой опцией будут автоматически рассчитаны значения ширины или высоты, чтобы размер конечного изображения был пропорционален&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Save proportion</source>
@@ -1308,7 +1308,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Please select a file from the list:</source>
-        <translation>Пожалуйста, выберите файлв из списка:</translation>
+        <translation>Пожалуйста, выберите файлы из списка:</translation>
     </message>
 </context>
 <context>
@@ -1353,7 +1353,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 &lt;br/&gt;
 &lt;b&gt;Совет 2:&lt;/b&gt; В отличии от старого редактора, большинство возможностей доступно через контекстное меню (открывается нажатием правой кнопки мыши), окна инструментов из панелей значков (перетаскиваемые панели со значками в верхней части окна) и меню. Этот редактор использует мульти-выбор!&lt;br/&gt;
 &lt;br/&gt;
-&lt;b&gt;Совет 3:&lt;/b&gt; Используйте среднюю кнопку мыши чтобы включать размещение выбранного элемента, или дублировать группу!&lt;/p&gt;</translation>
+&lt;b&gt;Совет 3:&lt;/b&gt; Используйте среднюю кнопку мыши чтобы включать размещение выбранного элемента, или дублировать группу элементов!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1732,7 +1732,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
         <translation>Пожалуйста, наберите сообщение, которое будет показано.
-(максимальная длина строки 27 символов)</translation>
+(максимальная длина строки - 27 символов)</translation>
     </message>
     <message>
         <source>Hit message text</source>
@@ -1880,7 +1880,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation>Разрешить предметы</translation>
+        <translation>Разрешить вспомогательные предметы</translation>
     </message>
     <message>
         <source>Locked</source>
@@ -2010,13 +2010,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это сообщение. которое будет отображено игроку при разговоре с этим неигровым персонажем.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Замечание:&lt;/span&gt; Все кавычки и символы переноса строки будут удалены.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это сообщение, которое будет отображено игроку при разговоре с этим неигровым персонажем.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Замечание:&lt;/span&gt; Все кавычки и символы переноса строки будут удалены.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
         <translation>Введите сообщение диалога NPC:
-(Макс. длина одной строки 27 символов)</translation>
+(Макс. длина одной строки - 27 символов)</translation>
     </message>
     <message>
         <source>Please, enter NPC&apos;s talkative message
@@ -2149,7 +2149,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC-ID: %1</source>
-        <translation>ID нИП: %1</translation>
+        <translation>ID НИП: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2328,11 +2328,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC Touch Event (Once)</source>
-        <translation>Событие касания нИП (Один раз)</translation>
+        <translation>Событие касания НИП (Один раз)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Every frame)</source>
-        <translation>Событие касания нИП (Циклически)</translation>
+        <translation>Событие касания НИП (Циклически)</translation>
     </message>
     <message>
         <source>Mouse click Event</source>
@@ -2340,11 +2340,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation>Событие касания нИП или игрока (Один раз)</translation>
+        <translation>Событие касания НИП или игрока (Один раз)</translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation>Событие касания нИП или игрока (Циклически)</translation>
+        <translation>Событие касания НИП или игрока (Циклически)</translation>
     </message>
     <message>
         <source>Collision script</source>
@@ -2814,7 +2814,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Это консольная утилита, которая исправляет лениво сделанные маски, созданые для SMBX. Эта утилита корректирует маску через сравнение цветов. Изображения будут перезаписаны, но при этом всегда создаётся резервная копя. Если конвертирование окажется неудачным, вы всегда можете восстановить исходные изображения.</translation>
+        <translation>Это консольная утилита, которая исправляет лениво сделанные маски, созданые для SMBX. Эта утилита корректирует маску через сравнение цветов. Изображения будут перезаписаны, но при этом всегда создаётся резервная копия. Если конвертирование окажется неудачным, вы всегда можете восстановить исходные изображения.</translation>
     </message>
     <message>
         <source>Output dir, where will be saved fixed images
