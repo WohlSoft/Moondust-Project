@@ -71,7 +71,7 @@
     <message id="CRASH_ABORT_TITLE.">
         <location filename="../common_features/crash_handler.cpp" line="562"/>
         <source>Engine has been aborted because critical error was occouped.</source>
-        <translation>Двигун завершився у зв&apos;язку з критичною помилкою.</translation>
+        <translation>Двигун аварійно завершився у зв&apos;язку з критичною помилкою.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="607"/>
@@ -91,12 +91,12 @@ and retry your recent actions to get more detailed information.</source>
     <message id="CRASH_INT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="620"/>
         <source>Interrupt</source>
-        <translation>Переривання</translation>
+        <translation>Перервати</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="622"/>
         <source>Engine has been interrupted</source>
-        <translation>Робота двигуна була перерваною</translation>
+        <translation>Робота двигуна була перервана</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <location filename="../data_configs/config_manager.cpp" line="115"/>
@@ -107,7 +107,7 @@ and retry your recent actions to get more detailed information.</source>
         <location filename="../data_configs/config_manager.cpp" line="117"/>
         <source>Config directory is not found at:
 %1</source>
-        <translation>Директорія конфіг-пакету не знайдена:
+        <translation>Директорія конфіг-пакету не знайдена на:
 %1</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
@@ -155,8 +155,8 @@ therefore you can use same link to get updated version.</source>
 
 Завантажити: %1
 
-Зауваження: Більшість конфіг-пакетів оновлюються разом з PGE,
-тому ви можете використовувати те ж саме посилання для завантажування оновленої версії.</translation>
+Примітка: більшість конфіг-пакетів оновлюються разом з комплектом PGE,
+тому ви можете використовувати те ж саме посилання, щоб отримати оновлену версію.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <location filename="../data_configs/config_manager.cpp" line="236"/>
@@ -257,13 +257,13 @@ Entrance point: %2</source>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <location filename="../scenes/scene_world.cpp" line="551"/>
         <source>Invalid playable character ID</source>
-        <translation>Невірний ID ігрового персонажу</translation>
+        <translation>Невірний ID ігрового персонажа</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <location filename="../scenes/scene_world.cpp" line="560"/>
         <source>Invalid playable character state ID</source>
-        <translation>Невірний ID типу ігрового персонажа</translation>
+        <translation>Невірний ID стану ігрового персонажа</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
         <location filename="../scenes/scene_world.cpp" line="612"/>
@@ -350,7 +350,7 @@ Entrance point: %2</source>
     <message id="MAINMENU_OPTIONS_CONTROLLS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="378"/>
         <source>Player controlling</source>
-        <translation>Управління</translation>
+        <translation>Управління гравця</translation>
     </message>
     <message id="MAINMENU_OPTIONS_VIDEO">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="380"/>
@@ -410,7 +410,7 @@ Entrance point: %2</source>
     <message id="VIDEO_SHOW_DEBUG">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="418"/>
         <source>Show debug info</source>
-        <translation>Показ. відлагодж. інфо</translation>
+        <translation>Показати відлагодж. інформацію</translation>
     </message>
     <message id="VIDEO_ENABLE_FRSKIP">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="420"/>
@@ -548,7 +548,7 @@ Software renderer will be started.</source>
     <message id="VSYNC_ERROR_INFO">
         <location filename="../graphics/vsync_validator.cpp" line="77"/>
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
-        <translation>Виявлена занадто швидка частота кадрів. Щоб запобігти проблемам, вертикальна синхронізация (V-Sync) буде вимкнена. Будь ласка, ввімкніть V-Sync в опціях відео-драйвера.</translation>
+        <translation>Виявлена занадто швидка частота кадрів. Щоб запобігти проблемам, вертикальна синхронізація (V-Sync) буде вимкнена. Будь ласка, ввімкніть V-Sync в опціях вашого відео-драйвера.</translation>
     </message>
     <message id="MSGBOX_INFO">
         <location filename="../gui/pge_msgbox.cpp" line="247"/>
