@@ -7727,7 +7727,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
-        <translation type="unfinished">默认</translation>
+        <translation>默认</translation>
     </message>
     <message>
         <source>Software</source>
