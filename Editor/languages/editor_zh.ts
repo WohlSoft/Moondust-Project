@@ -7678,12 +7678,12 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished">测试关卡</translation>
+        <translation>测试关卡</translation>
     </message>
     <message>
         <source>Test saved level</source>
@@ -7707,7 +7707,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
-        <translation type="unfinished">自定义</translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <source>Select a path to TheXTech executable</source>
@@ -7760,7 +7760,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
-        <translation type="unfinished"></translation>
+        <translation>在没有垂直同步的情况下，游戏将以最大帧数运行。</translation>
     </message>
     <message>
         <source>Enable grab all</source>
