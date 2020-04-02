@@ -842,7 +842,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Ой-йой, PGE Редагувач зламався :(&lt;br&gt;Детальна інформація аварії:</translation>
+        <translation type="unfinished">Ой-йой, PGE Редагувач зламався :(&lt;br&gt;Детальна інформація аварії:</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
@@ -873,11 +873,11 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Відправити рапорт на форум PGE (wohlsoft.ru/forum/)</translation>
+        <translation type="unfinished">Відправити рапорт на форум PGE (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Створити задачу на репозиторії GitHub (WohlSoft/PGE-Project)</translation>
+        <translation type="unfinished">Створити задачу на репозиторії GitHub (WohlSoft/PGE-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -1323,7 +1323,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Аргументи: {команди двигуна} Відправити команду або повідомлення в запущений двигун</translation>
+        <translation type="unfinished">Аргументи: {команди двигуна} Відправити команду або повідомлення в запущений двигун</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1456,7 +1456,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation>Ласкаво просимо у PGE Редагувач!</translation>
+        <translation type="unfinished">Ласкаво просимо у PGE Редагувач!</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1615,12 +1615,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>Файл рівня PGE</translation>
+        <translation type="unfinished">Файл рівня PGE</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>Файл карти світу PGE</translation>
+        <translation type="unfinished">Файл карти світу PGE</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -4659,7 +4659,7 @@ Physical env. zones:	%6
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>Визначення типів проходів:
+        <translation type="unfinished">Визначення типів проходів:
 0 - Миттєвий, гравець телепортується з втратою швидкості руху.
 1 - Труба, спрямований вхід та вихід.
 2 - Двері, гравець може в них увійти, натиснув &apos;&apos;Вгору&quot;.
@@ -6129,7 +6129,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation>Тестування на двигуні PGE</translation>
+        <translation type="unfinished">Тестування на двигуні PGE</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -6138,7 +6138,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>Вітаємо, друже! Це тестування на двигуні PGE.
+        <translation type="unfinished">Вітаємо, друже! Це тестування на двигуні PGE.
 Двигун PGE - це, компонент PGE Project, на стадії розробки, який реалізує ігровий процес та функціональність тестування рівнів. Зараз двигун являється експериментальним і має багато нереалізованих функцій. Деякі з них можуть все ще розроблятися, а деякі зовсім не працюють (поки що). Якщо ви створите рівні або епізоди для старого двигуна SMBX і ви захочете почати тестування з повною функціональністю, будь ласка, проводьте тестування на двигуні SMBX. Використовуйте тестування на двигуні PGE у тих випадках, коли ви хочете протестувати сам двигун PGE, або створені рівні та епізоди специфічно для PGE.</translation>
     </message>
     <message>
@@ -7230,7 +7230,7 @@ Error description:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Вибачаємось, але редагувач зламався.
+        <translation type="unfinished">Вибачаємось, але редагувач зламався.
 Причина: Недостатньо пам&apos;яті!
 
 Спробуйте закрити інші непотрібні програми, щоб звільнити пам&apos;ять й запобігти аварії.</translation>
@@ -7242,7 +7242,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Вибачте, але PGE Editor зламався.
+        <translation type="unfinished">Вибачте, але PGE Editor зламався.
 Причина: необроблене виключення
 
 Будь ласка, зв&apos;яжіться з розробниками через форум і ми зможемо виправити помилку. Дякуємо.
@@ -7290,7 +7290,7 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation>Вибачте, але Редагувач PGE аварійно завершився. 
+        <translation type="unfinished">Вибачте, але Редагувач PGE аварійно завершився. 
 Причина: %1
 
 </translation>
