@@ -4643,7 +4643,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
         <source>Please, enter message
 (Max line length is 27 characters)</source>
         <translation>Пожалуйста, введите сообщение
-(Макс. длина одной строки 27 символов)</translation>
+(Макс. длина одной строки - 27 символов)</translation>
     </message>
 </context>
 <context>
@@ -4791,7 +4791,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
         <translation>Это - приоритет сортировки в массиве. С помощью этой опции возможно поставить фоновый объект на передний план. (если значение установлено в -1: будет использоваться глобальное значение для данного ID фонового объекта).
-Эта опция использует баг SMBX в рендеринге фоновых объектов. Чтобы эта опция сработала, нужно поместить хотя бы один фоновый объект переднего плана. Эта опция не сохраняется в LVL-файл, и после переоткрытия файла вам нужно повторно настроить  эту опцию.</translation>
+Эта опция использует баг SMBX в рендеринге фоновых объектов. Чтобы эта опция сработала, нужно поместить хотя бы один фоновый объект переднего плана. Эта опция не сохраняется в LVL-файл; после переоткрытия файла вам нужно повторно настроить эту опцию.</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -6145,12 +6145,12 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation>Сохранить переносимого нИП, когда игрок входит
+        <translation>Сохранить переносимого НИП, когда игрок входит
 на другой уровень через этот проход.</translation>
     </message>
     <message>
         <source>Allow inter-level NPC</source>
-        <translation>Разрешить меж-уровн. нИП</translation>
+        <translation>Разрешить меж-уровн. НИП</translation>
     </message>
     <message>
         <source>Choose a warp entry to edit</source>
@@ -6210,7 +6210,7 @@ Please, select necessary world map in a list:</source>
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
         <translation>Показать пустой экран вместо экрана загрузки.
-Инчае, на экране загрузки в устеревшем движке будет показан 
+Иначе, на экране загрузки в устеревшем движке будет показан 
 действующий игровой персонаж(и) и остаток жизней.</translation>
     </message>
     <message>
@@ -7194,7 +7194,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
-        <translation>Открыть локальный сценарий уровня / карты мира. Если файл не существует, то будет создван новый, с нуля.</translation>
+        <translation>Открыть локальный сценарий уровня / карты мира. Если файл не существует, то будет создан новый, с нуля.</translation>
     </message>
     <message>
         <source>Open episode script</source>
