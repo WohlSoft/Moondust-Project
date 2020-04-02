@@ -2867,134 +2867,135 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Перервати завислий завантажник</translation>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перериває завислий потік, щоб дозволити запустити тест заново.</translation>
     </message>
     <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Перервати запущений процес</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перериває працюючий процес LunaTester, після чого двигун можна заново запустити.</translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Почати гру</translation>
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити LunaTester як звичайну гру.</translation>
     </message>
     <message>
         <source>Are you really want to terminate loader thread?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви впевнені, що хочете перервати потік завантажника?</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Потік завантажника не запущений.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви впевнені, що хочете завершити LunaTester? Це також перерве запущене тестування рівня!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester успішно завершений.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester не запущений.</translation>
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, вкажіть шлях до LunaTester:</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
-        <translation type="unfinished"></translation>
+        <translation>Користувацькі</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Огляд...</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Контрольні точки успішно перезавантажені!</translation>
     </message>
     <message>
         <source>LunaTester error!</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка LunaTester!</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
-        <translation type="unfinished"></translation>
+        <translation>Тестувальник LunaLUA не запущений!</translation>
     </message>
     <message>
         <source>SMBX Test is already runned</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX-тест вже запущений</translation>
     </message>
     <message>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX-Двигун вже тестує інший рівень.
+Чи ви хочете перервати процес тестування?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Виявлено старий SMBX (Vanilla SMBX)!</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished"></translation>
+        <translation>Невдала спроба відправити дані в LunaLUA-SMBX!</translation>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка LunaTester</translation>
     </message>
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation type="unfinished"></translation>
+        <translation>Змінити шлях до LunaTester...</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть шлях до LunaTester.</translation>
     </message>
     <message>
         <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
-        <translation type="unfinished"></translation>
+        <translation>Потік завантажника LunaTester-а зайнятий, спробуйте ще раз, або спробуйте перервати завислий завантажник!</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Шлях до LunaTester</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть шлях до LunaTester</translation>
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевищені обмеження SMBX64!</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3002,30 +3003,37 @@ Do you want to abort current testing process?</source>
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Do you want to continue the process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Виявлено порушення стандарту SMBX64!
+%1
+, застарілий двигун може аварійно перерватися!
+Рекомендується видалити всі зайві елементи.
+Хочете продовжити процес?</translation>
     </message>
     <message>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Помилка в директорії LunaTester</translation>
     </message>
     <message>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо запустити LunaTester, тому що файл &quot;%1&quot; не знайдений! Це могло статися по одній з наступних причин:</translation>
     </message>
     <message>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>- Вказаний невірний шлях LunaTester (або папки даних SMBX2). Будь ласка, перевірте налаштування шляху до LunaTester.
+- Можливе видалення файлів вашим антивірусом (помилкове спрацьовування або зараження файлу). Перевірьте, будь ласка, карантин вашого антивірусу або звіт про нещодавно видалені загрози.
+- Некоректне встановлення SMBX2, в результаті чого не вистачає деяких файлів. Будь ласка, перевстановіть SMBX2, щоб усунути проблему.</translation>
     </message>
     <message>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>- Можливе видалення файлів вашим антивірусом (помилкове спрацьовування або зараження файлу). Перевірьте, будь ласка, карантин вашого антивірусу або звіт про нещодавно видалені загрози.
+- Некоректне встановлення SMBX2, в результаті чого не вистачає деяких файлів. Будь ласка, перевстановіть SMBX2, щоб усунути проблему.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; not found!
