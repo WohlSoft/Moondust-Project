@@ -38,6 +38,8 @@ ExternalProject_Add(
         "-DFREEIMAGE_ZLIB_INCLUDE=${ZLIB_INCLUDE_DIRS}"
         "-DFREEIMAGE_PNG_LIB=${libPNG_A_Lib}"
         "-DFREEIMAGE_ZLIB_LIB=${libZLib_A_Lib}"
+        "-DFREEIMAGE_JPEG_INCLUDE=${JPEG_INCLUDE_DIRS}"
+        "-DFREEIMAGE_JPEG_LIB=${libJPEG_A_Lib}"
         $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
         ${ANDROID_CMAKE_FLAGS}
     BUILD_BYPRODUCTS
@@ -48,6 +50,7 @@ target_link_libraries(PGE_FreeImage INTERFACE
     "${libFreeImage_Libs}"
     PGE_libPNG
     PGE_ZLib
+    PGE_libJPEG
 )
 
 if(USE_SHARED_FREEIMAGE AND NOT WIN32)
