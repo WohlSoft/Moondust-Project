@@ -9184,7 +9184,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>File is untitled</source>
-        <translation>Файл не сохранён</translation>
+        <translation>Файл не имеет имени</translation>
     </message>
     <message>
         <source>File doesn&apos;t use custom graphics.
