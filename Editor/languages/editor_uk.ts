@@ -7523,557 +7523,566 @@ All tilesets which made here will be saved in this folder:
 I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
 
 If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ласкаво просимо до редагувача наборів елементів!
+
+Це редагувач глобальних наборів. Всі набори елементів, створені тут, будуть збережені в цій папці:
+%1
+Тобто всі збережені набори будуть глобальні для конфігураційного пакету і можуть використовуватись в групових наборах.
+
+Якщо ви бажаєте створити локальний набір для рівня/світу з використанням власної графіки, будь ласка, відкрийте &quot;Набір елементів&quot; і знайдіть кнопку &quot;Новий набір&quot; у вкладці &quot;Custom&quot;.</translation>
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити набір</translation>
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви точно бажаєте видалити цей набір?</translation>
     </message>
     <message>
         <source>Tileset removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Набір видалено</translation>
     </message>
     <message>
         <source>Tileset has been removed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Набір видалено!</translation>
     </message>
 </context>
 <context>
     <name>TilesetGroupEditor</name>
     <message>
         <source>Tileset Group editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувач групових наборів елементів</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>Вгору</translation>
     </message>
     <message>
         <source>Order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортувальна вага</translation>
     </message>
     <message>
         <source>Tileset group name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім&apos;я групи:</translation>
     </message>
     <message>
         <source>Category:</source>
-        <translation type="unfinished"></translation>
+        <translation>Категорія:</translation>
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє визначити свій порядок сортування. Якщо значення ваги рівні між різними групами палітр або дорівнюють -1, то групи будуть відсортовані по алфавіту.</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <source>Tilesets list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Список наборів елементів:</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Перегляд</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>Вниз</translation>
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити набір</translation>
     </message>
     <message>
         <source>Add tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати набір</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <source>Select Tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати набір плит</translation>
     </message>
     <message>
         <source>There is already a file called &apos;%1&apos;!
 Import anyway and overwrite?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вже існує файл з іменем &apos;%1&apos;!
+Ви справді бажаєте імпортувати й перезаписати теперішній?</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалось завантажити набір плит!</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалось завантажити набір плит!
+Пошкоджені дані!</translation>
     </message>
     <message>
         <source>Select Tileset Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір групи наборів плит</translation>
     </message>
     <message>
         <source>Failed to load tileset group!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалось завантажити групу наборів плит!</translation>
     </message>
     <message>
         <source>Failed to load tileset group!
 Data may be corrupted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалось завантажити групу набору плит!
+Пошкоджені дані!</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, вкажіть ім&apos;я файлу!</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім&apos;я файлу:</translation>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation type="unfinished"></translation>
+        <translation>Сортувальна вага категорії</translation>
     </message>
 </context>
 <context>
     <name>TilesetItemBox</name>
     <message>
         <source>Tileset Item Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Набір елементів</translation>
     </message>
     <message>
         <source>Search: </source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук: </translation>
     </message>
     <message>
         <source>New tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Новий набір плит</translation>
     </message>
     <message>
         <source>File not saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не збережено</translation>
     </message>
     <message>
         <source>File doesn&apos;t saved on disk.</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не збережено на диск.</translation>
     </message>
     <message>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Група:</translation>
     </message>
 </context>
 <context>
     <name>TipOfDay</name>
     <message>
         <source>Tip of day</source>
-        <translation type="unfinished"></translation>
+        <translation>Порада дня</translation>
     </message>
     <message>
         <source>Did you know?</source>
-        <translation type="unfinished"></translation>
+        <translation>Чи ви знали?</translation>
     </message>
     <message>
         <source>Show tip at startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Показувати поради кожного запуску</translation>
     </message>
     <message>
         <source>Previouse tip</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередня порада</translation>
     </message>
     <message>
         <source>Next tip</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступна порада</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити</translation>
     </message>
 </context>
 <context>
     <name>ToNewLayerBox</name>
     <message>
         <source>Add to new layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати до нового Шару</translation>
     </message>
     <message>
         <source>New layer name</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім&apos;я нового Шару</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Прихований</translation>
     </message>
     <message>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокований</translation>
     </message>
     <message>
         <source>Layer exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар вже існує</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; is exist, please, set other name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар &quot;%1&quot; вже існує, будь ласка, вкажіть інше ім&apos;я.</translation>
     </message>
 </context>
 <context>
     <name>UpdateChecker</name>
     <message>
         <source>Check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевіряти обновлення</translation>
     </message>
     <message>
         <source>Stable builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Стабільні збірки</translation>
     </message>
     <message>
         <source>Check for latest stable builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевіряти наявність нових стабільних збірок</translation>
     </message>
     <message>
         <source>Check automatically every startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевіряти автоматично кожного запуску</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <source>Click to check updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Натисніть для перевірки</translation>
     </message>
     <message>
         <source>Check laboratory updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевіряти лабораторні обновлення</translation>
     </message>
     <message>
         <source>Here you can get bug fixes and new features before new stable will be released</source>
-        <translation type="unfinished"></translation>
+        <translation>Тут ви зможете отримати виправлення помилок та нові функції задовго до наступної стабільної збірки</translation>
     </message>
     <message>
         <source>Laboratory builds</source>
-        <translation type="unfinished"></translation>
+        <translation>Лабораторні збірки</translation>
     </message>
     <message>
         <source>Check stable updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевіряти наявність стабільних збірок</translation>
     </message>
     <message>
         <source>This is an update checker dialog. Here you can check available updates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це діалог перевірки оновлень. Тут ви можете швидко перевірити доступні обновлення.</translation>
     </message>
     <message>
         <source>Checking...</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевіряю...</translation>
     </message>
     <message>
         <source>HTTP</source>
-        <translation type="unfinished"></translation>
+        <translation>HTTP</translation>
     </message>
     <message>
         <source>Check failed: %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевірка не вдалась: %1.</translation>
     </message>
     <message>
         <source>Check failed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Невдала перевірка!</translation>
     </message>
     <message>
         <source>Redirect to %1 ?</source>
-        <translation type="unfinished"></translation>
+        <translation>Перенаправити до %1 ?</translation>
     </message>
     <message>
         <source>You have a latest version!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви маєте останню версію!</translation>
     </message>
     <message>
         <source>Available new update!</source>
-        <translation type="unfinished"></translation>
+        <translation>Нова версія вже доступна!</translation>
     </message>
     <message>
         <source>Latest update is</source>
-        <translation type="unfinished"></translation>
+        <translation>Останнє обновлення було</translation>
     </message>
     <message>
         <source>One or more SSL errors has occurred: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Отримані помилки SSL: %1</translation>
     </message>
 </context>
 <context>
     <name>UserDataEdit</name>
     <message>
         <source>User data editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагування користувацьких даних</translation>
     </message>
 </context>
 <context>
     <name>VariablesBox</name>
     <message>
         <source>Variables [Under Construction]</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемінні [У розробці]</translation>
     </message>
     <message>
         <source>Show variables group</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати групу перемінних</translation>
     </message>
     <message>
         <source>Global</source>
-        <translation type="unfinished"></translation>
+        <translation>Глобальні</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation>Локальні</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation>Видалити</translation>
     </message>
 </context>
 <context>
     <name>WLD_ItemProps</name>
     <message>
         <source>Item Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Властивості елементу</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень</translation>
     </message>
     <message>
         <source>Big path background</source>
-        <translation type="unfinished"></translation>
+        <translation>Великий фоновий шлях</translation>
     </message>
     <message>
         <source>Path background</source>
-        <translation type="unfinished"></translation>
+        <translation>Фоновий шлях</translation>
     </message>
     <message>
         <source>Game start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Точка початку гри</translation>
     </message>
     <message>
         <source>Always visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Завжди видимий</translation>
     </message>
     <message>
         <source>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви можете встановити свої умови відкриття шляхів у вибраному напрямі (списки, вказані кожній з цих стрілок) в залежності від коду завершення рівня.</translation>
     </message>
     <message>
         <source>Level file:</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл рівня:</translation>
     </message>
     <message>
         <source>Level title</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва рівня</translation>
     </message>
     <message>
         <source>Enter to door ID:</source>
-        <translation type="unfinished"></translation>
+        <translation>Увійти в двері №:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Огляд</translation>
+        <translation>Огляд</translation>
     </message>
     <message>
         <source>Go to coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до координат:</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Задати</translation>
     </message>
     <message>
         <source>Open path by exists:</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити вихідні шляхи:</translation>
     </message>
     <message>
         <source>Open the Western (left) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити західний (лівий) шлях типом виходу</translation>
     </message>
     <message>
         <source>Open the Eastern (right) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити східний (правий) шлях типом виходу</translation>
     </message>
     <message>
         <source>Open the Northern (upper) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити північний (верхній) шлях типом виходу</translation>
     </message>
     <message>
         <source>Open the Southern (lower) path by exit type</source>
         <comment>Condition to open path by direction (like on compass) when level is completed with different exit ways</comment>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити південний (нижній) шлях типом виходу</translation>
     </message>
     <message>
         <source>Level ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>ID рівня: %1, ID масиву: %2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation>Позиція: [%1, %2]</translation>
     </message>
     <message>
         <source>* - Any</source>
-        <translation type="unfinished"></translation>
+        <translation>* - Будь-який</translation>
     </message>
     <message>
         <source>0 - None</source>
-        <translation type="unfinished"></translation>
+        <translation>0 - Ніякий</translation>
     </message>
     <message>
         <source>1 - Card Roulette Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>1 - Карткова рулетка</translation>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>2 - Перемога над босом</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>3 - Вихід за межу</translation>
     </message>
     <message>
         <source>4 - Secret Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>4 - Секретна замкова щілина</translation>
     </message>
     <message>
         <source>5 - Crystal Sphare Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>5 - Кришталевий шар</translation>
     </message>
     <message>
         <source>6 - Warp Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>6 - Вихід через прохід/двері</translation>
     </message>
     <message>
         <source>7 - Star Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>7 - Взяття Зірки</translation>
     </message>
     <message>
         <source>8 - Tape Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>8 - Фінішна стрічка</translation>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation type="unfinished">Режим розміщення </translation>
+        <translation>Режим розміщення</translation>
     </message>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
-        <translation type="unfinished"></translation>
+        <translation>Спочатку розмістіть об&apos;єкт на карті світу й відкрийте &quot;Властивості&quot; через контекстне меню.</translation>
     </message>
     <message>
         <source>Please save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, збережіть файл</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, збережіть файл перед тим, як вибирати рівні.</translation>
     </message>
 </context>
 <context>
     <name>WLD_SetPoint</name>
     <message>
         <source>Selecting point on the world map</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір точки на карті світу</translation>
     </message>
     <message>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Примітка: використовуйте колесо миші для прокрутки карти. Ви можете прокручувати горизонтально разом з натиснутою клавішею CTRL на клавіатурі.</translation>
     </message>
     <message>
         <source>Current Point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Теперішня точка:</translation>
     </message>
     <message>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити теперішню позицію на останню розміщену точку. Якщо точка не вибрана, залишиться колишня позиція.</translation>
     </message>
     <message>
         <source>Go to point</source>
-        <translation type="unfinished"></translation>
+        <translation>Перейти до точки</translation>
     </message>
     <message>
         <source>Start and stop animation of placed on the map items.</source>
-        <translation type="unfinished"></translation>
+        <translation>Запустити й зупинити анімацію розміщених об&apos;єктів на карті.</translation>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished">Анімація</translation>
+        <translation>Анімація</translation>
     </message>
     <message>
         <source>You will return to the x0-y0 position of the map.</source>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись до позиції x0-y0 на карті.</translation>
     </message>
     <message>
         <source>Reset position</source>
-        <translation type="unfinished"></translation>
+        <translation>Скинути позицію камери</translation>
     </message>
     <message>
         <source>Loading World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую дані карти світу</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Перервати</translation>
     </message>
     <message>
         <source>1/%1 Loading user data</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 Завантаження корист. даних</translation>
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 Застосування плит</translation>
     </message>
     <message>
         <source>2/%1 Applying Sceneries...</source>
-        <translation type="unfinished"></translation>
+        <translation>2/%1 Застосування декорацій...</translation>
     </message>
     <message>
         <source>3/%1 Applying Paths...</source>
-        <translation type="unfinished"></translation>
+        <translation>3/%1 Застосування шляхів...</translation>
     </message>
     <message>
         <source>4/%1 Applying Levels...</source>
-        <translation type="unfinished"></translation>
+        <translation>4/%1 Застосування рівнів...</translation>
     </message>
     <message>
         <source>5/%1 Applying Musics...</source>
-        <translation type="unfinished"></translation>
+        <translation>5/%1 Застосування музичних точок...</translation>
     </message>
     <message>
         <source>Point is not selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Точка не вибрана</translation>
     </message>
     <message>
         <source>Select the point on the world map first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть точку на карті світу спочатку.</translation>
     </message>
     <message>
         <source>Configuration package has errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфігураційний пакет містить помилки</translation>
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можу завантажити &quot;%1&quot; карту світу, тому що конфігураційний пакет містить помилки.</translation>
     </message>
 </context>
 <context>
@@ -8095,31 +8104,31 @@ Data may be corrupted!</source>
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <source>Place</source>
-        <translation type="unfinished"></translation>
+        <translation>Розташувати</translation>
     </message>
     <message>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>Розташувати й перезаписати</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити</translation>
     </message>
     <message>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Обернути</translation>
     </message>
     <message>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>Перевернути</translation>
     </message>
     <message>
         <source>Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворити</translation>
     </message>
     <message>
         <source>Undone: %1</source>
