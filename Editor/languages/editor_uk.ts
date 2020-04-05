@@ -148,7 +148,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Classic Events tabs to auto-expand</source>
-        <translation>Автоматичне розширення вкладок класичних подій</translation>
+        <translation>Автоматичне розширення вкладок класичних Подій</translation>
     </message>
     <message>
         <source>Common</source>
@@ -355,7 +355,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation>Підрахунок Зірок…</translation>
+        <translation>Підраховую Зірки…</translation>
     </message>
 </context>
 <context>
@@ -392,17 +392,17 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
         <translation>Шлях до бінарного файлу SoX не вказаний.
-Будь ласка, вкажіть шлях SoX</translation>
+Будь ласка, вкажіть шлях SoX спочатку</translation>
     </message>
     <message>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
         <translation>Шлях до бінарного файлу SoX не вірний.
-Будь ласка, вкажіть шлях SoX</translation>
+Будь ласка, вкажіть шлях SoX спочатку</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation>Нема чого робити.</translation>
+        <translation>Немає чого робити.</translation>
     </message>
     <message>
         <source>No files to convert</source>
@@ -468,7 +468,7 @@ Please set SoX path first</source>
         <source>Convert into new format
 (select a tab to choose target format)</source>
         <translation>Конвертувати у новий формат
-(відкрийте потрібну вкладку, щоб вибрати кінцевий формат)</translation>
+(відкрийте потрібну вкладку, щоб вибрати цільовий формат)</translation>
     </message>
     <message>
         <source>Don&apos;t change format</source>
@@ -611,7 +611,7 @@ You can use any configuration package here:&lt;br&gt;%2</source>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>Конфігураційний пакет &quot;%1&quot; ще не налаштований.
-Хочете його налаштувати зараз?</translation>
+Бажаєте зараз його налаштувати?</translation>
     </message>
     <message>
         <source>Configuration script failed</source>
@@ -708,7 +708,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Level: NPCs (%1/%2)</source>
-        <translation>Рівень: НІПи (%1/%2)</translation>
+        <translation>Рівень: НІП (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Terrain tiles (%1/%2)</source>
@@ -837,7 +837,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation>Ландшафтна плитка</translation>
+        <translation>Ландшафтна плита</translation>
     </message>
     <message>
         <source>Scenery</source>
@@ -893,7 +893,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Go to point:</source>
-        <translation>Перейти на точку:</translation>
+        <translation>Перейти до точки:</translation>
     </message>
     <message>
         <source>Go!</source>
@@ -1004,7 +1004,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
-        <translation>Аргументи: {[номер] Gigabytes} | Переповнює пам&apos;ять в мегабайтах</translation>
+        <translation>Аргументи: {[номер] Gigabytes} | Переповнює пам&apos;ять в мегабайтах (будьте обережні з цим!)</translation>
     </message>
     <message>
         <source>Throws an unhandled exception to crash the editor</source>
@@ -1023,7 +1023,7 @@ therefore you can use same link to get updated version</source>
     <name>ExportToImage</name>
     <message>
         <source>Export to image</source>
-        <translation>Експортувати як зображення</translation>
+        <translation>Експортувати у зображення</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1139,7 +1139,7 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Порада 1:&lt;/b&gt; Змінити вид інтерфейсу можливо через меню &lt;u&gt;Довідка&lt;/u&gt;, панель інструментів в меню &lt;u&gt;Вид&lt;/u&gt; або через опції перемикання режимів дочірніх вікон та вкладок в меню &lt;u&gt;Вікно&lt;/u&gt;.&lt;br/&gt;
+        <translation>&lt;p&gt;&lt;b&gt;Порада 1:&lt;/b&gt; Змінити вид інтерфейсу можливо через меню &lt;u&gt;Довідка&lt;/u&gt;, панель інструментів в меню &lt;u&gt;Вид&lt;/u&gt;, або через опції перемикання режимів дочірніх вікон та вкладок в меню &lt;u&gt;Вікно&lt;/u&gt;.&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Порада 2:&lt;/b&gt; У відмінності від старого редагувача, більшість можливостей доступні через контекстне меню (відкривається натиском правою кнопкою миші), панель інструментів зі значками (в верхній частині вікна) й меню. Цей редагувач також дозволяє вибирати кілька елементів одночасно!&lt;br/&gt;
 &lt;br/&gt;
@@ -1538,7 +1538,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please enter the name of event:</source>
-        <translation>Будь ласка, вкажіть ім&apos;я події:</translation>
+        <translation>Будь ласка, вкажіть ім&apos;я Події:</translation>
     </message>
     <message>
         <source>Please enter the message which will be shown.
@@ -1560,11 +1560,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>&apos;Hit&apos; event slot is used</source>
-        <translation>Слот події &apos;Удар&apos; вже використовується</translation>
+        <translation>Слот Події &apos;Удар&apos; вже використовується</translation>
     </message>
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
-        <translation>Вибачте, але слот події &apos;Удар&apos; вже використовується подією: &apos;%1&apos;.</translation>
+        <translation>Вибачте, але слот Події &apos;Удар&apos; вже використовується Подією: &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
@@ -1906,7 +1906,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Doesn&apos;t move</source>
-        <translation>Не рухається</translation>
+        <translation>Не рухомий</translation>
     </message>
     <message>
         <source>Set message...</source>
@@ -2124,7 +2124,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation>Поле болі для НІП</translation>
+        <translation>Область болі для НІП</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2320,7 +2320,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Tile-ID: %1</source>
-        <translation>ID Плитки: %1</translation>
+        <translation>ID Плити: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2803,7 +2803,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation>Тригер події</translation>
+        <translation>Тригер Події</translation>
     </message>
     <message>
         <source>General</source>
@@ -3170,11 +3170,11 @@ Do you want to continue?</source>
     <name>LvlEventsBox</name>
     <message>
         <source>Classic Events</source>
-        <translation>Класичні події</translation>
+        <translation>Класичні Події</translation>
     </message>
     <message>
         <source>Events list</source>
-        <translation>Список подій</translation>
+        <translation>Список Подій</translation>
     </message>
     <message>
         <source>Layer visibly</source>
@@ -3198,7 +3198,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Layers movement</source>
-        <translation>Рух шару</translation>
+        <translation>Рух Шару</translation>
     </message>
     <message>
         <source>Horisontal speed:</source>
@@ -3214,7 +3214,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Set moving layer</source>
-        <translation>Задати рухомий шар</translation>
+        <translation>Задати рухомий Шар</translation>
     </message>
     <message>
         <source>Autoscroll section</source>
@@ -3350,7 +3350,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation>Тригер події</translation>
+        <translation>Тригер Події</translation>
     </message>
     <message>
         <source>Delay</source>
@@ -3358,11 +3358,11 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autostart event</source>
-        <translation>Автозапуск події</translation>
+        <translation>Автозапуск Події</translation>
     </message>
     <message>
         <source>Create copy of event</source>
-        <translation>Створити копію події</translation>
+        <translation>Створити копію Події</translation>
     </message>
     <message>
         <source>[Silence]</source>
@@ -3386,7 +3386,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Please, set current section to %1 for capture data for this event</source>
-        <translation>Будь ласка, змініть дану секцію на %1 для захвату даних для цієї події</translation>
+        <translation>Будь ласка, змініть дану секцію на %1 для захвату даних для цієї Події</translation>
     </message>
     <message>
         <source>Please, enter message
@@ -3462,7 +3462,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
-        <translation>Не скидати подію на &quot;немає&quot;</translation>
+        <translation>Не скидати Подію на &quot;немає&quot;</translation>
     </message>
     <message>
         <source>Events</source>
@@ -3560,7 +3560,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Attach to:</source>
-        <translation>З&apos;єднати з шаром:</translation>
+        <translation>З&apos;єднати з Шаром:</translation>
     </message>
     <message>
         <source>Direction</source>
@@ -3717,11 +3717,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Layers merge</source>
-        <translation>Об&apos;єднати шари</translation>
+        <translation>Об&apos;єднати Шари</translation>
     </message>
     <message>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation>Шар з ім&apos;ям &apos;%1&apos; вже існує, ви бажаєте об&apos;єднати шари?</translation>
+        <translation>Шар з ім&apos;ям &apos;%1&apos; вже існує, ви бажаєте об&apos;єднати Шари?</translation>
     </message>
     <message>
         <source>New Layer %1</source>
@@ -3729,37 +3729,37 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Remove layer</source>
-        <translation>Видалити шар</translation>
+        <translation>Видалити Шар</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
-        <translation>Ви справді бажаєте видалити цей шар?
-Всі елементи цього шару будуть перенесені на шар &quot;Default&quot;.</translation>
+        <translation>Ви справді бажаєте видалити цей Шар?
+Всі елементи цього Шару будуть перенесені на Шар &quot;Default&quot;.</translation>
     </message>
     <message>
         <source>Rename layer</source>
-        <translation>Змінити ім&apos;я шару</translation>
+        <translation>Змінити ім&apos;я Шару</translation>
     </message>
     <message>
         <source>Remove layer with items</source>
-        <translation>Видалити шар і елементи</translation>
+        <translation>Видалити Шар і елементи</translation>
     </message>
     <message>
         <source>Remove Layer and keep items</source>
-        <translation>Видалити шар і залишити елементи</translation>
+        <translation>Видалити Шар і залишити елементи</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
-        <translation>Ви справді бажаєте видалити цей шар?
-Всі елементи цього шару будуть перенесені на шар &quot;Default&quot;!</translation>
+        <translation>Ви справді бажаєте видалити цей Шар?
+Всі елементи цього Шару будуть перенесені на Шар &quot;Default&quot;!</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
-        <translation>Ви справді бажаєте видалити цей шар?
-Всі елементи цього шару будуть видалені!</translation>
+        <translation>Ви справді бажаєте видалити цей Шар?
+Всі елементи цього Шару будуть видалені!</translation>
     </message>
 </context>
 <context>
@@ -3887,7 +3887,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
-        <translation>Пд. Пустий шар:</translation>
+        <translation>Пд. Пустий Шар:</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -3911,7 +3911,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Attached layer:</source>
-        <translation>З&apos;єднаний шар:</translation>
+        <translation>З&apos;єднаний Шар:</translation>
     </message>
     <message>
         <source>Search NPC</source>
@@ -3931,7 +3931,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Evt empty layer:</source>
-        <translation>Пд. Пустий шар:</translation>
+        <translation>Пд. Пустий Шар:</translation>
     </message>
     <message>
         <source>Doesn&apos;t move</source>
@@ -4010,11 +4010,11 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
-        <translation>Виходячи за край екрану, гравець вийде з протилежної сторони</translation>
+        <translation>Виходячи за межі екрану, гравець вийде з протилежної сторони</translation>
     </message>
     <message>
         <source>Off screen exit</source>
-        <translation>Вихід з рівня за край</translation>
+        <translation>Вихід з рівня за межу</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -4124,7 +4124,7 @@ Physical env. zones:	%6
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation>Додавати шари тут, наприклад:</translation>
+        <translation>Додавати Шари тут, наприклад:</translation>
     </message>
     <message>
         <source>Error in the file %1:
@@ -4249,7 +4249,7 @@ number of existing and collected stars in the level will not be shown.</source>
     </message>
     <message>
         <source>Trigger event when he player enters this warp</source>
-        <translation>Запустити подію, коли гравець ввійде в цей прохід</translation>
+        <translation>Запустити Подію, коли гравець ввійде в цей прохід</translation>
     </message>
     <message>
         <source>Any mounted vehicles will be removed
@@ -4638,7 +4638,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Palettes and tilesets</source>
-        <translation>Палітри й набори плиток</translation>
+        <translation>Палітри й набори плит</translation>
     </message>
     <message>
         <source>Custom data</source>
@@ -4848,7 +4848,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Offscreen exit</source>
-        <translation>Вихід з рівня за краї</translation>
+        <translation>Вихід з рівня за межу</translation>
     </message>
     <message>
         <source>No turn back</source>
@@ -5197,7 +5197,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
-        <translation>Не заливати за краї секції</translation>
+        <translation>Не заливати за поля секції</translation>
     </message>
     <message>
         <source>SMBX-like GUI</source>
@@ -5591,7 +5591,7 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been copied to clipboard</source>
-        <translation>%1 плиток, %2 декорацій, %3 шляхів, %4 рівнів, %5 музикальних точок скопійовано в буфер обміну</translation>
+        <translation>%1 плит, %2 декорацій, %3 шляхів, %4 рівнів, %5 музичних точок скопійовано в буфер обміну</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</source>
@@ -5599,7 +5599,7 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been moved to clipboard</source>
-        <translation>%1 плиток, %2 декорацій, %3 шляхів, %4 рівнів, %5 музикальних точок скопійовано в буфер обміну</translation>
+        <translation>%1 плит, %2 декорацій, %3 шляхів, %4 рівнів, %5 музичних точок скопійовано в буфер обміну</translation>
     </message>
     <message>
         <source>Engine is not found</source>
@@ -5685,7 +5685,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation>Краї секції</translation>
+        <translation>Поля секції</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
@@ -6399,7 +6399,7 @@ Error description:
     </message>
     <message>
         <source>Attach Layer</source>
-        <translation>З&apos;єднати з шаром</translation>
+        <translation>З&apos;єднати з Шаром</translation>
     </message>
     <message>
         <source>Event Block Destroyed</source>
@@ -6551,7 +6551,7 @@ Error description:
     </message>
     <message>
         <source>Trigger Activate</source>
-        <translation>Тригер події</translation>
+        <translation>Тригер Події</translation>
     </message>
     <message>
         <source>Trigger Delay</source>
@@ -6567,7 +6567,7 @@ Error description:
     </message>
     <message>
         <source>Off Screen Exit</source>
-        <translation>Вихід з рівня за краї</translation>
+        <translation>Вихід з рівня за межі</translation>
     </message>
     <message>
         <source>Underwater</source>
@@ -6670,7 +6670,10 @@ Error description:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибачаємось, але редагувач зламався.
+Причина: Недостатньо пам&apos;яті!
+
+Спробуйте закрити інші непотрібні програми, щоб звільнити пам&apos;ять й запобігти аварії.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
@@ -6679,7 +6682,12 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибачте, але PGE Editor зламався.
+Причина: необроблене виключення
+
+Будь ласка, зв&apos;яжіться з розробниками через форум і ми зможемо виправити помилку. Дякуємо.
+
+Посилання форуму: wohlsoft.ru/forum</translation>
     </message>
     <message>
         <source>Terminal was closed [SIGHUP]</source>
@@ -6715,254 +6723,278 @@ Forum link: wohlsoft.ru/forum</source>
     </message>
     <message>
         <source>Interrupted! [SIGINT]</source>
-        <translation type="unfinished"></translation>
+        <translation>Перервано! [SIGINT]</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Вибачте, але Редагувач PGE аварійно завершився. 
+Причина: %1
+
+</translation>
     </message>
     <message>
         <source>Cut top here</source>
-        <translation type="unfinished"></translation>
+        <translation>Зрізати тут верх</translation>
     </message>
     <message>
         <source>Cut bottom here</source>
-        <translation type="unfinished"></translation>
+        <translation>Зрізати тут низ</translation>
     </message>
     <message>
         <source>Cut left here</source>
-        <translation type="unfinished"></translation>
+        <translation>Зрізати вліво тут</translation>
     </message>
     <message>
         <source>Cut right here</source>
-        <translation type="unfinished"></translation>
+        <translation>Зрізати вправо тут</translation>
     </message>
     <message>
         <source>Don&apos;t snap to grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вирівнювати по сітці</translation>
     </message>
     <message>
         <source>Disable minimal size limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Відключити обмеження розміру</translation>
     </message>
     <message>
         <source>Loading BGOs...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую Ф.Об...</translation>
     </message>
     <message>
         <source>Loading Backgrounds...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую фони...</translation>
     </message>
     <message>
         <source>Loading Blocks...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую блоки...</translation>
     </message>
     <message>
         <source>Loading NPCs...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую НІП...</translation>
     </message>
     <message>
         <source>Loading Music...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую музику...</translation>
     </message>
     <message>
         <source>Loading Sound...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую звуки...</translation>
     </message>
     <message>
         <source>Loading Level images...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую зображення рівня...</translation>
     </message>
     <message>
         <source>Loading Paths images...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую шляхи...</translation>
     </message>
     <message>
         <source>Loading Sceneries...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую декорації...</translation>
     </message>
     <message>
         <source>Loading Tiles...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую плити...</translation>
     </message>
     <message>
         <source>Bad File</source>
-        <translation type="unfinished"></translation>
+        <translation>Поганий файл</translation>
     </message>
     <message>
         <source>Bad file format
 File: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Поганий формат файлу
+Файл: %1</translation>
     </message>
     <message>
         <source>Line Number: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер рядку: %1</translation>
     </message>
     <message>
         <source>Line Data: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Дані рядка: %1</translation>
     </message>
     <message>
         <source>File open error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка відкриття файлу</translation>
     </message>
     <message>
         <source>Unknown values are presented</source>
-        <translation type="unfinished"></translation>
+        <translation>Знайдені невідомі значення</translation>
     </message>
     <message>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ваш файл містить невідомі значення.
+Ці значення будуть видалені при збереженні файлу</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 секцій.
+Максимальне число секцій - %2.
+Всі налаштування й поля секцій з номером більше 21 будуть видалені,
+якщо ви збережете в цьому форматі.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 блоків.
+Максимальне число блоків - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 фонових об&apos;єктів.
+Максимальне число Ф.Об - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 НІП.
+Максимальне число НІП - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 проходів.
+Максимальне число проходів - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 фіз. середовищ.
+Максимальне число фіз. середовищ. - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 Шарів.
+Максимальне число Шарів - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 Подій.
+Максимальне число Подій - %2.</translation>
     </message>
     <message>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Під час збереження рівня у форматі SMBX64 стались негаразди:
+
+%1Будь ласка, видаліть зайві елементи (або налаштування), або збережіть рівень у форматі LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 ландшафтних плит.
+Максимальне число плит - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 декорацій.
+Максимальне число декорацій - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 шляхів.
+Максимальне число шляхів - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 рівнів.
+Максимальне число рівнів - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 не дозволяє зберігати %1 музичних точок.
+Максимальне число точок - %2.</translation>
     </message>
     <message>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation>Під час збереження карти світу в формат SMBX64 виникли негаразди:
+
+%1Будь ласка, видаліть зайві елементи (або налаштування), або збережіть карту світу у форматі WLDX.</translation>
     </message>
     <message>
         <source>Loading rotation rules table...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантаження таблиць правил обернення...</translation>
     </message>
     <message>
         <source>Loading Tilesets...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую палітри елементів...</translation>
     </message>
     <message>
         <source>Loading Tileset groups...</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую групи палітр елементів...</translation>
     </message>
     <message>
         <source>Finishing loading...</source>
-        <translation type="unfinished"></translation>
+        <translation>Закінчення завантаження...</translation>
     </message>
     <message>
         <source>Disable logging</source>
-        <translation type="unfinished">Вимкнути ведення звітів</translation>
+        <translation>Вимкнути ведення звітів</translation>
     </message>
     <message>
         <source>System messages</source>
-        <translation type="unfinished"></translation>
+        <translation>Системні повідомлення</translation>
     </message>
     <message>
         <source>Fatal</source>
-        <translation type="unfinished">Фатальні помилки</translation>
+        <translation>Фатальні помилки</translation>
     </message>
     <message>
         <source>Critical</source>
-        <translation type="unfinished"></translation>
+        <translation>Критичні помилки</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Попередження</translation>
+        <translation>Попередження</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished">Налагодження</translation>
+        <translation>Налагоджувач</translation>
     </message>
     <message>
         <source>Initializing tileset categories...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ініціалізація категорій елементних наборів...</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <source>Block user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміна користувацьких налаштувань блоку</translation>
     </message>
     <message>
         <source>BGO user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміна користувацьких налаштувань фонового об&apos;єкту</translation>
     </message>
     <message>
         <source>NPC user data change</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміна користувацьких налаштувань НІП</translation>
     </message>
     <message>
         <source>Level Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування рівня</translation>
     </message>
     <message>
         <source>Section extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Додаткові налаштування секції</translation>
     </message>
 </context>
 <context>
@@ -7013,298 +7045,298 @@ The maximum number of Music Boxes is %2.</source>
     <name>SavingNotificationDialog</name>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <source>Discard</source>
-        <translation type="unfinished"></translation>
+        <translation>Не зберігати</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
     <name>ScriptEditor</name>
     <message>
         <source>Script editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувач скриптів</translation>
     </message>
     <message>
         <source>Add script</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати скрипт</translation>
     </message>
     <message>
         <source>Remove script</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити скрипт</translation>
     </message>
     <message>
         <source>Script</source>
-        <translation type="unfinished"></translation>
+        <translation>Скрипт</translation>
     </message>
     <message>
         <source>Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати як...</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпорт</translation>
     </message>
     <message>
         <source>Import from file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпортувати з файлу...</translation>
     </message>
     <message>
         <source>Close script editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Новий</translation>
     </message>
     <message>
         <source>Empty script has been added!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пустий скрипт додано!</translation>
     </message>
 </context>
 <context>
     <name>SmartImporter</name>
     <message>
         <source>File not saved</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл не збережено</translation>
     </message>
     <message>
         <source>You need to save the level, so you can import custom graphics!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви повинні зберегти рівень, тоді ви зможете імпортувати корист. графіку!</translation>
     </message>
     <message>
         <source>You need to save the world, so you can import custom graphics!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви повинні спочатку зберегти світ перед тим, як імпортувати корист. графіку!</translation>
     </message>
 </context>
 <context>
     <name>TestingSettings</name>
     <message>
         <source>2 Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування 2-го гравця</translation>
     </message>
     <message>
         <source>PLSET_Character</source>
         <comment>Character</comment>
-        <translation type="unfinished"></translation>
+        <translation>Персонаж</translation>
     </message>
     <message>
         <source>PLSET_State</source>
         <comment>Character</comment>
-        <translation type="unfinished"></translation>
+        <translation>Стан</translation>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Додаткові налаштування</translation>
     </message>
     <message>
         <source>Debug info</source>
         <comment>Enable printing of the debug information.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Відлаг. інформація</translation>
     </message>
     <message>
         <source>Allows you to destroy any objects with no exceptions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє гравцю позбутися будь-якого елементу, без виключень.</translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє гравцю бродити всюди по карті світу, незалежно від шляхів.</translation>
     </message>
     <message>
         <source>World freedom</source>
-        <translation type="unfinished"></translation>
+        <translation>Ти вільний від світу</translation>
     </message>
     <message>
         <source>Playable character will not take damage on dangerous contacts and will not burn in the lava.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ігровий персонаж не отримає поразку від елементів і не згорить у лаві.</translation>
     </message>
     <message>
         <source>God mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим бога</translation>
     </message>
     <message>
         <source>Allows you to fly up to the space!</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє летіти в космос!</translation>
     </message>
     <message>
         <source>Testing settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування тестування</translation>
     </message>
     <message>
         <source>PLSET_VehicleID</source>
         <comment>translate as &quot;Vehicle&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Транспорт</translation>
     </message>
     <message>
         <source>PLSET_VehicleType</source>
         <comment>translate as &quot;Vehicle type&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тип транспорту</translation>
     </message>
     <message>
         <source>Unlimited flying</source>
-        <translation type="unfinished"></translation>
+        <translation>Безкінечний політ</translation>
     </message>
     <message>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
-        <translation type="unfinished"></translation>
+        <translation>Відлагоджувач фізики</translation>
     </message>
     <message>
         <source>Show frame speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати швидкість кадрів</translation>
     </message>
     <message>
         <source>Number of players</source>
-        <translation type="unfinished"></translation>
+        <translation>К-сть гравців</translation>
     </message>
     <message>
         <source>1 player</source>
-        <translation type="unfinished"></translation>
+        <translation>1 гравець</translation>
     </message>
     <message>
         <source>2 player</source>
-        <translation type="unfinished"></translation>
+        <translation>2 гравця</translation>
     </message>
     <message>
         <source>1 Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування 1-го гравця</translation>
     </message>
     <message>
         <source>Bulldozer mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим бульдозеру</translation>
     </message>
 </context>
 <context>
     <name>TheXTechEngine</name>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Огляд...</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тестувати рівень</translation>
     </message>
     <message>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тестувати збережений рівень</translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation>Почати гру</translation>
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, вкажіть шлях до TheXTech:</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
-        <translation type="unfinished"></translation>
+        <translation>Інший</translation>
     </message>
     <message>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть шлях до TheXTech</translation>
     </message>
     <message>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тестувати у режимі битви</translation>
     </message>
     <message>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тип графіки</translation>
     </message>
     <message>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
-        <translation type="unfinished"></translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <source>Software</source>
         <comment>Software rendering</comment>
-        <translation type="unfinished"></translation>
+        <translation>Програмна візуалізація</translation>
     </message>
     <message>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
-        <translation type="unfinished"></translation>
+        <translation>Апаратно-пришвидшений</translation>
     </message>
     <message>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
-        <translation type="unfinished"></translation>
+        <translation>Апаратно-пришвидшений з вертикальною синхронізацією</translation>
     </message>
     <message>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Включити &quot;магічну руку&quot;</translation>
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволяє редагувати у реальному часі: вибір елементів зі сцени рівня, розміщення нових, які були вибрані у редагувачі, а також їх видалення. Не працює під час тестування збереженого файлу.</translation>
     </message>
     <message>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
-        <translation type="unfinished"></translation>
+        <translation>Максимальна швидкість кадрів</translation>
     </message>
     <message>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
-        <translation type="unfinished"></translation>
+        <translation>Під час гри без вертикальної синхронізації, запустіть гру з максимально можливою частотою кадрів.</translation>
     </message>
     <message>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Включити захват всього</translation>
     </message>
     <message>
         <source>Allow player to grab any NPCs in a game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Дозволити гравцю захвачення будь-якого НІП.</translation>
     </message>
     <message>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Шлях до TheXTech</translation>
     </message>
     <message>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Змінити шлях до TheXTech...</translation>
     </message>
     <message>
         <source>Select the path to TheXTech executable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір шляху до TheXTech.</translation>
     </message>
     <message>
         <source>Executable not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Програма не знайдена</translation>
     </message>
     <message>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можу запустити TheXTech, тому що файл &quot;%1&quot; не знайдено. Це могло статися, у зв&apos;язку з тим, що шлях до файлу TheXTech був заданий невірно. Будь ласка, перевірте налаштування шляху до TheXTech.</translation>
     </message>
     <message>
         <source>TheXtech start failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка запуску TheXTech</translation>
     </message>
     <message>
         <source>Can&apos;t start TheXTech because of following reason:
@@ -7312,170 +7344,175 @@ The maximum number of Music Boxes is %2.</source>
 
 Command: &quot;%1&quot;
 Arguments: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можу запустити TheXTech по наступній причині:
+%3
+
+Команда: %1
+Аргументи: %2</translation>
     </message>
 </context>
 <context>
     <name>TilesetEditor</name>
     <message>
         <source>Tileset Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувач наборів елементів</translation>
     </message>
     <message>
         <source>Items</source>
-        <translation type="unfinished"></translation>
+        <translation>Елементи</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Блок</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>Ф.Об</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>НІП</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ландшафтна плита</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Декорація</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип:</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистити</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <source>Tileset name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім&apos;я набору плит:</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Висота:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <source>Show custom only</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати тільки користувацькі</translation>
     </message>
     <message>
         <source>Current Level/World specific</source>
-        <translation type="unfinished"></translation>
+        <translation>Тільки для даного Рівня/Світу</translation>
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити цей набір плит</translation>
     </message>
     <message>
         <source>Show default only</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати тільки вихідні</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук</translation>
     </message>
     <message>
         <source>Search settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування пошуку</translation>
     </message>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пошук по імені</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пошук по ID</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пошук по ID (Містить)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Сортувати по</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation>Імені</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>Зворотній порядок</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Очистити редагувач наборів плит</translation>
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви впевнені, що бажаєте очистити редагувач та створити новий набір елементів? Незбережені правки будуть загублені.</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, введіть ім&apos;я файлу!</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім&apos;я файлу:</translation>
     </message>
     <message>
         <source>Open Tileset</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити набір плит</translation>
     </message>
     <message>
         <source>Failed to load tileset!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можу завантажити набір плит!</translation>
     </message>
     <message>
         <source>Failed to load tileset!
 Data may be corrupted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалось завантажити набір плит!
+Дані можуть бути пошкодженими!</translation>
     </message>
     <message>
         <source>Tileset box editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувач наборів плит</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Більше не показувати це повідомлення.</translation>
     </message>
     <message>
         <source>Welcome to tileset editor!
