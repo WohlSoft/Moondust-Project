@@ -10538,7 +10538,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Cut top here</source>
-        <translation>Срезать  верх здесь</translation>
+        <translation>Срезать верх здесь</translation>
     </message>
     <message>
         <source>Cut bottom here</source>
@@ -10664,8 +10664,8 @@ All boundaries and settings of more than 21 sections will be lost.</source>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 блоков
-Максимальное число блоков -  %2.</translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 блоков.
+Максимальное число блоков - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
@@ -10709,7 +10709,7 @@ The maximum number of Events is %2.</source>
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
         <translation>Во время сохранения уровня в формат SMBX64 произошли неполадки:
 
-%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание уровень в формат LVLX.</translation>
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохраните уровень в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
@@ -10747,7 +10747,7 @@ The maximum number of Music Boxes is %2.</source>
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
         <translation>Во время сохранения карты мира в формат SMBX64 произошли неполадки:
 
-%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохраните карту мира в формат WLDX.</translation>
     </message>
     <message>
         <source>Loading rotation rules table...</source>
@@ -10829,7 +10829,7 @@ Forum link: wohlsoft.ru/forum</source>
         <translation>Извините, но PGE Editor сломался.
 Причина: необработанное исключение
 
-Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
+Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку. Спасибо.
 
 Ссылка форума: wohlsoft.ru/forum</translation>
     </message>
@@ -11474,7 +11474,7 @@ Those preferences will makes no effect on a testing process before it will be fi
     </message>
     <message>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation>Невозможно запустить TheXTech, потому что файл &quot;%1&quot; не найден. Это могло произойти, потому что путь к исполняемому файлу TheXTech был задан неправильно. Прожалуйста, проверьте настройки пути к TheXTech.</translation>
+        <translation>Невозможно запустить TheXTech, потому что файл &quot;%1&quot; не найден. Это могло произойти, потому что путь к исполняемому файлу TheXTech был задан неправильно. Пожалуйста, проверьте настройки пути к TheXTech.</translation>
     </message>
     <message>
         <source>TheXtech start failed</source>
@@ -11490,7 +11490,7 @@ Arguments: %2</source>
 %3
 
 Команда: %1
-Агрументы: %2</translation>
+Аргументы: %2</translation>
     </message>
 </context>
 <context>
