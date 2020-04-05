@@ -12289,7 +12289,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>6 - Warp Exit</source>
-        <translation>6 - Выход через дверь</translation>
+        <translation>6 - Выход через проход/дверь</translation>
     </message>
     <message>
         <source>7 - Star Exit</source>
@@ -12336,7 +12336,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation>Вы измените текущую позицию на последнюю размещённую точку. Если точка на выбрана, позиция останется прежней.</translation>
+        <translation>Вы измените текущую позицию на последнюю размещённую точку. Если точка не выбрана, позиция останется прежней.</translation>
     </message>
     <message>
         <source>Go to point</source>
