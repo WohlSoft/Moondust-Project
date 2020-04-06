@@ -9690,7 +9690,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <location filename="../testing/thextech_engine.cpp" line="141"/>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">TheXTech pad</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="148"/>
@@ -9801,11 +9801,35 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <location filename="../testing/thextech_engine.cpp" line="479"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Selecteer het TheXTech pad...</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="481"/>
         <source>Select the path to TheXTech executable.</source>
+        <translation type="unfinished">Gelieve een pad te kiezen naar het TheXTech uitvoerbaar bestand.</translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="494"/>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="495"/>
+        <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="504"/>
+        <source>TheXtech start failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/thextech_engine.cpp" line="505"/>
+        <source>Can&apos;t start TheXTech because of following reason:
+%3.
+
+Command: &quot;%1&quot;
+Arguments: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

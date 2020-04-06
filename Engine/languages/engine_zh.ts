@@ -247,19 +247,19 @@ and retry your recent actions to get more detailed information.</source>
         <translation>重新开始关卡</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="303"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <location filename="../scenes/scene_world.cpp" line="551"/>
         <source>Invalid playable character ID</source>
         <translation>错误的人物编号</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="312"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <location filename="../scenes/scene_world.cpp" line="560"/>
         <source>Invalid playable character state ID</source>
         <translation>错误的人物形态编号</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="437"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="445"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>错误：无法找到起点。
@@ -454,29 +454,29 @@ Did you placed player start point (or entrance warp point) too far off of the se
         <translation>&lt;未找到关卡&gt;</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="680"/>
+        <location filename="../main.cpp" line="684"/>
         <source>Unable to init SDL!</source>
         <translation>SDL 初始化失败！</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="741"/>
+        <location filename="../main.cpp" line="745"/>
         <source>Config packs not found</source>
         <translation>未找到配置包</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="744"/>
+        <location filename="../main.cpp" line="748"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>没有可用的配置包，因此无法启动游戏！</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="754"/>
+        <location filename="../main.cpp" line="758"/>
         <source>Choose a game to test:</source>
         <translation>选择游戏进行测试：</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
         <location filename="../main.cpp" line="286"/>
-        <location filename="../main.cpp" line="452"/>
+        <location filename="../main.cpp" line="454"/>
         <source>No opened files</source>
         <translation>无已打开文件</translation>
     </message>
@@ -510,7 +510,7 @@ Fail to start world map
         <translation>输入出口代码：（整数）</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="532"/>
+        <location filename="../main.cpp" line="536"/>
         <source>Warp exit
 
 Exit into:
@@ -525,7 +525,7 @@ Entrance point: %2</source>
 入口点 #：%2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="601"/>
+        <location filename="../main.cpp" line="605"/>
         <source>Level was closed with error.
 %1</source>
         <translation>由于关卡有错误，因此关卡已关闭。

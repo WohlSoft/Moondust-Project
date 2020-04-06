@@ -31,6 +31,18 @@ then
     fi
     mv SDL-default-new.tar.gz SDL-default.tar.gz
     mv SDL-default-new.zip SDL-default.zip
+
+    # Remove unnecessary folders from a Windows-used archive
+    zip -d SDL-default.zip \
+        SDL-default/VisualC/\* \
+        SDL-default/VisualC-WinRT/\* \
+        SDL-default/visualtest/\* \
+        SDL-default/test/\* \
+        SDL-default/Xcode/\* \
+        SDL-default/Xcode-iOS/\* \
+        SDL-default/android-project/\* \
+        SDL-default/android-project-ant/\*
+
     echo "Fresh now is $LatestSDL"
 else
     echo "Failed to retreive latest SDL!"

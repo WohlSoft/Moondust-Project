@@ -902,14 +902,14 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished">Vous possédez un ancien paquet de configuration.
+        <translation>Vous possédez un ancien paquet de configuration.
 &lt;br&gt;L&apos;éditeur sera lancé, mais vous pourriez rencontrer des problèmes avec les éléments ou les paramètres.
 &lt;br&gt;
 &lt;br&gt;Veuillez télécharger et installer la dernière version de votre paquet de configuration :
 &lt;br&gt;
 &lt;br&gt;Télécharger : %1
-&lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec PGE.
-&lt;br&gt;Cependant vous pouvez utiliser le même lien pour obtenir une version plus récente</translation>
+&lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec PGE,
+&lt;br&gt;cependant vous pouvez utiliser le même lien pour obtenir une version plus récente</translation>
     </message>
 </context>
 <context>
@@ -3294,29 +3294,29 @@ Pour utiliser LunaTester, vous devez utiliser la paquet de configuration d&apos;
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le chemin vers LunaTester…</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner l&apos;emplacement de LunaTester.</translation>
     </message>
     <message>
         <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fil de chargement de LunaTester est occupé, réessayez ou utilisez l&apos;option « mettre fin au chargeur bloqué » !</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Chemin vers LunaTester</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un emplacement pour LunaTester</translation>
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
-        <translation type="unfinished"></translation>
+        <translation>Les limites SMBX64 sont dépassées !</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3324,48 +3324,57 @@ Pour utiliser LunaTester, vous devez utiliser la paquet de configuration d&apos;
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Do you want to continue the process?</source>
-        <translation type="unfinished"></translation>
+        <translation>Un violation du standard SMBX64 a été trouvée !
+%1
+, l&apos;ancien moteur pourrait planter !
+Il est conseillé de supprimer tous les élément en excès.
+Souhaitez-vous continuer le processus ?</translation>
     </message>
     <message>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Échec de la vérification du répertoire de LunaTester</translation>
     </message>
     <message>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer LunaTester car « %1 » n&apos;a pas été trouvé ! Cela peut se produire pour les raisons suivantes :</translation>
     </message>
     <message>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>- Emplacement de LunaTester spécifié invalide (ou du dossier racine SMBX2), veuillez vérifier l&apos;emplacement d&apos;installation de LunaTester.
+- Il est possible que votre antivirus supprime des fichiers (faux positif ou infection du fichier), veuillez vérifier la quarantaine de votre antivirus ou les rapports de dernières menaces éliminées.
+- Une installation incorrecte de SMBX2 peut amener à des fichiers manquants, veuillez réinstaller SMBX2 pour corriger votre problème.</translation>
     </message>
     <message>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>- Il est possible que votre antivirus supprime des fichiers (faux positif ou infection du fichier), veuillez vérifier la quarantaine de votre antivirus ou les rapports de dernières menaces éliminées.
+- Une installation incorrecte de SMBX2 peut amener à des fichiers manquants, veuillez réinstaller SMBX2 pour corriger votre problème.</translation>
     </message>
     <message>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
-        <translation type="unfinished"></translation>
+        <translation>« %1 » introuvable !
+Vous avez un SMBX vierge !
+Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec LunaTester. LunaLua est requis pour lancer les tests de niveaux avec le moteur SMBX.</translation>
     </message>
     <message>
         <source>Impossible to launch LunaTester, due to %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer LunaTester, en raison de %1</translation>
     </message>
     <message>
         <source>LunaTester Directory wasn&apos;t configured right</source>
-        <translation type="unfinished"></translation>
+        <translation>Le répertoire de LunaTester n&apos;a pas été configuré correctement</translation>
     </message>
     <message>
         <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 introuvable ! Pour lancer les tests avec LunaTester, vous devez spécifier le bon emplacement pour SMBX.</translation>
     </message>
 </context>
 <context>
@@ -7577,16 +7586,40 @@ Motif : %1
     <message>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Chemin vers TheXTech</translation>
     </message>
     <message>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le chemin vers TheXTech…</translation>
     </message>
     <message>
         <source>Select the path to TheXTech executable.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner le chemin de l&apos;exécutable TheXTech.</translation>
+    </message>
+    <message>
+        <source>Executable not found</source>
+        <translation>Exécutable introuvable</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
+        <translation>Impossible de lancer la partie TheXTech car « %1 » est introuvable. Cela peut se produire à cause d&apos;un chemin vers l&apos;exécutable TheXTech spécifié incorrect, veuillez vérifier la configuration du chemin vers TheXTech.</translation>
+    </message>
+    <message>
+        <source>TheXtech start failed</source>
+        <translation>Échec du lancement de TheXTech</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start TheXTech because of following reason:
+%3.
+
+Command: &quot;%1&quot;
+Arguments: %2</source>
+        <translation>Impossible de lancer TheXTech pour l&apos;une des raisons suivantes :
+%3.
+
+Commande : « %1 »
+Arguments : %2</translation>
     </message>
 </context>
 <context>

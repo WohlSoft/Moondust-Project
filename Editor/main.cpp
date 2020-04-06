@@ -17,7 +17,6 @@
  */
 
 #ifdef USE_SDL_MIXER
-#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer_ext.h>
 #endif
@@ -42,8 +41,6 @@
 #include <common_features/main_window_ptr.h>
 #include <SingleApplication/singleapplication.h>
 #include <SingleApplication/editor_application.h>
-
-#include <Utf8Main/utf8main.h>
 
 #include <data_configs/selection_dialog/config_manager.h>
 
@@ -130,6 +127,7 @@ static void pgeEditorQuit()
     }
 }
 
+extern "C"
 int main(int argc, char *argv[])
 {
     CrashHandler::initCrashHandlers();
@@ -157,7 +155,12 @@ int main(int argc, char *argv[])
     }
 
     app     = new PGE_Application(argc, argv);
+#ifdef _WIN32
+    for(int i = 0; i < argc; i++)
+        args.push_back(QString::fromUtf8(argv[i]));
+#else
     args    = app->arguments();
+#endif
 
     // Workaround: https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
     setlocale(LC_NUMERIC, "C");

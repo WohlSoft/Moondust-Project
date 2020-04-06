@@ -6,4 +6,4 @@
 - Added global API version value for all PGE components are using config packs
 - QMake build with a set of bash scripts has been completely replaced with better CMake build
 - Added ability to pack the whole source code pack from GIT repository include all submodules (https://github.com/Kentzo/git-archive-all module is required)
-
+- Added JPEG support to get an ability to load some old levels and episodes where are JPEG textures being used as a workaround instead of BMP

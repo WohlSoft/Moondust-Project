@@ -26,7 +26,8 @@ static void error(QString msg)
     QMessageBox::warning(nullptr, "SDL error", msg, QMessageBox::Ok);
 }
 
-extern "C" int main(int argc, char *argv[])
+extern "C"
+int main(int argc, char *argv[])
 {
     QApplication::addLibraryPath(".");
     QApplication::addLibraryPath(QFileInfo(QString::fromUtf8(argv[0])).dir().path());
@@ -40,7 +41,14 @@ extern "C" int main(int argc, char *argv[])
     // https://doc.qt.io/qt-5/qcoreapplication.html#locale-settings
     setlocale(LC_NUMERIC, "C");
 
-    QStringList args = a.arguments();
+    QStringList args;
+#ifdef _WIN32
+    for(int i = 0; i < argc; i++)
+        args.push_back(QString::fromUtf8(argv[i]));
+#else
+    args = a.arguments();
+#endif
+
     SingleApplication *as = new SingleApplication(args);
     if(!as->shouldContinue())
     {

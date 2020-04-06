@@ -94,10 +94,12 @@ void PGE_MsgBox::construct(std::string msg,
     PGE_Size boxSize = FontManager::textSize(m_message, m_fontID, 27);
     setBoxSize(boxSize.w() / 2, boxSize.h() / 2, _padding);
 
+#ifndef _WIN32 // on Windows it may cause a crash because of vsprintf() on Windows side won't accept some unicode characters
     D_pLogDebug("Message box title sizes: %d x %d (len: %zu)\n"
                 "-------------\n"
                 "%s\n"
                 "-------------", boxSize.w(), boxSize.h(), m_message.size(), m_message.c_str());
+#endif
 
     if((pos.x() == -1) && (pos.y() == -1))
     {

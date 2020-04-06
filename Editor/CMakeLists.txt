@@ -47,7 +47,6 @@ include(../_common/DirManager/dirman.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
 include(../_common/IniProcessor/IniProcessor.cmake)
-include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
 if(WIN32)
@@ -470,6 +469,22 @@ list(APPEND PGE_EDITOR_SRCS
     ${QT_PLUGINS_CPP}
 )
 
+if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
+    if(NOT EXISTS ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
+        make_directory(${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
+    endif()
+    add_custom_target(luna_hwnd_show_bin ALL
+        COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz"
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        COMMENT "Unpacking luna_hwnd_show.exe"
+        VERBATIM
+    )
+    install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/luna_hwnd_show.exe"
+        DESTINATION "${PGE_INSTALL_DIRECTORY}/${CMAKE_INSTALL_BINDIR}/ipc"
+    )
+endif()
+
 add_executable(pge_editor
     ${PGE_EDITOR_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
@@ -477,7 +492,6 @@ add_executable(pge_editor
     ${FILEMAPPER_SRCS}
     ${INIPROCESSOR_SRCS}
     ${STACK_WALKER_SRCS}
-    ${UTF8MAIN_SRCS}
     ${UTILS_SRCS}
 )
 
