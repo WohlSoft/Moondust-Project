@@ -28,7 +28,7 @@ void DataConfig::loadRotationTable()
 
     if(!QFile::exists(rtables_ini))
     {
-        addError(QString("Rotation tables wasn't load: rotation_table.ini does not exist"), PGE_LogLevel::Warning);
+        LogWarning("Rotation tables wasn't load: rotation_table.ini does not exist");
         return;
     }
 
@@ -39,7 +39,7 @@ void DataConfig::loadRotationTable()
 
     if(groups.size()==0)
     {
-        addError(QString("ERROR LOADING of rotation_table.ini: number of items not define, or empty config"), PGE_LogLevel::Warning);
+        LogWarning("ERROR LOADING of rotation_table.ini: number of items not define, or empty config");
         return;
     }
 
@@ -72,7 +72,7 @@ void DataConfig::loadRotationTable()
 
         if(rtable_set.lastError() != IniProcessing::ERR_OK)
         {
-            addError(QString("ERROR LOADING lvl_bgo.ini N:%1 (bgo-%2)").arg(rtable_set.lastError()).arg(i), PGE_LogLevel::Critical);
+            addError(QString("ERROR LOADING rotation_table.ini N:%1 (bgo-%2)").arg(rtable_set.lastError()).arg(i), PGE_LogLevel::Critical);
         }
     }
 }
