@@ -38,6 +38,7 @@ public:
     void destoryLuaNpc(LVL_Npc *npc);
     void destoryLuaPlayer(LVL_Player *plr);
 
+    void initNPCClassTable();
     void loadNPCClass(unsigned long id, const std::string &path);
     void loadPlayerClass(unsigned long id, const std::string &path);
 

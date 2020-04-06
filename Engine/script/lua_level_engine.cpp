@@ -123,6 +123,17 @@ void LuaLevelEngine::destoryLuaPlayer(LVL_Player *plr)
     }
 }
 
+void LuaLevelEngine::initNPCClassTable()
+{
+    if(shouldShutdown())
+        return;
+
+    luabind::object _G = luabind::globals(getNativeState());
+
+    if(luabind::type(_G["npc_class_table"]) != LUA_TTABLE)
+        _G["npc_class_table"] = luabind::newtable(getNativeState());
+}
+
 void LuaLevelEngine::loadNPCClass(unsigned long id, const std::string &path)
 {
     if(shouldShutdown())
