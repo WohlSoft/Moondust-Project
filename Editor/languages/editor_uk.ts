@@ -6745,11 +6745,11 @@ Reason: %1
     </message>
     <message>
         <source>Cut left here</source>
-        <translation>Зрізати вліво тут</translation>
+        <translation>Зрізати тут вліво</translation>
     </message>
     <message>
         <source>Cut right here</source>
-        <translation>Зрізати вправо тут</translation>
+        <translation>Зрізати тут вправо</translation>
     </message>
     <message>
         <source>Don&apos;t snap to grid</source>
@@ -6828,8 +6828,8 @@ File: %1</source>
     <message>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
-        <translation>Ваш файл містить невідомі значення.
-Ці значення будуть видалені при збереженні файлу</translation>
+        <translation>Ваш файл містить невідомі дані.
+Ці дані будуть видалені при збереженні файлу</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
@@ -6886,7 +6886,7 @@ The maximum number of Events is %2.</source>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation>Під час збереження рівня у форматі SMBX64 стались негаразди:
+        <translation>Під час збереження рівня у форматі SMBX64 сталися негаразди:
 
 %1Будь ласка, видаліть зайві елементи (або налаштування), або збережіть рівень у форматі LVLX.</translation>
     </message>
@@ -7310,7 +7310,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Allow player to grab any NPCs in a game.</source>
-        <translation>Дозволити гравцю захвачення будь-якого НІП.</translation>
+        <translation>Дозволити гравцю захват будь-якого НІП.</translation>
     </message>
     <message>
         <source>Path to TheXTech</source>
@@ -7987,7 +7987,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
-        <translation>Спочатку розмістіть об&apos;єкт на карті світу й відкрийте &quot;Властивості&quot; через контекстне меню.</translation>
+        <translation>Спочатку розмістіть елемент на карті світу й відкрийте &quot;Властивості&quot; через контекстне меню.</translation>
     </message>
     <message>
         <source>Please save the file</source>
@@ -8255,10 +8255,10 @@ Paths:	%3
 Levels:	%4
 Music boxes:		%5
 </source>
-        <translation>Плит:			        %1
-Декорації:		        %2
-Шляхи:			%3
-Рівні:			        %4
+        <translation>Плити:	%1
+Декорації:	 %2
+Шляхи:	%3
+Рівні:	%4
 Музичні точки:	%5
 </translation>
     </message>
@@ -8430,7 +8430,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>5/%1 Applying Musics...</source>
-        <translation>5/%1 Примінення музикальних точок...</translation>
+        <translation>5/%1 Примінення музичних точок...</translation>
     </message>
     <message>
         <source>Untitled %1</source>
@@ -8482,7 +8482,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
-        <translation>Будь ласка, вкажіть назву епізода для &apos;%1&apos;!</translation>
+        <translation>Будь ласка, вкажіть назву епізоду для &apos;%1&apos;!</translation>
     </message>
     <message>
         <source>Episode Title: </source>
@@ -8627,7 +8627,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Intro level:</source>
-        <translation>Вступний рівень:</translation>
+        <translation>Початковий рівень:</translation>
     </message>
     <message>
         <source>Disable characters:</source>
@@ -8755,7 +8755,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>Помітка: якщо ви отримали пошкоджені зображення післе конвертування, будь ласка, запусіть утиліту LazyFix і повторіть конвертування</translation>
+        <translation>Помітка: якщо ви отримали пошкоджені зображення після конвертування, будь ласка, запустіть утиліту LazyFix і повторіть конвертування</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
@@ -8763,7 +8763,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
-        <translation>Видалити вихідні зображення післе завершення</translation>
+        <translation>Видалити вихідні зображення після завершення</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
@@ -8791,7 +8791,7 @@ Do you want to save your changes?</source>
 Please, check the application directory and make sure it is installed properly.</source>
         <translation>Не можу запустити програму:
 %1
-Будь ласка, перевірьте папку з програмою.</translation>
+Будь ласка, перевірте папку з програмою.</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
@@ -8891,7 +8891,7 @@ Please, check the application directory and make sure it is installed properly.<
 Please, check the application directory and make sure it is installed properly.</source>
         <translation>Не можу запустити програму:
 %1
-Будь ласка, перевірьте папку с програмою.</translation>
+Будь ласка, перевірте папку з програмою.</translation>
     </message>
 </context>
 <context>
