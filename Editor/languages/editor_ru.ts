@@ -12584,7 +12584,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;С этой опцией будут автоматически рассчитаны значения ширины или высоты. чтобы размер конечного изображения был пропорционален&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;С этой опцией будут автоматически рассчитаны значения ширины или высоты, чтобы размер конечного изображения был пропорционален.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
@@ -12841,7 +12841,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Search Tile</source>
-        <translation>Искать  плитку</translation>
+        <translation>Искать плитку</translation>
     </message>
     <message>
         <source>Terrain tile</source>
@@ -14014,7 +14014,7 @@ Do you want to save your changes?</source>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Выходная папка, куда будут сохранены файлы SMBX-GIF (*.gif and *m.gif)
+        <translation>Выходная папка, куда будут сохранены файлы SMBX-GIF (*.gif и *m.gif)
 (если поле пустое, то конечные изображения будут сохранены вместе с исходными в той же папке)</translation>
     </message>
     <message>
