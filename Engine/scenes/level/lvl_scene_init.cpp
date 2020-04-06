@@ -356,6 +356,8 @@ bool LevelScene::init_items()
     if(m_luaEngine.shouldShutdown())
         return false;
 
+    m_luaEngine.initNPCClassTable();
+
     for(unsigned long i = 1; i < ConfigManager::lvl_npc_indexes.size(); i++)
     {
         loaderStep();

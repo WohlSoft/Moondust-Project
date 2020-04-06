@@ -420,7 +420,7 @@ Entrance point: %2</source>
     <message id="VIDEO_ENABLE_VSYNC">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="422"/>
         <source>Enable V-Sync</source>
-        <translation>Вкл. вертик. синхр</translation>
+        <translation>Вкл. вертик. синхронізацію</translation>
     </message>
     <message id="VIDEO_FRAME_TIME">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="434"/>
@@ -548,7 +548,7 @@ Software renderer will be started.</source>
     <message id="VSYNC_ERROR_INFO">
         <location filename="../graphics/vsync_validator.cpp" line="77"/>
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
-        <translation>Виявлена занадто швидка частота кадрів. Щоб запобігти проблемам, вертикальна синхронізація (V-Sync) буде вимкнена. Будь ласка, ввімкніть V-Sync в опціях вашого відео-драйвера.</translation>
+        <translation>Виявлена занадто швидка частота кадрів. Щоб запобігти проблемам, вертикальна синхронізація (V-Sync) буде вимкнена. Будь ласка, ввімкніть V-Sync в опціях вашого відео-драйверу.</translation>
     </message>
     <message id="MSGBOX_INFO">
         <location filename="../gui/pge_msgbox.cpp" line="247"/>
