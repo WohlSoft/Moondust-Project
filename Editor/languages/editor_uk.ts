@@ -3790,7 +3790,7 @@ You will see &apos;ghosties&apos; or other dummy images instead custom GFX of it
 Please, reconvert your images to valid format and try to reload this level.</source>
         <translation>Цей рівень має невірні файли користувацької графіки.
 Ви будете бачити &apos;привидів&apos; або інше замінне зображення замість користувацької графіки об&apos;єктів. Таке могло статися, наприклад, із-за BMP-файлу, який зберегли під розширенням GIF.
-Будь ласка, переконвертуйте зображення у правильний формат та перезавантажте цей рівень.</translation>
+Будь ласка, переконвертуйте ваші зображення у правильний формат та перезавантажте цей рівень.</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -8132,39 +8132,38 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Undone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Відмінена дія: %1</translation>
     </message>
     <message>
         <source>Redone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Повернена дія: %1</translation>
     </message>
 </context>
 <context>
     <name>WldSaveImage</name>
     <message>
         <source>Export to image</source>
-        <translation type="unfinished">Експорт в зображення</translation>
+        <translation>Експортувати в зображення</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>Сховати сітку (якщо є)</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
-        <translation type="unfinished">Будь ласка, вкажіть розмір
-зображення для збереження:</translation>
+        <translation>Будь ласка, вкажіть розмір зображення для збереження:</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished">Висота</translation>
+        <translation>Висота</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;З цією опцією будуть автоматично розраховані значення ширини або висоти, щоб розмір цільового зображення був пропорційний.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти пропорції</translation>
     </message>
     <message>
         <source>Save proportion</source>
@@ -8172,31 +8171,31 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Export selected rectangle to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати вибрану область у зображення</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Це &lt;span style=&quot; font-weight:600;&quot;&gt;Ширина&lt;/span&gt; кінцевого зображення. Розмір кінцевого зображення буде змінений до вказаного розміру.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished">px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Це &lt;span style=&quot; font-weight:600;&quot;&gt;Висота&lt;/span&gt; кінцевого зображення. Розмір кінцевого зображення буде змінено до вказаного розміру.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation type="unfinished">Ширина</translation>
+        <translation>Ширина</translation>
     </message>
     <message>
         <source>Hide all paths and levels like &quot;game already stated&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Приховати всі шляхи та рівні</translation>
     </message>
     <message>
         <source>Hide music boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Приховати музичні точки</translation>
     </message>
     <message>
         <source>Will be exported:
@@ -8204,40 +8203,46 @@ Top:	%1
 Left:	%2
 Right:	%3
 Bottom:	%4</source>
-        <translation type="unfinished"></translation>
+        <translation>Буде експортовано:
+Вгору:	%1
+Вліво:	%2
+Вправо:	%3
+Вниз:	%4</translation>
     </message>
     <message>
         <source>Hide meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Сховати мета-об&apos;єкти</translation>
     </message>
 </context>
 <context>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук корист. Ландшафтних плит %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук корист. декорацій %1</translation>
     </message>
     <message>
         <source>Search User Paths %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук корист. шляхів %1</translation>
     </message>
     <message>
         <source>Search User Levels %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук корист. рівнів %1</translation>
     </message>
     <message>
         <source>Wrong custom images</source>
-        <translation type="unfinished"></translation>
+        <translation>Погані файли корист. зображень</translation>
     </message>
     <message>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей рівень має невірні файли користувацької графіки.
+Ви будете бачити &apos;привидів&apos; або інше замінне зображення замість користувацької графіки об&apos;єктів. Таке могло статися, наприклад, із-за поганої конвертації форматів зображень.
+Будь ласка, переконвертуйте ваші зображення у правильний формат та перезавантажте цей рівень.</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -8250,531 +8255,547 @@ Paths:	%3
 Levels:	%4
 Music boxes:		%5
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Плит:			        %1
+Декорації:		        %2
+Шляхи:			%3
+Рівні:			        %4
+Музичні точки:	%5
+</translation>
     </message>
 </context>
 <context>
     <name>WldSearchBox</name>
     <message>
         <source>Search of items on the World Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук елементів на карті світу</translation>
     </message>
     <message>
         <source>Search?</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати?</translation>
     </message>
     <message>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Дані</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[пусто]</translation>
     </message>
     <message>
         <source>Reset Search Fields</source>
-        <translation type="unfinished"></translation>
+        <translation>Скинути поля пошуку</translation>
     </message>
     <message>
         <source>Search Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати плиту</translation>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Ландшафтна плита</translation>
     </message>
     <message>
         <source>Search Terrain Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук ландшафтних плит</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Декорації</translation>
     </message>
     <message>
         <source>Search Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук декорацій</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Шлях</translation>
     </message>
     <message>
         <source>Search Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук шляхів</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень</translation>
     </message>
     <message>
         <source>Level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл рівня</translation>
     </message>
     <message>
         <source>Big Path Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Великий фоновий шлях</translation>
     </message>
     <message>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Завжди видимий</translation>
     </message>
     <message>
         <source>Game start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Точка початку гри</translation>
     </message>
     <message>
         <source>Contains Title</source>
-        <translation type="unfinished"></translation>
+        <translation>Містить плиту</translation>
     </message>
     <message>
         <source>Path background</source>
-        <translation type="unfinished"></translation>
+        <translation>Фоновий шлях</translation>
     </message>
     <message>
         <source>Search Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук рівня</translation>
     </message>
     <message>
         <source>Music box</source>
-        <translation type="unfinished"></translation>
+        <translation>Музична точка</translation>
     </message>
     <message>
         <source>Search Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук музичної точки</translation>
     </message>
     <message>
         <source>Next Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступний рівень</translation>
     </message>
     <message>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Зупинити пошук</translation>
     </message>
     <message>
         <source>Search Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук закінчено</translation>
     </message>
     <message>
         <source>Level search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук рівнів завершений!</translation>
     </message>
     <message>
         <source>Next Tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступна плита</translation>
     </message>
     <message>
         <source>Tile search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук плит завершено!</translation>
     </message>
     <message>
         <source>Next Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступна декорація</translation>
     </message>
     <message>
         <source>Scenery search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук декорацій завершено!</translation>
     </message>
     <message>
         <source>Next Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступний шлях</translation>
     </message>
     <message>
         <source>Path search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук шляхів завершено!</translation>
     </message>
     <message>
         <source>Next Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступна музика</translation>
     </message>
     <message>
         <source>Music search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук музики закінчено!</translation>
     </message>
 </context>
 <context>
     <name>WorldEdit</name>
     <message>
         <source>1/%1 Loading user data</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 Завантаження корист. даних</translation>
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 Примінення плит</translation>
     </message>
     <message>
         <source>2/%1 Applying Sceneries...</source>
-        <translation type="unfinished"></translation>
+        <translation>2/%1 Примінення декорацій...</translation>
     </message>
     <message>
         <source>3/%1 Applying Paths...</source>
-        <translation type="unfinished"></translation>
+        <translation>3/%1 Примінення шляхів...</translation>
     </message>
     <message>
         <source>4/%1 Applying Levels...</source>
-        <translation type="unfinished"></translation>
+        <translation>4/%1 Примінення рівнів...</translation>
     </message>
     <message>
         <source>5/%1 Applying Musics...</source>
-        <translation type="unfinished"></translation>
+        <translation>5/%1 Примінення музикальних точок...</translation>
     </message>
     <message>
         <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Безіменний %1</translation>
     </message>
     <message>
         <source>Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберігаю</translation>
     </message>
     <message>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти як</translation>
     </message>
     <message>
         <source>File save error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка збереження файлу</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можу зберегти файл %1:
+%2.</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка читання файлу</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можу прочитати файл %1:
+%2.</translation>
     </message>
     <message>
         <source>Export selected area to image</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати вибрану область в зображення</translation>
     </message>
     <message>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG Зображення (*.png)</translation>
     </message>
     <message>
         <source>Saving section image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберігаю зображення секції...</translation>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, почекайте...</translation>
     </message>
     <message>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, вкажіть назву епізода для &apos;%1&apos;!</translation>
     </message>
     <message>
         <source>Episode Title: </source>
-        <translation type="unfinished"></translation>
+        <translation>Назва світу: </translation>
     </message>
     <message>
         <source>Make custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити корист. папку</translation>
     </message>
     <message>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
-        <translation type="unfinished"></translation>
+        <translation>Примітка: корист. папки не підтримуються старим SMBX двигуном!</translation>
     </message>
     <message>
         <source>Extension is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Розширення не задано</translation>
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>Розширення файлу не задано, будь ласка, введіть розширення файлу!</translation>
     </message>
     <message>
         <source>SMBX file version</source>
-        <translation type="unfinished"></translation>
+        <translation>Версія файлу SMBX</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл якої версії ви бажаєте зберегти? (від 0 до 64)</translation>
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation type="unfinished"></translation>
+        <translation>Допустимі обмеження SMBX64 були перевищені</translation>
     </message>
     <message>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви справді хочете зберегти файл у будь-якому випадку?
+Перевищення обмежень SMBX64 може спровокувати аварію двигуна SMBX з помилкою &apos;overflow&apos;.
+
+Встановлений LunaLUA частково пом&apos;якшує ці обмеження.</translation>
     </message>
     <message>
         <source>Loading World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажую дані карти світу</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation>Некоректні корист. конфіги</translation>
     </message>
     <message>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>На цій карті світу є деякі невірні файли конфігурацій, які не можуть завантажитися. Щоб це повідомлення більше не з&apos;являлось наступного разу, будь ласка, виправте наступні помилки у ваших конфігураційних файлах в користувацьких папках:
+
+%1</translation>
     </message>
     <message>
         <source>World title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва світу:</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Перервати</translation>
     </message>
     <message>
         <source> not saved</source>
-        <translation type="unfinished"></translation>
+        <translation> не збережений</translation>
     </message>
     <message>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos; був змінений.
+Ви бажаєте зберегти зміни?</translation>
     </message>
 </context>
 <context>
     <name>WorldItemBox</name>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Ландшафт</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Декорації</translation>
     </message>
     <message>
         <source>Paths</source>
-        <translation type="unfinished"></translation>
+        <translation>Шляхи</translation>
     </message>
     <message>
         <source>Levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівні</translation>
     </message>
     <message>
         <source>Music Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Музика</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, збережіть файл</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, збережіть файл перед тим, як використовувати корист. музику.</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Оглядач елементів карти світу</translation>
     </message>
 </context>
 <context>
     <name>WorldMusicBoxItemBox</name>
     <message>
         <source>Music boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Музичні точки</translation>
     </message>
     <message>
         <source>Music Box</source>
-        <translation type="unfinished"></translation>
+        <translation>Музична точка</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, збережіть файл</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, збережіть файл перед тим, як використовувати корист. музику.</translation>
     </message>
 </context>
 <context>
     <name>WorldSettingsBox</name>
     <message>
         <source>World Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування світу</translation>
     </message>
     <message>
         <source>Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Порахувати</translation>
     </message>
     <message>
         <source>Intro level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вступний рівень:</translation>
     </message>
     <message>
         <source>Disable characters:</source>
-        <translation type="unfinished"></translation>
+        <translation>Відключити персонажів:</translation>
     </message>
     <message>
         <source>Credits of this episode (SMBX allows only 5 lines):</source>
-        <translation type="unfinished"></translation>
+        <translation>Автори цього епізоду (SMBX дозволяє тільки 5 рядків):</translation>
     </message>
     <message>
         <source>Episode title:</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва епізоду:</translation>
     </message>
     <message>
         <source>Restart last level after fail</source>
-        <translation type="unfinished"></translation>
+        <translation>Переграти рівень після смерті</translation>
     </message>
     <message>
         <source>Hub-styled world (without world map)</source>
-        <translation type="unfinished"></translation>
+        <translation>Коридорний світ (виключити карту світу)</translation>
     </message>
     <message>
         <source>Total stars:</source>
-        <translation type="unfinished"></translation>
+        <translation>Всього Зірок:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Огляд</translation>
+        <translation>Огляд</translation>
     </message>
     <message>
         <source>Counting...</source>
-        <translation type="unfinished"></translation>
+        <translation>Рахую...</translation>
     </message>
     <message>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation>Рахунок Зірок розташованих в рівнях</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Перервати</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation>Рахую Зірки...</translation>
     </message>
     <message>
         <source>The name of the level that will be loaded when the game first loads.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ім&apos;я рівня, який буде завантажений при першому запуску грі.</translation>
     </message>
     <message>
         <source>Main hub level:</source>
-        <translation type="unfinished"></translation>
+        <translation>Основний коридорний рівень:</translation>
     </message>
 </context>
 <context>
     <name>aboutDialog</name>
     <message>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Про програму</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити</translation>
     </message>
 </context>
 <context>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation type="unfinished">Вибір файла звіту</translation>
+        <translation>Задати файл звіту</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="unfinished">Текстові файли (*.txt *.log)</translation>
+        <translation>Текстові файли (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation type="unfinished"></translation>
+        <translation>Успіх</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="unfinished"></translation>
+        <translation>Всі розширення файлів успішно встановлені</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка</translation>
     </message>
 </context>
 <context>
     <name>gifs2png_gui</name>
     <message>
         <source>Convert masked GIFs into the PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертувати маскові GIF в PNG</translation>
     </message>
     <message>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ця консольна утиліта конвертує графіку SMBX. GIF-формат з масками прозорості в PNG-формат з власною прозорістю.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Огляд</translation>
+        <translation>Огляд</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Старт</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідна папка, в яку будуть збережені PNG-зображення
+(якщо поле пусте, кінцеві зображення будуть збережені там, де і вихідні зображення)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати в підпапках</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Флаги</translation>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Помітка: якщо ви отримали пошкоджені зображення післе конвертування, будь ласка, запусіть утиліту LazyFix і повторіть конвертування</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть папку, яка містить GIF-файли у форматі SMBX (*.gif і *m.gif)</translation>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити вихідні зображення післе завершення</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити вихідну папку</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити цільову папку</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідна папка не вказана</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, вкажіть вихідну папку</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Утиліта не знайдена</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можу запустити програму:
+%1
+Будь ласка, перевірьте папку з програмою.</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>Не конвертувати фони (не конвертувати background2-*.gif)</translation>
     </message>
 </context>
 <context>
@@ -8803,71 +8824,74 @@ Please, check the application directory and make sure it is installed properly.<
     <name>png2gifs_gui</name>
     <message>
         <source>Convert PNG into the masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертувати PNG в GIF з масками</translation>
     </message>
     <message>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>Це консольна утиліта, яка конвертує PNG-зображення з власною прозорістю в GIF-формат з використанням маски прозорості по стандарту SMBX.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Огляд</translation>
+        <translation>Огляд</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідна папка, в яку будуть збережені файли SMBX-GIF (*.gif і *m.gif)
+(якщо поле пусте, то кінцеві зображення будуть збережені разом з вихідними в тій же папці)</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Старт</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати в підпапках</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Флаги</translation>
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть папку, яка містить PNG зображення (*.png)</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити вихідні зображення після успішної конвертації</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити вихідну папку</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити кінцеву папку</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідна папка не вказана</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, вкажіть вихідну папку</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Утиліта не знайдена</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можу запустити програму:
+%1
+Будь ласка, перевірьте папку с програмою.</translation>
     </message>
 </context>
 <context>
@@ -8875,7 +8899,8 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемісти об&apos;єкти в цю область!
+Натискай правою кнопкою миші, щоб видалити.</translation>
     </message>
 </context>
 </TS>
