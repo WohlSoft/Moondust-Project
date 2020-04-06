@@ -1430,7 +1430,6 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
     if(!isOutPipeOpen() || !isInPipeOpen())
         return false;
 
-#ifdef _WIN32 // Windows-only trick
     QJsonDocument jsonOut;
     QJsonObject jsonObj;
     jsonObj["jsonrpc"]  = "2.0";
@@ -1458,6 +1457,7 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
             if(obj["error"].isNull())
             {
                 uintptr_t smbxHwnd = uintptr_t(obj["result"].toVariant().toULongLong());
+#ifdef _WIN32 // Windows-only trick
                 HWND wSmbx = HWND(smbxHwnd);
                 //msg.warning("Test2", QString("Received: %1, from: %2").arg(smbxHwnd).arg(QString::fromStdString(inMessage)), QMessageBox::Ok);
                 //wchar_t title[MAX_PATH];
@@ -1467,6 +1467,22 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
                 SetForegroundWindow(wSmbx);
                 SetActiveWindow(wSmbx);
                 SetFocus(wSmbx);
+#else
+                QStringList args;
+                args << QString::number(smbxHwnd);
+                QString cmd = ApplicationPath + "/ipc/luna_hwnd_show.exe";
+                if(QFile::exists(cmd))
+                {
+                    useWine(cmd, args);
+                    qDebug() << "Starting HWND bring bridge: " << cmd << args;
+                    QProcess q;
+                    q.start(cmd, args);
+                    if(q.waitForFinished())
+                        qDebug() << q.exitCode();
+                    else
+                        qWarning() << q.exitCode();
+                }
+#endif // _WIN32
             }
             else
                 msg.warning("LunaTester (switchToSmbxWindow, obj[\"error\"])",
@@ -1485,10 +1501,6 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
         return true;
     }
     return false;
-#else // _WIN32
-    Q_UNUSED(msg)
-    return true;
-#endif
 }
 
 void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &levelPath, bool isUntitled)
@@ -1619,6 +1631,8 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
             //Workaround to avoid weird crash
             closeSmbxWindow();
 #endif
+            //Attempt to switch SMBX Window
+            switchToSmbxWindow(msg);
             //Then send level data to SMBX Engine
             if(sendLevelData(in_levelData, levelPath, isUntitled))
             {
@@ -1626,8 +1640,6 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
                 QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
                 // not sure how efficient it is
                 QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-                //Attempt to switch SMBX Window
-                switchToSmbxWindow(msg);
             }
         }
         else if(msg.warning(LunaTesterEngine::tr("SMBX Test is already runned"),

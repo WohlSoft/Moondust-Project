@@ -453,6 +453,23 @@ if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_EDITOR_SRCS _resources/pge_editor.rc)
 endif()
 
+if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
+    if(NOT EXISTS ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
+        make_directory(${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
+    endif()
+    add_custom_target(luna_hwnd_show_bin ALL
+        COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz"
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        COMMENT "Unpacking luna_hwnd_show.exe"
+        VERBATIM
+    )
+    install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/luna_hwnd_show.exe"
+        DESTINATION "${PGE_INSTALL_DIRECTORY}/${CMAKE_INSTALL_BINDIR}/ipc"
+    )
+endif()
+
+
 add_executable(pge_editor
     ${PGE_EDITOR_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
