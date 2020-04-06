@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>wine_setup</class>
- <widget class="QDialog" name="wine_setup">
+ <class>WineSetup</class>
+ <widget class="QDialog" name="WineSetup">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -19,10 +19,13 @@
      <property name="title">
       <string>Location of wine</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" columnstretch="0,10000">
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,10000,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="wineRootPath"/>
+      </item>
       <item row="0" column="0" colspan="2">
        <widget class="QRadioButton" name="pathDefault">
         <property name="text">
@@ -37,8 +40,12 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="wineRootPath"/>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="wineRootPathBrowse">
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -178,7 +185,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>wine_setup</receiver>
+   <receiver>WineSetup</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -194,7 +201,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>wine_setup</receiver>
+   <receiver>WineSetup</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

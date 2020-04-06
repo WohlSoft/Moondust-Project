@@ -21,25 +21,57 @@
 
 #include <QDialog>
 #include <QProcessEnvironment>
+#include <QVector>
 
 namespace Ui {
-class wine_setup;
+class WineSetup;
 }
 
-class wine_setup : public QDialog
+struct PlayOnProfile
+{
+    enum Bits
+    {
+        BITS_32 = 32,
+        BITS_64 = 64
+    } bits;
+    QString name;
+    QString winePrefix;
+    QString wineVersion;
+};
+
+class WineSetup : public QDialog
 {
     Q_OBJECT
 
+    QVector<PlayOnProfile> m_polProfiles;
 public:
-    explicit wine_setup(QWidget *parent = nullptr);
-    ~wine_setup();
+    explicit WineSetup(QWidget *parent = nullptr);
+    ~WineSetup();
 
     void fetchPlayOnLinux();
 
     static QProcessEnvironment getEnv(const QString &profile);
 
+private slots:
+    void on_doImportFromPoL_clicked();
+
+private slots:
+    void on_wineDllBrowse_clicked();
+
+private slots:
+    void on_wine64ExecBrowse_clicked();
+
+private slots:
+    void on_wineExecBrowse_clicked();
+
+private slots:
+    void on_winePrefixBrowse_clicked();
+
+private slots:
+    void on_wineRootPathBrowse_clicked();
+
 private:
-    Ui::wine_setup *ui;
+    Ui::WineSetup *ui;
 };
 
 #endif // WINE_SETUP_H
