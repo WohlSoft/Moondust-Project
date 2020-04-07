@@ -380,17 +380,18 @@ void LunaEngineWorker::write(const QString &out, bool *ok)
 
 void LunaEngineWorker::read(QString *in, bool *ok)
 {
-    if(!m_process)
-    {
-        *ok = false;
-        return;
-    }
-
-    while (m_readPktQueue.isEmpty())
+    while (m_readPktQueue.isEmpty() && m_process && m_process->isOpen())
     {
         // gotReadReady is called from the same thread as this, so no synchronization, just loop this to run this thread's event queue until we might have something in the queue
         m_process->waitForReadyRead();
     }
+    
+    if (m_readPktQueue.isEmpty())
+    {
+        *ok = false;
+        return;
+    }
+    
     *in = QString::fromStdString(m_readPktQueue.dequeue());
     *ok = !in->isEmpty();
 }
@@ -408,17 +409,18 @@ void LunaEngineWorker::writeStd(const std::string &out, bool *ok)
 
 void LunaEngineWorker::readStd(std::string *in, bool *ok)
 {
-    if(!m_process)
-    {
-        *ok = false;
-        return;
-    }
-
-    while (m_readPktQueue.isEmpty())
+    while (m_readPktQueue.isEmpty() && m_process && m_process->isOpen())
     {
         // gotReadReady is called from the same thread as this, so no synchronization, just loop this to run this thread's event queue until we might have something in the queue
         m_process->waitForReadyRead();
     }
+    
+    if (m_readPktQueue.isEmpty())
+    {
+        *ok = false;
+        return;
+    }
+    
     *in = m_readPktQueue.dequeue();
     *ok = !in->empty();
 }
