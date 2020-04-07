@@ -26,6 +26,8 @@
 #include <QProcess>
 #include <QSharedPointer>
 #include <QThread>
+#include <QByteArray>
+#include <QQueue>
 #ifndef _WIN32
 #   include <QHash>
 #endif
@@ -42,6 +44,12 @@ class LunaEngineWorker : public QObject
     QString m_lunaExecPath;
     QProcess *m_process = nullptr;
     QProcess::ProcessState m_lastStatus = QProcess::NotRunning;
+    QByteArray m_readBuffer;
+
+    // Note: The following is only required to handle the synchronous read/readStd
+    //       and in the future gotIPCPacket should probably become a signal?
+    QQueue<std::string> m_readPktQueue;
+
     bool m_isRunning = false;
     void init();
 public:
@@ -67,9 +75,14 @@ public:
     void unInit();
     bool isActive();
 
+private:
+    // Note: In the future this should maybe become a signal, and maybe should be passed the decoded JSON instead of just a string
+    void gotIPCPacket(const std::string& str);
+
 private slots:
     void errorOccurred(QProcess::ProcessError error);
     void processFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void gotReadReady();
 
 signals:
     void loopFinished();
