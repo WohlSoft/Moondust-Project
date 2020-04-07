@@ -83,8 +83,6 @@ public:
     }
 };
 
-static std::string readIPC(QProcess *input);
-
 #ifdef _WIN32
 static BOOL  checkProc(DWORD procId, const wchar_t *proc_name_wanted);
 static DWORD getPidsByPath(const std::wstring &process_path, DWORD *found_pids, DWORD found_pids_max_size);
@@ -212,9 +210,13 @@ void LunaEngineWorker::init()
 {
     if(!m_process)
     {
+        m_readBuffer.clear();
+        m_readPktQueue.clear();
         m_process = new QProcess;
         QObject::connect(m_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                          this, &LunaEngineWorker::processFinished);
+        QObject::connect(m_process, &QProcess::readyReadStandardOutput,
+                         this, &LunaEngineWorker::gotReadReady);
 #if QT_VERSION >= 0x050600
         QObject::connect(m_process, &QProcess::errorOccurred, this, &LunaEngineWorker::errorOccurred);
 #endif
@@ -229,6 +231,8 @@ void LunaEngineWorker::unInit()
     {
         QObject::disconnect(m_process, static_cast<void (QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                          this, &LunaEngineWorker::processFinished);
+        QObject::disconnect(m_process, &QProcess::readyReadStandardOutput,
+                         this, &LunaEngineWorker::gotReadReady);
 #if QT_VERSION >= 0x050600
         QObject::disconnect(m_process, &QProcess::errorOccurred, this, &LunaEngineWorker::errorOccurred);
 #endif
@@ -376,14 +380,19 @@ void LunaEngineWorker::write(const QString &out, bool *ok)
 
 void LunaEngineWorker::read(QString *in, bool *ok)
 {
-    if(!m_process)
+    while (m_readPktQueue.isEmpty() && m_process && m_process->isOpen())
+    {
+        // gotReadReady is called from the same thread as this, so no synchronization, just loop this to run this thread's event queue until we might have something in the queue
+        m_process->waitForReadyRead();
+    }
+    
+    if (m_readPktQueue.isEmpty())
     {
         *ok = false;
         return;
     }
-    // NOTE: This wait does not guarantee the /whole/ message has arrived yet, so readIPC uses blocking reads.
-    m_process->waitForReadyRead();
-    *in = QString::fromStdString(readIPC(m_process));
+    
+    *in = QString::fromStdString(m_readPktQueue.dequeue());
     *ok = !in->isEmpty();
 }
 
@@ -400,14 +409,19 @@ void LunaEngineWorker::writeStd(const std::string &out, bool *ok)
 
 void LunaEngineWorker::readStd(std::string *in, bool *ok)
 {
-    if(!m_process)
+    while (m_readPktQueue.isEmpty() && m_process && m_process->isOpen())
+    {
+        // gotReadReady is called from the same thread as this, so no synchronization, just loop this to run this thread's event queue until we might have something in the queue
+        m_process->waitForReadyRead();
+    }
+    
+    if (m_readPktQueue.isEmpty())
     {
         *ok = false;
         return;
     }
-    // NOTE: This wait does not guarantee the /whole/ message has arrived yet, so readIPC uses blocking reads.
-    m_process->waitForReadyRead();
-    *in = readIPC(m_process);
+    
+    *in = m_readPktQueue.dequeue();
     *ok = !in->empty();
 }
 
@@ -475,8 +489,90 @@ void LunaEngineWorker::processFinished(int exitCode, QProcess::ExitStatus exitSt
     m_lastStatus = m_process->state();
 }
 
+void LunaEngineWorker::gotReadReady()
+{
+    // Sanity check
+    if (!m_process)
+    {
+        return;
+    }
 
+    // Read the new data
+    m_readBuffer += m_process->readAll();
 
+    while (m_readBuffer.size() > 0)
+    {
+        // Skip any non-digit characters
+        int i;
+        for (i = 0; i < m_readBuffer.size(); i++)
+        {
+            if ((m_readBuffer[i] >= '0') && (m_readBuffer[i] <= '9'))
+            {
+                break;
+            }
+        }
+
+        // If we skipped non-digits, clear that much from the start of the buffer
+        if (i > 0)
+        {
+            m_readBuffer.remove(0, i);
+        }
+
+        // Check how many digits we've read
+        for (i = 0; i < m_readBuffer.size(); i++)
+        {
+            if ((m_readBuffer[i] < '0') || (m_readBuffer[i] > '9'))
+            {
+                break;
+            }
+        }
+
+        // If we don't have a following byte, abort for now
+        if (i >= m_readBuffer.size())
+        {
+            break;
+        }
+
+        // If the following byte is not a colon, skip past this
+        if (m_readBuffer[i] != ':')
+        {
+            m_readBuffer.remove(0, i+1);
+            continue;
+        }
+
+        // Decode length string
+        bool ok;
+        int len = m_readBuffer.left(i).toInt(&ok);
+
+        // If unable to decode length string, skip past this
+        if (!ok)
+        {
+            m_readBuffer.remove(0, i+1);
+            continue;
+        }
+
+        // Check if we have enough data, otherwise we have to wait till we receive more
+        if ((i+1+len) > m_readBuffer.size())
+        {
+            break;
+        }
+
+        // We have enough data, let's get the packet as a string
+        std::string pkt = m_readBuffer.mid(i+1, len).toStdString();
+
+        // Discard from read buffer
+        m_readBuffer.remove(0, i+1+len);
+
+        gotIPCPacket(pkt);
+    }
+}
+
+void LunaEngineWorker::gotIPCPacket(const std::string& str)
+{
+    // Add the IPC packet to a queue
+    // In the future this should probably be a signal that is used for event-driven logic?
+    m_readPktQueue.enqueue(str);
+}
 
 #ifndef _WIN32
 void LunaTesterEngine::useWine(QString &command, QStringList &args)
@@ -1049,87 +1145,6 @@ static bool stringToJson(const std::string &message, QJsonDocument &out, QJsonPa
     QByteArray jsonData(message.c_str(), static_cast<int>(message.size()));
     out = QJsonDocument::fromJson(jsonData, &err);
     return (err.error == QJsonParseError::NoError);
-}
-
-static bool readProcessCharBlocking(QProcess *input, char *c)
-{
-    qint64 bytesRead = input->read(c, 1);
-    while (bytesRead == 0)
-    {
-        // No data? Block before trying again.
-        input->waitForReadyRead();
-        bytesRead = input->read(c, 1);
-    }
-
-    // At this point bytesRead is expected to be 1 of successful, or -1 if failed (i.e. the pipe was closed)
-    return (bytesRead == 1);
-}
-
-static std::string readIPC(QProcess *input)
-{
-    // Note: This is not written to be particularly efficient right now. Just
-    //       readable enough and safe.
-    if(!input->isOpen())
-        return std::string();
-    char c;
-    std::vector<char> data;
-    while(true)
-    {
-        data.clear();
-        // Read until : delimiter
-        bool err = false;
-        while(true)
-        {
-            if (!readProcessCharBlocking(input, &c))
-                return "";
-            if(c == ':')
-                break;
-            if((c > '9') || (c < '0'))
-            {
-                err = true;
-                break;
-            }
-
-            data.push_back(c);
-        }
-
-        if(err)
-            continue;
-
-        std::string byteCountStr = std::string(&data[0], data.size());
-        data.clear();
-        try
-        {
-            // Interpret as number
-            int byteCount = byteCountStr.empty() ? 0 : std::stoi(byteCountStr);
-            if(byteCount <= 0)
-                continue;
-            int byteCursor = 0;
-            data.resize(static_cast<size_t>(byteCount));
-            while(byteCursor < byteCount)
-            {
-                if (!readProcessCharBlocking(input, &data[static_cast<size_t>(byteCursor)]))
-                    return "";
-                byteCursor += 1;
-            }
-            // Get following comma
-            {
-                if (!readProcessCharBlocking(input, &c))
-                    return "";
-                if(c != ',')
-                    continue;
-            }
-        }
-        catch(const std::exception &)
-        {
-            return "";
-        }
-        catch(...)
-        {
-            return "";
-        }
-        return std::string(&data[0], data.size());
-    }
 }
 
 bool LunaTesterEngine::sendLevelData(LevelData &lvl, QString levelPath, bool isUntitled)
