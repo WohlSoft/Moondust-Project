@@ -24,6 +24,8 @@
 #include <QFile>
 #include <QSettings>
 #include <QHash>
+#include <QFileDialog>
+#include <QMessageBox>
 
 #include <QtDebug>
 
@@ -38,6 +40,38 @@ WineSetup::WineSetup(QWidget *parent) :
 #else
     ui->importFromPlay->setTitle(tr("Import setup from PlayOnLinux"));
 #endif
+    auto wineExPath = QStandardPaths::findExecutable("wine");
+    auto winePathExPath = QStandardPaths::findExecutable("winepath");
+    auto homePrefix = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+
+    if(!homePrefix.isEmpty())
+    {
+        homePrefix += "/.wine";
+        if(!QDir(homePrefix).exists())
+            homePrefix.clear();
+    }
+
+    if(!wineExPath.isEmpty())
+    {
+        QString libPrefix;
+        QString lib64Prefix;
+        QFileInfo wineEx(wineExPath);
+        QDir dir = wineEx.absoluteDir();
+        dir.cdUp();
+        if(dir.exists("lib"))
+            libPrefix = dir.absolutePath() + "/lib";
+        if(dir.exists("lib64"))
+            lib64Prefix = dir.absolutePath() + "/lib64";
+        ui->wineRootPath->setText(dir.absolutePath());
+        ui->wineExecPath->setText(wineExPath);
+        ui->winePathExecPath->setText(winePathExPath);
+        if(!homePrefix.isEmpty())
+            ui->winePrefixPath->setText(homePrefix);
+        if(!libPrefix.isEmpty())
+            ui->wineDllPath->setText(libPrefix + "/wine");
+        else if(!lib64Prefix.isEmpty())
+            ui->wineDllPath->setText(lib64Prefix + "/wine");
+    }
     fetchPlayOnLinux();
 }
 
@@ -76,10 +110,11 @@ void WineSetup::fetchPlayOnLinux()
     auto home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 #ifdef __APPLE__ // FIXME: VERIFY THIS ON MACOS
 #define POL_CONFIG_NAME "/playonmac.cfg"
+#define POL_WINE_DIR    "darwin"
     auto polHome = home + "/.PlayOnMac";
 #else
 #define POL_CONFIG_NAME "playonlinux"
-#define POL_WINE_DIR "linux"
+#define POL_WINE_DIR    "linux"
     auto polHome = home + "/.PlayOnLinux";
 #endif
 
@@ -104,16 +139,18 @@ void WineSetup::fetchPlayOnLinux()
         profile.name = QDir(p).dirName();
         qDebug() << p;
 
-        if(!QFile::exists(p + "/" POL_CONFIG_NAME ".cfg"))
+        const QString cfgFile = p + "/" POL_CONFIG_NAME ".cfg";
+
+        if(!QFile::exists(cfgFile))
             continue;
 
-        auto c = loadCfg(p + POL_CONFIG_NAME);
+        auto c = loadCfg(cfgFile);
         auto arch = c["ARCH"];
         auto version = c["VERSION"];
 
-        if(arch  == "x86")
+        if(arch == "x86")
             profile.bits = PlayOnProfile::BITS_32;
-        else if(arch  == "amd64")
+        else if(arch == "amd64")
             profile.bits = PlayOnProfile::BITS_64;
         else
         {
@@ -121,7 +158,7 @@ void WineSetup::fetchPlayOnLinux()
             continue;
         }
         profile.winePrefix = p;
-        profile.wineVersion = wineDirs.absolutePath() + "/linux-" + arch;
+        profile.wineVersion = wineDirs.absolutePath() + ("/" POL_WINE_DIR "-") + arch + "/" + version;
         QDir wineVer(profile.wineVersion);
         if(!wineVer.exists())
         {
@@ -129,7 +166,7 @@ void WineSetup::fetchPlayOnLinux()
             continue; // Invalid toolchain
         }
         m_polProfiles.push_back(profile);
-        ui->playOnLinuxDrive->addItem(profile.name);
+        ui->playOnLinuxDrive->addItem(profile.name, (m_polProfiles.size() - 1));
     }
 
     if(!m_polProfiles.isEmpty())
@@ -139,7 +176,7 @@ void WineSetup::fetchPlayOnLinux()
     }
 }
 
-QProcessEnvironment WineSetup::getEnv(const QString &profile)
+QProcessEnvironment WineSetup::getEnv(const WineSetupData &profile)
 {
     // TODO: Make data importing from a config
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
@@ -166,32 +203,193 @@ QProcessEnvironment WineSetup::getEnv(const QString &profile)
     return env;
 }
 
+QProcessEnvironment WineSetup::getEnv()
+{
+    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+
+    if(ui->pathCustom->isChecked())
+    {
+        env.insert("WINEDIR", ui->wineRootPath->text());
+        QString winePath = env.value("WINEDIR");
+        if(!winePath.isEmpty())
+        {
+            auto wineDll = QString("%1/lib/wine").arg(env.value("WINEDIR"));
+            auto wineEx = QString("%1/bin/wine").arg(env.value("WINEDIR"));
+            auto wine64Ex = QString("%1/bin/wine64").arg(env.value("WINEDIR"));
+
+            if(ui->wineDll->isChecked())
+                wineDll = ui->wineDllPath->text();
+
+            if(!QFile::exists(wine64Ex))
+                wine64Ex = wineEx;
+
+            env.insert("LD_LIBRARY_PATH",
+                       QString("%1/lib:%1/lib64:%2").arg(env.value("WINEDIR")).
+                       arg(env.value("LD_LIBRARY_PATH")));
+            env.insert("WINEDLLPATH", wineDll);
+            env.insert("WINELOADER", wine64Ex);
+            env.insert("WINESERVER", wine64Ex);
+        }
+
+        if(ui->winePrefix->isChecked())
+            env.insert("WINEPREFIX", ui->winePrefixPath->text());
+
+        env.insert("PATH", QString("%1/bin:%2/drive_c/windows:%3")
+                            .arg(env.value("WINEDIR"))
+                            .arg(env.value("WINEPREFIX"))
+                            .arg(env.value("PATH"))
+        );
+        env.insert("WINEDLLOVERRIDES", "");
+    }
+    return env;
+}
+
 void WineSetup::on_wineRootPathBrowse_clicked()
 {
-
+    auto path = QFileDialog::getExistingDirectory(this,
+        tr("Select a Wine install prefix path"),
+        ui->wineRootPath->text());
+    if(path.isEmpty())
+        return;
+    ui->wineRootPath->setText(path);
 }
 
 void WineSetup::on_winePrefixBrowse_clicked()
 {
-
+    auto path = QFileDialog::getExistingDirectory(this,
+        tr("Select a Wine home prefix path"),
+        ui->winePrefixPath->text());
+    if(path.isEmpty())
+        return;
+    ui->winePrefixPath->setText(path);
 }
 
 void WineSetup::on_wineExecBrowse_clicked()
 {
-
+    auto path = QFileDialog::getOpenFileName(this,
+        tr("Select a Wine executable"),
+        ui->wineExecPath->text(),
+        "Wine executable (wine)");
+    if(path.isEmpty())
+        return;
+    ui->wineExecPath->setText(path);
 }
 
-void WineSetup::on_wine64ExecBrowse_clicked()
+
+void WineSetup::on_winePathExecBrowse_clicked()
 {
-
+    auto path = QFileDialog::getOpenFileName(this,
+        tr("Select a WinePath executable"),
+        ui->winePathExecPath->text(),
+        "WinePath executable (winepath)");
+    if(path.isEmpty())
+        return;
+    ui->winePathExecPath->setText(path);
 }
+
 
 void WineSetup::on_wineDllBrowse_clicked()
 {
-
+    auto path = QFileDialog::getExistingDirectory(this,
+        tr("Select a Wine DLLs path"),
+        ui->wineDllPath->text());
+    if(path.isEmpty())
+        return;
+    ui->wineDllPath->setText(path);
 }
 
 void WineSetup::on_doImportFromPoL_clicked()
 {
+    int i = ui->playOnLinuxDrive->currentData().toInt();
+    if(i < 0 || i >= m_polProfiles.size())
+        return; // nothing to do
 
+    const auto &p = m_polProfiles[i];
+    ui->pathCustom->setChecked(true);
+    ui->wineRootPath->setText(p.wineVersion);
+
+    ui->winePrefix->setChecked(true);
+    ui->winePrefixPath->setText(p.winePrefix);
+
+    auto wineExec = p.wineVersion + "/bin/wine";
+    auto winePathExec = p.wineVersion + "/bin/winepath";
+    auto dllDir = p.wineVersion + "/lib/wine";
+
+    ui->wineExec->setChecked(false);
+    ui->wineExecPath->clear();
+    ui->winePathExec->setChecked(false);
+    ui->winePathExecPath->clear();
+
+    if(QFile::exists(wineExec))
+    {
+        ui->wineExec->setChecked(true);
+        ui->wineExecPath->setText(wineExec);
+    }
+
+    if(QFile::exists(winePathExec))
+    {
+        ui->winePathExec->setChecked(true);
+        ui->winePathExecPath->setText(winePathExec);
+    }
+
+    if(QDir(dllDir).exists())
+    {
+        ui->wineDll->setChecked(true);
+        ui->wineDllPath->setText(dllDir);
+    }
+}
+
+void WineSetup::on_runWineCfg_clicked()
+{
+    QString wineCfgPath;
+    if(ui->pathCustom->isChecked())
+        wineCfgPath = QStandardPaths::findExecutable("winecfg", {ui->wineRootPath->text() + "/bin"});
+    else
+        wineCfgPath = QStandardPaths::findExecutable("winecfg");
+
+    m_wineTestProc.setProgram(wineCfgPath);
+    m_wineTestProc.setProcessEnvironment(getEnv());
+    m_wineTestProc.start();
+    if(!m_wineTestProc.waitForStarted())
+    {
+        QMessageBox::warning(this,
+                             tr("Error"),
+                             tr("Can't start \"%1\" because of: %2")
+                             .arg(wineCfgPath)
+                             .arg(m_wineTestProc.errorString()),
+                             QMessageBox::Ok);
+    }
+}
+
+void WineSetup::on_runWineCmd_clicked()
+{
+    QString wineCfgPath;
+    if(ui->pathCustom->isChecked())
+        wineCfgPath = QStandardPaths::findExecutable("wine", {ui->wineRootPath->text() + "/bin"});
+    else
+        wineCfgPath = QStandardPaths::findExecutable("wine");
+
+    m_wineTestProc.setProgram(wineCfgPath);
+    m_wineTestProc.setProcessEnvironment(getEnv());
+    m_wineTestProc.setArguments({"winver"});
+    m_wineTestProc.start();
+    if(!m_wineTestProc.waitForStarted())
+    {
+        QMessageBox::warning(this,
+                             tr("Error"),
+                             tr("Can't start \"%1\" because of: %2")
+                             .arg(wineCfgPath)
+                             .arg(m_wineTestProc.errorString()),
+                             QMessageBox::Ok);
+    }
+}
+
+void WineSetup::on_wineStopProc_clicked()
+{
+    if(m_wineTestProc.state() == QProcess::Running)
+    {
+        m_wineTestProc.terminate();
+        if(!m_wineTestProc.waitForFinished(3000))
+            m_wineTestProc.kill();
+    }
 }

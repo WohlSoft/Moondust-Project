@@ -22,6 +22,7 @@
 #include <QDialog>
 #include <QProcessEnvironment>
 #include <QVector>
+#include <QProcess>
 
 namespace Ui {
 class WineSetup;
@@ -39,36 +40,53 @@ struct PlayOnProfile
     QString wineVersion;
 };
 
+struct WineSetupData
+{
+    bool useCustom = false;
+    bool useCustomEnv = false;
+    QString wineRoot;
+
+    bool useWinePrefix = false;
+    QString winePrefix;
+
+    bool useWineExec = false;
+    QString wineExec;
+
+    bool useWinePath = false;
+    QString winePathExec;
+
+    bool useWineDll = false;
+    QString wineDllPath;
+};
+
 class WineSetup : public QDialog
 {
     Q_OBJECT
 
     QVector<PlayOnProfile> m_polProfiles;
+    QProcess m_wineTestProc;
 public:
     explicit WineSetup(QWidget *parent = nullptr);
     ~WineSetup();
 
     void fetchPlayOnLinux();
 
-    static QProcessEnvironment getEnv(const QString &profile);
+    static QProcessEnvironment getEnv(const WineSetupData &profile);
 
+    QProcessEnvironment getEnv();
 private slots:
     void on_doImportFromPoL_clicked();
-
-private slots:
     void on_wineDllBrowse_clicked();
-
-private slots:
-    void on_wine64ExecBrowse_clicked();
-
-private slots:
     void on_wineExecBrowse_clicked();
-
-private slots:
+    void on_winePathExecBrowse_clicked();
     void on_winePrefixBrowse_clicked();
-
-private slots:
     void on_wineRootPathBrowse_clicked();
+
+    void on_runWineCfg_clicked();
+
+    void on_runWineCmd_clicked();
+
+    void on_wineStopProc_clicked();
 
 private:
     Ui::WineSetup *ui;
