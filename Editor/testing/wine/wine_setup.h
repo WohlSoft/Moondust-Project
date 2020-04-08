@@ -24,6 +24,8 @@
 #include <QVector>
 #include <QProcess>
 
+#include "wine_setup_cfg.h"
+
 namespace Ui {
 class WineSetup;
 }
@@ -37,26 +39,7 @@ struct PlayOnProfile
     } bits;
     QString name;
     QString winePrefix;
-    QString wineVersion;
-};
-
-struct WineSetupData
-{
-    bool useCustom = false;
-    bool useCustomEnv = false;
     QString wineRoot;
-
-    bool useWinePrefix = false;
-    QString winePrefix;
-
-    bool useWineExec = false;
-    QString wineExec;
-
-    bool useWinePath = false;
-    QString winePathExec;
-
-    bool useWineDll = false;
-    QString wineDllPath;
 };
 
 class WineSetup : public QDialog
@@ -71,22 +54,28 @@ public:
 
     void fetchPlayOnLinux();
 
-    static QProcessEnvironment getEnv(const WineSetupData &profile);
+    WineSetupData getSetup();
+    void setSetup(const WineSetupData &setup);
 
-    QProcessEnvironment getEnv();
+    static void prepareSetup(WineSetupData &setup);
+    static QProcessEnvironment buildEnv(const WineSetupData &profile);
+
 private slots:
     void on_doImportFromPoL_clicked();
-    void on_wineDllBrowse_clicked();
-    void on_wineExecBrowse_clicked();
-    void on_winePathExecBrowse_clicked();
     void on_winePrefixBrowse_clicked();
     void on_wineRootPathBrowse_clicked();
-
     void on_runWineCfg_clicked();
-
     void on_runWineCmd_clicked();
-
     void on_wineStopProc_clicked();
+
+#if QT_VERSION_CHECK(5, 6, 0)
+    void testErrorOccurred(QProcess::ProcessError error);
+#endif
+    void testStarted();
+    void testFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void testStateChanged(QProcess::ProcessState newState);
+    void testReadyReadStandardError();
+    void testReadyReadStandardOutput();
 
 private:
     Ui::WineSetup *ui;
