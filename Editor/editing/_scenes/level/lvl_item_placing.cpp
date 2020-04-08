@@ -343,6 +343,14 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         // Clean up previously added extra settings
         LvlPlacingItems::npcSet.meta.custom_params.clear();
+        
+        // Clean up previously added contents if this is not a container
+        if(!mergedSet.setup.container)
+            LvlPlacingItems::npcSet.contents = 0;
+        
+        // Clean up previously added special option if this doesn't have it
+        if(!mergedSet.setup.special_option)
+            LvlPlacingItems::npcSet.special_data = 0;
 
         if(LvlPlacingItems::npcSet.generator)
             LvlPlacingItems::gridSz = (m_configs->defaultGrid.general / 2);
