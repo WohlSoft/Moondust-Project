@@ -37,7 +37,10 @@ SingleApplication::SingleApplication(QStringList &args) :
     m_server = nullptr;
     QString isServerRuns;
 
+    //! is another copy of MusPlay running?
     bool isRunning=false;
+    //! Don't create semaphore listening because another copy of Editor runs
+    bool forceRun = false;
     m_sema.acquire();//Avoid races
 
     if(!m_shmem.create(1))//Detect shared memory copy
@@ -56,7 +59,8 @@ SingleApplication::SingleApplication(QStringList &args) :
     if(args.contains("--force-run", Qt::CaseInsensitive))
     {
         isServerRuns.clear();
-        isRunning=false;
+        isRunning = false;
+        forceRun = true;
         args.removeAll("--force-run");
     }
 
@@ -113,13 +117,17 @@ SingleApplication::SingleApplication(QStringList &args) :
     {
         // The attempt was insuccessful, so we continue the program
         m_shouldContinue = true;
-        m_server = new LocalServer();
-        m_server->start();
-        QObject::connect(m_server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
-        QObject::connect(m_server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
-        QObject::connect(m_server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
-        QObject::connect(this, SIGNAL(stopServer()), m_server, SLOT(stopServer()));
+        if(!forceRun)
+        {
+            m_server = new LocalServer();
+            m_server->start();
+            QObject::connect(m_server, SIGNAL(showUp()), this, SLOT(slotShowUp()));
+            QObject::connect(m_server, SIGNAL(dataReceived(QString)), this, SLOT(slotOpenFile(QString)));
+            QObject::connect(m_server, SIGNAL(acceptedCommand(QString)), this, SLOT(slotAcceptedCommand(QString)));
+            QObject::connect(this, SIGNAL(stopServer()), m_server, SLOT(stopServer()));
+        }
     }
+
     m_sema.release();//Free semaphore
 }
 

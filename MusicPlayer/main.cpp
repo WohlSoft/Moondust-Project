@@ -96,8 +96,8 @@ int main(int argc, char *argv[])
 #endif
 
     w.show();
-    if(a.arguments().size()>1)
-        w.openMusicByArg(a.arguments()[1]);
+    if(args.size() > 1)
+        w.openMusicByArg(args[1]);
 #   ifdef __APPLE__
     {
         QStringList argx = a.getOpenFileChain();
