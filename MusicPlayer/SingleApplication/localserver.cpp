@@ -47,10 +47,10 @@ void IntProcServer::stateChanged(QAbstractSocket::SocketState stat)
 
 void IntProcServer::doReadData()
 {
-    while (hasPendingDatagrams())
+    while(hasPendingDatagrams())
     {
         QByteArray datagram;
-        datagram.resize((int)pendingDatagramSize());
+        datagram.resize(static_cast<int>(pendingDatagramSize()));
         QHostAddress sender;
         quint16 senderPort;
         readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
@@ -60,7 +60,7 @@ void IntProcServer::doReadData()
 
 void IntProcServer::displayError(QTcpSocket::SocketError socketError)
 {
-    Q_UNUSED(socketError);
+    Q_UNUSED(socketError)
     qDebug() << QString("SDL2 Mixer X SingleAPP: The following error occurred: %1.").arg(errorString());
 }
 
