@@ -56,7 +56,8 @@
 #include <QSpacerItem>
 
 #if !defined(_WIN32)
-#include <QProcessEnvironment>
+#include <QStandardPaths>
+#include "wine/wine_setup.h"
 #endif
 
 #ifdef __APPLE__
@@ -258,14 +259,11 @@ void LunaEngineWorker::setExecPath(const QString &path)
     m_lunaExecPath = path;
 }
 
-void LunaEngineWorker::setEnv(const QHash<QString, QString> &env)
+void LunaEngineWorker::setEnv(const QProcessEnvironment &env)
 {
     if(!m_process)
         return;
-    QProcessEnvironment e = QProcessEnvironment::systemEnvironment();
-    for(auto it = env.begin(); it != env.end(); it++)
-        e.insert(it.key(), it.value());
-    m_process->setProcessEnvironment(e);
+    m_process->setProcessEnvironment(env);
 }
 
 void LunaEngineWorker::setWorkPath(const QString &wDir)
@@ -385,13 +383,13 @@ void LunaEngineWorker::read(QString *in, bool *ok)
         // gotReadReady is called from the same thread as this, so no synchronization, just loop this to run this thread's event queue until we might have something in the queue
         m_process->waitForReadyRead();
     }
-    
+
     if (m_readPktQueue.isEmpty())
     {
         *ok = false;
         return;
     }
-    
+
     *in = QString::fromStdString(m_readPktQueue.dequeue());
     *ok = !in->isEmpty();
 }
@@ -414,13 +412,13 @@ void LunaEngineWorker::readStd(std::string *in, bool *ok)
         // gotReadReady is called from the same thread as this, so no synchronization, just loop this to run this thread's event queue until we might have something in the queue
         m_process->waitForReadyRead();
     }
-    
+
     if (m_readPktQueue.isEmpty())
     {
         *ok = false;
         return;
     }
-    
+
     *in = m_readPktQueue.dequeue();
     *ok = !in->empty();
 }
@@ -578,26 +576,31 @@ void LunaEngineWorker::gotIPCPacket(const std::string& str)
 void LunaTesterEngine::useWine(QString &command, QStringList &args)
 {
     args.push_front(command);
-    command = m_wineBinDir + "wine";
-    emit engineSetEnv(m_wineEnv);
+    auto setup = m_wineSetup;
+    WineSetup::prepareSetup(setup);
+    command = setup.metaWineExec;
 }
 
 QString LunaTesterEngine::pathUnixToWine(const QString &unixPath)
 {
-    QProcess winePath;
+    auto setup = m_wineSetup;
+    WineSetup::prepareSetup(setup);
+    auto env = WineSetup::buildEnv(setup);
+
     QStringList args;
+    QString command = QStandardPaths::findExecutable("winepath", {setup.metaWineBinDir});
+
+    QProcess winePathExec;
     // Ask for in-Wine Windows path from in-UNIX native path
     args << "--windows" << unixPath;
     // Use wine custom environment
-    QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
-    for(auto it = m_wineEnv.begin(); it != m_wineEnv.end(); it++)
-        env.insert(it.key(), it.value());
-    winePath.setProcessEnvironment(env);
+    winePathExec.setProcessEnvironment(env);
+
     // Start winepath
-    winePath.start(m_wineBinDir + "winepath", args);
-    winePath.waitForFinished();
+    winePathExec.start(command, args);
+    winePathExec.waitForFinished();
     // Retrieve converted path
-    QString windowsPath = winePath.readAllStandardOutput();
+    QString windowsPath = winePathExec.readAllStandardOutput();
     return windowsPath;
 }
 
@@ -628,16 +631,7 @@ QString LunaTesterEngine::getEnginePath()
 
 LunaTesterEngine::LunaTesterEngine(QObject *parent) :
     AbstractRuntimeEngine(parent)
-{
-#ifndef _WIN32
-#   ifdef __APPLE__
-#       define WINE_PREFIX_BIN "/usr/local/bin/"
-#   else
-#       define WINE_PREFIX_BIN ""
-#   endif
-    m_wineBinDir = WINE_PREFIX_BIN;
-#endif
-}
+{}
 
 LunaTesterEngine::~LunaTesterEngine()
 {
@@ -793,6 +787,18 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
         m_menuItems[menuItemId++] = choosEnginePath;
     }
 
+#ifndef _WIN32
+    lunaMenu->addSeparator();
+    {
+        QAction *wineSetup;
+        wineSetup = lunaMenu->addAction("wineSetup");
+        QObject::connect(wineSetup,   &QAction::triggered,
+                    this,                   &LunaTesterEngine::runWineSetup,
+                    Qt::QueuedConnection);
+        m_menuItems[menuItemId++] = wineSetup;
+    }
+#endif
+
     lunaMenu->addSeparator();
     {
         QAction *runLegacyEngine = lunaMenu->addAction("startLegacyEngine");
@@ -863,6 +869,14 @@ void LunaTesterEngine::retranslateMenu()
                                      "Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory)."));
         chooseEnginePath->setToolTip(tr("Select the location of LunaTester."));
     }
+#ifndef _WIN32
+    {
+        QAction *runWineSetup = m_menuItems[menuItemId++];
+        runWineSetup->setText(tr("Wine settings...",
+                                 "Open Wine settings to choose which Wine toolchain use"));
+        runWineSetup->setToolTip(tr("Select a Wine toolchain for use."));
+    }
+#endif
     {
         QAction *runLegacyEngine = m_menuItems[menuItemId++];
         runLegacyEngine->setText(tr("Start Game",
@@ -1120,6 +1134,18 @@ void LunaTesterEngine::chooseEnginePath()
     }
 }
 
+#ifndef _WIN32
+void LunaTesterEngine::runWineSetup()
+{
+    WineSetup d(m_w);
+    d.setModal(true);
+    d.setSetup(m_wineSetup);
+    int ret = d.exec();
+    if(ret == QDialog::Accepted)
+        m_wineSetup = d.getSetup();
+}
+#endif
+
 /*****************************************Private functions*************************************************/
 
 /**
@@ -1292,6 +1318,13 @@ void LunaTesterEngine::loadSetup()
         m_noGL = settings.value("nogl", false).toBool();
         m_killPreviousSession = settings.value("kill-engine-on-every-test", false).toBool();
         m_customLunaPath = settings.value("custom-runtime-path", QString()).toString();
+#ifndef _WIN32
+        m_wineSetup.useCustom = settings.value("wine-custom", false).toBool();
+        m_wineSetup.wineRoot = settings.value("wine-root", QString()).toString();
+        m_wineSetup.useCustomEnv = settings.value("wine-custom-env", false).toBool();
+        m_wineSetup.useWinePrefix = settings.value("wine-use-prefix", false).toBool();
+        m_wineSetup.winePrefix = settings.value("wine-prefix", QString()).toString();
+#endif
     }
     settings.endGroup();
 }
@@ -1306,6 +1339,13 @@ void LunaTesterEngine::saveSetup()
         settings.setValue("nogl", m_noGL);
         settings.setValue("kill-engine-on-every-test", m_killPreviousSession);
         settings.setValue("custom-runtime-path", m_customLunaPath);
+#ifndef _WIN32
+        settings.setValue("wine-custom", m_wineSetup.useCustom);
+        settings.setValue("wine-root", m_wineSetup.wineRoot);
+        settings.setValue("wine-custom-env", m_wineSetup.useCustomEnv);
+        settings.setValue("wine-use-prefix", m_wineSetup.useWinePrefix);
+        settings.setValue("wine-prefix", m_wineSetup.winePrefix);
+#endif
     }
     settings.endGroup();
 }
@@ -1491,6 +1531,12 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
                     useWine(cmd, args);
                     qDebug() << "Starting HWND bring bridge: " << cmd << args;
                     QProcess q;
+                    {
+                        auto setup = m_wineSetup;
+                        WineSetup::prepareSetup(setup);
+                        auto env = WineSetup::buildEnv(setup);
+                        q.setProcessEnvironment(env);
+                    }
                     q.start(cmd, args);
                     if(q.waitForFinished())
                         qDebug() << q.exitCode();
@@ -1688,7 +1734,15 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
 
     bool engineStartedSuccess = true;
     QString engineStartupErrorString;
-    useWine(command, params);
+#ifndef _WIN32
+    {
+        useWine(command, params);
+        auto wSetup = m_wineSetup;
+        WineSetup::prepareSetup(wSetup);
+        auto env = WineSetup::buildEnv(wSetup);
+        emit engineSetEnv(env);
+    }
+#endif
     emit engineSetExecPath(getEnginePath());
     emit engineSetWorkPath(smbxPath);
     emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
@@ -1729,6 +1783,9 @@ void LunaTesterEngine::lunaRunGame()
     //! Full path to LunaTester proxy executable
     const QString execProxy = smbxPath + "LunaLoader-exec.exe";
 
+    if(m_lunaGame.state() == QProcess::Running)
+        m_lunaGame.terminate();
+
     if(!QFile::exists(execProxy))
     {
         QMessageBox::warning(m_w,
@@ -1749,8 +1806,17 @@ void LunaTesterEngine::lunaRunGame()
 
     if(!QFile::exists(lunaDllPath))
     {
+#ifndef _WIN32
         useWine(command, params);
-        QProcess::startDetached(command, params, pathUnixToWine(smbxPath));
+        auto wSetup = m_wineSetup;
+        WineSetup::prepareSetup(wSetup);
+        auto env = WineSetup::buildEnv(wSetup);
+        m_lunaGame.setProcessEnvironment(env);
+#endif
+        m_lunaGame.setProgram(command);
+        m_lunaGame.setArguments(params);
+        m_lunaGame.setWorkingDirectory(smbxPath);
+        m_lunaGame.start();
     }
     else
     {
@@ -1759,7 +1825,13 @@ void LunaTesterEngine::lunaRunGame()
         bool engineStartedSuccess = true;
         QString engineStartupErrorString;
         killEngine();// Kill previously running game
+#ifndef _WIN32
         useWine(command, params);
+        auto wSetup = m_wineSetup;
+        WineSetup::prepareSetup(wSetup);
+        auto env = WineSetup::buildEnv(wSetup);
+        emit engineSetEnv(env);
+#endif
         emit engineSetExecPath(getEnginePath());
         emit engineSetWorkPath(smbxPath);
         emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);

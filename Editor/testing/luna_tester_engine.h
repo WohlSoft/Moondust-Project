@@ -36,6 +36,9 @@ class QMenu;
 class QAction;
 class MainWindow;
 
+#ifndef _WIN32
+#include "wine/wine_setup_cfg.h"
+#endif
 
 class LunaEngineWorker : public QObject
 {
@@ -56,7 +59,7 @@ public:
     explicit LunaEngineWorker(QObject *parent = nullptr);
     ~LunaEngineWorker() override;
 public slots:
-    void setEnv(const QHash<QString, QString> &env);
+    void setEnv(const QProcessEnvironment &env);
     void setExecPath(const QString &path);
     void setWorkPath(const QString &wDir);
     void start(const QString &command, const QStringList &args, bool *ok, QString *errString);
@@ -115,7 +118,7 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     //! Pointer to main window
     MainWindow *m_w = nullptr;
     //! List of registered menu items
-    QAction *m_menuItems[8];
+    QAction *m_menuItems[10];
 
     //! LunaTester process handler
     QSharedPointer<LunaEngineWorker> m_worker;
@@ -134,9 +137,9 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     //! Custom path to LunaTester
     QString             m_customLunaPath;
 
+    QProcess                m_lunaGame;
 #ifndef _WIN32
-    QString                 m_wineBinDir;
-    QHash<QString, QString> m_wineEnv;
+    WineSetupData           m_wineSetup;
 #endif
     void useWine(QString &command, QStringList &args);
     QString pathUnixToWine(const QString &unixPath);
@@ -178,6 +181,10 @@ public slots:
     void killBackgroundInstance();
 
     void chooseEnginePath();
+
+#ifndef _WIN32
+    void runWineSetup();
+#endif
 
 private:
     /********Internal private functions*******/
@@ -255,7 +262,7 @@ private slots:
 
 signals:
     void engineSetExecPath(const QString &path);
-    void engineSetEnv(const QHash<QString, QString> &env);
+    void engineSetEnv(const QProcessEnvironment &env);
     void engineSetWorkPath(const QString &wPath);
     void engineStart(const QString &command, const QStringList &args, bool *ok, QString *errString);
     void engineWrite(const QString &out, bool *ok);

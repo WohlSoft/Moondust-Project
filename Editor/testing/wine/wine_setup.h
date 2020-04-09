@@ -19,10 +19,10 @@
 #ifndef WINE_SETUP_H
 #define WINE_SETUP_H
 
-#include <QDialog>
-#include <QProcessEnvironment>
 #include <QVector>
 #include <QProcess>
+#include <QProcessEnvironment>
+#include <QDialog>
 
 #include "wine_setup_cfg.h"
 
