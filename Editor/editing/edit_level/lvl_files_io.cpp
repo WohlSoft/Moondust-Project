@@ -309,6 +309,12 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     // //////////////////////////////////////////////////////////////////////
     QFileInfo finfo(fileName);
     GlobalSettings::savePath = finfo.path();
+    LogDebug(QString("-------------------------------\n"
+                     "Saving file name: %1").arg(fileName));
+    LogDebug(QString("-------------------------------\n"
+                     "Saving path: %1").arg(finfo.path()));
+    LogDebug(QString("-------------------------------\n"
+                     "Saving filename computed: %1").arg(finfo.fileName()));
     LvlData.meta.path = finfo.path();
     LvlData.meta.filename = util::getBaseFilename(finfo.fileName());
     QApplication::restoreOverrideCursor();

@@ -139,6 +139,8 @@ void FileKeeper::restore()
         std::wstring srcPath = m_tempPath.toStdWString();
         std::wstring dstPath = m_origPath.toStdWString();
         std::wstring backupPath = m_backupPath.toStdWString();
+        if(QFile::exists(m_backupPath))
+            QFile::remove(m_backupPath);
         LogDebug("Attempt to override " + m_origPath + " file with " + m_tempPath + " file and making a backup " + m_backupPath + " backup path...");
         BOOL ret = ReplaceFileW(dstPath.c_str(),
                                 srcPath.c_str(),
@@ -146,13 +148,13 @@ void FileKeeper::restore()
                                 0, nullptr, nullptr);
         if(ret == FALSE)
         {
-            ret = GetLastError();
+            DWORD reterr = GetLastError();
             LogWarning("Failed to override " + m_origPath + " file with " + m_tempPath + "! ["+ errorToString() + "]");
-            if(ret == ERROR_UNABLE_TO_MOVE_REPLACEMENT)
+            if(reterr == ERROR_UNABLE_TO_MOVE_REPLACEMENT)
                 LogWarning("The replacement file could not be renamed.");
-            else if(ret == ERROR_UNABLE_TO_MOVE_REPLACEMENT_2)
+            else if(reterr == ERROR_UNABLE_TO_MOVE_REPLACEMENT_2)
                 LogWarning("The replacement file could not be moved.");
-            else if(ret == ERROR_UNABLE_TO_REMOVE_REPLACED)
+            else if(reterr == ERROR_UNABLE_TO_REMOVE_REPLACED)
                 LogWarning("The replaced file could not be deleted.");
 
             if(QFile::exists(m_origPath))
