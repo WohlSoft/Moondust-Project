@@ -32,13 +32,16 @@
 #   include <QHash>
 #endif
 #include <common_features/safe_msg_box.h>
-class QMenu;
-class QAction;
-class MainWindow;
+
+#include "ipc/luna_capabilities.h"
 
 #ifndef _WIN32
 #include "wine/wine_setup_cfg.h"
 #endif
+
+class QMenu;
+class QAction;
+class MainWindow;
 
 class LunaEngineWorker : public QObject
 {
@@ -136,11 +139,18 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     bool                m_killPreviousSession = false;
     //! Custom path to LunaTester
     QString             m_customLunaPath;
+    //! Capabilities of given LunaLua build
+    LunaLuaCapabilities m_caps;
 
-    QProcess                m_lunaGame;
+    //! LunaLua process
+    QProcess            m_lunaGame;
 #ifndef _WIN32
-    WineSetupData           m_wineSetup;
+    //! Wine capabilities to run game on non-Windows platforms
+    WineSetupData       m_wineSetup;
 #endif
+
+    bool updateLunaCaps();
+
     void useWine(QString &command, QStringList &args);
     QString pathUnixToWine(const QString &unixPath);
 
@@ -158,6 +168,16 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     bool writeToIPC(const QString &out);
     std::string readFromIPC();
     QString readFromIPCQ();
+
+private slots:
+#if QT_VERSION_CHECK(5, 6, 0)
+    void gameErrorOccurred(QProcess::ProcessError error);
+#endif
+    void gameStarted();
+    void gameFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void gameStateChanged(QProcess::ProcessState newState);
+    void gameReadyReadStandardError();
+    void gameReadyReadStandardOutput();
 
 public slots:
     void killEngine();

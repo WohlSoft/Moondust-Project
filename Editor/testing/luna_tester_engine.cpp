@@ -689,6 +689,15 @@ void LunaTesterEngine::unInitRuntime()
     m_thread.reset();
 }
 
+bool LunaTesterEngine::updateLunaCaps()
+{
+    //! Path to SMBX root
+    const QString smbxPath = getEnginePath();
+    //! Full path to LunaDLL library
+    const QString lunaDllPath = smbxPath + "LunaDll.dll";
+    return getLunaCapabilities(m_caps, lunaDllPath);
+}
+
 
 
 
@@ -707,6 +716,22 @@ void LunaTesterEngine::init()
     }
 
     m_w = w;
+
+#if QT_VERSION_CHECK(5, 6, 0)
+    QObject::connect(&m_lunaGame, &QProcess::errorOccurred,
+                     this, &LunaTesterEngine::gameErrorOccurred);
+#endif
+    QObject::connect(&m_lunaGame, &QProcess::started,
+                     this, &LunaTesterEngine::gameStarted);
+    QObject::connect(&m_lunaGame,
+                     static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                     this, &LunaTesterEngine::gameFinished);
+    QObject::connect(&m_lunaGame, &QProcess::stateChanged,
+                     this, &LunaTesterEngine::gameStateChanged);
+    QObject::connect(&m_lunaGame, &QProcess::readyReadStandardError,
+                     this, &LunaTesterEngine::gameReadyReadStandardError);
+    QObject::connect(&m_lunaGame, &QProcess::readyReadStandardOutput,
+                     this, &LunaTesterEngine::gameReadyReadStandardOutput);
 
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &LunaTesterEngine::retranslateMenu);
 
@@ -936,6 +961,62 @@ QString LunaTesterEngine::readFromIPCQ()
     return out;
 }
 
+#if QT_VERSION_CHECK(5, 6, 0)
+void LunaTesterEngine::gameErrorOccurred(QProcess::ProcessError error)
+{
+    QString title = tr("LunaTester error");
+    QString msg;
+    switch(error)
+    {
+    case QProcess::FailedToStart:
+        msg = tr("Failed to start: %1").arg(m_lunaGame.errorString());
+        break;
+    case QProcess::Crashed:
+        msg = tr("Crashed: %1").arg(m_lunaGame.errorString());
+        break;
+    case QProcess::Timedout:
+        msg = tr("Timed out: %1").arg(m_lunaGame.errorString());
+        break;
+    case QProcess::WriteError:
+        msg = tr("Write error: %1").arg(m_lunaGame.errorString());
+        break;
+    case QProcess::ReadError:
+        msg = tr("Read error: %1").arg(m_lunaGame.errorString());
+        break;
+    default:
+    case QProcess::UnknownError:
+        msg = tr("\nUnknown error: %1").arg(m_lunaGame.errorString());
+        break;
+    }
+    QMessageBox::critical(m_w, title, msg, QMessageBox::Ok);
+}
+#endif
+
+void LunaTesterEngine::gameStarted()
+{
+
+}
+
+void LunaTesterEngine::gameFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+
+}
+
+void LunaTesterEngine::gameStateChanged(QProcess::ProcessState newState)
+{
+
+}
+
+void LunaTesterEngine::gameReadyReadStandardError()
+{
+
+}
+
+void LunaTesterEngine::gameReadyReadStandardOutput()
+{
+
+}
+
 
 void LunaTesterEngine::killEngine()
 {
@@ -1131,6 +1212,14 @@ void LunaTesterEngine::chooseEnginePath()
             m_customLunaPath = c->text();
         else
             m_customLunaPath.clear();
+
+        if(!updateLunaCaps())
+        {
+            QMessageBox::critical(m_w,
+                                  tr("LunaTester error"),
+                                  tr("Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path."),
+                                  QMessageBox::Ok);
+        }
     }
 }
 
@@ -1185,47 +1274,47 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl, QString levelPath, bool isU
         return false;
 
     // Ask "Is LVLX"
-    bool hasLvlxSupport = false;
-    {
-        QJsonDocument jsonOut;
-        QJsonObject jsonObj;
-        jsonObj["jsonrpc"] = "2.0";
-        jsonObj["method"] = "getSupportedFeatures";
-        jsonObj["id"] = 3;
-        jsonOut.setObject(jsonObj);
-        std::string dataToSend;
-        LogDebug("LunaTester: -> Checking for LVLX support on LunaLua side...");
+    bool hasLvlxSupport = m_caps.features.contains("LVLX");
+//    {
+//        QJsonDocument jsonOut;
+//        QJsonObject jsonObj;
+//        jsonObj["jsonrpc"] = "2.0";
+//        jsonObj["method"] = "getSupportedFeatures";
+//        jsonObj["id"] = 3;
+//        jsonOut.setObject(jsonObj);
+//        std::string dataToSend;
+//        LogDebug("LunaTester: -> Checking for LVLX support on LunaLua side...");
 
-        jSonToNetString(jsonOut, dataToSend);
-        LogDebugQD(QString("Sending message to SMBX %1").arg(QString::fromStdString(dataToSend)));
+//        jSonToNetString(jsonOut, dataToSend);
+//        LogDebugQD(QString("Sending message to SMBX %1").arg(QString::fromStdString(dataToSend)));
 
-        if(writeToIPC(dataToSend))
-        {
-            std::string resultMsg = readFromIPC();
-            LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
-            QJsonParseError errData;
-            QJsonDocument jsonOutData;
-            if(stringToJson(resultMsg, jsonOutData, errData))
-            {
-                QJsonObject obj = jsonOutData.object();
-                QJsonObject result = obj["result"].toObject();
-                if(!result["LVLX"].isNull())
-                {
-                    hasLvlxSupport = result["LVLX"].toBool();
-                    LogDebug("LunaTester: <- Yes! LVLX is supported!");
-                }
-            }
-            if(errData.error != QJsonParseError::NoError)
-            {
-                LogDebug("LunaTester: <- Oops, fail to parse: " + errData.errorString());
-            }
-        }
+//        if(writeToIPC(dataToSend))
+//        {
+//            std::string resultMsg = readFromIPC();
+//            LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
+//            QJsonParseError errData;
+//            QJsonDocument jsonOutData;
+//            if(stringToJson(resultMsg, jsonOutData, errData))
+//            {
+//                QJsonObject obj = jsonOutData.object();
+//                QJsonObject result = obj["result"].toObject();
+//                if(!result["LVLX"].isNull())
+//                {
+//                    hasLvlxSupport = result["LVLX"].toBool();
+//                    LogDebug("LunaTester: <- Yes! LVLX is supported!");
+//                }
+//            }
+//            if(errData.error != QJsonParseError::NoError)
+//            {
+//                LogDebug("LunaTester: <- Oops, fail to parse: " + errData.errorString());
+//            }
+//        }
+//    }
 
-        if(!hasLvlxSupport)
-        {
-            LogDebug("LunaTester: <- No! LVLX is NOT supported by this LunaLua build!");
-        }
-    }
+    if(hasLvlxSupport)
+        LogDebug("LunaTester: <- No! LVLX is NOT supported by this LunaLua build!");
+    else
+        LogDebug("LunaTester: <- Yes! LVLX is supported!");
 
     QJsonDocument jsonOut;
     QJsonObject jsonObj;
@@ -1327,6 +1416,9 @@ void LunaTesterEngine::loadSetup()
 #endif
     }
     settings.endGroup();
+
+    if(!updateLunaCaps())
+        qWarning() << "Failed to initialize LunaLua capabilities!";
 }
 
 void LunaTesterEngine::saveSetup()
@@ -1484,6 +1576,9 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
 {
     if(!isOutPipeOpen() || !isInPipeOpen())
         return false;
+
+    if(m_caps.features.contains("SelfForegrounding"))
+        return true; // this workaround is no more needed
 
     QJsonDocument jsonOut;
     QJsonObject jsonObj;

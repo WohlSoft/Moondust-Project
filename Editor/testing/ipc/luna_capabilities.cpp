@@ -295,5 +295,6 @@ bool getLunaCapabilities(LunaLuaCapabilities &caps, const QString &path)
     if(!getRawLunaCapabilities(caps, path))
         return getLunaHeuristicCapabilities(caps, path);
 
+    caps.loaded = true;
     return true;
 }

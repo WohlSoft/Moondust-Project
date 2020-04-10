@@ -24,6 +24,7 @@
 
 struct LunaLuaCapabilities
 {
+    bool loaded = false;
     //! Type of capabilities recognizing
     QString type;
     //! Presenting of special features
@@ -36,6 +37,7 @@ struct LunaLuaCapabilities
     //! Clear data
     void clear()
     {
+        loaded = false;
         type.clear();
         features.clear();
         args.clear();

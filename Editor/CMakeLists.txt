@@ -421,6 +421,7 @@ list(APPEND PGE_EDITOR_SRCS
     testing/luna_tester_engine.cpp
     testing/thextech_engine.cpp
     testing/ipc/pge_engine_ipc.cpp
+    testing/ipc/luna_capabilities.cpp
     tools/async/asyncstarcounter.cpp
     tools/debugger/custom_counter.cpp
     tools/debugger/custom_counter_gui.cpp
