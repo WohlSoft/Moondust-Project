@@ -1673,22 +1673,23 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
     // Prepare level file for SMBX-64 format
     FileFormats::smbx64LevelPrepare(in_levelData);
 
-#if 0 // TODO: On reorganizing, call this in only of a condition that target LunaLua build doesn't support LVLX
-    int smbx64limits = FileFormats::smbx64LevelCheckLimits(in_levelData);
-    if(smbx64limits != FileFormats::SMBX64_FINE)
+    if(m_caps.features.contains("SMBX64"))
     {
-        int reply = msg.warning(tr("SMBX64 limits are exceeded!"),
-                                tr("Violation of SMBX64 standard has been found!\n"
-                                   "%1\n"
-                                   ", legacy engine may crash!\n"
-                                   "Suggested to remove all excess elements.\n"
-                                   "Do you want to continue the process?")
-                                .arg(smbx64ErrMsgs(in_levelData, smbx64limits)),
-                                QMessageBox::Yes | QMessageBox::No);
-        if(reply != QMessageBox::Yes)
-            return;
+        int smbx64limits = FileFormats::smbx64LevelCheckLimits(in_levelData);
+        if(smbx64limits != FileFormats::SMBX64_FINE)
+        {
+            int reply = msg.warning(tr("SMBX64 limits are exceeded!"),
+                                    tr("Violation of SMBX64 standard has been found!\n"
+                                       "%1\n"
+                                       ", legacy engine may crash!\n"
+                                       "Suggested to remove all excess elements.\n"
+                                       "Do you want to continue the process?")
+                                    .arg(smbx64ErrMsgs(in_levelData, smbx64limits)),
+                                    QMessageBox::Yes | QMessageBox::No);
+            if(reply != QMessageBox::Yes)
+                return;
+        }
     }
-#endif
 
     //-----------------------------------------------------------------
 

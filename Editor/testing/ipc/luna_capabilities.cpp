@@ -54,6 +54,7 @@
 static void fillCapsBeta3(LunaLuaCapabilities &caps)
 {
     caps.type = "heuristic BETA3";
+    caps.features << "SMBX64";
     caps.ipcCommands << "echo" << "testLevel" <<
                         "getWindowHandle" << "resetCheckPoints";
     caps.args << "patch" << "game" << "leveleditor" << "noframeskip" <<
@@ -69,7 +70,7 @@ static void fillCapsBeta3(LunaLuaCapabilities &caps)
 static void fillCapsMAGLX3(LunaLuaCapabilities &caps)
 {
     caps.type = "heuristic MAGLX3";
-    caps.features << "LVLX";
+    caps.features << "LVLX" << "SMBX64";
     caps.ipcCommands << "echo" << "testLevel" <<
                         "getWindowHandle" << "resetCheckPoints" <<
                         "getSupportedFeatures";
@@ -86,7 +87,7 @@ static void fillCapsMAGLX3(LunaLuaCapabilities &caps)
 static void fillCapsPAL(LunaLuaCapabilities &caps)
 {
     caps.type = "heuristic PAL";
-    caps.features << "LVLX";
+    caps.features << "LVLX" << "SMBX64";
     caps.ipcCommands << "echo" << "testLevel" <<
                         "getWindowHandle" << "resetCheckPoints" <<
                         "getSupportedFeatures";
