@@ -175,22 +175,22 @@ void PgeEngine::unInit()
 void PgeEngine::initMenu(QMenu *destmenu)
 {
     size_t menuItemId = 0;
-    QAction *RunLevelTest;
+    QAction *runLevelTest;
     {
-        RunLevelTest = destmenu->addAction("runTesting");
-        QObject::connect(RunLevelTest,   &QAction::triggered,
+        runLevelTest = destmenu->addAction("runTesting");
+        QObject::connect(runLevelTest,   &QAction::triggered,
                     this,               &PgeEngine::startTestAction,
                     Qt::QueuedConnection);
-        m_menuItems[menuItemId++] = RunLevelTest;
+        m_menuItems[menuItemId++] = runLevelTest;
     }
 
-    QAction *RunLevelSafeTest;
+    QAction *runLevelSafeTest;
     {
-        RunLevelSafeTest = destmenu->addAction("runSafeTesting");
-        QObject::connect(RunLevelSafeTest,   &QAction::triggered,
+        runLevelSafeTest = destmenu->addAction("runSafeTesting");
+        QObject::connect(runLevelSafeTest,   &QAction::triggered,
                     this,               &PgeEngine::startSafeTestAction,
                     Qt::QueuedConnection);
-        m_menuItems[menuItemId++] = RunLevelSafeTest;
+        m_menuItems[menuItemId++] = runLevelSafeTest;
     }
 
     {
@@ -210,18 +210,18 @@ void PgeEngine::retranslateMenu()
 {
     size_t menuItemId = 0;
     {
-        QAction *RunLunaTest = m_menuItems[menuItemId++];
-        RunLunaTest->setText(tr("Test level/world",
+        QAction *runTest = m_menuItems[menuItemId++];
+        runTest->setText(tr("Test level/world",
                                 "Run the testing of current file in PGE Engine via interprocessing tunnel."));
     }
     {
-        QAction *RunLunaTest = m_menuItems[menuItemId++];
-        RunLunaTest->setText(tr("Test saved level/world",
+        QAction *runSafeTest = m_menuItems[menuItemId++];
+        runSafeTest->setText(tr("Test saved level/world",
                                 "Run the testing of current file in PGE Engine from disk."));
     }
     {
-        QAction *RunLunaTest = m_menuItems[menuItemId++];
-        RunLunaTest->setText(tr("Start Game",
+        QAction *startGame = m_menuItems[menuItemId++];
+        startGame->setText(tr("Start Game",
                                 "Launch PGE Engine as a normal game"));
     }
 }
