@@ -159,6 +159,7 @@ void TheXTechEngine::chooseEnginePath()
     QRadioButton *useCustom = new QRadioButton(gr);
     useCustom->setText(tr("Custom", "Using a user selected TheXTech path"));
     QLineEdit *c = new QLineEdit(gr);
+    c->setMinimumWidth(400);
     QPushButton *br = new QPushButton(gr);
     br->setText(tr("Browse..."));
 
