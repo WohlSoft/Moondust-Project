@@ -151,6 +151,7 @@ public slots:
     void chooseEnginePath();
 
 #ifndef _WIN32
+private:
     /**
      * @brief Change Wine setup
      */
