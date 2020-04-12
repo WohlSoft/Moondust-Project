@@ -26,6 +26,7 @@ Editor 0.3.2-dev
 - Added French translation by NathanBnm
 - Reworked a testing sub-system to make it be more modular
 - Added a level testing integration with the TheXTech engine
+- The LunaTester has been reworked: now it's fully asynchronius and much more stable. It works with a full backward compatibility with a bunch of LunaLua versions: tested with next toolchains: LunaLua-SMBX 1.3.0.2 (LunaLua 0.7.3.1), SMBX2 Beta3, SMBX2 MAGLX3/PAL, and SMBX2 Beta4. For Beta3 and older it's need to put a "LunaLoader-exec.exe" module to make a testign work.
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu

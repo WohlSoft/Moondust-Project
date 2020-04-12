@@ -23,6 +23,7 @@
 #include <QProcess>
 #include <QProcessEnvironment>
 #include <QDialog>
+#include <QSettings>
 
 #include "wine_setup_cfg.h"
 
@@ -59,6 +60,9 @@ public:
 
     static void prepareSetup(WineSetupData &setup);
     static QProcessEnvironment buildEnv(const WineSetupData &profile);
+
+    static void iniLoad(QSettings &settings, WineSetupData &setup);
+    static void iniSave(QSettings &settings, WineSetupData &setup);
 
 private slots:
     void on_doImportFromPoL_clicked();

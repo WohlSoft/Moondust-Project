@@ -31,6 +31,8 @@ struct WineSetupData
     bool useWinePrefix = false;
     QString winePrefix;
 
+    bool enableWineDebug = false;
+
     // Auto-computed values
     QString metaWineExec;
     QString metaWinePathExec;
@@ -39,6 +41,7 @@ struct WineSetupData
     QString metaWineLibDir;
     QString metaWineLib64Dir;
     QString metaWineDllDir;
+
 };
 
 #endif // WINE_SETUP_CFG_H

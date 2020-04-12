@@ -199,6 +199,8 @@ WineSetupData WineSetup::getSetup()
     setup.useWinePrefix = ui->winePrefix->isChecked();
     setup.winePrefix = ui->winePrefixPath->text();
 
+    setup.enableWineDebug = ui->wineDebug->isChecked();
+
     prepareSetup(setup);
 
     return setup;
@@ -216,6 +218,8 @@ void WineSetup::setSetup(const WineSetupData &setup)
     ui->winePrefix->setChecked(setup.useWinePrefix);
     if(!setup.winePrefix.isEmpty())
         ui->winePrefixPath->setText(setup.winePrefix);
+
+    ui->wineDebug->setChecked(setup.enableWineDebug);
 }
 
 void WineSetup::prepareSetup(WineSetupData &setup)
@@ -267,6 +271,9 @@ QProcessEnvironment WineSetup::buildEnv(const WineSetupData &profile)
 
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
 
+    if(!setup.enableWineDebug)
+        env.insert("WINEDEBUG", "-all");
+
     if(!setup.useCustom)
         return env; // Use system-default
 
@@ -311,6 +318,26 @@ QProcessEnvironment WineSetup::buildEnv(const WineSetupData &profile)
 //    env.insert("WINEDLLOVERRIDES", "");
 
     return env;
+}
+
+void WineSetup::iniLoad(QSettings &settings, WineSetupData &setup)
+{
+    setup.useCustom = settings.value("wine-custom", false).toBool();
+    setup.wineRoot = settings.value("wine-root", QString()).toString();
+    setup.useCustomEnv = settings.value("wine-custom-env", false).toBool();
+    setup.useWinePrefix = settings.value("wine-use-prefix", false).toBool();
+    setup.winePrefix = settings.value("wine-prefix", QString()).toString();
+    setup.enableWineDebug = settings.value("wine-debug", false).toBool();
+}
+
+void WineSetup::iniSave(QSettings &settings, WineSetupData &setup)
+{
+    settings.setValue("wine-custom", setup.useCustom);
+    settings.setValue("wine-root", setup.wineRoot);
+    settings.setValue("wine-custom-env", setup.useCustomEnv);
+    settings.setValue("wine-use-prefix", setup.useWinePrefix);
+    settings.setValue("wine-prefix", setup.winePrefix);
+    settings.setValue("wine-debug", setup.enableWineDebug);
 }
 
 void WineSetup::on_wineRootPathBrowse_clicked()

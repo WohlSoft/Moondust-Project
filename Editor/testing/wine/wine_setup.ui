@@ -14,66 +14,7 @@
    <string>Wine configuration</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="5" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QGroupBox" name="wineLocationGroup">
-     <property name="title">
-      <string>Location of wine</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout" columnstretch="0,10000,0">
-      <property name="sizeConstraint">
-       <enum>QLayout::SetMinimumSize</enum>
-      </property>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="wineRootPath">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="0" colspan="2">
-       <widget class="QRadioButton" name="pathDefault">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use a system-wide installed Wine from a PATH envrinoment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>System default</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QRadioButton" name="pathCustom">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Custom:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QPushButton" name="wineRootPathBrowse">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Browse...</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="3" column="0">
+   <item row="4" column="0">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Test</string>
@@ -138,7 +79,39 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="0">
+   <item row="3" column="0">
+    <widget class="QGroupBox" name="importFromPlay">
+     <property name="title">
+      <string notr="true">---------------------------</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="1000,0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QComboBox" name="playOnLinuxDrive"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="doImportFromPoL">
+        <property name="text">
+         <string>Import</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
     <widget class="QGroupBox" name="wineCustomEnvGroup">
      <property name="enabled">
       <bool>false</bool>
@@ -183,26 +156,60 @@
      </layout>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QGroupBox" name="importFromPlay">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="wineLocationGroup">
      <property name="title">
-      <string notr="true">---------------------------</string>
+      <string>Location of wine</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3" columnstretch="1000,0">
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,10000,0">
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>
-      <item row="0" column="0">
-       <widget class="QComboBox" name="playOnLinuxDrive"/>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="wineRootPath">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="doImportFromPoL">
+      <item row="0" column="0" colspan="2">
+       <widget class="QRadioButton" name="pathDefault">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use a system-wide installed Wine from a PATH envrinoment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
         <property name="text">
-         <string>Import</string>
+         <string>System default</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="pathCustom">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="text">
+         <string>Custom:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="wineRootPathBrowse">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Browse...</string>
         </property>
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="wineDebug">
+     <property name="text">
+      <string>Enable Wine debug printing into &quot;WineDebug&quot; console</string>
+     </property>
     </widget>
    </item>
   </layout>
