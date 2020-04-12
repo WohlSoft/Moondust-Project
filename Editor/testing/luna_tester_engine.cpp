@@ -598,7 +598,7 @@ QString LunaTesterEngine::pathUnixToWine(const QString &unixPath)
     winePath.waitForFinished();
     // Retrieve converted path
     QString windowsPath = winePath.readAllStandardOutput();
-    return windowsPath;
+    return windowsPath.trimmed();
 }
 
 #else // _WIN32
