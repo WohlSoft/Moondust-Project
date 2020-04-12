@@ -263,20 +263,58 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
                     this,               &TheXTechEngine::startTestAction,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = RunLevelTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+        });
     }
+
     {
         QAction *RunBattleLevelTest = destmenu->addAction("runBattleTest");
         QObject::connect(RunBattleLevelTest,   &QAction::triggered,
                     this,               &TheXTechEngine::startBattleTestAction,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = RunBattleLevelTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+        });
     }
+
     {
         QAction *RunLevelSafeTest = destmenu->addAction("runSafeTesting");
         QObject::connect(RunLevelSafeTest,   &QAction::triggered,
                     this,               &TheXTechEngine::startSafeTestAction,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = RunLevelSafeTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
+        });
     }
 
     destmenu->addSeparator();

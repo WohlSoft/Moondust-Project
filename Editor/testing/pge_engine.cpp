@@ -182,6 +182,18 @@ void PgeEngine::initMenu(QMenu *destmenu)
                     this,               &PgeEngine::startTestAction,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = runLevelTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+        });
     }
 
     QAction *runLevelSafeTest;
@@ -191,6 +203,18 @@ void PgeEngine::initMenu(QMenu *destmenu)
                     this,               &PgeEngine::startSafeTestAction,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = runLevelSafeTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
+        });
     }
 
     {
