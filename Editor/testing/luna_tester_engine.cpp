@@ -1038,7 +1038,7 @@ void LunaTesterEngine::gameReadyReadStandardOutput()
     if(!isEngineActive())
         return;
 
-    QByteArray strData = m_lunaGameIPC.readAll();
+    QByteArray strData = m_lunaGameIPC.readAllStandardOutput();
 //    readInputStream(strData);
 
     LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromUtf8(strData)));

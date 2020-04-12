@@ -125,6 +125,8 @@ void PgeEngineIpcClient::init(QProcess *engine)
         QObject::connect(m_engine, &QProcess::readyReadStandardOutput,
                          this, &PgeEngineIpcClient::onInputData);
 
+    m_engine->setReadChannel(QProcess::StandardOutput);
+
     QObject::connect(&g_intEngine, &IntEngineSignals::sendCheat,
                      this, &PgeEngineIpcClient::sendCheat);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendMessageBox,
