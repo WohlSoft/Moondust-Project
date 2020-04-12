@@ -142,7 +142,14 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     //! Capabilities of given LunaLua build
     LunaLuaCapabilities m_caps;
 
-    //! LunaLua process
+    //! Cached level data buffer
+    LevelData           m_levelTestBuffer;
+    QString             m_levelTestPath;
+    bool                m_levelTestUntitled = false;
+
+    //! LunaLua process with IPC
+    QProcess            m_lunaGameIPC;
+    //! LunaLua process without IPC
     QProcess            m_lunaGame;
 #ifndef _WIN32
     //! Wine capabilities to run game on non-Windows platforms
@@ -178,6 +185,9 @@ private slots:
     void gameStateChanged(QProcess::ProcessState newState);
     void gameReadyReadStandardError();
     void gameReadyReadStandardOutput();
+
+private:
+    void readInputStream(QByteArray &out);
 
 public slots:
     void killEngine();

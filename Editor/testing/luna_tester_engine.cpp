@@ -601,7 +601,7 @@ QString LunaTesterEngine::pathUnixToWine(const QString &unixPath)
     winePathExec.waitForFinished();
     // Retrieve converted path
     QString windowsPath = winePathExec.readAllStandardOutput();
-    return windowsPath;
+    return windowsPath.trimmed();
 }
 
 #else // _WIN32
@@ -718,19 +718,19 @@ void LunaTesterEngine::init()
     m_w = w;
 
 #if QT_VERSION_CHECK(5, 6, 0)
-    QObject::connect(&m_lunaGame, &QProcess::errorOccurred,
+    QObject::connect(&m_lunaGameIPC, &QProcess::errorOccurred,
                      this, &LunaTesterEngine::gameErrorOccurred);
 #endif
-    QObject::connect(&m_lunaGame, &QProcess::started,
+    QObject::connect(&m_lunaGameIPC, &QProcess::started,
                      this, &LunaTesterEngine::gameStarted);
-    QObject::connect(&m_lunaGame,
+    QObject::connect(&m_lunaGameIPC,
                      static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                      this, &LunaTesterEngine::gameFinished);
-    QObject::connect(&m_lunaGame, &QProcess::stateChanged,
+    QObject::connect(&m_lunaGameIPC, &QProcess::stateChanged,
                      this, &LunaTesterEngine::gameStateChanged);
-    QObject::connect(&m_lunaGame, &QProcess::readyReadStandardError,
+    QObject::connect(&m_lunaGameIPC, &QProcess::readyReadStandardError,
                      this, &LunaTesterEngine::gameReadyReadStandardError);
-    QObject::connect(&m_lunaGame, &QProcess::readyReadStandardOutput,
+    QObject::connect(&m_lunaGameIPC, &QProcess::readyReadStandardOutput,
                      this, &LunaTesterEngine::gameReadyReadStandardOutput);
 
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &LunaTesterEngine::retranslateMenu);
@@ -912,37 +912,45 @@ void LunaTesterEngine::retranslateMenu()
 
 bool LunaTesterEngine::isEngineActive()
 {
-    if(m_worker.isNull())
-        return false;
-    return m_worker->isActive();
+    return (m_lunaGameIPC.state() == QProcess::Running);
+//    if(m_worker.isNull())
+//        return false;
+//    return m_worker->isActive();
 }
 
 bool LunaTesterEngine::isInPipeOpen()
 {
-    if(m_worker.isNull())
-        return false;
-    return m_worker->isActive();
+    return isEngineActive();
+//    if(m_worker.isNull())
+//        return false;
+//    return m_worker->isActive();
 }
 
 bool LunaTesterEngine::isOutPipeOpen()
 {
-    if(m_worker.isNull())
-        return false;
-    return m_worker->isActive();
+    return isEngineActive();
+//    if(m_worker.isNull())
+//        return false;
+//    return m_worker->isActive();
 }
 
 bool LunaTesterEngine::writeToIPC(const std::string &out)
 {
-    bool ret = false;
-    emit engineWriteStd(out, &ret);
-    return ret;
+//    bool ret = false;
+//    emit engineWriteStd(out, &ret);
+//    return ret;
+    auto ret = m_lunaGameIPC.write(out.c_str(), static_cast<int>(out.size()));
+    return (ret == qint64(out.size()));
 }
 
 bool LunaTesterEngine::writeToIPC(const QString &out)
 {
-    bool ret = false;
-    emit engineWrite(out, &ret);
-    return ret;
+//    bool ret = false;
+//    emit engineWrite(out, &ret);
+//    return ret;
+    auto outData = out.toUtf8();
+    auto ret = m_lunaGameIPC.write(outData);
+    return (ret == qint64(outData.size()));
 }
 
 std::string LunaTesterEngine::readFromIPC()
@@ -994,7 +1002,20 @@ void LunaTesterEngine::gameErrorOccurred(QProcess::ProcessError error)
 
 void LunaTesterEngine::gameStarted()
 {
-
+    if(sendLevelData(m_levelTestBuffer, m_levelTestPath, m_levelTestUntitled))
+    {
+        //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
+        //Stop music playback in the PGE Editor!
+        QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+        QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+    }
+    else
+    {
+        QMessageBox::warning(m_w,
+                    LunaTesterEngine::tr("LunaTester error"),
+                    LunaTesterEngine::tr("Failed to send level into LunaLUA-SMBX!"),
+                    QMessageBox::Ok);
+    }
 }
 
 void LunaTesterEngine::gameFinished(int exitCode, QProcess::ExitStatus exitStatus)
@@ -1014,14 +1035,78 @@ void LunaTesterEngine::gameReadyReadStandardError()
 
 void LunaTesterEngine::gameReadyReadStandardOutput()
 {
+    if(!isEngineActive())
+        return;
+
+    QByteArray strData = m_lunaGameIPC.readAll();
+//    readInputStream(strData);
+
+    LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromUtf8(strData)));
 
 }
 
+void LunaTesterEngine::readInputStream(QByteArray &out)
+{
+    char c = 0;
+
+    out.clear();
+    out.reserve(100);
+
+    while(true)
+    {
+        qint64 bytesRead = m_lunaGameIPC.read(&c, 1);
+        while(bytesRead == 0)
+        {
+            // No data? Block before trying again.
+            m_lunaGameIPC.waitForReadyRead();
+            bytesRead = m_lunaGameIPC.read(&c, 1);
+        }
+
+        if(bytesRead != 1)
+            break; // error
+
+        if(c == '\n')
+            break; // complete
+        out.push_back(c);
+    }
+}
+
+
+static void jSonToNetString(const QJsonDocument &jd, std::string &outString);
 
 void LunaTesterEngine::killEngine()
 {
-    if(!m_thread.isNull())
-        m_worker->terminate();
+    if(!isEngineActive())
+        return;
+
+    if(m_caps.ipcCommands.contains("quit"))
+    {
+        QJsonDocument jsonOut;
+        QJsonObject jsonObj;
+        jsonObj["jsonrpc"]  = "2.0";
+        jsonObj["method"]   = "quit";
+        QJsonObject JSONparams;
+        JSONparams["xxx"] = 0;
+        jsonObj["params"] = JSONparams;
+        jsonObj["id"] = 3;
+        jsonOut.setObject(jsonObj);
+
+        //Converting JSON data into net string
+        std::string dataToSend;
+        jSonToNetString(jsonOut, dataToSend);
+
+        //Send data to SMBX
+        writeToIPC(dataToSend);
+        m_lunaGameIPC.waitForFinished(1000);
+        if(isEngineActive())
+            m_lunaGameIPC.kill();
+    }
+    else
+    {
+        m_lunaGameIPC.kill();
+    }
+//    if(!m_thread.isNull())
+//        m_worker->terminate();
 }
 
 /*****************************************Menu slots*************************************************/
@@ -1051,10 +1136,10 @@ void LunaTesterEngine::startTestAction()
 bool LunaTesterEngine::startLunaTester(const LevelData &d)
 {
     initRuntime();
-    if(m_helper.isRunning())
-        busyThreadBox(m_w);
-    else
-    {
+//    if(m_helper.isRunning())
+//        busyThreadBox(m_w);
+//    else
+//    {
         if(m_w->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *lvl = m_w->activeLvlEditWin();
@@ -1066,23 +1151,25 @@ bool LunaTesterEngine::startLunaTester(const LevelData &d)
                 LevelData l = d;
 
                 lvl->prepareLevelFile(l);
-                m_helper = QtConcurrent::run(this,
-                                             &LunaTesterEngine::lunaRunnerThread,
-                                             l,
-                                             lvl->curFile,
-                                             lvl->isUntitled());
+//                m_helper = QtConcurrent::run(this,
+//                                             &LunaTesterEngine::lunaRunnerThread,
+//                                             l,
+//                                             lvl->curFile,
+//                                             lvl->isUntitled());
+                lunaRunnerThread(l, lvl->curFile, lvl->isUntitled());
             }
         }
-    }
+//    }
     return true;
 }
 
 void LunaTesterEngine::resetCheckPoints()
 {
-    if(m_helper.isRunning())
-        busyThreadBox(m_w);
-    else
-        m_helper = QtConcurrent::run(this, &LunaTesterEngine::lunaChkResetThread);
+//    if(m_helper.isRunning())
+//        busyThreadBox(m_w);
+//    else
+//        m_helper = QtConcurrent::run(this, &LunaTesterEngine::lunaChkResetThread);
+    lunaChkResetThread();
 }
 
 void LunaTesterEngine::killFrozenThread()
@@ -1312,9 +1399,9 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl, QString levelPath, bool isU
 //    }
 
     if(hasLvlxSupport)
-        LogDebug("LunaTester: <- No! LVLX is NOT supported by this LunaLua build!");
-    else
         LogDebug("LunaTester: <- Yes! LVLX is supported!");
+    else
+        LogDebug("LunaTester: <- No! LVLX is NOT supported by this LunaLua build!");
 
     QJsonDocument jsonOut;
     QJsonObject jsonObj;
@@ -1329,12 +1416,16 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl, QString levelPath, bool isU
     {
         if(!hasLvlxSupport && levelPath.endsWith(".lvlx", Qt::CaseInsensitive))
             levelPath.remove(levelPath.size() - 1, 1);
-        levelPathOut = levelPath;
+        levelPathOut = pathUnixToWine(levelPath);
+        JSONparams["filename"] = levelPathOut;
     }
     else
-        levelPathOut = smbxPath + "/worlds/untitled.lvl" + (hasLvlxSupport ? "x" : "");
+    {
+        levelPathOut = QStringLiteral("worlds\\untitled.lvl") + (hasLvlxSupport ? "x" : "");
+        JSONparams["filename"] = levelPathOut;
+    }
 
-    JSONparams["filename"] = pathUnixToWine(levelPathOut);
+//    JSONparams["filename"] = pathUnixToWine(levelPathOut);
 
     QJsonArray JSONPlayers;
     QJsonObject JSONPlayer1, JSONPlayer2;
@@ -1388,9 +1479,9 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl, QString levelPath, bool isU
     if(writeToIPC(dataToSend))
     {
         //Read result from level testing run
-        std::string resultMsg = readFromIPC();
-        LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
-        LogDebug("LunaTester: <- Command has been sent!");
+//        std::string resultMsg = readFromIPC();
+//        LogDebugQD(QString("LunaTester: Received from SMBX JSON message: %1").arg(QString::fromStdString(resultMsg)));
+//        LogDebug("LunaTester: <- Command has been sent!");
         return true;
     }
     LogWarning("<- Fail to send level data and testing request into LunaTester!");
@@ -1472,6 +1563,7 @@ void LunaTesterEngine::lunaChkResetThread()
         //Send data to SMBX
         if(writeToIPC(dataToSend))
         {
+#if 0
             std::string inMessage = readFromIPC();
             LogDebugQD(QString("Received from SMBX JSON message: %1").arg(QString::fromStdString(inMessage)));
             QJsonParseError err;
@@ -1500,6 +1592,7 @@ void LunaTesterEngine::lunaChkResetThread()
                             QString::fromStdString(inMessage),
                             QMessageBox::Warning);
             }
+#endif
         }
     }
     else
@@ -1579,7 +1672,7 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
 
     if(m_caps.features.contains("SelfForegrounding"))
         return true; // this workaround is no more needed
-
+#if 0
     QJsonDocument jsonOut;
     QJsonObject jsonObj;
     jsonObj["jsonrpc"]  = "2.0";
@@ -1656,6 +1749,7 @@ bool LunaTesterEngine::switchToSmbxWindow(SafeMsgBoxInterface &msg)
         }
         return true;
     }
+#endif
     return false;
 }
 
@@ -1666,7 +1760,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
     QThreadPointNuller tlocker(&this->m_helperThread);
     Q_UNUSED(tlocker)
 
-    SafeMsgBoxInterface msg(&m_w->m_messageBoxer);
+//    SafeMsgBoxInterface msg(&m_w->m_messageBoxer);
 
     this->m_helperThread = QThread::currentThread();
 
@@ -1678,7 +1772,8 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
         int smbx64limits = FileFormats::smbx64LevelCheckLimits(in_levelData);
         if(smbx64limits != FileFormats::SMBX64_FINE)
         {
-            int reply = msg.warning(tr("SMBX64 limits are exceeded!"),
+            int reply = QMessageBox::warning(m_w,
+                                    tr("SMBX64 limits are exceeded!"),
                                     tr("Violation of SMBX64 standard has been found!\n"
                                        "%1\n"
                                        ", legacy engine may crash!\n"
@@ -1690,6 +1785,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
                 return;
         }
     }
+
 
     //-----------------------------------------------------------------
 
@@ -1745,7 +1841,8 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
     {
         if(!QFile::exists(f))
         {
-            msg.warning(notFoundErrorTitle,
+            QMessageBox::warning(m_w,
+                        notFoundErrorTitle,
                         QString("%1\n%2")
                         .arg(notFoundErrorText.arg(f))
                         .arg((ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA) ? explanationSMBX2 : explanationGeneric),
@@ -1759,7 +1856,8 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
         QFileInfo i(d);
         if(!i.exists() || !i.isDir())
         {
-            msg.warning(notFoundErrorTitle,
+            QMessageBox::warning(m_w,
+                        notFoundErrorTitle,
                         QString("%1\n%2")
                         .arg(notFoundErrorText.arg(d))
                         .arg((ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA) ? explanationSMBX2 : explanationGeneric),
@@ -1770,7 +1868,8 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
 
     if(!QFile::exists(lunaDllPath))
     {
-        msg.warning(LunaTesterEngine::tr("Vanilla SMBX detected!"),
+        QMessageBox::warning(m_w,
+                    LunaTesterEngine::tr("Vanilla SMBX detected!"),
                     LunaTesterEngine::tr("\"%1\" not found!\n"
                                          "You have a Vanilla SMBX!\n"
                                          "That means, impossible to launch level testing with a LunaTester. "
@@ -1789,7 +1888,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
             closeSmbxWindow();
 #endif
             //Attempt to switch SMBX Window
-            switchToSmbxWindow(msg);
+//            switchToSmbxWindow(msg);
             //Then send level data to SMBX Engine
             if(sendLevelData(in_levelData, levelPath, isUntitled))
             {
@@ -1799,7 +1898,8 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
                 QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
             }
         }
-        else if(msg.warning(LunaTesterEngine::tr("SMBX Test is already runned"),
+        else if(QMessageBox::warning(m_w,
+                            LunaTesterEngine::tr("SMBX Test is already runned"),
                             LunaTesterEngine::tr("SMBX Engine is already testing another level.\n"
                                                  "Do you want to abort current testing process?"),
                             QMessageBox::Abort | QMessageBox::Cancel) == QMessageBox::Abort)
@@ -1808,6 +1908,11 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
         }
         return;
     }
+
+    // Store level buffer
+    m_levelTestBuffer = in_levelData;
+    m_levelTestPath = levelPath;
+    m_levelTestUntitled = isUntitled;
 
     QString command = execProxy;
     QStringList params;
@@ -1828,7 +1933,7 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
         argString += params[i];
     }
 
-    bool engineStartedSuccess = true;
+//    bool engineStartedSuccess = true;
     QString engineStartupErrorString;
 #ifndef _WIN32
     {
@@ -1836,36 +1941,44 @@ void LunaTesterEngine::lunaRunnerThread(LevelData in_levelData, const QString &l
         auto wSetup = m_wineSetup;
         WineSetup::prepareSetup(wSetup);
         auto env = WineSetup::buildEnv(wSetup);
-        emit engineSetEnv(env);
+        m_lunaGameIPC.setProcessEnvironment(env);
+//        emit engineSetEnv(env);
     }
 #endif
-    emit engineSetExecPath(getEnginePath());
-    emit engineSetWorkPath(smbxPath);
-    emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
+//    emit engineSetExecPath(getEnginePath());
+    m_lunaGameIPC.setProgram(command);
+//    emit engineSetWorkPath(smbxPath);
+    m_lunaGameIPC.setWorkingDirectory(smbxPath);
+//    /*emit engine*/Start(command, params, &engineStartedSuccess, &engineStartupErrorString);
+    m_lunaGameIPC.start(command, params);
 
-    if(engineStartedSuccess)
-    {
-        if(sendLevelData(in_levelData, levelPath, isUntitled))
-        {
-            //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
-            //Stop music playback in the PGE Editor!
-            QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
-            QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
-        }
-        else
-        {
-            msg.warning(LunaTesterEngine::tr("LunaTester error"),
-                        LunaTesterEngine::tr("Failed to send level into LunaLUA-SMBX!"),
-                        QMessageBox::Ok);
-        }
-    }
-    else
-    {
-        QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
-        msg.warning(LunaTesterEngine::tr("LunaTester error"),
-                    LunaTesterEngine::tr("Impossible to launch LunaTester, due to %1").arg(luna_error),
-                    QMessageBox::Ok);
-    }
+//    engineStartedSuccess = m_lunaGame.waitForStarted();
+
+//    if(engineStartedSuccess)
+//    {
+//        if(sendLevelData(in_levelData, levelPath, isUntitled))
+//        {
+//            //GlobalSettings::recentMusicPlayingState = ui->actionPlayMusic->isChecked();
+//            //Stop music playback in the PGE Editor!
+//            QMetaObject::invokeMethod(m_w, "setMusicButton", Qt::QueuedConnection, Q_ARG(bool, false));
+//            QMetaObject::invokeMethod(m_w, "on_actionPlayMusic_triggered", Qt::QueuedConnection, Q_ARG(bool, false));
+//        }
+//        else
+//        {
+//            QMessageBox::warning(m_w,
+//                        LunaTesterEngine::tr("LunaTester error"),
+//                        LunaTesterEngine::tr("Failed to send level into LunaLUA-SMBX!"),
+//                        QMessageBox::Ok);
+//        }
+//    }
+//    else
+//    {
+//        QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
+//        QMessageBox::warning(m_w,
+//                    LunaTesterEngine::tr("LunaTester error"),
+//                    LunaTesterEngine::tr("Impossible to launch LunaTester, due to %1").arg(luna_error),
+//                    QMessageBox::Ok);
+//    }
 }
 
 void LunaTesterEngine::lunaRunGame()
@@ -1900,48 +2013,60 @@ void LunaTesterEngine::lunaRunGame()
     if(m_noGL)
         params << "--nogl";
 
-    if(!QFile::exists(lunaDllPath))
-    {
 #ifndef _WIN32
-        useWine(command, params);
-        auto wSetup = m_wineSetup;
-        WineSetup::prepareSetup(wSetup);
-        auto env = WineSetup::buildEnv(wSetup);
-        m_lunaGame.setProcessEnvironment(env);
+    useWine(command, params);
+    auto wSetup = m_wineSetup;
+    WineSetup::prepareSetup(wSetup);
+    auto env = WineSetup::buildEnv(wSetup);
+    m_lunaGame.setProcessEnvironment(env);
 #endif
-        m_lunaGame.setProgram(command);
-        m_lunaGame.setArguments(params);
-        m_lunaGame.setWorkingDirectory(smbxPath);
-        m_lunaGame.start();
-    }
-    else
-    {
-        initRuntime();
+    m_lunaGame.setProgram(command);
+    m_lunaGame.setArguments(params);
+    m_lunaGame.setWorkingDirectory(smbxPath);
+    m_lunaGame.start();
 
-        bool engineStartedSuccess = true;
-        QString engineStartupErrorString;
-        killEngine();// Kill previously running game
-#ifndef _WIN32
-        useWine(command, params);
-        auto wSetup = m_wineSetup;
-        WineSetup::prepareSetup(wSetup);
-        auto env = WineSetup::buildEnv(wSetup);
-        emit engineSetEnv(env);
-#endif
-        emit engineSetExecPath(getEnginePath());
-        emit engineSetWorkPath(smbxPath);
-        emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
+//    if(!QFile::exists(lunaDllPath))
+//    {
+//#ifndef _WIN32
+//        useWine(command, params);
+//        auto wSetup = m_wineSetup;
+//        WineSetup::prepareSetup(wSetup);
+//        auto env = WineSetup::buildEnv(wSetup);
+//        m_lunaGame.setProcessEnvironment(env);
+//#endif
+//        m_lunaGame.setProgram(command);
+//        m_lunaGame.setArguments(params);
+//        m_lunaGame.setWorkingDirectory(smbxPath);
+//        m_lunaGame.start();
+//    }
+//    else
+//    {
+//        initRuntime();
 
-        if(!engineStartedSuccess)
-        {
-            QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
-            QMessageBox::warning(m_w,
-                                 LunaTesterEngine::tr("LunaTester error"),
-                                 LunaTesterEngine::tr("Impossible to launch LunaTester, due to %1").arg(luna_error),
-                                 QMessageBox::Ok);
-            return;
-        }
-    }
+//        bool engineStartedSuccess = true;
+//        QString engineStartupErrorString;
+//        killEngine();// Kill previously running game
+//#ifndef _WIN32
+//        useWine(command, params);
+//        auto wSetup = m_wineSetup;
+//        WineSetup::prepareSetup(wSetup);
+//        auto env = WineSetup::buildEnv(wSetup);
+//        emit engineSetEnv(env);
+//#endif
+//        emit engineSetExecPath(getEnginePath());
+//        emit engineSetWorkPath(smbxPath);
+//        emit engineStart(command, params, &engineStartedSuccess, &engineStartupErrorString);
+
+//        if(!engineStartedSuccess)
+//        {
+//            QString luna_error = engineStartupErrorString.isEmpty() ? "Unknown error" : engineStartupErrorString;
+//            QMessageBox::warning(m_w,
+//                                 LunaTesterEngine::tr("LunaTester error"),
+//                                 LunaTesterEngine::tr("Impossible to launch LunaTester, due to %1").arg(luna_error),
+//                                 QMessageBox::Ok);
+//            return;
+//        }
+//    }
 
     //Stop music playback in the PGE Editor!
     QMetaObject::invokeMethod(m_w,
