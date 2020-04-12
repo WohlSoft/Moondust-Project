@@ -24,7 +24,10 @@
 
 struct LunaLuaCapabilities
 {
+    //! Was LunaLua was been detected?
     bool loaded = false;
+    //! Is detected LunaLua ompatible?
+    bool isCompatible = false;
     //! Type of capabilities recognizing
     QString type;
     //! Presenting of special features
@@ -38,6 +41,7 @@ struct LunaLuaCapabilities
     void clear()
     {
         loaded = false;
+        isCompatible = false;
         type.clear();
         features.clear();
         args.clear();

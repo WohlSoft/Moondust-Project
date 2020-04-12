@@ -33,6 +33,21 @@
 #define LUNALUA_CAPS_BEGIN  "STARTFEATUREJSON_Qf+OLC2Re05VTUIuDg99daqvfViNcGEwViqrEfXfJhg"
 #define LUNALUA_CAPS_END    "ENDFEATUREJSON_Qf+OLC2Re05VTUIuDg99daqvfViNcGEwViqrEfXfJhg"
 
+// Magic strings of known but incompatible LunaLua versions
+#define DLLCHECK_INVALID_0611       "LUNALUA V0.6.1.1 BETA"
+#define DLLCHECK_INVALID_0700       "LUNALUA V0.7.0.0 BETA"
+#define DLLCHECK_INVALID_0701       "LUNALUA V0.7.0.1 BETA"
+#define DLLCHECK_INVALID_0702       "LUNALUA V0.7.0.2 BETA"
+#define DLLCHECK_INVALID_0703       "LUNALUA V0.7.0.3 BETA"
+#define DLLCHECK_INVALID_0704       "LUNALUA V0.7.0.4 BETA"
+#define DLLCHECK_INVALID_0710       "LUNALUA V0.7.1.0 BETA"
+#define DLLCHECK_INVALID_0711       "LUNALUA V0.7.1.1 BETA"
+#define DLLCHECK_INVALID_0720       "LUNALUA V0.7.2.0 BETA"
+#define DLLCHECK_INVALID_0721       "LUNALUA V0.7.2.1 BETA"
+#define DLLCHECK_INVALID_0722       "LUNALUA V0.7.2.2 BETA"
+#define DLLCHECK_INVALID_0721       "LUNALUA V0.7.2.1 BETA"
+#define DLLCHECK_INVALID_0730       "LUNALUA V0.7.3.0 BETA" // Used in "SMBX 2.0 Open Beta-Release 2"
+
 // Magic strings to heuristically recognize capatibilities by a version of LunaLua
 #define DLLCHECK_SMBX2BETA3         "LUNALUA V0.7.3.1 BETA"
 #define DLLCHECK_SMBX2MAGLX3        "LUNALUA 70d92f34"
@@ -59,8 +74,9 @@ static void fillCapsBeta3(LunaLuaCapabilities &caps)
                         "getWindowHandle" << "resetCheckPoints";
     caps.args << "patch" << "game" << "leveleditor" << "noframeskip" <<
                  "nosound" << "debugger" << "logger" << "newlauncher" <<
-                 "console" << "nogl" << "testLevel" << "waitForIPC" <<
+                 "console" << "nogl" << "waitForIPC" <<
                  "hideOnCloseIPC";
+    caps.isCompatible = true;
 }
 
 /**
@@ -78,6 +94,7 @@ static void fillCapsMAGLX3(LunaLuaCapabilities &caps)
                  "nosound" << "debugger" << "logger" << "newlauncher" <<
                  "console" << "nogl" << "testLevel" << "waitForIPC" <<
                  "hideOnCloseIPC" << "oldLvlLoader";
+    caps.isCompatible = true;
 }
 
 /**
@@ -95,6 +112,7 @@ static void fillCapsPAL(LunaLuaCapabilities &caps)
                  "nosound" << "debugger" << "logger" << "newlauncher" <<
                  "console" << "nogl" << "testLevel" << "waitForIPC" <<
                  "hideOnCloseIPC" << "oldLvlLoader";
+    caps.isCompatible = true;
 }
 
 /**
@@ -113,6 +131,7 @@ static void fillCapsBeta4(LunaLuaCapabilities &caps)
                  "console" << "nogl" << "testLevel" << "waitForIPC" <<
                  "hideOnCloseIPC" << "oldLvlLoader" <<
                  "softGL" << "forceHardGL";
+    caps.isCompatible = true;
 }
 
 /**
@@ -150,6 +169,8 @@ static void fillCapsFromJson(LunaLuaCapabilities &caps, const QByteArray &rawJso
         for(auto &q : vl)
             caps.args.insert(q.toString());
     }
+
+    caps.isCompatible = true;
 }
 
 /**
@@ -171,6 +192,23 @@ static bool getRawLunaCapabilities(LunaLuaCapabilities &caps, const QString &pat
 
     q.seek(q.size() - 2048);
     a.resize(4096);
+
+    QStringList knownButNot =
+    {
+        DLLCHECK_INVALID_0611,
+        DLLCHECK_INVALID_0700,
+        DLLCHECK_INVALID_0701,
+        DLLCHECK_INVALID_0702,
+        DLLCHECK_INVALID_0703,
+        DLLCHECK_INVALID_0704,
+        DLLCHECK_INVALID_0710,
+        DLLCHECK_INVALID_0711,
+        DLLCHECK_INVALID_0720,
+        DLLCHECK_INVALID_0721,
+        DLLCHECK_INVALID_0722,
+        DLLCHECK_INVALID_0721,
+        DLLCHECK_INVALID_0730
+    };
 
     do
     {
@@ -212,6 +250,18 @@ static bool getRawLunaCapabilities(LunaLuaCapabilities &caps, const QString &pat
                 fillCapsBeta4(caps);
                 caps.type = "DLL-Check Beta4 Patch 1";
                 return true;
+            }
+            else
+            {
+                for(const auto &v : knownButNot)
+                {
+                    if(a.indexOf(v) < 0)
+                        continue;
+                    caps.type = "DLL-Check incompatible " + v;
+                    caps.isCompatible = false;
+                    caps.loaded = true;
+                    return true;
+                }
             }
 
             qint64 at = q.pos() - 2048;
