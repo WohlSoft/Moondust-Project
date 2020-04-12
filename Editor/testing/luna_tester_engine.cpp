@@ -1498,7 +1498,12 @@ bool LunaTesterEngine::doTestLevelIPC(const LevelData &d)
     params << (m_killPreviousSession ? "--patch" : "--hideOnCloseIPC");
 
     if(m_noGL)
-        params << "--nogl";
+    {
+        if(m_caps.args.contains("softgl"))
+            params << "--softgl";
+        else
+            params << "--nogl";
+    }
 
     if(m_caps.args.contains("sendIPCReady"))
         params << "--sendIPCReady";
@@ -1537,8 +1542,13 @@ bool LunaTesterEngine::doTestLevelFile(const QString &levelFile)
 
     params << "--testLevel=" + pathUnixToWine(levelFile);
 
-    if(m_noGL && m_caps.args.contains("nogl"))
-        params << "--nogl";
+    if(m_noGL)
+    {
+        if(m_caps.args.contains("softgl"))
+            params << "--softgl";
+        else
+            params << "--nogl";
+    }
 
     useWine(m_lunaGame, command, params);
     m_lunaGame.setProgram(command);
@@ -1611,8 +1621,13 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
     params << "--patch";
     params << "--game";
 
-    if(m_noGL && m_caps.args.contains("nogl"))
-        params << "--nogl";
+    if(m_noGL)
+    {
+        if(m_caps.args.contains("softgl"))
+            params << "--softgl";
+        else
+            params << "--nogl";
+    }
 
     useWine(m_lunaGame, command, params);
     m_lunaGame.setProgram(command);
@@ -1645,8 +1660,13 @@ bool LunaTesterEngine::runNormalGame()
     params << "--patch";
     params << "--game";
 
-    if(m_noGL && m_caps.args.contains("nogl"))
-        params << "--nogl";
+    if(m_noGL)
+    {
+        if(m_caps.args.contains("softgl"))
+            params << "--softgl";
+        else
+            params << "--nogl";
+    }
 
     useWine(m_lunaGame, command, params);
     m_lunaGame.setProgram(command);

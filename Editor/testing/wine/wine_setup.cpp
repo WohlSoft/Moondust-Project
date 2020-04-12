@@ -29,6 +29,16 @@
 
 #include <QtDebug>
 
+#ifdef __APPLE__
+static const QStringList g_wineSearchPaths =
+{
+    "/Applications/Wine Development.app/Content/Resources/wine/bin",
+    "/Applications/Wine Stable.app/Content/Resources/wine/bin",
+    "/usr/local/bin"
+};
+#else
+static const QStringList g_wineSearchPaths; // Leave blank
+#endif
 
 WineSetup::WineSetup(QWidget *parent) :
     QDialog(parent),
@@ -57,8 +67,8 @@ WineSetup::WineSetup(QWidget *parent) :
 #else
     ui->importFromPlay->setTitle(tr("Import setup from PlayOnLinux"));
 #endif
-    auto wineExPath = QStandardPaths::findExecutable("wine");
-    auto winePathExPath = QStandardPaths::findExecutable("winepath");
+    auto wineExPath = QStandardPaths::findExecutable("wine", g_wineSearchPaths);
+    auto winePathExPath = QStandardPaths::findExecutable("winepath", g_wineSearchPaths);
     auto homePrefix = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
 
     if(!homePrefix.isEmpty())
@@ -119,12 +129,10 @@ void WineSetup::fetchPlayOnLinux()
     ui->doImportFromPoL->setEnabled(false);
 
     auto home = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-#ifdef __APPLE__ // FIXME: VERIFY THIS ON MACOS
-#define POL_CONFIG_NAME "/playonmac.cfg"
+#ifdef __APPLE__
 #define POL_WINE_DIR    "darwin"
-    auto polHome = home + "/.PlayOnMac";
+    auto polHome = home + "/Library/PlayOnMac";
 #else
-#define POL_CONFIG_NAME "playonlinux"
 #define POL_WINE_DIR    "linux"
     auto polHome = home + "/.PlayOnLinux";
 #endif
@@ -150,7 +158,7 @@ void WineSetup::fetchPlayOnLinux()
         profile.name = QDir(p).dirName();
         qDebug() << p;
 
-        const QString cfgFile = p + "/" POL_CONFIG_NAME ".cfg";
+        const QString cfgFile = p + "/playonlinux.cfg";
 
         if(!QFile::exists(cfgFile))
             continue;
@@ -227,7 +235,7 @@ void WineSetup::prepareSetup(WineSetupData &setup)
     if(!setup.useCustom)
     {
         // Detect system-wide
-        setup.metaWineExec = QStandardPaths::findExecutable("wine");
+        setup.metaWineExec = QStandardPaths::findExecutable("wine", g_wineSearchPaths);
         QFileInfo f(setup.metaWineExec);
         auto d = f.absoluteDir();
         setup.metaWineBinDir = d.absolutePath();
