@@ -1499,8 +1499,8 @@ bool LunaTesterEngine::doTestLevelIPC(const LevelData &d)
 
     if(m_noGL)
     {
-        if(m_caps.args.contains("softgl"))
-            params << "--softgl";
+        if(m_caps.args.contains("softGL"))
+            params << "--softGL";
         else
             params << "--nogl";
     }
@@ -1544,8 +1544,8 @@ bool LunaTesterEngine::doTestLevelFile(const QString &levelFile)
 
     if(m_noGL)
     {
-        if(m_caps.args.contains("softgl"))
-            params << "--softgl";
+        if(m_caps.args.contains("softGL"))
+            params << "--softGL";
         else
             params << "--nogl";
     }
@@ -1623,8 +1623,8 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
 
     if(m_noGL)
     {
-        if(m_caps.args.contains("softgl"))
-            params << "--softgl";
+        if(m_caps.args.contains("softGL"))
+            params << "--softGL";
         else
             params << "--nogl";
     }
@@ -1662,8 +1662,8 @@ bool LunaTesterEngine::runNormalGame()
 
     if(m_noGL)
     {
-        if(m_caps.args.contains("softgl"))
-            params << "--softgl";
+        if(m_caps.args.contains("softGL"))
+            params << "--softGL";
         else
             params << "--nogl";
     }
