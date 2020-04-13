@@ -4097,84 +4097,88 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     <message>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in LunaTester from disk.</comment>
-        <translation type="unfinished">Тестировать файл уровня/мира</translation>
+        <translation>Тестировать файл уровня/мира</translation>
     </message>
     <message>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
-        <translation type="unfinished"></translation>
+        <translation>Настройки Wine...</translation>
     </message>
     <message>
         <source>Select a Wine toolchain for use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор комплекта Wine для работы.</translation>
     </message>
     <message>
         <source>Failed to start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка запуска: %1</translation>
     </message>
     <message>
         <source>Crashed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Авария: %1</translation>
     </message>
     <message>
         <source>Timed out: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Время ожидания истеклоt: %1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка записи: %1</translation>
     </message>
     <message>
         <source>Read error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка чтения: %1</translation>
     </message>
     <message>
         <source>Unknown error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Неизвестная ошибка: %1</translation>
     </message>
     <message>
         <source>Error has occured: (Error %1) %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Возникла ошибка: (Ошибка %1) %2</translation>
     </message>
     <message>
         <source>LunaTester is still active</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester всё ещё рабтоает</translation>
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shot down LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Чтобы изменить путь к LunaTester, необходимо завершить работающую игру. Завершить LunaTester сейчас?</translation>
     </message>
     <message>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось распознать возможности выбранной сборки LunaLua, игра может не заработать. Пожалуйста, укажите другой путь.</translation>
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы изменить настройки Wine, необходимо завершить работающую игру. Завершить LunaTester сейчас?</translation>
     </message>
     <message>
         <source>Incompatible LunaDll found</source>
-        <translation type="unfinished"></translation>
+        <translation>Обнаружена несовместимая сборка LunaLua</translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить LunaTester из-за несовместимого модуля LunaDll.dll, обнаруженного по пути: %1</translation>
     </message>
     <message>
         <source>Incompatible LunaLua</source>
-        <translation type="unfinished"></translation>
+        <translation>Несовместимая сборка LunaLua</translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить LunaTester из-за несовместимой сборки LunaLua по пути: %1</translation>
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить эпизод за пределами корня миров (папки &quot;worlds&quot;) в выбранной сборке LunaTester.</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустить эпизод из-за повреждённого файла карты мира.</translation>
+    </message>
+    <message>
+        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
+        <translation>Чтобы изменить путь к LunaTester, необходимо завершить работающую игру. Завершить LunaTester сейчас?</translation>
     </message>
 </context>
 <context>
@@ -12519,110 +12523,110 @@ because object configurations are not loaded
     <name>WineSetup</name>
     <message>
         <source>Wine configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки Wine</translation>
     </message>
     <message>
         <source>Test</source>
-        <translation type="unfinished">Тест</translation>
+        <translation>Тест</translation>
     </message>
     <message>
         <source>Wine config</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфигурация Wine</translation>
     </message>
     <message>
         <source>Version dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Диалог версии</translation>
     </message>
     <message>
         <source>Stop process</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить процесс</translation>
     </message>
     <message>
         <source>Not running</source>
-        <translation type="unfinished"></translation>
+        <translation>Не запущенно</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished">Импортировать</translation>
+        <translation>Импортировать</translation>
     </message>
     <message>
         <source>Specify a custom environment (PlayOnLinux/Mac)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Указать пользовательскую среду (PlayOnLinux/Mac)</translation>
     </message>
     <message>
         <source>Wine home prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Домашняя папка Wine</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <source>Location of wine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use a system-wide installed Wine from a PATH envrinoment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Расположение Wine</translation>
     </message>
     <message>
         <source>System default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Системный</translation>
     </message>
     <message>
         <source>Custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Другой:</translation>
     </message>
     <message>
         <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить отладочный вывод Wine в консоль &quot;WineDebug&quot;</translation>
     </message>
     <message>
         <source>Import setup from PlayOnMac</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать настройки из PlayOnMac</translation>
     </message>
     <message>
         <source>Import setup from PlayOnLinux</source>
-        <translation type="unfinished"></translation>
+        <translation>Импортировать настройки из PlayOnLinux</translation>
     </message>
     <message>
         <source>Select a Wine install prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать путь к установке Wine</translation>
     </message>
     <message>
         <source>Select a Wine home prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать путь к домашней папке Wine</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Невозможно запустит &quot;%1&quot; потому что: %2</translation>
     </message>
     <message>
         <source>Not running</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>Не запущенно</translation>
     </message>
     <message>
         <source>Starting...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>Запуск...</translation>
     </message>
     <message>
         <source>Running...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>Работает...</translation>
+    </message>
+    <message>
+        <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
+        <translation>Локальная пользовательская домашняя папка Wine, содержащая настройки, корень диска C, и некоторые другие вещи.</translation>
+    </message>
+    <message>
+        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <translation>Использовать Wine, установленный в системе и видимый через среду PATH.</translation>
+    </message>
+    <message>
+        <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
+        <translation>Указать другой путь установки Wine (папка, которая содержит папки &quot;bin&quot;, &quot;lib&quot;, &quot;share&quot;, содержащие рабочий комплект Wine).</translation>
     </message>
 </context>
 <context>
