@@ -211,6 +211,23 @@ void TheXTechEngine::chooseEnginePath()
             m_customEnginePath = c->text();
         else
             m_customEnginePath.clear();
+
+#ifdef __APPLE__
+        // Automatically recognize an executable inside of an app bundle
+        QFileInfo x(m_customEnginePath);
+        if(!m_customEnginePath.isEmpty() && x.isDir() && m_customEnginePath.endsWith(".app", Qt::CaseInsensitive))
+        {
+            QDir bundleMac(m_customEnginePath + "/Contents/MacOS");
+            if(bundleMac.exists())
+            {
+                auto f = bundleMac.entryList(QDir::Files);
+                if(!f.isEmpty())
+                {
+                    m_customEnginePath = bundleMac.absoluteFilePath(f.first());
+                }
+            }
+        }
+#endif
     }
 }
 
