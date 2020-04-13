@@ -3367,84 +3367,84 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     <message>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in LunaTester from disk.</comment>
-        <translation type="unfinished">测试已保存的关卡/大地图</translation>
+        <translation>测试已保存的关卡/大地图</translation>
     </message>
     <message>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wine 设置……</translation>
     </message>
     <message>
         <source>Select a Wine toolchain for use.</source>
-        <translation type="unfinished"></translation>
+        <translation>选择要使用的 Wine 工具链。</translation>
     </message>
     <message>
         <source>Failed to start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>启动失败：%1</translation>
     </message>
     <message>
         <source>Crashed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>异常终止：%1</translation>
     </message>
     <message>
         <source>Timed out: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>超时：%1</translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>写入错误：%1</translation>
     </message>
     <message>
         <source>Read error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>读取错误：%1</translation>
     </message>
     <message>
         <source>Unknown error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>未知错误：%1</translation>
     </message>
     <message>
         <source>Error has occured: (Error %1) %2</source>
-        <translation type="unfinished"></translation>
+        <translation>发生错误：（错误 %1）%2</translation>
     </message>
     <message>
         <source>LunaTester is still active</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 仍在运行</translation>
     </message>
     <message>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
-        <translation type="unfinished"></translation>
+        <translation>由于无法识别所选的 LunaLua 目录，故游戏无法运行，请选择其他目录。</translation>
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>您必须关闭正在运行的 LunaTester 进程才能更改 Wine 目录。您现在要关闭 LunaTester 吗？</translation>
     </message>
     <message>
         <source>Incompatible LunaDll found</source>
-        <translation type="unfinished"></translation>
+        <translation>存在不兼容的 LunaDLL</translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>启动 LunaTester 失败，因为存在不兼容的 LunaDll.dll 于目录：%1</translation>
     </message>
     <message>
         <source>Incompatible LunaLua</source>
-        <translation type="unfinished"></translation>
+        <translation>存在不兼容的 LunaLua</translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>启动 LunaTester 失败，因为存在不兼容的 LunaLua 于目录：%1</translation>
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation type="unfinished"></translation>
+        <translation>启动大地图失败，worlds 根目录中数量超出上限。</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation type="unfinished"></translation>
+        <translation>启动大地图失败，无效的大地图文件。</translation>
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>您必须关闭正在运行的游戏才能更改 LunaTester 目录。您现在要关闭 LunaTester 吗？</translation>
     </message>
 </context>
 <context>
@@ -8812,110 +8812,110 @@ because object configurations are not loaded
     <name>WineSetup</name>
     <message>
         <source>Wine configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine 设置</translation>
     </message>
     <message>
         <source>Test</source>
-        <translation type="unfinished">测试</translation>
+        <translation>测试</translation>
     </message>
     <message>
         <source>Wine config</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine 设置</translation>
     </message>
     <message>
         <source>Version dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>版本信息</translation>
     </message>
     <message>
         <source>Stop process</source>
-        <translation type="unfinished"></translation>
+        <translation>结束进程</translation>
     </message>
     <message>
         <source>Not running</source>
-        <translation type="unfinished"></translation>
+        <translation>未运行</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished">导入</translation>
+        <translation>导入</translation>
     </message>
     <message>
         <source>Specify a custom environment (PlayOnLinux/Mac)</source>
-        <translation type="unfinished"></translation>
+        <translation>确定自定义环境（PlayOnLinux/Mac）</translation>
     </message>
     <message>
         <source>Wine home prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine 主目录</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">浏览……</translation>
+        <translation>浏览……</translation>
     </message>
     <message>
         <source>Location of wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine 位置</translation>
     </message>
     <message>
         <source>System default</source>
-        <translation type="unfinished"></translation>
+        <translation>系统默认</translation>
     </message>
     <message>
         <source>Custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义：</translation>
     </message>
     <message>
         <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
-        <translation type="unfinished"></translation>
+        <translation>在“WineDebug”控制台中显示调试信息</translation>
     </message>
     <message>
         <source>Import setup from PlayOnMac</source>
-        <translation type="unfinished"></translation>
+        <translation>从 PlayOnMac 导入设置</translation>
     </message>
     <message>
         <source>Import setup from PlayOnLinux</source>
-        <translation type="unfinished"></translation>
+        <translation>从 PlayOnLinux 导入设置</translation>
     </message>
     <message>
         <source>Select a Wine install prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation>选择 Wine 安装目录</translation>
     </message>
     <message>
         <source>Select a Wine home prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation>选择 Wine 主目录</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">错误</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>启动“%1”失败，因为：%2</translation>
     </message>
     <message>
         <source>Not running</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>未运行</translation>
     </message>
     <message>
         <source>Starting...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>启动中……</translation>
     </message>
     <message>
         <source>Running...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>运行中……</translation>
     </message>
     <message>
         <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine 目录，包含设置、C 盘根目录以及其他一些要素。</translation>
     </message>
     <message>
         <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
-        <translation type="unfinished"></translation>
+        <translation>使用 Wine 中 PATH 的环境变量。</translation>
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
-        <translation type="unfinished"></translation>
+        <translation>确定自定义 Wine 安装目录（包含“Bin”、“Lib”、“Share”三个子目录和一个工作中的 Wine 工具链）。</translation>
     </message>
 </context>
 <context>
