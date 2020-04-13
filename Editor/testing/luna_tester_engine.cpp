@@ -474,12 +474,7 @@ void LunaTesterEngine::gameStarted()
     if(m_caps.args.contains("sendIPCReady"))
         return; // Unneeded
 
-    if(sendLevelData(m_levelTestBuffer))
-    {
-        //Stop music playback in the PGE Editor!
-        stopEditorMusic();
-    }
-    else
+    if(!sendLevelData(m_levelTestBuffer))
     {
         QMessageBox::warning(m_w,
                     LunaTesterEngine::tr("LunaTester error"),
@@ -654,10 +649,30 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
             if(sendLevelData(m_levelTestBuffer))
             {
                 LogDebug("LunaTester: Sent a level data");
-                stopEditorMusic();
             }
             else
+            {
                 LogWarning("LunaTester: Fail to send a level data.");
+            }
+        }
+        else if (call == "closedToBackgroundNotification")
+        {
+            // Engine window was closed, now hidden in the background
+            m_w->testingFinished();
+        }
+        else if (call == "showFromBackgroundNotification")
+        {
+            // Engine window is returning from being hidden in the background
+            // Note: We don't call m_w->stopMusicForTesting() here because we do that after level
+            //       data we send is acknowledged.
+        }
+        else if (call == "suspendWhileUnfocusedNotification")
+        {
+            // Engine window is still there but suspended due to being unfocused
+        }
+        else if (call == "resumeAfterUnfocusedNotification")
+        {
+            // Engine window is resuming after being unfocused
         }
         return;
     }
@@ -732,6 +747,19 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         LogDebug("LunaTester: <- Level data has been sent!");
         if(!obj["error"].isNull())
             lunaErrorMsg(m_w, obj);
+        
+        // Stop music playback in the PGE Editor
+        // Note: Currently, use stopMusicForTesting if we get hide/show notifications
+        //       but otherwise use LunaTesterEngine::stopEditorMusic()
+        if (m_caps.features.contains("HideShowNotifications"))
+        {
+            m_w->stopMusicForTesting();
+        }
+        else
+        {
+            stopEditorMusic();
+        }
+
         break;
 
     case PendC_Quit:
@@ -1497,7 +1525,6 @@ bool LunaTesterEngine::doTestLevelIPC(const LevelData &d)
         //Then send level data to SMBX Engine
         if(sendLevelData(m_levelTestBuffer))
         {
-            stopEditorMusic();
             return true;
         }
         return false;
