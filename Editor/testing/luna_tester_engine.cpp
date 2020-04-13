@@ -459,12 +459,13 @@ void LunaTesterEngine::gameErrorOccurred(QProcess::ProcessError error)
         break;
     }
 
-    if(m_ipcPrevCmd != PrevC_Kill)
+    if(!m_pendingCommands.contains(PendC_Kill))
         QMessageBox::critical(m_w, title, msg, QMessageBox::Ok);
     else
     {
         LogDebug("LunaTester: killed: " + msg);
     }
+    m_pendingCommands.clear();
 }
 #endif
 
@@ -590,7 +591,7 @@ void LunaTesterEngine::gameReadyReadStandardOutput()
     }
 }
 
-bool LunaTesterEngine::sendSimpleCommand(const QString &cmd)
+bool LunaTesterEngine::sendSimpleCommand(const QString &cmd, PendingCmd ipcPendCmd)
 {
     QJsonDocument jsonOut;
     QJsonObject jsonObj;
@@ -599,9 +600,14 @@ bool LunaTesterEngine::sendSimpleCommand(const QString &cmd)
     QJsonObject JSONparams;
     JSONparams["xxx"] = 0;
     jsonObj["params"] = JSONparams;
-    jsonObj["id"] = 3;
+    jsonObj["id"] = static_cast<int>(ipcPendCmd);
     jsonOut.setObject(jsonObj);
-    return writeToIPC(jsonOut);
+    if (writeToIPC(jsonOut))
+    {
+        m_pendingCommands += ipcPendCmd;
+        return true;
+    }
+    return false;
 }
 
 bool LunaTesterEngine::writeToIPC(const QJsonDocument &out)
@@ -656,9 +662,21 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         return;
     }
 
-    switch(m_ipcPrevCmd)
+    // Get previous command from ID field, since we send this enum as the ID
+    PendingCmd ipcPendCmd = static_cast<PendingCmd>(obj["id"].toInt(PendC_NONE));
+
+    // If kill is pending or unexpected response, don't react to any message exept to log errors
+    if (m_pendingCommands.contains(PendC_Kill) || !m_pendingCommands.contains(ipcPendCmd))
     {
-    case PrevC_CheckPoint:
+        ipcPendCmd = PendC_NONE;
+    }
+
+    // Mark as no longer pending
+    m_pendingCommands -= ipcPendCmd;
+
+    switch(ipcPendCmd)
+    {
+    case PendC_CheckPoint:
         LogDebug("LunaTester: Got a checkpoint reset feedback");
         if(!obj["error"].isNull())
         {
@@ -671,7 +689,7 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
                                  QMessageBox::Ok);
         break;
 
-    case PrevC_ShowWindow:
+    case PendC_ShowWindow:
         LogDebug("LunaTester: Got a HWND feedback");
         if(!obj["error"].isNull())
         {
@@ -710,26 +728,24 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         }
         break;
 
-    case PrevC_SendLevel:
+    case PendC_SendLevel:
         LogDebug("LunaTester: <- Level data has been sent!");
         if(!obj["error"].isNull())
             lunaErrorMsg(m_w, obj);
         break;
 
-    default:
-    case PrevC_Quit:
+    case PendC_Quit:
         LogDebug("LunaTester: Got a Quit feedback");
         if(!obj["error"].isNull())
             lunaErrorMsg(m_w, obj);
         break;
-    case PrevC_Kill:
-    case PrevC_NONE:
+
+    default:
+    case PendC_NONE:
         if(!obj["error"].isNull())
             lunaErrorMsg(m_w, obj);
         break;
     }
-
-    m_ipcPrevCmd = PrevC_NONE;
 }
 
 
@@ -799,6 +815,9 @@ bool LunaTesterEngine::isEngineActive()
 
 void LunaTesterEngine::killProcess()
 {
+    // Mark kill as pending for purposes of command processing
+    m_pendingCommands += PendC_Kill;
+
     QString lunaExecPath = getEnginePath();
     if(isEngineActive())
     {
@@ -882,8 +901,7 @@ void LunaTesterEngine::killEngine()
 
     if(m_caps.ipcCommands.contains("quit"))
     {
-        if(sendSimpleCommand("quit"))
-            m_ipcPrevCmd = PrevC_Quit;
+        sendSimpleCommand("quit", PendC_Quit);
 
         QEventLoop loop;
         QTimer waiter;
@@ -899,13 +917,11 @@ void LunaTesterEngine::killEngine()
 
         if(isEngineActive())
         {
-            m_ipcPrevCmd = PrevC_Kill;
             killProcess();
         }
     }
     else
     {
-        m_ipcPrevCmd = PrevC_Kill;
         killProcess();
     }
 }
@@ -980,8 +996,7 @@ void LunaTesterEngine::resetCheckPoints()
         return;
     }
 
-    if(sendSimpleCommand("resetCheckPoints"))
-        m_ipcPrevCmd = PrevC_CheckPoint;
+    sendSimpleCommand("resetCheckPoints", PendC_CheckPoint);
 }
 
 void LunaTesterEngine::killBackgroundInstance()
@@ -1144,9 +1159,8 @@ bool LunaTesterEngine::switchToSmbxWindow()
     if(m_caps.features.contains("SelfForegrounding"))
         return true; // this workaround is no more needed
 
-    if(sendSimpleCommand("getWindowHandle"))
+    if(sendSimpleCommand("getWindowHandle", PendC_ShowWindow))
     {
-        m_ipcPrevCmd = PrevC_ShowWindow;
         return true;
     }
 
@@ -1234,14 +1248,14 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl)
     JSONparams["leveldata"] = LVLRawData;
 
     jsonObj["params"] = JSONparams;
-    jsonObj["id"] = 3;
+    jsonObj["id"] = static_cast<int>(PendC_SendLevel);
     jsonOut.setObject(jsonObj);
 
     LogDebug("LunaTester: -> Sending level data and testing request...");
     //Send data to SMBX
     if(writeToIPC(jsonOut))
     {
-        m_ipcPrevCmd = PrevC_SendLevel;
+        m_pendingCommands += PendC_SendLevel;
         return true;
     }
     LogWarning("<- Fail to send level data and testing request into LunaTester!");
@@ -1495,6 +1509,10 @@ bool LunaTesterEngine::doTestLevelIPC(const LevelData &d)
     /**********************************************
      **********Do LunaLUA testing launch!**********
      **********************************************/
+
+    // Reset flags
+    m_pendingCommands.clear();
+
     params << (m_killPreviousSession ? "--patch" : "--hideOnCloseIPC");
 
     if(m_noGL)

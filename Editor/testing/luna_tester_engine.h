@@ -63,16 +63,16 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     //! Input buffer
     QByteArray          m_ipcReadBuffer;
 
-    enum PreviousCommand
+    enum PendingCmd
     {
-        PrevC_NONE = 0,
-        PrevC_SendLevel,
-        PrevC_CheckPoint,
-        PrevC_ShowWindow,
-        PrevC_Quit,
-        PrevC_Kill
+        PendC_NONE = 0,
+        PendC_SendLevel,
+        PendC_CheckPoint,
+        PendC_ShowWindow,
+        PendC_Quit,
+        PendC_Kill
     };
-    PreviousCommand     m_ipcPrevCmd = PrevC_NONE;
+    QSet<PendingCmd>    m_pendingCommands;
 
     //! Don't run same function multiple times
     QMutex              m_engine_mutex;
@@ -95,7 +95,7 @@ private slots:
     void gameReadyReadStandardOutput();
 
 private:
-    bool sendSimpleCommand(const QString &cmd);
+    bool sendSimpleCommand(const QString &cmd, PendingCmd ipcPrevCmd = PendC_NONE);
     bool writeToIPC(const QJsonDocument &out);
     void onInputData(const QJsonDocument &input);
 
