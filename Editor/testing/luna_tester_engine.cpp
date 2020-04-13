@@ -747,7 +747,7 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         LogDebug("LunaTester: <- Level data has been sent!");
         if(!obj["error"].isNull())
             lunaErrorMsg(m_w, obj);
-        
+
         // Stop music playback in the PGE Editor
         // Note: Currently, use stopMusicForTesting if we get hide/show notifications
         //       but otherwise use LunaTesterEngine::stopEditorMusic()
@@ -1060,7 +1060,7 @@ void LunaTesterEngine::chooseEnginePath()
         int ret = QMessageBox::question(m_w,
                                         tr("LunaTester is still active"),
                                         tr("To change a path to LunaTester, you will need to shut down a currently running game. "
-                                           "Do you want to shot down LunaTester now?"),
+                                           "Do you want to shut down LunaTester now?"),
                                         QMessageBox::Yes|QMessageBox::No);
         if(ret != QMessageBox::Yes)
             return; // Do nothing
