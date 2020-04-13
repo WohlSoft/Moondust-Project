@@ -3803,11 +3803,11 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation>Прервать зависший загрузчик</translation>
+        <translation type="vanished">Прервать зависший загрузчик</translation>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>Прерывание зависшего потока позволяет запустить тест заново.</translation>
+        <translation type="vanished">Прерывание зависшего потока позволяет запустить тест заново.</translation>
     </message>
     <message>
         <source>Terminate running process</source>
@@ -3843,13 +3843,13 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Are you really want to terminate loader thread?</source>
-        <translation>Действительно ли вы хотите прервать поток загрузчика?</translation>
+        <translation type="vanished">Действительно ли вы хотите прервать поток загрузчика?</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation>Поток загрузчика не запущен.</translation>
+        <translation type="vanished">Поток загрузчика не запущен.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -3899,7 +3899,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>LunaTester error!</source>
-        <translation>Ошибка LunaTester!</translation>
+        <translation type="vanished">Ошибка LunaTester!</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
@@ -3932,12 +3932,12 @@ To run testing via SMBX you should have right SMBX Integration configuration pac
     </message>
     <message>
         <source>SMBX Test is already runned</source>
-        <translation>SMBX-тест уже запущен</translation>
+        <translation type="vanished">SMBX-тест уже запущен</translation>
     </message>
     <message>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation>SMBX-Движок уже тестирует другой уровень.
+        <translation type="vanished">SMBX-Движок уже тестирует другой уровень.
 Хотите ли вы прервать процесс тестирования?</translation>
     </message>
     <message>
@@ -4021,7 +4021,7 @@ To use LunaTester you should have right Integration configuration package!</sour
     </message>
     <message>
         <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
-        <translation>Поток загрузчика LunaTester-а занят, попробуйте ещё раз, или попробуйте прервать зависший загрузчик!</translation>
+        <translation type="vanished">Поток загрузчика LunaTester-а занят, попробуйте ещё раз, или попробуйте прервать зависший загрузчик!</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
@@ -4084,15 +4084,97 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to launch LunaTester, due to %1</source>
-        <translation>Невозможно запустить SMBX-Движок, потому что %1</translation>
+        <translation type="vanished">Невозможно запустить SMBX-Движок, потому что %1</translation>
     </message>
     <message>
         <source>LunaTester Directory wasn&apos;t configured right</source>
-        <translation>Папка LunaTester-а сконфигурирована неверно</translation>
+        <translation type="vanished">Папка LunaTester-а сконфигурирована неверно</translation>
     </message>
     <message>
         <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
-        <translation>Файл &quot;%1&quot; не найден! Чтобы работать с LunaTester, вы должны указать корректный путь к SMBX.</translation>
+        <translation type="vanished">Файл &quot;%1&quot; не найден! Чтобы работать с LunaTester, вы должны указать корректный путь к SMBX.</translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in LunaTester from disk.</comment>
+        <translation type="unfinished">Тестировать файл уровня/мира</translation>
+    </message>
+    <message>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Wine toolchain for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to start: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crashed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timed out: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error has occured: (Error %1) %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester is still active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shot down LunaTester now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible LunaDll found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible LunaLua</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode out of LunaTester worlds root.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode because of an invalid world file.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -12431,6 +12513,116 @@ because object configurations are not loaded
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
         <translation>Невозможно загрузить карту мира &quot;%1&quot;, потому что конфигурационный пакет содержит ошибки.</translation>
+    </message>
+</context>
+<context>
+    <name>WineSetup</name>
+    <message>
+        <source>Wine configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished">Тест</translation>
+    </message>
+    <message>
+        <source>Wine config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Импортировать</translation>
+    </message>
+    <message>
+        <source>Specify a custom environment (PlayOnLinux/Mac)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wine home prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished">Обзор...</translation>
+    </message>
+    <message>
+        <source>Location of wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use a system-wide installed Wine from a PATH envrinoment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import setup from PlayOnMac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import setup from PlayOnLinux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Wine install prefix path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Wine home prefix path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Ошибка</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <comment>State of a test app</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting...</source>
+        <comment>State of a test app</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running...</source>
+        <comment>State of a test app</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

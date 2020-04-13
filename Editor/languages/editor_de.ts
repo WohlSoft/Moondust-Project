@@ -3453,15 +3453,6 @@ Suggested to disable this feature on slow machines or if any troubles are happen
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
@@ -3478,16 +3469,6 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3529,20 +3510,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>LunaTester error!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>LunaLUA tester is not started!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3568,10 +3536,6 @@ Do you want to abort current testing process?</source>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3626,15 +3590,85 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Impossible to launch LunaTester, due to %1</source>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in LunaTester from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>LunaTester Directory wasn&apos;t configured right</source>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
+        <source>Select a Wine toolchain for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to start: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crashed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timed out: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error has occured: (Error %1) %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LunaTester is still active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shot down LunaTester now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible LunaDll found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible LunaLua</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode out of LunaTester worlds root.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11289,6 +11323,116 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WineSetup</name>
+    <message>
+        <source>Wine configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished">Test</translation>
+    </message>
+    <message>
+        <source>Wine config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Importieren</translation>
+    </message>
+    <message>
+        <source>Specify a custom environment (PlayOnLinux/Mac)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wine home prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished">Durchsuchen...</translation>
+    </message>
+    <message>
+        <source>Location of wine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use a system-wide installed Wine from a PATH envrinoment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import setup from PlayOnMac</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import setup from PlayOnLinux</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Wine install prefix path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Wine home prefix path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <comment>State of a test app</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Starting...</source>
+        <comment>State of a test app</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running...</source>
+        <comment>State of a test app</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
