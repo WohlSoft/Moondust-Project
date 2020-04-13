@@ -3521,6 +3521,11 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1062"/>
+        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1071"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
@@ -3622,11 +3627,6 @@ Do you want to continue the process?</source>
         <location filename="../testing/luna_tester_engine.cpp" line="1061"/>
         <location filename="../testing/luna_tester_engine.cpp" line="1161"/>
         <source>LunaTester is still active</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1062"/>
-        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shot down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9962,7 +9962,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="139"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9983,17 +9983,17 @@ Data may be corrupted!</source>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="178"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use a system-wide installed Wine from a PATH envrinoment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/wine/wine_setup.ui" line="188"/>
+        <source>Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="181"/>
         <source>System default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../testing/wine/wine_setup.ui" line="188"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

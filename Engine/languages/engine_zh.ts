@@ -4,22 +4,22 @@
 <context>
     <name></name>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="247"/>
+        <location filename="../gui/pge_msgbox.cpp" line="249"/>
         <source>Information</source>
         <translation>信息</translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="262"/>
+        <location filename="../gui/pge_msgbox.cpp" line="264"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="277"/>
+        <location filename="../gui/pge_msgbox.cpp" line="279"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="292"/>
+        <location filename="../gui/pge_msgbox.cpp" line="294"/>
         <source>Fatal error</source>
         <translation>致命错误</translation>
     </message>
@@ -259,7 +259,7 @@ and retry your recent actions to get more detailed information.</source>
         <translation>错误的人物形态编号</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="445"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="447"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>错误：无法找到起点。
@@ -454,23 +454,23 @@ Did you placed player start point (or entrance warp point) too far off of the se
         <translation>&lt;未找到关卡&gt;</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="684"/>
+        <location filename="../main.cpp" line="685"/>
         <source>Unable to init SDL!</source>
         <translation>SDL 初始化失败！</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="745"/>
+        <location filename="../main.cpp" line="746"/>
         <source>Config packs not found</source>
         <translation>未找到配置包</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="748"/>
+        <location filename="../main.cpp" line="749"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>没有可用的配置包，因此无法启动游戏！</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="758"/>
+        <location filename="../main.cpp" line="759"/>
         <source>Choose a game to test:</source>
         <translation>选择游戏进行测试：</translation>
     </message>

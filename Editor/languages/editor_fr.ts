@@ -3423,10 +3423,6 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shot down LunaTester now?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3456,6 +3452,10 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8495,10 +8495,6 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Wine home prefix</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8511,15 +8507,7 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use a system-wide installed Wine from a PATH envrinoment.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>System default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8567,6 +8555,18 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
     <message>
         <source>Running...</source>
         <comment>State of a test app</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

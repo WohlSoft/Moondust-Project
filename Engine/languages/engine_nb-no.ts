@@ -4,22 +4,22 @@
 <context>
     <name></name>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="247"/>
+        <location filename="../gui/pge_msgbox.cpp" line="249"/>
         <source>Information</source>
         <translation>Informasjon</translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="262"/>
+        <location filename="../gui/pge_msgbox.cpp" line="264"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="277"/>
+        <location filename="../gui/pge_msgbox.cpp" line="279"/>
         <source>Error</source>
         <translation>Feil</translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="292"/>
+        <location filename="../gui/pge_msgbox.cpp" line="294"/>
         <source>Fatal error</source>
         <translation>Fatal feil</translation>
     </message>
@@ -260,7 +260,7 @@ og prøv å kjøre nylige handlinger igjen for å innhente mer info.</translatio
         <translation>Ugyldig spillbar karaktertilstands-ID</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="445"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="447"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation type="unfinished">Fatal feil: Kunne ikke finne startdel.
@@ -455,24 +455,24 @@ Plasserte du spillerens startpunkt (eller inngangsoverføringspunkt) for langt u
         <translation>&lt;nivåer ble ikke funnet&gt;</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="684"/>
+        <location filename="../main.cpp" line="685"/>
         <source>Unable to init SDL!</source>
         <translation>Kunne ikke igangsette SDL.</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="745"/>
+        <location filename="../main.cpp" line="746"/>
         <source>Config packs not found</source>
         <translation>Fant ikke oppsettspakker</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="748"/>
+        <location filename="../main.cpp" line="749"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>Kan ikke starte spill, fordi tilgjengelig
 oppsettspakker ikke ble funnet.</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="758"/>
+        <location filename="../main.cpp" line="759"/>
         <source>Choose a game to test:</source>
         <translation>Velg et spill å teste:</translation>
     </message>

@@ -173,24 +173,24 @@ Cependant vous pouvez utiliser le même lien pour obtenir un version plus récen
         <translation>Sélectionner un jeu :</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="684"/>
+        <location filename="../main.cpp" line="685"/>
         <source>Unable to init SDL!</source>
         <translation>Impossible d&apos;initialiser SDL !</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="745"/>
+        <location filename="../main.cpp" line="746"/>
         <source>Config packs not found</source>
         <translation>Paquets de configuration introuvables</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="748"/>
+        <location filename="../main.cpp" line="749"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>Impossible de lancer le jeu, car les
 paquets de configuration sont introuvables !</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="758"/>
+        <location filename="../main.cpp" line="759"/>
         <source>Choose a game to test:</source>
         <translation>Sélectionner un jeu à tester :</translation>
     </message>
@@ -468,7 +468,7 @@ Point d&apos;entrée N° : %2</translation>
         <translation>&lt;niveaux introuvables&gt;</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="445"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="447"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>Erreur fatale : Impossible de trouver la section de démarrage.
@@ -550,22 +550,22 @@ Le moteur de rendu logiciel va être lancé.</translation>
         <translation>Le nombre d&apos;images par seconde détecté est trop élevé. La synchronisation verticale sera désactivée pour éviter les résultats problématiques. Veuillez activer la synchronisation verticale de votre pilote vidéo.</translation>
     </message>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="247"/>
+        <location filename="../gui/pge_msgbox.cpp" line="249"/>
         <source>Information</source>
         <translation>Information</translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="262"/>
+        <location filename="../gui/pge_msgbox.cpp" line="264"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="277"/>
+        <location filename="../gui/pge_msgbox.cpp" line="279"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="292"/>
+        <location filename="../gui/pge_msgbox.cpp" line="294"/>
         <source>Fatal error</source>
         <translation>Erreur fatale</translation>
     </message>
