@@ -9512,7 +9512,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).</source>
+        <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

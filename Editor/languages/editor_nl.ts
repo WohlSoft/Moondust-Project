@@ -10928,13 +10928,13 @@ Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.I
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.ui" line="188"/>
-        <source>Specify a custom Wine install prefix (a directory which contains &amp;quot;bin&amp;quot;, &amp;quot;lib&amp;quot;, and &amp;quot;share&amp;quot; directories with a working Wine toolchain).</source>
+        <location filename="../testing/wine/wine_setup.ui" line="181"/>
+        <source>System default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.ui" line="181"/>
-        <source>System default</source>
+        <location filename="../testing/wine/wine_setup.ui" line="188"/>
+        <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
