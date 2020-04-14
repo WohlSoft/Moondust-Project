@@ -485,6 +485,7 @@ void LunaTesterEngine::gameStarted()
 
 void LunaTesterEngine::gameFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
+    m_w->testingFinished();
     LogDebug(QString("LunaTester: finished with Exit Code %1 and status %2").arg(exitCode).arg(exitStatus));
 }
 
@@ -765,6 +766,7 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         break;
 
     default:
+    case PendC_Kill:
     case PendC_NONE:
         if(!obj["error"].isNull())
             lunaErrorMsg(m_w, obj);
@@ -1033,6 +1035,7 @@ void LunaTesterEngine::killBackgroundInstance()
                                             QMessageBox::Yes | QMessageBox::No);
         if(reply == QMessageBox::Yes)
         {
+            m_w->testingFinished();
             killEngine();
             QMessageBox::information(m_w,
                          "LunaTester",
