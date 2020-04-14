@@ -1619,48 +1619,65 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
 
     m_lunaGame.waitForFinished(2000);
 
-    if(!worldFile.contains(smbxPath + "worlds/"))
-    {
-        QMessageBox::warning(m_w,
-                             "LunaTester",
-                             tr("Impossible to launch an episode out of LunaTester worlds root."),
-                             QMessageBox::Ok);
-        return false;
-    }
-
-    if(QFile::exists(autoStart))
-        QFile::remove(autoStart);
-
-    {
-        QFileInfo episodeGet(worldFile);
-        SETTINGS_TestSettings  t = GlobalSettings::testing;
-        WorldData wld;
-        if(!FileFormats::OpenWorldFileHeader(worldFile, wld))
-        {
-            QMessageBox::warning(m_w,
-                                 "LunaTester",
-                                 tr("Impossible to launch an episode because of an invalid world file."),
-                                 QMessageBox::Ok);
-            return false;
-        }
-
-        QSettings autostartINI(autoStart, QSettings::IniFormat);
-        autostartINI.beginGroup("autostart");
-        autostartINI.setValue("do-autostart", true);
-        autostartINI.setValue("episode-name", wld.EpisodeTitle);
-        autostartINI.setValue("singleplayer", t.numOfPlayers == 1);
-        autostartINI.setValue("character-player1", t.p1_char);
-        autostartINI.setValue("character-player2", t.p2_char);
-        autostartINI.setValue("save-slot", 1);
-        autostartINI.setValue("transient", true);
-        autostartINI.endGroup();
-    }
-
     QString command = execProxy;
     QStringList params;
 
     params << "--patch";
     params << "--game";
+
+    if (m_caps.args.contains("loadWorld"))
+    {
+        // For the case were we specify episode launch via command line
+        SETTINGS_TestSettings t = GlobalSettings::testing;
+        params << ("--loadWorld=" + pathUnixToWine(worldFile));
+        params << QString("--num-players=%1").arg((t.numOfPlayers >= 2) ? 2 : 1);
+        params << QString("--p1c=%1").arg(t.p1_char);
+        if (t.numOfPlayers >= 2)
+        {
+            params << QString("--p2c=%1").arg(t.p2_char);
+        }
+        params << QString("--saveslot=%1").arg(0); // Save slot 0 means no saving, test mode
+    }
+    else
+    {
+        // For the case were we use autostart.ini
+        if(!worldFile.contains(smbxPath + "worlds/"))
+        {
+            QMessageBox::warning(m_w,
+                                 "LunaTester",
+                                 tr("Impossible to launch an episode out of LunaTester worlds root."),
+                                 QMessageBox::Ok);
+            return false;
+        }
+
+        if(QFile::exists(autoStart))
+            QFile::remove(autoStart);
+
+        {
+            QFileInfo episodeGet(worldFile);
+            SETTINGS_TestSettings  t = GlobalSettings::testing;
+            WorldData wld;
+            if(!FileFormats::OpenWorldFileHeader(worldFile, wld))
+            {
+                QMessageBox::warning(m_w,
+                                     "LunaTester",
+                                     tr("Impossible to launch an episode because of an invalid world file."),
+                                     QMessageBox::Ok);
+                return false;
+            }
+
+            QSettings autostartINI(autoStart, QSettings::IniFormat);
+            autostartINI.beginGroup("autostart");
+            autostartINI.setValue("do-autostart", true);
+            autostartINI.setValue("episode-name", wld.EpisodeTitle);
+            autostartINI.setValue("singleplayer", t.numOfPlayers == 1);
+            autostartINI.setValue("character-player1", t.p1_char);
+            autostartINI.setValue("character-player2", t.p2_char);
+            autostartINI.setValue("save-slot", 0); // Save slot 0 means no saving, test mode
+            autostartINI.setValue("transient", true);
+            autostartINI.endGroup();
+        }
+    }
 
     if(m_noGL)
     {
