@@ -1121,6 +1121,8 @@ public:
         std::unique_ptr<AbstractRuntimeEngine> m_testLunaTester;
         //! TheXTech
         std::unique_ptr<AbstractRuntimeEngine> m_testTheXTech;
+        //! SMBX-38A
+        std::unique_ptr<AbstractRuntimeEngine> m_testSMBX38A;
 
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Plugins////////////////////////////////////////

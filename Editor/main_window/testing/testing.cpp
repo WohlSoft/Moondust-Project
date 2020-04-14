@@ -41,6 +41,7 @@
 #include <testing/pge_engine.h>
 #include <testing/luna_tester_engine.h>
 #include <testing/thextech_engine.h>
+#include <testing/38a_engine.h>
 
 
 void MainWindow::initTesting()
@@ -93,6 +94,23 @@ void MainWindow::initTesting()
         menuNext = sep;
     }
 
+    m_testSMBX38A.reset(new SanBaEiRuntimeEngine(this));
+    m_testSMBX38A->init();
+    m_testAllEngines.push_back(&m_testSMBX38A);
+    if(!noDefault || defEngine == ConfStatus::ENGINE_38A)
+    {
+        ui->sepEngineExtras->setVisible(false);
+        QIcon sanBaIcon(":/images/38a.ico");
+        QMenu *sanBaEiMenu = ui->menuTest->addMenu(sanBaIcon, "SMBX-38A");
+        ui->menuTest->insertMenu(menuNext, sanBaEiMenu);
+
+        m_testSMBX38A->initMenu(sanBaEiMenu);
+
+        QAction *sep = sanBaEiMenu->addSeparator();
+        ui->menuTest->insertAction(menuNext, sep);
+        menuNext = sep;
+    }
+
     m_testLunaTester.reset(new LunaTesterEngine(this));
     m_testLunaTester->init();
     m_testAllEngines.push_back(&m_testLunaTester);
@@ -123,8 +141,7 @@ void MainWindow::initTesting()
         m_testEngine = m_testTheXTech.get();
         break;
     case ConfStatus::ENGINE_38A:
-        // m_testEngine = m_test38A.get(); // TODO: uncomment this when 38A tester will be implemented
-        m_testEngine = m_testPGE.get();//TEMPORARELY
+        m_testEngine = m_testSMBX38A.get();
         break;
     }
 

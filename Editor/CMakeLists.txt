@@ -419,6 +419,7 @@ list(APPEND PGE_EDITOR_SRCS
     testing/pge_engine.cpp
     testing/luna_tester_engine.cpp
     testing/thextech_engine.cpp
+    testing/38a_engine.cpp
     testing/ipc/pge_engine_ipc.cpp
     testing/ipc/luna_capabilities.cpp
     tools/async/asyncstarcounter.cpp
@@ -473,6 +474,18 @@ if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
     if(NOT EXISTS ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
         make_directory(${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
     endif()
+
+    add_custom_target(38a_ipc_bridge_bin ALL
+        COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz"
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        COMMENT "Unpacking 38a_ipc_bridge.exe"
+        VERBATIM
+    )
+    install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe"
+        DESTINATION "${PGE_INSTALL_DIRECTORY}/${CMAKE_INSTALL_BINDIR}/ipc"
+    )
+
     add_custom_target(luna_hwnd_show_bin ALL
         COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz"
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz

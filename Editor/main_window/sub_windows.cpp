@@ -138,7 +138,7 @@ int MainWindow::activeChildWindow()
 
 int MainWindow::activeChildWindow(QMdiSubWindow *wnd)
 {
-    if(wnd == NULL)
+    if(wnd == nullptr)
         return WND_NoWindow;
 
     if(QString(wnd->widget()->metaObject()->className()) == LEVEL_EDIT_CLASS)
@@ -155,56 +155,56 @@ EditBase *MainWindow::activeBaseEditWin()
 {
     if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<EditBase *>(activeSubWindow->widget());
-    return 0;
+    return nullptr;
 }
 
 EditBase *MainWindow::activeBaseEditWin(QMdiSubWindow *wnd)
 {
     if(wnd)
         return qobject_cast<EditBase *>(wnd->widget());
-    return 0;
+    return nullptr;
 }
 
 NpcEdit *MainWindow::activeNpcEditWin()
 {
     if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<NpcEdit *>(activeSubWindow->widget());
-    return 0;
+    return nullptr;
 }
 
 NpcEdit *MainWindow::activeNpcEditWin(QMdiSubWindow *wnd)
 {
     if(wnd)
         return qobject_cast<NpcEdit *>(wnd->widget());
-    return 0;
+    return nullptr;
 }
 
 LevelEdit *MainWindow::activeLvlEditWin()
 {
     if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<LevelEdit *>(activeSubWindow->widget());
-    return 0;
+    return nullptr;
 }
 
 LevelEdit *MainWindow::activeLvlEditWin(QMdiSubWindow *wnd)
 {
     if(wnd)
         return qobject_cast<LevelEdit *>(wnd->widget());
-    return 0;
+    return nullptr;
 }
 
 WorldEdit *MainWindow::activeWldEditWin()
 {
     if(QMdiSubWindow *activeSubWindow = LastActiveSubWindow)
         return qobject_cast<WorldEdit *>(activeSubWindow->widget());
-    return 0;
+    return nullptr;
 }
 
 WorldEdit *MainWindow::activeWldEditWin(QMdiSubWindow *wnd)
 {
     if(wnd)
         return qobject_cast<WorldEdit *>(wnd->widget());
-    return 0;
+    return nullptr;
 }
 
 QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
@@ -235,7 +235,7 @@ QMdiSubWindow *MainWindow::findOpenedFileWin(const QString &fileName)
                 return window;
         }
     }
-    return 0;
+    return nullptr;
 }
 
 

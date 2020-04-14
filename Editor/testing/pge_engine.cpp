@@ -38,7 +38,7 @@
 #define PGE_ENGINE_EXE "pge_engine.exe"
 #define PGE_ENGINE_BUNLDE PGE_ENGINE_EXE
 #define PGE_ENGINE_BUNLDE_MASK PGE_ENGINE_EXE
-#elif __APPLE__
+#elif defined(__APPLE__)
 #define PGE_ENGINE_BUNLDE "PGE Engine.app"
 #define PGE_ENGINE_BUNLDE_MASK "PGE Engine"
 #define PGE_ENGINE_EXECUTABLE "/Contents/MacOS/PGE Engine"

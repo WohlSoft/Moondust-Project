@@ -33,7 +33,7 @@
 #define THEXTECH_EXE "thextech.exe"
 #define PGE_ENGINE_BUNLDE THEXTECH_EXE
 #define PGE_ENGINE_BUNLDE_MASK THEXTECH_EXE
-#elif __APPLE__
+#elif defined(__APPLE__)
 #define PGE_ENGINE_BUNLDE "TheXTech.app"
 #define PGE_ENGINE_BUNLDE_MASK "TheXTech"
 #define THEXTECH_EXECUTABLE "/Contents/MacOS/thextech"
