@@ -10919,12 +10919,12 @@ Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.I
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="162"/>
-        <source>Location of wine</source>
+        <source>Location of Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="178"/>
-        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

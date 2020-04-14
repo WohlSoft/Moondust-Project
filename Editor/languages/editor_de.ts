@@ -11369,7 +11369,7 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
         <translation type="unfinished">Durchsuchen...</translation>
     </message>
     <message>
-        <source>Location of wine</source>
+        <source>Location of Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -11428,7 +11428,7 @@ Bitte überprüfe, ob die Konfiguationsdateien (*.INI-Datein)/SMBX Ordner und de
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

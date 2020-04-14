@@ -159,7 +159,7 @@
    <item row="0" column="0">
     <widget class="QGroupBox" name="wineLocationGroup">
      <property name="title">
-      <string>Location of wine</string>
+      <string>Location of Wine</string>
      </property>
      <layout class="QGridLayout" name="gridLayout" columnstretch="0,10000,0">
       <property name="sizeConstraint">
@@ -175,7 +175,7 @@
       <item row="0" column="0" colspan="2">
        <widget class="QRadioButton" name="pathDefault">
         <property name="toolTip">
-         <string>Use a system-wide installed Wine from a PATH envrinoment.</string>
+         <string>Use a system-wide installed Wine from a PATH environment.</string>
         </property>
         <property name="text">
          <string>System default</string>

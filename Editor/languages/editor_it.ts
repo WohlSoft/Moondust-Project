@@ -9703,7 +9703,7 @@ perché le configurazioni degli oggetti non sono state caricate
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Location of wine</source>
+        <source>Location of Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9762,7 +9762,7 @@ perché le configurazioni degli oggetti non sono state caricate
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

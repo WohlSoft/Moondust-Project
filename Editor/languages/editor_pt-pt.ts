@@ -9447,7 +9447,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <translation type="unfinished">Procurar...</translation>
     </message>
     <message>
-        <source>Location of wine</source>
+        <source>Location of Wine</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9506,7 +9506,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

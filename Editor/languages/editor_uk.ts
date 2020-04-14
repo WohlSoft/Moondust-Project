@@ -8210,7 +8210,7 @@ Data may be corrupted!</source>
         <translation>Огляд...</translation>
     </message>
     <message>
-        <source>Location of wine</source>
+        <source>Location of Wine</source>
         <translation>Розташування Wine</translation>
     </message>
     <message>
@@ -8269,7 +8269,7 @@ Data may be corrupted!</source>
         <translation>Локальна користувацька домашня папка Wine, яка містить налаштування, корінь диску C, та деякі інші речі.</translation>
     </message>
     <message>
-        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
         <translation>Використовувати Wine, встановлений в системі та видимий через середовище PATH.</translation>
     </message>
     <message>

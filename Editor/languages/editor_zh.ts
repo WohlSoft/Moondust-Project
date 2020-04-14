@@ -8851,7 +8851,7 @@ because object configurations are not loaded
         <translation>浏览……</translation>
     </message>
     <message>
-        <source>Location of wine</source>
+        <source>Location of Wine</source>
         <translation>Wine 位置</translation>
     </message>
     <message>
@@ -8910,7 +8910,7 @@ because object configurations are not loaded
         <translation>Wine 目录，包含设置、C 盘根目录以及其他一些要素。</translation>
     </message>
     <message>
-        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
         <translation>使用 Wine 中 PATH 的环境变量。</translation>
     </message>
     <message>

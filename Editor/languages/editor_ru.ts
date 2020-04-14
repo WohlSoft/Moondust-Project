@@ -12562,7 +12562,7 @@ because object configurations are not loaded
         <translation>Обзор...</translation>
     </message>
     <message>
-        <source>Location of wine</source>
+        <source>Location of Wine</source>
         <translation>Расположение Wine</translation>
     </message>
     <message>
@@ -12621,7 +12621,7 @@ because object configurations are not loaded
         <translation>Локальная пользовательская домашняя папка Wine, содержащая настройки, корень диска C, и некоторые другие вещи.</translation>
     </message>
     <message>
-        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
         <translation>Использовать Wine, установленный в системе и видимый через среду PATH.</translation>
     </message>
     <message>

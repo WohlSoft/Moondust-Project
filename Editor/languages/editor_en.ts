@@ -12589,8 +12589,8 @@ Please check that the config pack&apos;s directory exists and contains the *.INI
         <translation>Browse...</translation>
     </message>
     <message>
-        <source>Location of wine</source>
-        <translation>Location of wine</translation>
+        <source>Location of Wine</source>
+        <translation>Location of Wine</translation>
     </message>
     <message>
         <source>System default</source>
@@ -12648,8 +12648,8 @@ Please check that the config pack&apos;s directory exists and contains the *.INI
         <translation>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</translation>
     </message>
     <message>
-        <source>Use a system-wide installed Wine from a PATH envrinoment.</source>
-        <translation>Use a system-wide installed Wine from a PATH envrinoment.</translation>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
+        <translation>Use a system-wide installed Wine from a PATH environment.</translation>
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
