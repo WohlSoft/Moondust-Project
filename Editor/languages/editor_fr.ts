@@ -3428,35 +3428,35 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Pour modifier la configuration de Wine, vous devez arrêter l&apos;instance de LunaTester en cours d&apos;exécution. Voulez-vous arrêter LunaTester maintenant ?</translation>
     </message>
     <message>
         <source>Incompatible LunaDll found</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaDll incompatible trouvée</translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de démarrer LunaTester en raison d&apos;un module LunaDll.dll incompatible au chemin : %1</translation>
     </message>
     <message>
         <source>Incompatible LunaLua</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLua incompatible</translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer LunaTester en raison d&apos;une incompatibilité avec LunaLua au chemin : %1</translation>
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer un épisode en dehors de la racine des mondes de LunaTester.</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer un épisode à cause d&apos;un fichier de monde invalide.</translation>
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Pour modifier le chemin vers LunaTester, vous devez arrête le jeu actuellement en cours d&apos;exécution. Voulez-vous arrêter LunaTester maintenant ?</translation>
     </message>
 </context>
 <context>
@@ -8464,102 +8464,102 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
     <name>WineSetup</name>
     <message>
         <source>Wine configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration de Wine</translation>
     </message>
     <message>
         <source>Test</source>
-        <translation type="unfinished"></translation>
+        <translation>Tester</translation>
     </message>
     <message>
         <source>Wine config</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration de Wine</translation>
     </message>
     <message>
         <source>Version dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Informations sur la version</translation>
     </message>
     <message>
         <source>Stop process</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrêter le processus</translation>
     </message>
     <message>
         <source>Not running</source>
-        <translation type="unfinished"></translation>
+        <translation>Non exécuté</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished">Importer</translation>
+        <translation>Importer</translation>
     </message>
     <message>
         <source>Specify a custom environment (PlayOnLinux/Mac)</source>
-        <translation type="unfinished"></translation>
+        <translation>Spécifier un environnement personnalisé (PlayOnLinux/Mac)</translation>
     </message>
     <message>
         <source>Wine home prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Préfixe de l&apos;accueil de Wine</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Parcourir…</translation>
+        <translation>Parcourir…</translation>
     </message>
     <message>
         <source>Location of Wine</source>
-        <translation type="unfinished"></translation>
+        <translation>Emplacement de Wine</translation>
     </message>
     <message>
         <source>System default</source>
-        <translation type="unfinished"></translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <source>Custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Personnalisé :</translation>
     </message>
     <message>
         <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer l&apos;affichage des informations de débogage de Wine dans la console « WineDebug »</translation>
     </message>
     <message>
         <source>Import setup from PlayOnMac</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer une configuration depuis PlayOnMac</translation>
     </message>
     <message>
         <source>Import setup from PlayOnLinux</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer une configuration depuis PlayOnLinux</translation>
     </message>
     <message>
         <source>Select a Wine install prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un préfixe de chemin d&apos;installation de Wine</translation>
     </message>
     <message>
         <source>Select a Wine home prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un préfixe de chemin racine d&apos;installation de Wine</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de lancer « %1 » en raison de : %2</translation>
     </message>
     <message>
         <source>Not running</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>Non exécuté</translation>
     </message>
     <message>
         <source>Starting...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>Lancement…</translation>
     </message>
     <message>
         <source>Running...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation>Exécution…</translation>
     </message>
     <message>
         <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
-        <translation type="unfinished"></translation>
+        <translation>Un préfixe Wine local à l&apos;utilisateur qui contient des paramètres, le répertoire racine C, et bien d&apos;autres choses.</translation>
     </message>
     <message>
         <source>Use a system-wide installed Wine from a PATH environment.</source>
@@ -8567,7 +8567,7 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
-        <translation type="unfinished"></translation>
+        <translation>Spécifier un préfixe d&apos;installation de Wine personnalisé (un dossier qui contient les dossiers « bin », « lib » et « share » avec une chaîne d&apos;outils Wine fonctionnelle).</translation>
     </message>
 </context>
 <context>
