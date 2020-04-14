@@ -44,7 +44,6 @@ include(../_common/static_qt.cmake)
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
 include(../_common/DirManager/dirman.cmake)
-include(../_common/FileMapper/FileMapper.cmake)
 add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
 include(../_common/IniProcessor/IniProcessor.cmake)
 include(../_common/tclap/tclap.cmake)
@@ -490,7 +489,6 @@ add_executable(pge_editor
     ${PGE_EDITOR_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
     ${DIRMANAGER_SRCS}
-    ${FILEMAPPER_SRCS}
     ${INIPROCESSOR_SRCS}
     ${STACK_WALKER_SRCS}
     ${UTILS_SRCS}
