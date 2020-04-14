@@ -751,14 +751,10 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         // Stop music playback in the PGE Editor
         // Note: Currently, use stopMusicForTesting if we get hide/show notifications
         //       but otherwise use LunaTesterEngine::stopEditorMusic()
-        if (m_caps.features.contains("HideShowNotifications"))
-        {
+        if(m_caps.features.contains("HideShowNotifications"))
             m_w->stopMusicForTesting();
-        }
         else
-        {
             stopEditorMusic();
-        }
 
         break;
 
