@@ -474,7 +474,7 @@ void SanBaEiRuntimeEngine::runWineSetup()
 }
 #endif
 
-QStringList SanBaEiRuntimeEngine::getTestingArgs(const LevelData &lvl, bool battleMode)
+QStringList SanBaEiRuntimeEngine::getTestingArgs(bool battleMode)
 {
     QStringList params;
 
@@ -534,28 +534,39 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
     LevelData lvl;
     if(!FileFormats::OpenLevelFileHeader(levelFile, lvl))
     {
-        QMessageBox::warning(m_w,
-                             "SMBX-38A",
-                             tr("Impossible to launch a level because of an invalid file."),
-                             QMessageBox::Ok);
+        QMessageBox::critical(m_w,
+                              "SMBX-38A",
+                              tr("Impossible to launch a level because of an invalid file."),
+                              QMessageBox::Ok);
         return false;
     }
 
     if((lvl.meta.RecentFormat != LevelData::SMBX38A) &&
        (lvl.meta.RecentFormat != LevelData::SMBX64))
     {
-        QMessageBox::warning(m_w,
-                             "SMBX-38A",
-                             tr("Cannot launch the level because the level file is saved in an unsupported format. "
-                                "Please save the level in the SMBX-38A or the SMBX64-LVL format."),
-                             QMessageBox::Ok);
+        QMessageBox::critical(m_w,
+                              "SMBX-38A",
+                              tr("Cannot launch the level because the level file is saved in an unsupported format. "
+                                 "Please save the level in the SMBX-38A or the SMBX64-LVL format."),
+                              QMessageBox::Ok);
         return false;
+    }
+
+    if(lvl.meta.RecentFormat == WorldData::SMBX64)
+    {
+        int ret = QMessageBox::warning(m_w,
+                                       tr("Caution"),
+                                       tr("Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. "
+                                          "Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?"),
+                                       QMessageBox::Yes|QMessageBox::No);
+        if(ret != QMessageBox::Yes)
+            return false;
     }
 
     QString command = smbxExe;
     QStringList params;
     params << pathUnixToWine(levelFile);
-    params << getTestingArgs(lvl, m_battleMode);
+    params << getTestingArgs(m_battleMode);
 
     useWine(m_testingProc, command, params);
     m_testingProc.setProgram(command);
@@ -581,22 +592,33 @@ bool SanBaEiRuntimeEngine::doTestWorldFile(const QString &worldFile)
     WorldData wld;
     if(!FileFormats::OpenWorldFileHeader(worldFile, wld))
     {
-        QMessageBox::warning(m_w,
-                             "SMBX-38A",
-                             tr("Impossible to launch an episode because of an invalid file."),
-                             QMessageBox::Ok);
+        QMessageBox::critical(m_w,
+                              "SMBX-38A",
+                              tr("Impossible to launch an episode because of an invalid file."),
+                              QMessageBox::Ok);
         return false;
     }
 
     if((wld.meta.RecentFormat != WorldData::SMBX38A) &&
        (wld.meta.RecentFormat != WorldData::SMBX64))
     {
-        QMessageBox::warning(m_w,
-                             "SMBX-38A",
-                             tr("Cannot launch the episode because the world map file is saved in an unsupported format. "
-                                "Please save the level in the SMBX-38A or the SMBX64-WLD format."),
-                             QMessageBox::Ok);
+        QMessageBox::critical(m_w,
+                              "SMBX-38A",
+                              tr("Cannot launch the episode because the world map file is saved in an unsupported format. "
+                                 "Please save the level in the SMBX-38A or the SMBX64-WLD format."),
+                              QMessageBox::Ok);
         return false;
+    }
+
+    if(wld.meta.RecentFormat == WorldData::SMBX64)
+    {
+        int ret = QMessageBox::warning(m_w,
+                                       tr("Caution"),
+                                       tr("Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. "
+                                          "Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?"),
+                                       QMessageBox::Yes|QMessageBox::No);
+        if(ret != QMessageBox::Yes)
+            return false;
     }
 
     QString command = smbxExe;

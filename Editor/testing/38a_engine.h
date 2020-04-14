@@ -104,7 +104,7 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
      */
     QString pathUnixToWine(const QString &unixPath);
 
-    QStringList getTestingArgs(const LevelData &lvl, bool battleMode);
+    QStringList getTestingArgs(bool battleMode = false);
 
 private slots:
     void retranslateMenu();
