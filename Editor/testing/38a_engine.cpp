@@ -95,6 +95,26 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
         });
     }
 
+    {
+        QAction *RunBattleLevelTest = destmenu->addAction("runBattleTest");
+        QObject::connect(RunBattleLevelTest,   &QAction::triggered,
+                    this,               &SanBaEiRuntimeEngine::startBattleTestAction,
+                    Qt::QueuedConnection);
+        m_menuItems[menuItemId++] = RunBattleLevelTest;
+        QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(wld)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+        });
+        QObject::connect(m_w, &MainWindow::windowActiveLevel, [this, menuItemId](bool lvl)
+        {
+            auto *m = m_menuItems[menuItemId - 1];
+            if(lvl)
+                m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+        });
+    }
+
     QAction *runLevelSafeTest;
     {
         runLevelSafeTest = destmenu->addAction("runSafeTesting");
@@ -114,6 +134,16 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
             if(lvl)
                 m->setEnabled(hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
         });
+    }
+
+    destmenu->addSeparator();
+
+    QAction *ResetCheckPoints = destmenu->addAction("resetCheckpoints");
+    {
+        QObject::connect(ResetCheckPoints,   &QAction::triggered,
+                    this,               &SanBaEiRuntimeEngine::resetCheckPoints,
+                    Qt::QueuedConnection);
+        m_menuItems[menuItemId++] = ResetCheckPoints;
     }
 
     destmenu->addSeparator();
@@ -283,6 +313,7 @@ void SanBaEiRuntimeEngine::startSafeTestAction()
             return;
         }
 
+        m_battleMode = false;
         doTestLevelFile(edit->curFile);
     }
     else if(m_w->activeChildWindow() == MainWindow::WND_World)
@@ -299,6 +330,38 @@ void SanBaEiRuntimeEngine::startSafeTestAction()
 
         doTestWorldFile(edit->curFile);
     }
+}
+
+void SanBaEiRuntimeEngine::startBattleTestAction()
+{
+    if(!AbstractRuntimeEngine::checkIsEngineRunning(this, m_w))
+        return;
+
+    if(m_w->activeChildWindow() == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = m_w->activeLvlEditWin();
+        if(!edit)
+            return;
+
+        if(edit->isUntitled())
+        {
+            AbstractRuntimeEngine::rejectUntitled(m_w);
+            return;
+        }
+
+        m_battleMode = true;
+        doTestLevelFile(edit->curFile);
+    }
+}
+
+void SanBaEiRuntimeEngine::resetCheckPoints()
+{
+    m_lastGameState.reset();
+
+    QMessageBox::information(m_w,
+                             "SMBX-38A",
+                             tr("Checkpoints successfully reseted!"),
+                             QMessageBox::Ok);
 }
 
 void SanBaEiRuntimeEngine::startGameAction()
@@ -411,9 +474,55 @@ void SanBaEiRuntimeEngine::runWineSetup()
 }
 #endif
 
+QStringList SanBaEiRuntimeEngine::getTestingArgs(const LevelData &lvl, bool battleMode)
+{
+    QStringList params;
+
+    SETTINGS_TestSettings t = GlobalSettings::testing;
+    if(battleMode)
+        params << "2";
+    else if(t.numOfPlayers == 1)
+        params << "0";
+    else if(t.numOfPlayers >= 2)
+        params << "1";
+
+    params << QString::number(t.p1_char);
+    params << QString::number(t.p2_char);
+
+    int p1mount = 0;
+    int p2mount = 0;
+
+    if(t.p1_vehicleID == 1)
+        p1mount = -t.p1_vehicleType;
+    if(t.p1_vehicleID == 3)
+        p1mount = t.p1_vehicleType;
+
+    if(t.p2_vehicleID == 1)
+        p2mount = -t.p2_vehicleType;
+    if(t.p2_vehicleID == 3)
+        p2mount = t.p2_vehicleType;
+
+    QString smbxArgsStr = QString("SMBXArgs|%1,%2,%3|%4,%5,%6,%7|%8,%9,%10")
+        .arg(m_lastGameState.hp)
+        .arg(m_lastGameState.co)
+        .arg(m_lastGameState.sr)
+
+        .arg(t.p1_state)
+        .arg(p1mount)
+        .arg(t.p2_state)
+        .arg(p2mount)
+
+        .arg(PGE_FileFormats_misc::url_encode(m_lastGameState.levelName))
+        .arg(m_lastGameState.cid)
+        .arg(m_lastGameState.id);
+
+    params << PGE_FileFormats_misc::url_encode(smbxArgsStr);
+    return params;
+}
+
 bool SanBaEiRuntimeEngine::doTestLevelIPC(const LevelData &d)
 {
-
+    return false;
 }
 
 bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
@@ -445,32 +554,8 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
 
     QString command = smbxExe;
     QStringList params;
-
-    SETTINGS_TestSettings t = GlobalSettings::testing;
     params << pathUnixToWine(levelFile);
-    if(t.numOfPlayers == 1)
-        params << "0";
-    else if(t.numOfPlayers >= 2)
-        params << "1";
-    params << QString::number(t.p1_char);
-    params << QString::number(t.p2_char);
-
-    QString smbxArgsStr =
-        QString("SMBXArgs|%1,%2,%3|%4,%5,%6,%7|%8,%9,%10")
-            .arg(25)
-            .arg(0)
-            .arg(0)
-
-            .arg(t.p1_state)
-            .arg(t.p1_vehicleType == 1 ? -t.p1_vehicleID : t.p1_vehicleType == 3 ? t.p1_vehicleID : 0)
-            .arg(t.p2_state)
-            .arg(t.p2_vehicleType == 1 ? -t.p2_vehicleID : t.p2_vehicleType == 3 ? t.p2_vehicleID : 0)
-
-            .arg(PGE_FileFormats_misc::url_encode(lvl.LevelName))
-            .arg(0)
-            .arg(0);
-
-    params << PGE_FileFormats_misc::url_encode(smbxArgsStr);
+    params << getTestingArgs(lvl, m_battleMode);
 
     useWine(m_testingProc, command, params);
     m_testingProc.setProgram(command);
@@ -484,17 +569,53 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
 
 bool SanBaEiRuntimeEngine::doTestWorldIPC(const WorldData &d)
 {
-
+    return false;
 }
 
 bool SanBaEiRuntimeEngine::doTestWorldFile(const QString &worldFile)
 {
+    const QString smbxExe = getEnginePath();
+    QFileInfo smbxExeInfo(smbxExe);
+    const QString smbxPath = smbxExeInfo.absoluteDir().absolutePath();
 
+    WorldData wld;
+    if(!FileFormats::OpenWorldFileHeader(worldFile, wld))
+    {
+        QMessageBox::warning(m_w,
+                             "SMBX-38A",
+                             tr("Impossible to launch an episode because of an invalid file."),
+                             QMessageBox::Ok);
+        return false;
+    }
+
+    if((wld.meta.RecentFormat != WorldData::SMBX38A) &&
+       (wld.meta.RecentFormat != WorldData::SMBX64))
+    {
+        QMessageBox::warning(m_w,
+                             "SMBX-38A",
+                             tr("Cannot launch the episode because the world map file is saved in an unsupported format. "
+                                "Please save the level in the SMBX-38A or the SMBX64-WLD format."),
+                             QMessageBox::Ok);
+        return false;
+    }
+
+    QString command = smbxExe;
+    QStringList params;
+    params << pathUnixToWine(worldFile);
+
+    useWine(m_testingProc, command, params);
+    m_testingProc.setProgram(command);
+    m_testingProc.setArguments(params);
+    m_testingProc.setWorkingDirectory(smbxPath);
+    m_testingProc.start();
+    LogDebug(QString("SMBX-38A: starting command: %1 %2").arg(command).arg(params.join(' ')));
+
+    return true;
 }
 
 bool SanBaEiRuntimeEngine::runNormalGame()
 {
-
+    return false;
 }
 
 void SanBaEiRuntimeEngine::terminate()

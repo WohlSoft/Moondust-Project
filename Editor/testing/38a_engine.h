@@ -50,6 +50,37 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
     /************** Settings **************/
     //! Path to custom SMBX-38A executable
     QString m_customEnginePath;
+    //! Start game in battle mode
+    bool    m_battleMode = false;
+
+    struct GameState
+    {
+        //! 0 = 'X Button', 99 = player failed, else: same as world map's level exit code.
+        int exitcode = 0;
+        //! if the player arrived the checkpoint, this value will be set to the level's filename[***urlencode!***]
+        QString levelName;
+        //! if the player arrived the checkpoint, this value will be set to the checkpoint's perm ID.
+        int cid = 0;
+        //! if the player arrived the checkpoint, this value will be set to the checkpoint's advset value.
+        int id = 0;
+        //! current 1up number
+        int hp = 20;
+        //! the coins number
+        int co = 0;
+        //! current score
+        int sr = 0;
+        //! Reset game state
+        void reset()
+        {
+            exitcode = 0;
+            levelName.clear();
+            cid = 0;
+            id = 0;
+            hp = 20;
+            co = 0;
+            sr = 0;
+        }
+    } m_lastGameState;
     /************** Settings **************/
 
     QString getEnginePath();
@@ -73,12 +104,16 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
      */
     QString pathUnixToWine(const QString &unixPath);
 
+    QStringList getTestingArgs(const LevelData &lvl, bool battleMode);
+
 private slots:
     void retranslateMenu();
 
     /********Menu items*******/
     void startTestAction();
     void startSafeTestAction();
+    void startBattleTestAction();
+    void resetCheckPoints();
     void startGameAction();
     void chooseEnginePath();
 #ifndef _WIN32
