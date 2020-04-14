@@ -1307,7 +1307,10 @@ bool LunaTesterEngine::reloadLunaCapabilities()
     if(ret)
     {
         if(m_menuRunLevelSafeTest)
-            m_menuRunLevelSafeTest->setEnabled(m_w->activeChildWindow() == MainWindow::WND_Level && m_caps.args.contains("testLevel"));
+        {
+            m_menuRunLevelSafeTest->setEnabled((m_w->activeChildWindow() == MainWindow::WND_Level && m_caps.args.contains("testLevel")) ||
+                                                m_w->activeChildWindow() == MainWindow::WND_World);
+        }
     }
 
     m_capsNeedReload = false;
@@ -1614,6 +1617,34 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
     //! Full path to an autostart.ini file for an episode starting
     const QString autoStart = smbxPath + "autostart.ini";
 
+    bool argsSupported =
+            m_caps.args.contains("loadWorld") &&
+            m_caps.args.contains("num-players") &&
+            m_caps.args.contains("p1c") &&
+            m_caps.args.contains("p2c") &&
+            m_caps.args.contains("saveslot");
+
+    WorldData wld;
+
+    if(!FileFormats::OpenWorldFileHeader(worldFile, wld))
+    {
+        QMessageBox::warning(m_w,
+                             "LunaTester",
+                             tr("Impossible to launch an episode because of an invalid world file."),
+                             QMessageBox::Ok);
+        return false;
+    }
+
+    if(!m_caps.features.contains("WLDX") && (wld.meta.RecentFormat != WorldData::SMBX64))
+    {
+        QMessageBox::warning(m_w,
+                             "LunaTester",
+                             tr("Cannot launch the episode because the world map file is saved in an unsupported format. "
+                                "Please save the world map in the SMBX64-WLD format."),
+                             QMessageBox::Ok);
+        return false;
+    }
+
     if(m_lunaGame.state() == QProcess::Running)
         m_lunaGame.kill();
 
@@ -1625,17 +1656,15 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
     params << "--patch";
     params << "--game";
 
-    if (m_caps.args.contains("loadWorld"))
+    if(argsSupported)
     {
         // For the case were we specify episode launch via command line
         SETTINGS_TestSettings t = GlobalSettings::testing;
         params << ("--loadWorld=" + pathUnixToWine(worldFile));
         params << QString("--num-players=%1").arg((t.numOfPlayers >= 2) ? 2 : 1);
         params << QString("--p1c=%1").arg(t.p1_char);
-        if (t.numOfPlayers >= 2)
-        {
+        if(t.numOfPlayers >= 2)
             params << QString("--p2c=%1").arg(t.p2_char);
-        }
         params << QString("--saveslot=%1").arg(0); // Save slot 0 means no saving, test mode
     }
     else
@@ -1653,30 +1682,18 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
         if(QFile::exists(autoStart))
             QFile::remove(autoStart);
 
-        {
-            QFileInfo episodeGet(worldFile);
-            SETTINGS_TestSettings  t = GlobalSettings::testing;
-            WorldData wld;
-            if(!FileFormats::OpenWorldFileHeader(worldFile, wld))
-            {
-                QMessageBox::warning(m_w,
-                                     "LunaTester",
-                                     tr("Impossible to launch an episode because of an invalid world file."),
-                                     QMessageBox::Ok);
-                return false;
-            }
-
-            QSettings autostartINI(autoStart, QSettings::IniFormat);
-            autostartINI.beginGroup("autostart");
-            autostartINI.setValue("do-autostart", true);
-            autostartINI.setValue("episode-name", wld.EpisodeTitle);
-            autostartINI.setValue("singleplayer", t.numOfPlayers == 1);
-            autostartINI.setValue("character-player1", t.p1_char);
-            autostartINI.setValue("character-player2", t.p2_char);
-            autostartINI.setValue("save-slot", 0); // Save slot 0 means no saving, test mode
-            autostartINI.setValue("transient", true);
-            autostartINI.endGroup();
-        }
+        SETTINGS_TestSettings  t = GlobalSettings::testing;
+        QSettings autostartINI(autoStart, QSettings::IniFormat);
+        autostartINI.beginGroup("autostart");
+        autostartINI.setValue("do-autostart", true);
+        autostartINI.setValue("episode-name", wld.EpisodeTitle);
+        autostartINI.setValue("singleplayer", t.numOfPlayers == 1);
+        autostartINI.setValue("character-player1", t.p1_char);
+        autostartINI.setValue("character-player2", t.p2_char);
+        autostartINI.setValue("save-slot", 0); // Save slot 0 means no saving, test mode
+        autostartINI.setValue("transient", true);
+        autostartINI.endGroup();
+        autostartINI.sync();
     }
 
     if(m_noGL)
