@@ -58,7 +58,7 @@ bool GlobalSettings::Placing_dontShowPropertiesBox  = false;
 
 int  GlobalSettings::historyLimit   = 300;
 
-QString GlobalSettings::currentTheme= "";
+QString GlobalSettings::currentTheme;
 
 bool GlobalSettings::ShowTipOfDay   = true;
 

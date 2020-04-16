@@ -555,3 +555,16 @@ void MainWindow::setUiDefults()
         connect(this, &MainWindow::windowActiveLevel,   m_sectionButtons[i], &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevel,   ui->actionSectionMore, &QAction::setEnabled);
 }
+
+void MainWindow::setUiDefultsConfigPack()
+{
+    // 21+ More sections
+    if(configs.editor.supported_features.level_section_21plus == EditorSetup::FeaturesSupport::F_DISABLED)
+        ui->actionSectionMore->setEnabled(false);
+    else if(configs.editor.supported_features.level_section_21plus == EditorSetup::FeaturesSupport::F_HIDDEN)
+        ui->actionSectionMore->setVisible(false);
+    else
+        QObject::connect(this, &MainWindow::setSMBX64Strict, ui->actionSectionMore, &QAction::setDisabled);
+
+    // TODO: Maoe more options of tune, for example, a default visibility and location of toolboxes, showing of default dialogs, etc.
+}

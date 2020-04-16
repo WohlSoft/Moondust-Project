@@ -6,12 +6,12 @@
     <message>
         <location filename="../testing/abstract_engine.cpp" line="87"/>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdenskart-testing via IPC støttes ikke</translation>
     </message>
     <message>
         <location filename="../testing/abstract_engine.cpp" line="94"/>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdenskart-testing støttes ikke</translation>
     </message>
     <message>
         <location filename="../testing/abstract_engine.cpp" line="100"/>

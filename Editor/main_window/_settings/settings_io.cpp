@@ -393,9 +393,7 @@ void MainWindow::on_actionApplication_settings_triggered()
         dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
         dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
 
-        applyTheme(GlobalSettings::currentTheme.isEmpty() ?
-                   (Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme())
-                   : GlobalSettings::currentTheme);
+        applyCurrentTheme();
 
         saveSettings();
     }

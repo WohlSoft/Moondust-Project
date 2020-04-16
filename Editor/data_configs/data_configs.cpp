@@ -128,6 +128,7 @@ bool DataConfig::loadBasics()
     guiset.beginGroup("gui");
     {
         guiset.read("editor-splash", splash_logo, "");
+        guiset.read("default-theme", ConfStatus::defaultTheme, "");
 #ifdef __linux__
         QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
         QString envir = env.value("XDG_CURRENT_DESKTOP", "");
@@ -136,19 +137,14 @@ bool DataConfig::loadBasics()
 #   else
         qApp->setStyle("GTK");
 #   endif
-        if(envir == "KDE" || envir == "XFCE")
+        if(ConfStatus::defaultTheme.isEmpty() && (envir == "KDE" || envir == "XFCE"))
             ConfStatus::defaultTheme = "Breeze";
-        else
-            guiset.read("default-theme", ConfStatus::defaultTheme, "");
 #elif __APPLE__
-        ConfStatus::defaultTheme = "Breeze";
-#elif _WIN32
-        if(QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
+        if(ConfStatus::defaultTheme.isEmpty())
             ConfStatus::defaultTheme = "Breeze";
-        else
-            guiset.read("default-theme", ConfStatus::defaultTheme, "");
-#else
-        guiset.read("default-theme", ConfStatus::defaultTheme, "");
+#elif _WIN32
+        if(ConfStatus::defaultTheme.isEmpty() && QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
+            ConfStatus::defaultTheme = "Breeze";
 #endif
         guiset.read("animations", Animations, 0);
     }
@@ -225,6 +221,8 @@ bool DataConfig::loadBasics()
                 {"2", EditorSetup::FeaturesSupport::F_HIDDEN}
         };
         guiset.readEnum("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
+        guiset.readEnum("level-section-21-plus", editor.supported_features.level_section_21plus, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
         guiset.readEnum("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
