@@ -226,6 +226,8 @@ bool DataConfig::loadBasics()
         };
         guiset.readEnum("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
+        guiset.readEnum("level-section-21-plus", editor.supported_features.level_section_21plus, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
         guiset.readEnum("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
         guiset.readEnum("level-bgo-z-layer", editor.supported_features.level_bgo_z_layer, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);

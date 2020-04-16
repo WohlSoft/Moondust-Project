@@ -225,6 +225,10 @@ public:
         /// \brief setUiDefults Init UI settings of application on start
         ///
         void setUiDefults();
+        /**
+         * @brief Initialize config pack side UI defaults
+         */
+        void setUiDefultsConfigPack();
 
         //! Manager of level specific toolboxes
         DockVizibilityManager docks_level;

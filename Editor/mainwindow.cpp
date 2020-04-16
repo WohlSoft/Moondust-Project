@@ -165,6 +165,9 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         dock_WldItemProps->resetExitTypesList();
         dock_TilesetBox->setTileSetBox(true);
 
+        // Initialize config pack-side UI settings
+        setUiDefultsConfigPack();
+
         LogDebug(QString("Initialize the testing sub-system..."));
         initTesting();
 

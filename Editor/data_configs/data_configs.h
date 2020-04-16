@@ -105,6 +105,8 @@ struct EditorSetup
         };
         State level_section_vertical_wrap = F_ENABLED;
 
+        State level_section_21plus = F_ENABLED;
+
         State level_phys_ez_new_types = F_ENABLED;
 
         State level_bgo_z_layer = F_ENABLED;
