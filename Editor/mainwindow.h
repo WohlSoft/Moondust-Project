@@ -167,11 +167,16 @@ public:
          */
         void showStatusMsg(QString msg, int time=2000); //Send status message
 
+        /**
+         * @brief Apply currently set theme or load a default one
+         */
+        void applyCurrentTheme();
+
         /*!
          * \brief Apply icons/cusors/images theme from selected path (where valid theme.ini is located)
          * \param themeDir Path to the valid PGE Editor theme package
          */
-        void applyTheme(QString themeDir="");
+        void applyTheme(QString themeDir = QString());
 
         //! Is everything has been successfuly initialized
         bool m_isAppInited;

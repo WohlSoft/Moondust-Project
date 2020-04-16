@@ -39,6 +39,18 @@ static void setToolButtonMenuIcon(QToolBar *bar, QMenu *menu, const QIcon &icon)
     }
 }
 
+void MainWindow::applyCurrentTheme()
+{
+    QString theme;
+    if(GlobalSettings::currentTheme.isEmpty())
+        theme = ConfStatus::defaultTheme;
+    else
+        theme = GlobalSettings::currentTheme;
+
+    LogDebug(QString("Loading theme [%1]...").arg(theme));
+    applyTheme(theme);
+}
+
 void MainWindow::applyTheme(QString themeDir)
 {
     if(!themeDir.isEmpty())

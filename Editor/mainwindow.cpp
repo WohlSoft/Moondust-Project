@@ -121,8 +121,6 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         /*********************Loading of config pack**********************/
 
         /*********************Splash Screen**********************/
-        // And meanwhile load the settings in the main thread
-        loadSettings();
 
         #ifndef Q_OS_ANDROID
         splash.show();
@@ -149,11 +147,6 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
             on_actionCurConfig_triggered();
         }
 
-        LogDebug(QString("Loading theme..."));
-        splash.progressTitle(tr("Loading theme..."));
-
-        applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
-
         LogDebug(QString("Initializing dock widgets..."));
         splash.progressTitle(tr("Initializing dock widgets..."));
 
@@ -174,6 +167,13 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         LogDebug(QString("Initalizing plugins..."));
         splash.progressTitle(tr("Initalizing plugins..."));
         initPlugins();
+
+        // Load Editor's settings
+        loadSettings();
+
+        LogDebug(QString("Loading theme..."));
+        splash.progressTitle(tr("Loading theme..."));
+        applyCurrentTheme();
 
         LogDebug(QString("Finishing loading..."));
         splash.progressTitle(tr("Finishing loading..."));

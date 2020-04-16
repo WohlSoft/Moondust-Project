@@ -73,7 +73,7 @@ g_AppSettings::g_AppSettings(QWidget *parent) :
     }
     #endif
 
-    QStringList themes=Themes::availableThemes();
+    auto themes = Themes::availableThemes();
 
     ui->Theme->clear();
 
@@ -146,14 +146,16 @@ void g_AppSettings::loadSettings()
     }
 
     if(!GlobalSettings::currentTheme.isEmpty())
-        for(int i=0; i< ui->Theme->count(); i++)
+    {
+        for(int i = 0; i < ui->Theme->count(); i++)
         {
-            if(ui->Theme->itemData(i).toString()==GlobalSettings::currentTheme)
+            if(ui->Theme->itemData(i).toString() == GlobalSettings::currentTheme)
             {
                 ui->Theme->setCurrentIndex(i);
                 break;
             }
         }
+    }
 
     /************************Item Defaults***************************/
     switch(GlobalSettings::LvlItemDefaults.npc_direction)
@@ -169,7 +171,7 @@ void g_AppSettings::loadSettings()
         case 2:ui->defaults_npc_generator_type->setCurrentIndex(1);break;
     }
 
-    ui->defaults_npc_generator_delay->setValue(((float)GlobalSettings::LvlItemDefaults.npc_generator_delay)/10.0);
+    ui->defaults_npc_generator_delay->setValue(static_cast<double>(GlobalSettings::LvlItemDefaults.npc_generator_delay) / 10.0);
     ui->defaults_warps_type->setCurrentIndex(GlobalSettings::LvlItemDefaults.warp_type);
 
     ui->defaults_eventtab_layviz->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz);
@@ -238,10 +240,12 @@ void g_AppSettings::on_buttonBox_accepted()
     else
         GlobalSettings::TSTToolboxPos = QTabWidget::West;
 
-    Themes::loadTheme(ui->Theme->currentData().toString());
-    GlobalSettings::currentTheme = ui->Theme->currentData().toString();
+    if(ui->Theme->currentIndex() == 0)
+        GlobalSettings::currentTheme.clear();
+    else
+        GlobalSettings::currentTheme = ui->Theme->currentData().toString();
 
-    LogWriter::logLevel     = PGE_LogLevel( ui->logLevel->currentIndex() );
+    LogWriter::logLevel     = PGE_LogLevel(ui->logLevel->currentIndex());
     LogWriter::DebugLogFile = ui->logFileName->text();
 
     /************************Item Defaults***************************/
@@ -257,13 +261,13 @@ void g_AppSettings::on_buttonBox_accepted()
     GlobalSettings::LvlItemDefaults.npc_generator_delay = static_cast<int>(round(ui->defaults_npc_generator_delay->value() * 10.0));
     GlobalSettings::LvlItemDefaults.warp_type = ui->defaults_warps_type->currentIndex();
 
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz=ui->defaults_eventtab_layviz->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov=ui->defaults_eventtab_laymov->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll=ui->defaults_eventtab_autoscroll->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_secset=ui->defaults_eventtab_secset->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_common=ui->defaults_eventtab_common->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons=ui->defaults_eventtab_holdbuttons->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger=ui->defaults_eventtab_trigger->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz = ui->defaults_eventtab_layviz->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov = ui->defaults_eventtab_laymov->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll = ui->defaults_eventtab_autoscroll->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_secset = ui->defaults_eventtab_secset->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_common = ui->defaults_eventtab_common->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons = ui->defaults_eventtab_holdbuttons->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger = ui->defaults_eventtab_trigger->isChecked();
 
     /**************************** Extra **********************************/
     GlobalSettings::extra.attr_hdpi = ui->extra_hdpiScale->isChecked();
