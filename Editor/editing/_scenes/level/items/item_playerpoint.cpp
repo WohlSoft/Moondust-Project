@@ -54,9 +54,9 @@ void ItemPlayerPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *,
     if(this->isSelected())
     {
         painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(m_offset_x+1, m_offset_y+1,m_cur.width()-2,m_cur.height()-2);
+        painter->drawRect(m_offset_x + 1, m_offset_y + 1, m_cur.width() - 2, m_cur.height() - 2);
         painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
-        painter->drawRect(m_offset_x+1, m_offset_y+1,m_cur.width()-2,m_cur.height()-2);
+        painter->drawRect(m_offset_x + 1, m_offset_y + 1, m_cur.width() - 2, m_cur.height() - 2);
     }
 }
 
@@ -84,21 +84,21 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     bool isLvlx = !m_scene->m_data->meta.smbx64strict;
 
-    QMenu * chDir =     ItemMenu.addMenu(
-                        tr("Set %1").arg(tr("Direction")) );
-        chDir->setEnabled(isLvlx);
+    QMenu *chDir =     ItemMenu.addMenu(
+                           tr("Set %1").arg(tr("Direction")));
+    chDir->setEnabled(isLvlx);
 
-    QAction *setLeft =  chDir->addAction( tr("Left"));
-        setLeft->setCheckable(true);
-        setLeft->setChecked(m_data.direction==-1);
+    QAction *setLeft =  chDir->addAction(tr("Left"));
+    setLeft->setCheckable(true);
+    setLeft->setChecked(m_data.direction == -1);
 
-    QAction *setRight = chDir->addAction( tr("Right") );
-        setRight->setCheckable(true);
-        setRight->setChecked(m_data.direction==1);
+    QAction *setRight = chDir->addAction(tr("Right"));
+    setRight->setCheckable(true);
+    setRight->setChecked(m_data.direction == 1);
 
-                        ItemMenu.addSeparator();
+    ItemMenu.addSeparator();
 
-    QAction * remove =  ItemMenu.addAction(tr("Remove"));
+    QAction *remove =  ItemMenu.addAction(tr("Remove"));
 
     /*****************Waiting for answer************************/
     QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
@@ -108,17 +108,14 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         return;
 
 
-    if(selected==remove)
-    {
+    if(selected == remove)
         m_scene->removeSelectedLvlItems();
-    }
-    else
-    if(selected==setLeft)
+    else if(selected == setLeft)
     {
         //LevelData selData;
-        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
+        foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString()=="playerPoint")
+            if(SelItem->data(ITEM_TYPE).toString() == "playerPoint")
             {
                 //selData.npc.push_back(((ItemNPC *) SelItem)->npcData);
                 dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(-1);
@@ -126,13 +123,12 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         }
         //scene->addChangeSettingsHistory(selData, LvlScene::SETTING_DIRECTION, QVariant(-1));
     }
-    else
-    if(selected==setRight)
+    else if(selected == setRight)
     {
         //LevelData selData;
-        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
+        foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString()=="playerPoint")
+            if(SelItem->data(ITEM_TYPE).toString() == "playerPoint")
             {
                 //selData.npc.push_back(((ItemPlayerPoint *) SelItem)->npcData);
                 dynamic_cast<ItemPlayerPoint *>(SelItem)->changeDirection(1);
@@ -146,10 +142,10 @@ void ItemPlayerPoint::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 void ItemPlayerPoint::changeDirection(int dir)
 {
     m_data.direction = dir;
-    if(m_data.direction<0)
-        m_cur=QPixmap::fromImage(m_currentImage.toImage().mirrored(true, false));
+    if(m_data.direction < 0)
+        m_cur = QPixmap::fromImage(m_currentImage.toImage().mirrored(true, false));
     else
-        m_cur=m_currentImage;
+        m_cur = m_currentImage;
     update();
     arrayApply();
 }
@@ -160,15 +156,15 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
 
     if(!init)
     {
-        bool found=false;
-        int q=0;
-        for(q=0; q < m_scene->m_data->players.size();q++)
+        bool found = false;
+        int q = 0;
+        for(q = 0; q < m_scene->m_data->players.size(); q++)
         {
-             if(m_scene->m_data->players[q].id == m_data.id)
-             {
-                 found=true;
-                 break;
-             }
+            if(m_scene->m_data->players[q].id == m_data.id)
+            {
+                found = true;
+                break;
+            }
         }
 
         if(!found)
@@ -177,13 +173,13 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
             m_scene->m_data->players.push_back(m_data);
         }
         else
-            m_scene->m_data->players[q]=m_data;
+            m_scene->m_data->players[q] = m_data;
     }
 
     if(((int)m_data.w >= (int)m_gridSize))
-        m_gridOffsetX = -1 * qRound( qreal((int)m_data.w % m_gridSize) / 2 );
+        m_gridOffsetX = -1 * qRound(qreal((int)m_data.w % m_gridSize) / 2);
     else
-        m_gridOffsetX = qRound( qreal( m_gridSize - (int)m_data.w ) / 2 );
+        m_gridOffsetX = qRound(qreal(m_gridSize - (int)m_data.w) / 2);
     m_gridOffsetX += (m_gridSize / 2);
 
     m_gridOffsetY = -m_data.h % m_gridSize;
@@ -197,15 +193,18 @@ void ItemPlayerPoint::setPointData(PlayerPoint pnt, bool init)
     switch(m_data.id)
     {
     case 1:
-        m_currentImage = Themes::Image(Themes::player1); break;
+        m_currentImage = Themes::Image(Themes::player1);
+        break;
     case 2:
-        m_currentImage = Themes::Image(Themes::player2); break;
+        m_currentImage = Themes::Image(Themes::player2);
+        break;
     default:
-        m_currentImage = Themes::Image(Themes::player_point); break;
+        m_currentImage = Themes::Image(Themes::player_point);
+        break;
     }
 
-    m_offset_x = qRound(qreal(pnt.w-m_currentImage.width())/2.0);
-    m_offset_y = pnt.h-m_currentImage.height();
+    m_offset_x = qRound(qreal(pnt.w - m_currentImage.width()) / 2.0);
+    m_offset_y = pnt.h - m_currentImage.height();
 
     this->setData(ITEM_WIDTH, (int)pnt.w);
     this->setData(ITEM_HEIGHT, (int)pnt.h);
@@ -222,9 +221,9 @@ void ItemPlayerPoint::arrayApply()
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
-    for(int i=0; i<m_scene->m_data->players.size();i++)
+    for(int i = 0; i < m_scene->m_data->players.size(); i++)
     {
-        if(m_data.id==m_scene->m_data->players[i].id)
+        if(m_data.id == m_scene->m_data->players[i].id)
         {
             m_scene->m_data->players[i] = m_data;
             break;
@@ -241,9 +240,9 @@ void ItemPlayerPoint::arrayApply()
 
 void ItemPlayerPoint::removeFromArray()
 {
-    for(int i=0; i<m_scene->m_data->players.size();i++)
+    for(int i = 0; i < m_scene->m_data->players.size(); i++)
     {
-        if(m_data.id==m_scene->m_data->players[i].id)
+        if(m_data.id == m_scene->m_data->players[i].id)
         {
             m_scene->m_data->players.removeAt(i);
             break;

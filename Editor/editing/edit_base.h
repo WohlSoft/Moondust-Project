@@ -34,7 +34,7 @@ class EditBase : public QWidget
     Q_OBJECT
 
 public:
-    explicit EditBase(MainWindow* mw, QWidget *parent = 0);
+    explicit EditBase(MainWindow *mw, QWidget *parent = nullptr);
     virtual ~EditBase();
 
     MainWindow *getMainWindow();
@@ -67,7 +67,7 @@ public:
      */
 
 protected:
-    MainWindow* m_mw;
+    MainWindow *m_mw = nullptr;
 };
 
 #endif //EDIT_BASE_HHHH

@@ -36,7 +36,7 @@
 
 namespace Ui
 {
-class NpcEdit;
+    class NpcEdit;
 }
 
 class NpcEdit : public EditBase
@@ -45,7 +45,7 @@ class NpcEdit : public EditBase
 
     friend class MainWindow;
 public:
-    explicit NpcEdit(MainWindow *mw, DataConfig *configs, QWidget *parent = 0);
+    explicit NpcEdit(MainWindow *mw, DataConfig *configs, QWidget *parent = nullptr);
     ~NpcEdit();
 
 public slots:
@@ -176,7 +176,7 @@ private slots:
     void on_AlignAt_currentIndexChanged(int index);
 
 private:
-    Ui::NpcEdit *ui;
+    Ui::NpcEdit *ui = nullptr;
 
     unsigned int    m_fileType = 2;
 

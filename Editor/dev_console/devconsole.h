@@ -54,7 +54,7 @@ private:
     QPlainTextEdit *getCurrentEdit();
 
     //Command area
-    typedef void (DevConsole::*command)(const QStringList&);
+    typedef void (DevConsole::*command)(const QStringList &);
     QMap<QString, QPair<command, QString> > commands;
     void registerCommand(const QString &commandName, command cmd, const QString &helpText = QString());
     void registerCommand(const std::initializer_list<QString> &commandNames, DevConsole::command cmd, const QString &helpText);
@@ -64,16 +64,16 @@ private:
     // Debug only commands, must be disabled in releases! (or Static Analyzers will swear!)
     void doFakeCrash(const QStringList &args);
     void doFlood(const QStringList &args);
-    void doThrowUnhandledException(const QStringList&);
-    void doSegmentationViolation(const QStringList&);
+    void doThrowUnhandledException(const QStringList &);
+    void doSegmentationViolation(const QStringList &);
     void doMemLeakResearch(const QStringList &args);
 #endif
     void doHelp(const QStringList &args);
     void doTest(const QStringList &args);
     void doPlayMusic(const QStringList &args);
-    void doVersion(const QStringList&);
-    void doQuit(const QStringList&);
-    void doSaveSettings(const QStringList&);
+    void doVersion(const QStringList &);
+    void doQuit(const QStringList &);
+    void doSaveSettings(const QStringList &);
     void doMd5(const QStringList &args);
     void doValidateStrArray(const QStringList &args);
     void doPgeXTest(const QStringList &args);

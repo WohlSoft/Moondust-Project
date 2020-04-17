@@ -27,7 +27,7 @@
 
 void LvlScene::setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool accept)
 {
-    if((enabled) && (m_resizeBox == NULL))
+    if((enabled) && (m_resizeBox == nullptr))
     {
         m_mw->on_actionSelect_triggered(); //Reset mode
         ItemBlock *blk = dynamic_cast<ItemBlock *>(targetBlock);
@@ -57,9 +57,9 @@ void LvlScene::setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool ac
         {
             if(accept)
             {
-                #ifdef _DEBUG_
+#ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("BLOCK RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
-                #endif
+#endif
                 ItemBlock *blk = dynamic_cast<ItemBlock *>(m_resizeBox->m_targetItem);
                 long x = (long)m_resizeBox->pos().x();
                 long y = (long)m_resizeBox->pos().y();

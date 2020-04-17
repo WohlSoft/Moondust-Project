@@ -52,15 +52,15 @@ QRectF ItemPoint::boundingRect() const
 
 void ItemPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    if(m_scene==NULL)
+    if(m_scene == nullptr)
     {
         painter->setPen(QPen(QBrush(Qt::yellow), 2, Qt::SolidLine));
         painter->setBrush(Qt::yellow);
         painter->setOpacity(0.5);
-        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
+        painter->drawRect(1, 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
         painter->setOpacity(1);
         painter->setBrush(Qt::transparent);
-        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
+        painter->drawRect(1, 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
     }
     else
     {
@@ -71,9 +71,9 @@ void ItemPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidg
     if(this->isSelected())
     {
         painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
+        painter->drawRect(1, 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
         painter->setPen(QPen(QBrush(Qt::white), 2, Qt::DotLine));
-        painter->drawRect(1,1,m_imageSize.width()-2,m_imageSize.height()-2);
+        painter->drawRect(1, 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
     }
 }
 

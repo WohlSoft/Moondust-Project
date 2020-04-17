@@ -27,7 +27,7 @@
 class WLD_ModeFill : public EditMode
 {
 public:
-    WLD_ModeFill(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    WLD_ModeFill(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~WLD_ModeFill();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
@@ -38,7 +38,7 @@ public:
     void keyRelease(QKeyEvent *keyEvent);
 
 private:
-    void attemptFlood(WldScene * scene);
+    void attemptFlood(WldScene *scene);
 };
 
 #endif // MODE_FILL_H

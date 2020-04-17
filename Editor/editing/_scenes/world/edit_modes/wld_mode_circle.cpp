@@ -32,7 +32,7 @@
 WLD_ModeCircle::WLD_ModeCircle(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Circle", parentScene, parent)
 {
-    drawStartPos = QPointF(0,0);
+    drawStartPos = QPointF(0, 0);
 }
 
 WLD_ModeCircle::~WLD_ModeCircle()
@@ -47,10 +47,10 @@ void WLD_ModeCircle::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=true;
-    s->m_disableMoveItems=false;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = true;
+    s->m_disableMoveItems = false;
 
     s->m_viewPort->setInteractive(true);
     s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_square_fill));
@@ -64,7 +64,7 @@ void WLD_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if( mouseEvent->buttons() & Qt::RightButton )
+    if(mouseEvent->buttons() & Qt::RightButton)
     {
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
@@ -73,27 +73,27 @@ void WLD_ModeCircle::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    s->m_lastTerrainArrayID=s->m_data->tile_array_id;
-    s->m_lastSceneryArrayID=s->m_data->scene_array_id;
-    s->m_lastPathArrayID=s->m_data->path_array_id;
-    s->m_lastLevelArrayID=s->m_data->level_array_id;
-    s->m_lastMusicBoxArrayID=s->m_data->musicbox_array_id;
+    s->m_lastTerrainArrayID = s->m_data->tile_array_id;
+    s->m_lastSceneryArrayID = s->m_data->scene_array_id;
+    s->m_lastPathArrayID = s->m_data->path_array_id;
+    s->m_lastLevelArrayID = s->m_data->level_array_id;
+    s->m_lastMusicBoxArrayID = s->m_data->musicbox_array_id;
 
     if(s->m_cursorItemImg)
     {
-        QGraphicsEllipseItem * cur = dynamic_cast<QGraphicsEllipseItem *>(s->m_cursorItemImg);
-        drawStartPos = QPointF(s->applyGrid( mouseEvent->scenePos().toPoint(),
-                                          WldPlacingItems::gridSz,
-                                          WldPlacingItems::gridOffset));
-        s->m_cursorItemImg->setPos( drawStartPos );
+        QGraphicsEllipseItem *cur = dynamic_cast<QGraphicsEllipseItem *>(s->m_cursorItemImg);
+        drawStartPos = QPointF(s->applyGrid(mouseEvent->scenePos().toPoint(),
+                                            WldPlacingItems::gridSz,
+                                            WldPlacingItems::gridOffset));
+        s->m_cursorItemImg->setPos(drawStartPos);
         s->m_cursorItemImg->setVisible(true);
 
-        QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
-                               WldPlacingItems::gridSz,
-                               WldPlacingItems::gridOffset);
+        QPoint hw = s->applyGrid(mouseEvent->scenePos().toPoint(),
+                                 WldPlacingItems::gridSz,
+                                 WldPlacingItems::gridOffset);
 
-        QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
-        cur->setRect(0,0, hs.width(), hs.height());
+        QSize hs = QSize((long)fabs(drawStartPos.x() - hw.x()), (long)fabs(drawStartPos.y() - hw.y()));
+        cur->setRect(0, 0, hs.width(), hs.height());
     }
 }
 
@@ -104,34 +104,34 @@ void WLD_ModeCircle::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(s->m_cursorItemImg && s->m_cursorItemImg->isVisible())
     {
-        QGraphicsEllipseItem * cur = dynamic_cast<QGraphicsEllipseItem *>(s->m_cursorItemImg);
-        QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint(),
-                               WldPlacingItems::gridSz,
-                               WldPlacingItems::gridOffset);
+        QGraphicsEllipseItem *cur = dynamic_cast<QGraphicsEllipseItem *>(s->m_cursorItemImg);
+        QPoint hw = s->applyGrid(mouseEvent->scenePos().toPoint(),
+                                 WldPlacingItems::gridSz,
+                                 WldPlacingItems::gridOffset);
 
-        QSize hs = QSize( (long)fabs(drawStartPos.x() - hw.x()),  (long)fabs( drawStartPos.y() - hw.y() ) );
+        QSize hs = QSize((long)fabs(drawStartPos.x() - hw.x()), (long)fabs(drawStartPos.y() - hw.y()));
 
 
-        cur->setRect(0,0, hs.width(), hs.height());
+        cur->setRect(0, 0, hs.width(), hs.height());
         cur->setPos(
-                    ((hw.x() < drawStartPos.x() )? hw.x() : drawStartPos.x()),
-                    ((hw.y() < drawStartPos.y() )? hw.y() : drawStartPos.y())
-                    );
+            ((hw.x() < drawStartPos.x()) ? hw.x() : drawStartPos.x()),
+            ((hw.y() < drawStartPos.y()) ? hw.y() : drawStartPos.y())
+        );
     }
 }
 
 void WLD_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
     if(s->m_cursorItemImg)
     {
-        QGraphicsEllipseItem * cur = dynamic_cast<QGraphicsEllipseItem *>(s->m_cursorItemImg);
+        QGraphicsEllipseItem *cur = dynamic_cast<QGraphicsEllipseItem *>(s->m_cursorItemImg);
         // /////////// Don't draw with zero width or height //////////////
-        if( (cur->rect().width()==0) || (cur->rect().height()==0) )
+        if((cur->rect().width() == 0) || (cur->rect().height() == 0))
         {
             s->m_cursorItemImg->hide();
             return;
@@ -140,7 +140,7 @@ void WLD_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         item_rectangles::drawRound(s,
                                    QRect(cur->x(), cur->y(), cur->rect().width(), cur->rect().height()),
                                    QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
-                                   );
+                                  );
 
         s->placeItemsByRectArray();
         s->Debugger_updateItemList();
@@ -155,19 +155,19 @@ void WLD_ModeCircle::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WLD_ModeCircle::keyPress(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }
 
 void WLD_ModeCircle::keyRelease(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
     switch(keyEvent->key())
     {
-        case (Qt::Key_Escape):
-            item_rectangles::clearArray();
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
-            break;
-        default:
-            break;
+    case(Qt::Key_Escape):
+        item_rectangles::clearArray();
+        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        break;
+    default:
+        break;
     }
 }

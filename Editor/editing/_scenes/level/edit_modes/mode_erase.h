@@ -25,7 +25,7 @@
 class LVL_ModeErase : public EditMode
 {
 public:
-    LVL_ModeErase(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    LVL_ModeErase(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModeErase();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

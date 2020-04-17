@@ -29,8 +29,8 @@ class ItemPoint : public WldBaseItem
 {
     void construct();
 public:
-    ItemPoint(QGraphicsItem *parent=0);
-    ItemPoint(WldScene *scenePoint, QGraphicsItem *parent=0);
+    ItemPoint(QGraphicsItem *parent = nullptr);
+    ItemPoint(WldScene *scenePoint, QGraphicsItem *parent = nullptr);
     ~ItemPoint();
 
     QRectF  boundingRect() const;

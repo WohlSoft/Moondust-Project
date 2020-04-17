@@ -303,9 +303,9 @@ cancelRemoveSSS:
         int transformToBlock;
         int tabType;
         ItemSelectDialog *blockList = new ItemSelectDialog(m_scene->m_configs,
-                                                           ItemSelectDialog::TAB_BGO|ItemSelectDialog::TAB_BLOCK,
-                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_mw,
-                                                           ItemSelectDialog::TAB_BGO);
+                ItemSelectDialog::TAB_BGO | ItemSelectDialog::TAB_BLOCK,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_mw,
+                ItemSelectDialog::TAB_BGO);
         blockList->setTabsOrder({ItemSelectDialog::TAB_BGO, ItemSelectDialog::TAB_BLOCK});
         util::DialogToCenter(blockList, true);
 
@@ -349,7 +349,7 @@ cancelRemoveSSS:
                 {
                     if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                     {
-                        ItemBGO * item = (ItemBGO *)SelItem;
+                        ItemBGO *item = (ItemBGO *)SelItem;
                         if((!sameID) || (item->m_data.id == oldID))
                         {
                             oldData.bgo.push_back(item->m_data);
@@ -366,7 +366,7 @@ cancelRemoveSSS:
                 {
                     if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                     {
-                        ItemBGO * item = (ItemBGO *)SelItem;
+                        ItemBGO *item = (ItemBGO *)SelItem;
                         if((!sameID) || (item->m_data.id == oldID))
                         {
                             oldData.bgo.push_back(item->m_data);
@@ -377,7 +377,7 @@ cancelRemoveSSS:
                             block.layer = item->m_data.layer;
                             block.meta = item->m_data.meta;
                             block.meta.array_id = (ldata->blocks_array_id)++;
-                            ItemBlock* blockItem = scene->placeBlock(block);
+                            ItemBlock *blockItem = scene->placeBlock(block);
                             block.w = blockItem->m_data.w;
                             block.h = blockItem->m_data.h;
                             ldata->blocks.push_back(block);

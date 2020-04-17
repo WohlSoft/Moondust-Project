@@ -29,13 +29,13 @@ class WldPointSelector : public QObject
 {
     Q_OBJECT
     //! Pointer to parent scene
-    WldScene *      m_scene;
+    WldScene       *m_scene = nullptr;
     //! Graphics item of point indicator
-    QGraphicsItem * m_pointItem;
+    QGraphicsItem *m_pointItem;
     //! Sprite of the point indicator
     QPixmap         m_pointImg;
 public:
-    explicit WldPointSelector(WldScene* scene, QObject* parent=nullptr);
+    explicit WldPointSelector(WldScene *scene, QObject *parent = nullptr);
     virtual ~WldPointSelector();
 
     //! Point indicator animation
@@ -43,9 +43,9 @@ public:
 
     //! SELECTING Point on the map
     QPoint  m_pointCoord;
-    bool    m_pointNotPlaced; //point is not selected (used because QPoint::isNull()
-                               //will work in the x0-y0, but this point are usable)
-                               //If value true, initial position will be 0x0, else already placed point
+    bool    m_pointNotPlaced = false; //point is not selected (used because QPoint::isNull()
+    //will work in the x0-y0, but this point are usable)
+    //If value true, initial position will be 0x0, else already placed point
 
     void setPoint(QPoint p);   //Set Point item
     void unserPointSelector(); //remove point item from world map

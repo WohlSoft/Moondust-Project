@@ -25,7 +25,7 @@
 class LVL_ModeResize : public EditMode
 {
 public:
-    LVL_ModeResize(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    LVL_ModeResize(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModeResize();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

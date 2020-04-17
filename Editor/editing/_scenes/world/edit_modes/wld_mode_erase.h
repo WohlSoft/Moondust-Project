@@ -25,7 +25,7 @@
 class WLD_ModeErase : public EditMode
 {
 public:
-    WLD_ModeErase(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    WLD_ModeErase(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~WLD_ModeErase();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

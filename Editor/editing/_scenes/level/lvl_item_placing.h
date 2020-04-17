@@ -40,7 +40,7 @@ public:
 
     enum PlaceMode
     {
-        PMODE_Brush=0,
+        PMODE_Brush = 0,
         PMODE_Rect,
         PMODE_Circle,
         PMODE_Line,
@@ -58,8 +58,9 @@ public:
     static LevelBGO bgoSet;
     static LevelPhysEnv waterSet;
 
-    enum doorType{
-        DOOR_Entrance=0,
+    enum doorType
+    {
+        DOOR_Entrance = 0,
         DOOR_Exit
     };
 

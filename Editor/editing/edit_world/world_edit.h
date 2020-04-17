@@ -34,8 +34,9 @@
 
 #define WORLD_EDIT_CLASS "WorldEdit"
 
-namespace Ui {
-class WorldEdit;
+namespace Ui
+{
+    class WorldEdit;
 }
 
 class MainWindow;
@@ -46,7 +47,7 @@ class WorldEdit : public EditBase
 
     friend class MainWindow;
 public:
-    explicit WorldEdit(MainWindow* mw, QWidget *parent = 0);
+    explicit WorldEdit(MainWindow *mw, QWidget *parent = nullptr);
     ~WorldEdit();
 public slots:
     void reTranslate();
@@ -55,7 +56,7 @@ public:
     WorldData WldData;
     //QGraphicsScene LvlScene;
 
-    long    currentMusic;
+    long    currentMusic = 0;
     QString currentCustomMusic;
 
     bool newFile(DataConfig &configs, EditingSettings options);
@@ -65,7 +66,10 @@ public:
     bool saveAs(bool savOptionsDialog = false);
     bool saveFile(const QString &fileName, const bool addToRecent = true);
     QString userFriendlyCurrentFile();
-    QString currentFile() { return curFile; }
+    QString currentFile()
+    {
+        return curFile;
+    }
 
     bool trySave();
 
@@ -76,7 +80,7 @@ public:
 
     void setCurrentSection(int scId);
     void ResetPosition();
-    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0), bool center=false);
+    void goTo(long x, long y, bool SwitchToSection = false, QPoint offset = QPoint(0, 0), bool center = false);
 
     void ResetZoom();
     void zoomIn();
@@ -84,12 +88,12 @@ public:
     void setZoom(int percent);
     int  getZoom();
 
-    QGraphicsView* getGraphicsView();
+    QGraphicsView *getGraphicsView();
 
     enum CusrorMode
     {
-        MODE_HandDrag=-1,
-        MODE_Selecting=0,
+        MODE_HandDrag = -1,
+        MODE_Selecting = 0,
         MODE_Erasing,
         MODE_PlaceItem,
         MODE_DrawSquares,
@@ -101,14 +105,14 @@ public:
 
     void ExportToImage_fn();
 
-    WldScene * scene;
+    WldScene *scene = nullptr;
 
     QAtomicInteger<bool> sceneCreated;
-    bool m_isUntitled;
+    bool m_isUntitled = false;
 
     QString curFile;
 
-    QTimer *updateTimer;
+    QTimer *updateTimer = nullptr;
     void setAutoUpdateTimer(int ms);
     void stopAutoUpdateTimer();
 signals:
@@ -118,11 +122,11 @@ protected:
     virtual void focusInEvent(QFocusEvent *event);
     void closeEvent(QCloseEvent *event);
     void dragEnterEvent(QDragEnterEvent *e);
-    void dropEvent(QDropEvent* e);
+    void dropEvent(QDropEvent *e);
 
 private slots:
-    virtual void mouseReleaseEvent( QMouseEvent * event );
-    virtual void leaveEvent(QEvent * leaveEvent);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void leaveEvent(QEvent *leaveEvent);
     void updateScene();
 
     void ExportingReady();
@@ -138,13 +142,13 @@ private:
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
     QString latest_export_path;
-    unsigned int FileType;
+    unsigned int FileType = 0;
 
     //QGraphicsScene* pScene;
     void moveH(int step);
     void moveV(int step);
 
-    Ui::WorldEdit *ui;
+    Ui::WorldEdit *ui = nullptr;
 };
 
 #endif // WORLD_EDIT_H

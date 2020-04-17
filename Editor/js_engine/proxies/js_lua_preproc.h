@@ -30,9 +30,9 @@ class PGE_JS_LuaPreprocessor : public QObject
     QString     m_luaFile;
     QStringList m_macros;
 public:
-    explicit PGE_JS_LuaPreprocessor(QObject *parent = 0);
-    PGE_JS_LuaPreprocessor(QString luaFile, QStringList macros = QStringList(), QObject *parent = 0);
-    PGE_JS_LuaPreprocessor(const PGE_JS_LuaPreprocessor& lp);
+    explicit PGE_JS_LuaPreprocessor(QObject *parent = nullptr);
+    PGE_JS_LuaPreprocessor(QString luaFile, QStringList macros = QStringList(), QObject *parent = nullptr);
+    PGE_JS_LuaPreprocessor(const PGE_JS_LuaPreprocessor &lp);
     virtual ~PGE_JS_LuaPreprocessor();
 
 };

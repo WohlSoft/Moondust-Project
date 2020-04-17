@@ -32,8 +32,9 @@
 
 #define LEVEL_EDIT_CLASS "LevelEdit"
 
-namespace Ui {
-class LevelEdit;
+namespace Ui
+{
+    class LevelEdit;
 }
 
 class LevelEdit : public EditBase
@@ -42,7 +43,7 @@ class LevelEdit : public EditBase
     friend class LvlScene;
     friend class MainWindow;
 public:
-    explicit LevelEdit(MainWindow* mw, QWidget *parent = 0);
+    explicit LevelEdit(MainWindow *mw, QWidget *parent = nullptr);
     ~LevelEdit();
 
 public slots:
@@ -59,12 +60,15 @@ public:
     void showCustomStuffWarnings();
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);
-    bool saveFile(const QString &fileName, const bool addToRecent = true, bool *out_WarningIsAborted = 0);
-    bool savePGEXLVL(QString fileName, bool silent=false); //!< Saves a PGE Extended Level file format
-    bool saveSMBX64LVL(QString fileName, bool silent=false, bool *out_WarningIsAborted = 0);//!< Saves a SMBX Level file format
-    bool saveSMBX38aLVL(QString fileName, bool silent=false); //!< Saves SMBX38A Level file format
+    bool saveFile(const QString &fileName, const bool addToRecent = true, bool *out_WarningIsAborted = nullptr);
+    bool savePGEXLVL(QString fileName, bool silent = false); //!< Saves a PGE Extended Level file format
+    bool saveSMBX64LVL(QString fileName, bool silent = false, bool *out_WarningIsAborted = nullptr); //!< Saves a SMBX Level file format
+    bool saveSMBX38aLVL(QString fileName, bool silent = false); //!< Saves SMBX38A Level file format
     QString userFriendlyCurrentFile();
-    QString currentFile() { return curFile; }
+    QString currentFile()
+    {
+        return curFile;
+    }
 
     bool trySave();
 
@@ -75,7 +79,7 @@ public:
 
     void setCurrentSection(int scId);
     void ResetPosition();
-    void goTo(long x, long y, bool SwitchToSection=false, QPoint offset=QPoint(0,0), bool center=false);
+    void goTo(long x, long y, bool SwitchToSection = false, QPoint offset = QPoint(0, 0), bool center = false);
 
     void ResetZoom();
     void zoomIn();
@@ -83,12 +87,12 @@ public:
     void setZoom(int percent);
     int  getZoom();
 
-    QGraphicsView* getGraphicsView();
+    QGraphicsView *getGraphicsView();
 
     enum CusrorMode
     {
-        MODE_HandDrag=-1,
-        MODE_Selecting=0,
+        MODE_HandDrag = -1,
+        MODE_Selecting = 0,
         MODE_Erasing,
         MODE_PlaceItem,
         MODE_DrawSquares,
@@ -101,14 +105,14 @@ public:
     void ExportToImage_fn();
     void ExportToImage_fn_piece();
 
-    LvlScene * scene;
+    LvlScene *scene = nullptr;
 
     QAtomicInteger<bool> sceneCreated;
-    bool m_isUntitled;
+    bool m_isUntitled = false;
 
     QString curFile;
 
-    QTimer *updateTimer;
+    QTimer *updateTimer = nullptr;
     void setAutoUpdateTimer(int ms);
     void stopAutoUpdateTimer();
 
@@ -123,8 +127,8 @@ public slots:
     void doSave();
 
 private slots:
-    virtual void mouseReleaseEvent( QMouseEvent * event );
-    virtual void leaveEvent(QEvent * leaveEvent);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
+    virtual void leaveEvent(QEvent *leaveEvent);
     virtual void focusInEvent(QFocusEvent *event);
     virtual void dragEnterEvent(QDragEnterEvent *e);
     virtual void dropEvent(QDropEvent *e);
@@ -135,7 +139,7 @@ private slots:
 
 private:
     void documentWasModified();
-    Ui::LevelEdit *ui;
+    Ui::LevelEdit *ui = nullptr;
 
     LevelData StartLvlData;
     bool DrawObjects(QProgressDialog &progress);
@@ -145,7 +149,7 @@ private:
     void setDataBoxes();
     QString strippedName(const QString &fullFileName);
     QString m_recentExportPath;
-    unsigned int m_fileType;
+    unsigned int m_fileType = 0;
 };
 
 #endif // LEVELEDIT_H

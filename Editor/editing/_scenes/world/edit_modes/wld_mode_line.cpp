@@ -32,7 +32,7 @@
 WLD_ModeLine::WLD_ModeLine(QGraphicsScene *parentScene, QObject *parent)
     : EditMode("Line", parentScene, parent)
 {
-    drawStartPos = QPointF(0,0);
+    drawStartPos = QPointF(0, 0);
 }
 
 WLD_ModeLine::~WLD_ModeLine()
@@ -47,10 +47,10 @@ void WLD_ModeLine::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=true;
-    s->m_disableMoveItems=false;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = true;
+    s->m_disableMoveItems = false;
 
     s->m_viewPort->setInteractive(true);
     s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_line_fill));
@@ -64,7 +64,7 @@ void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if( mouseEvent->buttons() & Qt::RightButton )
+    if(mouseEvent->buttons() & Qt::RightButton)
     {
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
@@ -75,27 +75,27 @@ void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 
     LogDebug(QString("Line mode %1").arg(s->m_editMode));
 
-    s->m_lastTerrainArrayID=s->m_data->tile_array_id;
-    s->m_lastSceneryArrayID=s->m_data->scene_array_id;
-    s->m_lastPathArrayID=s->m_data->path_array_id;
-    s->m_lastLevelArrayID=s->m_data->level_array_id;
-    s->m_lastMusicBoxArrayID=s->m_data->musicbox_array_id;
+    s->m_lastTerrainArrayID = s->m_data->tile_array_id;
+    s->m_lastSceneryArrayID = s->m_data->scene_array_id;
+    s->m_lastPathArrayID = s->m_data->path_array_id;
+    s->m_lastLevelArrayID = s->m_data->level_array_id;
+    s->m_lastMusicBoxArrayID = s->m_data->musicbox_array_id;
 
     if(s->m_cursorItemImg)
     {
-        drawStartPos = QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
-                                          QPoint(WldPlacingItems::c_offset_x,
-                                                 WldPlacingItems::c_offset_y),
-                                          WldPlacingItems::gridSz,
-                                          WldPlacingItems::gridOffset));
+        drawStartPos = QPointF(s->applyGrid(mouseEvent->scenePos().toPoint() -
+                                            QPoint(WldPlacingItems::c_offset_x,
+                                                    WldPlacingItems::c_offset_y),
+                                            WldPlacingItems::gridSz,
+                                            WldPlacingItems::gridOffset));
         //cursor->setPos( drawStartPos );
         s->m_cursorItemImg->setVisible(true);
 
-        QPoint hw = s->applyGrid( mouseEvent->scenePos().toPoint()-
-                               QPoint(WldPlacingItems::c_offset_x,
-                                      WldPlacingItems::c_offset_y),
-                               WldPlacingItems::gridSz,
-                               WldPlacingItems::gridOffset);
+        QPoint hw = s->applyGrid(mouseEvent->scenePos().toPoint() -
+                                 QPoint(WldPlacingItems::c_offset_x,
+                                        WldPlacingItems::c_offset_y),
+                                 WldPlacingItems::gridSz,
+                                 WldPlacingItems::gridOffset);
         ((QGraphicsLineItem *)s->m_cursorItemImg)->setLine(drawStartPos.x(), drawStartPos.y(), hw.x(), hw.y());
     }
 }
@@ -109,28 +109,28 @@ void WLD_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     {
         if(s->m_cursorItemImg->isVisible())
         {
-        QPoint hs = s->applyGrid( mouseEvent->scenePos().toPoint()-
-                               QPoint(WldPlacingItems::c_offset_x,
-                                      WldPlacingItems::c_offset_y),
-                               WldPlacingItems::gridSz,
-                               WldPlacingItems::gridOffset);
+            QPoint hs = s->applyGrid(mouseEvent->scenePos().toPoint() -
+                                     QPoint(WldPlacingItems::c_offset_x,
+                                            WldPlacingItems::c_offset_y),
+                                     WldPlacingItems::gridSz,
+                                     WldPlacingItems::gridOffset);
 
-        //((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
+            //((QGraphicsLineItem *)cursor)->setLine(drawStartPos.x(),drawStartPos.y(), hw.x(), hw.y());
 
-        QLineF sz = item_rectangles::snapLine(QLineF(drawStartPos.x(),drawStartPos.y(), (qreal)hs.x(), (qreal)hs.y()),
-                                             QSizeF((qreal)WldPlacingItems::itemW, (qreal)WldPlacingItems::itemH) );
+            QLineF sz = item_rectangles::snapLine(QLineF(drawStartPos.x(), drawStartPos.y(), (qreal)hs.x(), (qreal)hs.y()),
+                                                  QSizeF((qreal)WldPlacingItems::itemW, (qreal)WldPlacingItems::itemH));
 
-        QPoint hw = s->applyGrid( sz.p2().toPoint(),
-                            WldPlacingItems::gridSz,
-                            WldPlacingItems::gridOffset);
+            QPoint hw = s->applyGrid(sz.p2().toPoint(),
+                                     WldPlacingItems::gridSz,
+                                     WldPlacingItems::gridOffset);
 
-        sz.setP2(QPointF((qreal)hw.x(),(qreal)hw.y()));
+            sz.setP2(QPointF((qreal)hw.x(), (qreal)hw.y()));
 
-        ((QGraphicsLineItem *)s->m_cursorItemImg)->setLine(sz);
+            ((QGraphicsLineItem *)s->m_cursorItemImg)->setLine(sz);
 
-        item_rectangles::drawLine(s, sz,
-               QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
-                                    );
+            item_rectangles::drawLine(s, sz,
+                                      QSize(WldPlacingItems::itemW, WldPlacingItems::itemH)
+                                     );
 
         }
     }
@@ -162,11 +162,11 @@ void WLD_ModeLine::keyRelease(QKeyEvent *keyEvent)
     Q_UNUSED(keyEvent);
     switch(keyEvent->key())
     {
-        case (Qt::Key_Escape):
-            item_rectangles::clearArray();
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
-            break;
-        default:
-            break;
+    case(Qt::Key_Escape):
+        item_rectangles::clearArray();
+        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        break;
+    default:
+        break;
     }
 }

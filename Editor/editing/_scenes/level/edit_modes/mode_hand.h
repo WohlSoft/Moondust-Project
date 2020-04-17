@@ -25,7 +25,7 @@
 class LVL_ModeHand : public EditMode
 {
 public:
-    LVL_ModeHand(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    LVL_ModeHand(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModeHand();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

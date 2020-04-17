@@ -25,7 +25,7 @@
 class LVL_ModeCircle : public EditMode
 {
 public:
-    LVL_ModeCircle(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    LVL_ModeCircle(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModeCircle();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

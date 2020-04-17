@@ -29,9 +29,7 @@ WLD_ModeSetPoint::WLD_ModeSetPoint(QGraphicsScene *parentScene, QObject *parent)
 {}
 
 WLD_ModeSetPoint::~WLD_ModeSetPoint()
-{
-
-}
+{}
 
 void WLD_ModeSetPoint::set()
 {
