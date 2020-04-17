@@ -147,7 +147,13 @@ DevConsole::DevConsole(QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-    #endif
+
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_WINDOWS10)
+    {
+        // Erase style sheet from here, it won't work correctly...
+        ui->plainTextEdit->setStyleSheet(QString());
+    }
+#endif
     if(!hasFocus()) setWindowOpacity(0.9);
 }
 
