@@ -148,11 +148,13 @@ DevConsole::DevConsole(QWidget *parent) :
         }
     }
 
+#   if QT_VERSION_CHECK(5, 5, 0)
     if(QSysInfo::WindowsVersion >= QSysInfo::WV_WINDOWS10)
     {
         // Erase style sheet from here, it won't work correctly...
         ui->plainTextEdit->setStyleSheet(QString());
     }
+#   endif
 #endif
     if(!hasFocus()) setWindowOpacity(0.9);
 }
