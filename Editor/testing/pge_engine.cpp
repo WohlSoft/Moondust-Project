@@ -162,7 +162,7 @@ void PgeEngine::init()
     m_w = w;
 
     QObject::connect(&m_engineProc, SIGNAL(finished(int, QProcess::ExitStatus)),
-                     this, SLOT(testFinished()));
+                     this, SIGNAL(testFinished()));
 
     QObject::connect(this, &PgeEngine::testStarted,
                      m_w, &MainWindow::stopMusicForTesting);
