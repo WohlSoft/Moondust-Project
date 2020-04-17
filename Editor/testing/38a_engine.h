@@ -90,6 +90,10 @@ private slots:
 
     void gameStarted();
     void gameFinished(int exitCode, QProcess::ExitStatus exitStatus);
+    void testReadyReadStandardError();
+    void testReadyReadStandardOutput();
+    void gameReadyReadStandardError();
+    void gameReadyReadStandardOutput();
 
     /********Menu items*******/
     void startTestAction();

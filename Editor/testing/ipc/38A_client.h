@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QProcess>
+#include <QTimer>
 #include <PGE_File_Formats/lvl_filedata.h>
 
 /**
@@ -115,6 +116,9 @@ private:
 
     void onInputCommand(const QString &data);
 
+    void processQueue();
+    void pingGame();
+
 private slots:
     /**
      * @brief Event call, triggered when input data comes up
@@ -177,6 +181,17 @@ private:
         }
     } m_lastGameState;
 
+    struct MsgDelay
+    {
+        int timeLeft = 0;
+        QString msg;
+    };
+
+    QList<MsgDelay> m_outQueue;
+    QTimer m_outQueueTimer;
+
+
+    QTimer m_pinger;
     //! Input buffer
     QByteArray m_inBuffer;
     //! Readiness status of the bridge

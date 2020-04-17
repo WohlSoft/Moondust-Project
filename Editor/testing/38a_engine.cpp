@@ -35,6 +35,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_file_lib_private.h>
 #include <common_features/app_path.h>
+#include <dev_console/devconsole.h>
 
 #define SMBX38A_EXE "smbx.exe"
 
@@ -71,11 +72,21 @@ void SanBaEiRuntimeEngine::init()
                      static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                      this, &SanBaEiRuntimeEngine::gameFinished);
 
+    QObject::connect(&m_testingProc, &QProcess::readyReadStandardError,
+                     this, &SanBaEiRuntimeEngine::testReadyReadStandardError);
+    QObject::connect(&m_testingProc, &QProcess::readyReadStandardOutput,
+                     this, &SanBaEiRuntimeEngine::testReadyReadStandardOutput);
+
     QObject::connect(&m_gameProc, &QProcess::started,
                      this, &SanBaEiRuntimeEngine::gameStarted);
     QObject::connect(&m_gameProc,
                      static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
                      this, &SanBaEiRuntimeEngine::gameFinished);
+
+    QObject::connect(&m_gameProc, &QProcess::readyReadStandardError,
+                     this, &SanBaEiRuntimeEngine::gameReadyReadStandardError);
+    QObject::connect(&m_gameProc, &QProcess::readyReadStandardOutput,
+                     this, &SanBaEiRuntimeEngine::gameReadyReadStandardOutput);
 
     QObject::connect(this, &SanBaEiRuntimeEngine::testStarted,
                      m_w, &MainWindow::stopMusicForTesting);
@@ -219,6 +230,30 @@ void SanBaEiRuntimeEngine::gameFinished(int exitCode, QProcess::ExitStatus exitS
     LogDebug(QString("SMBX-38A: finished with Exit Code %1 and status %2").arg(exitCode).arg(exitStatus));
     if(m_interface.isBridgeWorking())
         m_interface.terminateBridge();
+}
+
+void SanBaEiRuntimeEngine::testReadyReadStandardError()
+{
+    QString err = m_testingProc.readAllStandardError();
+    DevConsole::log(err, "WineDebug");
+}
+
+void SanBaEiRuntimeEngine::testReadyReadStandardOutput()
+{
+    QString err = m_testingProc.readAllStandardOutput();
+    DevConsole::log(err, "WineDebug");
+}
+
+void SanBaEiRuntimeEngine::gameReadyReadStandardError()
+{
+    QString err = m_gameProc.readAllStandardError();
+    DevConsole::log(err, "WineDebug");
+}
+
+void SanBaEiRuntimeEngine::gameReadyReadStandardOutput()
+{
+    QString err = m_gameProc.readAllStandardOutput();
+    DevConsole::log(err, "WineDebug");
 }
 
 QString SanBaEiRuntimeEngine::getEnginePath()
@@ -541,19 +576,21 @@ QStringList SanBaEiRuntimeEngine::getTestingArgs()
     if(t.p2_vehicleID == 3)
         p2mount = t.p2_vehicleType;
 
-    QString smbxArgsStr = QString("SMBXArgs|%1,%2,%3|%4,%5,%6,%7|%8,%9,%10")
-        .arg(m_interface.m_lastGameState.hp)
-        .arg(m_interface.m_lastGameState.co)
-        .arg(m_interface.m_lastGameState.sr)
+    QString smbxArgsStr = "SMBXArgs|";
+    smbxArgsStr += QString::number(m_interface.m_lastGameState.hp);
+    smbxArgsStr += "," + QString::number(m_interface.m_lastGameState.co);
+    smbxArgsStr += "," + QString::number(m_interface.m_lastGameState.sr);
+    smbxArgsStr += "|";
 
-        .arg(t.p1_state)
-        .arg(p1mount)
-        .arg(t.p2_state)
-        .arg(p2mount)
+    smbxArgsStr += QString::number(t.p1_state);
+    smbxArgsStr += "," + QString::number(p1mount);
+    smbxArgsStr += "," + QString::number(t.p2_state);
+    smbxArgsStr += "," + QString::number(p2mount);
+    smbxArgsStr += "|";
 
-        .arg(PGE_FileFormats_misc::url_encode(m_interface.m_lastGameState.levelName))
-        .arg(m_interface.m_lastGameState.cid)
-        .arg(m_interface.m_lastGameState.id);
+    smbxArgsStr += PGE_FileFormats_misc::url_encode(m_interface.m_lastGameState.levelName);
+    smbxArgsStr += "," + QString::number(m_interface.m_lastGameState.cid);
+    smbxArgsStr += "," + QString::number(m_interface.m_lastGameState.id);
 
     params << PGE_FileFormats_misc::url_encode(smbxArgsStr);
     return params;

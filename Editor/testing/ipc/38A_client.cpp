@@ -30,7 +30,12 @@
 
 SanBaEiIpcClient::SanBaEiIpcClient(QObject *parent) :
     QObject(parent)
-{}
+{
+    QObject::connect(&m_outQueueTimer, &QTimer::timeout,
+                     this, &SanBaEiIpcClient::processQueue);
+    QObject::connect(&m_pinger, &QTimer::timeout,
+                     this, &SanBaEiIpcClient::pingGame);
+}
 
 void SanBaEiIpcClient::setMainWindow(QWidget *mw)
 {
@@ -141,7 +146,12 @@ void SanBaEiIpcClient::sendPlacingBlock(const LevelBlock &block)
 
     if(block.npc_id != 0)
     {
-        msg += QString::number(block.npc_id);
+        auto npcId = block.npc_id;
+        if(npcId < 0)
+            npcId *= -1;
+        else
+            npcId += 1000;
+        msg += QString::number(npcId);
         if(block.npc_special_value > 0)
             msg += "," + QString::number(block.npc_special_value);
     }
@@ -271,11 +281,11 @@ void SanBaEiIpcClient::onInputCommand(const QString &data)
     {
         LogDebug("SMBX38A: Bridge ready!");
         m_bridgeReady = true;
-        QThread::msleep(200);
-        sendMessage("GB");
+        m_pinger.start(100);// Start pinging of a game
     }
     else if(data.startsWith("GB|NULL"))
     {
+        m_pinger.stop();
         sendMessage("SO|CURSOR\n"
                     "GGI|NOPAUSE\n"
                     "GGI|GM");
@@ -284,6 +294,7 @@ void SanBaEiIpcClient::onInputCommand(const QString &data)
     {
         LogDebug("SMBX38A: Bridge got terminated!");
         m_bridgeReady = false;
+        m_pinger.stop();
     }
     else if(data.startsWith("GGI|GM"))
     {
@@ -324,6 +335,37 @@ void SanBaEiIpcClient::onInputCommand(const QString &data)
     }
 }
 
+void SanBaEiIpcClient::processQueue()
+{
+    if(m_outQueue.isEmpty())
+        return;
+    for(auto &e : m_outQueue)
+    {
+        if(e.timeLeft <= 0)
+            continue; // skip sent messages
+        e.timeLeft -= 100;
+        if(e.timeLeft <= 0)
+            sendMessage(e.msg);
+    }
+
+    for(auto it = m_outQueue.begin(); it != m_outQueue.end();)
+    {
+        if(it->timeLeft < 0)
+            it = m_outQueue.erase(it);
+        else
+            it++;
+    }
+
+    if(m_outQueue.isEmpty())
+        m_outQueueTimer.stop();
+}
+
+void SanBaEiIpcClient::pingGame()
+{
+    // Ping game to recognize it's readiness
+    sendMessage("GB");
+}
+
 void SanBaEiIpcClient::onReadReady()
 {
     if(!isBridgeWorking())
@@ -350,6 +392,7 @@ void SanBaEiIpcClient::onBridgeFinish(int exitCode, QProcess::ExitStatus exitSta
 {
     LogDebug(QString("SMBX-38A: Bridge got finished with Exit Code %1 and status %2").arg(exitCode).arg(exitStatus));
     m_bridgeReady = false; // Wait until bridge will confirm a readiness
+    m_pinger.stop();
 }
 
 bool SanBaEiIpcClient::sendMessage(const char *msg)
@@ -374,4 +417,13 @@ bool SanBaEiIpcClient::sendMessage(const QString &msg)
     QByteArray output_e = msg.toUtf8();
     output_e.append("\n");
     return (m_bridge.write(output_e) > 0);
+}
+
+bool SanBaEiIpcClient::sendMessageDelayed(const QString &msg, int ms)
+{
+    MsgDelay d = {ms, msg};
+    m_outQueue.push_back(d);
+    if(!m_outQueueTimer.isActive())
+        m_outQueueTimer.start(100);
+    return true;
 }
