@@ -18,12 +18,11 @@
 
 #include "pge_engine_ipc.h"
 #include <PGE_File_Formats/file_formats.h>
-#include <common_features/main_window_ptr.h>
-#include <common_features/app_path.h>
+#include <mainwindow.h>
 #include <common_features/logger.h>
-#include <common_features/main_window_ptr.h>
+#include <common_features/app_path.h>
 #include <networking/engine_intproc.h>
-#include <QSharedPointer>
+#include <cstring>
 
 /**
  * @brief Encodes string with a Base64
@@ -166,32 +165,22 @@ bool PgeEngineIpcClient::isWorking()
 
 bool PgeEngineIpcClient::sendCheat(QString _args)
 {
-    if(isWorking())
-    {
-        if(_args.isEmpty())
-            return false;
-
-        _args.replace('\n', "\\n");
-        QString out = QString("CHEAT: %1").arg(_args);
-        return sendMessage(out);
-    }
-    else
+    if(!isWorking() || _args.isEmpty())
         return false;
+
+    _args.replace('\n', "\\n");
+    QString out = QString("CHEAT: %1").arg(_args);
+    return sendMessage(out);
 }
 
 bool PgeEngineIpcClient::sendMessageBox(QString _args)
 {
-    if(isWorking())
-    {
-        if(_args.isEmpty())
-            return false;
-
-        _args.replace('\n', "\\n");
-        QString out = QString("MSGBOX: %1").arg(_args);
-        return sendMessage(out);
-    }
-    else
+    if(!isWorking() || _args.isEmpty())
         return false;
+
+    _args.replace('\n', "\\n");
+    QString out = QString("MSGBOX: %1").arg(_args);
+    return sendMessage(out);
 }
 
 void PgeEngineIpcClient::sendPlacingBlock(const LevelBlock &block)
