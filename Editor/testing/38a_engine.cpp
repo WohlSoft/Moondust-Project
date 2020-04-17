@@ -24,6 +24,7 @@
 #include <QPushButton>
 
 #if !defined(_WIN32)
+#include <unistd.h>
 #include <QStandardPaths>
 #include "wine/wine_setup.h"
 #endif
@@ -45,6 +46,7 @@ SanBaEiRuntimeEngine::SanBaEiRuntimeEngine(QObject *parent) :
 SanBaEiRuntimeEngine::~SanBaEiRuntimeEngine()
 {
     terminateAll();
+    removeTempDir();
 }
 
 void SanBaEiRuntimeEngine::init()
@@ -62,6 +64,25 @@ void SanBaEiRuntimeEngine::init()
 
     QObject::connect(&m_testingProc, SIGNAL(finished(int, QProcess::ExitStatus)),
                      this, SLOT(testFinished()));
+
+    QObject::connect(&m_testingProc, &QProcess::started,
+                     this, &SanBaEiRuntimeEngine::gameStarted);
+    QObject::connect(&m_testingProc,
+                     static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                     this, &SanBaEiRuntimeEngine::gameFinished);
+
+    QObject::connect(&m_gameProc, &QProcess::started,
+                     this, &SanBaEiRuntimeEngine::gameStarted);
+    QObject::connect(&m_gameProc,
+                     static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
+                     this, &SanBaEiRuntimeEngine::gameFinished);
+
+    QObject::connect(this, &SanBaEiRuntimeEngine::testStarted,
+                     m_w, &MainWindow::stopMusicForTesting);
+    QObject::connect(this, &SanBaEiRuntimeEngine::testFinished,
+                     m_w, &MainWindow::testingFinished);
+
+    m_interface.init(&m_testingProc);
     loadSetup();
 }
 
@@ -187,6 +208,19 @@ void SanBaEiRuntimeEngine::retranslateMenu()
 
 }
 
+void SanBaEiRuntimeEngine::gameStarted()
+{
+    emit testStarted();
+}
+
+void SanBaEiRuntimeEngine::gameFinished(int exitCode, QProcess::ExitStatus exitStatus)
+{
+    emit testFinished();
+    LogDebug(QString("SMBX-38A: finished with Exit Code %1 and status %2").arg(exitCode).arg(exitStatus));
+    if(m_interface.isBridgeWorking())
+        m_interface.terminateBridge();
+}
+
 QString SanBaEiRuntimeEngine::getEnginePath()
 {
     return m_customEnginePath.isEmpty() ?
@@ -204,6 +238,7 @@ void SanBaEiRuntimeEngine::loadSetup()
         m_customEnginePath = settings.value("custom-runtime-path", QString()).toString();
 #ifndef _WIN32
         WineSetup::iniLoad(settings, m_wineSetup);
+        WineSetup::prepareSetup(m_wineSetup);
 #endif
     }
     settings.endGroup();
@@ -292,6 +327,7 @@ void SanBaEiRuntimeEngine::startTestAction()
         if(!edit)
             return;
 
+        m_battleMode = false;
         doTestLevelIPC(edit->LvlData);
     }
 }
@@ -356,7 +392,7 @@ void SanBaEiRuntimeEngine::startBattleTestAction()
 
 void SanBaEiRuntimeEngine::resetCheckPoints()
 {
-    m_lastGameState.reset();
+    m_interface.m_lastGameState.reset();
 
     QMessageBox::information(m_w,
                              "SMBX-38A",
@@ -470,16 +506,19 @@ void SanBaEiRuntimeEngine::runWineSetup()
     d.setSetup(m_wineSetup);
     int ret = d.exec();
     if(ret == QDialog::Accepted)
+    {
         m_wineSetup = d.getSetup();
+        WineSetup::prepareSetup(m_wineSetup);
+    }
 }
 #endif
 
-QStringList SanBaEiRuntimeEngine::getTestingArgs(bool battleMode)
+QStringList SanBaEiRuntimeEngine::getTestingArgs()
 {
     QStringList params;
 
     SETTINGS_TestSettings t = GlobalSettings::testing;
-    if(battleMode)
+    if(m_battleMode)
         params << "2";
     else if(t.numOfPlayers == 1)
         params << "0";
@@ -503,26 +542,141 @@ QStringList SanBaEiRuntimeEngine::getTestingArgs(bool battleMode)
         p2mount = t.p2_vehicleType;
 
     QString smbxArgsStr = QString("SMBXArgs|%1,%2,%3|%4,%5,%6,%7|%8,%9,%10")
-        .arg(m_lastGameState.hp)
-        .arg(m_lastGameState.co)
-        .arg(m_lastGameState.sr)
+        .arg(m_interface.m_lastGameState.hp)
+        .arg(m_interface.m_lastGameState.co)
+        .arg(m_interface.m_lastGameState.sr)
 
         .arg(t.p1_state)
         .arg(p1mount)
         .arg(t.p2_state)
         .arg(p2mount)
 
-        .arg(PGE_FileFormats_misc::url_encode(m_lastGameState.levelName))
-        .arg(m_lastGameState.cid)
-        .arg(m_lastGameState.id);
+        .arg(PGE_FileFormats_misc::url_encode(m_interface.m_lastGameState.levelName))
+        .arg(m_interface.m_lastGameState.cid)
+        .arg(m_interface.m_lastGameState.id);
 
     params << PGE_FileFormats_misc::url_encode(smbxArgsStr);
     return params;
 }
 
+QString SanBaEiRuntimeEngine::prepareTempDir()
+{
+    if(m_tempPath.isEmpty())
+    {
+#ifndef _WIN32
+        m_tempPath = m_wineSetup.metaWinePrefix + "/drive_c/windows/temp";
+        QDir t(m_tempPath);
+        if(!t.exists())
+            t.mkpath(m_tempPath);
+#else
+        m_tempPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+#endif
+    }
+
+    removeTempDir(); // Delete old temp path
+    QDir tmp(m_tempPath);
+    tmp.mkdir("38a-lvl-test");
+    tmp.cd("38a-lvl-test");
+
+    return tmp.absolutePath();
+}
+
+void SanBaEiRuntimeEngine::removeTempDir()
+{
+    if(!m_tempPath.isEmpty())
+    {
+        QDir tmp(m_tempPath);
+        if(tmp.exists("38a-lvl-test"))
+        {
+            tmp.cd("38a-lvl-test");
+            tmp.removeRecursively();
+            tmp.cdUp();
+        }
+    }
+}
+
+QString SanBaEiRuntimeEngine::initTempLevel(const LevelData &d)
+{
+    QString tempPath;
+    QString origPath;
+    if(!d.meta.path.isEmpty())
+        origPath = d.meta.path;
+
+    tempPath = prepareTempDir();
+    if(tempPath.isEmpty() || !QFile::exists(tempPath))
+        return QString(); // Failed to prepare a temp path
+
+    QString levelFile = tempPath + "/TeMpLeVeL38A.lvl";
+    LogDebug(QString("Orig Path %1 -> %2").arg(origPath).arg(levelFile));
+    if(!origPath.isEmpty())
+    {
+        QDir op(origPath);
+        auto entries = op.entryList(QDir::NoDotAndDotDot|QDir::Dirs|QDir::Files);
+        for(auto &i : entries)
+        {
+            auto from = origPath + "/" + i;
+            auto to = tempPath + "/" + i;
+            symlink(from.toUtf8().data(), to.toUtf8().data());
+        }
+
+        auto cfFrom = origPath + "/" + d.meta.filename;
+        auto cfTo = tempPath + "/TeMpLeVeL38A";
+        if(QFile::exists(cfFrom))
+            symlink(cfFrom.toUtf8().data(), cfTo.toUtf8().data());
+    }
+
+    LevelData lvl = d;
+    if(!FileFormats::WriteSMBX38ALvlFileF(levelFile, lvl))
+        return QString(); // Failed to write a level file
+
+    return levelFile;
+}
+
 bool SanBaEiRuntimeEngine::doTestLevelIPC(const LevelData &d)
 {
-    return false;
+    const QString smbxExe = getEnginePath();
+    QFileInfo smbxExeInfo(smbxExe);
+    const QString smbxPath = smbxExeInfo.absoluteDir().absolutePath();
+
+    QString levelFile = initTempLevel(d);
+    if(levelFile.isEmpty())
+    {
+        QMessageBox::critical(m_w,
+                              "SMBX-38A",
+                              tr("Impossible to prepare a temp file for a test run."),
+                              QMessageBox::Ok);
+        return false;
+    }
+
+    if(!m_interface.isBridgeWorking()) // Initialize bridge
+    {
+        QString cmd = ApplicationPath + "/ipc/38a_ipc_bridge.exe";
+        QStringList params;
+        if(QFile::exists(cmd))
+        {
+            auto &b = m_interface.m_bridge;
+            useWine(b, cmd, params);
+            b.setProgram(cmd);
+            b.setArguments(params);
+            b.setWorkingDirectory(smbxPath);
+            b.start();
+            b.waitForStarted();
+        }
+    }
+
+    QString command = smbxExe;
+    QStringList params;
+    params << pathUnixToWine(levelFile);
+    params << getTestingArgs();
+
+    useWine(m_testingProc, command, params);
+    m_testingProc.setProgram(command);
+    m_testingProc.setArguments(params);
+    m_testingProc.setWorkingDirectory(smbxPath);
+    m_testingProc.start();
+    LogDebug(QString("SMBX-38A: starting command: %1 %2").arg(command).arg(params.join(' ')));
+
+    return true;
 }
 
 bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
@@ -563,10 +717,13 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
             return false;
     }
 
+    if(m_interface.isBridgeWorking())
+        m_interface.terminateBridge();
+
     QString command = smbxExe;
     QStringList params;
     params << pathUnixToWine(levelFile);
-    params << getTestingArgs(m_battleMode);
+    params << getTestingArgs();
 
     useWine(m_testingProc, command, params);
     m_testingProc.setProgram(command);
@@ -578,7 +735,7 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
     return true;
 }
 
-bool SanBaEiRuntimeEngine::doTestWorldIPC(const WorldData &d)
+bool SanBaEiRuntimeEngine::doTestWorldIPC(const WorldData &)
 {
     return false;
 }
@@ -644,8 +801,7 @@ void SanBaEiRuntimeEngine::terminate()
 {
     m_testingProc.terminate();
     m_testingProc.waitForFinished(3000);
-    m_bridgeProc.terminate();
-    m_bridgeProc.waitForFinished(3000);
+    m_interface.terminateBridge();
 }
 
 bool SanBaEiRuntimeEngine::isRunning()
@@ -660,14 +816,4 @@ int SanBaEiRuntimeEngine::capabilities()
             CAP_WORLD_FILE |
             CAP_RUN_GAME |
             CAP_HAS_MENU;
-}
-
-void SanBaEiRuntimeEngine::testStarted()
-{
-
-}
-
-void SanBaEiRuntimeEngine::testFinished()
-{
-
 }

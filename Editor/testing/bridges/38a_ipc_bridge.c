@@ -66,6 +66,10 @@ static void caughtSignal(int sig)
     {
         g_is_working = FALSE;
     }
+    else if(sig == SIGTERM)
+    {
+        g_is_working = FALSE;
+    }
 }
 
 
@@ -125,6 +129,12 @@ int main()
 
         if(line)
         {
+            if(strcmp(line, "TERMINATE\n") == 0)
+            {
+                g_is_working = FALSE;
+                break;
+            }
+
             memcpy(&MsgLenI, &(pBlock->BufferB[0]), 2);
             MsgLen = (short)strlen(line);
 
@@ -152,7 +162,7 @@ int main()
                 memcpy(&OutputBuffer[0], &(pBlock->BufferA[2]), MsgLen);
                 OutputBuffer[MsgLen] = 0;
 
-                printf("INPUT:%s\n", OutputBuffer);
+                printf("%s\n", OutputBuffer);
                 fflush(stdout);
 
                 memset(&(pBlock->BufferA[0]), 0, 8192);
@@ -164,6 +174,10 @@ int main()
     printf("TERMINATED\n");
     fflush(stdout);
 
+    Sleep(200);
+
     UnmapViewOfFile(hAddress);
     CloseHandle(hMap);
+
+    return 0;
 }

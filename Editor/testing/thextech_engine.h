@@ -97,7 +97,7 @@ public:
 
     virtual int capabilities();
 
-private slots:
+signals:
     void testStarted();
     void testFinished();
 };

@@ -241,6 +241,8 @@ void WineSetup::prepareSetup(WineSetupData &setup)
         setup.metaWineBinDir = d.absolutePath();
         d.cdUp();
 
+        setup.metaWinePrefix = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/.wine";
+
         if(d.exists("lib64"))
             setup.metaWineLib64Dir = d.absoluteFilePath("lib64");
 
@@ -252,6 +254,7 @@ void WineSetup::prepareSetup(WineSetupData &setup)
     else
     {
         // Use custom
+        setup.metaWinePrefix = setup.winePrefix;
         setup.metaWineBinDir = setup.wineRoot + "/bin";
         setup.metaWineLibDir = setup.wineRoot + "/lib";
         setup.metaWineLib64Dir = setup.wineRoot + "/lib64";

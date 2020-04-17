@@ -259,6 +259,12 @@ void TheXTechEngine::init()
 
     QObject::connect(&m_engineProc, SIGNAL(finished(int, QProcess::ExitStatus)),
                      this, SLOT(testFinished()));
+
+    QObject::connect(this, &TheXTechEngine::testStarted,
+                     m_w, &MainWindow::stopMusicForTesting);
+    QObject::connect(this, &TheXTechEngine::testFinished,
+                     m_w, &MainWindow::testingFinished);
+
     m_interface.init(&m_engineProc);
 
     loadSetup();
@@ -766,17 +772,4 @@ int TheXTechEngine::capabilities()
             CAP_LEVEL_FILE |
             CAP_RUN_GAME |
             CAP_HAS_MENU;
-}
-
-void TheXTechEngine::testStarted()
-{
-    Q_ASSERT(m_w);
-    //Stop music playback in the PGE Editor!
-    m_w->stopMusicForTesting();
-}
-
-void TheXTechEngine::testFinished()
-{
-    Q_ASSERT(m_w);
-    m_w->testingFinished();
 }

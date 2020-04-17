@@ -19,6 +19,7 @@
 #ifndef SANBAEIRUNTIMEENGINE_H
 #define SANBAEIRUNTIMEENGINE_H
 
+#include "ipc/38A_client.h"
 #include "abstract_engine.h"
 
 #include <QProcess>
@@ -37,11 +38,11 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
     //! Game application handler
     QProcess m_testingProc;
     //! IPC Bridge handler
-    QProcess m_bridgeProc;
-    //! IPC Bridge handler
     QProcess m_gameProc;
     //! Mutex which helps to avoid multiple launches of engine
     QMutex   m_engineMutex;
+    //! IPC protocol client
+    SanBaEiIpcClient m_interface;
 
     MainWindow *m_w = nullptr;
     //! List of registered menu items
@@ -52,35 +53,6 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
     QString m_customEnginePath;
     //! Start game in battle mode
     bool    m_battleMode = false;
-
-    struct GameState
-    {
-        //! 0 = 'X Button', 99 = player failed, else: same as world map's level exit code.
-        int exitcode = 0;
-        //! if the player arrived the checkpoint, this value will be set to the level's filename[***urlencode!***]
-        QString levelName;
-        //! if the player arrived the checkpoint, this value will be set to the checkpoint's perm ID.
-        int cid = 0;
-        //! if the player arrived the checkpoint, this value will be set to the checkpoint's advset value.
-        int id = 0;
-        //! current 1up number
-        int hp = 20;
-        //! the coins number
-        int co = 0;
-        //! current score
-        int sr = 0;
-        //! Reset game state
-        void reset()
-        {
-            exitcode = 0;
-            levelName.clear();
-            cid = 0;
-            id = 0;
-            hp = 20;
-            co = 0;
-            sr = 0;
-        }
-    } m_lastGameState;
     /************** Settings **************/
 
     QString getEnginePath();
@@ -104,10 +76,20 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
      */
     QString pathUnixToWine(const QString &unixPath);
 
-    QStringList getTestingArgs(bool battleMode = false);
+    QStringList getTestingArgs();
+
+    //! Temp path to store level data
+    QString m_tempPath;
+
+    QString prepareTempDir();
+    void removeTempDir();
+    QString initTempLevel(const LevelData &d);
 
 private slots:
     void retranslateMenu();
+
+    void gameStarted();
+    void gameFinished(int exitCode, QProcess::ExitStatus exitStatus);
 
     /********Menu items*******/
     void startTestAction();
@@ -150,7 +132,7 @@ public:
 
     virtual int capabilities();
 
-private slots:
+signals:
     void testStarted();
     void testFinished();
 };

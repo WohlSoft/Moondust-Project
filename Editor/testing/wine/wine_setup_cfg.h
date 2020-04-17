@@ -34,6 +34,7 @@ struct WineSetupData
     bool enableWineDebug = false;
 
     // Auto-computed values
+    QString metaWinePrefix;
     QString metaWineExec;
     QString metaWinePathExec;
     QString metaWine64Exec;

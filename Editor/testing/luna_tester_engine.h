@@ -209,6 +209,10 @@ public:
 
 private slots:
     void retranslateMenu();
+
+signals:
+    void testStarted();
+    void testFinished();
 };
 
 #endif // LUNATESTERENGINE_H

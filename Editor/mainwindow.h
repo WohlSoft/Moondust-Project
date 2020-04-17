@@ -1120,6 +1120,7 @@ public:
         friend class PgeEngine;
         friend class LunaTesterEngine;
         friend class TheXTechEngine;
+        friend class SanBaEiRuntimeEngine;
         //! Default testing engine
         AbstractRuntimeEngine *m_testEngine;
         //! All available engines

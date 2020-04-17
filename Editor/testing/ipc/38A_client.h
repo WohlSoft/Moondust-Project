@@ -30,6 +30,8 @@
 class SanBaEiIpcClient : public QObject
 {
     Q_OBJECT
+    friend class SanBaEiRuntimeEngine;
+
 public:
     explicit SanBaEiIpcClient(QObject *parent = nullptr);
     ~SanBaEiIpcClient() override = default;
@@ -55,6 +57,13 @@ public:
      * @return true if running
      */
     bool isWorking();
+    /**
+     * @brief Is a bridge running?
+     * @return true if running
+     */
+    bool isBridgeWorking();
+
+    void terminateBridge();
 
     /**
      * @brief Send a cheat-code command
@@ -104,11 +113,16 @@ private:
      */
     void readInputStream(QByteArray &out);
 
+    void onInputCommand(const QString &data);
+
 private slots:
     /**
      * @brief Event call, triggered when input data comes up
      */
-    void onInputData();
+    void onReadReady();
+
+    void onBridgeStart();
+    void onBridgeFinish(int exitCode, QProcess::ExitStatus exitStatus);
 
 signals:
     /**
@@ -131,6 +145,42 @@ private:
      */
     bool sendMessage(const QString &msg);
 
+    bool sendMessageDelayed(const QString &msg, int ms);
+
+
+    struct GameState
+    {
+        //! 0 = 'X Button', 99 = player failed, else: same as world map's level exit code.
+        int exitcode = 0;
+        //! if the player arrived the checkpoint, this value will be set to the level's filename[***urlencode!***]
+        QString levelName;
+        //! if the player arrived the checkpoint, this value will be set to the checkpoint's perm ID.
+        int cid = 0;
+        //! if the player arrived the checkpoint, this value will be set to the checkpoint's advset value.
+        int id = 0;
+        //! current 1up number
+        int hp = 20;
+        //! the coins number
+        int co = 0;
+        //! current score
+        int sr = 0;
+        //! Reset game state
+        void reset()
+        {
+            exitcode = 0;
+            levelName.clear();
+            cid = 0;
+            id = 0;
+            hp = 20;
+            co = 0;
+            sr = 0;
+        }
+    } m_lastGameState;
+
+    //! Input buffer
+    QByteArray m_inBuffer;
+    //! Readiness status of the bridge
+    bool m_bridgeReady = false;
     //! Main window instance pointer
     QWidget *m_mainWindow = nullptr;
     //! Bridge process

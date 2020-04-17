@@ -226,6 +226,11 @@ void LunaTesterEngine::init()
     QObject::connect(&m_lunaGameIPC, &QProcess::readyReadStandardOutput,
                      this, &LunaTesterEngine::gameReadyReadStandardOutput);
 
+    QObject::connect(this, &LunaTesterEngine::testStarted,
+                     m_w, &MainWindow::stopMusicForTesting);
+    QObject::connect(this, &LunaTesterEngine::testFinished,
+                     m_w, &MainWindow::testingFinished);
+
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &LunaTesterEngine::retranslateMenu);
 
     loadSetup();
@@ -430,7 +435,6 @@ void LunaTesterEngine::retranslateMenu()
     }
 }
 
-
 #if QT_VERSION_CHECK(5, 6, 0)
 void LunaTesterEngine::gameErrorOccurred(QProcess::ProcessError error)
 {
@@ -485,7 +489,7 @@ void LunaTesterEngine::gameStarted()
 
 void LunaTesterEngine::gameFinished(int exitCode, QProcess::ExitStatus exitStatus)
 {
-    m_w->testingFinished();
+    emit testFinished();
     LogDebug(QString("LunaTester: finished with Exit Code %1 and status %2").arg(exitCode).arg(exitStatus));
 }
 
@@ -659,7 +663,7 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         else if (call == "closedToBackgroundNotification")
         {
             // Engine window was closed, now hidden in the background
-            m_w->testingFinished();
+            emit testFinished();
         }
         else if (call == "showFromBackgroundNotification")
         {
@@ -753,7 +757,7 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
         // Note: Currently, use stopMusicForTesting if we get hide/show notifications
         //       but otherwise use LunaTesterEngine::stopEditorMusic()
         if(m_caps.features.contains("HideShowNotifications"))
-            m_w->stopMusicForTesting();
+            testStarted();
         else
             stopEditorMusic();
 
@@ -1035,7 +1039,7 @@ void LunaTesterEngine::killBackgroundInstance()
                                             QMessageBox::Yes | QMessageBox::No);
         if(reply == QMessageBox::Yes)
         {
-            m_w->testingFinished();
+            emit testFinished();
             killEngine();
             QMessageBox::information(m_w,
                          "LunaTester",

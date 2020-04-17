@@ -163,6 +163,12 @@ void PgeEngine::init()
 
     QObject::connect(&m_engineProc, SIGNAL(finished(int, QProcess::ExitStatus)),
                      this, SLOT(testFinished()));
+
+    QObject::connect(this, &PgeEngine::testStarted,
+                     m_w, &MainWindow::stopMusicForTesting);
+    QObject::connect(this, &PgeEngine::testFinished,
+                     m_w, &MainWindow::testingFinished);
+
     m_interface.init(&m_engineProc);
 }
 
@@ -510,17 +516,4 @@ int PgeEngine::capabilities()
             CAP_WORLD_FILE |
             CAP_RUN_GAME |
             CAP_HAS_MENU;
-}
-
-void PgeEngine::testStarted()
-{
-    Q_ASSERT(m_w);
-    //Stop music playback in the PGE Editor!
-    m_w->stopMusicForTesting();
-}
-
-void PgeEngine::testFinished()
-{
-    Q_ASSERT(m_w);
-    m_w->testingFinished();
 }

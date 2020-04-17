@@ -39,7 +39,7 @@ class PgeEngine : public AbstractRuntimeEngine
     MainWindow *m_w = nullptr;
     //! List of registered menu items
     QAction *m_menuItems[7];
-
+    //! IPC protocol client
     PgeEngineIpcClient m_interface;
 private slots:
     void retranslateMenu();
@@ -77,7 +77,7 @@ public:
 
     virtual int capabilities();
 
-private slots:
+signals:
     void testStarted();
     void testFinished();
 };
