@@ -148,10 +148,17 @@ private:
      * @return true on a success sending
      */
     bool sendMessage(const QString &msg);
-
+    /**
+     * @brief Send a raw message command to the Engine server with a delay
+     * @param msg raw message string
+     * @param ms Milliseconds delay
+     * @return true on a success sending
+     */
     bool sendMessageDelayed(const QString &msg, int ms);
 
-
+    /**
+     * @brief Keeps a state of game while game is off
+     */
     struct GameState
     {
         //! 0 = 'X Button', 99 = player failed, else: same as world map's level exit code.
@@ -186,11 +193,12 @@ private:
         int timeLeft = 0;
         QString msg;
     };
-
+    //! Queoe of delayed output messages
     QList<MsgDelay> m_outQueue;
+    //! Timer to re-check delayed messages queue
     QTimer m_outQueueTimer;
 
-
+    //! Timer to ping a game to detect it's readiness
     QTimer m_pinger;
     //! Input buffer
     QByteArray m_inBuffer;

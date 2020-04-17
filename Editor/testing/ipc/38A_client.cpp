@@ -285,10 +285,13 @@ void SanBaEiIpcClient::onInputCommand(const QString &data)
     }
     else if(data.startsWith("GB|NULL"))
     {
-        m_pinger.stop();
-        sendMessage("SO|CURSOR\n"
-                    "GGI|NOPAUSE\n"
-                    "GGI|GM");
+        if(m_pinger.isActive()) // Response to the pinger
+        {
+            m_pinger.stop();
+            sendMessage("SO|CURSOR\n"
+                        "GGI|NOPAUSE\n"
+                        "GGI|GM");
+        }
     }
     else if(data.startsWith("TERMINATED"))
     {
