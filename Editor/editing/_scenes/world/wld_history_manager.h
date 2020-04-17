@@ -33,12 +33,12 @@ class WldHistoryManager : public QObject
     Q_OBJECT
 
     friend class WldScene;
-    WldScene* m_scene;
-    bool    historyChanged;
-    int     historyIndex;
+    WldScene *m_scene = nullptr;
+    bool    historyChanged = false;
+    int     historyIndex = 0;
     QList<QSharedPointer<IHistoryElement> > operationList;
 public:
-    explicit WldHistoryManager(WldScene* scene, QObject* parent = nullptr);
+    explicit WldHistoryManager(WldScene *scene, QObject *parent = nullptr);
 
     void addRemoveHistory(WorldData removedItems);
     void addPlaceHistory(WorldData placedItems);
@@ -63,7 +63,7 @@ public slots:
 
 signals:
     void refreshHistoryButtons();
-    void showStatusMessage(QString text, int delay=2000);
+    void showStatusMessage(QString text, int delay = 2000);
 };
 
 #endif // WLD_HISTORY_MANAGER_H

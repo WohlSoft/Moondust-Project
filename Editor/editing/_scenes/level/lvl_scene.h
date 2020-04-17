@@ -64,7 +64,8 @@ class LvlScene : public QGraphicsScene
     friend class LevelEdit;
     friend class LvlHistoryManager;
 public:
-    LvlScene(MainWindow *mw, GraphicsWorkspace *parentView, DataConfig &configs, LevelData &FileData, QObject *parent = 0);
+    LvlScene(MainWindow *mw, GraphicsWorkspace *parentView,
+             DataConfig &configs, LevelData &FileData, QObject *parent = nullptr);
     ~LvlScene();
 
     /* //////////////////////Contents/////////////////////////////
@@ -104,15 +105,15 @@ public:
     // ///////////////////Common////////////////////////
 public:
     //! Main window pointer
-    MainWindow         *m_mw;
+    MainWindow         *m_mw = nullptr;
     //! Pointer to global configuration in the main window
-    DataConfig        *m_configs;
+    DataConfig        *m_configs = nullptr;
     //! Pointer to level data storage in the sub-window class
-    LevelData          *m_data;
+    LevelData          *m_data = nullptr;
     //! Pointer to parent graphics view
-    GraphicsWorkspace *m_viewPort;
+    GraphicsWorkspace *m_viewPort = nullptr;
     //! Pointer to parent edit sub-window;
-    LevelEdit          *m_subWindow;
+    LevelEdit          *m_subWindow = nullptr;
 
     //! Data buffer
     LevelData m_dataBuffer;
@@ -555,7 +556,7 @@ public:
      */
     bool canRedo();
     //! History manager
-    LvlHistoryManager *m_history;
+    LvlHistoryManager *m_history = nullptr;
     // ////////////////////Unsorted slots/////////////////////////////
     // ///////Please move them into it's category/////////////////////
 

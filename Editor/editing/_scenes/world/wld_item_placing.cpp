@@ -76,9 +76,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         obj_w_tile &tileConf = m_localConfigTerrain[itemID];
         Items::getItemGFX(&tileConf, tImg, false);
         if(tImg.isNull())
-        {
             tImg = m_dummyTerrainImg;
-        }
         if(!tileConf.isValid)
         {
             tileConf = m_configs->main_wtiles[1];
@@ -173,9 +171,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         obj_w_scenery &sceneConf = m_localConfigScenery[itemID];
         Items::getItemGFX(&sceneConf, tImg, false);
         if(tImg.isNull())
-        {
             tImg = m_dummySceneryImg;
-        }
         if(!sceneConf.isValid)
         {
             sceneConf = m_configs->main_wscene[1];
@@ -271,9 +267,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         obj_w_path &pathConf = m_localConfigPaths[itemID];
         Items::getItemGFX(&pathConf, tImg, false);
         if(tImg.isNull())
-        {
             tImg = m_dummyPathImg;
-        }
         if(!pathConf.isValid)
         {
             pathConf = m_configs->main_wpaths[1];
@@ -369,9 +363,7 @@ void WldScene::setItemPlacer(int itemType, unsigned long itemID)
         obj_w_level &wlevelConf = m_localConfigLevels[itemID];
         Items::getItemGFX(&wlevelConf, tImg, false);
         if(tImg.isNull())
-        {
             tImg = m_dummyLevelImg;
-        }
         if(!wlevelConf.isValid)
         {
             wlevelConf = m_configs->main_wlevels[0];

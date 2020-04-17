@@ -13,7 +13,8 @@
 
 // This specialization allows us to use void for qjsvalue_cast
 template<>
-inline void qjsvalue_cast<void>(const QJSValue&){
+inline void qjsvalue_cast<void>(const QJSValue &)
+{
     return;
 }
 
@@ -27,18 +28,19 @@ class PGE_JsEngine : public QObject
     QJSValue m_lastError;
     QJSEngine m_jsengine;
 public:
-    explicit PGE_JsEngine(QObject *parent = 0);
+    explicit PGE_JsEngine(QObject *parent = nullptr);
     virtual ~PGE_JsEngine() {}
 
     bool setFile(QString filePath);
 
     template<typename T>
-    T loadFileByExpcetedResult(const QString& filePath, bool* ok)
+    T loadFileByExpcetedResult(const QString &filePath, bool *ok)
     {
         // Add booting-js file as resource to set local variables
         // i.e. filePath of script
         QFile file(filePath);
-        if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
             if(ok)
                 *ok = false;
             return T();
@@ -60,12 +62,14 @@ public:
 
 
 
-    inline void bindProxy(QObject* obj, const QString& regName){
+    inline void bindProxy(QObject *obj, const QString &regName)
+    {
         m_jsengine.globalObject().setProperty(regName, m_jsengine.newQObject(obj));
     }
 
     template<typename RetVal, typename... Args>
-    RetVal call(const QString& functionName, bool* ok, Args&&... args){
+    RetVal call(const QString &functionName, bool *ok, Args &&... args)
+    {
         static_assert(std::is_default_constructible<RetVal>::value, "RetVal must be constructable without any args!");
 
         QJSValue function = m_jsengine.evaluate(functionName);
@@ -74,7 +78,7 @@ public:
 
         QJSValue result = function.call(QJSValueList({std::forward<Args>(args)...}));
         if(!checkForErrors(result, ok))
-                return RetVal();
+            return RetVal();
 
         return qjsvalue_cast<RetVal>(result);
     }
@@ -82,7 +86,7 @@ public:
     int getLastErrorLine() const;
     QString getLastError() const;
 private:
-    bool checkForErrors(const QJSValue& possibleErrVal, bool* ok = nullptr);
+    bool checkForErrors(const QJSValue &possibleErrVal, bool *ok = nullptr);
     void logError(const QJSValue &erroredValue);
 };
 

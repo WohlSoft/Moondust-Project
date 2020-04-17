@@ -52,7 +52,7 @@ ItemLevel::~ItemLevel()
     m_scene->unregisterElement(this);
 }
 
-void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
+void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 {
     //Remove selection from non-bgo items
     if(!this->isSelected())
@@ -65,27 +65,27 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     QMenu ItemMenu;
 
     QAction *LvlTitle =         ItemMenu.addAction(QString("[%1]").arg(m_data.title));
-        LvlTitle->setEnabled(false);
-        LvlTitle->setVisible(!m_data.title.isEmpty());
+    LvlTitle->setEnabled(false);
+    LvlTitle->setVisible(!m_data.title.isEmpty());
 
     QAction *openLvl =          ItemMenu.addAction(tr("Open target file: %1").arg(m_data.lvlfile));
-        openLvl->setVisible( (!m_data.lvlfile.isEmpty()) && (QFile(m_scene->m_data->meta.path + "/" + m_data.lvlfile).exists()) );
-                                ItemMenu.addSeparator();
+    openLvl->setVisible((!m_data.lvlfile.isEmpty()) && (QFile(m_scene->m_data->meta.path + "/" + m_data.lvlfile).exists()));
+    ItemMenu.addSeparator();
 
     QAction *setPathBG =        ItemMenu.addAction(tr("Path background"));
-        setPathBG->setCheckable(true);
-        setPathBG->setChecked(m_data.pathbg);
+    setPathBG->setCheckable(true);
+    setPathBG->setChecked(m_data.pathbg);
 
     QAction *setBigPathBG =     ItemMenu.addAction(tr("Big Path background"));
-        setBigPathBG->setCheckable(true);
-        setBigPathBG->setChecked(m_data.bigpathbg);
+    setBigPathBG->setCheckable(true);
+    setBigPathBG->setChecked(m_data.bigpathbg);
 
     QAction *setAlVis =         ItemMenu.addAction(tr("Always Visible"));
-        setAlVis->setCheckable(true);
-        setAlVis->setChecked(m_data.alwaysVisible);
-                                ItemMenu.addSeparator();
+    setAlVis->setCheckable(true);
+    setAlVis->setChecked(m_data.alwaysVisible);
+    ItemMenu.addSeparator();
 
-    QMenu * copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
+    QMenu *copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
 
     QAction *copyItemID =       copyPreferences->addAction(tr("Level-ID: %1").arg(m_data.id));
     QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
@@ -94,13 +94,13 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
 
     QAction *copyTile =         ItemMenu.addAction(tr("Copy"));
     QAction *cutTile =          ItemMenu.addAction(tr("Cut"));
-                                ItemMenu.addSeparator();
+    ItemMenu.addSeparator();
     QAction *transform =        ItemMenu.addAction(tr("Transform into"));
     QAction *transform_all =    ItemMenu.addAction(tr("Transform all %1 into").arg("LEVEL-%1").arg(m_data.id));
-                                ItemMenu.addSeparator();
+    ItemMenu.addSeparator();
     QAction *remove =           ItemMenu.addAction(tr("Remove"));
     QAction *remove_all =       ItemMenu.addAction(tr("Remove all %1").arg("LEVEL-%1").arg(m_data.id));
-                                ItemMenu.addSeparator();
+    ItemMenu.addSeparator();
     QAction *props =            ItemMenu.addAction(tr("Properties..."));
 
     m_scene->m_contextMenuIsOpened =  true; //bug protector
@@ -109,105 +109,98 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
     if(!selected) return;
 
 
-    if(selected==openLvl)
+    if(selected == openLvl)
     {
         MainWinConnect::pMainWin->OpenFile(m_scene->m_data->meta.path + "/" + m_data.lvlfile);
         m_scene->m_contextMenuIsOpened = false;
     }
-    else
-    if(selected==setPathBG)
+    else if(selected == setPathBG)
     {
         m_scene->m_contextMenuIsOpened = false;
         WorldData selData;
-        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
+        foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
+            if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
-                ((ItemLevel *)SelItem)->setShowSmallPathBG( setPathBG->isChecked() );
+                ((ItemLevel *)SelItem)->setShowSmallPathBG(setPathBG->isChecked());
             }
         }
         m_scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_PATHBACKGROUND, QVariant(setPathBG->isChecked()));
     }
-    else
-    if(selected==setBigPathBG)
+    else if(selected == setBigPathBG)
     {
         m_scene->m_contextMenuIsOpened = false;
         WorldData selData;
-        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
+        foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
+            if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
-                ((ItemLevel *)SelItem)->setShowBigPathBG( setBigPathBG->isChecked() );
+                ((ItemLevel *)SelItem)->setShowBigPathBG(setBigPathBG->isChecked());
             }
         }
         m_scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_BIGPATHBACKGROUND, QVariant(setPathBG->isChecked()));
     }
-    else
-    if(selected==setAlVis)
+    else if(selected == setAlVis)
     {
         m_scene->m_contextMenuIsOpened = false;
         WorldData selData;
-        foreach(QGraphicsItem * SelItem, m_scene->selectedItems() )
+        foreach(QGraphicsItem *SelItem, m_scene->selectedItems())
         {
-            if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
+            if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
             {
                 selData.levels << ((ItemLevel *)SelItem)->m_data;
-                ((ItemLevel *)SelItem)->alwaysVisible( setAlVis->isChecked() );
+                ((ItemLevel *)SelItem)->alwaysVisible(setAlVis->isChecked());
             }
         }
         m_scene->m_history->addChangeSettingsHistory(selData, HistorySettings::SETTING_ALWAYSVISIBLE, QVariant(setPathBG->isChecked()));
     }
-    else
-    if(selected==cutTile)
+    else if(selected == cutTile)
     {
         //scene->doCut = true ;
         MainWinConnect::pMainWin->on_actionCut_triggered();
         m_scene->m_contextMenuIsOpened = false;
     }
-    else
-    if(selected==copyTile)
+    else if(selected == copyTile)
     {
         //scene->doCopy = true ;
         MainWinConnect::pMainWin->on_actionCopy_triggered();
         m_scene->m_contextMenuIsOpened = false;
     }
-    else
-    if((selected==transform)||(selected==transform_all))
+    else if((selected == transform) || (selected == transform_all))
     {
         WorldData oldData;
         WorldData newData;
         int transformTO;
 
-        ItemSelectDialog * itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_LEVEL,0,0,0,0,0,0,0,0,0, m_scene->m_subWindow,ItemSelectDialog::TAB_LEVEL);
+        ItemSelectDialog *itemList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_LEVEL, 0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow, ItemSelectDialog::TAB_LEVEL);
         util::DialogToCenter(itemList, true);
 
-        if(itemList->exec()==QDialog::Accepted)
+        if(itemList->exec() == QDialog::Accepted)
         {
             QList<QGraphicsItem *> our_items;
-            bool sameID=false;
+            bool sameID = false;
             transformTO = itemList->levelID;
             unsigned long oldID = m_data.id;
 
-            if(selected==transform)
-                our_items=m_scene->selectedItems();
-            else
-            if(selected==transform_all)
+            if(selected == transform)
+                our_items = m_scene->selectedItems();
+            else if(selected == transform_all)
             {
-                our_items=m_scene->items();
-                sameID=true;
+                our_items = m_scene->items();
+                sameID = true;
             }
 
-            foreach(QGraphicsItem * SelItem, our_items )
+            foreach(QGraphicsItem *SelItem, our_items)
             {
-                if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
+                if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
                 {
-                    if((!sameID)||(((ItemLevel *) SelItem)->m_data.id==oldID))
+                    if((!sameID) || (((ItemLevel *) SelItem)->m_data.id == oldID))
                     {
-                        oldData.levels.push_back( ((ItemLevel *) SelItem)->m_data );
+                        oldData.levels.push_back(((ItemLevel *) SelItem)->m_data);
                         ((ItemLevel *) SelItem)->transformTo(transformTO);
-                        newData.levels.push_back( ((ItemLevel *) SelItem)->m_data );
+                        newData.levels.push_back(((ItemLevel *) SelItem)->m_data);
                     }
                 }
             }
@@ -216,67 +209,57 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
         if(!newData.levels.isEmpty())
             m_scene->m_history->addTransformHistory(newData, oldData);
     }
-    else
-    if(selected==copyItemID)
+    else if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
-    else
-    if(selected==copyPosXY)
+    else if(selected == copyPosXY)
     {
         QApplication::clipboard()->setText(
-                            QString("X=%1; Y=%2;")
-                               .arg(m_data.x)
-                               .arg(m_data.y)
-                               );
+            QString("X=%1; Y=%2;")
+            .arg(m_data.x)
+            .arg(m_data.y)
+        );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
-    else
-    if(selected==copyPosXYWH)
+    else if(selected == copyPosXYWH)
     {
         QApplication::clipboard()->setText(
-                            QString("X=%1; Y=%2; W=%3; H=%4;")
-                               .arg(m_data.x)
-                               .arg(m_data.y)
-                               .arg(m_imageSize.width())
-                               .arg(m_imageSize.height())
-                               );
+            QString("X=%1; Y=%2; W=%3; H=%4;")
+            .arg(m_data.x)
+            .arg(m_data.y)
+            .arg(m_imageSize.width())
+            .arg(m_imageSize.height())
+        );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
-    else
-    if(selected==copyPosLTRB)
+    else if(selected == copyPosLTRB)
     {
         QApplication::clipboard()->setText(
-                            QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
-                               .arg(m_data.x)
-                               .arg(m_data.y)
-                               .arg(m_data.x+m_imageSize.width())
-                               .arg(m_data.y+m_imageSize.height())
-                               );
+            QString("Left=%1; Top=%2; Right=%3; Bottom=%4;")
+            .arg(m_data.x)
+            .arg(m_data.y)
+            .arg(m_data.x + m_imageSize.width())
+            .arg(m_data.y + m_imageSize.height())
+        );
         MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
-    else
-    if(selected==remove)
-    {
+    else if(selected == remove)
         m_scene->removeSelectedWldItems();
-    }
-    else
-    if(selected==remove_all)
+    else if(selected == remove_all)
     {
         QList<QGraphicsItem *> our_items;
         QList<QGraphicsItem *> selectedList;
         unsigned long oldID = m_data.id;
         our_items = m_scene->items();
 
-        foreach(QGraphicsItem * SelItem, our_items )
+        foreach(QGraphicsItem *SelItem, our_items)
         {
-            if(SelItem->data(ITEM_TYPE).toString()=="LEVEL")
+            if(SelItem->data(ITEM_TYPE).toString() == "LEVEL")
             {
-                if( ((ItemLevel*) SelItem)->m_data.id == oldID)
-                {
+                if(((ItemLevel *) SelItem)->m_data.id == oldID)
                     selectedList.push_back(SelItem);
-                }
             }
         }
         if(!selectedList.isEmpty())
@@ -285,11 +268,8 @@ void ItemLevel::contextMenu( QGraphicsSceneMouseEvent * mouseEvent )
             m_scene->Debugger_updateItemList();
         }
     }
-    else
-    if(selected==props)
-    {
+    else if(selected == props)
         m_scene->openProps();
-    }
 }
 
 
@@ -334,33 +314,34 @@ void ItemLevel::transformTo(long target_id)
 
 void ItemLevel::arrayApply()
 {
-    bool found=false;
+    bool found = false;
     m_data.x = qRound(this->scenePos().x());
     m_data.y = qRound(this->scenePos().y());
 
     if(m_data.meta.index < (unsigned int)m_scene->m_data->levels.size())
-    { //Check index
+    {
+        //Check index
         if(m_data.meta.array_id == m_scene->m_data->levels[m_data.meta.index].meta.array_id)
-        {
-            found=true;
-        }
+            found = true;
     }
 
     //Apply current data in main array
     if(found)
-    { //directlry
+    {
+        //directlry
         m_scene->m_data->levels[m_data.meta.index] = m_data; //apply current levelData
     }
     else
-    for(int i=0; i<m_scene->m_data->levels.size(); i++)
-    { //after find it into array
-        if(m_scene->m_data->levels[i].meta.array_id == m_data.meta.array_id)
+        for(int i = 0; i < m_scene->m_data->levels.size(); i++)
         {
-            m_data.meta.index = i;
-            m_scene->m_data->levels[i] = m_data;
-            break;
+            //after find it into array
+            if(m_scene->m_data->levels[i].meta.array_id == m_data.meta.array_id)
+            {
+                m_data.meta.index = i;
+                m_scene->m_data->levels[i] = m_data;
+                break;
+            }
         }
-    }
 
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
@@ -371,27 +352,28 @@ void ItemLevel::arrayApply()
 
 void ItemLevel::removeFromArray()
 {
-    bool found=false;
+    bool found = false;
     if(m_data.meta.index < (unsigned int)m_scene->m_data->levels.size())
-    { //Check index
+    {
+        //Check index
         if(m_data.meta.array_id == m_scene->m_data->levels[m_data.meta.index].meta.array_id)
-        {
-            found=true;
-        }
+            found = true;
     }
 
     if(found)
-    { //directlry
+    {
+        //directlry
         m_scene->m_data->levels.removeAt(m_data.meta.index);
     }
     else
-    for(int i=0; i<m_scene->m_data->levels.size(); i++)
-    {
-        if(m_scene->m_data->levels[i].meta.array_id == m_data.meta.array_id)
+        for(int i = 0; i < m_scene->m_data->levels.size(); i++)
         {
-            m_scene->m_data->levels.removeAt(i); break;
+            if(m_scene->m_data->levels[i].meta.array_id == m_data.meta.array_id)
+            {
+                m_scene->m_data->levels.removeAt(i);
+                break;
+            }
         }
-    }
 
     //Mark world map as modified
     m_scene->m_data->meta.modified = true;
@@ -416,30 +398,30 @@ void ItemLevel::alwaysVisible(bool v)
 
 void ItemLevel::setShowSmallPathBG(bool p)
 {
-    m_data.pathbg=p;
+    m_data.pathbg = p;
     arrayApply();
     this->update();
 }
 
 void ItemLevel::setShowBigPathBG(bool p)
 {
-    m_data.bigpathbg=p;
+    m_data.bigpathbg = p;
     arrayApply();
 
     this->update();
 
-    m_imageSizeTarget=m_imageSize;
+    m_imageSizeTarget = m_imageSize;
 
     if(p)
     {
         if(m_imageSizeTarget.left() > m_imageSizeBP.left())
-            m_imageSizeTarget.setLeft( m_imageSizeBP.left() );
+            m_imageSizeTarget.setLeft(m_imageSizeBP.left());
         if(m_imageSizeTarget.right() < m_imageSizeBP.right())
-            m_imageSizeTarget.setRight( m_imageSizeBP.right() );
+            m_imageSizeTarget.setRight(m_imageSizeBP.right());
         if(m_imageSizeTarget.top() > m_imageSizeBP.top())
-            m_imageSizeTarget.setTop( m_imageSizeBP.top() );
+            m_imageSizeTarget.setTop(m_imageSizeBP.top());
         if(m_imageSizeTarget.bottom() < m_imageSizeBP.bottom())
-            m_imageSizeTarget.setBottom( m_imageSizeBP.bottom() );
+            m_imageSizeTarget.setBottom(m_imageSizeBP.bottom());
     }
     m_scene->update();
 }
@@ -451,8 +433,8 @@ void ItemLevel::setLevelData(WorldLevelTile inD, obj_w_level *mergedSet,
 
     setPos(m_data.x, m_data.y);
 
-    setData(ITEM_ID, QString::number(m_data.id) );
-    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id) );
+    setData(ITEM_ID, QString::number(m_data.id));
+    setData(ITEM_ARRAY_ID, QString::number(m_data.meta.array_id));
 
     if(mergedSet)
     {
@@ -476,46 +458,46 @@ QRectF ItemLevel::boundingRect() const
 
 void ItemLevel::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    if(m_animatorID<0)
+    if(m_animatorID < 0)
     {
-        painter->drawRect(QRect(m_imgOffsetX,m_imgOffsetY,1,1));
+        painter->drawRect(QRect(m_imgOffsetX, m_imgOffsetY, 1, 1));
         return;
     }
 
     if(m_data.bigpathbg)
     {
-        if(m_scene->m_animatorsLevels.size()>m_bPathID)
+        if(m_scene->m_animatorsLevels.size() > m_bPathID)
             painter->drawPixmap(m_imageSizeBP,
                                 m_scene->m_animatorsLevels[m_bPathID]->wholeImage(),
                                 m_scene->m_animatorsLevels[m_bPathID]->frameRect());
         else
-            painter->drawRect(QRect(0,0,32,32));
+            painter->drawRect(QRect(0, 0, 32, 32));
     }
 
 
     if(m_data.pathbg)
     {
-        if(m_scene->m_animatorsLevels.size()>m_pathID)
+        if(m_scene->m_animatorsLevels.size() > m_pathID)
             painter->drawPixmap(m_imageSizeP,
                                 m_scene->m_animatorsLevels[m_pathID]->wholeImage(),
                                 m_scene->m_animatorsLevels[m_pathID]->frameRect());
         else
-            painter->drawRect(QRect(0,0,32,32));
+            painter->drawRect(QRect(0, 0, 32, 32));
     }
 
-    if(m_scene->m_animatorsLevels.size()>m_animatorID)
+    if(m_scene->m_animatorsLevels.size() > m_animatorID)
         painter->drawPixmap(m_imageSize,
                             m_scene->m_animatorsLevels[m_animatorID]->wholeImage(),
                             m_scene->m_animatorsLevels[m_animatorID]->frameRect());
     else
-        painter->drawRect(QRect(0,0,32,32));
+        painter->drawRect(QRect(0, 0, 32, 32));
 
     if(this->isSelected())
     {
         painter->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine));
-        painter->drawRect(m_imgOffsetX+1,m_imgOffsetY+1,m_imageSize.width()-2,m_imageSize.height()-2);
+        painter->drawRect(m_imgOffsetX + 1, m_imgOffsetY + 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
         painter->setPen(QPen(QBrush(Qt::magenta), 2, Qt::DotLine));
-        painter->drawRect(m_imgOffsetX+1,m_imgOffsetY+1,m_imageSize.width()-2,m_imageSize.height()-2);
+        painter->drawRect(m_imgOffsetX + 1, m_imgOffsetY + 1, m_imageSize.width() - 2, m_imageSize.height() - 2);
     }
 }
 
@@ -527,25 +509,25 @@ void ItemLevel::setAnimator(long aniID, long path, long bPath)
     if(aniID < m_scene->m_animatorsLevels.size())
     {
         QRect frameRect = m_scene->m_animatorsLevels[aniID]->frameRect();
-        m_imgOffsetX = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
-        m_imgOffsetY = (int)qRound( -qreal(frameRect.height()) + m_gridSize );
-        m_imageSize = QRectF(m_imgOffsetX,m_imgOffsetY, frameRect.width(), frameRect.height() );
+        m_imgOffsetX = (int)qRound(-(qreal(frameRect.width() - m_gridSize)  / 2));
+        m_imgOffsetY = (int)qRound(-qreal(frameRect.height()) + m_gridSize);
+        m_imageSize = QRectF(m_imgOffsetX, m_imgOffsetY, frameRect.width(), frameRect.height());
     }
 
     if(path < m_scene->m_animatorsLevels.size())
     {
         QRect frameRect = m_scene->m_animatorsLevels[path]->frameRect();
-        m_imgOffsetXp = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
-        m_imgOffsetYp = (int)qRound( -qreal(frameRect.height()) + m_gridSize );
-        m_imageSizeP = QRectF(m_imgOffsetXp,m_imgOffsetYp, frameRect.width(), frameRect.height() );
+        m_imgOffsetXp = (int)qRound(-(qreal(frameRect.width() - m_gridSize)  / 2));
+        m_imgOffsetYp = (int)qRound(-qreal(frameRect.height()) + m_gridSize);
+        m_imageSizeP = QRectF(m_imgOffsetXp, m_imgOffsetYp, frameRect.width(), frameRect.height());
     }
 
     if(bPath < m_scene->m_animatorsLevels.size())
     {
         QRect frameRect = m_scene->m_animatorsLevels[bPath]->frameRect();
-        m_imgOffsetXbp = (int)qRound( -( qreal(frameRect.width() - m_gridSize)  / 2 ) );
-        m_imgOffsetYbp = (int)qRound( -qreal(frameRect.height()) + qreal(m_gridSize)*1.25);
-        m_imageSizeBP = QRectF(m_imgOffsetXbp,m_imgOffsetYbp, frameRect.width(), frameRect.height() );
+        m_imgOffsetXbp = (int)qRound(-(qreal(frameRect.width() - m_gridSize)  / 2));
+        m_imgOffsetYbp = (int)qRound(-qreal(frameRect.height()) + qreal(m_gridSize) * 1.25);
+        m_imageSizeBP = QRectF(m_imgOffsetXbp, m_imgOffsetYbp, frameRect.width(), frameRect.height());
     }
 
     m_imageSizeTarget = m_imageSize;
@@ -553,17 +535,17 @@ void ItemLevel::setAnimator(long aniID, long path, long bPath)
     if(m_data.bigpathbg)
     {
         if(m_imageSizeTarget.left() > m_imageSizeBP.left())
-            m_imageSizeTarget.setLeft( m_imageSizeBP.left() );
+            m_imageSizeTarget.setLeft(m_imageSizeBP.left());
         if(m_imageSizeTarget.right() < m_imageSizeBP.right())
-            m_imageSizeTarget.setRight( m_imageSizeBP.right() );
+            m_imageSizeTarget.setRight(m_imageSizeBP.right());
         if(m_imageSizeTarget.top() > m_imageSizeBP.top())
-            m_imageSizeTarget.setTop( m_imageSizeBP.top() );
+            m_imageSizeTarget.setTop(m_imageSizeBP.top());
         if(m_imageSizeTarget.bottom() < m_imageSizeBP.bottom())
-            m_imageSizeTarget.setBottom( m_imageSizeBP.bottom() );
+            m_imageSizeTarget.setBottom(m_imageSizeBP.bottom());
     }
 
-    this->setData(ITEM_WIDTH, QString::number( m_gridSize ) ); //width
-    this->setData(ITEM_HEIGHT, QString::number( m_gridSize ) ); //height
+    this->setData(ITEM_WIDTH, QString::number(m_gridSize));    //width
+    this->setData(ITEM_HEIGHT, QString::number(m_gridSize));    //height
     //WriteToLog(QtDebugMsg, QString("Tile Animator ID: %1").arg(aniID));
 
     m_pathID = path;

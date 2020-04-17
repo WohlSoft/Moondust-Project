@@ -30,11 +30,11 @@ class ItemScene : public WldBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemScene(QGraphicsItem *parent=0);
-    ItemScene(WldScene *parentScene, QGraphicsItem *parent=0);
+    ItemScene(QGraphicsItem *parent = nullptr);
+    ItemScene(WldScene *parentScene, QGraphicsItem *parent = nullptr);
     ~ItemScene();
 
-    void setSceneData(WorldScenery inD, obj_w_scenery *mergedSet=0, long *animator_id=0);
+    void setSceneData(WorldScenery inD, obj_w_scenery *mergedSet = nullptr, long *animator_id = nullptr);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

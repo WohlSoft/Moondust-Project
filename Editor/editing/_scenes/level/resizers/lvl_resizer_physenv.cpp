@@ -59,9 +59,9 @@ void LvlScene::setPhysEnvResizer(QGraphicsItem *targetRect, bool enabled, bool a
             if(accept)
             {
                 ItemPhysEnv *env = dynamic_cast<ItemPhysEnv *>(m_resizeBox->m_targetItem);
-                #ifdef _DEBUG_
+#ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("Water RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
-                #endif
+#endif
                 long x = (long)m_resizeBox->pos().x();
                 long y = (long)m_resizeBox->pos().y();
                 long w = (long)m_resizeBox->m_width;

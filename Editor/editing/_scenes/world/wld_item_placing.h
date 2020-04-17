@@ -37,7 +37,7 @@ public:
 
     enum PlaceMode
     {
-        PMODE_Brush=0,
+        PMODE_Brush = 0,
         PMODE_Rect,
         PMODE_Circle,
         PMODE_Line,

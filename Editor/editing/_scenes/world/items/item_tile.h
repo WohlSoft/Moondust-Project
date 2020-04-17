@@ -30,11 +30,11 @@ class ItemTile : public WldBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemTile(QGraphicsItem *parent=0);
-    ItemTile(WldScene *parentScene, QGraphicsItem *parent=0);
+    ItemTile(QGraphicsItem *parent = nullptr);
+    ItemTile(WldScene *parentScene, QGraphicsItem *parent = nullptr);
     ~ItemTile();
 
-    void setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet=0, long *animator_id=0);
+    void setTileData(WorldTerrainTile inD, obj_w_tile *mergedSet = nullptr, long *animator_id = nullptr);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

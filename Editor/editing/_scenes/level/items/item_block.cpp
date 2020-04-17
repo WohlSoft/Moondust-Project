@@ -92,7 +92,7 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *setLayer;
     QList<QAction *> layerItems;
     QAction *newLayer = LayerName->addAction(tr("Add to new layer..."));
-    LayerName->addSeparator()->deleteLater();;
+    LayerName->addSeparator()->deleteLater();
 
     for(LevelLayer &layer : m_scene->m_data->layers)
     {
@@ -211,9 +211,9 @@ void ItemBlock::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         int transformToBGO;
         int tabType;
         ItemSelectDialog *blockList = new ItemSelectDialog(scene->m_configs,
-                                                           ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO,
-                                                           0, 0, 0, 0, 0, 0, 0, 0, 0, scene->m_subWindow,
-                                                           ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO);
+                ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, scene->m_subWindow,
+                ItemSelectDialog::TAB_BLOCK | ItemSelectDialog::TAB_BGO);
         util::DialogToCenter(blockList, true);
 
         if(blockList->exec() == QDialog::Accepted)
@@ -483,8 +483,8 @@ cancelRemoveSSS:
                 if(SelItem->data(ITEM_TYPE).toString() == "Block")
                 {
                     selData.blocks.push_back(((ItemBlock *)SelItem)->m_data);
-                    ((ItemBlock*) SelItem)->m_data.meta.custom_params = ch;
-                    ((ItemBlock*) SelItem)->arrayApply();
+                    ((ItemBlock *) SelItem)->m_data.meta.custom_params = ch;
+                    ((ItemBlock *) SelItem)->arrayApply();
                 }
             }
             m_scene->m_history->addChangeSettings(selData, new BlockHistory_UserData(), ch);
@@ -525,8 +525,8 @@ void ItemBlock::setMetaSignsVisibility(bool visible)
 void ItemBlock::updateSizableBorder(const QPixmap &srcimg)
 {
     sizable_border.g = m_localProps.setup.sizable_border_width < 0 ?
-                m_scene->m_configs->defaultBlock.sizable_block_border_size :
-                m_localProps.setup.sizable_border_width;
+                       m_scene->m_configs->defaultBlock.sizable_block_border_size :
+                       m_localProps.setup.sizable_border_width;
     sizable_border.l = m_localProps.setup.sizable_border_width_left;
     sizable_border.t = m_localProps.setup.sizable_border_width_top;
     sizable_border.r = m_localProps.setup.sizable_border_width_right;
@@ -988,7 +988,7 @@ void ItemBlock::drawSizableBlock(int w, int h, const QPixmap &srcimg)
 
         if(fLnt != 0)
             szblock.drawPixmap(0, ybT + hc, xbL - dX, fLnt,
-                   srcimg.copy(0, ybT,      xbL - dX, fLnt));
+                               srcimg.copy(0, ybT,      xbL - dX, fLnt));
     }
 
     //T Draw top border
@@ -1007,7 +1007,7 @@ void ItemBlock::drawSizableBlock(int w, int h, const QPixmap &srcimg)
 
         if(fLnt != 0)
             szblock.drawPixmap(xbL + hc, 0, fLnt, ybT - dY,
-                   srcimg.copy(xbL,      0, fLnt, ybT - dY));
+                               srcimg.copy(xbL,      0, fLnt, ybT - dY));
     }
 
     //B Draw bottom border
@@ -1026,7 +1026,7 @@ void ItemBlock::drawSizableBlock(int w, int h, const QPixmap &srcimg)
 
         if(fLnt != 0)
             szblock.drawPixmap(xbL + hc,   hB - ybB + dY, fLnt, ybB - dY,
-                   srcimg.copy(xbL,        hT - ybB + dY, fLnt, ybB - dY));
+                               srcimg.copy(xbL,        hT - ybB + dY, fLnt, ybB - dY));
     }
 
     //R Draw right border
@@ -1045,7 +1045,7 @@ void ItemBlock::drawSizableBlock(int w, int h, const QPixmap &srcimg)
 
         if(fLnt != 0)
             szblock.drawPixmap(wB - xbR + dX,      ybT + hc, xbR - dX, fLnt,
-                   srcimg.copy(wT - xbR + dX, ybT, xbR - dX, fLnt));
+                               srcimg.copy(wT - xbR + dX, ybT, xbR - dX, fLnt));
     }
 
     //C Draw center
@@ -1069,7 +1069,7 @@ void ItemBlock::drawSizableBlock(int w, int h, const QPixmap &srcimg)
 
             if(fLnt != 0)
                 szblock.drawPixmap(xbL + hc, ybT + wc, fLnt, pHeight,
-                       srcimg.copy(xbL,      ybT,      fLnt, pHeight));
+                                   srcimg.copy(xbL,      ybT,      fLnt, pHeight));
 
             wc += pHeight;
         }
@@ -1091,23 +1091,23 @@ void ItemBlock::drawSizableBlock(int w, int h, const QPixmap &srcimg)
 
             if(fLnt != 0)
                 szblock.drawPixmap(xbL + hc, ybT + wc, fLnt, fWdt,
-                       srcimg.copy(xbL,      ybT,      fLnt, fWdt));
+                                   srcimg.copy(xbL,      ybT,      fLnt, fWdt));
         }
     }
 
     //Draw corners
     //1 Left-top
     szblock.drawPixmap(0, 0, xbL - dX, ybT - dY,
-     srcimg.copy(QRect(0, 0, xbL - dX, ybT - dY)));
+                       srcimg.copy(QRect(0, 0, xbL - dX, ybT - dY)));
     //2 Right-top
     szblock.drawPixmap(wB - xbR + dX, 0, xbR - dX, ybT - dY,
-     srcimg.copy(QRect(wT - xbR + dX, 0, xbR - dX, ybT - dY)));
+                       srcimg.copy(QRect(wT - xbR + dX, 0, xbR - dX, ybT - dY)));
     //3 Right-bottom
     szblock.drawPixmap(wB - xbR + dX, hB - ybB + dY, xbR - dX, ybB - dY,
-     srcimg.copy(QRect(wT - xbR + dX, hT - ybB + dY, xbR - dX, ybB - dY)));
+                       srcimg.copy(QRect(wT - xbR + dX, hT - ybB + dY, xbR - dX, ybB - dY)));
     //4 Left-bottom
     szblock.drawPixmap(0, hB - ybB + dY, xbL - dX, ybB - dY,
-     srcimg.copy(QRect(0, hT - ybB + dY, xbL - dX, ybB - dY)));
+                       srcimg.copy(QRect(0, hT - ybB + dY, xbL - dX, ybB - dY)));
 
     szblock.end();
 }

@@ -29,10 +29,10 @@
 
 void WldScene::SwitchEditingMode(int EdtMode)
 {
-    m_eraserIsEnabled=false; //All just selected items will be removed
-    m_pastingMode=false;
-    m_busyMode=false; //Placing/drawing on map, disable selecting and dragging items
-    m_disableMoveItems=false; // You can do anything with items, but can't move them
+    m_eraserIsEnabled = false; //All just selected items will be removed
+    m_pastingMode = false;
+    m_busyMode = false; //Placing/drawing on map, disable selecting and dragging items
+    m_disableMoveItems = false; // You can do anything with items, but can't move them
 
     switch(EdtMode)
     {
@@ -63,7 +63,7 @@ void WldScene::SwitchEditingMode(int EdtMode)
     case MODE_PasteFromClip:
         switchMode("Select");
         clearSelection();
-        m_disableMoveItems=true;
+        m_disableMoveItems = true;
         m_viewPort->setInteractive(true);
         m_viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
         m_viewPort->setDragMode(QGraphicsView::NoDrag);
@@ -75,7 +75,7 @@ void WldScene::SwitchEditingMode(int EdtMode)
 
     case MODE_SelectingOnly:
         switchMode("Select");
-        m_disableMoveItems=true;
+        m_disableMoveItems = true;
         break;
 
     case MODE_HandScroll:
@@ -98,9 +98,9 @@ void WldScene::SwitchEditingMode(int EdtMode)
 
 void WldScene::switchMode(QString title)
 {
-    for(int i=0; i<m_editModes.size(); i++)
+    for(int i = 0; i < m_editModes.size(); i++)
     {
-        if(m_editModes[i]->name()==title)
+        if(m_editModes[i]->name() == title)
         {
             m_editModeObj = m_editModes[i];
             m_editModeObj->set();
@@ -113,117 +113,42 @@ void WldScene::switchMode(QString title)
 
 void WldScene::hideMusicBoxes(bool visible)
 {
-    foreach (QGraphicsItem* i, items())
+    foreach(QGraphicsItem *i, items())
     {
-        if(i->data(0).toString()=="MUSICBOX"){
+        if(i->data(0).toString() == "MUSICBOX")
             i->setVisible(visible);
-        }
     }
 }
 
 void WldScene::setSemiTransparentPaths(bool semiTransparent)
 {
-    foreach (QGraphicsItem* i, items())
+    foreach(QGraphicsItem *i, items())
     {
-        if(i->data(0).toString()=="PATH"){
+        if(i->data(0).toString() == "PATH")
             i->setOpacity(semiTransparent ? 0.5 : 1);
-        }
     }
     update();
 }
 
 void WldScene::hidePathAndLevels(bool visible)
 {
-    foreach (QGraphicsItem* i, items())
+    foreach(QGraphicsItem *i, items())
     {
-        if(i->data(0).toString()=="PATH")
-        {
+        if(i->data(0).toString() == "PATH")
             i->setVisible(visible);
-        }
-        else
-        if(i->data(0).toString()=="LEVEL")
+        else if(i->data(0).toString() == "LEVEL")
         {
-            i->setVisible( visible ||
-                        ((ItemLevel *)i)->m_data.gamestart ||
-                        ((ItemLevel *)i)->m_data.alwaysVisible );
+            i->setVisible(visible ||
+                          ((ItemLevel *)i)->m_data.gamestart ||
+                          ((ItemLevel *)i)->m_data.alwaysVisible);
         }
     }
 }
 
-
-//void WldScene::applyLayersVisible()
-//{
-//    QList<QGraphicsItem*> ItemList = items();
-//    QGraphicsItem *tmp;
-//    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
-//    {
-//        if((*it)->data(0)=="Block")
-//        {
-//            tmp = (*it);
-//            foreach(LevelLayers layer, WldData->layers)
-//            {
-//                if( ((ItemBlock *)tmp)->blockData.layer == layer.name)
-//                {
-//                    ((ItemBlock *)tmp)->setVisible( !layer.hidden ); break;
-//                }
-//            }
-//        }
-//        else
-//        if((*it)->data(0)=="BGO")
-//        {
-//            tmp = (*it);
-//            foreach(LevelLayers layer, WldData->layers)
-//            {
-//                if( ((ItemBGO *)tmp)->bgoData.layer == layer.name)
-//                {
-//                    ((ItemBGO *)tmp)->setVisible( !layer.hidden ); break;
-//                }
-//            }
-//        }
-//        else
-//        if((*it)->data(0)=="NPC")
-//        {
-//            tmp = (*it);
-//            foreach(LevelLayers layer, WldData->layers)
-//            {
-//                if( ((ItemNPC *)tmp)->npcData.layer == layer.name)
-//                {
-//                    ((ItemNPC *)tmp)->setVisible( !layer.hidden ); break;
-//                }
-//            }
-//        }
-//        else
-//        if((*it)->data(0)=="Water")
-//        {
-//            tmp = (*it);
-//            foreach(LevelLayers layer, WldData->layers)
-//            {
-//                if( ((ItemWater *)tmp)->waterData.layer == layer.name)
-//                {
-//                    ((ItemWater *)tmp)->setVisible( !layer.hidden ); break;
-//                }
-//            }
-//        }
-//        else
-//        if(((*it)->data(0)=="Door_enter")||((*it)->data(0)=="Door_exit"))
-//        {
-//            tmp = (*it);
-//            foreach(LevelLayers layer, WldData->layers)
-//            {
-//                if( ((ItemDoor *)tmp)->doorData.layer == layer.name)
-//                {
-//                    ((ItemDoor *)tmp)->setVisible( !layer.hidden ); break;
-//                }
-//            }
-//        }
-//    }
-//}
-
-
 /////////////////////////////////////////////Locks////////////////////////////////
 void WldScene::setLocked(int type, bool lock)
 {
-    QList<QGraphicsItem*> ItemList = items();
+    QList<QGraphicsItem *> ItemList = items();
     // setLock
     switch(type)
     {
@@ -242,59 +167,61 @@ void WldScene::setLocked(int type, bool lock)
     case 5://MusicBoxes
         m_lockMusicBox = lock;
         break;
-    default: break;
+    default:
+        break;
     }
 
-    for (QList<QGraphicsItem*>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
+    for(QList<QGraphicsItem *>::iterator it = ItemList.begin(); it != ItemList.end(); it++)
     {
         switch(type)
         {
         case 1://Tile
-            if((*it)->data(0).toString()=="TILE")
+            if((*it)->data(0).toString() == "TILE")
             {
-                ItemTile *gi= qgraphicsitem_cast<ItemTile*>(*it);
+                ItemTile *gi = qgraphicsitem_cast<ItemTile *>(*it);
                 if(!gi)continue;
-                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked() ) ) );
-                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked() ) ) );
+                (*it)->setFlag(QGraphicsItem::ItemIsSelectable, (!((lock) || gi->isLocked())));
+                (*it)->setFlag(QGraphicsItem::ItemIsMovable, (!((lock) || gi->isLocked())));
             }
             break;
         case 2://Scenery
-            if((*it)->data(0).toString()=="SCENERY")
+            if((*it)->data(0).toString() == "SCENERY")
             {
-                ItemScene *gi= qgraphicsitem_cast<ItemScene*>(*it);
+                ItemScene *gi = qgraphicsitem_cast<ItemScene *>(*it);
                 if(!gi)continue;
-                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || ((ItemScene *)(*it))->isLocked() ) ));
-                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || ((ItemScene *)(*it))->isLocked() ) ));
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!((lock) || ((ItemScene *)(*it))->isLocked())));
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!((lock) || ((ItemScene *)(*it))->isLocked())));
             }
             break;
         case 3://Paths
-            if((*it)->data(0).toString()=="PATH")
+            if((*it)->data(0).toString() == "PATH")
             {
-                ItemPath *gi= qgraphicsitem_cast<ItemPath*>(*it);
+                ItemPath *gi = qgraphicsitem_cast<ItemPath *>(*it);
                 if(!gi)continue;
-                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked() ) ) );
-                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked() ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!((lock) || gi->isLocked())));
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!((lock) || gi->isLocked())));
             }
             break;
         case 4://Levels
-            if((*it)->data(0).toString()=="LEVEL")
+            if((*it)->data(0).toString() == "LEVEL")
             {
-                ItemLevel *gi= qgraphicsitem_cast<ItemLevel*>(*it);
+                ItemLevel *gi = qgraphicsitem_cast<ItemLevel *>(*it);
                 if(!gi)continue;
-                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked() ) ) );
-                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked() ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!((lock) || gi->isLocked())));
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!((lock) || gi->isLocked())));
             }
             break;
         case 5://Musicboxes
-            if((*it)->data(0).toString()=="MUSICBOX")
+            if((*it)->data(0).toString() == "MUSICBOX")
             {
-                ItemMusic *gi = qgraphicsitem_cast<ItemMusic*>(*it);
+                ItemMusic *gi = qgraphicsitem_cast<ItemMusic *>(*it);
                 if(!gi)continue;
-                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!( (lock) || gi->isLocked() ) ) );
-                gi->setFlag(QGraphicsItem::ItemIsMovable, (!( (lock) || gi->isLocked() ) ) );
+                gi->setFlag(QGraphicsItem::ItemIsSelectable, (!((lock) || gi->isLocked())));
+                gi->setFlag(QGraphicsItem::ItemIsMovable, (!((lock) || gi->isLocked())));
             }
             break;
-        default: break;
+        default:
+            break;
         }
     }
 

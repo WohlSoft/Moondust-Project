@@ -23,10 +23,10 @@
 // ///////////////////SET Tiles Objects/////////////////////////////////////////////
 void WldScene::setTiles(QProgressDialog &progress)
 {
-    int i=0;
+    int i = 0;
 
     //Applay images to objects
-    for(i=0; i<m_data->tiles.size(); i++)
+    for(i = 0; i < m_data->tiles.size(); i++)
     {
         //Add tile to scene
         placeTile(m_data->tiles[i]);
@@ -39,10 +39,10 @@ void WldScene::setTiles(QProgressDialog &progress)
 // ///////////////////SET Scenery Objects/////////////////////////////////////////////
 void WldScene::setSceneries(QProgressDialog &progress)
 {
-    int i=0;
+    int i = 0;
 
     //Applay images to objects
-    for(i=0; i<m_data->scenery.size(); i++)
+    for(i = 0; i < m_data->scenery.size(); i++)
     {
         //Add scenery to scene
         placeScenery(m_data->scenery[i]);
@@ -56,10 +56,10 @@ void WldScene::setSceneries(QProgressDialog &progress)
 // ///////////////////SET Paths Objects/////////////////////////////////////////////
 void WldScene::setPaths(QProgressDialog &progress)
 {
-    int i=0;
+    int i = 0;
 
     //Applay images to objects
-    for(i=0; i<m_data->paths.size(); i++)
+    for(i = 0; i < m_data->paths.size(); i++)
     {
         //Add path to scene
         placePath(m_data->paths[i]);
@@ -72,10 +72,10 @@ void WldScene::setPaths(QProgressDialog &progress)
 // ///////////////////SET Levels Objects/////////////////////////////////////////////
 void WldScene::setLevels(QProgressDialog &progress)
 {
-    int i=0;
+    int i = 0;
 
     //Applay images to objects
-    for(i=0; i<m_data->levels.size(); i++)
+    for(i = 0; i < m_data->levels.size(); i++)
     {
         //Add level to scene
         placeLevel(m_data->levels[i]);
@@ -90,10 +90,10 @@ void WldScene::setLevels(QProgressDialog &progress)
 // ///////////////////SET Music Objects/////////////////////////////////////////////
 void WldScene::setMusicBoxes(QProgressDialog &progress)
 {
-    int i=0;
+    int i = 0;
 
     //Applay images to objects
-    for(i=0; i<m_data->music.size(); i++)
+    for(i = 0; i < m_data->music.size(); i++)
     {
         //Add music to scene
         placeMusicbox(m_data->music[i]);

@@ -48,10 +48,10 @@ void WLD_ModeErase::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=false;
-    s->m_disableMoveItems=false;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = false;
+    s->m_disableMoveItems = false;
 
     s->m_viewPort->setInteractive(true);
     s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
@@ -63,7 +63,7 @@ void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if( mouseEvent->buttons() & Qt::RightButton )
+    if(mouseEvent->buttons() & Qt::RightButton)
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered();
         dontCallEvent = true;
@@ -71,21 +71,22 @@ void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    if(s->m_cursorItemImg){
-       s->m_cursorItemImg->show();
-       s->m_cursorItemImg->setPos(mouseEvent->scenePos());
+    if(s->m_cursorItemImg)
+    {
+        s->m_cursorItemImg->show();
+        s->m_cursorItemImg->setPos(mouseEvent->scenePos());
     }
 
     s->m_skipChildMousePressEvent = true;
     s->mousePressEvent(mouseEvent);
     dontCallEvent = true;
 
-    QList<QGraphicsItem*> selectedList = s->selectedItems();
-    if (!selectedList.isEmpty())
+    QList<QGraphicsItem *> selectedList = s->selectedItems();
+    if(!selectedList.isEmpty())
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
-        s->m_eraserIsEnabled=true;
+        s->m_eraserIsEnabled = true;
     }
 }
 
@@ -95,7 +96,7 @@ void WLD_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
     if(s->m_cursorItemImg) s->m_cursorItemImg->setPos(mouseEvent->scenePos());
-    if (s->m_eraserIsEnabled)// Remove All items, placed under Cursor
+    if(s->m_eraserIsEnabled) // Remove All items, placed under Cursor
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
@@ -104,15 +105,15 @@ void WLD_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WLD_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
-    if(!s->m_overwritedItems.tiles.isEmpty()||
-        !s->m_overwritedItems.scenery.isEmpty()||
-        !s->m_overwritedItems.paths.isEmpty()||
-        !s->m_overwritedItems.levels.isEmpty()||
-        !s->m_overwritedItems.music.isEmpty() )
+    if(!s->m_overwritedItems.tiles.isEmpty() ||
+       !s->m_overwritedItems.scenery.isEmpty() ||
+       !s->m_overwritedItems.paths.isEmpty() ||
+       !s->m_overwritedItems.levels.isEmpty() ||
+       !s->m_overwritedItems.music.isEmpty())
     {
         s->m_history->addRemoveHistory(s->m_overwritedItems);
         s->m_overwritedItems.tiles.clear();
@@ -122,10 +123,10 @@ void WLD_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         s->m_overwritedItems.music.clear();
     }
 
-    QList<QGraphicsItem*> selectedList = s->selectedItems();
+    QList<QGraphicsItem *> selectedList = s->selectedItems();
 
     // check for grid snap
-    if ((!selectedList.isEmpty())&&(s->m_mouseIsMoved))
+    if((!selectedList.isEmpty()) && (s->m_mouseIsMoved))
     {
         s->removeWldItems(selectedList);
         selectedList = s->selectedItems();
@@ -137,7 +138,7 @@ void WLD_ModeErase::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WLD_ModeErase::keyPress(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }
 
 
@@ -145,10 +146,10 @@ void WLD_ModeErase::keyRelease(QKeyEvent *keyEvent)
 {
     switch(keyEvent->key())
     {
-        case (Qt::Key_Escape):
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
-            break;
-        default:
-            break;
+    case(Qt::Key_Escape):
+        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        break;
+    default:
+        break;
     }
 }

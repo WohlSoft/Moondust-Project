@@ -31,7 +31,7 @@
 void LvlScene::SwitchEditingMode(int EdtMode)
 {
     //int EditingMode; // 0 - selecting,  1 - erasing, 2 - placeNewObject
-                     // 3 - drawing water/sand zone, 4 - placing from Buffer
+    // 3 - drawing water/sand zone, 4 - placing from Buffer
     //bool EraserEnabled;
     //bool PasteFromBuffer;
 
@@ -40,10 +40,10 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     //bool disableMoveItems;
 
     //bool contextMenuOpened;
-    m_eraserIsEnabled=false;
-    m_pastingMode=false;
-    m_busyMode=false;
-    m_disableMoveItems=false;
+    m_eraserIsEnabled = false;
+    m_pastingMode = false;
+    m_busyMode = false;
+    m_disableMoveItems = false;
 
     switch(EdtMode)
     {
@@ -70,7 +70,7 @@ void LvlScene::SwitchEditingMode(int EdtMode)
     case MODE_PasteFromClip:
         switchMode("Select");
         clearSelection();
-        m_disableMoveItems=true;
+        m_disableMoveItems = true;
         m_viewPort->setInteractive(true);
         m_viewPort->setCursor(Themes::Cursor(Themes::cursor_pasting));
         m_viewPort->setDragMode(QGraphicsView::NoDrag);
@@ -82,7 +82,7 @@ void LvlScene::SwitchEditingMode(int EdtMode)
 
     case MODE_SelectingOnly:
         switchMode("Select");
-        m_disableMoveItems=true;
+        m_disableMoveItems = true;
         break;
 
     case MODE_HandScroll:
@@ -125,12 +125,12 @@ void LvlScene::hideWarpsAndDoors(bool visible)
     for(auto &layer : m_data->layers)
         localLayers[layer.name] = layer;
 
-    for(QGraphicsItem* i : items())
+    for(QGraphicsItem *i : items())
     {
         if(i->data(ITEM_TYPE).toString() == "Water")
-            i->setVisible(!localLayers[qgraphicsitem_cast<ItemPhysEnv*>(i)->m_data.layer].hidden && visible);
+            i->setVisible(!localLayers[qgraphicsitem_cast<ItemPhysEnv *>(i)->m_data.layer].hidden && visible);
         else if(i->data(ITEM_TYPE).toString() == "Door_exit" || i->data(ITEM_TYPE).toString() == "Door_enter")
-            i->setVisible(!localLayers[qgraphicsitem_cast<ItemDoor*>(i)->m_data.layer].hidden && visible);
+            i->setVisible(!localLayers[qgraphicsitem_cast<ItemDoor *>(i)->m_data.layer].hidden && visible);
     }
 }
 
@@ -142,10 +142,10 @@ void LvlScene::setTiledBackground(bool forceTiled)
 
 void LvlScene::applyLayersVisible()
 {
-    QList<QGraphicsItem*> ItemList = items();
-    for(auto & it : ItemList)
+    QList<QGraphicsItem *> ItemList = items();
+    for(auto &it : ItemList)
     {
-        QGraphicsItem* item = it;
+        QGraphicsItem *item = it;
         if(!item->data(ITEM_IS_CURSOR).isNull())
             continue;
 
@@ -156,26 +156,24 @@ void LvlScene::applyLayersVisible()
                 auto *itm = qgraphicsitem_cast<ItemBlock *>(item);
                 if(itm->m_data.layer == layer.name)
                 {
-                    itm->setVisible( !layer.hidden );
+                    itm->setVisible(!layer.hidden);
                     break;
                 }
             }
         }
-        else
-        if(item->data(ITEM_TYPE) == "BGO")
+        else if(item->data(ITEM_TYPE) == "BGO")
         {
             for(const LevelLayer &layer : m_data->layers)
             {
                 auto *itm = qgraphicsitem_cast<ItemBGO *>(item);
                 if(itm->m_data.layer == layer.name)
                 {
-                    itm->setVisible( !layer.hidden );
+                    itm->setVisible(!layer.hidden);
                     break;
                 }
             }
         }
-        else
-        if(item->data(ITEM_TYPE) == "NPC")
+        else if(item->data(ITEM_TYPE) == "NPC")
         {
             for(const LevelLayer &layer : m_data->layers)
             {
@@ -187,28 +185,26 @@ void LvlScene::applyLayersVisible()
                 }
             }
         }
-        else
-        if(item->data(ITEM_TYPE) == "Water")
+        else if(item->data(ITEM_TYPE) == "Water")
         {
             for(const LevelLayer &layer : m_data->layers)
             {
                 auto *itm = qgraphicsitem_cast<ItemPhysEnv *>(item);
                 if(itm->m_data.layer == layer.name)
                 {
-                    itm->setVisible( !layer.hidden );
+                    itm->setVisible(!layer.hidden);
                     break;
                 }
             }
         }
-        else
-        if((item->data(ITEM_TYPE) == "Door_enter") || (item->data(ITEM_TYPE) == "Door_exit"))
+        else if((item->data(ITEM_TYPE) == "Door_enter") || (item->data(ITEM_TYPE) == "Door_exit"))
         {
             for(const LevelLayer &layer : m_data->layers)
             {
                 auto *itm = qgraphicsitem_cast<ItemDoor *>(item);
                 if(itm->m_data.layer == layer.name)
                 {
-                    itm->setVisible( !layer.hidden );
+                    itm->setVisible(!layer.hidden);
                     break;
                 }
             }
@@ -238,11 +234,12 @@ void LvlScene::setLocked(int type, bool lock)
     case 5://Doors
         m_lockDoor = lock;
         break;
-    default: break;
+    default:
+        break;
     }
 
-    QList<QGraphicsItem*> ItemList = items();
-    for(auto & it : ItemList)
+    QList<QGraphicsItem *> ItemList = items();
+    for(auto &it : ItemList)
     {
         if(it == nullptr)
             continue;
@@ -286,7 +283,8 @@ void LvlScene::setLocked(int type, bool lock)
                 if(i) i->setLocked(lock);
             }
             break;
-        default: break;
+        default:
+            break;
         }
     }
 
@@ -297,7 +295,7 @@ void LvlScene::setLayerToSelected()
 {
     QString lName;
     auto *layerBox = new ToNewLayerBox(m_data, m_viewPort);
-    layerBox->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
+    layerBox->setWindowFlags(Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     layerBox->setGeometry(util::alignToScreenCenter(layerBox->size()));
 
     if(layerBox->exec() == QDialog::Accepted)
@@ -327,10 +325,11 @@ void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
 {
     LevelData modData;
     for(const LevelLayer &lr : m_data->layers)
-    { //Find layer's settings
+    {
+        //Find layer's settings
         if(lr.name == lName)
         {
-            for(QGraphicsItem *SelItem : selectedItems() )
+            for(QGraphicsItem *SelItem : selectedItems())
             {
                 if(SelItem->data(ITEM_TYPE).toString() == "Block")
                 {
@@ -340,8 +339,7 @@ void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
                     itm->setVisible(!lr.hidden);
                     itm->arrayApply();
                 }
-                else
-                if(SelItem->data(ITEM_TYPE).toString() == "BGO")
+                else if(SelItem->data(ITEM_TYPE).toString() == "BGO")
                 {
                     auto *itm = qgraphicsitem_cast<ItemBGO *>(SelItem);
                     modData.bgo.push_back(itm->m_data);
@@ -349,8 +347,7 @@ void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
                     itm->setVisible(!lr.hidden);
                     itm->arrayApply();
                 }
-                else
-                if(SelItem->data(ITEM_TYPE).toString() == "NPC")
+                else if(SelItem->data(ITEM_TYPE).toString() == "NPC")
                 {
                     auto *itm = qgraphicsitem_cast<ItemNPC *>(SelItem);
                     modData.npc.push_back(itm->m_data);
@@ -358,8 +355,7 @@ void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
                     itm->setVisible(!lr.hidden);
                     itm->arrayApply();
                 }
-                else
-                if(SelItem->data(ITEM_TYPE).toString() == "Water")
+                else if(SelItem->data(ITEM_TYPE).toString() == "Water")
                 {
                     auto *itm = qgraphicsitem_cast<ItemPhysEnv *>(SelItem);
                     modData.physez.push_back(itm->m_data);
@@ -367,9 +363,8 @@ void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
                     itm->setVisible(!lr.hidden);
                     itm->arrayApply();
                 }
-                else
-                if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") ||
-                   (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
+                else if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") ||
+                        (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
                 {
                     auto *itm = qgraphicsitem_cast<ItemDoor *>(SelItem);
                     if(itm->data(ITEM_TYPE).toString() == "Door_exit")
@@ -379,8 +374,7 @@ void LvlScene::setLayerToSelected(const QString &lName, bool isNew)
                         tDoor.isSetIn = false;
                         modData.doors.push_back(tDoor);
                     }
-                    else
-                    if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                    else if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
                     {
                         LevelDoor tDoor = itm->m_data;
                         tDoor.isSetOut = false;

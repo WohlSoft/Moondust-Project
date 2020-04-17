@@ -30,8 +30,8 @@ class ItemPhysEnv : public LvlBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemPhysEnv(QGraphicsItem *parent=0);
-    ItemPhysEnv(LvlScene *parentScene, QGraphicsItem *parent=0);
+    ItemPhysEnv(QGraphicsItem *parent = nullptr);
+    ItemPhysEnv(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     ~ItemPhysEnv();
 
     void setSize(QSize sz);
@@ -56,7 +56,7 @@ public:
     LevelPhysEnv m_data;
 
     bool itemTypeIsLocked();
-    void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
+    void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
     QPainterPath shape() const;
 

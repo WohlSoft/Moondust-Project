@@ -22,7 +22,7 @@
 #include "../wld_scene.h"
 
 WLD_ModeHand::WLD_ModeHand(QGraphicsScene *parentScene, QObject *parent)
-: EditMode("HandScroll", parentScene, parent)
+    : EditMode("HandScroll", parentScene, parent)
 {}
 
 WLD_ModeHand::~WLD_ModeHand()
@@ -38,10 +38,10 @@ void WLD_ModeHand::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=false;
-    s->m_disableMoveItems=false;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = false;
+    s->m_disableMoveItems = false;
 
     s->m_viewPort->setCursor(Qt::ArrowCursor);
     s->m_viewPort->setInteractive(false);
@@ -50,25 +50,25 @@ void WLD_ModeHand::set()
 
 void WLD_ModeHand::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 void WLD_ModeHand::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 void WLD_ModeHand::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 void WLD_ModeHand::keyPress(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }
 
 void WLD_ModeHand::keyRelease(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }

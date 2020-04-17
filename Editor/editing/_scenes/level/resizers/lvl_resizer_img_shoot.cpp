@@ -55,9 +55,9 @@ void LvlScene::setScreenshotSelector(bool enabled, bool accept)
         {
             if(accept)
             {
-                #ifdef _DEBUG_
+#ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
-                #endif
+#endif
 
                 captutedSize = QRectF(m_resizeBox->pos().x(),
                                       m_resizeBox->pos().y(),
@@ -76,4 +76,3 @@ void LvlScene::setScreenshotSelector(bool enabled, bool accept)
 
     if(do_signal) emit screenshotSizeCaptured();
 }
-

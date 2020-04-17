@@ -288,7 +288,7 @@ void WLD_ModeSelect::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WLD_ModeSelect::keyPress(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }
 
 void WLD_ModeSelect::keyRelease(QKeyEvent *keyEvent)

@@ -122,25 +122,25 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *envTypes[16];
     int typeID = 0;
     bool enable_new_types = !m_scene->m_data->meta.smbx64strict
-            && (m_scene->m_configs->editor.supported_features.level_phys_ez_new_types == EditorSetup::FeaturesSupport::F_ENABLED);
+                            && (m_scene->m_configs->editor.supported_features.level_phys_ez_new_types == EditorSetup::FeaturesSupport::F_ENABLED);
     bool show_new_types = (m_scene->m_configs->editor.supported_features.level_phys_ez_new_types != EditorSetup::FeaturesSupport::F_HIDDEN);
 
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true, true,                       tr("Water"),        m_data.env_type == LevelPhysEnv::ENV_WATER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true, true,                       tr("Quicksand"),    m_data.env_type == LevelPhysEnv::ENV_QUICKSAND);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Custom liquid"), m_data.env_type == LevelPhysEnv::ENV_CUSTOM_LIQUID);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Gravity Field"), m_data.env_type == LevelPhysEnv::ENV_GRAVITATIONAL_FIELD);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Event"), m_data.env_type == LevelPhysEnv::ENV_CLICK_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision script"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Script"), m_data.env_type == LevelPhysEnv::ENV_CLICK_SCRIPT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision Event"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_EVENT);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Air chamber"), m_data.env_type == LevelPhysEnv::ENV_AIR);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC1);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC1);
-    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Hurting Field"), m_data.env_type == LevelPhysEnv::ENV_NPC_HURTING_FIELD);
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true, true,                       tr("Water"),        m_data.env_type == LevelPhysEnv::ENV_WATER)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], true, true,                       tr("Quicksand"),    m_data.env_type == LevelPhysEnv::ENV_QUICKSAND)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Custom liquid"), m_data.env_type == LevelPhysEnv::ENV_CUSTOM_LIQUID)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Gravity Field"), m_data.env_type == LevelPhysEnv::ENV_GRAVITATIONAL_FIELD)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_PLAYER)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_PLAYER)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC/Player Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Event"), m_data.env_type == LevelPhysEnv::ENV_CLICK_EVENT)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision script"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_SCRIPT)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Mouse click Script"), m_data.env_type == LevelPhysEnv::ENV_CLICK_SCRIPT)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Collision Event"), m_data.env_type == LevelPhysEnv::ENV_COLLISION_EVENT)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("Air chamber"), m_data.env_type == LevelPhysEnv::ENV_AIR)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Once)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_ONCE_NPC1)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Touch Event (Every frame)"), m_data.env_type == LevelPhysEnv::ENV_TOUCH_EVENT_NPC1)
+    CONTEXT_MENU_ITEM_CHK(envTypes[typeID], enable_new_types, show_new_types, tr("NPC Hurting Field"), m_data.env_type == LevelPhysEnv::ENV_NPC_HURTING_FIELD)
 
 #undef CONTEXT_MENU_ITEM_CHK
 
@@ -226,7 +226,7 @@ void ItemPhysEnv::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     {
                         if(selItem->data(ITEM_TYPE).toString() == "Water")
                         {
-                            ItemPhysEnv *pe = dynamic_cast<ItemPhysEnv*>(selItem);
+                            ItemPhysEnv *pe = dynamic_cast<ItemPhysEnv *>(selItem);
                             modData.physez.push_back(pe->m_data);
                             pe->setType(i);
                             m_scene->invalidate(pe->boundingRect());
@@ -250,7 +250,8 @@ QPainterPath ItemPhysEnv::shape() const
     QVector<qreal> points = {0.0,
                              0.0,
                              this->data(ITEM_WIDTH).toReal(),
-                             this->data(ITEM_HEIGHT).toReal()};
+                             this->data(ITEM_HEIGHT).toReal()
+                            };
 #define PLEFT   0
 #define PTOP    1
 #define PRIGHT  2
@@ -263,8 +264,8 @@ QPainterPath ItemPhysEnv::shape() const
 
     lineBoarder.push_back(QPointF(points[PLEFT] + 4, points[PTOP]));
     lineBoarder.push_back(QPointF(points[PLEFT] + 4, points[PBOTTOM] - 4));
-    lineBoarder.push_back(QPointF(points[PRIGHT] - 4,points[PBOTTOM] - 4));
-    lineBoarder.push_back(QPointF(points[PRIGHT] - 4,points[PTOP] + 4));
+    lineBoarder.push_back(QPointF(points[PRIGHT] - 4, points[PBOTTOM] - 4));
+    lineBoarder.push_back(QPointF(points[PRIGHT] - 4, points[PTOP] + 4));
     lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP] + 4));
 #undef PLEFT
 #undef PTOP

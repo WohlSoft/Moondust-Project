@@ -30,12 +30,12 @@ class ItemBlock : public LvlBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemBlock(LvlScene *parentScene, QGraphicsItem *parent=0);
-    ItemBlock(QGraphicsItem *parent=0);
+    ItemBlock(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
+    ItemBlock(QGraphicsItem *parent = nullptr);
     ~ItemBlock();
 
     void setMainPixmap(/*const QPixmap &pixmap*/);
-    void setBlockData(LevelBlock inD, obj_block *mergedSet=0, long *animator=0);
+    void setBlockData(LevelBlock inD, obj_block *mergedSet = nullptr, long *animator = nullptr);
     void setScenePoint(LvlScene *theScene);
 
     QRectF boundingRect() const;
@@ -48,7 +48,7 @@ public:
     void setSlippery(bool slip);
     void setInvisible(bool inv);
     void setBlockSize(QRect rect);
-    void setIncludedNPC(int npcID, bool init=false);
+    void setIncludedNPC(int npcID, bool init = false);
 
     void transformTo(long target_id);
 
@@ -71,9 +71,9 @@ public:
     void setMetaSignsVisibility(bool visible);
 
 private:
-    QGraphicsItemGroup * m_grp = nullptr;
-    QGraphicsItem *      m_includedNPC = nullptr;
-    QGraphicsPixmapItem* m_coinCounter = nullptr;
+    QGraphicsItemGroup *m_grp = nullptr;
+    QGraphicsItem       *m_includedNPC = nullptr;
+    QGraphicsPixmapItem *m_coinCounter = nullptr;
     QPixmap              m_currentImage;
     bool                 m_sizable = false;
     int                  m_sizablePrevFrame = 0;

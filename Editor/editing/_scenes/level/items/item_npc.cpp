@@ -57,8 +57,8 @@ void ItemNPC::construct()
     m_offset_x = 0;
     m_offset_y = 0;
 
-    m_generatorArrow = NULL;
-    m_includedNPC = NULL;
+    m_generatorArrow = nullptr;
+    m_includedNPC = nullptr;
     m_animated = false;
     m_direction = -1;
     m_gridSize = 1;
@@ -70,7 +70,7 @@ void ItemNPC::construct()
     m_imgOffsetX = 0;
     m_imgOffsetY = 0;
 
-    _internal_animator = NULL;
+    _internal_animator = nullptr;
 
     setData(ITEM_TYPE, "NPC");
 }
@@ -78,8 +78,8 @@ void ItemNPC::construct()
 
 ItemNPC::~ItemNPC()
 {
-    if(m_includedNPC != NULL) delete m_includedNPC;
-    if(m_grp != NULL) delete m_grp;
+    if(m_includedNPC != nullptr) delete m_includedNPC;
+    if(m_grp != nullptr) delete m_grp;
     if(!m_DisableScene) m_scene->unregisterElement(this);
     if(_internal_animator) delete _internal_animator;
 }
@@ -171,7 +171,7 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *transform_all =    ItemMenu.addAction(tr("Transform all %1 into").arg("NPC-%1").arg(m_data.id));
     ItemMenu.addSeparator();
 
-    QAction *chNPC = NULL;
+    QAction *chNPC = nullptr;
     if(m_localProps.setup.container)
     {
         chNPC =                 ItemMenu.addAction(tr("Change included NPC..."));
@@ -217,7 +217,7 @@ void ItemNPC::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LevelData newData;
 
         int transformTO;
-        ItemSelectDialog *npcList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow,ItemSelectDialog::TAB_NPC);
+        ItemSelectDialog *npcList = new ItemSelectDialog(m_scene->m_configs, ItemSelectDialog::TAB_NPC, 0, 0, 0, 0, 0, 0, 0, 0, 0, m_scene->m_subWindow, ItemSelectDialog::TAB_NPC);
         util::DialogToCenter(npcList, true);
 
         if(npcList->exec() == QDialog::Accepted)
@@ -662,12 +662,12 @@ void ItemNPC::setGenerator(bool enable, int direction, int type, bool init)
 
     if(!init) m_data.generator = enable;
 
-    if(m_generatorArrow != NULL)
+    if(m_generatorArrow != nullptr)
     {
         m_grp->removeFromGroup(m_generatorArrow);
         m_scene->removeItem(m_generatorArrow);
         delete m_generatorArrow;
-        m_generatorArrow = NULL;
+        m_generatorArrow = nullptr;
     }
 
     if(!enable)
@@ -897,54 +897,22 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
             if(!m_localProps.setup.special_option)
                 m_data.special_data = 0;
             else // When settings of special value aren't matching
-            if(oldProps.isValid &&
-              (m_localProps.setup.special_name != oldProps.setup.special_name ||
-               m_localProps.setup.special_type != oldProps.setup.special_type ||
-               m_localProps.setup.special_combobox_opts != oldProps.setup.special_combobox_opts ||
-               m_localProps.setup.special_spin_min != oldProps.setup.special_spin_min ||
-               m_localProps.setup.special_spin_max != oldProps.setup.special_spin_max ||
-               m_localProps.setup.special_spin_value_offset != oldProps.setup.special_spin_value_offset)
-            )
-            {
-                if(m_localProps.setup.default_special) // When default value is set
-                    m_data.special_data = m_localProps.setup.default_special_value; //Put it!
-                else // Or calculate it automatically
+                if(oldProps.isValid &&
+                   (m_localProps.setup.special_name != oldProps.setup.special_name ||
+                    m_localProps.setup.special_type != oldProps.setup.special_type ||
+                    m_localProps.setup.special_combobox_opts != oldProps.setup.special_combobox_opts ||
+                    m_localProps.setup.special_spin_min != oldProps.setup.special_spin_min ||
+                    m_localProps.setup.special_spin_max != oldProps.setup.special_spin_max ||
+                    m_localProps.setup.special_spin_value_offset != oldProps.setup.special_spin_value_offset)
+                  )
                 {
-                    if(m_localProps.setup.special_type == 0 || m_localProps.setup.special_type == 2)
-                        m_data.special_data = 0;//Combobox and NPC-id
-                    else if(m_localProps.setup.special_type == 1)//Spinbox with min-max
+                    if(m_localProps.setup.default_special) // When default value is set
+                        m_data.special_data = m_localProps.setup.default_special_value; //Put it!
+                    else // Or calculate it automatically
                     {
-                        m_data.special_data = 0;
-                        NumberLimiter::apply(m_data.special_data,
-                                             static_cast<long>(m_localProps.setup.special_spin_min),
-                                             static_cast<long>(m_localProps.setup.special_spin_max));
-                    }
-                }
-            }
-            else
-            {
-                // Be sure input data are valid
-                if(m_localProps.setup.special_type == 0)
-                {
-                    const long rangeMin = 0;
-                    const long rangeMax = static_cast<long>(m_localProps.setup.special_combobox_opts.size() - 1);
-                    if((m_data.special_data < rangeMin) || (m_data.special_data > rangeMax))
-                    {
-                        if(m_localProps.setup.default_special) // When default value is set
-                            m_data.special_data = m_localProps.setup.default_special_value; //Put it!
-                        else
-                            NumberLimiter::apply(m_data.special_data, rangeMin, rangeMax);
-                    }
-                }
-                else if(m_localProps.setup.special_type == 1)
-                {
-                    const long rangeMin = static_cast<long>(m_localProps.setup.special_spin_min);
-                    const long rangeMax = static_cast<long>(m_localProps.setup.special_spin_max);
-                    if((m_data.special_data < rangeMin) || (m_data.special_data > rangeMax))
-                    {
-                        if(m_localProps.setup.default_special) // When default value is set
-                            m_data.special_data = m_localProps.setup.default_special_value; //Put it!
-                        else
+                        if(m_localProps.setup.special_type == 0 || m_localProps.setup.special_type == 2)
+                            m_data.special_data = 0;//Combobox and NPC-id
+                        else if(m_localProps.setup.special_type == 1)//Spinbox with min-max
                         {
                             m_data.special_data = 0;
                             NumberLimiter::apply(m_data.special_data,
@@ -953,7 +921,39 @@ void ItemNPC::setNpcData(LevelNPC inD, obj_npc *mergedSet, long *animator_id, bo
                         }
                     }
                 }
-            }
+                else
+                {
+                    // Be sure input data are valid
+                    if(m_localProps.setup.special_type == 0)
+                    {
+                        const long rangeMin = 0;
+                        const long rangeMax = static_cast<long>(m_localProps.setup.special_combobox_opts.size() - 1);
+                        if((m_data.special_data < rangeMin) || (m_data.special_data > rangeMax))
+                        {
+                            if(m_localProps.setup.default_special) // When default value is set
+                                m_data.special_data = m_localProps.setup.default_special_value; //Put it!
+                            else
+                                NumberLimiter::apply(m_data.special_data, rangeMin, rangeMax);
+                        }
+                    }
+                    else if(m_localProps.setup.special_type == 1)
+                    {
+                        const long rangeMin = static_cast<long>(m_localProps.setup.special_spin_min);
+                        const long rangeMax = static_cast<long>(m_localProps.setup.special_spin_max);
+                        if((m_data.special_data < rangeMin) || (m_data.special_data > rangeMax))
+                        {
+                            if(m_localProps.setup.default_special) // When default value is set
+                                m_data.special_data = m_localProps.setup.default_special_value; //Put it!
+                            else
+                            {
+                                m_data.special_data = 0;
+                                NumberLimiter::apply(m_data.special_data,
+                                                     static_cast<long>(m_localProps.setup.special_spin_min),
+                                                     static_cast<long>(m_localProps.setup.special_spin_max));
+                            }
+                        }
+                    }
+                }
         }
 
         if((m_localProps.setup.container) && (m_data.contents > 0))
