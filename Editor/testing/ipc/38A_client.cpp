@@ -19,6 +19,7 @@
 #include "38A_client.h"
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_file_lib_private.h> // 38A specific URL Encode/Decode
+#include <PGE_File_Formats/smbx38a_private.h> // 38A specific URL Encode/Decode
 #include <QThread>
 #include <mainwindow.h>
 #include <common_features/logger.h>
@@ -208,57 +209,156 @@ void SanBaEiIpcClient::sendPlacingBGO(const LevelBGO &bgo)
 
 void SanBaEiIpcClient::sendPlacingNPC(const LevelNPC &npc)
 {
+    QString msg = "SO|N|";
     // N|layer[,name]|id[,dx,dy]|x|y|b1,b2,b3,b4,b5,b6|sp|[e1,e2,e3,e4,e5,e6,e7]|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|[wi,hi]
-    /*
-    N|layer[,name]|id[,dx,dy]|x|y|b1,b2,b3,b4,b5,b6|sp|[e1,e2,e3,e4,e5,e6,e7]|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|[wi,hi]
-        layer=layer name["" == "Default"][***urlencode!***]
-        only if name != ""
-        name=npc's name
-        id=npc id
-        only if dx > 0 or dy > 0
-        dx=graphics extend x
-        dy=graphics extend y
-        x=npc position x
-        y=npc position y
-        b1=[-1]left [0]random [1]right
-        b2=friendly npc
-        b3=don't move npc
-        b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300][101~108=wing type]
-        sp=special option
-            []=optional
-            [***urlencode!***]
-            e1=death event
-            e2=talk event
-            e3=activate event
-            e4=no more object in layer event
-            e5=grabed event
-            e6=next frame event
-            e7=touch event
-            a1=layer name to attach
-            a2=variable name to send
-        b5=autoscale
-        b6=style of wings(0=wings 1=propeller)
-        c1=generator enable
-            [if c1!=0]
-            c2=generator period[1 frame]
-            c3=generator effect
-                c3-1[1=warp][0=projective][4=no effect]
-                c3-2[0=center][1=up][2=left][3=down][4=right][9=up+left][10=left+down][11=down+right][12=right+up]
-                    if (c3-2)!=0
-                    c3=4*(c3-1)+(c3-2)
-                    else
-                    c3=0
-            c4=generator direction[angle][when c3=0]
-            c5=batch[when c3=0][MAX=32]
-            c6=angle range[when c3=0]
-            c7=speed[when c3=0][float]
-        msg=message by this npc talkative[***urlencode!***]
-        wi=width of this npc
-        hi=height of this npc
-    */
-    // TODO this!
 
-    // sendMessage(msg);
+    //Pre-convert some data into SMBX-38A compatible format
+    long npcID = (long)npc.id;
+    long containerType = 0;
+    long specialData = npc.special_data;
+    switch(npcID)//Convert npcID and contents ID into container type
+    {
+    case 91:
+        containerType = 1;
+        break;
+    case 96:
+        containerType = 2;
+        break;
+    case 283:
+        containerType = 3;
+        break;
+    case 284:
+        containerType = 4;
+        break;
+    case 300:
+        containerType = 5;
+        break;
+    case 347:
+        containerType = 6;
+        break;
+    default:
+        containerType = 0;
+        break;
+    }
+    if(containerType != 0)
+    {
+        //Set NPC-ID of contents as main NPC-ID for this NPC
+        npcID = npc.contents;
+    }
+
+    //Convert "Is Boss" flag into special ID
+    switch(npc.id)
+    {
+    case 15:
+    case 39:
+    case 86:
+        if(npc.is_boss)
+            specialData = (long)npc.is_boss;
+        break;
+    default:
+        break;
+    }
+
+    //Convert generator type and direction into SMBX-38A Compatible format
+    long genType_1 = npc.generator_type;
+
+    //Swap "Appear" and "Projectile" types
+    switch(genType_1)
+    {
+    case 0:
+        genType_1 = 2;
+        break;
+    case 2:
+        genType_1 = 0;
+        break;
+    }
+
+    long genType_2 = npc.generator_direct;
+    long genType = (genType_2 != 0) ? ((4 * genType_1) + genType_2) : 0 ;
+    //    N|layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|
+    //    layer=layer name["" == "Default"][***urlencode!***]
+    if(npc.layer != "Default")
+        msg += PGE_URLENC(npc.layer);
+    msg += "|";
+    //only if name != ""
+    //name=npc's name
+    if(!IsEmpty(npc.gfx_name))
+        msg += "," + PGE_URLENC(npc.gfx_name);
+    //    id=npc id
+    msg += "|" + fromNum(npcID);
+    if((npc.gfx_dx) > 0 || (npc.gfx_dy > 0))
+    {
+        //  dx=graphics extend x
+        msg += "," + fromNum(npc.gfx_dx);
+        //  dy=graphics extend y
+        msg += "," + fromNum(npc.gfx_dy);
+    }
+    //    x=npc position x
+    msg += "|" + fromNum(npc.x);
+    //    y=npc position y
+    msg += "|" + fromNum(npc.y);
+    //    b1=[1]left [0]random [-1]right
+    msg += "|" + fromNum(-1 * npc.direct);
+    //    b2=friendly npc
+    msg += "," + fromNum((int)npc.friendly);
+    //    b3=don't move npc
+    msg += "," + fromNum((int)npc.nomove);
+    //    b4=[1=npc91][2=npc96][3=npc283][4=npc284][5=npc300]
+    msg += "," + fromNum(containerType);
+    //    sp=special option
+    msg += "|" + fromNum(specialData);
+    //        [***urlencode!***]
+    //        e1=death event
+    msg += "|" +PGE_URLENC(npc.event_die);
+    //        e2=talk event
+    msg += "," + PGE_URLENC(npc.event_talk);
+    //        e3=activate event
+    msg += "," + PGE_URLENC(npc.event_activate);
+    //        e4=no more object in layer event
+    msg += "," + PGE_URLENC(npc.event_emptylayer);
+    //        e5=grabed event
+    msg += "," + PGE_URLENC(npc.event_grab);
+    //        e6=next frame event
+    msg += "," + PGE_URLENC(npc.event_nextframe);
+    //        e7=touch event
+    msg += "," + PGE_URLENC(npc.event_touch);
+    //        a1=layer name to attach
+    msg += "|" + PGE_URLENC(npc.attach_layer);
+    //        a2=variable name to send
+    msg += "," + PGE_URLENC(npc.send_id_to_variable);
+    //    c1=generator enable
+    msg += "|" + fromNum((int)npc.generator);
+
+    //        [if c1!=0]
+    if(npc.generator)
+    {
+        //        c2=generator period[1 frame]
+        //Convert deciseconds into frames with rounding
+        long period = npc.generator_period_orig;
+        SMBX38A_RestoreOrigTime(period, static_cast<long>(npc.generator_period), PGE_FileLibrary::TimeUnit::Decisecond);
+        msg += "," + fromNum(period);
+        //        c3=generator effect
+        //            c3-1 [1=warp][0=projective][4=no effect]
+        //            c3-2 [0=center][1=up][2=left][3=down][4=right][9=up+left][10=left+down][11=down+right][12=right+up]
+        //                if (c3-2)!=0
+        //                c3=4*(c3-1)+(c3-2)
+        //                else
+        //                c3=0
+        msg += "," + fromNum(genType);
+        //        c4=generator direction[angle][when c3=0]
+        msg += "," + fromNum(npc.generator_custom_angle);
+        //        c5=batch[when c3=0][MAX=32]
+        msg += "," + fromNum(npc.generator_branches);
+        //        c6=angle range[when c3=0]
+        msg += "," + fromNum(npc.generator_angle_range);
+        //        c7=speed[when c3=0][float]
+        msg += "," + fromNum(npc.generator_initial_speed);
+    }
+
+    //    msg=message by this npc talkative[***urlencode!***]
+    msg += "|" + PGE_URLENC(npc.msg);
+
+    sendMessage(msg);
 }
 
 bool SanBaEiIpcClient::setCursor()
