@@ -190,19 +190,48 @@ QGraphicsItem * WldScene::itemCollidesCursor(QGraphicsItem * item)
     item->data(ITEM_WIDTH).toReal()+20, item->data(ITEM_HEIGHT).toReal()+20 );
     queryItems(findZoneR, &collisions);
 
-    foreach (QGraphicsItem * it, collisions) {
-            if (it == item)
-                 continue;
-            if( (
-                    (it->data(ITEM_TYPE).toString()=="TILE")||
-                    (it->data(ITEM_TYPE).toString()=="SCENERY")||
-                    (it->data(ITEM_TYPE).toString()=="PATH")||
-                    (it->data(ITEM_TYPE).toString()=="LEVEL")||
-                    (it->data(ITEM_TYPE).toString()=="MUSICBOX")
-              )&&(it->isVisible() ) )
-                return it;
+    for(auto *it : collisions)
+    {
+        if(it == item || !it->isVisible())
+            continue;
+
+        QString type = it->data(ITEM_TYPE).toString();
+        if(type == "TILE")
+        {
+            if(m_lockTerrain || dynamic_cast<ItemTile*>(it)->isLocked())
+                continue;
+        }
+        else if(type == "SCENERY")
+        {
+            if(m_lockScenery || dynamic_cast<ItemScene*>(it)->isLocked())
+                continue;
+        }
+        else if(type == "PATH")
+        {
+            if(m_lockPath || dynamic_cast<ItemPath*>(it)->isLocked())
+                continue;
+        }
+        else if(type == "LEVEL")
+        {
+            if(m_lockLevel || dynamic_cast<ItemLevel*>(it)->isLocked())
+                continue;
+        }
+        else if(type == "MUSICBOX")
+        {
+            if(m_lockMusicBox || dynamic_cast<ItemMusic*>(it)->isLocked())
+                continue;
+        }
+
+        if(
+            (type == "TILE") ||
+            (type == "SCENERY") ||
+            (type == "PATH") ||
+            (type == "LEVEL") ||
+            (type == "MUSICBOX")
+         )
+            return it;
     }
-    return NULL;
+    return nullptr;
 }
 
 namespace WorldScene_space
