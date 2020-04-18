@@ -27,6 +27,8 @@
 #include <unistd.h>
 #include <QStandardPaths>
 #include "wine/wine_setup.h"
+#else
+#include <windows.h>
 #endif
 
 #include "38a_engine.h"
@@ -722,6 +724,39 @@ void SanBaEiRuntimeEngine::removeTempDir()
     }
 }
 
+static inline int symLink(const QString &from, const QString &to)
+{
+#ifndef _WIN32
+    return symlink(from.toUtf8().data(), to.toUtf8().data());
+#else
+    typedef BOOL (*MkLinkW)(LPCWSTR lpSymlinkFileName, LPCWSTR lpTargetFileName, DWORD  dwFlags);
+    HMODULE kernel32 = LoadLibraryW(L"kernel32.dll");
+    if(!kernel32)
+        return -1;
+
+    MkLinkW mkLinkW = GetProcAddress(kernel32, "CreateSymbolicLinkW");
+    if(!mkLinkW)
+    {
+        FreeLibrary(kernel32);
+        return -1;
+    }
+
+    auto f = from.toStdWString();
+    auto t = to.toStdWString();
+    DWORD flags = 0;
+
+    QFileInfo frInfo(from);
+    if(frInfo.isDir())
+        flags = SYMBOLIC_LINK_FLAG_DIRECTORY;
+
+    BOOL ret = mkLinkW(f.c_str(), t.c_str(), flags);
+
+    FreeLibrary(kernel32);
+
+    return (int)ret;
+#endif
+}
+
 QString SanBaEiRuntimeEngine::initTempLevel(const LevelData &d)
 {
     QString tempPath;
@@ -735,21 +770,26 @@ QString SanBaEiRuntimeEngine::initTempLevel(const LevelData &d)
 
     QString levelFile = tempPath + "/___smbx38a-temp-level.lvl";
     LogDebug(QString("Orig Path %1 -> %2").arg(origPath).arg(levelFile));
+
     if(!origPath.isEmpty())
     {
+        /* FIXME: WORKAROUND: reproduce an episode directory of a testing level by a
+         * symbolic links to every file in the original episode folder.
+         * Remove this cludge once SMBX-38A wil get a proper ability to specify
+         * the location of episode and level custom resources set. */
         QDir op(origPath);
         auto entries = op.entryList(QDir::NoDotAndDotDot|QDir::Dirs|QDir::Files);
         for(auto &i : entries)
         {
             auto from = origPath + "/" + i;
             auto to = tempPath + "/" + i;
-            symlink(from.toUtf8().data(), to.toUtf8().data());
+            symLink(from, to);
         }
 
         auto cfFrom = origPath + "/" + d.meta.filename;
         auto cfTo = tempPath + "/___smbx38a-temp-level";
         if(QFile::exists(cfFrom))
-            symlink(cfFrom.toUtf8().data(), cfTo.toUtf8().data());
+            symLink(cfFrom, cfTo);
     }
 
     LevelData lvl = d;
