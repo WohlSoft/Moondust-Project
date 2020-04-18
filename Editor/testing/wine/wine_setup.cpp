@@ -203,6 +203,8 @@ WineSetupData WineSetup::getSetup()
     setup.useCustom = ui->pathCustom->isChecked();
     setup.wineRoot = ui->wineRootPath->text();
 
+    setup.lastPolProfile = ui->playOnLinuxDrive->currentText();
+
     setup.useCustomEnv = ui->wineCustomEnvGroup->isChecked();
     setup.useWinePrefix = ui->winePrefix->isChecked();
     setup.winePrefix = ui->winePrefixPath->text();
@@ -228,6 +230,17 @@ void WineSetup::setSetup(const WineSetupData &setup)
         ui->winePrefixPath->setText(setup.winePrefix);
 
     ui->wineDebug->setChecked(setup.enableWineDebug);
+
+    int polCount = ui->playOnLinuxDrive->count();
+    for(int i = 0; i < polCount; ++i)
+    {
+        auto t = ui->playOnLinuxDrive->itemText(i);
+        if(t == setup.lastPolProfile)
+        {
+            ui->playOnLinuxDrive->setCurrentIndex(i);
+            break;
+        }
+    }
 }
 
 void WineSetup::prepareSetup(WineSetupData &setup)
@@ -335,6 +348,7 @@ void WineSetup::iniLoad(QSettings &settings, WineSetupData &setup)
 {
     setup.useCustom = settings.value("wine-custom", false).toBool();
     setup.wineRoot = settings.value("wine-root", QString()).toString();
+    setup.lastPolProfile = settings.value("last-pol-profile", QString()).toString();
     setup.useCustomEnv = settings.value("wine-custom-env", false).toBool();
     setup.useWinePrefix = settings.value("wine-use-prefix", false).toBool();
     setup.winePrefix = settings.value("wine-prefix", QString()).toString();
@@ -345,6 +359,7 @@ void WineSetup::iniSave(QSettings &settings, WineSetupData &setup)
 {
     settings.setValue("wine-custom", setup.useCustom);
     settings.setValue("wine-root", setup.wineRoot);
+    settings.setValue("last-pol-profile", setup.lastPolProfile);
     settings.setValue("wine-custom-env", setup.useCustomEnv);
     settings.setValue("wine-use-prefix", setup.useWinePrefix);
     settings.setValue("wine-prefix", setup.winePrefix);

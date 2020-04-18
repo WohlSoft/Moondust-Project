@@ -28,6 +28,8 @@ struct WineSetupData
     bool useCustomEnv = false;
     QString wineRoot;
 
+    QString lastPolProfile;
+
     bool useWinePrefix = false;
     QString winePrefix;
 
