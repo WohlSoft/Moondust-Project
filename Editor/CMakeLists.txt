@@ -486,6 +486,7 @@ if(NOT HAIKU)
         COMMENT "Unpacking 38a_ipc_bridge.exe"
         VERBATIM
     )
+    # FIXME: on macOS, embed a bridge executable into the bundle
     install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe"
         DESTINATION "${PGE_INSTALL_DIRECTORY}/${CMAKE_INSTALL_BINDIR}/ipc"
     )
