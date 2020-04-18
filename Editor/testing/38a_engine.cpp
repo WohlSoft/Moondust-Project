@@ -597,7 +597,10 @@ void SanBaEiRuntimeEngine::actionChooseEnginePath()
     {
         QString p = QFileDialog::getOpenFileName(&d,
                                                  tr("Select a path to SMBX-38A executable",
-                                                    "File dialog title"), c->text(), "SMBX-38A executable (smbx.exe)");
+                                                    "File dialog title"), c->text(),
+                                                    "SMBX-38A executable (smbx.exe);;"
+                                                    "All Windows executables (*.exe);;"
+                                                    "All files(*.*)");
         if(!p.isEmpty())
             c->setText(p);
     });
