@@ -471,11 +471,14 @@ list(APPEND PGE_EDITOR_SRCS
     ${QT_PLUGINS_CPP}
 )
 
-if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
+
+if(NOT HAIKU)
+    # Generic folder for IPC bridge executables
     if(NOT EXISTS ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
         make_directory(${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
     endif()
 
+    # 38A IPC bridge
     add_custom_target(38a_ipc_bridge_bin ALL
         COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz"
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz
@@ -486,7 +489,10 @@ if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
     install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe"
         DESTINATION "${PGE_INSTALL_DIRECTORY}/${CMAKE_INSTALL_BINDIR}/ipc"
     )
+endif()
 
+if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
+    # LunaTester Wine helper
     add_custom_target(luna_hwnd_show_bin ALL
         COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz"
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz

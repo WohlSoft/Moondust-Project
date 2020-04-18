@@ -31,6 +31,7 @@ Editor 0.3.2-dev
 - Fixed an ignore of locks for item types by an eraser
 - Extended a context menu of level and world map surface
 - Better look of a crash handler dialog
+- Added a level testing integration with the SMBX-38A engine
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
