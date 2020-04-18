@@ -759,11 +759,27 @@ QString SanBaEiRuntimeEngine::initTempLevel(const LevelData &d)
     return levelFile;
 }
 
+static void msgNotFound(QWidget *parent, const QString &what)
+{
+    QMessageBox::warning(parent,
+                         SanBaEiRuntimeEngine::tr("Executable not found"),
+                         SanBaEiRuntimeEngine::tr("Can't start SMBX-38A game because \"%1\" is not found. "
+                                                  "That might happen because of incorrect path to SMBX-38A executable was "
+                                                  "specified, please check the TheXTech path setup.").arg(what),
+                         QMessageBox::Ok);
+}
+
 bool SanBaEiRuntimeEngine::doTestLevelIPC(const LevelData &d)
 {
     const QString smbxExe = getEnginePath();
     QFileInfo smbxExeInfo(smbxExe);
     const QString smbxPath = smbxExeInfo.absoluteDir().absolutePath();
+
+    if(!QFile::exists(smbxExe))
+    {
+        msgNotFound(m_w, smbxExe);
+        return false;
+    }
 
     QString levelFile = initTempLevel(d);
     if(levelFile.isEmpty())
@@ -812,6 +828,11 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
     QFileInfo smbxExeInfo(smbxExe);
     const QString smbxPath = smbxExeInfo.absoluteDir().absolutePath();
 
+    if(!QFile::exists(smbxExe))
+    {
+        msgNotFound(m_w, smbxExe);
+        return false;
+    }
     LevelData lvl;
     if(!FileFormats::OpenLevelFileHeader(levelFile, lvl))
     {
@@ -872,6 +893,12 @@ bool SanBaEiRuntimeEngine::doTestWorldFile(const QString &worldFile)
     const QString smbxExe = getEnginePath();
     QFileInfo smbxExeInfo(smbxExe);
     const QString smbxPath = smbxExeInfo.absoluteDir().absolutePath();
+
+    if(!QFile::exists(smbxExe))
+    {
+        msgNotFound(m_w, smbxExe);
+        return false;
+    }
 
     WorldData wld;
     if(!FileFormats::OpenWorldFileHeader(worldFile, wld))
