@@ -96,15 +96,15 @@ private slots:
     void gameReadyReadStandardOutput();
 
     /********Menu items*******/
-    void startTestAction();
-    void startSafeTestAction();
-    void startBattleTestAction();
-    void resetCheckPoints();
-    void startGameAction();
-    void chooseEnginePath();
+    void actionStartTest();
+    void actionStartBattleTest();
+    void actionStartSafeTest();
+    void actionResetCheckPoints();
+    void actionStartGame();
+    void actionChooseEnginePath();
 #ifndef _WIN32
 private:
-    void runWineSetup();
+    void actionRunWineSetup();
 #endif
 
 public:
@@ -124,7 +124,7 @@ public:
     virtual bool doTestLevelIPC(const LevelData &d);
     virtual bool doTestLevelFile(const QString &levelFile);
 
-    virtual bool doTestWorldIPC(const WorldData &d);
+//    virtual bool doTestWorldIPC(const WorldData &d);
 
     virtual bool doTestWorldFile(const QString &worldFile);
 

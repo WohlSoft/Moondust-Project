@@ -110,7 +110,7 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
     {
         runLevelTest = destmenu->addAction("runTesting");
         QObject::connect(runLevelTest,   &QAction::triggered,
-                    this,               &SanBaEiRuntimeEngine::startTestAction,
+                    this,               &SanBaEiRuntimeEngine::actionStartTest,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = runLevelTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
@@ -130,7 +130,7 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
     {
         QAction *RunBattleLevelTest = destmenu->addAction("runBattleTest");
         QObject::connect(RunBattleLevelTest,   &QAction::triggered,
-                    this,               &SanBaEiRuntimeEngine::startBattleTestAction,
+                    this,               &SanBaEiRuntimeEngine::actionStartBattleTest,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = RunBattleLevelTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
@@ -151,7 +151,7 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
     {
         runLevelSafeTest = destmenu->addAction("runSafeTesting");
         QObject::connect(runLevelSafeTest,   &QAction::triggered,
-                    this,               &SanBaEiRuntimeEngine::startSafeTestAction,
+                    this,               &SanBaEiRuntimeEngine::actionStartSafeTest,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = runLevelSafeTest;
         QObject::connect(m_w, &MainWindow::windowActiveWorld, [this, menuItemId](bool wld)
@@ -173,7 +173,7 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
     QAction *ResetCheckPoints = destmenu->addAction("resetCheckpoints");
     {
         QObject::connect(ResetCheckPoints,   &QAction::triggered,
-                    this,               &SanBaEiRuntimeEngine::resetCheckPoints,
+                    this,               &SanBaEiRuntimeEngine::actionResetCheckPoints,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = ResetCheckPoints;
     }
@@ -211,7 +211,7 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
     {
         choosEnginePath = destmenu->addAction("change38aPath");
         QObject::connect(choosEnginePath,   &QAction::triggered,
-                    this,                   &SanBaEiRuntimeEngine::chooseEnginePath,
+                    this,                   &SanBaEiRuntimeEngine::actionChooseEnginePath,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = choosEnginePath;
     }
@@ -222,7 +222,7 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
         QAction *wineSetup;
         wineSetup = destmenu->addAction("wineSetup38a");
         QObject::connect(wineSetup,   &QAction::triggered,
-                    this,                   &SanBaEiRuntimeEngine::runWineSetup,
+                    this,                   &SanBaEiRuntimeEngine::actionRunWineSetup,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = wineSetup;
     }
@@ -232,7 +232,7 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
         destmenu->addSeparator();
         QAction *startGame = destmenu->addAction("start38aEngine");
         QObject::connect(startGame,   &QAction::triggered,
-                    this,             &SanBaEiRuntimeEngine::startGameAction,
+                    this,             &SanBaEiRuntimeEngine::actionStartGame,
                     Qt::QueuedConnection);
         m_menuItems[menuItemId++] = startGame;
     }
@@ -441,7 +441,7 @@ QString SanBaEiRuntimeEngine::pathUnixToWine(const QString &unixPath)
 #endif //_WIN32
 
 
-void SanBaEiRuntimeEngine::startTestAction()
+void SanBaEiRuntimeEngine::actionStartTest()
 {
     if(!AbstractRuntimeEngine::checkIsEngineRunning(this, m_w))
         return;
@@ -457,7 +457,29 @@ void SanBaEiRuntimeEngine::startTestAction()
     }
 }
 
-void SanBaEiRuntimeEngine::startSafeTestAction()
+void SanBaEiRuntimeEngine::actionStartBattleTest()
+{
+    if(!AbstractRuntimeEngine::checkIsEngineRunning(this, m_w))
+        return;
+
+    if(m_w->activeChildWindow() == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = m_w->activeLvlEditWin();
+        if(!edit)
+            return;
+
+        if(edit->isUntitled())
+        {
+            AbstractRuntimeEngine::rejectUntitled(m_w);
+            return;
+        }
+
+        m_battleMode = true;
+        doTestLevelIPC(edit->LvlData);
+    }
+}
+
+void SanBaEiRuntimeEngine::actionStartSafeTest()
 {
     if(!AbstractRuntimeEngine::checkIsEngineRunning(this, m_w))
         return;
@@ -493,29 +515,7 @@ void SanBaEiRuntimeEngine::startSafeTestAction()
     }
 }
 
-void SanBaEiRuntimeEngine::startBattleTestAction()
-{
-    if(!AbstractRuntimeEngine::checkIsEngineRunning(this, m_w))
-        return;
-
-    if(m_w->activeChildWindow() == MainWindow::WND_Level)
-    {
-        LevelEdit *edit = m_w->activeLvlEditWin();
-        if(!edit)
-            return;
-
-        if(edit->isUntitled())
-        {
-            AbstractRuntimeEngine::rejectUntitled(m_w);
-            return;
-        }
-
-        m_battleMode = true;
-        doTestLevelFile(edit->curFile);
-    }
-}
-
-void SanBaEiRuntimeEngine::resetCheckPoints()
+void SanBaEiRuntimeEngine::actionResetCheckPoints()
 {
     m_interface.m_lastGameState.reset();
 
@@ -525,12 +525,12 @@ void SanBaEiRuntimeEngine::resetCheckPoints()
                              QMessageBox::Ok);
 }
 
-void SanBaEiRuntimeEngine::startGameAction()
+void SanBaEiRuntimeEngine::actionStartGame()
 {
     runNormalGame();
 }
 
-void SanBaEiRuntimeEngine::chooseEnginePath()
+void SanBaEiRuntimeEngine::actionChooseEnginePath()
 {
     QDialog d(m_w);
     d.setWindowTitle(tr("Path to SMBX-38A", "Title of dialog"));
@@ -612,7 +612,7 @@ void SanBaEiRuntimeEngine::chooseEnginePath()
 }
 
 #ifndef _WIN32
-void SanBaEiRuntimeEngine::runWineSetup()
+void SanBaEiRuntimeEngine::actionRunWineSetup()
 {
     if(isRunning() || (m_gameProc.state() == QProcess::Running))
     {
@@ -833,6 +833,7 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
         msgNotFound(m_w, smbxExe);
         return false;
     }
+
     LevelData lvl;
     if(!FileFormats::OpenLevelFileHeader(levelFile, lvl))
     {
@@ -881,11 +882,6 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
     LogDebug(QString("SMBX-38A: starting command: %1 %2").arg(command).arg(params.join(' ')));
 
     return true;
-}
-
-bool SanBaEiRuntimeEngine::doTestWorldIPC(const WorldData &)
-{
-    return false;
 }
 
 bool SanBaEiRuntimeEngine::doTestWorldFile(const QString &worldFile)
@@ -948,7 +944,26 @@ bool SanBaEiRuntimeEngine::doTestWorldFile(const QString &worldFile)
 
 bool SanBaEiRuntimeEngine::runNormalGame()
 {
-    return false;
+    const QString smbxExe = getEnginePath();
+    QFileInfo smbxExeInfo(smbxExe);
+    const QString smbxPath = smbxExeInfo.absoluteDir().absolutePath();
+
+    if(!QFile::exists(smbxExe))
+    {
+        msgNotFound(m_w, smbxExe);
+        return false;
+    }
+
+    QString command = smbxExe;
+    QStringList params;
+    useWine(m_testingProc, command, params);
+    m_testingProc.setProgram(command);
+    m_testingProc.setArguments(params);
+    m_testingProc.setWorkingDirectory(smbxPath);
+    m_testingProc.start();
+    LogDebug(QString("SMBX-38A: starting command: %1 %2").arg(command).arg(params.join(' ')));
+
+    return true;
 }
 
 void SanBaEiRuntimeEngine::terminate()
