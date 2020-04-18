@@ -107,6 +107,10 @@ public:
 
     bool setEraser();
 
+    void setNoSuspend(bool en);
+
+    void setMagicHand(bool en);
+
 private:
     /**
      * @brief Read all input data before last delimeter character
@@ -155,6 +159,13 @@ private:
      * @return true on a success sending
      */
     bool sendMessageDelayed(const QString &msg, int ms);
+
+    /**********SETUP***************/
+    // Disable pausing when unfocused
+    bool m_noSuspend = true;
+    // Enable Magic Hand
+    bool m_enableMagicHand = true;
+    /**********SETUP***************/
 
     /**
      * @brief Keeps a state of game while game is off

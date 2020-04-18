@@ -180,6 +180,33 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
 
     destmenu->addSeparator();
 
+    {
+        QAction *enableMagicHand;
+        enableMagicHand = destmenu->addAction("enableMagicHand");
+        enableMagicHand->setCheckable(true);
+        enableMagicHand->setChecked(m_interface.m_enableMagicHand);
+        QObject::connect(enableMagicHand,   &QAction::toggled,
+                    [this](bool state)
+        {
+            m_interface.setMagicHand(state);
+        });
+        m_menuItems[menuItemId++] = enableMagicHand;
+    }
+    {
+        QAction *noSuspend;
+        noSuspend = destmenu->addAction("don't suspent while unfocused");
+        noSuspend->setCheckable(true);
+        noSuspend->setChecked(m_interface.m_noSuspend);
+        QObject::connect(noSuspend,   &QAction::toggled,
+                    [this](bool state)
+        {
+            m_interface.setNoSuspend(state);
+        });
+        m_menuItems[menuItemId++] = noSuspend;
+    }
+
+    destmenu->addSeparator();
+
     QAction *choosEnginePath;
     {
         choosEnginePath = destmenu->addAction("change38aPath");
@@ -271,6 +298,8 @@ void SanBaEiRuntimeEngine::loadSetup()
     settings.beginGroup("38aTester");
     {
         m_customEnginePath = settings.value("custom-runtime-path", QString()).toString();
+        m_interface.m_enableMagicHand = settings.value("enable-magic-hand", true).toBool();
+        m_interface.m_noSuspend = settings.value("no-pause-while-unfocused", true).toBool();
 #ifndef _WIN32
         WineSetup::iniLoad(settings, m_wineSetup);
         WineSetup::prepareSetup(m_wineSetup);
@@ -287,6 +316,8 @@ void SanBaEiRuntimeEngine::saveSetup()
     settings.beginGroup("38aTester");
     {
         settings.setValue("custom-runtime-path", m_customEnginePath);
+        settings.value("enable-magic-hand", m_interface.m_enableMagicHand);
+        settings.value("no-pause-while-unfocused", m_interface.m_noSuspend);
 #ifndef _WIN32
         WineSetup::iniSave(settings, m_wineSetup);
 #endif

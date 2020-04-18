@@ -371,35 +371,62 @@ bool SanBaEiIpcClient::setEraser()
     return sendMessage("SO|ERASER");
 }
 
+void SanBaEiIpcClient::setNoSuspend(bool en)
+{
+    if(m_bridgeReady)
+    {
+        if(!m_noSuspend && en)
+            sendMessage("GGI|NOPAUSE");
+        // Can't be undone, need to restart a game
+    }
+    m_noSuspend = en;
+}
+
+void SanBaEiIpcClient::setMagicHand(bool en)
+{
+    if(m_bridgeReady)
+    {
+        if(!m_enableMagicHand && en)
+            sendMessage("SO|CURSOR");
+        else if(m_enableMagicHand && !en)
+            sendMessage("SO");
+    }
+    m_enableMagicHand = en;
+}
+
 void SanBaEiIpcClient::onInputCommand(const QString &data)
 {
-    if(data.startsWith("WAITING"))
+    if(data.startsWith("WAITING")) // Bridge waits for a game start
     {
         LogDebug("SMBX38A: Bridge waiting");
     }
-    else if(data.startsWith("READY"))
+    else if(data.startsWith("READY")) // Bridge confirms it's readiness
     {
         LogDebug("SMBX38A: Bridge ready!");
         m_bridgeReady = true;
         m_pinger.start(100);// Start pinging of a game
     }
-    else if(data.startsWith("GB|NULL"))
+    else if(data.startsWith("GB|NULL")) // Response to a ping with using of a cursor state request command
     {
         if(m_pinger.isActive()) // Response to the pinger
         {
             m_pinger.stop();
-            sendMessage("SO|CURSOR\n"
-                        "GGI|NOPAUSE\n"
-                        "GGI|GM");
+            QString msg;
+            if(m_noSuspend)
+                msg += "GGI|NOPAUSE\n";
+            if(m_enableMagicHand)
+                msg += "SO|CURSOR\n";
+            msg += "GGI|GM";
+            sendMessage(msg);
         }
     }
-    else if(data.startsWith("TERMINATED"))
+    else if(data.startsWith("TERMINATED")) // Bridge has been terminated
     {
         LogDebug("SMBX38A: Bridge got terminated!");
         m_bridgeReady = false;
         m_pinger.stop();
     }
-    else if(data.startsWith("GGI|GM"))
+    else if(data.startsWith("GGI|GM")) // Game end with a state report
     {
         QStringList d = data.split("|");
         while(d.size() < 5)

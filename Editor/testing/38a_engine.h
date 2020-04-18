@@ -46,7 +46,7 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
 
     MainWindow *m_w = nullptr;
     //! List of registered menu items
-    QAction *m_menuItems[7];
+    QAction *m_menuItems[10];
 
     /************** Settings **************/
     //! Path to custom SMBX-38A executable
