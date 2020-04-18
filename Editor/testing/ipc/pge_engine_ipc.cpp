@@ -136,6 +136,8 @@ void PgeEngineIpcClient::init(QProcess *engine)
                      this, &PgeEngineIpcClient::sendPlacingBGO);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingNPC,
                      this, &PgeEngineIpcClient::sendPlacingNPC);
+    QObject::connect(&g_intEngine, &IntEngineSignals::sendCurrentLayer,
+                     this, &PgeEngineIpcClient::sendCurrentLayer);
 }
 
 void PgeEngineIpcClient::quit()
@@ -152,6 +154,9 @@ void PgeEngineIpcClient::quit()
                         this, &PgeEngineIpcClient::sendPlacingBGO);
     QObject::disconnect(&g_intEngine, &IntEngineSignals::sendPlacingNPC,
                         this, &PgeEngineIpcClient::sendPlacingNPC);
+    QObject::disconnect(&g_intEngine, &IntEngineSignals::sendCurrentLayer,
+                        this, &PgeEngineIpcClient::sendCurrentLayer);
+
     if(m_engine)
         QObject::disconnect(m_engine, &QProcess::readyReadStandardOutput,
                             this, &PgeEngineIpcClient::onInputData);
@@ -223,6 +228,15 @@ void PgeEngineIpcClient::sendPlacingNPC(const LevelNPC &npc)
     QString encoded;
     if(FileFormats::WriteExtendedLvlFileRaw(buffer, encoded))
         sendItemPlacing("NPC_PLACE\nNPC_PLACE_END\n" + encoded);
+}
+
+void PgeEngineIpcClient::sendCurrentLayer(const QString &layerName)
+{
+    if(!isWorking() || layerName.isEmpty())
+        return;
+
+    QString out = QString("SET_LAYER: %1").arg(layerName);
+    sendMessage(out);
 }
 
 bool PgeEngineIpcClient::sendItemPlacing(const QString &rawData)

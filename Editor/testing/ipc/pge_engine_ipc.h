@@ -88,6 +88,12 @@ public:
     void sendPlacingNPC(const LevelNPC &npc);
 
     /**
+     * @brief Change a layer of placing element
+     * @param layerName
+     */
+    void sendCurrentLayer(const QString &layerName);
+
+    /**
      * @brief Change the level data buffer for testing
      * @param buffer Level data structure
      */

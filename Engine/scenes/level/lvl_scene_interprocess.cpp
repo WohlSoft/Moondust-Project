@@ -23,6 +23,7 @@
 #include <networking/intproc.h>
 #include <common_features/logger.h>
 #include <audio/pge_audio.h>
+#include <fontman/font_manager.h>
 
 void LevelScene::process_InterprocessCommands()
 {
@@ -44,6 +45,15 @@ void LevelScene::process_InterprocessCommands()
 
         case IntProc::Cheat:
             break;
+
+        case IntProc::SetLayer:
+        {
+            std::string layer = IntProc::getCMD();
+            m_placingMode_bgo.layer = layer;
+            m_placingMode_block.layer = layer;
+            m_placingMode_npc.layer = layer;
+            break;
+        }
 
         case IntProc::PlaceItem:
         {
@@ -148,8 +158,8 @@ void LevelScene::process_InterprocessCommands()
             else PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
 
             break;
-        }
-        }
+        }// place
+        }// switch
     }
 
     IntProc::cmdUnLock();
