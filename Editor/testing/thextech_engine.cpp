@@ -471,18 +471,18 @@ void TheXTechEngine::retranslateMenu()
 {
     size_t menuItemId = 0;
     {
-        QAction *RunLunaTest = m_menuItems[menuItemId++];
-        RunLunaTest->setText(tr("Test level",
+        QAction *runTest = m_menuItems[menuItemId++];
+        runTest->setText(tr("Test level",
                                 "Run the testing of current file in TheXTech via interprocessing tunnel."));
     }
     {
-        QAction *RunLunaTest = m_menuItems[menuItemId++];
-        RunLunaTest->setText(tr("Test level in battle mode",
+        QAction *runTest = m_menuItems[menuItemId++];
+        runTest->setText(tr("Test level in battle mode",
                                 "Run a battle testing of current file in TheXTech via interprocessing tunnel."));
     }
     {
-        QAction *RunLunaTest = m_menuItems[menuItemId++];
-        RunLunaTest->setText(tr("Test saved level",
+        QAction *runTest = m_menuItems[menuItemId++];
+        runTest->setText(tr("Test saved level",
                                 "Run the testing of current file in TheXTech from disk."));
     }
 
@@ -522,16 +522,16 @@ void TheXTechEngine::retranslateMenu()
                                        "Doesn't works when running a test of a saved file."));
     }
     {
-        QAction *enableMagicHand = m_menuItems[menuItemId++];
-        enableMagicHand->setText(tr("Enable max FPS",
+        QAction *enableMaxFps = m_menuItems[menuItemId++];
+        enableMaxFps->setText(tr("Enable max FPS",
                                     "When running non-vsync, run game with a maximum possible frame-rate"));
-        enableMagicHand->setToolTip(tr("When playing a game without V-Sync, run a game with a maximum possible frame-rate."));
+        enableMaxFps->setToolTip(tr("When playing a game without V-Sync, run a game with a maximum possible frame-rate."));
     }
     {
-        QAction *enableMagicHand = m_menuItems[menuItemId++];
-        enableMagicHand->setText(tr("Enable grab all",
+        QAction *enableGrabAll = m_menuItems[menuItemId++];
+        enableGrabAll->setText(tr("Enable grab all",
                                     "Allow player to grab absolutely any NPCs in a game."));
-        enableMagicHand->setToolTip(tr("Allow player to grab any NPCs in a game."));
+        enableGrabAll->setToolTip(tr("Allow player to grab any NPCs in a game."));
     }
 
 
