@@ -243,7 +243,66 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
 
 void SanBaEiRuntimeEngine::retranslateMenu()
 {
+    size_t menuItemId = 0;
+    {
+        QAction *run38aTest = m_menuItems[menuItemId++];
+        run38aTest->setText(tr("Test level",
+                                "Run the testing of current file in SMBX-38A via interprocessing tunnel."));
+    }
+    {
+        QAction *run38aTest = m_menuItems[menuItemId++];
+        run38aTest->setText(tr("Test level in battle mode",
+                                "Run a battle testing of current file in SMBX-38A via interprocessing tunnel."));
+    }
+    {
+        QAction *run38aTest = m_menuItems[menuItemId++];
+        run38aTest->setText(tr("Test saved level/world",
+                                "Run the testing of current file in SMBX-38A from disk."));
+    }
 
+
+    {
+        QAction *ResetCheckPoints = m_menuItems[menuItemId++];
+        ResetCheckPoints->setText(tr("Reset checkpoints"));
+        ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
+    }
+
+
+    {
+        QAction *enableMagicHand = m_menuItems[menuItemId++];
+        enableMagicHand->setText(tr("Enable magic hand",
+                                    "Allow real-time picking-up of elements while playing a level test."));
+        enableMagicHand->setToolTip(tr("Allows real-time editing: picking-up elements from a level scene, "
+                                       "placing new elements, selected at back in the editor, and erasing. "
+                                       "Doesn't works when running a test of a saved file."));
+    }
+    {
+        QAction *noAutoSuspend = m_menuItems[menuItemId++];
+        noAutoSuspend->setText(tr("Don't auto-suspend game",
+                                    "Don't pause game when it's window is unfocused"));
+        noAutoSuspend->setToolTip(tr("Game will always run and it will never suspend while window is unfocused."));
+    }
+    {
+        QAction *chooseEnginePath = m_menuItems[menuItemId++];
+        chooseEnginePath->setText(tr("Change the path to SMBX-38A...",
+                                     "Select the path to SMBX-38A executable."));
+        chooseEnginePath->setToolTip(tr("Select the path to SMBX-38A executable."));
+    }
+
+#ifndef _WIN32
+    {
+        QAction *runWineSetup = m_menuItems[menuItemId++];
+        runWineSetup->setText(tr("Wine settings...",
+                                 "Open Wine settings to choose which Wine toolchain use"));
+        runWineSetup->setToolTip(tr("Select a Wine toolchain for use."));
+    }
+#endif
+
+    {
+        QAction *runLunaTest = m_menuItems[menuItemId++];
+        runLunaTest->setText(tr("Start Game",
+                                "Launch SMBX-38A as a normal game"));
+    }
 }
 
 void SanBaEiRuntimeEngine::gameStarted()
