@@ -381,6 +381,7 @@ void WineSetup::on_doImportFromPoL_clicked()
     ui->pathCustom->setChecked(true);
     ui->wineRootPath->setText(p.wineRoot);
 
+    ui->wineCustomEnvGroup->setChecked(true);
     ui->winePrefix->setChecked(true);
     ui->winePrefixPath->setText(p.winePrefix);
 }
