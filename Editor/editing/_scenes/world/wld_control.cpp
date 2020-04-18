@@ -180,6 +180,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     bool isLeftMouse = false;
     bool isMiddleMouse = false;
+    bool isRightMouse = false;
 
     if(mouseEvent->button() == Qt::LeftButton)
     {
@@ -196,6 +197,7 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     if(mouseEvent->button() == Qt::RightButton)
     {
         m_mouseRightPressed = false;
+        isRightMouse = true;
         LogDebug(QString("Right mouse button released [edit mode: %1]").arg(m_editMode));
     }
 
@@ -223,6 +225,11 @@ void WldScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             MainWinConnect::pMainWin->on_actionHandScroll_triggered();
 
         QGraphicsScene::mouseReleaseEvent(mouseEvent);
+
+        if(isRightMouse && !m_mouseIsMovedAfterKey && (!mouseEvent->isAccepted()))
+        {
+            m_mw->getViewMenu()->exec(mouseEvent->screenPos());
+        }
         return;
     }
 

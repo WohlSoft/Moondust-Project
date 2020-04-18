@@ -290,6 +290,76 @@ void MainWindow::updateWindowMenu()
     }
 }
 
+QMenu *MainWindow::getFileMenu()
+{
+    return ui->menuFile;
+}
+
+QMenu *MainWindow::getEditMenu()
+{
+    return ui->menuEdit;
+}
+
+QMenu *MainWindow::getViewMenu()
+{
+    return ui->menuView;
+}
+
+QMenu *MainWindow::getLevelMenu()
+{
+    return ui->menuLevel;
+}
+
+QMenu *MainWindow::getLevelCurrSectionMenu()
+{
+    return ui->menuCurrent_section;
+}
+
+QMenu *MainWindow::getLevelModSectionMenu()
+{
+    return ui->menuSection_tools;
+}
+
+QMenu *MainWindow::getWorldMenu()
+{
+    return ui->menuWorld;
+}
+
+QMenu *MainWindow::getTestMenu()
+{
+    return ui->menuTest;
+}
+
+QMenu *MainWindow::getScriptMenu()
+{
+    return ui->menuScript;
+}
+
+QMenu *MainWindow::getConfigMenu()
+{
+    return ui->menuConfiguration;
+}
+
+QMenu *MainWindow::getToolsMenu()
+{
+    return ui->menuTools;
+}
+
+QMenu *MainWindow::getWindowMenu()
+{
+    return  ui->menuWindow;
+}
+
+QMenu *MainWindow::getPluginsMenu()
+{
+    return ui->menuPlugins;
+}
+
+QMenu *MainWindow::getHelpMenu()
+{
+    return ui->menuHelp;
+}
+
 
 void MainWindow::UpdateCustomItems()
 {

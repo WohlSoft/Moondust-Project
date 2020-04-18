@@ -299,6 +299,23 @@ public:
          * \brief Update "Window" Menu
          */
         void updateWindowMenu();
+    public:
+        /* Menu binds */
+
+        QMenu *getFileMenu();
+        QMenu *getEditMenu();
+        QMenu *getViewMenu();
+        QMenu *getLevelMenu();
+        QMenu *getLevelCurrSectionMenu();
+        QMenu *getLevelModSectionMenu();
+        QMenu *getWorldMenu();
+        QMenu *getTestMenu();
+        QMenu *getScriptMenu();
+        QMenu *getConfigMenu();
+        QMenu *getToolsMenu();
+        QMenu *getWindowMenu();
+        QMenu *getPluginsMenu();
+        QMenu *getHelpMenu();
 
     private slots:
         /*!
