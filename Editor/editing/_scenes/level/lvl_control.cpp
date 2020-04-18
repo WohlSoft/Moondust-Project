@@ -233,7 +233,12 @@ void LvlScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
             //QMenu* jumptoSide = lmenu.addMenu(tr("LEVELSCENE_CONTEXTMENU_JUMP_TO_SIDE", "Jump to side"));
             //QMenu* jumptoSection = lmenu.addMenu(tr("LEVELSCENE_CONTEXTMENU_JUMP_TO_SECTION", "Jump to section"));
             QAction *props = lmenu.addAction(tr("LEVELSCENE_CONTEXTMENU_SectionProperties...", "Section properties..."));
+            lmenu.addMenu(m_mw->getLevelCurrSectionMenu());
+            lmenu.addMenu(m_mw->getLevelModSectionMenu());
+            lmenu.addSeparator();
+            lmenu.addMenu(m_mw->getViewMenu());
             QAction *lvlprops = lmenu.addAction(tr("LEVELSCENE_CONTEXTMENU_LevelProperties...", "Level properties..."));
+
             QAction *answer = lmenu.exec(mouseEvent->screenPos());
             if(answer != nullptr)
             {
