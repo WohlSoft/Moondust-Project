@@ -58,11 +58,11 @@ SO|CURSOR
 Eraser:
 SO|ERASER
 Place Block:
-SO|B|... (Block Data)
+SO|B|... (Block Data without layer field)
 Place Background object
-SO|T|... (Background Data)
+SO|T|... (Background Data without layer field)
 Place NPC
-SO|N|... (NPC Data)
+SO|N|... (NPC Data without layer field)
 
 Set Layer State:
 SLT|layername|type|nosmoke

@@ -733,7 +733,7 @@ QString SanBaEiRuntimeEngine::initTempLevel(const LevelData &d)
     if(tempPath.isEmpty() || !QFile::exists(tempPath))
         return QString(); // Failed to prepare a temp path
 
-    QString levelFile = tempPath + "/TeMpLeVeL38A.lvl";
+    QString levelFile = tempPath + "/___smbx38a-temp-level.lvl";
     LogDebug(QString("Orig Path %1 -> %2").arg(origPath).arg(levelFile));
     if(!origPath.isEmpty())
     {
@@ -747,7 +747,7 @@ QString SanBaEiRuntimeEngine::initTempLevel(const LevelData &d)
         }
 
         auto cfFrom = origPath + "/" + d.meta.filename;
-        auto cfTo = tempPath + "/TeMpLeVeL38A";
+        auto cfTo = tempPath + "/___smbx38a-temp-level";
         if(QFile::exists(cfFrom))
             symlink(cfFrom.toUtf8().data(), cfTo.toUtf8().data());
     }
@@ -780,6 +780,9 @@ bool SanBaEiRuntimeEngine::doTestLevelIPC(const LevelData &d)
         msgNotFound(m_w, smbxExe);
         return false;
     }
+
+    QMutexLocker mlocker(&m_engineMutex);
+    Q_UNUSED(mlocker)
 
     QString levelFile = initTempLevel(d);
     if(levelFile.isEmpty())
@@ -833,6 +836,9 @@ bool SanBaEiRuntimeEngine::doTestLevelFile(const QString &levelFile)
         msgNotFound(m_w, smbxExe);
         return false;
     }
+
+    QMutexLocker mlocker(&m_engineMutex);
+    Q_UNUSED(mlocker)
 
     LevelData lvl;
     if(!FileFormats::OpenLevelFileHeader(levelFile, lvl))
@@ -896,6 +902,9 @@ bool SanBaEiRuntimeEngine::doTestWorldFile(const QString &worldFile)
         return false;
     }
 
+    QMutexLocker mlocker(&m_engineMutex);
+    Q_UNUSED(mlocker)
+
     WorldData wld;
     if(!FileFormats::OpenWorldFileHeader(worldFile, wld))
     {
@@ -956,11 +965,11 @@ bool SanBaEiRuntimeEngine::runNormalGame()
 
     QString command = smbxExe;
     QStringList params;
-    useWine(m_testingProc, command, params);
-    m_testingProc.setProgram(command);
-    m_testingProc.setArguments(params);
-    m_testingProc.setWorkingDirectory(smbxPath);
-    m_testingProc.start();
+    useWine(m_gameProc, command, params);
+    m_gameProc.setProgram(command);
+    m_gameProc.setArguments(params);
+    m_gameProc.setWorkingDirectory(smbxPath);
+    m_gameProc.start();
     LogDebug(QString("SMBX-38A: starting command: %1 %2").arg(command).arg(params.join(' ')));
 
     return true;

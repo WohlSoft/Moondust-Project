@@ -40,6 +40,7 @@ signals:
     void sendPlacingBlock(const LevelBlock &block);
     void sendPlacingBGO(const LevelBGO &bgo);
     void sendPlacingNPC(const LevelNPC &npc);
+    void sendCurrentLayer(const QString &layerName);
 };
 
 extern IntEngineSignals g_intEngine;

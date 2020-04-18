@@ -68,6 +68,8 @@ void SanBaEiIpcClient::init(QProcess *engine)
                      this, &SanBaEiIpcClient::sendPlacingBGO);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendPlacingNPC,
                      this, &SanBaEiIpcClient::sendPlacingNPC);
+    QObject::connect(&g_intEngine, &IntEngineSignals::sendCurrentLayer,
+                     this, &SanBaEiIpcClient::sendCurrentLayer);
 }
 
 void SanBaEiIpcClient::quit()
@@ -82,6 +84,8 @@ void SanBaEiIpcClient::quit()
                         this, &SanBaEiIpcClient::sendPlacingBGO);
     QObject::disconnect(&g_intEngine, &IntEngineSignals::sendPlacingNPC,
                         this, &SanBaEiIpcClient::sendPlacingNPC);
+    QObject::disconnect(&g_intEngine, &IntEngineSignals::sendCurrentLayer,
+                        this, &SanBaEiIpcClient::sendCurrentLayer);
 
     QObject::disconnect(&m_bridge, &QProcess::readyReadStandardOutput,
                         this, &SanBaEiIpcClient::onReadReady);
@@ -128,12 +132,8 @@ void SanBaEiIpcClient::sendPlacingBlock(const LevelBlock &block)
 //Debug: SMBX38A: Input data: INPUT:GBA|B||1  |-199712|-200416||0|0||32|32
 
 //    auto msg = QString("SO|B|%1,%2|%3,%4,%5|%6|%7|%8,%9|%10,%11|%12|%13,%14,%15,%16|%17|%18")
-    QString msg = "SO|B|";
-    if(block.layer != "Default")
-        msg += PGE_URLENC(block.layer);
-    if(!block.gfx_name.isEmpty())
-        msg += "," + PGE_URLENC(block.gfx_name);
-    msg += "|";
+    QString msg = "GGI|SLN|" + PGE_URLENC(block.layer) + "\n";
+    msg += "SO|B|";
 
     msg += QString::number(block.id);
     if(block.gfx_dx != 0 || block.gfx_dy != 0)
@@ -187,11 +187,8 @@ void SanBaEiIpcClient::sendPlacingBlock(const LevelBlock &block)
 void SanBaEiIpcClient::sendPlacingBGO(const LevelBGO &bgo)
 {
     // T|layer|id[,dx,dy]|x|y
-    QString msg = "SO|T|";
-
-    if(bgo.layer != "Default")
-        msg += PGE_URLENC(bgo.layer);
-    msg += "|";
+    QString msg = "GGI|SLN|" + PGE_URLENC(bgo.layer) + "\n";
+    msg += "SO|T|";
 
     msg += QString::number(bgo.id);
     if(bgo.gfx_dx != 0 || bgo.gfx_dy != 0)
@@ -209,9 +206,6 @@ void SanBaEiIpcClient::sendPlacingBGO(const LevelBGO &bgo)
 
 void SanBaEiIpcClient::sendPlacingNPC(const LevelNPC &npc)
 {
-    QString msg = "SO|N|";
-    // N|layer[,name]|id[,dx,dy]|x|y|b1,b2,b3,b4,b5,b6|sp|[e1,e2,e3,e4,e5,e6,e7]|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|[wi,hi]
-
     //Pre-convert some data into SMBX-38A compatible format
     long npcID = (long)npc.id;
     long containerType = 0;
@@ -277,15 +271,12 @@ void SanBaEiIpcClient::sendPlacingNPC(const LevelNPC &npc)
     long genType = (genType_2 != 0) ? ((4 * genType_1) + genType_2) : 0 ;
     //    N|layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|
     //    layer=layer name["" == "Default"][***urlencode!***]
-    if(npc.layer != "Default")
-        msg += PGE_URLENC(npc.layer);
-    msg += "|";
-    //only if name != ""
-    //name=npc's name
-    if(!IsEmpty(npc.gfx_name))
-        msg += "," + PGE_URLENC(npc.gfx_name);
+
+    QString msg = "GGI|SLN|" + PGE_URLENC(npc.layer) + "\n";
+    msg += "SO|N|";
+    // N|layer[,name]|id[,dx,dy]|x|y|b1,b2,b3,b4,b5,b6|sp|[e1,e2,e3,e4,e5,e6,e7]|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg|[wi,hi]
     //    id=npc id
-    msg += "|" + fromNum(npcID);
+    msg += fromNum(npcID);
     if((npc.gfx_dx) > 0 || (npc.gfx_dy > 0))
     {
         //  dx=graphics extend x
@@ -359,6 +350,11 @@ void SanBaEiIpcClient::sendPlacingNPC(const LevelNPC &npc)
     msg += "|" + PGE_URLENC(npc.msg);
 
     sendMessage(msg);
+}
+
+void SanBaEiIpcClient::sendCurrentLayer(const QString &layerName)
+{
+    sendMessage("GGI|SLN|" + PGE_URLENC(layerName));
 }
 
 bool SanBaEiIpcClient::setCursor()
