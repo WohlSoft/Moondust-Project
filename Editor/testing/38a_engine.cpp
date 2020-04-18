@@ -805,7 +805,7 @@ static void msgNotFound(QWidget *parent, const QString &what)
                          SanBaEiRuntimeEngine::tr("Executable not found"),
                          SanBaEiRuntimeEngine::tr("Can't start SMBX-38A game because \"%1\" is not found. "
                                                   "That might happen because of incorrect path to SMBX-38A executable was "
-                                                  "specified, please check the TheXTech path setup.").arg(what),
+                                                  "specified, please check the SMBX-38A path setup.").arg(what),
                          QMessageBox::Ok);
 }
 

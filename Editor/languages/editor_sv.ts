@@ -732,15 +732,7 @@ File path: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You might want to report this data to developers or post it at:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -755,6 +747,33 @@ File path: %3</source>
     <message>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You might want to report this data to developers:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy report into clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copied!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2963,6 +2982,10 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6727,6 +6750,157 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Section extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SanBaEiRuntimeEngine</name>
+    <message>
+        <source>Test level</source>
+        <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test level in battle mode</source>
+        <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in SMBX-38A from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset checkpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable magic hand</source>
+        <comment>Allow real-time picking-up of elements while playing a level test.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t auto-suspend game</source>
+        <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Game will always run and it will never suspend while window is unfocused.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the path to SMBX-38A...</source>
+        <comment>Select the path to SMBX-38A executable.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the path to SMBX-38A executable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Wine toolchain for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch SMBX-38A as a normal game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checkpoints successfully reseted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path to SMBX-38A</source>
+        <comment>Title of dialog</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select a path to SMBX-38A executable:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected SMBX-38A path</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished">Bläddra...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a path to SMBX-38A executable</source>
+        <comment>File dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SMBX-38A is still active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to prepare a temp file for a test run.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to launch a level because of an invalid file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Caution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode because of an invalid file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

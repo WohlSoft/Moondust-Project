@@ -913,7 +913,7 @@ Are you want to configure it?</source>
     </message>
     <message>
         <source>You might want to report this data to developers or post it at:</source>
-        <translation>Вы можете отправить эти данные разработчикам, или отправить на:</translation>
+        <translation type="vanished">Вы можете отправить эти данные разработчикам, или отправить на:</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
@@ -929,7 +929,7 @@ Are you want to configure it?</source>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation>Форум PGE (http://wohlsoft.ru/forum/)</translation>
+        <translation type="vanished">Форум PGE (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</source>
@@ -968,6 +968,36 @@ Please save them before doing anything else.</source>
 Please save them first before doing anything else.</source>
         <translation type="vanished">После недавней аварии, редактор восстановил некоторые файлы.
 Пожалуйста сохраните их прежде чем делать что либо.</translation>
+    </message>
+    <message>
+        <source>You might want to report this data to developers:</source>
+        <translation>Вы можете отправить эти данные разработчикам:</translation>
+    </message>
+    <message>
+        <source>Copy report into clipboard</source>
+        <translation>Скопировать отчёт</translation>
+    </message>
+    <message>
+        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
+        <translation>Отправить репорт на форуме PGE (wohlsoft.ru/forum/)</translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
+        <translation>Создать задачу на репозитории GitHub (WohlSoft/PGE-Project)</translation>
+    </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation>Создавая отчёт, пожалуйста, подробно опишите, что именно было сделано, чтобы обвалить редактор.
+- Напишите список действий, сделанных, чтобы спровоцировать аварию.
+- Если авария произошла при редактировании определённого файла, пожалуйста, вложите его в отчёт.
+- Какую операционную систему вы писпользуете?</translation>
+    </message>
+    <message>
+        <source>Copied!</source>
+        <translation>Скопировано!</translation>
     </message>
 </context>
 <context>
@@ -4179,6 +4209,10 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation>Чтобы изменить путь к LunaTester, необходимо завершить работающую игру. Завершить LunaTester сейчас?</translation>
+    </message>
+    <message>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
+        <translation>Невозможно запустить эпизод, потому чть файл карты мира сохранён в неподдерживаемом формате. Пожалуйста, сохраните карту мира в формат SMBX64-WLD.</translation>
     </message>
 </context>
 <context>
@@ -11228,6 +11262,161 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Value</source>
         <translation type="obsolete">Значение</translation>
+    </message>
+</context>
+<context>
+    <name>SanBaEiRuntimeEngine</name>
+    <message>
+        <source>Test level</source>
+        <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation>Тестировать уровень</translation>
+    </message>
+    <message>
+        <source>Test level in battle mode</source>
+        <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation>Запустить режим битвы</translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in SMBX-38A from disk.</comment>
+        <translation>Тестировать файл уровня/мира</translation>
+    </message>
+    <message>
+        <source>Reset checkpoints</source>
+        <translation>Сбросить контрольные точки</translation>
+    </message>
+    <message>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation>Сбросить все контрольные точки в исходное состояние.</translation>
+    </message>
+    <message>
+        <source>Enable magic hand</source>
+        <comment>Allow real-time picking-up of elements while playing a level test.</comment>
+        <translation>Включить &quot;волшебную руку&quot;</translation>
+    </message>
+    <message>
+        <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
+        <translation>Включает редактирование в реальном времени: подбирание элементов со сцены уровня, размещение новых, выбранных тем временем в редакторе, а также стирание. Не работает во время тестирования сохранённого файла.</translation>
+    </message>
+    <message>
+        <source>Don&apos;t auto-suspend game</source>
+        <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
+        <translation>Не приостанавливать игру</translation>
+    </message>
+    <message>
+        <source>Game will always run and it will never suspend while window is unfocused.</source>
+        <translation>Игра будет работать всегда, и она никогда не заснёт, если убрать фокус с окна.</translation>
+    </message>
+    <message>
+        <source>Change the path to SMBX-38A...</source>
+        <comment>Select the path to SMBX-38A executable.</comment>
+        <translation>Изменить путь к SMBX-38A...</translation>
+    </message>
+    <message>
+        <source>Select the path to SMBX-38A executable.</source>
+        <translation>Указать путь к исполняемому файлу SMBX-38A.</translation>
+    </message>
+    <message>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
+        <translation>Настройки Wine...</translation>
+    </message>
+    <message>
+        <source>Select a Wine toolchain for use.</source>
+        <translation>Выбор комплекта Wine для работы.</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch SMBX-38A as a normal game</comment>
+        <translation>Запустить игру</translation>
+    </message>
+    <message>
+        <source>Checkpoints successfully reseted!</source>
+        <translation>Контрольные точки успешно сброшены!</translation>
+    </message>
+    <message>
+        <source>Path to SMBX-38A</source>
+        <comment>Title of dialog</comment>
+        <translation>Путь к SMBX-38A</translation>
+    </message>
+    <message>
+        <source>Please select a path to SMBX-38A executable:</source>
+        <translation>Пожалуйста, укажите путь к исполняемому файлу SMBX-38A:</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
+        <translation>По-умолчанию</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected SMBX-38A path</comment>
+        <translation>Другой</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Обзор...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Select a path to SMBX-38A executable</source>
+        <comment>File dialog title</comment>
+        <translation>Выбор пути к SMBX-38A</translation>
+    </message>
+    <message>
+        <source>SMBX-38A is still active</source>
+        <translation>SMBX-38A всё ещё рабтоает</translation>
+    </message>
+    <message>
+        <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
+        <translation>Чтобы изменить настройки Wine, необходимо завершить работающую игру. Завершить SMBX-38A сейчас?</translation>
+    </message>
+    <message>
+        <source>Executable not found</source>
+        <translation>Исполняемый файл не найден</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the TheXTech path setup.</source>
+        <translation type="obsolete">Невозможно запустить игру SMBX-38A, потому что файл &quot;%1&quot; не найден. Это могло произойти из-за неправильной настройки пути к исполняемому файлу SMBX-38A, п.</translation>
+    </message>
+    <message>
+        <source>Impossible to prepare a temp file for a test run.</source>
+        <translation>Невозможно подготовить временный файл для запуска теста.</translation>
+    </message>
+    <message>
+        <source>Impossible to launch a level because of an invalid file.</source>
+        <translation>Невозможно запустить уровень из-за некорректного файла.</translation>
+    </message>
+    <message>
+        <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
+        <translation>Невозможно запустить уровень, потому чть файл уровня сохранён в неподдерживаемом формате. Пожалуйста, сохраните уровень в формат SMBX-38A или в SMBX64-LVL.</translation>
+    </message>
+    <message>
+        <source>Caution</source>
+        <translation>Осторожно</translation>
+    </message>
+    <message>
+        <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation>Ваш уровень не в формате SMBX-38A. Это значит, что игра АВТОМАТИЧЕСКИ преобразует его в формат SMBX-38A. Ваш уровень станет несовместим с классическим SMBX. Хотите ли вы продолжить на свой страх и риск?</translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode because of an invalid file.</source>
+        <translation>Невозможно запустить уровень из-за повреждённого файла уровня.</translation>
+    </message>
+    <message>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
+        <translation>Невозможно запустить эпизод, потому чть файл карты мира сохранён в неподдерживаемом формате. Пожалуйста, сохраните карту мира в формат SMBX-38A или в SMBX64-LVL.</translation>
+    </message>
+    <message>
+        <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation>Ваша карта мира не в формате SMBX-38A. Это значит, что игра АВТОМАТИЧЕСКИ преобразует его в формат SMBX-38A. Ваш эпизод станет несовместим с классическим SMBX. Хотите ли вы продолжить на свой страх и риск?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
+        <translation>Невозможно запустить игру SMBX-38A, потому что файл &quot;%1&quot; не найден. Это могло произойти из-за неправильной настройки пути к исполняемому файлу SMBX-38A. Пожалуйста, проверьте настройки пути SMBX-38A.</translation>
     </message>
 </context>
 <context>

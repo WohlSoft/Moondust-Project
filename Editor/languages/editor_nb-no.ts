@@ -907,35 +907,62 @@ File path: %3</source>
         <translation>Kræsj</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="33"/>
-        <source>You might want to report this data to developers or post it at:</source>
+        <location filename="../common_features/crashhandler.ui" line="40"/>
+        <source>You might want to report this data to developers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="53"/>
+        <location filename="../common_features/crashhandler.ui" line="47"/>
+        <source>Copy report into clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="74"/>
+        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="81"/>
+        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="104"/>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="77"/>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation>PGE-forum (http://wohlsoft.ru/forum/)</translation>
+        <translation type="vanished">PGE-forum (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="84"/>
+        <location filename="../common_features/crashhandler.ui" line="54"/>
         <source>Exit from application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="437"/>
+        <location filename="../common_features/crashhandler.cpp" line="438"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="438"/>
+        <location filename="../common_features/crashhandler.cpp" line="439"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.cpp" line="473"/>
+        <source>Copied!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1021,7 +1048,7 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="287"/>
+        <location filename="../data_configs/data_configs.cpp" line="285"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -1119,87 +1146,87 @@ therefore you can use same link to get updated version</source>
         <translation>Tøm systemlogg</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="191"/>
+        <location filename="../dev_console/devconsole.cpp" line="199"/>
         <source>Clear %1 Log</source>
         <translation>Tøm %1 logg</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="269"/>
+        <location filename="../dev_console/devconsole.cpp" line="277"/>
         <source>Prints this help text</source>
         <translation>Skriver ut denne hjelpeteksten</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="270"/>
+        <location filename="../dev_console/devconsole.cpp" line="278"/>
         <source>Prints a test command</source>
         <translation>Skriver ut en testkommando</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="271"/>
+        <location filename="../dev_console/devconsole.cpp" line="279"/>
         <source>Prints the editor version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="272"/>
+        <location filename="../dev_console/devconsole.cpp" line="280"/>
         <source>Quits the program</source>
         <translation>Avslutter programmet</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="273"/>
+        <location filename="../dev_console/devconsole.cpp" line="281"/>
         <source>Saves the application settings</source>
         <translation>Lagrer programinnstillingene</translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="274"/>
+        <location filename="../dev_console/devconsole.cpp" line="282"/>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="275"/>
+        <location filename="../dev_console/devconsole.cpp" line="283"/>
         <source>Arg: {String array} validates the PGE-X string array</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="278"/>
+        <location filename="../dev_console/devconsole.cpp" line="286"/>
         <source>Simulates crash signal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="279"/>
+        <location filename="../dev_console/devconsole.cpp" line="287"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="280"/>
+        <location filename="../dev_console/devconsole.cpp" line="288"/>
         <source>Throws an unhandled exception to crash the editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="281"/>
+        <location filename="../dev_console/devconsole.cpp" line="289"/>
         <source>Does a segmentation violation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="282"/>
+        <location filename="../dev_console/devconsole.cpp" line="290"/>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="284"/>
+        <location filename="../dev_console/devconsole.cpp" line="292"/>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="285"/>
+        <location filename="../dev_console/devconsole.cpp" line="293"/>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="286"/>
+        <location filename="../dev_console/devconsole.cpp" line="294"/>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../dev_console/devconsole.cpp" line="287"/>
+        <location filename="../dev_console/devconsole.cpp" line="295"/>
         <source>Shows various important paths!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2113,10 +2140,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="223"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="233"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="245"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="257"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="215"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="224"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="235"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="246"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2149,75 +2176,75 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemMusic</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="84"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="85"/>
         <source>&lt;Silence&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="87"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="88"/>
         <source>Play this</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="90"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="91"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="92"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="93"/>
         <source>World-Music-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="94"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="95"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="96"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="97"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="98"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="99"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="101"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="102"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="102"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="103"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="104"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="105"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="105"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="106"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="109"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
         <source>Remove</source>
         <translation type="unfinished">Fjern</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="111"/>
         <source>Remove all %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="133"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="143"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="155"/>
-        <location filename="../editing/_scenes/world/items/item_music.cpp" line="167"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="142"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="153"/>
+        <location filename="../editing/_scenes/world/items/item_music.cpp" line="164"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2454,9 +2481,9 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="90"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="100"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="112"/>
-        <location filename="../editing/_scenes/world/items/item_path.cpp" line="124"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="99"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="110"/>
+        <location filename="../editing/_scenes/world/items/item_path.cpp" line="121"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2692,9 +2719,9 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="109"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="119"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="131"/>
-        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="143"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="118"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="129"/>
+        <location filename="../editing/_scenes/world/items/item_scene.cpp" line="140"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2892,9 +2919,9 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="90"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="100"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="112"/>
-        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="124"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="99"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="110"/>
+        <location filename="../editing/_scenes/world/items/item_tile.cpp" line="121"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3445,125 +3472,125 @@ Do you want to save your changes?</source>
 <context>
     <name>LunaTesterEngine</name>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="373"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="378"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="375"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="380"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="381"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="386"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in LunaTester from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="386"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="391"/>
         <source>Reset checkpoints</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="387"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="392"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="391"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="396"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="392"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="397"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="398"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="403"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="400"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="405"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="406"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="411"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="409"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="414"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="413"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="418"/>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="415"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="420"/>
         <source>Select the location of LunaTester.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1062"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1065"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1071"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1074"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1131"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1134"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1421"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1427"/>
         <source>Incompatible LunaDll found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1422"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1428"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1431"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1437"/>
         <source>Incompatible LunaLua</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1432"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1438"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1501"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1507"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1502"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1508"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -3572,81 +3599,81 @@ Do you want to continue the process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1357"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1363"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="420"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="425"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="422"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="427"/>
         <source>Select a Wine toolchain for use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="442"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="446"/>
         <source>Failed to start: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="445"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="449"/>
         <source>Crashed: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="448"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="452"/>
         <source>Timed out: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="451"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="455"/>
         <source>Write error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="454"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="458"/>
         <source>Read error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="458"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="462"/>
         <source>Unknown error: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="633"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="638"/>
         <source>Error has occured: (Error %1) %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1061"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1161"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1064"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1164"/>
         <source>LunaTester is still active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1149"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1152"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1162"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1165"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1359"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1365"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1363"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1369"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -3654,106 +3681,111 @@ Do you want to continue the process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1370"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1376"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1408"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1414"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1630"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1649"/>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/luna_tester_engine.cpp" line="1684"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1646"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1640"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="427"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="432"/>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="429"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="434"/>
         <source>Launch LunaTester as a normal game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1036"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1038"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1043"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1046"/>
         <source>LunaTester has been successfully closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1051"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1054"/>
         <source>LunaTester is not running.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1078"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1081"/>
         <source>Please select a path to LunaTester:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1087"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1090"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1090"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1093"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1094"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1097"/>
         <source>Browse...</source>
         <translation type="unfinished">Utforsk…</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1118"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1121"/>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="703"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="708"/>
         <source>Checkpoints successfully reseted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1023"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1025"/>
         <source>LunaLUA tester is not started!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1407"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1413"/>
         <source>Vanilla SMBX detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="481"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="485"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="437"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="480"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1148"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="441"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="484"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1151"/>
         <source>LunaTester error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4563,56 +4595,56 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="721"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="708"/>
         <source>Layers merge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="722"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="800"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="785"/>
         <source>New Layer %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="870"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="904"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="912"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="859"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="899"/>
         <source>Remove layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="871"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="860"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="876"/>
         <source>Rename layer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="880"/>
         <source>Remove layer with items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="881"/>
         <source>Remove Layer and keep items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="905"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="913"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="900"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation type="unfinished"></translation>
@@ -4621,19 +4653,19 @@ All elements of this layer will be removed too!</source>
 <context>
     <name>LvlScene</name>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="237"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="235"/>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="238"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="240"/>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_control.cpp" line="270"/>
+        <location filename="../editing/_scenes/level/lvl_control.cpp" line="273"/>
         <source>Player start points:		%1
 Blocks:			%2
 Background objects&apos;s:	%3
@@ -6698,82 +6730,82 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="147"/>
-        <location filename="../mainwindow.cpp" line="183"/>
-        <location filename="../mainwindow.cpp" line="198"/>
+        <location filename="../mainwindow.cpp" line="145"/>
+        <location filename="../mainwindow.cpp" line="186"/>
+        <location filename="../mainwindow.cpp" line="201"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="195"/>
         <source>Configuration error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="148"/>
+        <location filename="../mainwindow.cpp" line="146"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="196"/>
         <source>Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="153"/>
+        <location filename="../mainwindow.cpp" line="175"/>
         <source>Loading theme...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="158"/>
+        <location filename="../mainwindow.cpp" line="151"/>
         <source>Initializing dock widgets...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="172"/>
+        <location filename="../mainwindow.cpp" line="168"/>
         <source>Initalizing plugins...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="176"/>
+        <location filename="../mainwindow.cpp" line="179"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="184"/>
+        <location filename="../mainwindow.cpp" line="187"/>
         <source>Configuration can&apos;t be loaded:
 %1.
 See %2 for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="199"/>
+        <location filename="../mainwindow.cpp" line="202"/>
         <source>Configuration can&apos;t be loaded.
 See %1 for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="340"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="356"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="355"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="371"/>
         <source>File is untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="341"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="357"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="356"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="372"/>
         <source>File doesn&apos;t use custom graphics.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="390"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="405"/>
         <source>Nothing to do.</source>
         <translation type="unfinished">Ingenting å gjøre.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="391"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="406"/>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="412"/>
         <source>Fixing of masks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="397"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="412"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
@@ -6782,18 +6814,18 @@ See %1 for more information.</source>
         <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="398"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="413"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="438"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="453"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="439"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="454"/>
         <source>Masks has been fixed!
 Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
@@ -6928,12 +6960,12 @@ Do you want to abort current testing process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="206"/>
+        <location filename="../main_window/testing/testing.cpp" line="223"/>
         <source>World map testing of saved file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing.cpp" line="207"/>
+        <location filename="../main_window/testing/testing.cpp" line="224"/>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
         <translation type="unfinished"></translation>
@@ -7049,9 +7081,9 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="217"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="155"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="161"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="167"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="156"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="162"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="168"/>
         <source>[None]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7717,30 +7749,30 @@ Error description:
 <context>
     <name>PgeEngine</name>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="238"/>
+        <location filename="../testing/pge_engine.cpp" line="244"/>
         <source>Test level/world</source>
         <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="243"/>
+        <location filename="../testing/pge_engine.cpp" line="249"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in PGE Engine from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="248"/>
+        <location filename="../testing/pge_engine.cpp" line="254"/>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="269"/>
+        <location filename="../testing/pge_engine.cpp" line="275"/>
         <source>Unsupported yet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="270"/>
+        <location filename="../testing/pge_engine.cpp" line="276"/>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7748,7 +7780,7 @@ Error description:
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="281"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="285"/>
         <source>File association failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8295,23 +8327,23 @@ Error description:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="249"/>
+        <location filename="../mainwindow.cpp" line="252"/>
         <source>Bad File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="250"/>
+        <location filename="../mainwindow.cpp" line="253"/>
         <source>Bad file format
 File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="252"/>
+        <location filename="../mainwindow.cpp" line="255"/>
         <source>Line Number: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="253"/>
+        <location filename="../mainwindow.cpp" line="256"/>
         <source>Line Data: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8336,7 +8368,7 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="548"/>
+        <location filename="../data_configs/data_configs.cpp" line="546"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8475,7 +8507,7 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="203"/>
+        <location filename="../common_features/crashhandler.cpp" line="204"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
@@ -8483,7 +8515,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="209"/>
+        <location filename="../common_features/crashhandler.cpp" line="210"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Unhandled Exception
 
@@ -8493,52 +8525,52 @@ Forum link: wohlsoft.ru/forum</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="221"/>
+        <location filename="../common_features/crashhandler.cpp" line="222"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="225"/>
+        <location filename="../common_features/crashhandler.cpp" line="226"/>
         <source>Quit command [SIGQUIT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="229"/>
+        <location filename="../common_features/crashhandler.cpp" line="230"/>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="233"/>
+        <location filename="../common_features/crashhandler.cpp" line="234"/>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="243"/>
+        <location filename="../common_features/crashhandler.cpp" line="244"/>
         <source>Wrong CPU Instruction [SIGILL]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="247"/>
+        <location filename="../common_features/crashhandler.cpp" line="248"/>
         <source>Floating-point exception [SIGFPE]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="251"/>
+        <location filename="../common_features/crashhandler.cpp" line="252"/>
         <source>Aborted! [SIGABRT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="255"/>
+        <location filename="../common_features/crashhandler.cpp" line="256"/>
         <source>Signal Segmentation Violation [SIGSEGV]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="259"/>
+        <location filename="../common_features/crashhandler.cpp" line="260"/>
         <source>Interrupted! [SIGINT]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="266"/>
+        <location filename="../common_features/crashhandler.cpp" line="267"/>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
@@ -8636,6 +8668,192 @@ The maximum number of Music Boxes is %2.</source>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SanBaEiRuntimeEngine</name>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="251"/>
+        <source>Test level</source>
+        <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="256"/>
+        <source>Test level in battle mode</source>
+        <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="261"/>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in SMBX-38A from disk.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="268"/>
+        <source>Reset checkpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="269"/>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="275"/>
+        <source>Enable magic hand</source>
+        <comment>Allow real-time picking-up of elements while playing a level test.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="277"/>
+        <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="283"/>
+        <source>Don&apos;t auto-suspend game</source>
+        <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="285"/>
+        <source>Game will always run and it will never suspend while window is unfocused.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="289"/>
+        <source>Change the path to SMBX-38A...</source>
+        <comment>Select the path to SMBX-38A executable.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="291"/>
+        <source>Select the path to SMBX-38A executable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="297"/>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="299"/>
+        <source>Select a Wine toolchain for use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="305"/>
+        <source>Start Game</source>
+        <comment>Launch SMBX-38A as a normal game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="526"/>
+        <source>Checkpoints successfully reseted!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="538"/>
+        <source>Path to SMBX-38A</source>
+        <comment>Title of dialog</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="545"/>
+        <source>Please select a path to SMBX-38A executable:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="554"/>
+        <source>Use default</source>
+        <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="557"/>
+        <source>Custom</source>
+        <comment>Using a user selected SMBX-38A path</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="561"/>
+        <source>Browse...</source>
+        <translation type="unfinished">Utforsk…</translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="585"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="599"/>
+        <source>Select a path to SMBX-38A executable</source>
+        <comment>File dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="622"/>
+        <source>SMBX-38A is still active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="623"/>
+        <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="805"/>
+        <source>Executable not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="806"/>
+        <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="832"/>
+        <source>Impossible to prepare a temp file for a test run.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="888"/>
+        <source>Impossible to launch a level because of an invalid file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="898"/>
+        <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="907"/>
+        <location filename="../testing/38a_engine.cpp" line="972"/>
+        <source>Caution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="908"/>
+        <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="953"/>
+        <source>Impossible to launch an episode because of an invalid file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="963"/>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../testing/38a_engine.cpp" line="973"/>
+        <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8744,111 +8962,111 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="88"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="390"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="395"/>
         <source>PLSET_State</source>
         <comment>Character</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="95"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="354"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="359"/>
         <source>PLSET_Character</source>
         <comment>Character</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="155"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="517"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="527"/>
         <source>PLSET_VehicleID</source>
         <comment>translate as &quot;Vehicle&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="162"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="524"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="534"/>
         <source>PLSET_VehicleType</source>
         <comment>translate as &quot;Vehicle type&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="223"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="228"/>
         <source>Extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="229"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="234"/>
         <source>Allows you to fly up to the space!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="232"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="237"/>
         <source>Unlimited flying</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="239"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="244"/>
         <source>Playable character will not take damage on dangerous contacts and will not burn in the lava.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="242"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="247"/>
         <source>God mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="249"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="254"/>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="252"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="257"/>
         <source>World freedom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="259"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="264"/>
         <source>Allows you to destroy any objects with no exceptions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="262"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="267"/>
         <source>Bulldozer mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="269"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="274"/>
         <source>Debug info</source>
         <comment>Enable printing of the debug information.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="276"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="281"/>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="296"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="301"/>
         <source>Show frame speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="306"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="311"/>
         <source>Number of players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="312"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="317"/>
         <source>1 player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="319"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="324"/>
         <source>2 player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="348"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="353"/>
         <source>1 Player settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8895,120 +9113,120 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="469"/>
+        <location filename="../testing/thextech_engine.cpp" line="475"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="474"/>
+        <location filename="../testing/thextech_engine.cpp" line="480"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="479"/>
+        <location filename="../testing/thextech_engine.cpp" line="485"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="485"/>
+        <location filename="../testing/thextech_engine.cpp" line="491"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="490"/>
+        <location filename="../testing/thextech_engine.cpp" line="496"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="495"/>
+        <location filename="../testing/thextech_engine.cpp" line="501"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="500"/>
+        <location filename="../testing/thextech_engine.cpp" line="506"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="505"/>
+        <location filename="../testing/thextech_engine.cpp" line="511"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="512"/>
+        <location filename="../testing/thextech_engine.cpp" line="518"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="514"/>
+        <location filename="../testing/thextech_engine.cpp" line="520"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="520"/>
+        <location filename="../testing/thextech_engine.cpp" line="526"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="522"/>
+        <location filename="../testing/thextech_engine.cpp" line="528"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="526"/>
+        <location filename="../testing/thextech_engine.cpp" line="532"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="528"/>
+        <location filename="../testing/thextech_engine.cpp" line="534"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="535"/>
+        <location filename="../testing/thextech_engine.cpp" line="541"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="537"/>
+        <location filename="../testing/thextech_engine.cpp" line="543"/>
         <source>Select the path to TheXTech executable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="541"/>
+        <location filename="../testing/thextech_engine.cpp" line="547"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="550"/>
+        <location filename="../testing/thextech_engine.cpp" line="556"/>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="551"/>
+        <location filename="../testing/thextech_engine.cpp" line="557"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="560"/>
+        <location filename="../testing/thextech_engine.cpp" line="566"/>
         <source>TheXtech start failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="561"/>
+        <location filename="../testing/thextech_engine.cpp" line="567"/>
         <source>Can&apos;t start TheXTech because of following reason:
 %3.
 
@@ -10017,41 +10235,41 @@ Data may be corrupted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="354"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="357"/>
         <source>Select a Wine install prefix path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="364"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="367"/>
         <source>Select a Wine home prefix path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="414"/>
-        <location filename="../testing/wine/wine_setup.cpp" line="436"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="417"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="439"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="415"/>
-        <location filename="../testing/wine/wine_setup.cpp" line="437"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="418"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="440"/>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="503"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="506"/>
         <source>Not running</source>
         <comment>State of a test app</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="509"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="512"/>
         <source>Starting...</source>
         <comment>State of a test app</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="515"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="518"/>
         <source>Running...</source>
         <comment>State of a test app</comment>
         <translation type="unfinished"></translation>
@@ -10191,7 +10409,7 @@ Bottom:	%4</source>
 <context>
     <name>WldScene</name>
     <message>
-        <location filename="../editing/_scenes/world/wld_control.cpp" line="250"/>
+        <location filename="../editing/_scenes/world/wld_control.cpp" line="255"/>
         <source>Tiles:		%1
 Sceneries:			%2
 Paths:	%3
@@ -10201,32 +10419,32 @@ Music boxes:		%5
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="120"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="117"/>
         <source>Search User Tiles %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="196"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="193"/>
         <source>Search User Sceneries %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="270"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="267"/>
         <source>Search User Paths %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="344"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="341"/>
         <source>Search User Levels %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="424"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="421"/>
         <source>Wrong custom images</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="425"/>
+        <location filename="../editing/_scenes/world/data_manager/wld_custom_gfx.cpp" line="422"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -10843,27 +11061,27 @@ Do you want to save your changes?</source>
 <context>
     <name>g_AppSettings</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="189"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="191"/>
         <source>Set log file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="190"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="192"/>
         <source>Text files (*.txt *.log)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="279"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="283"/>
         <source>Success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="279"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="283"/>
         <source>All file associations have been set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="281"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="285"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
