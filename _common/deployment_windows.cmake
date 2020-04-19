@@ -33,9 +33,20 @@ find_program(GitBashFind find
     NO_DEFAULT_PATH
 )
 
+if(GitBashFind)
+    message("Detected 'find' from Git-Bash installed: ${GitBashFind}")
+else()
+    message("!! 'find' from Git-Bash was not found!")
+endif()
 
 if(SevenZipProgram)
     message("Detected 7Zip installed: ${SevenZipProgram}. Deployment is possible!")
+else()
+    message("!! 7Zip not found! Deployment will be inavailable!")
+endif()
+
+
+if(SevenZipProgram)
     if($ENV{QtDir})
         string(REPLACE "\\" "/" QT_BINLIB_DIR $ENV{QtDir})
     endif()
@@ -220,8 +231,6 @@ if(SevenZipProgram)
         DEPENDS mkdir_packed_create_zip
         COMMENT "Packing ZIP archive..."
     )
-else()
-    message("!! 7Zip not found! Deployment will be inavailable!")
 endif()
 
 endif(WIN32)
