@@ -48,6 +48,7 @@ if(SevenZipProgram)
             "${ZIP_SRC_DIR}/imageformats/"
             "${ZIP_SRC_DIR}/platforms/"
             "${ZIP_SRC_DIR}/styles/"
+            "${ZIP_SRC_DIR}/languages/qt_*.qm"
             ${MINGW_DLLS}
         )
     elseif(PGE_SHARED_SDLMIXER)
@@ -78,7 +79,8 @@ if(SevenZipProgram)
         "${ZIP_SRC_DIR}/calibrator"
         "${ZIP_SRC_DIR}/languages"
         "${ZIP_SRC_DIR}/pge_calibrator.exe"
-        -r "-x!engine_*.qm" "-x!editor_*.qm" "-x!maintainer_*.qm"
+        "${ZIP_SRC_DIR}/languages/calibrator_*.qm"
+        "${ZIP_SRC_DIR}/languages/*.png"
     )
 
     set(PGE_Gifs2PngFiles
@@ -109,7 +111,8 @@ if(SevenZipProgram)
         ${PGE_PaletteFilterFiles}
         ${PGE_Png2GifsFiles}
         "${ZIP_SRC_DIR}/pge_maintainer.exe"
-        -r "-x!engine_*.qm" "-x!editor_*.qm" "-x!calibrator_*.qm"
+        "${ZIP_SRC_DIR}/languages/maintainer_*.qm"
+        "${ZIP_SRC_DIR}/languages/*.png"
     )
 
     set(PGE_InstallCommonFiles
@@ -122,17 +125,17 @@ if(SevenZipProgram)
         "${ZIP_SRC_DIR}/themes"
         "${ZIP_SRC_DIR}/languages"
         "${ZIP_SRC_DIR}/ipc"
-        -r "-x!engine_*.qm" "-x!calibrator_*.qm" "-x!maintainer_*.qm"
+        "${ZIP_SRC_DIR}/languages/editor_*.qm"
+        "${ZIP_SRC_DIR}/languages/*.png"
     )
     set(PGE_InstallEngineFiles
         "${ZIP_SRC_DIR}/pge_engine.exe"
         "${ZIP_SRC_DIR}/languages"
         "${ZIP_SRC_DIR}/pge_engine.*.txt"
         "${ZIP_SRC_DIR}/changelog.engine.txt"
-        -r "-x!*.png" "-x!editor_*.qm" "-x!qt_*.qm" "-x!calibrator_*.qm" "-x!maintainer_*.qm"
+        "${ZIP_SRC_DIR}/languages/engine_*.qm"
     )
     set(PGE_InstallToolsFiles
-        "${ZIP_SRC_DIR}/languages"
         "${ZIP_SRC_DIR}/GIFs2PNG.exe"
         "${ZIP_SRC_DIR}/GIFs2PNG.readme.txt"
         "${ZIP_SRC_DIR}/PNG2GIFs.exe"
@@ -146,7 +149,10 @@ if(SevenZipProgram)
         "${ZIP_SRC_DIR}/pge_maintainer.exe"
         "${ZIP_SRC_DIR}/calibrator"
         "${ZIP_SRC_DIR}/tools"
-        -r "-x!editor_*.qm" "-x!engine_*.qm"
+        "${ZIP_SRC_DIR}/languages/calibrator_*.qm"
+        "${ZIP_SRC_DIR}/languages/maintainer_*.qm"
+        "${ZIP_SRC_DIR}/languages/qt_*.qm"
+        "${ZIP_SRC_DIR}/languages/*.png"
     )
 
     add_custom_target(create_zip_install
