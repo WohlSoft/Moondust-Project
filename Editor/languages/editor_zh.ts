@@ -784,30 +784,33 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished"></translation>
+        <translation>您可能想将此数据报告给开发人员：</translation>
     </message>
     <message>
         <source>Copy report into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>复制报告到剪贴板</translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>在 PGE 论坛中反馈问题（需英文）</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation>在 Github 仓库中反馈问题（需英文）</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation type="unfinished"></translation>
+        <translation>反馈问题时，请描述您遇到了什么异常错误。
+- 请您说明由于什么原因遇到了异常错误。
+- 若是编辑相关文件时异常终止，请在问题中将附件。
+- 您使用的是什么操作系统？</translation>
     </message>
     <message>
         <source>Copied!</source>
-        <translation type="unfinished"></translation>
+        <translation>已复制！</translation>
     </message>
 </context>
 <context>
@@ -3467,7 +3470,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation>启动大地图失败，无效的大地图文件。</translation>
+        <translation>由于文件不支持，大地图启动失败。</translation>
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
@@ -3475,7 +3478,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
-        <translation type="unfinished"></translation>
+        <translation>由于保存的大地图文件是不支持的格式，因此无法打开大地图。请使用 SMBX64-WLD 格式保存。</translation>
     </message>
 </context>
 <context>
@@ -7608,150 +7611,150 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Test level</source>
         <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
-        <translation type="unfinished">测试关卡</translation>
+        <translation>测试关卡</translation>
     </message>
     <message>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
-        <translation type="unfinished">在战斗模式中测试关卡</translation>
+        <translation>在对战模式中测试关卡</translation>
     </message>
     <message>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in SMBX-38A from disk.</comment>
-        <translation type="unfinished">测试已保存的关卡/大地图</translation>
+        <translation>测试已保存的关卡/大地图</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation type="unfinished">重置存档点</translation>
+        <translation>重置存档点</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished">重置所有存档点。</translation>
+        <translation>重置所有存档点。</translation>
     </message>
     <message>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
-        <translation type="unfinished">启用鼠标</translation>
+        <translation>启用鼠标</translation>
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
-        <translation type="unfinished">允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。不支持执行已保存的关卡。</translation>
+        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。不支持执行已保存的关卡。</translation>
     </message>
     <message>
         <source>Don&apos;t auto-suspend game</source>
         <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
-        <translation type="unfinished"></translation>
+        <translation>窗口未激活时运行</translation>
     </message>
     <message>
         <source>Game will always run and it will never suspend while window is unfocused.</source>
-        <translation type="unfinished"></translation>
+        <translation>即使窗口未激活，游戏仍会继续运行。</translation>
     </message>
     <message>
         <source>Change the path to SMBX-38A...</source>
         <comment>Select the path to SMBX-38A executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation>更改 SMBX-38A 目录……</translation>
     </message>
     <message>
         <source>Select the path to SMBX-38A executable.</source>
-        <translation type="unfinished"></translation>
+        <translation>选择 SMBX-38A 程序所在的目录。</translation>
     </message>
     <message>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
-        <translation type="unfinished">Wine 设置……</translation>
+        <translation>Wine 设置……</translation>
     </message>
     <message>
         <source>Select a Wine toolchain for use.</source>
-        <translation type="unfinished">选择要使用的 Wine 工具链。</translation>
+        <translation>选择要使用的 Wine 工具链。</translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
-        <translation type="unfinished">开始游戏</translation>
+        <translation>开始游戏</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished">存档点已成功重置！</translation>
+        <translation>存档点已成功重置！</translation>
     </message>
     <message>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX-38A 目录</translation>
     </message>
     <message>
         <source>Please select a path to SMBX-38A executable:</source>
-        <translation type="unfinished"></translation>
+        <translation>请选择 SMBX-38A 程序所在目录：</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished">使用默认值</translation>
+        <translation>使用默认值</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
-        <translation type="unfinished">自定义</translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">浏览……</translation>
+        <translation>浏览……</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>选择 SMBX-38A 程序目录</translation>
     </message>
     <message>
         <source>SMBX-38A is still active</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX-38A 仍在运行</translation>
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
-        <translation type="unfinished"></translation>
+        <translation>您必须关闭正在运行的 SMBX-38A 才能更改 Wine 设置。您现在要关闭 SMBX-38A 吗？</translation>
     </message>
     <message>
         <source>Executable not found</source>
-        <translation type="unfinished">未找到程序</translation>
+        <translation>未找到程序</translation>
     </message>
     <message>
         <source>Impossible to prepare a temp file for a test run.</source>
-        <translation type="unfinished"></translation>
+        <translation>临时文件准备失败，无法测试。</translation>
     </message>
     <message>
         <source>Impossible to launch a level because of an invalid file.</source>
-        <translation type="unfinished"></translation>
+        <translation>由于文件不支持，关卡启动失败。</translation>
     </message>
     <message>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
-        <translation type="unfinished"></translation>
+        <translation>由于保存的关卡文件是不支持的格式，因此无法打开关卡。请使用 SMBX-38A 或 SMBX64-LVL 格式保存。</translation>
     </message>
     <message>
         <source>Caution</source>
-        <translation type="unfinished"></translation>
+        <translation>注意</translation>
     </message>
     <message>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation type="unfinished"></translation>
+        <translation>您的关卡不是 SMBX-38A 格式，因此该游戏将自动转换为 SMBX-38A 格式，且不再兼容经典版的 SMBX。您要接受风险并继续吗？</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid file.</source>
-        <translation type="unfinished"></translation>
+        <translation>由于文件不支持，大地图启动失败。</translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
-        <translation type="unfinished"></translation>
+        <translation>由于保存的大地图文件是不支持的格式，因此无法打开大地图。请使用 SMBX-38A 或 SMBX64-WLD 格式保存。</translation>
     </message>
     <message>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation type="unfinished"></translation>
+        <translation>您的大地图不是 SMBX-38A 格式，因此该游戏将自动转换为 SMBX-38A 格式，且不再兼容经典版的 SMBX。您要接受风险并继续吗？</translation>
     </message>
     <message>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>由于 %1 未找到，因此无法启动 SMBX-38A。可能的原因是 SMBX-38A 程序所在目录设置错误，请检查 SMBX-38A 目录设置是否正确。</translation>
     </message>
 </context>
 <context>
