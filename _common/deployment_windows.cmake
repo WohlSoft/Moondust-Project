@@ -76,7 +76,9 @@ if(SevenZipProgram)
     set(PGE_CalibratorFiles
         ${PGE_CommonQtFiles}
         "${ZIP_SRC_DIR}/calibrator"
+        "${ZIP_SRC_DIR}/languages"
         "${ZIP_SRC_DIR}/pge_calibrator.exe"
+        -r "-x!engine_*.qm" "-x!editor_*.qm" "-x!maintainer_*.qm"
     )
 
     set(PGE_Gifs2PngFiles
@@ -102,10 +104,12 @@ if(SevenZipProgram)
     set(PGE_MaintainerFiles
         ${PGE_CommonQtFiles}
         "${ZIP_SRC_DIR}/tools"
+        "${ZIP_SRC_DIR}/languages"
         ${PGE_Gifs2PngFiles}
         ${PGE_PaletteFilterFiles}
         ${PGE_Png2GifsFiles}
         "${ZIP_SRC_DIR}/pge_maintainer.exe"
+        -r "-x!engine_*.qm" "-x!editor_*.qm" "-x!calibrator_*.qm"
     )
 
     set(PGE_InstallCommonFiles
@@ -117,16 +121,18 @@ if(SevenZipProgram)
         "${ZIP_SRC_DIR}/pge_editor.exe"
         "${ZIP_SRC_DIR}/themes"
         "${ZIP_SRC_DIR}/languages"
-        -r "-x!engine_*.qm"
+        "${ZIP_SRC_DIR}/ipc"
+        -r "-x!engine_*.qm" "-x!calibrator_*.qm" "-x!maintainer_*.qm"
     )
     set(PGE_InstallEngineFiles
         "${ZIP_SRC_DIR}/pge_engine.exe"
         "${ZIP_SRC_DIR}/languages"
         "${ZIP_SRC_DIR}/pge_engine.*.txt"
         "${ZIP_SRC_DIR}/changelog.engine.txt"
-        -r "-x!*.png" "-x!editor_*.qm" "-x!qt_*.qm"
+        -r "-x!*.png" "-x!editor_*.qm" "-x!qt_*.qm" "-x!calibrator_*.qm" "-x!maintainer_*.qm"
     )
     set(PGE_InstallToolsFiles
+        "${ZIP_SRC_DIR}/languages"
         "${ZIP_SRC_DIR}/GIFs2PNG.exe"
         "${ZIP_SRC_DIR}/GIFs2PNG.readme.txt"
         "${ZIP_SRC_DIR}/PNG2GIFs.exe"
@@ -140,6 +146,7 @@ if(SevenZipProgram)
         "${ZIP_SRC_DIR}/pge_maintainer.exe"
         "${ZIP_SRC_DIR}/calibrator"
         "${ZIP_SRC_DIR}/tools"
+        -r "-x!editor_*.qm" "-x!engine_*.qm"
     )
 
     add_custom_target(create_zip_install

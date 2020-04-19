@@ -488,7 +488,7 @@ if(NOT HAIKU)
     )
     # FIXME: on macOS, embed a bridge executable into the bundle
     install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe"
-        DESTINATION "${PGE_INSTALL_DIRECTORY}/${CMAKE_INSTALL_BINDIR}/ipc"
+        DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
     )
 endif()
 
@@ -502,7 +502,7 @@ if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
         VERBATIM
     )
     install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/luna_hwnd_show.exe"
-        DESTINATION "${PGE_INSTALL_DIRECTORY}/${CMAKE_INSTALL_BINDIR}/ipc"
+        DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
     )
 endif()
 
