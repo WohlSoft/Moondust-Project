@@ -24,6 +24,16 @@ find_program(SevenZipProgram 7z
     NO_DEFAULT_PATH
 )
 
+find_program(GitBashFind find
+    PATHS
+    "/usr/bin/"
+    "$ENV{ProgramFiles}/Git/usr/bin/"
+    "C:/Program Files/Git/usr/bin/"
+    "C:/Program Files (x86)/Git/usr/bin/"
+    NO_DEFAULT_PATH
+)
+
+
 if(SevenZipProgram)
     message("Detected 7Zip installed: ${SevenZipProgram}. Deployment is possible!")
     if($ENV{QtDir})
@@ -199,10 +209,14 @@ if(SevenZipProgram)
     )
 
     add_custom_target(create_zip
-        ${SevenZipProgram}
-        a -tzip -mx9
-        "${ZIP_PACK_DIR}/pge-project-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
-        "${ZIP_SRC_DIR}/"
+        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+        # Clean-up blank translations
+        COMMAND ${GitBashFind} "${ZIP_SRC_DIR}/languages/" -maxdepth 1 -type f -name "*.qm" -size "-1000c" -delete
+        # Pack a ZIP archive
+        COMMAND ${SevenZipProgram}
+            a -tzip -mx9
+            "${ZIP_PACK_DIR}/pge-project-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
+            "${ZIP_SRC_DIR}/"
         DEPENDS mkdir_packed_create_zip
         COMMENT "Packing ZIP archive..."
     )
