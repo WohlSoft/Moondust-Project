@@ -22,16 +22,17 @@
 #include <QRadioButton>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QStandardPaths>
 
 #if !defined(_WIN32)
 #include <unistd.h>
-#include <QStandardPaths>
 #include "wine/wine_setup.h"
 #else
 #include <windows.h>
 #endif
 
 #include "38a_engine.h"
+#include "38a_symlinks.h"
 
 #include <mainwindow.h>
 #include <PGE_File_Formats/file_formats.h>
@@ -721,43 +722,10 @@ void SanBaEiRuntimeEngine::removeTempDir()
         if(tmp.exists("38a-lvl-test"))
         {
             tmp.cd("38a-lvl-test");
-            tmp.removeRecursively();
+            removeAllLinks(tmp);
             tmp.cdUp();
         }
     }
-}
-
-static inline int symLink(const QString &from, const QString &to)
-{
-#ifndef _WIN32
-    return symlink(from.toUtf8().data(), to.toUtf8().data());
-#else
-    typedef BOOL (*MkLinkW)(LPCWSTR lpSymlinkFileName, LPCWSTR lpTargetFileName, DWORD  dwFlags);
-    HMODULE kernel32 = LoadLibraryW(L"kernel32.dll");
-    if(!kernel32)
-        return -1;
-
-    MkLinkW mkLinkW = GetProcAddress(kernel32, "CreateSymbolicLinkW");
-    if(!mkLinkW)
-    {
-        FreeLibrary(kernel32);
-        return -1;
-    }
-
-    auto f = from.toStdWString();
-    auto t = to.toStdWString();
-    DWORD flags = 0;
-
-    QFileInfo frInfo(from);
-    if(frInfo.isDir())
-        flags = SYMBOLIC_LINK_FLAG_DIRECTORY;
-
-    BOOL ret = mkLinkW(f.c_str(), t.c_str(), flags);
-
-    FreeLibrary(kernel32);
-
-    return (int)ret;
-#endif
 }
 
 QString SanBaEiRuntimeEngine::initTempLevel(const LevelData &d)
