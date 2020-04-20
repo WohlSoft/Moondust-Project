@@ -30,7 +30,7 @@ i686-w64-mingw32-g++ -O2 -DLUNALOADER_EXEC LunaLoaderPatch.cpp -c -o LunaLoaderP
 echo "LunaLoader.rc..."
 i686-w64-mingw32-windres -DLUNALOADER_EXEC LunaLoader.rc -o LunaLoaderRes.o
 echo "Linking..."
-i686-w64-mingw32-g++ LunaLoader.cpp.o LunaLoaderPatch.cpp.o LunaLoaderRes.o -o ../LunaLoader-exec.exe -static-libgcc -static-libstdc++
+i686-w64-mingw32-g++ LunaLoader.cpp.o LunaLoaderPatch.cpp.o LunaLoaderRes.o -o ../LunaLoader-exec.exe -static-libgcc -static-libstdc++ -lshlwapi
 rm *.o
 cd ..
 echo "Stripping..."

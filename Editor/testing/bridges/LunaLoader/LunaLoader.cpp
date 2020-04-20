@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <windows.h>
+#include <shlwapi.h>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -66,6 +67,7 @@ int WINAPI WinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR /
 
     std::wstring curPath;
 
+#ifndef LUNALOADER_EXEC
     WCHAR szFileName[MAX_PATH];
     GetModuleFileNameW(NULL, szFileName, MAX_PATH);
     WCHAR** lppPart = { NULL };
@@ -78,6 +80,15 @@ int WINAPI WinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR /
 
     if(pathToSMBX == fulPath_s) // If LunaLoader.exe renamed into "SMBX.exe"
         pathToSMBX = curPath + L"\\smbx.legacy";
+#else
+    curPath.resize(4096);
+    DWORD curPathLen = GetCurrentDirectoryW(4096, &curPath[0]);
+    curPath.resize(curPathLen);
+
+    std::wstring pathToSMBX = curPath + L"\\smbx.legacy";
+    if(!PathFileExistsW(pathToSMBX.c_str()))
+        pathToSMBX = curPath + L"\\smbx.exe";
+#endif
 
     // Strip first arg which is just our own path
     if (cmdArgs.size() > 0)
