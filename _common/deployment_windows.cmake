@@ -63,13 +63,13 @@ if(SevenZipProgram)
         "libgcc*.dll"
         "libstdc*.dll"
     )
-    if(MINGWEX)
+    if(MINGWDLL_MINGWEX)
         list(APPEND MinGW_BuiltDlls "libmingwex-0.dll")
     endif()
-    if(WINPTHREAD)
+    if(MINGWDLL_WINPTHREAD)
         list(APPEND MinGW_BuiltDlls "libwinpthread-1.dll")
     endif()
-    if(WINPTHREADGC3)
+    if(MINGWDLL_WINPTHREADGC3)
         list(APPEND MinGW_BuiltDlls "pthreadGC-3.dll")
     endif()
 
