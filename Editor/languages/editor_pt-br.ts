@@ -5,15 +5,15 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Teste de mapas de mundo pelo IPC não é suportado</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Teste de mapas de mundo não é suportado</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Essa funcionalidade não foi implementada</translation>
     </message>
 </context>
 <context>
