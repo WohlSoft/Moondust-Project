@@ -6808,7 +6808,7 @@ Error description:
     </message>
     <message>
         <source>Boss</source>
-        <translation>Boss</translation>
+        <translation type="unfinished">Boss</translation>
     </message>
     <message>
         <source>Not Moveable</source>
