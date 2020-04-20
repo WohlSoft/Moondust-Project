@@ -142,14 +142,12 @@ if(SevenZipProgram)
         "changelog.editor.txt"
         "pge_editor.exe"
         "themes"
-        "languages"
         "ipc"
         "languages/editor_*.qm"
         "languages/*.png"
     )
     set(PGE_InstallEngineFiles
         "pge_engine.exe"
-        "languages"
         "pge_engine.*.txt"
         "changelog.engine.txt"
         "languages/engine_*.qm"
