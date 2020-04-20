@@ -71,7 +71,16 @@ function(pgeSetupQtDeploymet _is_static_qt _is_shared_mixer)
     endif()
 
     if(WIN32 AND (NOT ${_is_static_qt} OR ${_is_shared_mixer}))
+        function(find_mingw_dll _FieldName _FileName _DestList _SearchPaths)
+            find_file(MINGWDLL_${_FieldName} ${_FileName} PATHS "${_SearchPaths}")
+            if(MINGWDLL_${_FieldName})
+                list(APPEND ${_DestList} "${MINGWDLL_${_FieldName}}")
+                set(${_DestList} ${${_DestList}} PARENT_SCOPE)
+            endif()
+        endfunction()
+
         set(MINGW_BIN_PATH $ENV{MinGW})
+
         if(NOT MINGW_BIN_PATH)
             set(MINGW_BIN_PATH "${QT_BINLIB_DIR}")
         else()
@@ -79,41 +88,20 @@ function(pgeSetupQtDeploymet _is_static_qt _is_shared_mixer)
         endif()
 
         set(MINGW_DLLS)
-        find_file(MINGWDLL_LIBGCCDW libgcc_s_dw2-1.dll PATHS "${MINGW_BIN_PATH}")
-        if(MINGWDLL_LIBGCC)
-            list(APPEND MINGW_DLLS "${MINGWDLL_LIBGCC}")
-        endif()
+        find_mingw_dll(LIBGCCDW         "libgcc_s_dw2-1.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
+        find_mingw_dll(LIBGCCSEC        "libgcc_s_seh-1.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
+        find_mingw_dll(MINGWEX          "libmingwex-0.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
+        find_mingw_dll(WINPTHREAD       "libwinpthread-1.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
+        find_mingw_dll(WINPTHREADGC3    "pthreadGC-3.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
+        find_mingw_dll(STDCPP           "libstdc++-6.dll" MINGW_DLLS "${MINGW_BIN_PATH}")
 
-        find_file(MINGWDLL_LIBGCCSEC libgcc_s_seh-1.dll PATHS "${MINGW_BIN_PATH}")
-        if(MINGWDLL_LIBGCCSEC)
-            list(APPEND MINGW_DLLS "${MINGWDLL_LIBGCCSEC}")
-        endif()
-
-        find_file(MINGWDLL_MINGWEX libmingwex-0.dll PATHS "${MINGW_BIN_PATH}")
-        if(MINGWDLL_MINGWEX)
-            list(APPEND MINGW_DLLS "${MINGWDLL_MINGWEX}")
-        endif()
-
-        find_file(MINGWDLL_WINPTHREAD libwinpthread-1.dll PATHS "${MINGW_BIN_PATH}")
-        if(MINGWDLL_WINPTHREAD)
-            list(APPEND MINGW_DLLS "${MINGWDLL_WINPTHREAD}")
-        endif()
-
-        find_file(MINGWDLL_WINPTHREADGC3 pthreadGC-3.dll PATHS "${MINGW_BIN_PATH}")
-        if(MINGWDLL_WINPTHREADGC3)
-            list(APPEND MINGW_DLLS "${MINGWDLL_WINPTHREADGC3}")
-        endif()
-
-        find_file(MINGWDLL_STDCPP libstdc++-6.dll PATHS "${MINGW_BIN_PATH}")
-        if(EXISTS "${MINGWDLL_STDCPP}")
-            list(APPEND MINGW_DLLS "${MINGWDLL_STDCPP}")
-        endif()
+        message("MinGW DLLs: [${MINGW_DLLS}]")
 
         install(FILES
             ${MINGW_DLLS}
             DESTINATION "${PGE_INSTALL_DIRECTORY}/"
         )
-
+#        file(COPY ${MINGW_DLLS} DESTINATION "${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/")
         add_custom_target(copy_mingw_dlls DEPENDS pge_windeploy)
         foreach(MingwRuntimeDll ${MINGW_DLLS})
             add_custom_command(TARGET copy_mingw_dlls POST_BUILD

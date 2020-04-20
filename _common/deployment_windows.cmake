@@ -59,6 +59,20 @@ if(SevenZipProgram)
         COMMAND ${CMAKE_COMMAND} -E make_directory "${ZIP_SRC_DIR}/styles" # WORKAROUND: when styles DLLs realy not used, just make empty folder
     )
 
+    set(MinGW_BuiltDlls
+        "libgcc*.dll"
+        "libstdc*.dll"
+    )
+    if(MINGWEX)
+        list(APPEND MinGW_BuiltDlls "libmingwex-0.dll")
+    endif()
+    if(WINPTHREAD)
+        list(APPEND MinGW_BuiltDlls "libwinpthread-1.dll")
+    endif()
+    if(WINPTHREADGC3)
+        list(APPEND MinGW_BuiltDlls "pthreadGC-3.dll")
+    endif()
+
     set(PGE_CommonQtFiles)
     if(NOT PGE_ENABLE_STATIC_QT)
         set(PGE_CommonQtFiles
@@ -70,11 +84,11 @@ if(SevenZipProgram)
             "platforms/"
             "styles/"
             "languages/qt_*.qm"
-            ${MINGW_DLLS}
+            ${MinGW_BuiltDlls}
         )
     elseif(PGE_SHARED_SDLMIXER)
         set(PGE_CommonQtFiles
-            ${MINGW_DLLS}
+            ${MinGW_BuiltDlls}
         )
     endif()
 
