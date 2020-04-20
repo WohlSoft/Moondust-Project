@@ -490,6 +490,7 @@ if(NOT HAIKU)
     set(38A_IPC_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe")
     if(APPLE) # Embed into the bundle
         list(APPEND PGE_EDITOR_SRCS "${38A_IPC_BRIDGE_BIN}")
+        set_source_files_properties(${38A_IPC_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
     else()
         install(FILES "${38A_IPC_BRIDGE_BIN}"
             DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
