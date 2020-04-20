@@ -11414,7 +11414,7 @@ The maximum number of Music Boxes is %2.</translation>
     </message>
     <message>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</translation>
+        <translation>Your level is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid file.</source>
@@ -11422,7 +11422,7 @@ The maximum number of Music Boxes is %2.</translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
-        <translation>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</translation>
+        <translation>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX-38A or the SMBX64-WLD format.</translation>
     </message>
     <message>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
