@@ -1,7 +1,8 @@
 #ifndef LunaLoaderPatch_hhhhh
 #define LunaLoaderPatch_hhhhh
 
-enum LunaLoaderResult {
+enum LunaLoaderResult
+{
     LUNALOADER_OK = 0,
     LUNALOADER_CREATEPROCESS_FAIL,
     LUNALOADER_PATCH_FAIL
@@ -9,6 +10,6 @@ enum LunaLoaderResult {
 
 LunaLoaderResult LunaLoaderRun(const wchar_t *pathToSMBX, const wchar_t *cmdLine, const wchar_t *workingDir = NULL);
 
-const wchar_t* LunaLoaderGetLastError();
+const wchar_t *LunaLoaderGetLastError();
 
 #endif

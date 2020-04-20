@@ -25,19 +25,19 @@ std::vector<std::wstring> splitCmdArgs(const std::wstring &str)
 
 std::wstring escapeArg(const std::wstring &str)
 {
-    if ((str.find_first_of(L" \t\n\v\"") == str.npos) &&
-        (str.find(L"\\\\") == str.npos) &&
-        (str.find(L"\\\"") == str.npos)
-        )
+    if((str.find_first_of(L" \t\n\v\"") == str.npos) &&
+       (str.find(L"\\\\") == str.npos) &&
+       (str.find(L"\\\"") == str.npos)
+      )
     {
         // No escaping needed
         return str;
     }
 
     std::wstring out = L"\"";
-    for (wchar_t c : str)
+    for(wchar_t c : str)
     {
-        switch (c)
+        switch(c)
         {
         case L'\\':
             out += L"\\\\";
@@ -53,7 +53,7 @@ std::wstring escapeArg(const std::wstring &str)
     return out;
 }
 
-std::wstring dirnameOf(const std::wstring& fname)
+std::wstring dirnameOf(const std::wstring &fname)
 {
     size_t pos = fname.find_last_of(L"\\/");
     return (std::wstring::npos == pos) ? L"" : fname.substr(0, pos);
@@ -70,13 +70,13 @@ int WINAPI WinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR /
 #ifndef LUNALOADER_EXEC
     WCHAR szFileName[MAX_PATH];
     GetModuleFileNameW(NULL, szFileName, MAX_PATH);
-    WCHAR** lppPart = { NULL };
+    WCHAR **lppPart = { NULL };
     WCHAR fulPath_s[4096] = L"";
 
     GetFullPathNameW(szFileName, 4096, fulPath_s, lppPart);
     curPath = dirnameOf(fulPath_s);
 
-    std::wstring pathToSMBX = curPath+L"\\smbx.exe"; //use either smbx.exe or the first arg
+    std::wstring pathToSMBX = curPath + L"\\smbx.exe"; //use either smbx.exe or the first arg
 
     if(pathToSMBX == fulPath_s) // If LunaLoader.exe renamed into "SMBX.exe"
         pathToSMBX = curPath + L"\\smbx.legacy";
@@ -91,13 +91,11 @@ int WINAPI WinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR /
 #endif
 
     // Strip first arg which is just our own path
-    if (cmdArgs.size() > 0)
-    {
+    if(cmdArgs.size() > 0)
         cmdArgs.erase(cmdArgs.begin());
-    }
 
     // If the first arg starting with "--" and contains .exe then no smbx path --> just starting with argument
-    if ((cmdArgs.size() > 0) && (cmdArgs[0].find(L"--") == std::wstring::npos))
+    if((cmdArgs.size() > 0) && (cmdArgs[0].find(L"--") == std::wstring::npos))
     {
         std::wstring tmpArg = cmdArgs[0];
         std::transform(tmpArg.begin(), tmpArg.end(), tmpArg.begin(), ::towlower);
@@ -105,7 +103,7 @@ int WINAPI WinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR /
                           (tmpArg.rfind(L".exe.legacy") == (tmpArg.size() - 11)));
 
         // Only interpret this as the smbx executable if this ends in .exe
-        if (isExeFile)
+        if(isExeFile)
         {
             pathToSMBX = cmdArgs[0];
             cmdArgs.erase(cmdArgs.begin());
@@ -114,25 +112,21 @@ int WINAPI WinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, LPSTR /
 
     // Re-generate arg string from list
     newCmdLine = L"";
-    for (unsigned int i = 0; i < cmdArgs.size(); ++i)
+    for(unsigned int i = 0; i < cmdArgs.size(); ++i)
     {
         newCmdLine += escapeArg(cmdArgs[i]);
-        if (i != cmdArgs.size() - 1)
-        {
+        if(i != cmdArgs.size() - 1)
             newCmdLine += L" ";
-        }
     }
 
     FILE *test;
-    #ifdef _MSC_VER
+#ifdef _MSC_VER
     _wfopen_s(&test, pathToSMBX.c_str(), L"rb");
-    #else
+#else
     test = _wfopen(pathToSMBX.c_str(), L"rb");
-    #endif
+#endif
     if(!test)
-    {
         pathToSMBX = curPath + L"\\smbx.legacy";
-    }
     else
         fclose(test);
 
