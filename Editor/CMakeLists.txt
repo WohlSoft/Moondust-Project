@@ -478,9 +478,10 @@ if(NOT HAIKU)
         make_directory(${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
     endif()
 
-    set(38A_IPC_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe")
 
     # 38A IPC bridge
+    set(38A_IPC_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe")
+
     add_custom_target(38a_ipc_bridge_bin ALL
         COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz"
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz
@@ -498,6 +499,29 @@ if(NOT HAIKU)
             DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
         )
     endif()
+
+
+    # LunaTester IPC bridge
+    set(LUNATESTER_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/LunaLoader-exec.exe")
+
+    add_custom_target(lunatester_bridge_bin ALL
+        COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/LunaLoader-exec.tar.gz"
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/LunaLoader-exec.tar.gz
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        COMMENT "Unpacking LunaLoader-exec.exe"
+        VERBATIM
+        BYPRODUCTS "${LUNATESTER_BRIDGE_BIN}"
+    )
+
+    if(APPLE) # Embed into the bundle
+        list(APPEND PGE_EDITOR_SRCS "${LUNATESTER_BRIDGE_BIN}")
+        set_source_files_properties(${LUNATESTER_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
+    else()
+        install(FILES "${LUNATESTER_BRIDGE_BIN}"
+            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+        )
+    endif()
+
 endif()
 
 if(NOT WIN32 AND NOT HAIKU)
@@ -676,6 +700,7 @@ if(APPLE)
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties("${38A_IPC_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
     set_source_files_properties("${LUNA_HWND_SHOW_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
+    set_source_files_properties("${LUNATESTER_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
 
     list(APPEND PGE_EDITOR_LINK_LIBS iconv)
 endif()

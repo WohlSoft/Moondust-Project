@@ -838,6 +838,24 @@ QString LunaTesterEngine::getEnginePath()
                 m_customLunaPath + "/";
 }
 
+QString LunaTesterEngine::getBridgePath()
+{
+    const QString execProxy = getEnginePath() + "LunaLoader-exec.exe";
+
+    if(QFile::exists(execProxy))
+        return execProxy;
+    else
+    {
+#   ifdef Q_OS_MAC
+        // on macOS an IPC bridge is shipped inside of a bundle
+        QDir exePath(QApplication::applicationDirPath());
+        return exePath.absoluteFilePath("../Resources/ipc/LunaLoader-exec.exe");
+#   else
+        return ApplicationPath + "/ipc/LunaLoader-exec.exe";
+#   endif
+    }
+}
+
 #ifndef _WIN32
 QString LunaTesterEngine::getHwndShowBridgePath()
 {
@@ -1350,7 +1368,7 @@ bool LunaTesterEngine::verifyCompatibility()
     //! Full path to LunaDLL library
     const QString lunaDllPath = smbxPath + "LunaDll.dll";
     //! Full path to LunaTester proxy executable
-    const QString execProxy = smbxPath + "LunaLoader-exec.exe";
+    const QString execProxy = getBridgePath();
 
     const QStringList smbxFiles =
     {
@@ -1535,7 +1553,7 @@ bool LunaTesterEngine::doTestLevelIPC(const LevelData &d)
     //! Path to SMBX root
     const QString smbxPath = getEnginePath();
     //! Full path to LunaTester proxy executable
-    const QString execProxy = smbxPath + "LunaLoader-exec.exe";
+    const QString execProxy = getBridgePath();
 
     if(isEngineActive())
     {
@@ -1588,7 +1606,7 @@ bool LunaTesterEngine::doTestLevelFile(const QString &levelFile)
     //! Path to SMBX root
     const QString smbxPath = getEnginePath();
     //! Full path to LunaTester proxy executable
-    const QString execProxy = smbxPath + "LunaLoader-exec.exe";
+    const QString execProxy = getBridgePath();
 
     if(!m_caps.args.contains("testLevel"))
         return false; // Unsupported by a current LunaLua build
@@ -1633,7 +1651,7 @@ bool LunaTesterEngine::doTestWorldFile(const QString &worldFile)
     //! Path to SMBX root
     const QString smbxPath = getEnginePath();
     //! Full path to LunaTester proxy executable
-    const QString execProxy = smbxPath + "LunaLoader-exec.exe";
+    const QString execProxy = getBridgePath();
     //! Full path to an autostart.ini file for an episode starting
     const QString autoStart = smbxPath + "autostart.ini";
 
@@ -1742,7 +1760,7 @@ bool LunaTesterEngine::runNormalGame()
     //! Path to SMBX root
     const QString smbxPath = getEnginePath();
     //! Full path to LunaTester proxy executable
-    const QString execProxy = smbxPath + "LunaLoader-exec.exe";
+    const QString execProxy = getBridgePath();
 
     if(m_lunaGame.state() == QProcess::Running)
         m_lunaGame.kill();

@@ -119,6 +119,12 @@ private:
      */
     QString getEnginePath();
 
+    /**
+     * @brief Returns a path to a bridge executable to run a LunaTester
+     * @return path to an executable
+     */
+    QString getBridgePath();
+
 #ifndef _WIN32
     /**
      * @brief Returns a path to an executable of bridge to show a Wine window by HWND
