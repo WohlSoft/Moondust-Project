@@ -62,14 +62,14 @@ if(SevenZipProgram)
     set(PGE_CommonQtFiles)
     if(NOT PGE_ENABLE_STATIC_QT)
         set(PGE_CommonQtFiles
-            "${ZIP_SRC_DIR}/Qt5Core${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/Qt5Gui${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/Qt5Network${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/Qt5Widgets${PGE_DLL_SUFFIX}.dll"
-            "${ZIP_SRC_DIR}/imageformats/"
-            "${ZIP_SRC_DIR}/platforms/"
-            "${ZIP_SRC_DIR}/styles/"
-            "${ZIP_SRC_DIR}/languages/qt_*.qm"
+            "Qt5Core${PGE_DLL_SUFFIX}.dll"
+            "Qt5Gui${PGE_DLL_SUFFIX}.dll"
+            "Qt5Network${PGE_DLL_SUFFIX}.dll"
+            "Qt5Widgets${PGE_DLL_SUFFIX}.dll"
+            "imageformats/"
+            "platforms/"
+            "styles/"
+            "languages/qt_*.qm"
             ${MINGW_DLLS}
         )
     elseif(PGE_SHARED_SDLMIXER)
@@ -79,104 +79,103 @@ if(SevenZipProgram)
     endif()
 
     set(PGE_CommonFiles
-        "${ZIP_SRC_DIR}/*.dll"
-        "${ZIP_SRC_DIR}/licenses/"
-        "${ZIP_SRC_DIR}/imageformats/"
-        "${ZIP_SRC_DIR}/platforms/"
-        "${ZIP_SRC_DIR}/styles/"
-        "${ZIP_SRC_DIR}/help/"
+        "*.dll"
+        "licenses/"
+        "imageformats/"
+        "platforms/"
+        "styles/"
+        "help/"
     )
 
     set(PGE_MusPlayFiles
         ${PGE_CommonQtFiles}
-        "${ZIP_SRC_DIR}/SDL2${PGE_DLL_SUFFIX}.dll"
-        "${ZIP_SRC_DIR}/SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
-        "${ZIP_SRC_DIR}/pge_musplay.exe"
-        "${ZIP_SRC_DIR}/changelog.musplay.txt"
+        "SDL2${PGE_DLL_SUFFIX}.dll"
+        "SDL2_mixer_ext${PGE_DLL_SUFFIX}.dll"
+        "pge_musplay.exe"
+        "changelog.musplay.txt"
     )
 
     set(PGE_CalibratorFiles
         ${PGE_CommonQtFiles}
-        "${ZIP_SRC_DIR}/calibrator"
-        "${ZIP_SRC_DIR}/languages"
-        "${ZIP_SRC_DIR}/pge_calibrator.exe"
-        "${ZIP_SRC_DIR}/languages/calibrator_*.qm"
-        "${ZIP_SRC_DIR}/languages/*.png"
+        "calibrator"
+        "pge_calibrator.exe"
+        "languages/calibrator_*.qm"
+        "languages/*.png"
     )
 
     set(PGE_Gifs2PngFiles
-        "${ZIP_SRC_DIR}/GIFs2PNG.exe"
-        "${ZIP_SRC_DIR}/GIFs2PNG.readme.txt"
+        "GIFs2PNG.exe"
+        "GIFs2PNG.readme.txt"
     )
 
     set(PGE_PaletteFilterFiles
-        "${ZIP_SRC_DIR}/PaletteFilter.exe"
-        "${ZIP_SRC_DIR}/PaletteFilter.readme.txt"
+        "PaletteFilter.exe"
+        "PaletteFilter.readme.txt"
     )
 
     set(PGE_Png2GifsFiles
-        "${ZIP_SRC_DIR}/PNG2GIFs.exe"
-        "${ZIP_SRC_DIR}/PNG2GIFs.readme.txt"
+        "PNG2GIFs.exe"
+        "PNG2GIFs.readme.txt"
     )
 
     set(PGE_LazyFixToolFiles
-        "${ZIP_SRC_DIR}/LazyFixTool.exe"
-        "${ZIP_SRC_DIR}/LazyFixTool.readme.txt"
+        "LazyFixTool.exe"
+        "LazyFixTool.readme.txt"
     )
 
     set(PGE_MaintainerFiles
         ${PGE_CommonQtFiles}
-        "${ZIP_SRC_DIR}/tools"
-        "${ZIP_SRC_DIR}/languages"
+        "tools"
         ${PGE_Gifs2PngFiles}
         ${PGE_PaletteFilterFiles}
         ${PGE_Png2GifsFiles}
-        "${ZIP_SRC_DIR}/pge_maintainer.exe"
-        "${ZIP_SRC_DIR}/languages/maintainer_*.qm"
-        "${ZIP_SRC_DIR}/languages/*.png"
+        "pge_maintainer.exe"
+        "languages/maintainer_*.qm"
+        "languages/*.png"
     )
 
     set(PGE_InstallCommonFiles
         ${PGE_CommonFiles}
-        "${ZIP_SRC_DIR}/tools"
+        "tools"
     )
     set(PGE_InstallEditorFiles
-        "${ZIP_SRC_DIR}/changelog.editor.txt"
-        "${ZIP_SRC_DIR}/pge_editor.exe"
-        "${ZIP_SRC_DIR}/themes"
-        "${ZIP_SRC_DIR}/languages"
-        "${ZIP_SRC_DIR}/ipc"
-        "${ZIP_SRC_DIR}/languages/editor_*.qm"
-        "${ZIP_SRC_DIR}/languages/*.png"
+        "changelog.editor.txt"
+        "pge_editor.exe"
+        "themes"
+        "languages"
+        "ipc"
+        "languages/editor_*.qm"
+        "languages/*.png"
     )
     set(PGE_InstallEngineFiles
-        "${ZIP_SRC_DIR}/pge_engine.exe"
-        "${ZIP_SRC_DIR}/languages"
-        "${ZIP_SRC_DIR}/pge_engine.*.txt"
-        "${ZIP_SRC_DIR}/changelog.engine.txt"
-        "${ZIP_SRC_DIR}/languages/engine_*.qm"
+        "pge_engine.exe"
+        "languages"
+        "pge_engine.*.txt"
+        "changelog.engine.txt"
+        "languages/engine_*.qm"
     )
     set(PGE_InstallToolsFiles
-        "${ZIP_SRC_DIR}/GIFs2PNG.exe"
-        "${ZIP_SRC_DIR}/GIFs2PNG.readme.txt"
-        "${ZIP_SRC_DIR}/PNG2GIFs.exe"
-        "${ZIP_SRC_DIR}/PNG2GIFs.readme.txt"
-        "${ZIP_SRC_DIR}/LazyFixTool.exe"
-        "${ZIP_SRC_DIR}/LazyFixTool.readme.txt"
-        "${ZIP_SRC_DIR}/PaletteFilter.exe"
-        "${ZIP_SRC_DIR}/PaletteFilter.readme.txt"
-        "${ZIP_SRC_DIR}/pge_musplay.exe"
-        "${ZIP_SRC_DIR}/pge_calibrator.exe"
-        "${ZIP_SRC_DIR}/pge_maintainer.exe"
-        "${ZIP_SRC_DIR}/calibrator"
-        "${ZIP_SRC_DIR}/tools"
-        "${ZIP_SRC_DIR}/languages/calibrator_*.qm"
-        "${ZIP_SRC_DIR}/languages/maintainer_*.qm"
-        "${ZIP_SRC_DIR}/languages/qt_*.qm"
-        "${ZIP_SRC_DIR}/languages/*.png"
+        "GIFs2PNG.exe"
+        "GIFs2PNG.readme.txt"
+        "PNG2GIFs.exe"
+        "PNG2GIFs.readme.txt"
+        "LazyFixTool.exe"
+        "LazyFixTool.readme.txt"
+        "PaletteFilter.exe"
+        "PaletteFilter.readme.txt"
+        "pge_musplay.exe"
+        "pge_calibrator.exe"
+        "pge_maintainer.exe"
+        "calibrator"
+        "tools"
+        "languages/calibrator_*.qm"
+        "languages/maintainer_*.qm"
+        "languages/qt_*.qm"
+        "languages/*.png"
     )
 
     add_custom_target(create_zip_install
+        WORKING_DIRECTORY "${ZIP_SRC_DIR}"
         COMMAND ${SevenZipProgram} a -tzip -mx9
             "${ZIP_PACK_DIR}/install-pge-common-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
             ${PGE_InstallCommonFiles}
@@ -194,6 +193,7 @@ if(SevenZipProgram)
     )
 
     add_custom_target(create_zip_tools
+        WORKING_DIRECTORY "${ZIP_SRC_DIR}"
         COMMAND ${SevenZipProgram} a -tzip -mx9
             "${ZIP_PACK_DIR}/pge-musplay-${PACKAGE_SUFFIX}-win${PGE_ARCHITECTURE_BITS}.zip"
             ${PGE_MusPlayFiles}
@@ -220,7 +220,7 @@ if(SevenZipProgram)
     )
 
     add_custom_target(create_zip
-        WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+        WORKING_DIRECTORY "${ZIP_SRC_DIR}"
         # Clean-up blank translations
         COMMAND ${GitBashFind} "${ZIP_SRC_DIR}/languages/" -maxdepth 1 -type f -name "*.qm" -size "-1000c" -delete
         # Pack a ZIP archive
