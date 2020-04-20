@@ -56,6 +56,7 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
     /************** Settings **************/
 
     QString getEnginePath();
+    QString getBridgePath();
 
     void loadSetup();
     void saveSetup();

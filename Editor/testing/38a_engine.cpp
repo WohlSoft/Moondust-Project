@@ -67,7 +67,7 @@ void SanBaEiRuntimeEngine::init()
     m_w = w;
 
     QObject::connect(&m_testingProc, SIGNAL(finished(int, QProcess::ExitStatus)),
-                     this, SLOT(testFinished()));
+                     this, SIGNAL(testFinished()));
 
     QObject::connect(&m_testingProc, &QProcess::started,
                      this, &SanBaEiRuntimeEngine::gameStarted);
@@ -350,6 +350,17 @@ QString SanBaEiRuntimeEngine::getEnginePath()
     return m_customEnginePath.isEmpty() ?
                 ApplicationPath + "/" + SMBX38A_EXE :
                 m_customEnginePath;
+}
+
+QString SanBaEiRuntimeEngine::getBridgePath()
+{
+#ifdef Q_OS_MAC
+    // on macOS an IPC bridge is shipped inside of a bundle
+    QDir exePath(QApplication::applicationDirPath());
+    return exePath.absoluteFilePath("../Resources/ipc/38a_ipc_bridge.exe");
+#else
+    return ApplicationPath + "/ipc/38a_ipc_bridge.exe";
+#endif
 }
 
 void SanBaEiRuntimeEngine::loadSetup()
@@ -807,7 +818,13 @@ bool SanBaEiRuntimeEngine::doTestLevelIPC(const LevelData &d)
 
     if(!m_interface.isBridgeWorking()) // Initialize bridge
     {
-        QString cmd = ApplicationPath + "/ipc/38a_ipc_bridge.exe";
+        QString cmd = getBridgePath();
+        if(!QFile::exists(cmd))
+        {
+            msgNotFound(m_w, cmd);
+            return false;
+        }
+
         QStringList params;
         if(QFile::exists(cmd))
         {

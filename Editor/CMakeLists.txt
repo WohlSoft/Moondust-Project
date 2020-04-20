@@ -486,10 +486,15 @@ if(NOT HAIKU)
         COMMENT "Unpacking 38a_ipc_bridge.exe"
         VERBATIM
     )
-    # FIXME: on macOS, embed a bridge executable into the bundle
-    install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe"
-        DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
-    )
+
+    set(38A_IPC_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe")
+    if(APPLE) # Embed into the bundle
+        list(APPEND PGE_EDITOR_SRCS "${38A_IPC_BRIDGE_BIN}")
+    else()
+        install(FILES "${38A_IPC_BRIDGE_BIN}"
+            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+        )
+    endif()
 endif()
 
 if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
@@ -655,6 +660,7 @@ if(APPLE)
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${PGE_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties("${38A_IPC_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
 
     list(APPEND PGE_EDITOR_LINK_LIBS iconv)
 endif()
