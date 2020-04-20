@@ -732,7 +732,7 @@ void LunaTesterEngine::onInputData(const QJsonDocument &input)
 #else
             QStringList args;
             args << QString::number(smbxHwnd);
-            QString cmd = ApplicationPath + "/ipc/luna_hwnd_show.exe";
+            QString cmd = getHwndShowBridgePath();
             if(QFile::exists(cmd))
             {
                 qDebug() << "Starting HWND bring bridge: " << cmd << args;
@@ -837,6 +837,19 @@ QString LunaTesterEngine::getEnginePath()
                 ConfStatus::configDataPath :
                 m_customLunaPath + "/";
 }
+
+#ifndef _WIN32
+QString LunaTesterEngine::getHwndShowBridgePath()
+{
+#   ifdef Q_OS_MAC
+    // on macOS an IPC bridge is shipped inside of a bundle
+    QDir exePath(QApplication::applicationDirPath());
+    return exePath.absoluteFilePath("../Resources/ipc/luna_hwnd_show.exe");
+#   else
+    return ApplicationPath + "/ipc/luna_hwnd_show.exe";
+#   endif
+}
+#endif // _WIN32
 
 bool LunaTesterEngine::isEngineActive()
 {

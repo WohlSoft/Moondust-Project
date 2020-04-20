@@ -119,6 +119,14 @@ private:
      */
     QString getEnginePath();
 
+#ifndef _WIN32
+    /**
+     * @brief Returns a path to an executable of bridge to show a Wine window by HWND
+     * @return path to an executable
+     */
+    QString getHwndShowBridgePath();
+#endif
+
     bool isEngineActive();
     void killProcess();
     void killEngine();

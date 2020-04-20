@@ -478,6 +478,8 @@ if(NOT HAIKU)
         make_directory(${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
     endif()
 
+    set(38A_IPC_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe")
+
     # 38A IPC bridge
     add_custom_target(38a_ipc_bridge_bin ALL
         COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz"
@@ -485,9 +487,9 @@ if(NOT HAIKU)
         WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
         COMMENT "Unpacking 38a_ipc_bridge.exe"
         VERBATIM
+        BYPRODUCTS "${38A_IPC_BRIDGE_BIN}"
     )
 
-    set(38A_IPC_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe")
     if(APPLE) # Embed into the bundle
         list(APPEND PGE_EDITOR_SRCS "${38A_IPC_BRIDGE_BIN}")
         set_source_files_properties(${38A_IPC_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
@@ -498,7 +500,10 @@ if(NOT HAIKU)
     endif()
 endif()
 
-if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
+if(NOT WIN32 AND NOT HAIKU)
+
+    set(LUNA_HWND_SHOW_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/luna_hwnd_show.exe")
+
     # LunaTester Wine helper
     add_custom_target(luna_hwnd_show_bin ALL
         COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz"
@@ -506,10 +511,18 @@ if(NOT WIN32 AND NOT APPLE AND NOT HAIKU)
         WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
         COMMENT "Unpacking luna_hwnd_show.exe"
         VERBATIM
+        BYPRODUCTS "${LUNA_HWND_SHOW_BRIDGE_BIN}"
     )
-    install(FILES "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/luna_hwnd_show.exe"
-        DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
-    )
+
+    if(APPLE) # Embed into the bundle
+        list(APPEND PGE_EDITOR_SRCS "${LUNA_HWND_SHOW_BRIDGE_BIN}")
+        set_source_files_properties(${LUNA_HWND_SHOW_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
+    else()
+        install(FILES "${LUNA_HWND_SHOW_BRIDGE_BIN}"
+            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+        )
+    endif()
+
 endif()
 
 add_executable(pge_editor
@@ -662,6 +675,7 @@ if(APPLE)
     set_source_files_properties(${PGE_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties("${38A_IPC_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
+    set_source_files_properties("${LUNA_HWND_SHOW_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
 
     list(APPEND PGE_EDITOR_LINK_LIBS iconv)
 endif()
