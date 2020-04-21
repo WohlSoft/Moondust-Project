@@ -11408,7 +11408,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
-        <translation>Невозможно запустить эпизод, потому чть файл карты мира сохранён в неподдерживаемом формате. Пожалуйста, сохраните карту мира в формат SMBX-38A или в SMBX64-LVL.</translation>
+        <translation>Невозможно запустить эпизод, потому что файл карты мира сохранён в неподдерживаемом формате. Пожалуйста, сохраните карту мира в формат SMBX-38A или в SMBX64-LVL.</translation>
     </message>
     <message>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
