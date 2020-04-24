@@ -993,7 +993,7 @@ Please save them first before doing anything else.</source>
         <translation>Создавая отчёт, пожалуйста, подробно опишите, что именно было сделано, чтобы обвалить редактор.
 - Напишите список действий, сделанных, чтобы спровоцировать аварию.
 - Если авария произошла при редактировании определённого файла, пожалуйста, вложите его в отчёт.
-- Какую операционную систему вы писпользуете?</translation>
+- Какую операционную систему вы используете?</translation>
     </message>
     <message>
         <source>Copied!</source>
@@ -4212,7 +4212,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
-        <translation>Невозможно запустить эпизод, потому чть файл карты мира сохранён в неподдерживаемом формате. Пожалуйста, сохраните карту мира в формат SMBX64-WLD.</translation>
+        <translation>Невозможно запустить эпизод, потому что файл карты мира сохранён в неподдерживаемом формате. Пожалуйста, сохраните карту мира в формат SMBX64-WLD.</translation>
     </message>
 </context>
 <context>
@@ -11368,7 +11368,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>SMBX-38A is still active</source>
-        <translation>SMBX-38A всё ещё рабтоает</translation>
+        <translation>SMBX-38A всё ещё работает</translation>
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
