@@ -8748,7 +8748,7 @@ Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.
     </message>
     <message>
         <source>Use a system-wide installed Wine from a PATH environment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Utiliser une version de Wine installée sur le système à partir de la variable d’environnement PATH.</translation>
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
