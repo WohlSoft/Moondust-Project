@@ -45,11 +45,22 @@
 #endif
 
 
+static QString getDefaultEnginePath()
+{
+    QString pathConfig = ConfStatus::configDataPath + "/" + THEXTECH_EXE;
+    QString pathApp = ApplicationPath + "/" + THEXTECH_EXE;
+
+    if(QFile::exists(pathConfig))
+        return pathConfig;
+    else
+        return pathApp;
+}
+
 QString TheXTechEngine::getEnginePath()
 {
     return m_customEnginePath.isEmpty() ?
-                ApplicationPath + "/" + THEXTECH_EXE :
-                m_customEnginePath;
+           getDefaultEnginePath() :
+           m_customEnginePath;
 }
 
 void TheXTechEngine::loadSetup()
@@ -175,7 +186,7 @@ void TheXTechEngine::chooseEnginePath()
     if(m_customEnginePath.isEmpty())
     {
         useDefault->setChecked(true);
-        c->setText(ApplicationPath + "/" + THEXTECH_EXE);
+        c->setText(getDefaultEnginePath());
         c->setEnabled(false);
     }
     else
