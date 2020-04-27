@@ -4074,7 +4074,8 @@ To use LunaTester you should have right Integration configuration package!</sour
 Suggested to remove all excess elements.
 Do you want to continue the process?</source>
         <translation>Обнаружено нарушение стандарта SMBX64!
-%1, устаревший движок может аварийно прерваться!
+%1
+, устаревший движок может аварийно прерваться!
 Рекомендуется удалить все ненужные элементы.
 Хотите продолжить процесс?</translation>
     </message>
@@ -6265,8 +6266,7 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation>Сохранить переносимого НИП, когда игрок входит
-на другой уровень через этот проход.</translation>
+        <translation>Сохранить переносимого НИП, когда игрок входит на другой уровень через этот проход.</translation>
     </message>
     <message>
         <source>Allow inter-level NPC</source>
