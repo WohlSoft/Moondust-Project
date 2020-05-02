@@ -778,7 +778,7 @@ Percorso file: %3</translation>
     <name>CrashHandler</name>
     <message>
         <source>Crash</source>
-        <translation>Crash</translation>
+        <translation>Interruzione</translation>
     </message>
     <message>
         <source>You might want to report this data to developers or post it at:</source>
