@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Funktion ist noch nicht verfügbar</translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation>Setzen</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <source>Main</source>
