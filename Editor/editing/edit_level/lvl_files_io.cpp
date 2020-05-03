@@ -48,6 +48,7 @@ bool LevelEdit::newFile(DataConfig &configs, EditingSettings options)
     {
     case EditorSetup::DefaultFileFormats::SMBX64:
         LvlData.meta.RecentFormat = LevelData::SMBX64;
+        LvlData.meta.RecentFormatVersion = 64;
         LvlData.meta.smbx64strict = true;
         break;
     case EditorSetup::DefaultFileFormats::PGEX:

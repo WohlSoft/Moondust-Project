@@ -52,6 +52,7 @@ bool WorldEdit::newFile(DataConfig &configs, EditingSettings options)
     {
     case EditorSetup::DefaultFileFormats::SMBX64:
         WldData.meta.RecentFormat = LevelData::SMBX64;
+        WldData.meta.RecentFormatVersion = 64;
         WldData.meta.smbx64strict = true;
         break;
     case EditorSetup::DefaultFileFormats::PGEX:
