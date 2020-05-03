@@ -23,17 +23,18 @@
 #include <QDialog>
 #include <QMdiArea>
 
-namespace Ui {
+namespace Ui
+{
 class AppSettings;
 }
 
-class g_AppSettings : public QDialog
+class AppSettings : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit g_AppSettings(QWidget *parent = 0);
-    ~g_AppSettings();
+    explicit AppSettings(QWidget *parent = 0);
+    ~AppSettings();
 
     void loadSettings();
     static bool associateFiles();

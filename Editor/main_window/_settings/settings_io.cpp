@@ -114,6 +114,7 @@ void MainWindow::loadSettings()
         GlobalSettings::TSTToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("tileset-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
 
         GlobalSettings::currentTheme = settings.value("current-theme", "").toString();
+        GlobalSettings::fontSize = settings.value("font-size", -1).toInt();
 
         GlobalSettings::ShowTipOfDay = settings.value("show-tip-of-a-day", true).toBool();
 
@@ -295,6 +296,7 @@ void MainWindow::saveSettings()
         settings.setValue("language", GlobalSettings::locale);
 
         settings.setValue("current-theme", GlobalSettings::currentTheme);
+        settings.setValue("font-size", GlobalSettings::fontSize);
         settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
 
         settings.setValue("sdl-sample-rate", MixerX::sampleRate());
@@ -375,29 +377,42 @@ void MainWindow::on_actionApplication_settings_triggered()
 {
     if(!m_isAppInited) return;
 
-    g_AppSettings *appSettings = new g_AppSettings(this);
+    AppSettings *appSettings = new AppSettings(this);
     util::DialogToCenter(appSettings, true);
     //appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     //appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), util::getScreenGeometry()));
 
     if(appSettings->exec() == QDialog::Accepted)
     {
-        ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
-        on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
-
-        ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
-        on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
-
-        ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
-        dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
-        dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
-        dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
-
-        applyCurrentTheme();
-
+        applySetup(false);
         saveSettings();
     }
 
     delete appSettings;
+}
 
+void MainWindow::applySetup(bool startup)
+{
+    ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
+    on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
+
+    ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
+    on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
+
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+    dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
+    dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
+    dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
+
+    applyCurrentTheme();
+
+    if(GlobalSettings::fontSize > 0)
+    {
+        GlobalSettings::font.setPointSize(GlobalSettings::fontSize);
+        qApp->setFont(GlobalSettings::font);
+    }
+    else if(!startup)
+    {
+        qApp->setFont(GlobalSettings::fontDefault);
+    }
 }

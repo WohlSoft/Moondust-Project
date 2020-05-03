@@ -171,6 +171,9 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         // Load Editor's settings
         loadSettings();
 
+        // Apply setup
+        applySetup(true);
+
         LogDebug(QString("Loading theme..."));
         splash.progressTitle(tr("Loading theme..."));
         applyCurrentTheme();

@@ -193,10 +193,6 @@ int main(int argc, char *argv[])
 //    }
 //#endif
 
-    QFont fnt = app->font();
-    fnt.setPointSize(PGEDefaultFontSize);
-    app->setFont(fnt);
-
     for(QString &arg : args)
     {
         if(arg == "--install")

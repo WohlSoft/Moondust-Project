@@ -408,6 +408,10 @@ void MainWindow::setUiDefults()
     dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
     ui->centralWidget->setTabsClosable(true);
 
+    /**********************Default font size********************************/
+    GlobalSettings::fontDefault = qApp->font();
+    GlobalSettings::font = qApp->font();
+
     /*********************Music volume regulator*************************/
     m_ui_musicVolume = new QSlider(Qt::Horizontal, ui->EditionToolBar);
     m_ui_musicVolume->setMaximumWidth(70);

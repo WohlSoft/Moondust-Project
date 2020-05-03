@@ -155,6 +155,10 @@ public:
     static QTabWidget::TabPosition  TSTToolboxPos;
     static QString                  currentTheme;
 
+    static QFont                    fontDefault;
+    static QFont                    font;
+    static int                      fontSize;
+
     static bool ShowTipOfDay;
 };
 

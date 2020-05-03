@@ -59,6 +59,9 @@ bool GlobalSettings::Placing_dontShowPropertiesBox  = false;
 int  GlobalSettings::historyLimit   = 300;
 
 QString GlobalSettings::currentTheme;
+QFont   GlobalSettings::fontDefault;
+QFont   GlobalSettings::font;
+int     GlobalSettings::fontSize = -1;
 
 bool GlobalSettings::ShowTipOfDay   = true;
 

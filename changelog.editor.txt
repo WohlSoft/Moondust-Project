@@ -32,6 +32,7 @@ Editor 0.3.2-dev
 - Extended a context menu of level and world map surface
 - Better look of a crash handler dialog
 - Added a level testing integration with the SMBX-38A engine
+- Added an ability to change font size
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu

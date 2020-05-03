@@ -195,6 +195,8 @@ public:
         ///
         void saveSettings();
 
+        void applySetup(bool startup = false);
+
         ///
         /// \brief getCurrentSceneCoordinates Returns the scene coordinates either from level window or world window
         /// \param x The current x-coordinate.
