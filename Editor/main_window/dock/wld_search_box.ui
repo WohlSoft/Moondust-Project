@@ -47,21 +47,6 @@
         <string>Terrain tile</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_21">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="spacing">
-         <number>3</number>
-        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_75">
           <property name="text">
@@ -161,21 +146,6 @@
         <string>Scenery</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_24">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="spacing">
-         <number>3</number>
-        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_72">
           <property name="text">
@@ -275,21 +245,6 @@
         <string>Path</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_23">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="spacing">
-         <number>3</number>
-        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_69">
           <property name="text">
@@ -389,21 +344,6 @@
         <string>Level</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_20">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="spacing">
-         <number>3</number>
-        </property>
         <item row="8" column="1">
          <widget class="QCheckBox" name="Find_Check_BigPathBackground"/>
         </item>
@@ -628,21 +568,6 @@
         <string>Music box</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_22">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="spacing">
-         <number>3</number>
-        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_66">
           <property name="text">

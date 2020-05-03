@@ -18,6 +18,7 @@
 
 #include <QJsonObject>
 #include <QMutexLocker>
+#include <QLayout>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/util.h>
 #include <common_features/json_settings_widget.h>
@@ -86,7 +87,7 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
 
     re_translate_widgets();
 
-    m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    m_extraSettingsSpacer.reset(new QSpacerItem(10, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
     setAttribute(Qt::WA_LayoutUsesWidgetRect);
     setAttribute(Qt::WA_ShowWithoutActivating);
     setFocusPolicy(Qt::StrongFocus);

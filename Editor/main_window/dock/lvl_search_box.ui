@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>291</width>
-    <height>465</height>
+    <width>287</width>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -44,24 +44,6 @@
         <string>Block</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_10" columnstretch="0,0,0,0,90">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>3</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>1</number>
-        </property>
         <item row="12" column="0" colspan="5">
          <widget class="QPushButton" name="Find_Button_ResetBlock">
           <property name="text">
@@ -267,24 +249,6 @@
         <string>BGO</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_11" columnstretch="0,0,0,0,90">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>3</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>1</number>
-        </property>
         <item row="3" column="0" alignment="Qt::AlignHCenter">
          <widget class="QCheckBox" name="Find_Check_LayerBGO"/>
         </item>
@@ -413,24 +377,6 @@
        <layout class="QGridLayout" name="gridLayout_12" rowstretch="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,100">
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>3</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>1</number>
         </property>
         <item row="12" column="3">
          <widget class="QLabel" name="label_51">

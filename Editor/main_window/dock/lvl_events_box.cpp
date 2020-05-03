@@ -103,7 +103,7 @@ QComboBox *LvlEventsBox::cbox_sct_bg()
     return ui->LVLEvent_SctBg_List;
 }
 
-QPushButton *LvlEventsBox::button_event_dupe()
+QToolButton *LvlEventsBox::button_event_dupe()
 {
     return ui->LVLEvents_duplicate;
 }

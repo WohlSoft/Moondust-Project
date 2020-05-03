@@ -12,6 +12,7 @@ class QListWidget;
 class QListWidgetItem;
 class QComboBox;
 class QPushButton;
+class QToolButton;
 
 namespace Ui {
 class LvlEventsBox;
@@ -38,7 +39,7 @@ public:
     QComboBox* cbox_event_trigger();
     QComboBox* cbox_sct_mus();
     QComboBox* cbox_sct_bg();
-    QPushButton *button_event_dupe();
+    QToolButton *button_event_dupe();
 
     bool eventIsExist(QString evt);
 

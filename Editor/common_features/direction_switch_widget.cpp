@@ -35,6 +35,7 @@ DirectionSwitchWidget::DirectionSwitchWidget(QWidget *parent) : QWidget(parent)
     setMinimumWidth(60);
     setMinimumHeight(60);
     setMouseTracking(true); // Mouse tracking is needed to highlight hovering buttons and show tooltips
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 }
 
 DirectionSwitchWidget::~DirectionSwitchWidget()
