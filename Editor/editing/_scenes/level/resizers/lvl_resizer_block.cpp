@@ -38,7 +38,9 @@ void LvlScene::setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool ac
         int h = (int)blk->m_data.h;
         int gridSize = blk->m_localProps.setup.grid;
 
-        if(m_opts.grid_override)
+        if(m_data->meta.smbx64strict)
+            gridSize = 32;
+        else if(m_opts.grid_override)
             gridSize = m_opts.customGrid.width();
 
         m_resizeBox = new ItemResizer(QSize(w, h), Qt::blue, gridSize);
@@ -46,7 +48,9 @@ void LvlScene::setBlockResizer(QGraphicsItem *targetBlock, bool enabled, bool ac
         m_resizeBox->setPos(x, y);
         m_resizeBox->m_resizerType = ItemResizer::Resizer_Item;
         m_resizeBox->m_targetItem = targetBlock;
-        m_resizeBox->m_minSize = QSizeF(64, 64);
+        m_resizeBox->m_minSize = m_data->meta.smbx64strict ? QSizeF(64, 64) : QSizeF(8, 8);
+        if(!m_data->meta.smbx64strict)
+            m_resizeBox->setNoGrid(!m_opts.grid_snap);
         this->setFocus(Qt::ActiveWindowFocusReason);
         SwitchEditingMode(MODE_Resizing);
         m_mw->resizeToolbarVisible(true);
