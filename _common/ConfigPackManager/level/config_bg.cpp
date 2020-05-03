@@ -244,11 +244,12 @@ bool BgSetup::parse(IniProcessing *setup,
                     int depth_mode = 0;
                     setup->readEnum("depth",
                                     depth_mode,
-                                    0, {
-                                        {"INFINITE", +1},
-                                        {"MAX", +1},
-                                        {"MIN", -1}
-                                    });
+                                    0,
+                    {
+                        {"INFINITE", +1},
+                        {"MAX", +1},
+                        {"MIN", -1}
+                    });
                     switch(depth_mode)
                     {
                     case +1:
@@ -273,7 +274,8 @@ bool BgSetup::parse(IniProcessing *setup,
                 pAlias("repeatx", lyr.repeat_x);
                 pAlias("repeaty", lyr.repeat_y);
 
-                IniProcessing::StrEnumMap pMode = {
+                IniProcessing::StrEnumMap pMode =
+                {
                     {"scroll", BgLayer::P_MODE_SCROLL},
                     {"fit", BgLayer::P_MODE_FIT},
                     {"fixed", BgLayer::P_MODE_FIXED}
@@ -323,7 +325,9 @@ bool BgSetup::parse(IniProcessing *setup,
                                 lyr.parallax_mode_x = BgLayer::P_MODE_FIXED;
                                 lyr.parallax_mode_y = BgLayer::P_MODE_FIXED;
                                 lyr.opacity = 0.0;//Layer is behind the "camera"
-                            } else {
+                            }
+                            else
+                            {
                                 d += 1.0l;
                                 d = 1.0l / (d * d);
                                 parallaxX = parallaxY = static_cast<double>(d);

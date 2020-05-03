@@ -32,9 +32,9 @@ bool BgoSetup::parse(IniProcessing *setup,
                      const BgoSetup *merge_with,
                      PGEString *error)
 {
-    #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
-    #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
-    #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
+#define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+#define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
+#define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
@@ -72,6 +72,10 @@ bool BgoSetup::parse(IniProcessing *setup,
     setup->read("offset-y", grid_offset_y, pMergeMe(grid_offset_y));//DEPRECATED
 
     setup->read("image",    image_n, pMerge(image_n, ""));
+#ifdef PGE_EDITOR // alternative image for Editor
+    pAlias("editor-image", image_n);
+#endif
+
     if(!merge_with && !PGE_ImageInfo::getImageSize(bgoImgPath + image_n, &w, &h, &errCode))
     {
         if(error)
@@ -132,6 +136,9 @@ bool BgoSetup::parse(IniProcessing *setup,
     setup->read("frames", frames,       pMerge(frames, 1u));//Real
     pAlias("framecount",           frames);
     pAlias("frame-count",          frames);
+#ifdef PGE_EDITOR // alternative animation for Editor
+    pAlias("editor-frames",   frames);
+#endif
     NumberLimiter::apply(frames, 1u);
     animated = (frames > 1);
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
@@ -144,14 +151,17 @@ bool BgoSetup::parse(IniProcessing *setup,
 
     frame_sequence.clear();
     setup->read("frame-sequence", frame_sequence, pMergeMe(frame_sequence));
+#ifdef PGE_EDITOR // alternative animation for Editor
+    pAlias("editor-frame-sequence",   frame_sequence);
+#endif
 
     frame_h =   animated ? Maths::uRound(double(h) / double(frames)) : h;
     NumberLimiter::apply(frame_h, 0u);
     setup->read("display-frame", display_frame, pMerge(display_frame, 0));
     NumberLimiter::apply(display_frame, 0u);
 
-    #undef pMerge
-    #undef pMergeMe
-    #undef pAlias
+#undef pMerge
+#undef pMergeMe
+#undef pAlias
     return true;
 }
