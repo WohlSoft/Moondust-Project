@@ -16,21 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/graphics_funcs.h>
-#include <common_features/items.h>
 #include <editing/edit_world/world_edit.h>
 #include <PGE_File_Formats/file_formats.h>
 
-#include "../wld_scene.h"
-
+#include <editing/_scenes/world/wld_scene.h>
+#include <editing/_scenes/common/load_cgfx.hpp>
 
 //Search and load custom User's files
 void WldScene::loadUserData(QProgressDialog &progress)
 {
-    int i;
-
     QImage tempImg;
-    bool WrongImagesDetected = false;
+    bool hasInvalidPictures = false;
 
     m_localConfigTerrain.clear();
     m_localConfigScenery.clear();
@@ -123,8 +119,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
 
     m_localConfigTerrain.allocateSlots(m_configs->main_wtiles.total());
     uWLD.setDefaultDir(m_configs->getTilePath());
+
     //Load Tiles
-    for(i = 1; i < m_configs->main_wtiles.size(); i++) //Add user images
+    for(int i = 1; i < m_configs->main_wtiles.size(); i++) //Add user images
     {
         obj_w_tile &tileD = m_configs->main_wtiles[i];
         obj_w_tile  t_tile;
@@ -139,25 +136,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString customImgFile = uWLD.getCustomFile(t_tile.setup.image_n, true);
-        if(!customImgFile.isEmpty())
-        {
-            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
-            {
-                QString CustomMask = uWLD.getCustomFile(t_tile.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &tileD.image);
-            }
-            else
-                GraphicsHelps::loadQImage(tempImg, customImgFile);
-            if(tempImg.isNull())
-                WrongImagesDetected = true;
-            else
-            {
-                m_localImages.push_back(QPixmap::fromImage(tempImg));
-                t_tile.cur_image = &m_localImages.last();
-            }
-            custom = true;
-        }
+        custom |= loadCustomImage(tempImg, uWLD,
+                                  t_tile, &tileD,
+                                  m_localImages, &hasInvalidPictures);
 
         SimpleAnimator *aniTile = new SimpleAnimator(
             ((t_tile.cur_image->isNull()) ?
@@ -175,10 +156,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
         m_animationTimer.registerAnimation(aniTile);
         t_tile.animator_id = m_animatorsTerrain.size() - 1;
         m_localConfigTerrain.storeElement(i, t_tile);
-        if(custom)
-        {
-            m_customTerrain.push_back(&m_localConfigTerrain[i]);//Register Terrain tile as customized
-        }
+
+        if(custom) // Register Terrain tile as customized
+            m_customTerrain.push_back(&m_localConfigTerrain[i]);
 
         if(progress.wasCanceled())
             return;
@@ -198,8 +178,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
     qApp->processEvents();
     m_localConfigScenery.allocateSlots(m_configs->main_wscene.total());
     uWLD.setDefaultDir(m_configs->getScenePath());
+
     //Load Sceneries
-    for(i = 1; i < m_configs->main_wscene.size(); i++) //Add user images
+    for(int i = 1; i < m_configs->main_wscene.size(); i++) //Add user images
     {
         obj_w_scenery &sceneryD = m_configs->main_wscene[i];
         obj_w_scenery  t_scenery;
@@ -214,25 +195,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString customImgFile = uWLD.getCustomFile(t_scenery.setup.image_n, true);
-        if(!customImgFile.isEmpty())
-        {
-            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
-            {
-                QString CustomMask = uWLD.getCustomFile(t_scenery.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &sceneryD.image);
-            }
-            else
-                GraphicsHelps::loadQImage(tempImg, customImgFile);
-            if(tempImg.isNull())
-                WrongImagesDetected = true;
-            else
-            {
-                m_localImages.push_back(QPixmap::fromImage(tempImg));
-                t_scenery.cur_image = &m_localImages.last();
-            }
-            custom = true;
-        }
+        custom |= loadCustomImage(tempImg, uWLD,
+                                  t_scenery, &sceneryD,
+                                  m_localImages, &hasInvalidPictures);
 
         SimpleAnimator *aniScene = new SimpleAnimator(
             ((t_scenery.cur_image->isNull()) ?
@@ -250,10 +215,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
         m_animationTimer.registerAnimation(aniScene);
         t_scenery.animator_id = m_animatorsScenery.size() - 1;
         m_localConfigScenery.storeElement(i, t_scenery);
-        if(custom)
-        {
-            m_customSceneries.push_back(&m_localConfigScenery[i]);//Register Terrain tile as customized
-        }
+
+        if(custom) // Register scenery as customized
+            m_customSceneries.push_back(&m_localConfigScenery[i]);
 
         if(progress.wasCanceled())
             return;
@@ -272,8 +236,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
     qApp->processEvents();
     m_localConfigPaths.allocateSlots(m_configs->main_wpaths.total());
     uWLD.setDefaultDir(m_configs->getPathPath());
+
     //Load Path tiles
-    for(i = 1; i < m_configs->main_wpaths.size(); i++) //Add user images
+    for(int i = 1; i < m_configs->main_wpaths.size(); i++) //Add user images
     {
         obj_w_path &pathD = m_configs->main_wpaths[i];
         obj_w_path t_path;
@@ -288,25 +253,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString customImgFile = uWLD.getCustomFile(t_path.setup.image_n, true);
-        if(!customImgFile.isEmpty())
-        {
-            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
-            {
-                QString CustomMask = uWLD.getCustomFile(t_path.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &pathD.image);
-            }
-            else
-                GraphicsHelps::loadQImage(tempImg, customImgFile);
-            if(tempImg.isNull())
-                WrongImagesDetected = true;
-            else
-            {
-                m_localImages.push_back(QPixmap::fromImage(tempImg));
-                t_path.cur_image = &m_localImages.last();
-            }
-            custom = true;
-        }
+        custom |= loadCustomImage(tempImg, uWLD,
+                                  t_path, &pathD,
+                                  m_localImages, &hasInvalidPictures);
 
         SimpleAnimator *aniPath = new SimpleAnimator(
             ((t_path.cur_image->isNull()) ?
@@ -324,10 +273,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
         m_animationTimer.registerAnimation(aniPath);
         t_path.animator_id = m_animatorsPaths.size() - 1;
         m_localConfigPaths.storeElement(i, t_path);
-        if(custom)
-        {
-            m_customPaths.push_back(&m_localConfigPaths[i]);//Register Terrain tile as customized
-        }
+
+        if(custom) // Register path tile as customized
+            m_customPaths.push_back(&m_localConfigPaths[i]);
 
         if(progress.wasCanceled())
             return;
@@ -348,7 +296,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
     uWLD.setDefaultDir(m_configs->getWlvlPath());
 
     //Load Level tiles
-    for(i = 0; i < m_configs->main_wlevels.size(); i++) //Add user images
+    for(int i = 0; i < m_configs->main_wlevels.size(); i++) //Add user images
     {
         obj_w_level &levelD = m_configs->main_wlevels[i];
         obj_w_level t_level;
@@ -363,25 +311,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString customImgFile = uWLD.getCustomFile(t_level.setup.image_n, true);
-        if(!customImgFile.isEmpty())
-        {
-            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
-            {
-                QString CustomMask = uWLD.getCustomFile(t_level.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &levelD.image);
-            }
-            else
-                GraphicsHelps::loadQImage(tempImg, customImgFile);
-            if(tempImg.isNull())
-                WrongImagesDetected = true;
-            else
-            {
-                m_localImages.push_back(QPixmap::fromImage(tempImg));
-                t_level.cur_image = &m_localImages.last();
-            }
-            custom = true;
-        }
+        custom |= loadCustomImage(tempImg, uWLD,
+                                  t_level, &levelD,
+                                  m_localImages, &hasInvalidPictures);
 
         SimpleAnimator *aniLevel = new SimpleAnimator(
             ((t_level.cur_image->isNull()) ?
@@ -399,10 +331,9 @@ void WldScene::loadUserData(QProgressDialog &progress)
         m_animationTimer.registerAnimation(aniLevel);
         t_level.animator_id = m_animatorsLevels.size() - 1;
         m_localConfigLevels.storeElement(i, t_level);
-        if(custom)
-        {
-            m_customLevels.push_back(&m_localConfigLevels[i]);//Register Terrain tile as customized
-        }
+
+        if(custom) // Register level cell as customized
+            m_customLevels.push_back(&m_localConfigLevels[i]);
 
         if(progress.wasCanceled())
             return;
@@ -414,7 +345,7 @@ void WldScene::loadUserData(QProgressDialog &progress)
     qApp->processEvents();
 
     //Notification about wrong custom image sprites
-    if(WrongImagesDetected)
+    if(hasInvalidPictures)
     {
         QMessageBox *msg = new QMessageBox();
         msg->setWindowFlags(msg->windowFlags() | Qt::WindowStaysOnTopHint);
@@ -426,4 +357,3 @@ void WldScene::loadUserData(QProgressDialog &progress)
         msg->exec();
     }
 }
-
