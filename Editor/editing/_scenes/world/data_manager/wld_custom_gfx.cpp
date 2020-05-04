@@ -139,16 +139,16 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString CustomImage = uWLD.getCustomFile(t_tile.setup.image_n, true);
-        if(! CustomImage.isEmpty())
+        QString customImgFile = uWLD.getCustomFile(t_tile.setup.image_n, true);
+        if(!customImgFile.isEmpty())
         {
-            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
+            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uWLD.getCustomFile(t_tile.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &tileD.image);
+                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &tileD.image);
             }
             else
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
+                GraphicsHelps::loadQImage(tempImg, customImgFile);
             if(tempImg.isNull())
                 WrongImagesDetected = true;
             else
@@ -214,16 +214,16 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString CustomImage = uWLD.getCustomFile(t_scenery.setup.image_n, true);
-        if(! CustomImage.isEmpty())
+        QString customImgFile = uWLD.getCustomFile(t_scenery.setup.image_n, true);
+        if(!customImgFile.isEmpty())
         {
-            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
+            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uWLD.getCustomFile(t_scenery.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &sceneryD.image);
+                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &sceneryD.image);
             }
             else
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
+                GraphicsHelps::loadQImage(tempImg, customImgFile);
             if(tempImg.isNull())
                 WrongImagesDetected = true;
             else
@@ -288,16 +288,16 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString CustomImage = uWLD.getCustomFile(t_path.setup.image_n, true);
-        if(! CustomImage.isEmpty())
+        QString customImgFile = uWLD.getCustomFile(t_path.setup.image_n, true);
+        if(!customImgFile.isEmpty())
         {
-            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
+            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uWLD.getCustomFile(t_path.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &pathD.image);
+                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &pathD.image);
             }
             else
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
+                GraphicsHelps::loadQImage(tempImg, customImgFile);
             if(tempImg.isNull())
                 WrongImagesDetected = true;
             else
@@ -363,16 +363,16 @@ void WldScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString CustomImage = uWLD.getCustomFile(t_level.setup.image_n, true);
-        if(! CustomImage.isEmpty())
+        QString customImgFile = uWLD.getCustomFile(t_level.setup.image_n, true);
+        if(!customImgFile.isEmpty())
         {
-            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
+            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uWLD.getCustomFile(t_level.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &levelD.image);
+                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &levelD.image);
             }
             else
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
+                GraphicsHelps::loadQImage(tempImg, customImgFile);
             if(tempImg.isNull())
                 WrongImagesDetected = true;
             else

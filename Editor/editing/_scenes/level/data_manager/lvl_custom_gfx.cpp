@@ -222,16 +222,16 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString CustomFile = uLVL.getCustomFile(t_block.setup.image_n, true);
-        if(!CustomFile.isEmpty())
+        QString customImgFile = uLVL.getCustomFile(t_block.setup.image_n, true);
+        if(!customImgFile.isEmpty())
         {
-            if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
+            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uLVL.getCustomFile(t_block.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomFile, CustomMask, &blockD->image);
+                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &blockD->image);
             }
             else
-                GraphicsHelps::loadQImage(tempImg, CustomFile);
+                GraphicsHelps::loadQImage(tempImg, customImgFile);
             if(tempImg.isNull())
                 WrongImagesDetected = true;
             else
@@ -301,16 +301,16 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             custom = true;
         }
 
-        QString CustomImage = uLVL.getCustomFile(t_bgo.setup.image_n, true);
-        if(!CustomImage.isEmpty())
+        QString customImgFile = uLVL.getCustomFile(t_bgo.setup.image_n, true);
+        if(!customImgFile.isEmpty())
         {
-            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
+            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uLVL.getCustomFile(t_bgo.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &bgoD->image);
+                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &bgoD->image);
             }
             else
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
+                GraphicsHelps::loadQImage(tempImg, customImgFile);
             if(tempImg.isNull())
                 WrongImagesDetected = true;
             else
@@ -405,19 +405,19 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         QString imgFileName = (npctxt && sets.en_image) ? sets.image : t_npc.setup.image_n;
 
         // ///////////////////////Looking for user's GFX
-        QString CustomImage = uLVL.getCustomFile(imgFileName, true);
-        if(CustomImage.isEmpty())
-            CustomImage = uLVL.getCustomFile(t_npc.setup.image_n, true);
+        QString customImgFile = uLVL.getCustomFile(imgFileName, true);
+        if(customImgFile.isEmpty())
+            customImgFile = uLVL.getCustomFile(t_npc.setup.image_n, true);
 
-        if(!CustomImage.isEmpty())
+        if(!customImgFile.isEmpty())
         {
-            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
+            if(!customImgFile.endsWith(".png", Qt::CaseInsensitive))
             {
                 QString CustomMask = uLVL.getCustomFile(t_npc.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &npcD->image);
+                GraphicsHelps::loadQImage(tempImg, customImgFile, CustomMask, &npcD->image);
             }
             else
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
+                GraphicsHelps::loadQImage(tempImg, customImgFile);
             if(tempImg.isNull())
                 WrongImagesDetected = true;
             else
