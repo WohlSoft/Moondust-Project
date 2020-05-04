@@ -122,6 +122,10 @@ void DataConfig::loadWorldLevels()
                 valid = false;
                 addError(QString("LEVEL-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderWldLevelPoints.graphics,
+                                       slevel.setup.icon_n,
+                                       slevel.icon);
         }
         /***************Load image*end***************/
         slevel.setup.id = i;

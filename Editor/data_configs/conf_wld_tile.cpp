@@ -119,6 +119,10 @@ void DataConfig::loadWorldTiles()
                 valid = false;
                 addError(QString("TILE-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderWldTerrain.graphics,
+                                       stile.setup.icon_n,
+                                       stile.icon);
         }
         /***************Load image*end***************/
         stile.setup.id = i;

@@ -120,6 +120,10 @@ void DataConfig::loadWorldPaths()
                 valid = false;
                 addError(QString("PATH-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderWldPaths.graphics,
+                                       sPath.setup.icon_n,
+                                       sPath.icon);
         }
         /***************Load image*end***************/
         sPath.setup.id = i;

@@ -120,6 +120,10 @@ void DataConfig::loadWorldScene()
                 valid = false;
                 addError(QString("SCENE-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderWldScenery.graphics,
+                                       sScene.setup.icon_n,
+                                       sScene.icon);
         }
         /***************Load image*end***************/
         sScene.setup.id = i;

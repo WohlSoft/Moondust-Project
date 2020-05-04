@@ -23,12 +23,6 @@
 
 #include "data_configs.h"
 
-obj_bgo::obj_bgo()
-{
-    isValid     = false;
-    animator_id = 0;
-    cur_image   = nullptr;
-}
 
 void obj_bgo::copyTo(obj_bgo &bgo)
 {
@@ -36,8 +30,12 @@ void obj_bgo::copyTo(obj_bgo &bgo)
     bgo.isValid         = isValid;
     bgo.animator_id     = animator_id;
     bgo.cur_image       = cur_image;
-    if(cur_image == nullptr)
+    bgo.cur_icon        = cur_icon;
+
+    if(!cur_image)
         bgo.cur_image   = &image;
+    if(!cur_icon)
+        bgo.cur_icon    = &icon;
 
     bgo.setup = setup;
 }
@@ -151,6 +149,10 @@ void DataConfig::loadLevelBGO()
                 valid = false;
                 addError(QString("BGO-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderLvlBgo.graphics,
+                                       sbgo.setup.icon_n,
+                                       sbgo.icon);
         }
         /***************Load image*end***************/
         sbgo.setup.id = i;

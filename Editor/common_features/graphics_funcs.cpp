@@ -361,6 +361,19 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
     out_errStr = "";
 }
 
+void GraphicsHelps::loadIconOpt(QString rootDir, QString in_imgName, QPixmap &out_Img)
+{
+    out_Img = QPixmap(); // null it
+
+    if(in_imgName.isEmpty())
+        return;
+
+    if(!QFile::exists(rootDir + in_imgName))
+        return;
+
+    out_Img.load(rootDir + in_imgName);
+}
+
 QPixmap GraphicsHelps::loadPixmap(QString file)
 {
     return QPixmap::fromImage(loadQImage(file));

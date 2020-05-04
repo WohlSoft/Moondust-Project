@@ -40,6 +40,9 @@ public:
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &out_Mask, QString &out_errStr);
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QString &out_errStr);
 
+    // Optional loading of image (without reporting of error)
+    static void loadIconOpt(QString rootDir, QString in_imgName, QPixmap &out_Img);
+
     static QPixmap loadPixmap(QString file);
     static QImage  loadQImage(QString file);
 
