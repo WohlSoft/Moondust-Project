@@ -111,6 +111,9 @@
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
           </widget>
          </item>
         </layout>
@@ -201,6 +204,9 @@
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
           </widget>
          </item>
         </layout>
@@ -290,6 +296,9 @@
            <property name="icon">
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
            </property>
           </widget>
          </item>
@@ -415,6 +424,9 @@
            <property name="icon">
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
            </property>
           </widget>
          </item>
@@ -553,6 +565,9 @@
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
           </widget>
          </item>
         </layout>
@@ -680,6 +695,9 @@
            <property name="icon">
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
            </property>
           </widget>
          </item>
@@ -818,6 +836,9 @@
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
            </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
+           </property>
           </widget>
          </item>
         </layout>
@@ -917,6 +938,9 @@
            <property name="icon">
             <iconset resource="../../_resources/editor.qrc">
              <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+           </property>
+           <property name="popupMode">
+            <enum>QToolButton::InstantPopup</enum>
            </property>
           </widget>
          </item>

@@ -186,6 +186,12 @@
         <iconset resource="../../_resources/editor.qrc">
          <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
        </property>
+       <property name="popupMode">
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
+       <property name="arrowType">
+        <enum>Qt::NoArrow</enum>
+       </property>
       </widget>
      </item>
     </layout>
@@ -343,6 +349,9 @@
         <iconset resource="../../_resources/editor.qrc">
          <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
        </property>
+       <property name="popupMode">
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
       </widget>
      </item>
     </layout>
@@ -499,6 +508,12 @@
        <property name="icon">
         <iconset resource="../../_resources/editor.qrc">
          <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+       </property>
+       <property name="popupMode">
+        <enum>QToolButton::InstantPopup</enum>
+       </property>
+       <property name="arrowType">
+        <enum>Qt::NoArrow</enum>
        </property>
       </widget>
      </item>
