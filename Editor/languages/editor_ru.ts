@@ -406,6 +406,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation>Стандартный масштаб, устанавливаемый при открытии или создании файла.</translation>
     </message>
+    <message>
+        <source>Font</source>
+        <translation>Шрифт</translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation>Размер шрифта</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <translation>По-умолчанию</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
