@@ -356,11 +356,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Set log file</source>
-        <translation type="vanished">Выбор файла отчёта</translation>
+        <translation>Выбор файла отчёта</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Текстовые файлы (*.txt *.log)</translation>
+        <translation>Текстовые файлы (*.txt *.log)</translation>
     </message>
     <message>
         <source>PGE Level file</source>
@@ -384,15 +384,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Success</source>
-        <translation type="vanished">Успешно</translation>
+        <translation>Успешно</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="vanished">Все расширения файлов успешно установлены</translation>
+        <translation>Все расширения файлов успешно установлены</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="vanished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Environment</source>
@@ -13810,23 +13810,23 @@ therefore you can use same link to get updated version</source>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>Выбор файла отчёта</translation>
+        <translation type="vanished">Выбор файла отчёта</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>Текстовые файлы (*.txt *.log)</translation>
+        <translation type="vanished">Текстовые файлы (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Успешно</translation>
+        <translation type="vanished">Успешно</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>Все расширения файлов успешно установлены</translation>
+        <translation type="vanished">Все расширения файлов успешно установлены</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation type="vanished">Ошибка</translation>
     </message>
 </context>
 <context>

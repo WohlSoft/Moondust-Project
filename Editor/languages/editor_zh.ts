@@ -329,6 +329,38 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation>新建或打开文件时的默认缩放级别。</translation>
     </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <translation type="unfinished">使用默认值</translation>
+    </message>
+    <message>
+        <source>Set log file</source>
+        <translation type="unfinished">设置日志文件</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt *.log)</source>
+        <translation type="unfinished">文本文件 (*.txt *.log)</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation type="unfinished">成功</translation>
+    </message>
+    <message>
+        <source>All file associations have been set</source>
+        <translation type="unfinished">文件关联已设置</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">错误</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -9725,23 +9757,23 @@ therefore you can use same link to get updated version</source>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>设置日志文件</translation>
+        <translation type="vanished">设置日志文件</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>文本文件 (*.txt *.log)</translation>
+        <translation type="vanished">文本文件 (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>成功</translation>
+        <translation type="vanished">成功</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>文件关联已设置</translation>
+        <translation type="vanished">文件关联已设置</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>错误</translation>
+        <translation type="vanished">错误</translation>
     </message>
 </context>
 <context>

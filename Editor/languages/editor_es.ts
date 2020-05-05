@@ -355,11 +355,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Set log file</source>
-        <translation type="vanished">Establecer archivo</translation>
+        <translation>Establecer archivo</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Archivos de texto (*.txt *.log)</translation>
+        <translation>Archivos de texto (*.txt *.log)</translation>
     </message>
     <message>
         <source>PGE Level file</source>
@@ -383,15 +383,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Success</source>
-        <translation type="vanished">Éxito</translation>
+        <translation>Éxito</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="vanished">Todas las asociaciones se hicieron</translation>
+        <translation>Todas las asociaciones se hicieron</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="vanished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Environment</source>
@@ -404,6 +404,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation>Zoom predeterminado que se instalará al abrir o crear un archivo.</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13566,23 +13578,23 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada</tr
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>Establecer archivo</translation>
+        <translation type="vanished">Establecer archivo</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>Archivos de texto (*.txt *.log)</translation>
+        <translation type="vanished">Archivos de texto (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Éxito</translation>
+        <translation type="vanished">Éxito</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>Todas las asociaciones se hicieron</translation>
+        <translation type="vanished">Todas las asociaciones se hicieron</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation type="vanished">Error</translation>
     </message>
 </context>
 <context>

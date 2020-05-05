@@ -373,6 +373,38 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation>Zoom par défaut qui sera défini à l&apos;ouverture ou à la création du fichier.</translation>
     </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <translation type="unfinished">Utiliser celui par défaut</translation>
+    </message>
+    <message>
+        <source>Set log file</source>
+        <translation type="unfinished">Définir le fichier de journal</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt *.log)</source>
+        <translation type="unfinished">Fichiers texte (*.txt *.log)</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation type="unfinished">Succès</translation>
+    </message>
+    <message>
+        <source>All file associations have been set</source>
+        <translation type="unfinished">Toutes les associations de fichiers on été définies</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Erreur</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -9369,23 +9401,23 @@ therefore you can use same link to get updated version</source>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>Définir le fichier de journal</translation>
+        <translation type="vanished">Définir le fichier de journal</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>Fichiers texte (*.txt *.log)</translation>
+        <translation type="vanished">Fichiers texte (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Succès</translation>
+        <translation type="vanished">Succès</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>Toutes les associations de fichiers on été définies</translation>
+        <translation type="vanished">Toutes les associations de fichiers on été définies</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation type="vanished">Erreur</translation>
     </message>
 </context>
 <context>

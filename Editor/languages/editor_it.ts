@@ -324,11 +324,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Set log file</source>
-        <translation type="vanished">setta il file log</translation>
+        <translation>setta il file log</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">file text (.txt .log)</translation>
+        <translation>file text (.txt .log)</translation>
     </message>
     <message>
         <source>Environment</source>
@@ -341,6 +341,30 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation type="unfinished">Successo</translation>
+    </message>
+    <message>
+        <source>All file associations have been set</source>
+        <translation type="unfinished">Tutte le associazioni file sono state impostate</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Errore</translation>
     </message>
 </context>
 <context>
@@ -10577,23 +10601,23 @@ Vuoi salvare le modifiche?</translation>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>Imposta il file log</translation>
+        <translation type="vanished">Imposta il file log</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>File di testo (*.txt *.log)</translation>
+        <translation type="vanished">File di testo (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Successo</translation>
+        <translation type="vanished">Successo</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>Tutte le associazioni file sono state impostate</translation>
+        <translation type="vanished">Tutte le associazioni file sono state impostate</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Errore</translation>
+        <translation type="vanished">Errore</translation>
     </message>
 </context>
 <context>

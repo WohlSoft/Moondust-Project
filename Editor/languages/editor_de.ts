@@ -347,11 +347,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Set log file</source>
-        <translation type="vanished">Setzte Log Datei</translation>
+        <translation>Setzte Log Datei</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Text Datei (*.txt *.log)</translation>
+        <translation>Text Datei (*.txt *.log)</translation>
     </message>
     <message>
         <source>PGE Level file</source>
@@ -375,15 +375,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Success</source>
-        <translation type="vanished">Erfolgreich</translation>
+        <translation>Erfolgreich</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="vanished">Alle Dateierweiterungen wurden verknüpft</translation>
+        <translation>Alle Dateierweiterungen wurden verknüpft</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="vanished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Environment</source>
@@ -395,6 +395,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12548,23 +12560,23 @@ Möchtest du die Änderungen speichern?</translation>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>Setzte Log Datei</translation>
+        <translation type="vanished">Setzte Log Datei</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>Text Datei (*.txt *.log)</translation>
+        <translation type="vanished">Text Datei (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Erfolgreich</translation>
+        <translation type="vanished">Erfolgreich</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>Alle Dateierweiterungen wurden verknüpft</translation>
+        <translation type="vanished">Alle Dateierweiterungen wurden verknüpft</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation type="vanished">Error</translation>
     </message>
 </context>
 <context>

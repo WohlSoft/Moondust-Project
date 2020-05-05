@@ -355,11 +355,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Set log file</source>
-        <translation type="vanished">Set log file</translation>
+        <translation>Set log file</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Text files (*.txt *.log)</translation>
+        <translation>Text files (*.txt *.log)</translation>
     </message>
     <message>
         <source>PGE Level file</source>
@@ -383,15 +383,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Success</source>
-        <translation type="vanished">Success</translation>
+        <translation>Success</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="vanished">All file associations have been set</translation>
+        <translation>All file associations have been set</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="vanished">Error</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Environment</source>
@@ -13839,23 +13839,23 @@ therefore you can use same link to get updated version</source>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>Set log file</translation>
+        <translation type="vanished">Set log file</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>Text files (*.txt *.log)</translation>
+        <translation type="vanished">Text files (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Success</translation>
+        <translation type="vanished">Success</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>All file associations have been set</translation>
+        <translation type="vanished">All file associations have been set</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation type="vanished">Error</translation>
     </message>
 </context>
 <context>

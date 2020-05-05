@@ -349,6 +349,38 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation>Domyślne zbliżenie, które będzie zastosowane przy tworzeniu lub otwieraniu pliku.</translation>
     </message>
+    <message>
+        <source>Font</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set log file</source>
+        <translation type="unfinished">Ustaw plik logu</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt *.log)</source>
+        <translation type="unfinished">Pliki tekstowe (*.txt *.log)</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation type="unfinished">Sukces</translation>
+    </message>
+    <message>
+        <source>All file associations have been set</source>
+        <translation type="unfinished">Wszystkie rozszerzenia plików zostały ustawione</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Błąd</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -10242,23 +10274,23 @@ dlatego możesz użyć tego samego linku, aby pobać najnowszą wersję</transla
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>Ustaw plik logu</translation>
+        <translation type="vanished">Ustaw plik logu</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>Pliki tekstowe (*.txt *.log)</translation>
+        <translation type="vanished">Pliki tekstowe (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Sukces</translation>
+        <translation type="vanished">Sukces</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>Wszystkie rozszerzenia plików zostały ustawione</translation>
+        <translation type="vanished">Wszystkie rozszerzenia plików zostały ustawione</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Błąd</translation>
+        <translation type="vanished">Błąd</translation>
     </message>
 </context>
 <context>

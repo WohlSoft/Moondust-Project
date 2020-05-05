@@ -353,8 +353,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="101"/>
         <location filename="../main/settings.cpp" line="270"/>
+        <location filename="../main/files_io.cpp" line="101"/>
         <source>Saved</source>
         <translation type="unfinished"></translation>
     </message>
