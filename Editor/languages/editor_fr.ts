@@ -375,35 +375,35 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Police</translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille de police</translation>
     </message>
     <message>
         <source>Use default</source>
-        <translation type="unfinished">Utiliser celui par défaut</translation>
+        <translation>Valeur par défaut</translation>
     </message>
     <message>
         <source>Set log file</source>
-        <translation type="unfinished">Définir le fichier de journal</translation>
+        <translation>Définir le fichier de journal</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="unfinished">Fichiers texte (*.txt *.log)</translation>
+        <translation>Fichiers texte (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation type="unfinished">Succès</translation>
+        <translation>Succès</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="unfinished">Toutes les associations de fichiers on été définies</translation>
+        <translation>Toutes les associations de fichiers on été définies</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Erreur</translation>
+        <translation>Erreur</translation>
     </message>
 </context>
 <context>
@@ -7825,7 +7825,7 @@ Motif : %1
     <message>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation>Utiliser celui par défaut</translation>
+        <translation>Valeur par défaut</translation>
     </message>
     <message>
         <source>Custom</source>
