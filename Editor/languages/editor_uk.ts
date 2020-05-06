@@ -344,27 +344,27 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Шрифт</translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір шрифту</translation>
     </message>
     <message>
         <source>Use default</source>
-        <translation type="unfinished">За замовчуванням</translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation type="unfinished">Успіх</translation>
+        <translation>Успішно</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="unfinished">Всі розширення файлів успішно встановлені</translation>
+        <translation>Всі розширення файлів успішно встановлені</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Помилка</translation>
+        <translation>Помилка</translation>
     </message>
 </context>
 <context>
