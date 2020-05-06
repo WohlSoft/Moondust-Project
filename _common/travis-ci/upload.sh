@@ -11,6 +11,8 @@ fi
 if [[ "${TRAVIS_OS_NAME}" == "linux" ]];
 then
 
+    UPLOAD_LIST="set ssl:verify-certificate no;"
+
     #Skip deploy on Travis-CI, since it done on Semaphore-CI
     if [[ $(whoami) != "travis" ]];
     then
@@ -27,7 +29,7 @@ then
         then
             lftp -e "${UPLOAD_LIST} exit" -u ${FTP_USER},${FTP_PASSWORD} ${FTP_SERVER}
 
-            UPLOAD_LIST="put -O ./ubuntu-14-04/ ${PROJECT_ROOT}/bin/_packed/pge-project-${GIT_BRANCH}-linux-ubuntu-14.04.tar.bz2;";
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./ubuntu-14-04/ ${PROJECT_ROOT}/bin/_packed/pge-project-${GIT_BRANCH}-linux-ubuntu-14.04.tar.bz2;";
             # [DEPRECATED] SMBX config pack update patch
             # UPLOAD_LIST="${UPLOAD_LIST} put -O ./_common/ ${PROJECT_ROOT}/bin/_packed/SMBX-Config-Patch.zip;";
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${HAMSTER_ROOT}/build_date_${GIT_BRANCH}_linux.txt;";
@@ -41,7 +43,7 @@ then
         if [[ -d ${PROJECT_ROOT}/bin-cmake-release ]];
         then
             # Build
-            UPLOAD_LIST="put -O ./ubuntu-14-04/ ${PROJECT_ROOT}/bin-cmake-release/pge_project-linux-${GIT_BRANCH}-64.tar.bz2;"
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ./ubuntu-14-04/ ${PROJECT_ROOT}/bin-cmake-release/pge_project-linux-${GIT_BRANCH}-64.tar.bz2;"
             # [DEPRECATED] SMBX config pack update patch
             # UPLOAD_LIST="${UPLOAD_LIST} put -O ./_common/ ${PROJECT_ROOT}/bin-cmake-release/SMBX-Config-Patch.zip;"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${HAMSTER_ROOT}/build_date_${GIT_BRANCH}_linux.txt;"
@@ -61,14 +63,16 @@ then
 # ==============================================================================
 # Upload created DMG file to the server
 # ==============================================================================
+    UPLOAD_LIST="set ssl:verify-certificate no;"
+
     if [[ -f bin/_packed/pge-project-${GIT_BRANCH}-macosx.dmg ]];
     then
-        UPLOAD_LIST="put -O ./macosx/ ./bin/_packed/pge-project-${GIT_BRANCH}-macosx.dmg;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./macosx/ ./bin/_packed/pge-project-${GIT_BRANCH}-macosx.dmg;"
         UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ /Users/travis/build_date_${GIT_BRANCH}_osx.txt;"
         lftp -e "${UPLOAD_LIST} exit" -u ${FTPUser},${FTPPassword} ${FTPServer}
     elif [[ -f bin-cmake-release/pge-project-${GIT_BRANCH}-macosx.dmg ]];
     then
-        UPLOAD_LIST="put -O ./macosx/ ./bin-cmake-release/pge-project-${GIT_BRANCH}-macosx.dmg;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./macosx/ ./bin-cmake-release/pge-project-${GIT_BRANCH}-macosx.dmg;"
         UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ /Users/travis/build_date_${GIT_BRANCH}_osx.txt;"
         lftp -e "${UPLOAD_LIST} exit" -u ${FTPUser},${FTPPassword} ${FTPServer}
     else
