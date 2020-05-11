@@ -27,6 +27,7 @@ template<class T>
 inline void loadCustomIcon(CustomDirManager &uLVL, T &t_item)
 {
     t_item.icon = QPixmap(); // Enforce auto-generated icon for customized sprites if no custom given
+    t_item.cur_icon = nullptr;
 
     if(!t_item.setup.icon_n.isEmpty()) // Load custom icon in only when custom image is used
     {
