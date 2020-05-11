@@ -56,7 +56,7 @@ void BlocksPerSecondDialog::on_buttonBox_accepted()
 
     auto blockSize = (double)ui->spinBlockSize->value();
     auto blocksCount = ui->spinBlocks->value();
-    auto seconds = (double)ui->spinSecond->value();
+    auto seconds = ui->spinSecond->value();
 
     m_result = (blockSize * blocksCount) / (seconds * m_framesPerSecond);
 
@@ -71,6 +71,12 @@ double BlocksPerSecondDialog::framesPerSecond() const
 {
     return m_framesPerSecond;
 }
+
+void BlocksPerSecondDialog::on_toggleSign_clicked()
+{
+    ui->spinBlocks->setValue(ui->spinBlocks->value() * -1.0);
+}
+
 
 void BlocksPerSecondDialog::setFramesPerSecond(double framesPerSecond)
 {

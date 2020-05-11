@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>297</width>
+    <width>285</width>
     <height>135</height>
    </rect>
   </property>
@@ -18,9 +18,6 @@
     <normaloff>:/images/cat_builder/cat_builder_16.png</normaloff>:/images/cat_builder/cat_builder_16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="1">
-    <widget class="QSpinBox" name="spinBlockSize"/>
-   </item>
    <item row="4" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
@@ -28,6 +25,20 @@
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Move time:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Distance:</string>
      </property>
     </widget>
    </item>
@@ -44,42 +55,13 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Size of one block:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QDoubleSpinBox" name="spinSecond">
-     <property name="prefix">
-      <string>per </string>
-     </property>
-     <property name="suffix">
-      <string> second</string>
-     </property>
-     <property name="decimals">
-      <number>15</number>
-     </property>
-     <property name="minimum">
-      <double>0.000000000000000</double>
-     </property>
-     <property name="maximum">
-      <double>99999.990000000005239</double>
-     </property>
-     <property name="value">
-      <double>1.000000000000000</double>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="1">
     <widget class="QDoubleSpinBox" name="spinBlocks">
      <property name="suffix">
       <string> blocks</string>
      </property>
      <property name="decimals">
-      <number>15</number>
+      <number>5</number>
      </property>
      <property name="minimum">
       <double>-9999999.000000000000000</double>
@@ -92,17 +74,42 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Distance:</string>
+      <string>Size of one block:</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
+   <item row="1" column="2">
+    <widget class="QToolButton" name="toggleSign">
      <property name="text">
-      <string>Move time:</string>
+      <string notr="true">+/-</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="2">
+    <widget class="QSpinBox" name="spinBlockSize"/>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QDoubleSpinBox" name="spinSecond">
+     <property name="prefix">
+      <string>per </string>
+     </property>
+     <property name="suffix">
+      <string> second</string>
+     </property>
+     <property name="decimals">
+      <number>5</number>
+     </property>
+     <property name="minimum">
+      <double>0.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>99999.990000000005239</double>
+     </property>
+     <property name="value">
+      <double>1.000000000000000</double>
      </property>
     </widget>
    </item>
