@@ -24,7 +24,7 @@
 #include <common_features/graphics_funcs.h>
 
 template<class T>
-inline void loadCustomIcon(CustomDirManager &uLVL, T &t_item)
+inline void loadCustomIcon(CustomDirManager &uLVL, T &t_item, QList<QPixmap> &localImages)
 {
     t_item.icon = QPixmap(); // Enforce auto-generated icon for customized sprites if no custom given
     t_item.cur_icon = nullptr;
@@ -34,8 +34,12 @@ inline void loadCustomIcon(CustomDirManager &uLVL, T &t_item)
         auto customIconFile = uLVL.getCustomFile(t_item.setup.icon_n, true);
         if(customIconFile.isEmpty())
         {
-            t_item.icon = GraphicsHelps::loadPixmap(customIconFile);
-            t_item.cur_icon = &t_item.icon;
+            auto icon = GraphicsHelps::loadPixmap(customIconFile);
+            if(!icon.isNull())
+            {
+                localImages.push_back(icon);
+                t_item.cur_icon = &localImages.last();
+            }
         }
     }
 }
@@ -86,7 +90,7 @@ inline bool loadCustomImage(QImage &tempImg,
 
         isCustom = true;
 
-        loadCustomIcon(uLVL, t_item);
+        loadCustomIcon(uLVL, t_item, localImages);
     }
 
     return isCustom;
