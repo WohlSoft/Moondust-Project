@@ -315,7 +315,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Log level</source>
-        <translation></translation>
+        <translation>Log level</translation>
     </message>
     <message>
         <source>Browse</source>
