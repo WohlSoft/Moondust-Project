@@ -580,7 +580,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Taille de bloc :</translation>
+        <translation type="vanished">Taille de bloc :</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -593,6 +593,18 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
     <message>
         <source> second</source>
         <translation> seconde</translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

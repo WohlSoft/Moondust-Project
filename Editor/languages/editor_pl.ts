@@ -556,7 +556,7 @@ Ustaw ścieżkę ponownie</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Rozmiar bloku:</translation>
+        <translation type="vanished">Rozmiar bloku:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -569,6 +569,18 @@ Ustaw ścieżkę ponownie</translation>
     <message>
         <source> second</source>
         <translation> sekundę</translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

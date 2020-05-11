@@ -541,7 +541,7 @@ Imposta un percorso SoX</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Grandezza blocco:</translation>
+        <translation type="vanished">Grandezza blocco:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -554,6 +554,18 @@ Imposta un percorso SoX</translation>
     <message>
         <source> second</source>
         <translation> secondo</translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

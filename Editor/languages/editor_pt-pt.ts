@@ -554,7 +554,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Tamanho do bloco:</translation>
+        <translation type="vanished">Tamanho do bloco:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -567,6 +567,18 @@ Please set SoX path first</source>
     <message>
         <source> second</source>
         <translation> segundos</translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

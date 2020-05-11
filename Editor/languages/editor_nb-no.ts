@@ -646,22 +646,32 @@ Please set SoX path first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/math/blocksperseconddialog.ui" line="50"/>
-        <source>Block Size:</source>
+        <location filename="../tools/math/blocksperseconddialog.ui" line="34"/>
+        <source>Move time:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/math/blocksperseconddialog.ui" line="57"/>
+        <location filename="../tools/math/blocksperseconddialog.ui" line="41"/>
+        <source>Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tools/math/blocksperseconddialog.ui" line="61"/>
         <source> blocks</source>
         <translation> blokker</translation>
     </message>
     <message>
-        <location filename="../tools/math/blocksperseconddialog.ui" line="76"/>
+        <location filename="../tools/math/blocksperseconddialog.ui" line="80"/>
+        <source>Size of one block:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../tools/math/blocksperseconddialog.ui" line="97"/>
         <source>per </source>
         <translation>per </translation>
     </message>
     <message>
-        <location filename="../tools/math/blocksperseconddialog.ui" line="79"/>
+        <location filename="../tools/math/blocksperseconddialog.ui" line="100"/>
         <source> second</source>
         <translation> sekund</translation>
     </message>

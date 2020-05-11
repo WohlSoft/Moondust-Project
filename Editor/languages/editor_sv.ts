@@ -520,7 +520,7 @@ Vänligen ange sökvägen för SoX först</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Blockstorlek:</translation>
+        <translation type="vanished">Blockstorlek:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -532,6 +532,18 @@ Vänligen ange sökvägen för SoX först</translation>
     </message>
     <message>
         <source> second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

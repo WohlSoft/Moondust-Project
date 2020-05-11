@@ -643,7 +643,7 @@ Bitte setze den SoX Exe-Pfad zuerst</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Blockgröße:</translation>
+        <translation type="vanished">Blockgröße:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -656,6 +656,18 @@ Bitte setze den SoX Exe-Pfad zuerst</translation>
     <message>
         <source> second</source>
         <translation> Sekunden</translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -652,7 +652,7 @@ Por favor defínala primero</translation>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Tamaño de bloque:</translation>
+        <translation type="vanished">Tamaño de bloque:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -665,6 +665,18 @@ Por favor defínala primero</translation>
     <message>
         <source> second</source>
         <translation> segundos</translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
