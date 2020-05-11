@@ -669,15 +669,15 @@ Please set SoX path first</translation>
     </message>
     <message>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Move time:</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distance:</translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation>Size of one block:</translation>
     </message>
 </context>
 <context>

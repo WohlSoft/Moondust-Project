@@ -609,15 +609,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Время пути:</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Расстояние:</translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер одного блока:</translation>
     </message>
 </context>
 <context>
