@@ -6,17 +6,17 @@
     <message id="CRASH_UNHEXC_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="371"/>
         <source>Unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Exceção não manipulada!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
         <location filename="../common_features/crash_handler.cpp" line="373"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>O mecanismo crachou porque aceitou a exceção não manipulada!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="385"/>
         <source>Out of memory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem memória!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="387"/>
@@ -26,7 +26,7 @@
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="423"/>
         <source>Time out!</source>
-        <translation type="unfinished"></translation>
+        <translation>Expirou!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="425"/>
@@ -66,7 +66,7 @@
     <message id="CRASH_ABORT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="560"/>
         <source>Aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Abortado</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
         <location filename="../common_features/crash_handler.cpp" line="562"/>
@@ -88,12 +88,12 @@ and retry your recent actions to get more detailed information.</source>
     <message id="CRASH_INT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="620"/>
         <source>Interrupt</source>
-        <translation type="unfinished"></translation>
+        <translation>Interromper</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="622"/>
         <source>Engine has been interrupted</source>
-        <translation type="unfinished"></translation>
+        <translation>O mecanismo foi interrompido</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <location filename="../data_configs/config_manager.cpp" line="115"/>
@@ -109,12 +109,12 @@ and retry your recent actions to get more detailed information.</source>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
         <location filename="../data_configs/config_manager.cpp" line="127"/>
         <source>Missing main.ini</source>
-        <translation type="unfinished"></translation>
+        <translation>main.ini em falta</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
         <location filename="../data_configs/config_manager.cpp" line="129"/>
         <source>Can&apos;t open the &apos;main.ini&apos; config file!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível abrir ficheiro de configuração &apos;main.ini&apos;!</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <location filename="../data_configs/config_manager.cpp" line="150"/>
@@ -148,33 +148,34 @@ therefore you can use same link to get updated version.</source>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <location filename="../data_configs/config_manager.cpp" line="236"/>
         <source>main.ini is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>main.ini é inválido</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
         <location filename="../data_configs/config_manager.cpp" line="238"/>
         <source>Error has occouped in main.ini in line %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocorreu um erro na linha %1 no main.ini.</translation>
     </message>
     <message id="CONFIG_SELECT">
         <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="61"/>
         <source>Choose a game:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolher um jogo:</translation>
     </message>
     <message id="SDL_INIT_ERROR">
         <location filename="../main.cpp" line="685"/>
         <source>Unable to init SDL!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível iniciar SDL!</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
         <location filename="../main.cpp" line="746"/>
         <source>Config packs not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Pacotes de configuração não encontrados</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
         <location filename="../main.cpp" line="749"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>Não é possível iniciar o jogo, porque não foram
+encontrados pacotes de configurações disponíveis!</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
         <location filename="../main.cpp" line="759"/>
@@ -244,83 +245,83 @@ Entrance point: %2</source>
         <location filename="../scenes/scene_world.cpp" line="612"/>
         <location filename="../scenes/scene_world.cpp" line="639"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausar</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
         <location filename="../scenes/scene_world.cpp" line="620"/>
         <location filename="../scenes/scene_world.cpp" line="647"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
         <location filename="../scenes/scene_world.cpp" line="622"/>
         <source>Save and continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar e continuar</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
         <location filename="../scenes/scene_world.cpp" line="624"/>
         <source>Save and quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar e sair</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
         <location filename="../scenes/scene_world.cpp" line="626"/>
         <source>Exit without saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair sem guardar</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
         <location filename="../scenes/scene_world.cpp" line="649"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message id="GAMEOVER_TITLE">
         <location filename="../scenes/scene_gameover.cpp" line="56"/>
         <source>Game Over!</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogo Terminado!</translation>
     </message>
     <message id="GAMEOVER_CONTINUE">
         <location filename="../scenes/scene_gameover.cpp" line="62"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
     <message id="GAMEOVER_EXIT">
         <location filename="../scenes/scene_gameover.cpp" line="64"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message id="MAINMENU_1_PLAYER_GAME">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="360"/>
         <source>1 Player Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogo 1 Jogador</translation>
     </message>
     <message id="MAINMENU_2_PLAYER_GAME">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="362"/>
         <source>2 Player Game</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogo 2 Jogadores</translation>
     </message>
     <message id="MAINMENU_PLAY_SINGLE_LEVEL">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="364"/>
         <source>Play level</source>
-        <translation type="unfinished"></translation>
+        <translation>Jogar nível</translation>
     </message>
     <message id="MAINMENU_OPTIONS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="366"/>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções</translation>
     </message>
     <message id="MAINMENU_EXIT">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="368"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar</translation>
     </message>
     <message id="MAINMENU_OPTIONS_TEST_SCRS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="374"/>
         <source>Test of screens</source>
-        <translation type="unfinished"></translation>
+        <translation>Teste de ecrãs</translation>
     </message>
     <message id="MAINMENU_OPTIONS_TEST_MSGS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="376"/>
         <source>Test of message boxes</source>
-        <translation type="unfinished"></translation>
+        <translation>Teste das caixas de mensagem</translation>
     </message>
     <message id="MAINMENU_OPTIONS_CONTROLLS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="378"/>
@@ -330,32 +331,32 @@ Entrance point: %2</source>
     <message id="MAINMENU_OPTIONS_VIDEO">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="380"/>
         <source>Video settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Definições de vídeo</translation>
     </message>
     <message id="MAINMENU_OPTIONS_MUS_VOL">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="382"/>
         <source>Music volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume da música</translation>
     </message>
     <message id="MAINMENU_OPTIONS_SND_VOL">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="385"/>
         <source>Sound volume</source>
-        <translation type="unfinished"></translation>
+        <translation>Volume do som</translation>
     </message>
     <message id="MAINMENU_OPTIONS_FULLSCR">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="388"/>
         <source>Full Screen mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo de ecrã completo</translation>
     </message>
     <message id="TESTSCR_CREDITS">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="396"/>
         <source>Credits</source>
-        <translation type="unfinished"></translation>
+        <translation>Créditos</translation>
     </message>
     <message id="TESTSCR_LOADING_SCREEN">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="398"/>
         <source>Loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation>A carregar ecrã</translation>
     </message>
     <message id="TESTSCR_GAMEOVER">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="400"/>
@@ -365,12 +366,12 @@ Entrance point: %2</source>
     <message id="TEST_MSGBOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="406"/>
         <source>Message box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de mensagem</translation>
     </message>
     <message id="TEST_MENUBOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="408"/>
         <source>Menu box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa do menu</translation>
     </message>
     <message id="TEST_TEXTINPUTBOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="410"/>
@@ -380,12 +381,12 @@ Entrance point: %2</source>
     <message id="TEST_QUESTION_BOX">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="412"/>
         <source>Question box</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de pergunta</translation>
     </message>
     <message id="VIDEO_SHOW_DEBUG">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="418"/>
         <source>Show debug info</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar informação da depuração</translation>
     </message>
     <message id="VIDEO_ENABLE_FRSKIP">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="420"/>
@@ -405,22 +406,22 @@ Entrance point: %2</source>
     <message id="CONTROLLS_SETUP_PLAYER1">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="452"/>
         <source>Player 1 controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlos do jogador 1</translation>
     </message>
     <message id="CONTROLLS_SETUP_PLAYER2">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="454"/>
         <source>Player 2 controls</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlos do jogador 2</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_KEYBOARD">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="504"/>
         <source>Keyboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Teclado</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_JOYSTICK">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="511"/>
         <source>Joystick: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Joystick: %1</translation>
     </message>
     <message id="PLAYER_CONTROLS_SETUP_INPUT_TYPE">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="515"/>
@@ -431,7 +432,7 @@ Entrance point: %2</source>
         <location filename="../scenes/title/ttl_main_menu.cpp" line="545"/>
         <location filename="../scenes/title/ttl_main_menu.cpp" line="575"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Por favor, aguarde...</translation>
     </message>
     <message id="MSG_EPISODES_NOT_FOUND">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="662"/>
@@ -454,40 +455,40 @@ Did you placed player start point (or entrance warp point) too far off of the se
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="60"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="87"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation>Pausar</translation>
     </message>
     <message id="LVL_MENU_PAUSE_CONTINUE">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="40"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="69"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="95"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
     <message id="LVL_MENU_PAUSE_CONTINUESAVE">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="42"/>
         <source>Save and continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar e continuar</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXITSAVE">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="44"/>
         <source>Save and quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar e sair</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXITNOSAVE">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="46"/>
         <source>Exit without saving</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair sem guardar</translation>
     </message>
     <message id="LVL_MENU_PAUSE_EXIT">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="71"/>
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="99"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message id="LVL_MENU_PAUSE_REPLAY">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="97"/>
         <source>Replay level</source>
-        <translation type="unfinished"></translation>
+        <translation>Reiniciar nível</translation>
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <location filename="../graphics/window.cpp" line="167"/>
@@ -526,22 +527,22 @@ Software renderer will be started.</source>
     <message id="MSGBOX_INFO">
         <location filename="../gui/pge_msgbox.cpp" line="249"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informação</translation>
     </message>
     <message id="MSGBOX_WARN">
         <location filename="../gui/pge_msgbox.cpp" line="264"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviso</translation>
     </message>
     <message id="MSGBOX_ERROR">
         <location filename="../gui/pge_msgbox.cpp" line="279"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro</translation>
     </message>
     <message id="MSGBOX_FATAL">
         <location filename="../gui/pge_msgbox.cpp" line="294"/>
         <source>Fatal error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro fatal</translation>
     </message>
 </context>
 </TS>
