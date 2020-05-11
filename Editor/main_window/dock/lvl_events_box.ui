@@ -183,7 +183,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-1231</y>
+       <y>-601</y>
        <width>271</width>
        <height>1725</height>
       </rect>
@@ -527,7 +527,7 @@
             <bool>false</bool>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="decimals">
             <number>15</number>
@@ -566,7 +566,7 @@
             <bool>false</bool>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::NoFocus</enum>
+            <enum>Qt::ClickFocus</enum>
            </property>
            <property name="decimals">
             <number>15</number>
