@@ -205,22 +205,45 @@ WldScene::~WldScene()
 void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);
-    if(!m_opts.grid_show) return;
 
-    int gridSize = m_configs->defaultGrid.general;
-    qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
-    qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
+    if(m_opts.grid_show)
+    {
+        int gridSize = int(m_configs->defaultGrid.general);
+        qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
+        qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
 
-    QVarLengthArray<QLineF, 100> lines;
-    for(qreal x = left; x < rect.right(); x += gridSize)
-        lines.append(QLineF(x, rect.top(), x, rect.bottom()));
-    for(qreal y = top; y < rect.bottom(); y += gridSize)
-        lines.append(QLineF(rect.left(), y, rect.right(), y));
+        QVarLengthArray<QLineF, 100> lines;
+        for(qreal x = left; x < rect.right(); x += gridSize)
+            lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+        for(qreal y = top; y < rect.bottom(); y += gridSize)
+            lines.append(QLineF(rect.left(), y, rect.right(), y));
 
-    painter->setRenderHint(QPainter::Antialiasing, false);
-    painter->setOpacity(0.9);
-    painter->setPen(QPen(QBrush(QColor(51, 51, 51)), 0, Qt::SolidLine));
-    painter->drawLines(lines.data(), lines.size());
-    painter->setPen(QPen(QBrush(QColor(204, 204, 204)), 0, Qt::DashLine));
-    painter->drawLines(lines.data(), lines.size());
+        painter->setRenderHint(QPainter::Antialiasing, false);
+        painter->setOpacity(0.9);
+        painter->setPen(QPen(QBrush(QColor(51, 51, 51)), 0, Qt::SolidLine));
+        painter->drawLines(lines.data(), lines.size());
+        painter->setPen(QPen(QBrush(QColor(204, 204, 204)), 0, Qt::DashLine));
+        painter->drawLines(lines.data(), lines.size());
+    }
+
+    if(m_opts.camera_grid_show)
+    {
+        int gridSizeX = 800;
+        int gridSizeY = 608;
+        qreal left = int(rect.left()) - (int(rect.left()) % gridSizeX);
+        qreal top = int(rect.top()) - (int(rect.top()) % gridSizeY);
+
+        QVarLengthArray<QLineF, 100> lines;
+        for(qreal x = left; x < rect.right(); x += gridSizeX)
+            lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+        for(qreal y = top; y < rect.bottom(); y += gridSizeY)
+            lines.append(QLineF(rect.left(), y, rect.right(), y));
+
+        painter->setRenderHint(QPainter::Antialiasing, false);
+        painter->setOpacity(1.0);
+        painter->setPen(QPen(QBrush(QColor(128, 0, 128)), 0, Qt::SolidLine));
+        painter->drawLines(lines.data(), lines.size());
+        painter->setPen(QPen(QBrush(QColor(255, 0, 255)), 0, Qt::DashLine));
+        painter->drawLines(lines.data(), lines.size());
+    }
 }

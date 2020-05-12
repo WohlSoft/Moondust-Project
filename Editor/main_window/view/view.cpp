@@ -62,6 +62,26 @@ void MainWindow::on_actionShowGrid_triggered(bool checked)
     }
 }
 
+void MainWindow::on_actionShowCameraGrid_triggered(bool checked)
+{
+    GlobalSettings::LvlOpts.camera_grid_show = checked;
+    if(activeChildWindow() == WND_Level)
+    {
+        LevelEdit *e = activeLvlEditWin();
+        assert(e);
+        e->scene->m_opts.camera_grid_show = checked;
+        e->scene->update();
+    }
+    else
+    if(activeChildWindow() == WND_World)
+    {
+        WorldEdit *e = activeWldEditWin();
+        assert(e);
+        e->scene->m_opts.camera_grid_show = checked;
+        e->scene->update();
+    }
+}
+
 void MainWindow::customGrid(bool)
 {
     QAction* action = (QAction*)sender();

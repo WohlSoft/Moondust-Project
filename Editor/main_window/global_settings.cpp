@@ -27,6 +27,7 @@ EditingSettings::EditingSettings()
     customGrid.setWidth(0);
     customGrid.setHeight(0);
     grid_show=false;
+    camera_grid_show=false;
     semiTransparentPaths=false;
 }
 

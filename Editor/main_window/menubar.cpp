@@ -163,6 +163,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
             LogDebug("-> Get scene flags: grid");
             ui->actionGridEn->setChecked(scn->m_opts.grid_snap);
             ui->actionShowGrid->setChecked(scn->m_opts.grid_show);
+            ui->actionShowCameraGrid->setChecked(scn->m_opts.camera_grid_show);
 
             GlobalSettings::LvlOpts = scn->m_opts;
 
@@ -197,6 +198,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
             LogDebug("-> Get scene flags: grid");
             ui->actionGridEn->setChecked(scn->m_opts.grid_snap);
             ui->actionShowGrid->setChecked(scn->m_opts.grid_show);
+            ui->actionShowCameraGrid->setChecked(scn->m_opts.camera_grid_show);
 
             LogDebug("-> Get scene flags: animation and collision");
             GlobalSettings::LvlOpts = scn->m_opts;
