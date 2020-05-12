@@ -243,9 +243,9 @@ void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
         lines.append(QLineF(rect.left(), y, rect.right(), y));
 
     painter->setRenderHint(QPainter::Antialiasing, false);
-    painter->setOpacity(0.5);
-    painter->setPen(QPen(QBrush(Qt::black), 1, Qt::SolidLine));
+    painter->setOpacity(0.9);
+    painter->setPen(QPen(QBrush(QColor(51, 51, 51)), 0, Qt::SolidLine));
     painter->drawLines(lines.data(), lines.size());
-    painter->setPen(QPen(QBrush(Qt::white), 1, Qt::DashLine));
+    painter->setPen(QPen(QBrush(QColor(204, 204, 204)), 0, Qt::DashLine));
     painter->drawLines(lines.data(), lines.size());
 }
