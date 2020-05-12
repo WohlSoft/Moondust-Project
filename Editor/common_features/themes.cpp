@@ -69,6 +69,7 @@ void Themes::init()
 
     icons_map[playmusic]    = QIcon(":/images/playmusic.png");
     icons_map[grid_snap]    = QIcon(":/images/grid.png");
+    icons_map[camera_grid]  = QIcon(":/images/camera_grid.png");
     icons_map[animation]    = QIcon(":/images/animation.png");
     icons_map[search]       = QIcon(":/images/search.png");
     icons_map[pencil]       = QIcon(":/images/pencil_16x16.png");
@@ -339,6 +340,7 @@ void Themes::loadTheme(const QString &themeDir)
     guiset.beginGroup("edit-common");
     loadIcon(guiset, "playmusic", playmusic);
     loadIcon(guiset, "grid-snap", grid_snap);
+    loadIcon(guiset, "camera-grid", camera_grid);
     loadIcon(guiset, "animation", animation);
     loadIcon(guiset, "search", search);
     loadIcon(guiset, "pencil", pencil);

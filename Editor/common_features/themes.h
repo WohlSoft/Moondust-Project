@@ -61,6 +61,7 @@ public:
 
         playmusic,
         grid_snap,
+        camera_grid,
         animation,
         search,
         pencil,
