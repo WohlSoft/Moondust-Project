@@ -88,6 +88,7 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionPlayMusic->setIcon(Themes::icon(Themes::playmusic));
     ui->actionGridEn->setIcon(Themes::icon(Themes::grid_snap));
+    ui->actionShowGrid->setIcon(Themes::icon(Themes::grid_snap));
     ui->actionAnimation->setIcon(Themes::icon(Themes::animation));
 
     ui->actionWLD_SearchBox->setIcon(Themes::icon(Themes::search));

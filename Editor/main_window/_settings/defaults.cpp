@@ -203,6 +203,11 @@ void MainWindow::setUiDefults()
     ui->actionFloodSectionOnly->setVisible(false);
     ui->actionFloodSectionOnly->setEnabled(false);
 
+    auto ziKey = QKeySequence::keyBindings(QKeySequence::ZoomIn);
+    ziKey.append(QKeySequence(Qt::CTRL + Qt::Key_Equal));
+    ui->actionZoomIn->setShortcuts(ziKey);
+    ui->actionZoomOut->setShortcuts(QKeySequence::ZoomOut);
+
 #ifndef Q_OS_WIN
     addToolBar(Qt::LeftToolBarArea, ui->LevelObjectToolbar);
     addToolBar(Qt::LeftToolBarArea, ui->WorldObjectToolbar);
