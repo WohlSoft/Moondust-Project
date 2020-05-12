@@ -2381,9 +2381,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
    <property name="text">
     <string>Zoom In</string>
    </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl++</string>
-   </property>
   </action>
   <action name="actionZoomOut">
    <property name="icon">
@@ -2392,9 +2389,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="text">
     <string>Zoom Out</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+-</string>
    </property>
   </action>
   <action name="actionZoomReset">
@@ -2406,7 +2400,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <string>Reset Zoom</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+=</string>
+    <string notr="true">Ctrl+0</string>
    </property>
   </action>
   <action name="actionTilesetBox">
