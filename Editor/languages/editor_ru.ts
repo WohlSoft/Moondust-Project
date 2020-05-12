@@ -9635,7 +9635,7 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>Show camera grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать сетку камеры</translation>
     </message>
 </context>
 <context>
