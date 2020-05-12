@@ -252,23 +252,49 @@ void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
 
     if(m_opts.camera_grid_show)
     {
-        int gridSizeX = 800;
-        int gridSizeY = 608;
-        qreal sectionYOffset = 20000.0 * qMin(qMax(-10, qRound(0.5 * (rect.top() + rect.bottom()) / 20000.0)), 10);
-        qreal left = int(rect.left()) - (int(rect.left()) % gridSizeX);
-        qreal top = int(rect.top() - sectionYOffset) - (int(rect.top() - sectionYOffset) % gridSizeY) + sectionYOffset;
+        // Get viewport size from config pack engine.ini settings
+        int gridSizeX = m_configs->engine.screen_w;
+        int gridSizeY = m_configs->engine.screen_h;
+
+        // Round y-axis camera grid to a multiple of default block grid size, since the player will normally stand on
+        // a block and thus typical camera position will be relative to that
+        gridSizeY = m_configs->defaultGrid.block * qRound((qreal)gridSizeY / m_configs->defaultGrid.block);
+
+        // Get offset to grid alignment such that things are aligned sensibly for default section positions.
+        qreal sectionOffset = 20000.0 * (m_data->CurSection - 10);
+
+        // Get top-left corner
+        qreal left = int(rect.left() - sectionOffset) - (int(rect.left() - sectionOffset) % gridSizeX) + sectionOffset;
+        qreal top = int(rect.top() - sectionOffset) - (int(rect.top() - sectionOffset) % gridSizeY) + sectionOffset;
+        qreal cam_top = top + (gridSizeY - m_configs->engine.screen_h);
+        if (cam_top > (rect.top() + gridSizeY))
+            cam_top -= gridSizeY;
 
         QVarLengthArray<QLineF, 100> lines;
+        QVarLengthArray<QLineF, 100> top_lines;
         for(qreal x = left; x < rect.right(); x += gridSizeX)
             lines.append(QLineF(x, rect.top(), x, rect.bottom()));
         for(qreal y = top; y < rect.bottom(); y += gridSizeY)
             lines.append(QLineF(rect.left(), y, rect.right(), y));
+        for(qreal y = cam_top; y < rect.bottom(); y += gridSizeY)
+            top_lines.append(QLineF(rect.left(), y, rect.right(), y));
 
+        // Draw regular lines
         painter->setRenderHint(QPainter::Antialiasing, false);
         painter->setOpacity(1.0);
         painter->setPen(QPen(QBrush(QColor(128, 0, 128)), 0, Qt::SolidLine));
         painter->drawLines(lines.data(), lines.size());
         painter->setPen(QPen(QBrush(QColor(255, 0, 255)), 0, Qt::DashLine));
         painter->drawLines(lines.data(), lines.size());
+
+        // Draw extra top-edge lines fainter
+        if (gridSizeY != (int)m_configs->engine.screen_h)
+        {
+            painter->setOpacity(0.5);
+            painter->setPen(QPen(QBrush(QColor(128, 0, 128)), 0, Qt::SolidLine));
+            painter->drawLines(top_lines.data(), top_lines.size());
+            painter->setPen(QPen(QBrush(QColor(255, 0, 255)), 0, Qt::DashLine));
+            painter->drawLines(top_lines.data(), top_lines.size());
+        }
     }
 }

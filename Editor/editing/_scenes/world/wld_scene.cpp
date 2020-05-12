@@ -228,8 +228,14 @@ void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
 
     if(m_opts.camera_grid_show)
     {
-        int gridSizeX = 800;
-        int gridSizeY = 608;
+        // Get viewport size from config pack engine.ini settings
+        int gridSizeX = m_configs->engine.wld_viewport_w;
+        int gridSizeY = m_configs->engine.wld_viewport_h;
+
+        // Round up to multiple of default level grid size
+        gridSizeY = m_configs->defaultGrid.levels * qRound(ceil((qreal)gridSizeY / m_configs->defaultGrid.levels));
+        gridSizeX = m_configs->defaultGrid.levels * qRound(ceil((qreal)gridSizeX / m_configs->defaultGrid.levels));
+
         qreal left = int(rect.left()) - (int(rect.left()) % gridSizeX);
         qreal top = int(rect.top()) - (int(rect.top()) % gridSizeY);
 
