@@ -6920,6 +6920,10 @@ See %2 for more information.</source>
         <source>&lt;no extra settings&gt;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show camera grid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>

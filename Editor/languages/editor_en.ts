@@ -9644,6 +9644,10 @@ See %2 for more information.</translation>
         <source>&lt;no extra settings&gt;</source>
         <translation>&lt;no extra settings&gt;</translation>
     </message>
+    <message>
+        <source>Show camera grid</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
