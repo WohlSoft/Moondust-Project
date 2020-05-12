@@ -17,7 +17,8 @@
         <file>images/section16.png</file>
         <file>images/world16.png</file>
         <file>images/coin.png</file>
-        <file>images/grid.png</file>
+        <file>images/grid_snap.png</file>
+		<file>images/show_grid.png</file>
         <file>images/camera_grid.png</file>
         <file>images/reset_pos.png</file>
         <file alias="locks/bgo_cl.png">images/lock_bgo_cl.png</file>
