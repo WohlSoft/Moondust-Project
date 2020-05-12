@@ -353,6 +353,7 @@ void MainWindow::setUiDefults()
 
             menu->insertAction(nullptr, ui->actionGridEn);
             menu->insertAction(nullptr, ui->actionShowGrid);
+            menu->insertAction(nullptr, ui->actionShowCameraGrid);
             menu->addMenu(ui->menuSetGridSize);
             menu->addSeparator();
             menu->insertAction(nullptr, ui->actionAnimation);
@@ -463,9 +464,9 @@ void MainWindow::setUiDefults()
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionGridEn, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowCameraGrid, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCollisions, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuSetGridSize, &QMenu::setEnabled);
-    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
 
     connect(this, &MainWindow::windowActiveLevel,  ui->menuLevel->menuAction(), &QAction::setVisible);
     connect(this, &MainWindow::windowActiveWorld,  ui->menuWorld->menuAction(), &QAction::setVisible);

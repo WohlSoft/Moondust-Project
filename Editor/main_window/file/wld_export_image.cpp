@@ -70,6 +70,7 @@ void WorldEdit::ExportingReady() //slot
         bool hideGrid = false;
         bool hideMetas = false;
         bool gridWasShown = false;
+        bool cameraGridWasShown = false;
         QString inifile = AppPathManager::settingsFile();
         QSettings settings(inifile, QSettings::IniFormat);
         settings.beginGroup("Main");
@@ -198,6 +199,9 @@ void WorldEdit::ExportingReady() //slot
         {
             gridWasShown = scene->m_opts.grid_show;
             scene->m_opts.grid_show = false;
+
+            cameraGridWasShown = scene->m_opts.camera_grid_show;
+            scene->m_opts.camera_grid_show = false;            
         }
 
         if(!progress.wasCanceled())
@@ -244,6 +248,8 @@ void WorldEdit::ExportingReady() //slot
             scene->hidePathAndLevels(true);
         if(gridWasShown)
             scene->m_opts.grid_show = true;
+        if(cameraGridWasShown)
+            scene->m_opts.camera_grid_show = true;
         if(hideMetas)
         {
             for(QGraphicsItem *it : invisibleMetas)

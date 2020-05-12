@@ -77,6 +77,7 @@ void MainWindow::loadSettings()
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", true).toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", true).toBool();
         GlobalSettings::LvlOpts.grid_show = settings.value("grid-show", false).toBool();
+        GlobalSettings::LvlOpts.camera_grid_show = settings.value("camera-grid-show", false).toBool();
         GlobalSettings::LvlOpts.default_zoom = settings.value("default-zoom", 100).toUInt();
 
         GlobalSettings::LvlItemDefaults.npc_direction = settings.value("defaults-npc-directuin", -1).toInt();
@@ -278,6 +279,7 @@ void MainWindow::saveSettings()
         settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
         settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
         settings.setValue("grid-show", GlobalSettings::LvlOpts.grid_show);
+        settings.setValue("camera-grid-show", GlobalSettings::LvlOpts.camera_grid_show);
         settings.setValue("default-zoom", GlobalSettings::LvlOpts.default_zoom);
         settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 

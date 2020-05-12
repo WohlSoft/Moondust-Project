@@ -275,6 +275,7 @@
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
     <addaction name="actionShowGrid"/>
+	<addaction name="actionShowCameraGrid"/>
     <addaction name="actionAnimation"/>
     <addaction name="actionSemi_transparent_paths"/>
    </widget>
@@ -2818,6 +2819,24 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="text">
     <string>Show grid</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
+  </action>
+  <action name="actionShowCameraGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/camera_grid.png</normaloff>:/images/camera_grid.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show camera grid</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
