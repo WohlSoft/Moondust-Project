@@ -151,11 +151,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Largura:</translation>
+        <translation>Largura:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished">Altura:</translation>
+        <translation>Altura:</translation>
     </message>
     <message>
         <source>Fit to window size</source>
@@ -311,19 +311,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Logging</source>
-        <translation>Logging</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation>Logar level</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Procurar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <source>Log file</source>
-        <translation>Arquivo de log</translation>
+        <translation>Ficheiro de registo</translation>
     </message>
     <message>
         <source>Disable logging</source>
@@ -343,11 +343,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Set log file</source>
-        <translation>Definir arquivo de log</translation>
+        <translation>Definir ficheiro de registo</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>Arquivos de texto (*.txt *.log)</translation>
+        <translation>Ficheiros de texto (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
@@ -355,7 +355,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>Todas as associações de arquivos definidas</translation>
+        <translation>Foram definidas todas as associações de ficheiro</translation>
     </message>
     <message>
         <source>Error</source>
@@ -375,15 +375,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de letra</translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamanho da letra</translation>
     </message>
     <message>
         <source>Use default</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilizar predefinição</translation>
     </message>
 </context>
 <context>
@@ -398,7 +398,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation>Contando estrelas...</translation>
+        <translation>A contar as estrelas…</translation>
     </message>
 </context>
 <context>
@@ -409,15 +409,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>SoX executable path:</source>
-        <translation>Localização do binário do SoX:</translation>
+        <translation>Caminho do executável de SoX:</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation>Procurar...</translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <source>Make backup</source>
-        <translation>Fazer backup</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Resample to</source>
@@ -434,20 +434,22 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation>Localização do binário do SoX não definida. Por favor, defina a localização primeiro</translation>
+        <translation>Caminho do executável de SoX não definido.
+Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation>Localização do binário do SoX não válida. Por favor, defina a localização primeiro</translation>
+        <translation>O caminho do executável de SoX é inválido.
+Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation>Nada a fazer</translation>
+        <translation>Nada a fazer.</translation>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation>Nenhum arquivo a ser convertido</translation>
+        <translation>Nenhum ficheiro para converter</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -459,29 +461,31 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Sorry, SoX has crashed</source>
-        <translation>SoX parou de funcionar</translation>
+        <translation>Desculpe, SoX crachou</translation>
     </message>
     <message>
         <source>SoX returned a non-zero exit code: %1
 %2</source>
-        <translation>SoX retornou um código diferente de zero: %1 %2</translation>
+        <translation>SoX devolveu um código de saída diferente de zero: %1
+%2</translation>
     </message>
     <message>
         <source>Operation complete</source>
-        <translation>Todas as operações concluídas</translation>
+        <translation>Operação concluída</translation>
     </message>
     <message>
         <source>All files successfully converted!
 %1</source>
-        <translation>Todos os arquivos convertidos com sucesso! %1</translation>
+        <translation>Todos os ficheiros convertidos com sucesso!
+%1</translation>
     </message>
     <message>
         <source>No tasks defined. Nothing to do.</source>
-        <translation>Nenhuma tarefa definida. Nada a ser feito.</translation>
+        <translation>Nenhuma tarefa definida. Nada a fazer.</translation>
     </message>
     <message>
         <source>Open SoX executable path</source>
-        <translation>Procurar localização do binário do SoX</translation>
+        <translation>Abrir caminho do executável de SoX</translation>
     </message>
     <message>
         <source>Select file to convert</source>
@@ -506,7 +510,8 @@ Please set SoX path first</source>
     <message>
         <source>Convert into new format
 (select a tab to choose target format)</source>
-        <translation>Converter em outro formato (abra a guia desejada para escolher o novo formato)</translation>
+        <translation>Converter para novo formato
+(selecione um separador para escolher o formato de destino)</translation>
     </message>
     <message>
         <source>Don&apos;t change format</source>
@@ -612,7 +617,7 @@ Também pode dar um duplo clique em um item para ter o mesmo efeito.</translatio
     </message>
     <message>
         <source>Go To...</source>
-        <translation>Ir para...</translation>
+        <translation>Ir para…</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
@@ -881,7 +886,7 @@ Dados sobre o erro que causou isso:</translation>
     <message>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished">Recuperação de arquivos</translation>
+        <translation>Recuperação de crache</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recovered some files.
@@ -941,7 +946,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Counter name:</source>
-        <translation>Nome do contador</translation>
+        <translation>Nome do contador:</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1081,7 +1086,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Clear All Logs</source>
-        <translation></translation>
+        <translation>Limpar Todos os Registos</translation>
     </message>
     <message>
         <source>Clear %1 Log</source>
@@ -1239,7 +1244,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Isto é uma lista de arquivos, os que estão junto com o seu arquivo atual na mesma pasta.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Isto é uma lista de ficheiros que estão localizados na mesma pasta que o ficheiro atual.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please select a file from the list:</source>
@@ -1319,7 +1324,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation>Camadas achatas</translation>
+        <translation>União de camadas</translation>
     </message>
 </context>
 <context>
@@ -1441,14 +1446,14 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please wait...</source>
-        <translation type="unfinished">Aguarde...</translation>
+        <translation>Por favor, aguarde...</translation>
     </message>
 </context>
 <context>
     <name>ItemBGO</name>
     <message>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1532,15 +1537,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover tudo %1 nesta secção</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Remover tudo %1</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation>Propiedades...</translation>
+        <translation>Propriedades...</translation>
     </message>
     <message>
         <source>Z-Offset</source>
@@ -1552,7 +1557,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished">Margem de seção</translation>
+        <translation>Margem da secção</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
@@ -1560,7 +1565,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>As preferências foram copiadas: %1</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
@@ -1571,7 +1576,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>ItemBlock</name>
     <message>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -1781,7 +1786,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -2008,7 +2013,7 @@ Apenas 27 caracteres por linha</translation>
     <name>ItemNPC</name>
     <message>
         <source>Layer: </source>
-        <translation>Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
@@ -2755,7 +2760,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Level title: </source>
-        <translation>Título do nível:</translation>
+        <translation>Título do nível: </translation>
     </message>
     <message>
         <source>Make custom folder</source>
@@ -4038,7 +4043,7 @@ Apenas 28 caracteres por linha</translation>
     </message>
     <message>
         <source>Destroyed: </source>
-        <translation>Destruído:</translation>
+        <translation>Destruído: </translation>
     </message>
     <message>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
@@ -5097,7 +5102,7 @@ Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <source>Can&apos;t open the file!</source>
-        <translation>Não foi possível abrir o arquivo.</translation>
+        <translation>Não é possível abrir o arquivo!</translation>
     </message>
     <message>
         <source>Please save the file</source>
@@ -5307,7 +5312,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>Editor - Platformer Game Engine</translation>
+        <translation>Editor - Mecanismo de Jogo de Plataformas</translation>
     </message>
     <message>
         <source>Section modifications</source>
@@ -6643,7 +6648,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Select directory with custom data to import.</source>
-        <translation>Selecione diretório com dados personalizados para importar</translation>
+        <translation>Selecione a diretoria com os dados personalizados para importar.</translation>
     </message>
     <message>
         <source>File is untitled</source>
@@ -6657,7 +6662,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation>Nada a fazer</translation>
+        <translation>Nada a fazer..</translation>
     </message>
     <message>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
@@ -9160,7 +9165,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>Search: </source>
-        <translation>Procurar:</translation>
+        <translation>Procurar: </translation>
     </message>
     <message>
         <source>New tileset</source>
@@ -9946,11 +9951,12 @@ Paths:	%3
 Levels:	%4
 Music boxes:		%5
 </source>
-        <translation>Tiles:		%1
+        <translation>Mosaicos:		%1
 Objetos de cenário:	%2
 Caminhos:		%3
 Níveis:		%4
-Caixas de música:	%5</translation>
+Caixas de música:	%5
+</translation>
     </message>
 </context>
 <context>
@@ -10656,8 +10662,8 @@ Por favor, verifique a pasta do aplicativo.</translation>
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation>Arraste e solte itens nesta caixa!
-Botão direito para remover!</translation>
+        <translation>Arraste e largue itens nesta caixa.
+Clique direito para remover.</translation>
     </message>
 </context>
 </TS>
