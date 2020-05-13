@@ -557,15 +557,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Час руху:</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Дистанція:</translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір одного блоку:</translation>
     </message>
 </context>
 <context>
@@ -6083,7 +6083,7 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>Show camera grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати сітку камери</translation>
     </message>
 </context>
 <context>
