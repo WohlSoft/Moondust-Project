@@ -71,7 +71,7 @@
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation>Subjanelas</translation>
+        <translation>Subjanelas separadas (estilo clássico)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
@@ -311,7 +311,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Logging</source>
-        <translation></translation>
+        <translation type="unfinished">Logging</translation>
     </message>
     <message>
         <source>Log level</source>
@@ -417,7 +417,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Make backup</source>
-        <translation></translation>
+        <translation>Criar cópia de segurança</translation>
     </message>
     <message>
         <source>Resample to</source>
@@ -1561,7 +1561,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
+        <translation>Por favor, selecione a que distância dos limites da secção (em píxeis) para remover os itens.</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -1648,7 +1648,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished">Margem de seção</translation>
+        <translation>Margem de secção</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
@@ -1750,12 +1750,12 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished">ID</translation>
+        <translation>Id.</translation>
     </message>
     <message>
         <source>Descending</source>
@@ -1806,7 +1806,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation>Barrar veículos</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -1990,7 +1990,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar em</translation>
+        <translation>Transformar em</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
@@ -2081,7 +2081,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation type="unfinished">Mudar NPC incluído...</translation>
+        <translation>Alterar NPC incluído...</translation>
     </message>
     <message>
         <source>Copy preferences</source>
@@ -2129,7 +2129,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation type="unfinished">Margem de seção</translation>
+        <translation>Margem de secção</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
@@ -2176,7 +2176,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation type="unfinished">Transformar em</translation>
+        <translation>Transformar em</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
@@ -2199,11 +2199,11 @@ Apenas 27 caracteres por linha</translation>
     <name>ItemPhysEnv</name>
     <message>
         <source>Layer: </source>
-        <translation type="unfinished">Camada:</translation>
+        <translation>Camada: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation type="unfinished">Adicionar a nova camada...</translation>
+        <translation>Adicionar à nova camada...</translation>
     </message>
     <message>
         <source>[hidden]</source>
@@ -2211,15 +2211,15 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Environment type</source>
-        <translation type="unfinished">Tipo de ambiente</translation>
+        <translation>Tipo de ambiente</translation>
     </message>
     <message>
         <source>Water</source>
-        <translation type="unfinished">Água</translation>
+        <translation>Água</translation>
     </message>
     <message>
         <source>Quicksand</source>
-        <translation type="unfinished">Areia movediça</translation>
+        <translation>Areia movediça</translation>
     </message>
     <message>
         <source>Custom liquid</source>
@@ -2291,15 +2291,15 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Resize</source>
-        <translation type="unfinished">Redimensionar</translation>
+        <translation>Redimensionar</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation type="unfinished">Cortar</translation>
+        <translation>Cortar</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2581,7 +2581,7 @@ Apenas 27 caracteres por linha</translation>
     <name>JsonSettingsWidget</name>
     <message>
         <source>Browse</source>
-        <translation type="unfinished">Procurar</translation>
+        <translation>Explorar</translation>
     </message>
     <message>
         <source>Play</source>
@@ -2589,7 +2589,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>[empty]</source>
-        <translation type="unfinished">[Vazio]</translation>
+        <translation>[Vazio]</translation>
     </message>
     <message>
         <source>W</source>
@@ -2676,8 +2676,9 @@ Apenas 27 caracteres por linha</translation>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Não foi possível iniciar o aplicativo:%1.
-Por favor, verifique a pasta do aplicativo.</translation>
+        <translation>Não é possível executar a aplicação:
+%1.
+Por favor, verifique a diretoria da aplicação e certifique-se que está instalada corretamente.</translation>
     </message>
 </context>
 <context>
@@ -3129,7 +3130,7 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">Geral</translation>
+        <translation>Geral</translation>
     </message>
     <message>
         <source>No settings available</source>
@@ -3289,15 +3290,15 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
-        <translation type="unfinished">Personalizada</translation>
+        <translation>Personalizada</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Procurar...</translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Salvar</translation>
+        <translation>Guardar</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
@@ -3714,8 +3715,8 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <source>Source section is empty!
 Please select another section, or clear.</source>
-        <translation>A seção fonte está vazia!
-Por favor, escolha outra.</translation>
+        <translation>A secção fonte está vazia!
+Por favor, selecione outra secção.</translation>
     </message>
     <message>
         <source>Section is used</source>
@@ -6632,7 +6633,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
+        <translation>Por favor, selecione a que distância dos limites da secção (em pixels) para remover os itens.</translation>
     </message>
     <message>
         <source>Section has been removed</source>
@@ -6644,7 +6645,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>Por favor, escolha o quão longe intens fora das margens da seção serão rotacionados também (em pixels)</translation>
+        <translation>Por favor, selecione até que ponto os itens podem rodar além dos limites da secção (em píxeis) antes de serem removidos.</translation>
     </message>
     <message>
         <source>Select directory with custom data to import.</source>
