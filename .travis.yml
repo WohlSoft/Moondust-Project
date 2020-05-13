@@ -156,8 +156,8 @@ matrix:
       osx_image: xcode10.2
       compiler: clang
       env:
-        - QT_VER=5.12.4
-        - QT_TARBALL=qt-5-12-4-static-macosx-10-14-5.tar.bz2
+        - QT_VER=5-14-2
+        - QT_TARBALL=qt-5-14-2-static-macosx-10-14-6.tar.bz2
       before_cache:
         - brew cleanup
       cache:
