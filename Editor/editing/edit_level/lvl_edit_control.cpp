@@ -60,11 +60,12 @@ LevelEdit::~LevelEdit()
 
 void LevelEdit::ResetPosition()
 {
+    qreal zoom = ui->graphicsView->zoom();
     LvlData.sections[LvlData.CurSection].PositionX =
         LvlData.sections[LvlData.CurSection].size_left;
     LvlData.sections[LvlData.CurSection].PositionY =
-        LvlData.sections[LvlData.CurSection].size_bottom - ui->graphicsView->viewport()->height() + 10;
-    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom - ui->graphicsView->viewport()->height() + 10, false, QPoint(-10, 10));
+        LvlData.sections[LvlData.CurSection].size_bottom + (10 - ui->graphicsView->viewport()->height())/zoom;
+    goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom, false, QPoint(-10, 10 - ui->graphicsView->viewport()->height()));
 }
 
 void LevelEdit::ResetZoom()
