@@ -331,35 +331,35 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>字体</translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>字体大小</translation>
     </message>
     <message>
         <source>Use default</source>
-        <translation type="unfinished">使用默认值</translation>
+        <translation>使用默认值</translation>
     </message>
     <message>
         <source>Set log file</source>
-        <translation type="unfinished">设置日志文件</translation>
+        <translation>设置日志文件</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="unfinished">文本文件 (*.txt *.log)</translation>
+        <translation>文本文件 (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation type="unfinished">成功</translation>
+        <translation>成功</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="unfinished">文件关联已设置</translation>
+        <translation>文件关联已设置</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">错误</translation>
+        <translation>错误</translation>
     </message>
 </context>
 <context>
@@ -552,15 +552,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation>移动时间：</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>距离：</translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation>砖块大小：</translation>
     </message>
 </context>
 <context>
@@ -6492,7 +6492,7 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>Show camera grid</source>
-        <translation type="unfinished"></translation>
+        <translation>显示镜像网格</translation>
     </message>
 </context>
 <context>
