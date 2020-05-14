@@ -232,7 +232,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
             child->show();
             updateMenus(newSubWin, true);
             child->updateGeometry();
-            child->ResetPosition();
+            child->resetPosition();
             dock_LvlItemBox->initItemLists();
             statusBar()->showMessage(tr("Level file loaded"), 2000);
             setCurrentLevelSection(0);

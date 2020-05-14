@@ -65,15 +65,20 @@ public slots:
     void resetNPCSearch();
 
 private slots:
+    void on_FindStartBlock_clicked();
+    void on_FindStartBGO_clicked();
     void on_FindStartNPC_clicked();
+
+    void on_blockSelectAll_clicked();
+    void on_npcSelectAll_clicked();
+    void on_bgoSelectAll_clicked();
+
     void on_Find_Button_TypeBlock_clicked();
     void on_Find_Button_TypeBGO_clicked();
     void on_Find_Button_TypeNPC_clicked();
     void on_Find_Button_ResetBlock_clicked();
     void on_Find_Button_ResetBGO_clicked();
     void on_Find_Button_ResetNPC_clicked();
-    void on_FindStartBlock_clicked();
-    void on_FindStartBGO_clicked();
     void on_Find_Button_ContainsNPCBlock_clicked();
 
 private:
@@ -93,9 +98,9 @@ private:
     SearchMeta<LevelBGO>    m_curBgo;
     SearchMeta<LevelNPC>    m_curNpc;
 
-    bool doSearchBlock(LevelEdit *edit);
-    bool doSearchBGO(LevelEdit *edit);
-    bool doSearchNPC(LevelEdit *edit);
+    bool doSearchBlock(LevelEdit *edit, bool all = false);
+    bool doSearchBGO(LevelEdit *edit, bool all = false);
+    bool doSearchNPC(LevelEdit *edit, bool all = false);
 
     enum currentSearch
     {

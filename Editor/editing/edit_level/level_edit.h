@@ -77,13 +77,18 @@ public:
 
     void markForForceClose();
 
+    int  findNearestSection(long x, long y);
+
     void setCurrentSection(int scId);
-    void ResetPosition();
+    int  getCurrentSection();
+
+    void resetPosition();
     void goTo(long x, long y, bool SwitchToSection = false, QPoint offset = QPoint(0, 0), bool center = false);
 
-    void ResetZoom();
+    void zoomReset();
     void zoomIn();
     void zoomOut();
+
     void setZoom(int percent);
     int  getZoom();
 

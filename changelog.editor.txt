@@ -36,6 +36,8 @@ Editor 0.3.2-dev
 - Added the support for alternative Editor images and animations (config pack entry settings with "editor-" prefix)
 - Added the support for item icons (alternative pictures shown in tilesets and item lists)
 - Added camera grid for a preset grid for visualizing screens worth of a level
+- Added the "select all" item search option
+- Added the "Current section only" and the "Search in selection group" item search criterias
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu

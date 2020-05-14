@@ -358,6 +358,55 @@ void LvlSearchBox::on_FindStartNPC_clicked()
     }
 }
 
+void LvlSearchBox::on_blockSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    auto *edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_BLOCK;
+    m_currentSearches ^= SEARCH_BLOCK;
+    ui->FindStartBlock->setText(tr("Search Block"));
+    ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
+    doSearchBlock(edit, true);
+}
+
+void LvlSearchBox::on_npcSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    auto *edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_NPC;
+    m_currentSearches ^= SEARCH_NPC;
+    ui->FindStartNPC->setText(tr("Search NPC"));
+    ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
+    doSearchNPC(edit, true);
+}
+
+void LvlSearchBox::on_bgoSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    auto *edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_BGO;
+    m_currentSearches ^= SEARCH_BGO;
+    ui->FindStartBGO->setText(tr("Search BGO"));
+    ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
+    doSearchBGO(edit, true);
+}
+
+
 void LvlSearchBox::on_Find_Button_TypeBlock_clicked()
 {
     ItemSelectDialog selBlock(&(mw()->configs), ItemSelectDialog::TAB_BLOCK, 0, m_curBlock.data.id, 0, 0, 0, 0, 0, 0, 0, this);
@@ -524,17 +573,35 @@ void LvlSearchBox::resetNPCSearch()
 }
 
 //return true when finish searching
-bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
+bool LvlSearchBox::doSearchBlock(LevelEdit *edit, bool all)
 {
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
+    auto gr = edit->scene->items();
+    auto grSize = static_cast<quint64>(gr.size());
+
+    bool foundAll = false;
+    QPoint foundFirst;
+    int foundCount = 0;
+
+    auto curSectionOnly = ui->blockCurSection->isChecked();
+    auto selectionOnly = ui->blockSelectionOnly->isChecked();
 
     //Reset search on changing total number of elements (something added or deleted)
     //... however, will be continued if something replaced
-    if(grSize != m_curBlock.total)
+    if(grSize != m_curBlock.total || all)
     {
         m_curBlock.total = grSize;
         m_curBlock.index = 0;
+        if(all)
+        {
+            if(selectionOnly)
+            {
+                gr = edit->scene->selectedItems();
+                grSize = static_cast<quint64>(gr.size());
+            }
+
+            for(QGraphicsItem *it : edit->scene->selectedItems())
+                it->setSelected(false);
+        }
     }
 
     if(m_curBlock.index < grSize)
@@ -574,16 +641,48 @@ bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
             if(ui->Find_Check_EventLayerEmptyBlock->isChecked() && toBeFound)
                 toBeFound = d.event_emptylayer == ui->Find_Combo_EventLayerEmptyBlock->currentText();
 
+            if(curSectionOnly && toBeFound)
+                toBeFound = edit->getCurrentSection() == edit->findNearestSection(d.x, d.y);
+
             if(toBeFound)
             {
-                for(QGraphicsItem *it : edit->scene->selectedItems())
-                    it->setSelected(false);
-                gr[i]->setSelected(true);
-                edit->goTo(d.x, d.y, true, QPoint(-300, -300));
-                m_curBlock.index = i + 1;//Continue search at next
-                return false;
+                if(!all)
+                {
+                    for(auto *it : edit->scene->selectedItems())
+                        it->setSelected(false);
+                }
+
+                gri->setSelected(true);
+
+                if(!all)
+                {
+                    edit->goTo(d.x, d.y, true, QPoint(-300, -300));
+                    m_curBlock.index = i + 1;//Continue search at next
+                    return false;
+                }
+                else if(!foundAll)
+                {
+                    foundAll = true;
+                    foundFirst.setY(d.y);
+                    foundFirst.setX(d.x);
+                }
+                else
+                {
+                    // Move to left-top of selection group for convenience
+                    if(foundFirst.y() > d.y)
+                        foundFirst.setY(d.y);
+                    if(foundFirst.x() > d.x)
+                        foundFirst.setX(d.x);
+                }
+                foundCount++;
             }
         }
+    }
+
+    if(foundAll)
+    {
+        edit->goTo(foundFirst.x(), foundFirst.y(), true, QPoint(-300, -300));
+        mw()->showStatusMsg(tr("%1 found elements were selected.").arg(foundCount), 3000);
     }
 
     //end search
@@ -591,17 +690,35 @@ bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
     return true;
 }
 
-bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
+bool LvlSearchBox::doSearchBGO(LevelEdit *edit, bool all)
 {
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
+    auto gr = edit->scene->items();
+    auto grSize = static_cast<quint64>(gr.size());
+
+    bool foundAll = false;
+    QPoint foundFirst;
+    int foundCount = 0;
+
+    auto curSectionOnly = ui->bgoCurSection->isChecked();
+    auto selectionOnly = ui->bgoSelectionOnly->isChecked();
 
     //Reset search on changing total number of elements (something added or deleted)
     //... however, will be continued if something replaced
-    if(grSize != m_curBgo.total)
+    if(grSize != m_curBgo.total || all)
     {
         m_curBgo.total = grSize;
         m_curBgo.index = 0;
+        if(all)
+        {
+            if(selectionOnly)
+            {
+                gr = edit->scene->selectedItems();
+                grSize = static_cast<quint64>(gr.size());
+            }
+
+            for(QGraphicsItem *it : edit->scene->selectedItems())
+                it->setSelected(false);
+        }
     }
 
     if(m_curBgo.index < grSize)
@@ -626,16 +743,49 @@ bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
             if(ui->Find_Check_PriorityBGO->isChecked() && toBeFound)
                 toBeFound = d.smbx64_sp == ui->Find_Spin_PriorityBGO->value();
 
+            if(curSectionOnly && toBeFound)
+                toBeFound = edit->getCurrentSection() == edit->findNearestSection(d.x, d.y);
+
             if(toBeFound)
             {
-                for(QGraphicsItem *it : edit->scene->selectedItems())
-                    it->setSelected(false);
+                if(!all)
+                {
+                    for(QGraphicsItem *it : edit->scene->selectedItems())
+                        it->setSelected(false);
+                }
+
                 gri->setSelected(true);
-                edit->goTo(d.x, d.y, true, QPoint(-300, -300));
-                m_curBgo.index = i + 1;//Continue search at next
-                return false;
+
+                if(!all)
+                {
+                    edit->goTo(d.x, d.y, true, QPoint(-300, -300));
+                    m_curBgo.index = i + 1;//Continue search at next
+                    return false;
+                }
+                else if(!foundAll)
+                {
+                    foundAll = true;
+                    foundFirst.setY(d.y);
+                    foundFirst.setX(d.x);
+                }
+                else
+                {
+                    // Move to left-top of selection group for convenience
+                    if(foundFirst.y() > d.y)
+                        foundFirst.setY(d.y);
+                    if(foundFirst.x() > d.x)
+                        foundFirst.setX(d.x);
+                }
+
+                foundCount++;
             }
         }
+    }
+
+    if(foundAll)
+    {
+        edit->goTo(foundFirst.x(), foundFirst.y(), true, QPoint(-300, -300));
+        mw()->showStatusMsg(tr("%1 found elements were selected.").arg(foundCount), 3000);
     }
 
     //end search
@@ -643,17 +793,35 @@ bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
     return true;
 }
 
-bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
+bool LvlSearchBox::doSearchNPC(LevelEdit *edit, bool all)
 {
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
+    auto gr = edit->scene->items();
+    auto grSize = static_cast<quint64>(gr.size());
+
+    bool foundAll = false;
+    QPoint foundFirst;
+    int foundCount = 0;
+
+    auto curSectionOnly = ui->npcCurSection->isChecked();
+    auto selectionOnly = ui->npcSelectionOnly->isChecked();
 
     //Reset search on changing total number of elements (something added or deleted)
     //... however, will be continued if something replaced
-    if(grSize != m_curNpc.total)
+    if(grSize != m_curNpc.total || all)
     {
         m_curNpc.total = grSize;
         m_curNpc.index = 0;
+        if(all)
+        {
+            if(selectionOnly)
+            {
+                gr = edit->scene->selectedItems();
+                grSize = static_cast<quint64>(gr.size());
+            }
+
+            for(QGraphicsItem *it : edit->scene->selectedItems())
+                it->setSelected(false);
+        }
     }
 
     if(m_curNpc.index < grSize)
@@ -720,16 +888,48 @@ bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
                             || (d.event_emptylayer == "" && ui->Find_Combo_Event_Empty_LayerNPC->currentText() == "[None]");
             }
 
+            if(curSectionOnly && toBeFound)
+                toBeFound = edit->getCurrentSection() == edit->findNearestSection(d.x, d.y);
+
             if(toBeFound)
             {
-                for(QGraphicsItem *it : edit->scene->selectedItems())
-                    it->setSelected(false);
+                if(!all)
+                {
+                    for(QGraphicsItem *it : edit->scene->selectedItems())
+                        it->setSelected(false);
+                }
+
                 gri->setSelected(true);
-                edit->goTo(d.x, d.y, true, QPoint(-300, -300));
-                m_curNpc.index = i + 1;
-                return false;
+
+                if(!all)
+                {
+                    edit->goTo(d.x, d.y, true, QPoint(-300, -300));
+                    m_curNpc.index = i + 1;
+                    return false;
+                }
+                else if(!foundAll)
+                {
+                    foundAll = true;
+                    foundFirst.setY(d.y);
+                    foundFirst.setX(d.x);
+                }
+                else
+                {
+                    // Move to left-top of selection group for convenience
+                    if(foundFirst.y() > d.y)
+                        foundFirst.setY(d.y);
+                    if(foundFirst.x() > d.x)
+                        foundFirst.setX(d.x);
+                }
+                foundCount++;
             }
         }
+    }
+
+    if(foundAll)
+    {
+        edit->goTo(foundFirst.x(), foundFirst.y(), true, QPoint(-300, -300));
+        mw()->showStatusMsg(tr("%1 found elements were selected.").arg(foundCount), 3000);
     }
 
     //end search

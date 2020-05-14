@@ -58,7 +58,7 @@ LevelEdit::~LevelEdit()
 
 
 
-void LevelEdit::ResetPosition()
+void LevelEdit::resetPosition()
 {
     qreal zoom = ui->graphicsView->zoom();
     LvlData.sections[LvlData.CurSection].PositionX =
@@ -68,7 +68,7 @@ void LevelEdit::ResetPosition()
     goTo(LvlData.sections[LvlData.CurSection].size_left, LvlData.sections[LvlData.CurSection].size_bottom, false, QPoint(-10, 10 - ui->graphicsView->viewport()->height()));
 }
 
-void LevelEdit::ResetZoom()
+void LevelEdit::zoomReset()
 {
     if(QString(ui->graphicsView->metaObject()->className()) == "GraphicsWorkspace")
         static_cast<GraphicsWorkspace *>(ui->graphicsView)->setZoom(1.0);
@@ -106,7 +106,7 @@ int LevelEdit::getZoom()
 }
 
 
-static int findNearestSection(LevelData &data, long x, long y)
+static int privateFindNearestSection(LevelData &data, long x, long y)
 {
     long lessDistance = 0;
     int  result = 0;
@@ -127,6 +127,7 @@ static int findNearestSection(LevelData &data, long x, long y)
         LevelSection &s = data.sections[i];
         long centerX = s.size_left + std::abs(s.size_left - s.size_right) / 2;
         long centerY = s.size_top  + std::abs(s.size_top  - s.size_bottom) / 2;
+
         //Find distance to center
         long distanceC = std::sqrt(std::pow(centerX - x, 2) + std::pow(centerY - y, 2));
 
@@ -162,6 +163,7 @@ static int findNearestSection(LevelData &data, long x, long y)
 
         if(i == 0)
             lessDistance = distanceC;
+
         else if(distanceC < lessDistance)
         {
             lessDistance = distanceC;
@@ -172,14 +174,19 @@ static int findNearestSection(LevelData &data, long x, long y)
     return result;
 }
 
-void LevelEdit::goTo(long x, long y, bool SwitchToSection, QPoint offset, bool center)
+int LevelEdit::findNearestSection(long x, long y)
+{
+    return privateFindNearestSection(LvlData, x, y);
+}
+
+void LevelEdit::goTo(long x, long y, bool switchToSection, QPoint offset, bool center)
 {
     if(center)
         offset = QPoint(-ui->graphicsView->viewport()->width() / 2, -ui->graphicsView->viewport()->height() / 2);
 
-    if(SwitchToSection)
+    if(switchToSection)
     {
-        int section = findNearestSection(LvlData, x, y);
+        int section = privateFindNearestSection(LvlData, x, y);
         m_mw->setCurrentLevelSection(section);
     }
 
@@ -263,9 +270,14 @@ void LevelEdit::setCurrentSection(int scId)
     ui->graphicsView->update();
     update();
 
-    if(sIsNew) m_mw->on_actionGotoLeftBottom_triggered();
+    if(sIsNew)
+        m_mw->on_actionGotoLeftBottom_triggered();
 }
 
+int LevelEdit::getCurrentSection()
+{
+    return LvlData.CurSection;
+}
 
 void LevelEdit::changeCursor(int mode)
 {
