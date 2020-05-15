@@ -28,6 +28,7 @@ class MainWindow;
 class QMdiSubWindow;
 class LevelEdit;
 class QComboBox;
+class QGraphicsItem;
 
 namespace Ui
 {
@@ -85,22 +86,35 @@ private:
     Ui::LvlSearchBox *ui;
     bool m_lockReset;
 
-    template<class T>
     struct SearchMeta
     {
         quint64         total = 0;
         unsigned long   index = 0;
-        T               data;
+        struct Data
+        {
+            unsigned long id = 0;
+            unsigned int index = 0;
+            long npc_id = 0;
+        } data;
     };
 
     void resetAllSearchFields();
-    SearchMeta<LevelBlock>  m_curBlock;
-    SearchMeta<LevelBGO>    m_curBgo;
-    SearchMeta<LevelNPC>    m_curNpc;
+    SearchMeta m_curBlock;
+    SearchMeta m_curBgo;
+    SearchMeta m_curNpc;
 
-    bool doSearchBlock(LevelEdit *edit, bool all = false);
-    bool doSearchBGO(LevelEdit *edit, bool all = false);
-    bool doSearchNPC(LevelEdit *edit, bool all = false);
+    typedef bool (LvlSearchBox::*SearchCriteriaType)(QGraphicsItem *);
+
+    bool checkBlockCriteria(QGraphicsItem *gri);
+    bool checkBgoCriteria(QGraphicsItem *gri);
+    bool checkNpcCriteria(QGraphicsItem *gri);
+
+    bool doSearch(SearchMeta &meta,
+                  SearchCriteriaType checkCriteria,
+                  LevelEdit *edit,
+                  bool curSectionOnly = false,
+                  bool all = false,
+                  bool selectionOnly = false);
 
     enum currentSearch
     {
