@@ -27,6 +27,7 @@
 class MainWindow;
 class QMdiSubWindow;
 class WorldEdit;
+class QGraphicsItem;
 
 namespace Ui
 {
@@ -64,6 +65,12 @@ private slots:
     void on_FindStartPath_clicked();
     void on_FindStartMusic_clicked();
 
+    void on_tileSelectAll_clicked();
+    void on_scenerySelectAll_clicked();
+    void on_pathSelectAll_clicked();
+    void on_levelSelectAll_clicked();
+    void on_mboxSelectAll_clicked();
+
     void on_Find_Button_TypeLevel_clicked();
     void on_Find_Button_TypeTile_clicked();
     void on_Find_Button_TypeScenery_clicked();
@@ -76,25 +83,37 @@ private slots:
     void on_Find_Button_ResetTile_clicked();
 
 private:
-    template<class T>
+
     struct SearchMeta
     {
         quint64         total = 0;
         unsigned long   index = 0;
-        T               data;
+        struct Data
+        {
+            unsigned long id = 0;
+            unsigned int index = 0;
+        } data;
     };
 
-    SearchMeta<WorldTerrainTile>    m_curTerrain;
-    SearchMeta<WorldScenery>        m_curScenery;
-    SearchMeta<WorldPathTile>       m_curPath;
-    SearchMeta<WorldLevelTile>      m_curLevel;
-    SearchMeta<WorldMusicBox>       m_curMusicBox;
+    SearchMeta m_curTerrain;
+    SearchMeta m_curScenery;
+    SearchMeta m_curPath;
+    SearchMeta m_curLevel;
+    SearchMeta m_curMusicBox;
 
-    bool doSearchTile(WorldEdit *edit);
-    bool doSearchScenery(WorldEdit *edit);
-    bool doSearchPath(WorldEdit *edit);
-    bool doSearchLevel(WorldEdit *edit);
-    bool doSearchMusic(WorldEdit *edit);
+    typedef bool (WldSearchBox::*SearchCriteriaType)(QGraphicsItem *);
+
+    bool checkTileCriteria(QGraphicsItem *gri);
+    bool checkSceneryCriteria(QGraphicsItem *gri);
+    bool checkPathCriteria(QGraphicsItem *gri);
+    bool checkLevelCriteria(QGraphicsItem *gri);
+    bool checkMusicBoxCriteria(QGraphicsItem *gri);
+
+    bool doSearch(SearchMeta &meta,
+                  SearchCriteriaType checkCriteria,
+                  WorldEdit *edit,
+                  bool all = false,
+                  bool selectionOnly = false);
 
     Ui::WldSearchBox *ui;
     bool m_lockSettings = false;

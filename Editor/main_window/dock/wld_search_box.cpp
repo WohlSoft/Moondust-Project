@@ -44,19 +44,19 @@ WldSearchBox::WldSearchBox(QWidget *parent) :
     m_currentSearches = 0;
 
     m_curTerrain.data.id = 0;
-    m_curTerrain.data.meta.index = 0;
+    m_curTerrain.data.index = 0;
 
     m_curScenery.data.id = 0;
-    m_curScenery.data.meta.index = 0;
+    m_curScenery.data.index = 0;
 
     m_curPath.data.id = 0;
-    m_curPath.data.meta.index = 0;
+    m_curPath.data.index = 0;
 
     m_curLevel.data.id = 0;
-    m_curLevel.data.meta.index = 0;
+    m_curLevel.data.index = 0;
 
     m_curMusicBox.data.id = 0;
-    m_curMusicBox.data.meta.index = 0;
+    m_curMusicBox.data.index = 0;
 
     QRect mwg = mw()->geometry();
     int GOffset = 10;
@@ -246,6 +246,7 @@ void WldSearchBox::on_Find_Button_ResetTile_clicked()
     }
 }
 
+
 void WldSearchBox::on_Find_Button_TypeLevel_clicked()
 {
     std::unique_ptr<ItemSelectDialog> selLevel(new ItemSelectDialog(&(mw()->configs), ItemSelectDialog::TAB_LEVEL, 0, 0, 0, 0, 0, 0, 0, m_curLevel.data.id, 0, this));
@@ -312,12 +313,15 @@ void WldSearchBox::on_FindStartLevel_clicked()
     {
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
+            WorldEdit *edit = mw()->activeWldEditWin();
+            if(!edit)
+                return;
+
             m_currentSearches |= SEARCH_LEVEL;
             ui->FindStartLevel->setText(tr("Next Level"));
             ui->Find_Button_ResetLevel->setText(tr("Stop Search"));
-            WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchLevel(edit))
+
+            if(doSearch(m_curLevel, &WldSearchBox::checkLevelCriteria, edit, false, ui->levelSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_LEVEL;
                 ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
@@ -331,8 +335,10 @@ void WldSearchBox::on_FindStartLevel_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchLevel(edit))
+            if(!edit)
+                return;
+
+            if(doSearch(m_curLevel, &WldSearchBox::checkLevelCriteria, edit, false, ui->levelSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_LEVEL;
                 ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
@@ -349,12 +355,15 @@ void WldSearchBox::on_FindStartTile_clicked()
     {
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
+            WorldEdit *edit = mw()->activeWldEditWin();
+            if(!edit)
+                return;
+
             m_currentSearches |= SEARCH_TILE;
             ui->FindStartTile->setText(tr("Next Tile"));
             ui->Find_Button_ResetTile->setText(tr("Stop Search"));
-            WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchTile(edit))
+
+            if(doSearch(m_curTerrain, &WldSearchBox::checkTileCriteria, edit, false, ui->tileSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_TILE;
                 ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
@@ -368,8 +377,10 @@ void WldSearchBox::on_FindStartTile_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchTile(edit))
+            if(!edit)
+                return;
+
+            if(doSearch(m_curTerrain, &WldSearchBox::checkTileCriteria, edit, false, ui->tileSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_TILE;
                 ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
@@ -386,12 +397,15 @@ void WldSearchBox::on_FindStartScenery_clicked()
     {
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
+            WorldEdit *edit = mw()->activeWldEditWin();
+            if(!edit)
+                return;
+
             m_currentSearches |= SEARCH_SCENERY;
             ui->FindStartScenery->setText(tr("Next Scenery"));
             ui->Find_Button_ResetScenery->setText(tr("Stop Search"));
-            WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchScenery(edit))
+
+            if(doSearch(m_curScenery, &WldSearchBox::checkSceneryCriteria, edit, false, ui->scenerySelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_SCENERY;
                 ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
@@ -405,8 +419,10 @@ void WldSearchBox::on_FindStartScenery_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchScenery(edit))
+            if(!edit)
+                return;
+
+            if(doSearch(m_curScenery, &WldSearchBox::checkSceneryCriteria, edit, false, ui->scenerySelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_SCENERY;
                 ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
@@ -423,12 +439,15 @@ void WldSearchBox::on_FindStartPath_clicked()
     {
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
+            WorldEdit *edit = mw()->activeWldEditWin();
+            if(!edit)
+                return;
+
             m_currentSearches |= SEARCH_PATH;
             ui->FindStartPath->setText(tr("Next Path"));
             ui->Find_Button_ResetPath->setText(tr("Stop Search"));
-            WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchPath(edit))
+
+            if(doSearch(m_curPath, &WldSearchBox::checkPathCriteria, edit, false, ui->pathSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_PATH;
                 ui->Find_Button_ResetPath->setText(tr("Reset Search Fields"));
@@ -442,8 +461,10 @@ void WldSearchBox::on_FindStartPath_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchPath(edit))
+            if(!edit)
+                return;
+
+            if(doSearch(m_curPath, &WldSearchBox::checkPathCriteria, edit, false, ui->pathSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_PATH;
                 ui->Find_Button_ResetPath->setText(tr("Reset Search Fields"));
@@ -460,12 +481,15 @@ void WldSearchBox::on_FindStartMusic_clicked()
     {
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
+            WorldEdit *edit = mw()->activeWldEditWin();
+            if(!edit)
+                return;
+
             m_currentSearches |= SEARCH_MUSICBOX;
             ui->FindStartMusic->setText(tr("Next Music"));
             ui->Find_Button_ResetMusic->setText(tr("Stop Search"));
-            WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchMusic(edit))
+
+            if(doSearch(m_curMusicBox, &WldSearchBox::checkMusicBoxCriteria, edit, false, ui->mboxSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_MUSICBOX;
                 ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
@@ -479,8 +503,10 @@ void WldSearchBox::on_FindStartMusic_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_World)
         {
             WorldEdit *edit = mw()->activeWldEditWin();
-            if(!edit) return;
-            if(doSearchMusic(edit))
+            if(!edit)
+                return;
+
+            if(doSearch(m_curMusicBox, &WldSearchBox::checkMusicBoxCriteria, edit, false, ui->mboxSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_MUSICBOX;
                 ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
@@ -491,217 +517,285 @@ void WldSearchBox::on_FindStartMusic_clicked()
     }
 }
 
-bool WldSearchBox::doSearchTile(WorldEdit *edit)
+
+
+void WldSearchBox::on_tileSelectAll_clicked()
 {
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
+    if(mw()->activeChildWindow() != MainWindow::WND_World)
+        return;
+
+    auto *edit = mw()->activeWldEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_TILE;
+    m_currentSearches ^= SEARCH_TILE;
+    ui->Find_Button_ResetTile->setText(tr("Reset Search Fields"));
+    ui->FindStartTile->setText(tr("Search Tile"));
+    doSearch(m_curTerrain, &WldSearchBox::checkTileCriteria, edit,
+             true, ui->tileSelectionOnly->isChecked());
+}
+
+void WldSearchBox::on_scenerySelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_World)
+        return;
+
+    auto *edit = mw()->activeWldEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_SCENERY;
+    m_currentSearches ^= SEARCH_SCENERY;
+    ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
+    ui->FindStartScenery->setText(tr("Search Scenery"));
+    doSearch(m_curScenery, &WldSearchBox::checkSceneryCriteria, edit,
+             true, ui->scenerySelectionOnly->isChecked());
+}
+
+void WldSearchBox::on_pathSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_World)
+        return;
+
+    auto *edit = mw()->activeWldEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_PATH;
+    m_currentSearches ^= SEARCH_PATH;
+    ui->Find_Button_ResetScenery->setText(tr("Reset Search Fields"));
+    ui->FindStartScenery->setText(tr("Search Scenery"));
+    doSearch(m_curPath, &WldSearchBox::checkPathCriteria, edit,
+             true, ui->pathSelectionOnly->isChecked());
+}
+
+void WldSearchBox::on_levelSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_World)
+        return;
+
+    auto *edit = mw()->activeWldEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_LEVEL;
+    m_currentSearches ^= SEARCH_LEVEL;
+    ui->Find_Button_ResetLevel->setText(tr("Reset Search Fields"));
+    ui->FindStartLevel->setText(tr("Search Level"));
+    doSearch(m_curLevel, &WldSearchBox::checkLevelCriteria, edit,
+             true, ui->levelSelectionOnly->isChecked());
+}
+
+void WldSearchBox::on_mboxSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_World)
+        return;
+
+    auto *edit = mw()->activeWldEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_MUSICBOX;
+    m_currentSearches ^= SEARCH_MUSICBOX;
+    ui->Find_Button_ResetMusic->setText(tr("Reset Search Fields"));
+    ui->FindStartMusic->setText(tr("Search Music"));
+    doSearch(m_curMusicBox, &WldSearchBox::checkMusicBoxCriteria, edit,
+             true, ui->mboxSelectionOnly->isChecked());
+}
+
+
+bool WldSearchBox::checkTileCriteria(QGraphicsItem *gri)
+{
+    if(gri->data(ITEM_TYPE).toString() != "TILE")
+        return false;
+
+    auto *it = qgraphicsitem_cast<ItemTile *>(gri);
+    Q_ASSERT(it);
+    auto &d = it->m_data;
+
+    bool toBeFound = true;
+
+    if(ui->Find_Check_TypeTile->isChecked() && m_curTerrain.data.id != 0 && toBeFound)
+        toBeFound = d.id == (unsigned int)m_curTerrain.data.id;
+
+    return toBeFound;
+}
+
+bool WldSearchBox::checkSceneryCriteria(QGraphicsItem *gri)
+{
+    if(gri->data(ITEM_TYPE).toString() != "SCENERY")
+        return false;
+
+    auto *it = qgraphicsitem_cast<ItemScene *>(gri);
+    Q_ASSERT(it);
+    auto &d = it->m_data;
+
+    bool toBeFound = true;
+
+    if(ui->Find_Check_TypeScenery->isChecked() && m_curScenery.data.id != 0 && toBeFound)
+        toBeFound = d.id == (unsigned int)m_curScenery.data.id;
+
+    return toBeFound;
+}
+
+bool WldSearchBox::checkPathCriteria(QGraphicsItem *gri)
+{
+    if(gri->data(ITEM_TYPE).toString() != "PATH")
+        return false;
+
+    auto *it = qgraphicsitem_cast<ItemPath *>(gri);
+    Q_ASSERT(it);
+    auto &d = it->m_data;
+
+    bool toBeFound = true;
+
+    if(ui->Find_Check_TypePath->isChecked() && m_curPath.data.id != 0 && toBeFound)
+        toBeFound = d.id == (unsigned int)m_curPath.data.id;
+
+    return toBeFound;
+}
+
+bool WldSearchBox::checkLevelCriteria(QGraphicsItem *gri)
+{
+    if(gri->data(ITEM_TYPE).toString() != "LEVEL")
+        return false;
+
+    auto *it = qgraphicsitem_cast<ItemLevel *>(gri);
+    Q_ASSERT(it);
+    auto &d = it->m_data;
+
+    bool toBeFound = true;
+
+    if(ui->Find_Check_TypeLevel->isChecked() && m_curLevel.data.id != 0 && toBeFound)
+        toBeFound = d.id == (unsigned int)m_curLevel.data.id;
+
+    if(ui->Find_Check_PathBackground->isChecked() && toBeFound)
+        toBeFound = d.pathbg == ui->Find_Check_PathBackgroundActive->isChecked();
+
+    if(ui->Find_Check_BigPathBackground->isChecked() && toBeFound)
+        toBeFound = d.bigpathbg == ui->Find_Check_BigPathBackgroundActive->isChecked();
+
+    if(ui->Find_Check_AlwaysVisible->isChecked() && toBeFound)
+        toBeFound = d.alwaysVisible == ui->Find_Check_AlwaysVisibleActive->isChecked();
+
+    if(ui->Find_Check_GameStartPoint->isChecked() && toBeFound)
+        toBeFound = d.gamestart == ui->Find_Check_GameStartPointActive->isChecked();
+
+    if(ui->Find_Check_LevelFile->isChecked() && toBeFound)
+        toBeFound = d.lvlfile.contains(ui->Find_Edit_LevelFile->text(), Qt::CaseInsensitive);
+
+    if(ui->Find_Check_ContainsTitle->isChecked() && toBeFound)
+        toBeFound = d.title.contains(ui->Find_Edit_ContainsTitle->text(), Qt::CaseInsensitive);
+
+    return toBeFound;
+}
+
+bool WldSearchBox::checkMusicBoxCriteria(QGraphicsItem *gri)
+{
+    if(gri->data(ITEM_TYPE).toString() != "MUSICBOX")
+        return false;
+
+    auto *it = qgraphicsitem_cast<ItemMusic *>(gri);
+    Q_ASSERT(it);
+    auto &d = it->m_data;
+
+    bool toBeFound = true;
+
+    if(ui->Find_Check_TypeMusic->isChecked() && m_curMusicBox.data.id != 0 && toBeFound)
+        toBeFound = d.id == (unsigned int)m_curMusicBox.data.id;
+
+    return toBeFound;
+}
+
+bool WldSearchBox::doSearch(WldSearchBox::SearchMeta &meta,
+                            WldSearchBox::SearchCriteriaType checkCriteria,
+                            WorldEdit *edit,
+                            bool all, bool selectionOnly)
+{
+    auto gr = edit->scene->items();
+    auto grSize = static_cast<quint64>(gr.size());
+
+    bool foundAll = false;
+    QPoint foundFirst;
+    int foundCount = 0;
 
     //Reset search on changing total number of elements (something added or deleted)
     //... however, will be continued if something replaced
-    if(grSize != m_curTerrain.total)
+    if(grSize != meta.total || all)
     {
-        m_curTerrain.total = grSize;
-        m_curTerrain.index = 0;
+        meta.total = grSize;
+        meta.index = 0;
+        if(all)
+        {
+            if(selectionOnly)
+            {
+                gr = edit->scene->selectedItems();
+                grSize = static_cast<quint64>(gr.size());
+            }
+
+            for(QGraphicsItem *it : edit->scene->selectedItems())
+                it->setSelected(false);
+        }
     }
 
-    if(m_curTerrain.data.meta.index < grSize)
+    if(meta.index < grSize)
     {
-        for(quint64 i = m_curTerrain.index; i < grSize; ++i)
+        for(quint64 i = meta.index; i < grSize; ++i)
         {
-            if(gr[i]->data(ITEM_TYPE).toString() == "TILE")
+            auto *gri = gr[i];
+            long x = static_cast<long>(gri->x());
+            long y = static_cast<long>(gri->y());
+
+            bool toBeFound = (this->*checkCriteria)(gri);
+
+            if(toBeFound)
             {
-                bool toBeFound = true;
-                if(ui->Find_Check_TypeTile->isChecked() && m_curTerrain.data.id != 0 && toBeFound)
-                    toBeFound = ((ItemTile *)gr[i])->m_data.id == (unsigned int)m_curTerrain.data.id;
-                if(toBeFound)
+                if(!all)
                 {
-                    foreach(QGraphicsItem *i, edit->scene->selectedItems())
-                        i->setSelected(false);
-                    gr[i]->setSelected(true);
-                    edit->goTo(((ItemTile *)gr[i])->m_data.x, ((ItemTile *)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    m_curTerrain.index = i + 1;
+                    for(QGraphicsItem *it : edit->scene->selectedItems())
+                        it->setSelected(false);
+                }
+
+                gri->setSelected(true);
+
+                if(!all)
+                {
+                    edit->goTo(x, y, true, QPoint(-300, -300));
+                    meta.index = i + 1;//Continue search at next
                     return false;
                 }
+                else if(!foundAll)
+                {
+                    foundAll = true;
+                    foundFirst.setY(y);
+                    foundFirst.setX(x);
+                }
+                else
+                {
+                    // Move to left-top of selection group for convenience
+                    if(foundFirst.y() > y)
+                        foundFirst.setY(y);
+                    if(foundFirst.x() > x)
+                        foundFirst.setX(x);
+                }
+
+                foundCount++;
             }
         }
     }
 
-    //end search
-    m_curTerrain.index = 0;
-    return true;
-}
-
-bool WldSearchBox::doSearchScenery(WorldEdit *edit)
-{
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
-
-    //Reset search on changing total number of elements (something added or deleted)
-    //... however, will be continued if something replaced
-    if(grSize != m_curScenery.total)
+    if(foundAll)
     {
-        m_curScenery.total = grSize;
-        m_curScenery.index = 0;
-    }
-
-    if(m_curScenery.index  < grSize)
-    {
-        for(quint64 i = m_curScenery.index; i < grSize; ++i)
-        {
-            if(gr[i]->data(ITEM_TYPE).toString() == "SCENERY")
-            {
-                bool toBeFound = true;
-                if(ui->Find_Check_TypeScenery->isChecked() && m_curScenery.data.id != 0 && toBeFound)
-                    toBeFound = ((ItemScene *)gr[i])->m_data.id == (unsigned int)m_curScenery.data.id;
-                if(toBeFound)
-                {
-                    foreach(QGraphicsItem *i, edit->scene->selectedItems())
-                        i->setSelected(false);
-                    gr[i]->setSelected(true);
-                    edit->goTo(((ItemScene *)gr[i])->m_data.x, ((ItemScene *)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    m_curScenery.index = i + 1;
-                    return false;
-                }
-            }
-        }
+        edit->goTo(foundFirst.x(), foundFirst.y(), true, QPoint(-300, -300));
+        mw()->showStatusMsg(tr("%1 found elements were selected.").arg(foundCount), 3000);
     }
 
     //end search
-    m_curScenery.index = 0;
+    meta.index = 0; //When incrementing then starting with 0
     return true;
 }
 
-bool WldSearchBox::doSearchPath(WorldEdit *edit)
-{
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
-
-    //Reset search on changing total number of elements (something added or deleted)
-    //... however, will be continued if something replaced
-    if(grSize != m_curPath.total)
-    {
-        m_curPath.total = grSize;
-        m_curPath.index = 0;
-    }
-
-    if(m_curPath.index < grSize)
-    {
-        for(quint64 i = m_curPath.index; i < grSize; ++i)
-        {
-            if(gr[i]->data(ITEM_TYPE).toString() == "PATH")
-            {
-                bool toBeFound = true;
-                if(ui->Find_Check_TypePath->isChecked() && m_curPath.data.id != 0 && toBeFound)
-                    toBeFound = ((ItemPath *)gr[i])->m_data.id == (unsigned int)m_curPath.data.id;
-                if(toBeFound)
-                {
-                    foreach(QGraphicsItem *i, edit->scene->selectedItems())
-                        i->setSelected(false);
-                    gr[i]->setSelected(true);
-                    edit->goTo(((ItemPath *)gr[i])->m_data.x, ((ItemPath *)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    m_curPath.index = i + 1;
-                    return false;
-                }
-            }
-        }
-    }
-
-    //end search
-    m_curPath.index = 0;
-    return true;
-}
-
-bool WldSearchBox::doSearchLevel(WorldEdit *edit)
-{
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
-
-    //Reset search on changing total number of elements (something added or deleted)
-    //... however, will be continued if something replaced
-    if(grSize != m_curLevel.total)
-    {
-        m_curLevel.total = grSize;
-        m_curLevel.index = 0;
-    }
-
-    if(m_curLevel.index < grSize)
-    {
-        for(quint64 i = m_curLevel.index; i < grSize; ++i)
-        {
-            if(gr[i]->data(ITEM_TYPE).toString() == "LEVEL")
-            {
-                bool toBeFound = true;
-                if(ui->Find_Check_TypeLevel->isChecked() && m_curLevel.data.id != 0 && toBeFound)
-                    toBeFound = ((ItemLevel *)gr[i])->m_data.id == (unsigned int)m_curLevel.data.id;
-                if(ui->Find_Check_PathBackground->isChecked() && toBeFound)
-                    toBeFound = ((ItemLevel *)gr[i])->m_data.pathbg == ui->Find_Check_PathBackgroundActive->isChecked();
-                if(ui->Find_Check_BigPathBackground->isChecked() && toBeFound)
-                    toBeFound = ((ItemLevel *)gr[i])->m_data.bigpathbg == ui->Find_Check_BigPathBackgroundActive->isChecked();
-                if(ui->Find_Check_AlwaysVisible->isChecked() && toBeFound)
-                    toBeFound = ((ItemLevel *)gr[i])->m_data.alwaysVisible == ui->Find_Check_AlwaysVisibleActive->isChecked();
-                if(ui->Find_Check_GameStartPoint->isChecked() && toBeFound)
-                    toBeFound = ((ItemLevel *)gr[i])->m_data.gamestart == ui->Find_Check_GameStartPointActive->isChecked();
-                if(ui->Find_Check_LevelFile->isChecked() && toBeFound)
-                    toBeFound = ((ItemLevel *)gr[i])->m_data.lvlfile.contains(ui->Find_Edit_LevelFile->text(), Qt::CaseInsensitive);
-                if(ui->Find_Check_ContainsTitle->isChecked() && toBeFound)
-                    toBeFound = ((ItemLevel *)gr[i])->m_data.title.contains(ui->Find_Edit_ContainsTitle->text(), Qt::CaseInsensitive);
-                if(toBeFound)
-                {
-                    foreach(QGraphicsItem *i, edit->scene->selectedItems())
-                        i->setSelected(false);
-                    gr[i]->setSelected(true);
-                    edit->goTo(((ItemLevel *)gr[i])->m_data.x, ((ItemLevel *)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    m_curLevel.index = i + 1;
-                    return false;
-                }
-            }
-        }
-    }
-
-    //end search
-    m_curLevel.index = 0;
-    return true;
-}
-
-bool WldSearchBox::doSearchMusic(WorldEdit *edit)
-{
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
-
-    //Reset search on changing total number of elements (something added or deleted)
-    //... however, will be continued if something replaced
-    if(grSize != m_curMusicBox.total)
-    {
-        m_curMusicBox.total = grSize;
-        m_curMusicBox.index = 0;
-    }
-
-    if(m_curMusicBox.index < grSize)
-    {
-        for(quint64 i = m_curMusicBox.index; i < grSize; ++i)
-        {
-            if(gr[i]->data(ITEM_TYPE).toString() == "MUSICBOX")
-            {
-                bool toBeFound = true;
-                if(ui->Find_Check_TypeMusic->isChecked() && m_curMusicBox.data.id != 0 && toBeFound)
-                    toBeFound = ((ItemMusic *)gr[i])->m_data.id == (unsigned int)m_curMusicBox.data.id;
-                if(toBeFound)
-                {
-                    foreach(QGraphicsItem *i, edit->scene->selectedItems())
-                        i->setSelected(false);
-                    gr[i]->setSelected(true);
-                    edit->goTo(((ItemMusic *)gr[i])->m_data.x, ((ItemMusic *)gr[i])->m_data.y, false, QPoint(-300, -300));
-                    m_curMusicBox.index = i + 1;
-                    return false;
-                }
-            }
-        }
-    }
-
-    //end search
-    m_curMusicBox.index = 0;
-    return true;
-}
 
 void WldSearchBox::resetAllSearchFieldsWLD()
 {
