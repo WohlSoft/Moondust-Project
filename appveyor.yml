@@ -66,16 +66,16 @@ environment:
       PLATFORM: x64
       BIN_DIR: bin-w64
       WINXX_ARCH: win64
-      DOWNLOAD_MINGW: YES
+      DOWNLOAD_MINGW: NO
       URL_MINGWw64: http://wohlsoft.ru/docs/Software/MinGW/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
       MINGWw64_7z: C:\temp-d\x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
       DOWNLOAD_QT: NO
 #      URL_QT: http://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.12.0-x64-mingw-w64-8.1.0-shared-release.7z
 #      QT_7z: C:\temp-d\Qt-5.12.0-x64-mingw-w64-8.1.0-shared-release.7z
-      COMPILER: C:\MinGW-w64\mingw64\bin
+#      COMPILER: C:\MinGW-w64\mingw64\bin
 #      QT_DIR: C:\Qt\5.12.0-x64\bin
-      QT_DIR: C:\Qt\5.14\mingw73_64
-#      COMPILER: C:\Qt\Tools\mingw730_32
+      QT_DIR: C:\Qt\5.14\mingw73_64\bin
+      COMPILER: C:\Qt\Tools\mingw730_32\bin
       QtDir: ${QT_DIR}
       MinGW: ${COMPILER}
       MINGWx64Dest: yes
