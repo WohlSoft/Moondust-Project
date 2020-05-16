@@ -75,7 +75,6 @@ environment:
       COMPILER: C:\MinGW-w64\mingw730_64\bin
 #      QT_DIR: C:\Qt\5.12.0-x64\bin
       QT_DIR: C:\Qt\5.14\mingw73_64\bin
-      COMPILER: C:\Qt\Tools\mingw730_32\bin
       QtDir: ${QT_DIR}
       MinGW: ${COMPILER}
       MINGWx64Dest: yes
