@@ -415,8 +415,8 @@ void MainWindow::setUiDefults()
     ui->centralWidget->setTabsClosable(true);
 
     /**********************Default font size********************************/
-    GlobalSettings::fontDefault = qApp->font();
-    GlobalSettings::font = qApp->font();
+    GlobalSettings::fontDefault.reset(new QFont(qApp->font()));
+    GlobalSettings::font.reset(new QFont(qApp->font()));
 
     /*********************Music volume regulator*************************/
     m_ui_musicVolume = new QSlider(Qt::Horizontal, ui->EditionToolBar);

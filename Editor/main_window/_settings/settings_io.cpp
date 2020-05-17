@@ -410,11 +410,11 @@ void MainWindow::applySetup(bool startup)
 
     if(GlobalSettings::fontSize > 0)
     {
-        GlobalSettings::font.setPointSize(GlobalSettings::fontSize);
-        qApp->setFont(GlobalSettings::font);
+        GlobalSettings::font->setPointSize(GlobalSettings::fontSize);
+        qApp->setFont(*GlobalSettings::font);
     }
     else if(!startup)
     {
-        qApp->setFont(GlobalSettings::fontDefault);
+        qApp->setFont(*GlobalSettings::fontDefault);
     }
 }

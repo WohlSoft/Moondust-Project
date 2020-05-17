@@ -20,6 +20,7 @@
 #ifndef GLOBAL_SETTINGS_H
 #define GLOBAL_SETTINGS_H
 
+#include <memory>
 #include <QString>
 #include <QMdiArea>
 
@@ -95,8 +96,12 @@ struct SETTINGS_Extra
     bool attr_hdpi = true;
 };
 
+/**
+ * @brief A container of globally visible settings
+ */
 class GlobalSettings
 {
+    // TODO: Make it being a non-static global singleton
 public:
     static EditingSettings  LvlOpts;
     static SETTINGS_ItemDefaults LvlItemDefaults;
@@ -156,16 +161,22 @@ public:
     static QTabWidget::TabPosition  TSTToolboxPos;
     static QString                  currentTheme;
 
-    static QFont                    fontDefault;
-    static QFont                    font;
+    static std::unique_ptr<QFont>   fontDefault;
+    static std::unique_ptr<QFont>   font;
     static int                      fontSize;
 
     static bool ShowTipOfDay;
+
+    static void cleanUp();
 };
 
+
+/**
+ * @brief A container of current config pack status information
+ */
 class ConfStatus
 {
-    //Configuration status
+    // TODO: Make it being a non-static global singleton
 public:
     static long total_characters;
     static long total_blocks;

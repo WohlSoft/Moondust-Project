@@ -60,8 +60,8 @@ bool GlobalSettings::Placing_dontShowPropertiesBox  = false;
 int  GlobalSettings::historyLimit   = 300;
 
 QString GlobalSettings::currentTheme;
-QFont   GlobalSettings::fontDefault;
-QFont   GlobalSettings::font;
+std::unique_ptr<QFont> GlobalSettings::fontDefault;
+std::unique_ptr<QFont> GlobalSettings::font;
 int     GlobalSettings::fontSize = -1;
 
 bool GlobalSettings::ShowTipOfDay   = true;
@@ -101,3 +101,9 @@ ConfStatus::TestEngineType ConfStatus::defaultTestEngine = ConfStatus::ENGINE_PG
 bool ConfStatus::hideNonDefaultEngines = false;
 
 QString ConfStatus::defaultTheme;
+
+void GlobalSettings::cleanUp()
+{
+    font.reset();
+    fontDefault.reset();
+}

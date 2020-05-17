@@ -234,6 +234,7 @@ MainWindow::~MainWindow()
     if(pge_thumbbar)
         delete pge_thumbbar;
 #endif
+    GlobalSettings::cleanUp();
     m_messageBoxer.disconnectAll();
     closeTesting();
     delete ui;
