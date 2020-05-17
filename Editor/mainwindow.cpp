@@ -115,13 +115,11 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
                        &splash, SLOT(progressPartsVal(int)), Qt::QueuedConnection);
 
         /*********************Loading of config pack**********************/
-        QFutureWatcher<bool> isOkWatch;
+        QFutureWatcher<bool> isOk;
         QEventLoop waitLoop;
-        QObject::connect(&isOkWatch, SIGNAL(finished()),
-                         &waitLoop, SLOT(quit()));
+        QObject::connect(&isOk, SIGNAL(finished()), &waitLoop, SLOT(quit()));
         // Do the loading in a thread
-        QFuture<bool> isOk = QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig);
-        isOkWatch.setFuture(isOk);
+        isOk.setFuture(QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig));
         /*********************Loading of config pack**********************/
 
         /*********************Splash Screen**********************/
