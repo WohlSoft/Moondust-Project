@@ -17,6 +17,8 @@
  */
 
 #include <QtConcurrent>
+#include <QFutureWatcher>
+#include <QEventLoop>
 #include <utility>
 #include <stdexcept>
 
@@ -89,9 +91,6 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         EditorSpashScreen splash(splashimg);
         splash.setCursor(Qt::ArrowCursor);
         splash.setDisabled(true);
-        //#ifndef DEBUG_BUILD
-        //splash.setWindowFlags( splash.windowFlags() | Qt::WindowStaysOnTopHint );
-        //#endif
 
         for(auto &animation : configs.animations)
         {
@@ -104,33 +103,34 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
                                 int(animation.speed));
         }
 
-        splash.connect(&configs, SIGNAL(progressMax(int)),
+        QObject::connect(&configs, SIGNAL(progressMax(int)),
                        &splash, SLOT(progressMax(int)), Qt::QueuedConnection);
-        splash.connect(&configs, SIGNAL(progressTitle(QString)),
+        QObject::connect(&configs, SIGNAL(progressTitle(QString)),
                        &splash, SLOT(progressTitle(QString)), Qt::QueuedConnection);
-        splash.connect(&configs, SIGNAL(progressValue(int)),
+        QObject::connect(&configs, SIGNAL(progressValue(int)),
                        &splash, SLOT(progressValue(int)), Qt::QueuedConnection);
-        splash.connect(&configs, SIGNAL(progressPartsTotal(int)),
+        QObject::connect(&configs, SIGNAL(progressPartsTotal(int)),
                        &splash, SLOT(progressPartsMax(int)), Qt::QueuedConnection);
-        splash.connect(&configs, SIGNAL(progressPartNumber(int)),
+        QObject::connect(&configs, SIGNAL(progressPartNumber(int)),
                        &splash, SLOT(progressPartsVal(int)), Qt::QueuedConnection);
 
         /*********************Loading of config pack**********************/
+        QFutureWatcher<bool> isOkWatch;
+        QEventLoop waitLoop;
+        QObject::connect(&isOkWatch, SIGNAL(finished()),
+                         &waitLoop, SLOT(quit()));
         // Do the loading in a thread
         QFuture<bool> isOk = QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig);
+        isOkWatch.setFuture(isOk);
         /*********************Loading of config pack**********************/
 
         /*********************Splash Screen**********************/
 
-        #ifndef Q_OS_ANDROID
         splash.show();
-        #else
-        splash.showFullScreen();
-        #endif
         splash.startAnimations();
 
         // Now wait until the config load in finished.
-        while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(10); }
+        waitLoop.exec();
 
         /*********************Splash Screen end**********************/
         splash.finish(this);
@@ -211,10 +211,10 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
     }
 
 #ifdef Q_OS_MACX
-    foreach(QAction* menu, ui->menuBar->actions())
+    for(QAction* menu : ui->menuBar->actions())
     {
         menu->setVisible(true);
-        foreach(QAction* item, menu->menu()->actions())
+        for(QAction* item : menu->menu()->actions())
             item->setIconVisibleInMenu(false);
     }
     ui->Exit->setMenuRole(QAction::QuitRole);
