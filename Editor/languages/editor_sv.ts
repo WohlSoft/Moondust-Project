@@ -3915,6 +3915,22 @@ Physical env. zones:	%6
         <source>NPC search completed!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in current section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlSectionProps</name>
@@ -8376,6 +8392,18 @@ Music boxes:		%5
     </message>
     <message>
         <source>Music search completed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

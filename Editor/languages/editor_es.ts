@@ -5706,6 +5706,22 @@ Zonas físicas de ambiente:	%6
         <source>%1 coins</source>
         <translation type="obsolete">%1 monedas</translation>
     </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in current section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlSectionProps</name>
@@ -13139,6 +13155,18 @@ Cajas de música:		%5
     <message>
         <source>Music search completed!</source>
         <translation>¡Búsqueda de música completa!</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -4599,6 +4599,22 @@ Woda, ruchome piaski itp.:	%6</translation>
         <source>NPC search completed!</source>
         <translation>Wyszukiwanie NPC ukończone!</translation>
     </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in current section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlSectionProps</name>
@@ -9966,6 +9982,18 @@ Bloki muzyczne:		%5
     <message>
         <source>Music search completed!</source>
         <translation>Wyszukiwanie muzyki ukończone!</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

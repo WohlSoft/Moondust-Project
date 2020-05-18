@@ -1636,15 +1636,15 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1 nesta secção</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
     <message>
         <source>Margin of section</source>
@@ -1850,7 +1850,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -1913,7 +1913,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -1921,7 +1921,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -2002,11 +2002,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -2117,11 +2117,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1 nesta secção</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -2137,7 +2137,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
@@ -2188,11 +2188,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -2307,7 +2307,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -2377,11 +2377,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -2519,11 +2519,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover tudo %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
 </context>
 <context>
@@ -3285,7 +3285,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utilizar predefinição</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -4620,6 +4620,22 @@ las?</translation>
     <message>
         <source>NPC search completed!</source>
         <translation>Busca por NPC completa!</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in current section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8348,7 +8364,7 @@ ao salvar o arquivo</translation>
     <message>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utilizar predefinição</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -8624,7 +8640,7 @@ ao salvar o arquivo</translation>
     <message>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utilizar predefinição</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -10109,6 +10125,18 @@ Caixas de música:	%5
     <message>
         <source>Music search completed!</source>
         <translation>Busca por caixas de música completa!</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -4431,6 +4431,22 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <source>NPC search completed!</source>
         <translation>NPC 搜索完毕！</translation>
     </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in current section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlSectionProps</name>
@@ -9447,6 +9463,18 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>Music search completed!</source>
         <translation>音乐搜索完毕！</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

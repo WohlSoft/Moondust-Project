@@ -5871,6 +5871,22 @@ Physical env. zones:	 %6
         <source>%1 coins</source>
         <translation type="vanished">%1 coin(s)</translation>
     </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in current section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlSectionProps</name>
@@ -13400,6 +13416,18 @@ Music boxes:	%5
     <message>
         <source>Music search completed!</source>
         <translation>Music search completed!</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
