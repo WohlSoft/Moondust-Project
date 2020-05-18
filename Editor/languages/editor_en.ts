@@ -5873,19 +5873,19 @@ Physical env. zones:	 %6
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>Search in selection group</translation>
     </message>
     <message>
         <source>Search in current section</source>
-        <translation type="unfinished"></translation>
+        <translation>Search in current section</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Select all</translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 found elements were selected.</translation>
     </message>
 </context>
 <context>
@@ -13419,15 +13419,15 @@ Music boxes:	%5
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>Search in selection group</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Select all</translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 found elements were selected.</translation>
     </message>
 </context>
 <context>
