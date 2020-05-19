@@ -4445,19 +4445,19 @@ Zones d&apos;env. physique : 			%6
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher dans le groupe de sélection</translation>
     </message>
     <message>
         <source>Search in current section</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher dans la sélection courante</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout sélectionner</translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 éléments trouvés ont été sélectionnés.</translation>
     </message>
 </context>
 <context>
@@ -9118,15 +9118,15 @@ Boîtes à musique :	%5
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher dans le groupe de sélection</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tout sélectionner</translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 éléments trouvés ont été sélectionnés.</translation>
     </message>
 </context>
 <context>
