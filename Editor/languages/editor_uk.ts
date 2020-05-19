@@ -4155,19 +4155,19 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати у вибраній групі</translation>
     </message>
     <message>
         <source>Search in current section</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати в даній секції</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділити все</translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрано %1 знайдених елементів.</translation>
     </message>
 </context>
 <context>
@@ -8840,15 +8840,15 @@ Music boxes:		%5
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>Шукати у виділеній групі</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Виділити все</translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрано %1 знайдених елементів.</translation>
     </message>
 </context>
 <context>
@@ -9131,7 +9131,7 @@ Do you want to save your changes?</source>
     <name>aboutDialog</name>
     <message>
         <source>About</source>
-        <translation>Про програму</translation>
+        <translation>О програмі</translation>
     </message>
     <message>
         <source>Close</source>
