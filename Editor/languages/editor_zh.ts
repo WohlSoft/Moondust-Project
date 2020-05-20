@@ -4433,19 +4433,19 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>在选区组搜索</translation>
     </message>
     <message>
         <source>Search in current section</source>
-        <translation type="unfinished"></translation>
+        <translation>在当前选区搜索</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>全选</translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>已选择 %1 个已找到的对象。</translation>
     </message>
 </context>
 <context>
@@ -9466,15 +9466,15 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>在选区组搜索</translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>全选</translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>已选择 %1 个已找到的对象。</translation>
     </message>
 </context>
 <context>
