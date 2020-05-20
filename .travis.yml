@@ -43,8 +43,8 @@ matrix:
       dist: trusty
       compiler: gcc
       env:
-        - QT_VER=5.10.1_static
-        - QT_TARBALL=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
+        - QT_VER=5.9.9_static
+        - QT_TARBALL=qt-5.9.9-static-ubuntu-14-04-x64-gcc8.tar.bz2
         - IS_COVERITY_SCAN=true
       addons:
         coverity_scan:
@@ -94,8 +94,8 @@ matrix:
             - libmirclient-dev
             - libproxy-dev
             - ccache
-            - gcc-6
-            - g++-6
+            - gcc-8
+            - g++-8
             - libc6
             - libstdc++6
             - cmake
@@ -104,8 +104,10 @@ matrix:
       dist: xenial
       compiler: gcc
       env:
-        - QT_VER=5.10.1_static
-        - QT_TARBALL=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
+        - QT_VER=5.14.2_static
+        - QT_TARBALL=qt-5.14.2-static-ubuntu-16-04-x64-gcc8.tar.bz2
+        - UPLOAD_TARGET=ubuntu-16-04
+        - UPLOAD_VERSION_SUFFIX=ubuntu1604
       addons:
         apt:
           sources:
@@ -146,8 +148,8 @@ matrix:
             - libmirclient-dev
             - libproxy-dev
             - ccache
-            - gcc-6
-            - g++-6
+            - gcc-8
+            - g++-8
             - libc6
             - libstdc++6
             - cmake

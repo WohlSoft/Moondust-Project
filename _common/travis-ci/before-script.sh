@@ -18,8 +18,8 @@ then
     QtCacheFolder=qtcache
 
     if [[ "${QT_VER}" == "" ]]; then
-        QtTarballName=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
-        QtStaticVersion=5.10.1_static
+        QtTarballName=qt-5.9.9-static-ubuntu-14-04-x64-gcc8.tar.bz2
+        QtStaticVersion=5.9.9_static
     fi
 
     if ${IS_SEMAPHORECI}; then
@@ -35,13 +35,13 @@ then
             libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev \
             libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev \
             libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev \
-            libproxy-dev ccache gcc-6 g++-6 libc6 libstdc++6 cmake ninja-build
+            libproxy-dev ccache gcc-8 g++-8 libc6 libstdc++6 cmake ninja-build
     fi
 
     sudo update-alternatives --remove-all gcc
     sudo update-alternatives --remove-all g++
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60
-    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 60
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80
+    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 80
 
     echo "================================================"
     g++ --version
