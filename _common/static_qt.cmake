@@ -193,10 +193,18 @@ if(PGE_ENABLE_STATIC_QT)
             endif()
 
             find_library(QT_EGLINT  qxcb-egl-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLINT})
+            if(QT_EGLINT)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLINT})
+            else()
+                message("!!! QT_EGLINT NOT FOUND!!!")
+            endif()
 
             find_library(QT_Qt5EglFSDeviceIntegration  Qt5EglFSDeviceIntegration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_Qt5EglFSDeviceIntegration})
+            if(QT_Qt5EglFSDeviceIntegration)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_Qt5EglFSDeviceIntegration})
+            else()
+                message("!!! QT_Qt5EglFSDeviceIntegration NOT FOUND!!!")
+            endif()
 
             foreach(qqlib
                     Qt5EventDispatcherSupport Qt5ServiceSupport
@@ -222,7 +230,11 @@ if(PGE_ENABLE_STATIC_QT)
             endforeach()
 
             find_library(QT_GLXINT  qxcb-glx-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GLXINT})
+            if(QT_GLXINT)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GLXINT})
+            else()
+                message("!!! QT_GLXINT NOT FOUND!!!")
+            endif()
 
             if(NOT QT_PRCE2)
                 find_library(QT_PRCESYS pcre)
@@ -292,7 +304,11 @@ if(PGE_ENABLE_STATIC_QT)
             endforeach()
 
             find_library(QT_EGL EGL)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${QT_EGL})
+            if(QT_EGL)
+                list(APPEND QT_FOUND_EXTRA_LIBS ${QT_EGL})
+            else()
+                message("!!! QT_EGL NOT FOUND!!!")
+            endif()
 
             find_library(QT_udev udev)
             list(APPEND QT_FOUND_EXTRA_LIBS ${QT_udev})
