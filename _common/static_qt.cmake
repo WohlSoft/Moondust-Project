@@ -56,6 +56,8 @@ if(PGE_ENABLE_STATIC_QT)
             "
         )
 
+        set(QT_HAS_WAYLAND FALSE)
+
         if(WIN32)
             set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
                 Q_IMPORT_PLUGIN(QWindowsVistaStylePlugin)
@@ -67,11 +69,25 @@ if(PGE_ENABLE_STATIC_QT)
                 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)"
             )
         elseif("${CMAKE_SYSTEM}" MATCHES "Linux")
-           set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-               Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
-               Q_IMPORT_PLUGIN(QXcbEglIntegrationPlugin)
-               Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)"
-           )
+            set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
+                Q_IMPORT_PLUGIN(QXcbEglIntegrationPlugin)
+                Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)"
+            )
+
+            find_library(QT_WAYLAND_GENERIC_PLUGIN qwayland-generic PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+            mark_as_advanced(QT_WAYLAND_GENERIC_PLUGIN)
+            if(QT_WAYLAND_GENERIC_PLUGIN)
+                set(QT_HAS_WAYLAND TRUE)
+                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                    Q_IMPORT_PLUGIN(QWaylandIntegrationPlugin)
+                    Q_IMPORT_PLUGIN(QWaylandEglPlatformIntegrationPlugin)
+                    Q_IMPORT_PLUGIN(QWaylandXCompositeEglPlatformIntegrationPlugin)
+                    Q_IMPORT_PLUGIN(QWaylandXCompositeGlxPlatformIntegrationPlugin)"
+                )
+                # Q_IMPORT_PLUGIN(QWaylandBrcmEglPlatformIntegrationPlugin)
+            endif()
+            unset(QT_WAYLAND_GENERIC_PLUGIN)
         endif()
 
         set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
@@ -104,11 +120,15 @@ if(PGE_ENABLE_STATIC_QT)
         find_library(QT_ICO     qico PATHS "${CMAKE_PREFIX_PATH}/plugins/imageformats" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/imageformats")
         list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICO})
 
+        mark_as_advanced(QT_QGIF QT_ICNS QT_ICO)
+
         if(APPLE)
             find_library(QT_MACSTYLE qmacstyle PATHS "${CMAKE_PREFIX_PATH}/plugins/styles" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/styles")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_MACSTYLE})
             find_library(QT_COCOA    qcocoa PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_COCOA})
+
+            mark_as_advanced(QT_MACSTYLE QT_COCOA)
 
             list(APPEND QT_FOUND_EXTRA_LIBS cups)
 
@@ -143,6 +163,7 @@ if(PGE_ENABLE_STATIC_QT)
             foreach(LIB ${MAC_LIBS_TO_FIND})
                     find_library(FOUND_LIB_${LIB} ${LIB})
                     list(APPEND QT_FOUND_EXTRA_LIBS ${FOUND_LIB_${LIB}})
+                    mark_as_advanced(FOUND_LIB_${LIB})
                     #message("Lib: ${LIB}")
                     #message("Found Lib: ${FOUND_LIB_${LIB}}")
             endforeach()
@@ -155,6 +176,7 @@ if(PGE_ENABLE_STATIC_QT)
             endif()
             find_library(QT_WINDOWS    qwindows PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WINDOWS})
+            mark_as_advanced(QT_WINVISTASTYLE QT_WINDOWS)
         endif()
 
         if("${CMAKE_SYSTEM}" MATCHES "Linux")
@@ -214,6 +236,40 @@ if(PGE_ENABLE_STATIC_QT)
                 message("!!! Qt5EglFSDeviceIntegration NOT FOUND!!!")
             endif()
 
+            mark_as_advanced(QT_QEGLFS QT_LINUXFB QT_EGLX11 QT_QXCB QT_GTK3 QT_EGLINT QT_Qt5EglFSDeviceIntegration)
+
+            if(QT_HAS_WAYLAND)
+                find_library(QT_WAYLAND_GENERIC_PLUGIN qwayland-generic PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+                if(QT_WAYLAND_GENERIC_PLUGIN)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WAYLAND_GENERIC_PLUGIN})
+                else()
+                    message("!!! qwayland-generic NOT FOUND!!!")
+                endif()
+
+                find_library(QT_WAYLAND_EGL_PLUGIN qwayland-egl PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+                if(QT_WAYLAND_EGL_PLUGIN)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WAYLAND_EGL_PLUGIN})
+                else()
+                    message("!!! qwayland-egl NOT FOUND!!!")
+                endif()
+
+                find_library(QT_WAYLAND_XCOMPOSITE_EGL_PLUGIN qwayland-xcomposite-egl PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+                if(QT_WAYLAND_XCOMPOSITE_EGL_PLUGIN)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WAYLAND_XCOMPOSITE_EGL_PLUGIN})
+                else()
+                    message("!!! qwayland-xcomposite-egl NOT FOUND!!!")
+                endif()
+
+                find_library(QT_WAYLAND_XCOMPOSITE_GLX_PLUGIN qwayland-xcomposite-glx PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+                if(QT_WAYLAND_XCOMPOSITE_GLX_PLUGIN)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WAYLAND_XCOMPOSITE_GLX_PLUGIN})
+                else()
+                    message("!!! qwayland-xcomposite-glx NOT FOUND!!!")
+                endif()
+
+                mark_as_advanced(QT_WAYLAND_GENERIC_PLUGIN QT_WAYLAND_EGL_PLUGIN QT_WAYLAND_XCOMPOSITE_EGL_PLUGIN QT_WAYLAND_XCOMPOSITE_GLX_PLUGIN)
+            endif()
+
             foreach(qqlib
                     Qt5EventDispatcherSupport Qt5ServiceSupport
                     Qt5ThemeSupport Qt5FontDatabaseSupport Qt5PlatformCompositorSupport)
@@ -221,6 +277,7 @@ if(PGE_ENABLE_STATIC_QT)
                 if(QT_${qqlib})
                     message("-- Found ${QT_${qqlib}}!")
                     list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_${qqlib}})
+                    mark_as_advanced(${QT_${qqlib}})
                 endif()
             endforeach()
 
@@ -234,6 +291,7 @@ if(PGE_ENABLE_STATIC_QT)
                 if(QT_${qqlib})
                     message("-- Found ${QT_${qqlib}}!")
                     list(APPEND QT_FOUND_EXTRA_LIBS ${QT_${qqlib}})
+                    mark_as_advanced(${QT_${qqlib}})
                 endif()
             endforeach()
 
@@ -243,6 +301,8 @@ if(PGE_ENABLE_STATIC_QT)
             else()
                 message("!!! qxcb-glx-integration NOT FOUND!!!")
             endif()
+
+            mark_as_advanced(QT_GLXINT)
 
             if(NOT QT_PRCE2)
                 find_library(QT_PRCESYS pcre)
@@ -255,6 +315,7 @@ if(PGE_ENABLE_STATIC_QT)
                     message("== SYS-pcre16 detected! (${QT_PRCE16SYS})==")
                     list(APPEND QT_FOUND_EXTRA_LIBS ${QT_PRCE16SYS})
                 endif()
+                mark_as_advanced(QT_PRCE16SYS QT_PRCESYS)
             endif()
 
             find_library(QT_GLIB glib NAMES glib glib-2.0)
@@ -277,6 +338,8 @@ if(PGE_ENABLE_STATIC_QT)
 #                endforeach()
             endif()
 
+            mark_as_advanced(QT_GLIB QT_XCB)
+
             foreach(xxlib
                     Xext
                     xcb-xinerama Xrender xcb-xkb xcb-sync xcb-xfixes xcb-randr
@@ -291,11 +354,13 @@ if(PGE_ENABLE_STATIC_QT)
                 if(QT_${xxlib})
                     message("-- Found ${QT_${xxlib}}!")
                     list(APPEND QT_FOUND_EXTRA_LIBS ${QT_${xxlib}})
+                    mark_as_advanced(${QT_${xxlib}})
                 endif()
             endforeach()
 
             find_library(QT_fontconfig fontconfig)
             list(APPEND QT_FOUND_EXTRA_LIBS ${QT_fontconfig})
+            mark_as_advanced(QT_fontconfig)
 
             if(NOT QT_FREETYPE)
             #     find_library(QT_freetype freetype)
@@ -308,6 +373,7 @@ if(PGE_ENABLE_STATIC_QT)
                 if(QT_${xxlib})
                     message("-- Found ${QT_${xxlib}}!")
                     list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_${xxlib}})
+                    mark_as_advanced(${QT_${xxlib}})
                 endif()
             endforeach()
 
@@ -329,6 +395,8 @@ if(PGE_ENABLE_STATIC_QT)
                 # message("==DL detected! (${QT_DL})==")
                 list(APPEND QT_FOUND_EXTRA_LIBS ${QT_DL})
             endif()
+
+            mark_as_advanced(QT_EGL QT_udev QT_GL QT_DL)
         endif()
         # message("==Full list of libs: ${QT_FOUND_EXTRA_LIBS}==")
 
