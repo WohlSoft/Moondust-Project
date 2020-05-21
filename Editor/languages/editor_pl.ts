@@ -907,11 +907,11 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Opublikuj raport na Forum PGE (wohlsoft.ru/forum/)</translation>
+        <translation type="unfinished">Opublikuj raport na Forum PGE (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Zgłoś problem w repozytorium GitHub&apos;a (WohlSoft/PGE-Project)</translation>
+        <translation type="unfinished">Zgłoś problem w repozytorium GitHub&apos;a (WohlSoft/PGE-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
