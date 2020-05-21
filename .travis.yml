@@ -115,6 +115,8 @@ matrix:
           sources:
             - sourceline: "ppa:ubuntu-toolchain-r/test"
             - sourceline: "ppa:ubuntu-sdk-team/ppa"
+            - sourceline: 'deb https://apt.kitware.com/ubuntu/ xenial-rc main'
+              keyurl: "https://apt.kitware.com/keys/kitware-archive-latest.asc"
           packages:
             - build-essential
             - "^libxcb.*"
