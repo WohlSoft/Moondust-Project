@@ -137,6 +137,7 @@ matrix:
             - libdbus-1-dev
             - libgtk-3-dev
             - libgegl-dev
+            - libgegl-0.0-dev
             - udev
             - mtdev-tools
             - webp
@@ -144,12 +145,15 @@ matrix:
             - libglm-dev
             - libwayland-dev
             - libegl1-mesa-dev
+            - xwayland
+            - wayland-protocols
             - mesa-common-dev
             - libgl1-mesa-dev
             - libglu1-mesa-dev
             - libgles2-mesa
             - libgles2-mesa-dev
             - libmirclient-dev
+            - libwayland-server0
             - libproxy-dev
             - ccache
             - gcc-8
