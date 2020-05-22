@@ -16,10 +16,17 @@ then
     # Skip deploy on Coverity-Scan platform
     if [[ "${IS_COVERITY_SCAN}" != "true" ]];
     then
-        PROJECT_ROOT=/home/runner/PGE-Project
-        HAMSTER_ROOT=/home/runner/
+        #PROJECT_ROOT=/home/runner/PGE-Project
+        #HAMSTER_ROOT=/home/runner/
+        PROJECT_ROOT=$HOME/PGE-Project
+        HAMSTER_ROOT=$HOME/
 
-        if [[ ! -d ${PROJECT_ROOT}/bin/_packed && ! -d ${PROJECT_ROOT}/bin-cmake-release ]];
+        #Different project root path on Travis-CI
+        if [[ -d /home/travis/build/WohlSoft ]]; then
+            PROJECT_ROOT=/home/travis/build/WohlSoft/PGE-Project
+        fi
+
+        if [[ ! -d ${PROJECT_ROOT}/bin-cmake-release ]];
         then
             echo "Nothing built! Therefore is nothing to upload!"
             exit 1

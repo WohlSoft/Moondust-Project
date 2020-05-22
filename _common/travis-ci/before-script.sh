@@ -25,7 +25,7 @@ then
     if ${IS_SEMAPHORECI}; then
         sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
         sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-        sudo add-apt-repository --yes ppa:george-edison55/cmake-3.x
+        sudo add-apt-repository --yes ppa:adrozdoff/cmake
         sudo apt-get update -qq
         # sudo DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade
         sudo apt-get install -qq "^libxcb.*" libx11-dev libx11-xcb-dev \
