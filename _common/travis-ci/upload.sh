@@ -14,7 +14,7 @@ then
     UPLOAD_LIST="set ssl:verify-certificate no;"
 
     # Skip deploy on Coverity-Scan platform
-    if [[ "${IS_COVERITY_SCAN}" != "" ]];
+    if [[ "${IS_COVERITY_SCAN}" != "true" ]];
     then
         PROJECT_ROOT=/home/runner/PGE-Project
         HAMSTER_ROOT=/home/runner/
