@@ -27,7 +27,6 @@
 
 #include "../../../common_features/logger.h"
 
-#include "../../../common_features/timecounter.h"
 
 ///
 /// \brief cleanCollisionBuffer
@@ -137,11 +136,6 @@ QGraphicsItem *LvlScene::itemCollidesWith(QGraphicsItem *item, PGE_ItemList *ite
         return nullptr;
 
     PGE_ItemList collisions;
-
-    //TimeCounter t;
-    //t.start();
-    //if(xxx)
-    // ~15 ms on big maps
 
     if(itemgrp && !itemgrp->isEmpty())
         collisions = *itemgrp;

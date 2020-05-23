@@ -194,7 +194,6 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/simple_animator.cpp
     common_features/spash_screen.cpp
     common_features/themes.cpp
-    common_features/timecounter.cpp
     common_features/util.cpp
     common_features/version_cmp.cpp
     data_configs/config_status/config_status.cpp
