@@ -11,7 +11,7 @@ fi
 if [[ "${TRAVIS_OS_NAME}" == "linux" ]];
 then
 
-    UPLOAD_LIST="debug; set ssl:verify-certificate no;"
+    UPLOAD_LIST="set ssl:verify-certificate no;"
 
     # Skip deploy on Coverity-Scan platform
     if [[ "${IS_COVERITY_SCAN}" != "true" ]];
@@ -24,9 +24,6 @@ then
         #Different project root path on Travis-CI
         if [[ -d /home/travis/build/WohlSoft ]]; then
             PROJECT_ROOT=/home/travis/build/WohlSoft/PGE-Project
-            FTP_USER=${FTPUser}
-            FTP_PASSWORD=${FTPPassword}
-            FTP_SERVER=${FTPServer}
         fi
 
         if [[ ! -d ${PROJECT_ROOT}/bin-cmake-release ]];
@@ -57,7 +54,7 @@ then
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_${GIT_BRANCH}.txt;"
             UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading engine_stable_${GIT_BRANCH}.txt\";"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_stable_${GIT_BRANCH}.txt;"
-            lftp -e "${UPLOAD_LIST} exit" -u ${FTP_USER},${FTP_PASSWORD} ${FTP_SERVER}
+            lftp -e "${UPLOAD_LIST} exit" -u ${FTPUser},${FTPPassword} ${FTPServer}
         fi
 
     else

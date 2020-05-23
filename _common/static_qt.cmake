@@ -57,6 +57,7 @@ if(PGE_ENABLE_STATIC_QT)
         )
 
         set(QT_HAS_WAYLAND FALSE)
+        set(QT_HAS_EGLX11 FALSE)
 
         if(WIN32)
             set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
@@ -70,10 +71,25 @@ if(PGE_ENABLE_STATIC_QT)
             )
         elseif("${CMAKE_SYSTEM}" MATCHES "Linux")
             set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-                Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
-                Q_IMPORT_PLUGIN(QXcbEglIntegrationPlugin)
-                Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)"
+                Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)"
             )
+
+            find_library(QT_EGLX11_CHECK  qeglfs-x11-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/egldeviceintegrations")
+            if(QT_EGLX11_CHECK)
+                set(QT_HAS_EGLX11 TRUE)
+                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                    Q_IMPORT_PLUGIN(QXcbEglIntegrationPlugin)"
+                )
+            endif()
+            unset(QT_EGLX11_CHECK)
+
+            find_library(QT_GLXINT_CHECK  qxcb-glx-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
+            if(QT_GLXINT_CHECK)
+                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                    Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)"
+                )
+            endif()
+            unset(QT_GLXINT_CHECK)
 
             find_library(QT_WAYLAND_GENERIC_PLUGIN qwayland-generic PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             mark_as_advanced(QT_WAYLAND_GENERIC_PLUGIN)
@@ -97,10 +113,12 @@ if(PGE_ENABLE_STATIC_QT)
         )
 
         if("${CMAKE_SYSTEM}" MATCHES "Linux")
-            set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-                /* Q_IMPORT_PLUGIN(QEglFSEmulatorIntegrationPlugin) */
-                Q_IMPORT_PLUGIN(QEglFSX11IntegrationPlugin)"
-            )
+            if(QT_HAS_EGLX11)
+                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                    /* Q_IMPORT_PLUGIN(QEglFSEmulatorIntegrationPlugin) */
+                    Q_IMPORT_PLUGIN(QEglFSX11IntegrationPlugin)"
+                )
+            endif()
 
             find_package(PkgConfig)
             pkg_check_modules(GTK "gtk+-3.0")
@@ -207,6 +225,13 @@ if(PGE_ENABLE_STATIC_QT)
             if(QT_QXCB)
                 list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QXCB})
             else()
+                message("!!! qxcb NOT FOUND!!!")
+            endif()
+
+            find_library(QT_QXCB_STATIC_A xcb-static PATHS "${CMAKE_PREFIX_PATH}/lib")
+            if(QT_QXCB_STATIC_A)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QXCB_STATIC_A})
+            else()
                 find_library(QT_QXCB xcb)
                 if(QT_QXCB)
                     list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QXCB})
@@ -236,7 +261,7 @@ if(PGE_ENABLE_STATIC_QT)
                 message("!!! Qt5EglFSDeviceIntegration NOT FOUND!!!")
             endif()
 
-            mark_as_advanced(QT_QEGLFS QT_LINUXFB QT_EGLX11 QT_QXCB QT_GTK3 QT_EGLINT QT_Qt5EglFSDeviceIntegration)
+            mark_as_advanced(QT_QEGLFS QT_LINUXFB QT_EGLX11 QT_QXCB_STATIC_A QT_QXCB QT_GTK3 QT_EGLINT QT_Qt5EglFSDeviceIntegration)
 
             if(QT_HAS_WAYLAND)
                 find_library(QT_WAYLAND_GENERIC_PLUGIN qwayland-generic PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
