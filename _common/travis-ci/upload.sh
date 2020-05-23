@@ -11,7 +11,7 @@ fi
 if [[ "${TRAVIS_OS_NAME}" == "linux" ]];
 then
 
-    UPLOAD_LIST="set ssl:verify-certificate no;"
+    UPLOAD_LIST="debug; set ssl:verify-certificate no;"
 
     # Skip deploy on Coverity-Scan platform
     if [[ "${IS_COVERITY_SCAN}" != "true" ]];
