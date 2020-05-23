@@ -17,25 +17,25 @@
  */
 
 #include "timecounter.h"
+#include "logger.h"
 
 TimeCounter::TimeCounter()
-{
-}
+{}
 
 void TimeCounter::start()
 {
-    TickTack.start();
-    TickTack.restart();
+    m_ticker.start();
+    m_ticker.restart();
 }
 
 void TimeCounter::stop(QString msg, int items)
 {
-    int counter = TickTack.elapsed();
-    if(items>=0)
+    int counter = m_ticker.elapsed();
+    if(items >= 0)
         LogDebug(QString("Performance test-> %1 %2 in %3 ms").arg(items).arg(msg).arg(counter));
 }
 
 int TimeCounter::current()
 {
-    return TickTack.elapsed();
+    return m_ticker.elapsed();
 }

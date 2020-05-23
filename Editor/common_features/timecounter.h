@@ -20,23 +20,20 @@
 #ifndef TIMECOUNTER_H
 #define TIMECOUNTER_H
 
-#include <QTime>
+#include <QElapsedTimer>
 #include <QString>
-
-#include "logger.h"
 
 class TimeCounter
 {
 public:
     TimeCounter();
+
     void start();
-    void stop(QString msg="",int items=0);
+    void stop(QString msg = QString(), int items = 0);
     int current();
 
 private:
-    QTime TickTack;
-    QString msg;
-
+    QElapsedTimer m_ticker;
 };
 
 #endif // TIMECOUNTER_H

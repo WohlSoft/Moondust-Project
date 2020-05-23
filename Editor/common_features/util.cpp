@@ -222,8 +222,9 @@ QRect util::getScreenGeometry(int screenIndex)
 {
     auto *d = qApp->desktop();
     Q_ASSERT(d);
+    auto screens = QGuiApplication::screens();
 
-    if(d->screenCount() <= 1) // if 1 monitor only in use
+    if(screens.size() <= 1) // if 1 monitor only in use
         return d->geometry();
 
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -231,7 +232,6 @@ QRect util::getScreenGeometry(int screenIndex)
         return screen ? screen->geometry() : d->geometry();
     else
     {
-        QList<QScreen*> screens = QGuiApplication::screens();
         if(screenIndex >= screens.size())
             return d->geometry();
         else

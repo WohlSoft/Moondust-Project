@@ -43,8 +43,8 @@ void LvlCloneSection::addLevelList(QList<LevelEdit * > _levels, LevelEdit *activ
 
     foreach(LevelEdit *x, levels)
     {
-        ui->FileList_src->addItem(x->windowTitle(), qVariantFromValue(x));
-        ui->FileList_dst->addItem(x->windowTitle(), qVariantFromValue(x));
+        ui->FileList_src->addItem(x->windowTitle(), QVariant::fromValue(x));
+        ui->FileList_dst->addItem(x->windowTitle(), QVariant::fromValue(x));
 
         if(active == x)
             ActiveIndex = ui->FileList_src->count() - 1;
