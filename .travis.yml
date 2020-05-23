@@ -164,6 +164,7 @@ matrix:
             - libstdc++6
             - cmake
             - ninja-build
+            - lftp
     - os: osx
       osx_image: xcode10.2
       compiler: clang
