@@ -24,6 +24,9 @@ then
         #Different project root path on Travis-CI
         if [[ -d /home/travis/build/WohlSoft ]]; then
             PROJECT_ROOT=/home/travis/build/WohlSoft/PGE-Project
+            FTP_USER=${FTPUser}
+            FTP_PASSWORD=${FTPPassword}
+            FTP_SERVER=${FTPServer}
         fi
 
         if [[ ! -d ${PROJECT_ROOT}/bin-cmake-release ]];
