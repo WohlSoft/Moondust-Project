@@ -43,13 +43,19 @@ then
         if [[ -d ${PROJECT_ROOT}/bin-cmake-release ]];
         then
             # Build
+            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading archive pge_project-linux-${GIT_BRANCH}-64.tar.bz2...\";"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./${UPLOAD_TARGET}/ ${PROJECT_ROOT}/bin-cmake-release/pge_project-linux-${GIT_BRANCH}-64.tar.bz2;"
             # [DEPRECATED] SMBX config pack update patch
             # UPLOAD_LIST="${UPLOAD_LIST} put -O ./_common/ ${PROJECT_ROOT}/bin-cmake-release/SMBX-Config-Patch.zip;"
+            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading build_date_${GIT_BRANCH}_${UPLOAD_VERSION_SUFFIX}.txt...\";"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${HAMSTER_ROOT}/build_date_${GIT_BRANCH}_${UPLOAD_VERSION_SUFFIX}.txt;"
+            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading editor_${GIT_BRANCH}.txt\";"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_${GIT_BRANCH}.txt;"
+            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading editor_stable_${GIT_BRANCH}.txt\";"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_stable_${GIT_BRANCH}.txt;"
+            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading engine_${GIT_BRANCH}.txt\";"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_${GIT_BRANCH}.txt;"
+            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading engine_stable_${GIT_BRANCH}.txt\";"
             UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_stable_${GIT_BRANCH}.txt;"
             lftp -e "${UPLOAD_LIST} exit" -u ${FTP_USER},${FTP_PASSWORD} ${FTP_SERVER}
         fi
