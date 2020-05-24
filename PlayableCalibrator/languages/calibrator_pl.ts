@@ -190,7 +190,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="555"/>
         <source>About</source>
-        <translation>O</translation>
+        <translation>O programie</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="568"/>
