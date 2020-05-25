@@ -5,15 +5,15 @@
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
         <source>Unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eccezione non gestita!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Il motore si è bloccato perché è stata accettata un&apos;eccezione non gestita!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <source>Out of memory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuori dalla memoria!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
