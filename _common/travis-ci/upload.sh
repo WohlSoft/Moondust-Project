@@ -8,10 +8,20 @@ then
     exit 0;
 fi
 
+UPLOAD_LIST="set ssl:verify-certificate no;"
+
+function addUploadfile()
+{
+    if [[ -f $2 ]]; then
+        UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading archive $2...\";"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O $1 $2;"
+    else
+        echo "warning: File $2 doesn't exist, skipping..."
+    fi
+}
+
 if [[ "${TRAVIS_OS_NAME}" == "linux" ]];
 then
-
-    UPLOAD_LIST="set ssl:verify-certificate no;"
 
     # Skip deploy on Coverity-Scan platform
     if [[ "${IS_COVERITY_SCAN}" != "true" ]];
@@ -40,20 +50,14 @@ then
         if [[ -d ${PROJECT_ROOT}/bin-cmake-release ]];
         then
             # Build
-            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading archive pge_project-linux-${GIT_BRANCH}-64.tar.bz2...\";"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./${UPLOAD_TARGET}/ ${PROJECT_ROOT}/bin-cmake-release/pge_project-linux-${GIT_BRANCH}-64.tar.bz2;"
+            addUploadfile ./${UPLOAD_TARGET}/ ${PROJECT_ROOT}/bin-cmake-release/pge_project-linux-${GIT_BRANCH}-64.tar.bz2
             # [DEPRECATED] SMBX config pack update patch
             # UPLOAD_LIST="${UPLOAD_LIST} put -O ./_common/ ${PROJECT_ROOT}/bin-cmake-release/SMBX-Config-Patch.zip;"
-            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading build_date_${GIT_BRANCH}_${UPLOAD_VERSION_SUFFIX}.txt...\";"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${HAMSTER_ROOT}/build_date_${GIT_BRANCH}_${UPLOAD_VERSION_SUFFIX}.txt;"
-            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading editor_${GIT_BRANCH}.txt\";"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_${GIT_BRANCH}.txt;"
-            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading editor_stable_${GIT_BRANCH}.txt\";"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_stable_${GIT_BRANCH}.txt;"
-            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading engine_${GIT_BRANCH}.txt\";"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_${GIT_BRANCH}.txt;"
-            UPLOAD_LIST="${UPLOAD_LIST} echo \"Uploading engine_stable_${GIT_BRANCH}.txt\";"
-            UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_stable_${GIT_BRANCH}.txt;"
+            addUploadfile ./_versions/ ${HAMSTER_ROOT}/build_date_${GIT_BRANCH}_${UPLOAD_VERSION_SUFFIX}.txt
+            addUploadfile ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_${GIT_BRANCH}.txt
+            addUploadfile ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/editor_stable_${GIT_BRANCH}.txt
+            addUploadfile ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_${GIT_BRANCH}.txt
+            addUploadfile ./_versions/ ${PROJECT_ROOT}/bin-cmake-release/versions/engine_stable_${GIT_BRANCH}.txt
             lftp -e "${UPLOAD_LIST} exit" -u ${FTPUser},${FTPPassword} ${FTPServer}
         fi
 
@@ -66,12 +70,10 @@ then
 # ==============================================================================
 # Upload created DMG file to the server
 # ==============================================================================
-    UPLOAD_LIST="set ssl:verify-certificate no;"
-
     if [[ -f bin-cmake-release/pge-project-${GIT_BRANCH}-macosx.dmg ]];
     then
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./macosx/ ./bin-cmake-release/pge-project-${GIT_BRANCH}-macosx.dmg;"
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./_versions/ /Users/travis/build_date_${GIT_BRANCH}_osx.txt;"
+        addUploadfile ./macosx/ ./bin-cmake-release/pge-project-${GIT_BRANCH}-macosx.dmg
+        addUploadfile ./_versions/ /Users/travis/build_date_${GIT_BRANCH}_osx.txt
         lftp -e "${UPLOAD_LIST} exit" -u ${FTPUser},${FTPPassword} ${FTPServer}
     else
         echo "Built DMG was not found! Therefore is nothing to upload!"
