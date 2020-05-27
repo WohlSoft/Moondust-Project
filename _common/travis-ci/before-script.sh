@@ -22,6 +22,13 @@ then
         QtStaticVersion=5.9.9_static
     fi
 
+    if [[ "${CI_NEED_LFTP_U1604}" != "" ]]; then
+        echo "Downloading a custom lftp build for Ubuntu 16.04..."
+        wget --quiet http://wohlsoft.ru/www/docs/Software/lftp_4.9.1-1_amd64-ubuntu1604.deb -O /home/runner/lftp_4.9.1-1_amd64-ubuntu1604.deb
+        echo "Installing custom lftp..."
+        sudo dpkg -i /home/runner/lftp_4.9.1-1_amd64-ubuntu1604.deb
+    fi
+
     if ${IS_SEMAPHORECI}; then
         sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
         sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test

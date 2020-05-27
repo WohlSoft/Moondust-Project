@@ -110,6 +110,7 @@ matrix:
         - QT_TARBALL=qt-5.14.2-static-ubuntu-16-04-x64-gcc8.tar.bz2
         - UPLOAD_TARGET=ubuntu-16-04
         - UPLOAD_VERSION_SUFFIX=ubuntu1604
+        - CI_NEED_LFTP_U1604=true
       addons:
         apt:
           sources:
@@ -164,7 +165,9 @@ matrix:
             - libstdc++6
             - cmake
             - ninja-build
-            - lftp
+            - libreadline6
+            - libgnutls30
+            - libexpat1-dev
     - os: osx
       osx_image: xcode10.2
       compiler: clang
