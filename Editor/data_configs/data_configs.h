@@ -199,6 +199,9 @@ public:
     QString splash_logo;
     QList<obj_splash_ani > animations;
 
+    //! An identify key to mark level and world files to maintain a compatibility between different config packs.
+    QString configPackId;
+
     EditorSetup editor;
     EngineSetup engine;
 

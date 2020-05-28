@@ -383,6 +383,8 @@ bool DataConfig::loadFullConfig()
         // For LunaTester
         mainSet.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
 
+        mainSet.read("config-pack-id",          configPackId, QString());
+
         mainSet.readEnum("default-engine-type",
                          ConfStatus::defaultTestEngine,
                          ConfStatus::ENGINE_PGE,

@@ -165,6 +165,78 @@ void MainWindow::on_OpenFile_triggered()
         OpenFile(file, true);
 }
 
+
+static QString getEngineName(ConfStatus::TestEngineType type)
+{
+    switch(type)
+    {
+    default:
+    case ConfStatus::ENGINE_PGE:
+        return "PGE Engine";
+
+    case ConfStatus::ENGINE_LUNA:
+        return "SMBX2/LunaLua-SMBX";
+
+    case ConfStatus::ENGINE_THEXTECH:
+        return "SMBX/TheXTech";
+
+    case ConfStatus::ENGINE_38A:
+        return "SMBX-38A";
+    }
+}
+
+static void verifyCompatibilityLevel(MainWindow *mw,
+                                     const QString &path,
+                                     const QString &engineName,
+                                     const QString &fileId,
+                                     const QString &configPackId)
+{
+    if(fileId.isEmpty() || configPackId.isEmpty())
+        return; // Nothing to check
+    if(fileId == configPackId)
+        return; // File is compatible
+    QMessageBox::warning(mw,
+                         MainWindow::tr("Level is incompatible"),
+                         MainWindow::tr("This level file was created in an editor that was using an unrecognized config pack. This most likely means this "
+                                        "level was designed to be used with a different engine rather than %1. It is likely that some "
+                                        "blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors."
+                                        "\n\n"
+                                        "Filename: %2\n"
+                                        "Level's config pack ID: %3\n"
+                                        "Expected config pack ID: %4")
+                         .arg(engineName)
+                         .arg(path)
+                         .arg(fileId)
+                         .arg(configPackId)
+    );
+}
+
+static void verifyCompatibilityWorld(MainWindow *mw,
+                                     const QString &path,
+                                     const QString &engineName,
+                                     const QString &fileId,
+                                     const QString &configPackId)
+{
+    if(fileId.isEmpty() || configPackId.isEmpty())
+        return; // Nothing to check
+    if(fileId == configPackId)
+        return; // File is compatible
+    QMessageBox::warning(mw,
+                         MainWindow::tr("World map is incompatible"),
+                         MainWindow::tr("This world map file was created in an editor that was using an unrecognized config pack. This most likely means this "
+                                        "world map was designed to be used with a different engine rather than %1. It is likely that some "
+                                        "terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors."
+                                        "\n\n"
+                                        "Filename: %2\n"
+                                        "Level's config pack ID: %3\n"
+                                        "Expected config pack ID: %4")
+                         .arg(engineName)
+                         .arg(path)
+                         .arg(fileId)
+                         .arg(configPackId)
+    );
+}
+
 void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
 {
     if(m_isFileReloading) return;
@@ -225,6 +297,10 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         FileData.playmusic  = GlobalSettings::autoPlayMusic;
         file.close();
 
+        verifyCompatibilityLevel(this, in_1.fileName(),
+                                 getEngineName(ConfStatus::defaultTestEngine),
+                                 FileData.meta.configPackId, configs.configPackId);
+
         LogDebug("Creating of sub-window");
         LevelEdit *child = createLvlChild(&newSubWin);
         if(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts))
@@ -255,13 +331,21 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     else if((in_1.suffix().toLower() == "wld") || (in_1.suffix().toLower() == "wldx"))
     {
         WorldData FileData;
+
+        LogDebug("> parsing world map file format");
         if(!FileFormats::OpenWorldFile(FilePath, FileData))
         {
             formatErrorMsgBox(FilePath, FileData.meta.ERROR_info, FileData.meta.ERROR_linenum, FileData.meta.ERROR_linedata);
             return;
         }
+        LogDebug("File was read!");
         file.close();
 
+        verifyCompatibilityWorld(this, in_1.fileName(),
+                                 getEngineName(ConfStatus::defaultTestEngine),
+                                 FileData.meta.configPackId, configs.configPackId);
+
+        LogDebug("Creating of sub-window");
         WorldEdit *child = createWldChild(&newSubWin);
         if(child->loadFile(FilePath, FileData, configs, GlobalSettings::LvlOpts))
         {
@@ -290,6 +374,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
     else if(in_1.suffix().toLower() == "txt")
     {
         NPCConfigFile FileData;
+
         if(!FileFormats::ReadNpcTXTFileF(FilePath, FileData))
         {
             QMessageBox::critical(this, QObject::tr("File open error"), tr("Can't read the file"), QMessageBox::Ok);

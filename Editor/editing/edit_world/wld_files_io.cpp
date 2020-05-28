@@ -259,6 +259,8 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         return false;
     }
 
+    WldData.meta.configPackId = getMainWindow()->configs.configPackId;
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     FileKeeper fileKeeper = FileKeeper(fileName);

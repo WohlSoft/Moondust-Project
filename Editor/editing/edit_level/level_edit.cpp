@@ -84,6 +84,8 @@ void LevelEdit::prepareLevelFile(LevelData &data)
 
     DataConfig *config = scene->m_configs;
 
+    data.meta.configPackId = config->configPackId;
+
     FileFormats::arrayIdLevelSortBGOs(data);
 
     // TODO: make here the synchronizarion with the main scene

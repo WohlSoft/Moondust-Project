@@ -1,5 +1,6 @@
 0.4.3
 - Native support for MSYS2 build environment via build.sh script
+- Added config pack ID key to manage the compatibility between different runtime engines and universes
 
 0.4.2
 - First PGE Project global changelog entry
