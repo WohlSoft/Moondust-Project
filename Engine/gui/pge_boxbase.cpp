@@ -121,7 +121,7 @@ void PGE_BoxBase::setType(PGE_BoxBase::msgType type)
         m_bgColor =      GlColor(0, 0, 0.490196078);
         break;
     case msg_warn:
-        m_bgColor =      GlColor(1.0, 0.788235294, 0.054901961);
+        m_bgColor =      GlColor(1.0, 0.62745098, 0.0);
         break;
     case msg_error:
         m_bgColor =      GlColor(0.490196078, 0, 0);
