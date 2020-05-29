@@ -6396,7 +6396,7 @@ Veuillez choisir l&apos;application de moteur vous-même !</translation>
     </message>
     <message>
         <source>Level is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Le niveau n&apos;est pas compatible</translation>
     </message>
     <message>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -6404,11 +6404,15 @@ Veuillez choisir l&apos;application de moteur vous-même !</translation>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce fichier de niveau a été créé avec un éditeur utilisant un paquet de configuration non reconnu. Cela signifie généralement que ce niveau a été conçu pour être utilisé avec un autre moteur que %1. Généralement il y a des blocs, PNJ, scripts, etc. qui ne sont pas compatibles, et qui pourraient causer une expérience de jeu ou des erreurs inattendues.
+
+Nom du fichier : %2
+Identifiant de paquet de configuration du niveau : %3
+Identifiant de paquet de configuration attendu : %4</translation>
     </message>
     <message>
         <source>World map is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>La carte de monde n&apos;est pas compatible</translation>
     </message>
     <message>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -6416,7 +6420,11 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce fichier de carte de monde a été créé avec un éditeur utilisant un paquet de configuration non reconnu. Cela signifie généralement que cette carte de monde a été conçue pour être utilisée avec un autre moteur que %1. Généralement il y a certains terrains, niveaux, scripts, etc. qui ne seront pas compatibles, et qui pourraient causer une expérience de jeu ou des erreurs inattendues.
+
+Nom du fichier : %2
+Identifiant de paquet de configuration du niveau : %3
+Identifiant de paquet de configuration attendu : %4</translation>
     </message>
 </context>
 <context>
