@@ -384,6 +384,7 @@ bool DataConfig::loadFullConfig()
         mainSet.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
 
         mainSet.read("config-pack-id",          configPackId, QString());
+        mainSet.read("target-engine-name",      targetEngineName, QString());
 
         mainSet.readEnum("default-engine-type",
                          ConfStatus::defaultTestEngine,

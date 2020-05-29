@@ -166,16 +166,19 @@ void MainWindow::on_OpenFile_triggered()
 }
 
 
-static QString getEngineName(ConfStatus::TestEngineType type)
+static QString getEngineName(DataConfig *config)
 {
-    switch(type)
+    if(config && !config->targetEngineName.isEmpty())
+        return config->targetEngineName;
+
+    switch(ConfStatus::defaultTestEngine)
     {
     default:
     case ConfStatus::ENGINE_PGE:
         return "PGE Engine";
 
     case ConfStatus::ENGINE_LUNA:
-        return "SMBX2/LunaLua-SMBX";
+        return "LunaLua-SMBX";
 
     case ConfStatus::ENGINE_THEXTECH:
         return "SMBX/TheXTech";
@@ -298,7 +301,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         file.close();
 
         verifyCompatibilityLevel(this, in_1.fileName(),
-                                 getEngineName(ConfStatus::defaultTestEngine),
+                                 getEngineName(&configs),
                                  FileData.meta.configPackId, configs.configPackId);
 
         LogDebug("Creating of sub-window");
@@ -342,7 +345,7 @@ void MainWindow::OpenFile(QString FilePath, bool addToRecentList)
         file.close();
 
         verifyCompatibilityWorld(this, in_1.fileName(),
-                                 getEngineName(ConfStatus::defaultTestEngine),
+                                 getEngineName(&configs),
                                  FileData.meta.configPackId, configs.configPackId);
 
         LogDebug("Creating of sub-window");
