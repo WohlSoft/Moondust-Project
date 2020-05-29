@@ -99,46 +99,46 @@ and retry your recent actions to get more detailed information.</source>
         <translation>Робота двигуна була перервана</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="115"/>
+        <location filename="../data_configs/config_manager.cpp" line="117"/>
         <source>Config pack directory error</source>
         <translation>Помилка директорії конфіг-пакету</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
-        <location filename="../data_configs/config_manager.cpp" line="117"/>
+        <location filename="../data_configs/config_manager.cpp" line="119"/>
         <source>Config directory is not found at:
 %1</source>
         <translation>Директорія конфіг-пакету не знайдена на:
 %1</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="127"/>
+        <location filename="../data_configs/config_manager.cpp" line="129"/>
         <source>Missing main.ini</source>
         <translation>Відсутній main.ini</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="129"/>
+        <location filename="../data_configs/config_manager.cpp" line="131"/>
         <source>Can&apos;t open the &apos;main.ini&apos; config file!</source>
         <translation>Неможливо відкрити конфігураційний файл &apos;main.ini&apos;!</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="150"/>
+        <location filename="../data_configs/config_manager.cpp" line="152"/>
         <source>Missing config pack data directory</source>
         <translation>Відсутня папка з даними в конфіг-пакеті</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="152"/>
+        <location filename="../data_configs/config_manager.cpp" line="154"/>
         <source>Config pack data path not exists:
 %1</source>
         <translation>Папка з даними конфіг-пакету відсутня:
 %1</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="183"/>
+        <location filename="../data_configs/config_manager.cpp" line="187"/>
         <source>Legacy configuration package</source>
         <translation>Конфігураційний пакет застарів</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK">
-        <location filename="../data_configs/config_manager.cpp" line="190"/>
+        <location filename="../data_configs/config_manager.cpp" line="194"/>
         <source>You have a legacy configuration package.
 Game will be started, but you may have a some problems with gameplay.
 
@@ -159,12 +159,12 @@ therefore you can use same link to get updated version.</source>
 тому ви можете використовувати те ж саме посилання, щоб отримати оновлену версію.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="236"/>
+        <location filename="../data_configs/config_manager.cpp" line="240"/>
         <source>main.ini is invalid</source>
         <translation>Файл main.ini має помилки</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="238"/>
+        <location filename="../data_configs/config_manager.cpp" line="242"/>
         <source>Error has occouped in main.ini in line %1.</source>
         <translation>У файлі main.ini трапилась помилка на рядку %1.</translation>
     </message>
@@ -174,35 +174,35 @@ therefore you can use same link to get updated version.</source>
         <translation>Виберіть гру:</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="685"/>
+        <location filename="../main.cpp" line="729"/>
         <source>Unable to init SDL!</source>
         <translation>Неможливо ініціювати SDL!</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="746"/>
+        <location filename="../main.cpp" line="790"/>
         <source>Config packs not found</source>
         <translation>Конфігураційні пакети не знайдені</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="749"/>
+        <location filename="../main.cpp" line="793"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>Неможливо запустити гру,
 тому що не знайдені конфігураційні пакети!</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="759"/>
+        <location filename="../main.cpp" line="803"/>
         <source>Choose a game to test:</source>
         <translation>Виберіть гру для тестування:</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="286"/>
-        <location filename="../main.cpp" line="454"/>
+        <location filename="../main.cpp" line="295"/>
+        <location filename="../main.cpp" line="480"/>
         <source>No opened files</source>
         <translation>Немає відкритих файлів</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="307"/>
+        <location filename="../main.cpp" line="316"/>
         <source>ERROR:
 Fail to start world map
 
@@ -212,27 +212,37 @@ Fail to start world map
 
 %1</translation>
     </message>
+    <message id="WARNING_INCOMPATIBLE_WORLDMAP">
+        <location filename="../main.cpp" line="333"/>
+        <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="WLD_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="325"/>
+        <location filename="../main.cpp" line="352"/>
         <source>World map was closed with error.
 %1</source>
         <translation>Карта світу завершилась з помилкою
 %1</translation>
     </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="343"/>
+        <location filename="../main.cpp" line="370"/>
         <source>Start level
 %1</source>
         <translation>Запуск рівня
 %1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="345"/>
+        <location filename="../main.cpp" line="372"/>
         <source>Type an exit code (signed integer)</source>
         <translation>Введіть код виходу (знакове ціле)</translation>
     </message>
+    <message id="WARNING_INCOMPATIBLE_LEVEL">
+        <location filename="../main.cpp" line="510"/>
+        <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="536"/>
+        <location filename="../main.cpp" line="580"/>
         <source>Warp exit
 
 Exit into:
@@ -247,53 +257,53 @@ Entrance point: %2</source>
 Вхідний прохід №: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="605"/>
+        <location filename="../main.cpp" line="649"/>
         <source>Level was closed with error.
 %1</source>
         <translation>Рівень завершився з помилкою.
 %1</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="551"/>
+        <location filename="../scenes/scene_world.cpp" line="556"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <source>Invalid playable character ID</source>
         <translation>Невірний ID ігрового персонажа</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="560"/>
+        <location filename="../scenes/scene_world.cpp" line="565"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <source>Invalid playable character state ID</source>
         <translation>Невірний ID стану ігрового персонажа</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="612"/>
-        <location filename="../scenes/scene_world.cpp" line="639"/>
+        <location filename="../scenes/scene_world.cpp" line="617"/>
+        <location filename="../scenes/scene_world.cpp" line="644"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="620"/>
-        <location filename="../scenes/scene_world.cpp" line="647"/>
+        <location filename="../scenes/scene_world.cpp" line="625"/>
+        <location filename="../scenes/scene_world.cpp" line="652"/>
         <source>Continue</source>
         <translation>Продовжити</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="622"/>
+        <location filename="../scenes/scene_world.cpp" line="627"/>
         <source>Save and continue</source>
         <translation>Зберегти й продовжити</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="624"/>
+        <location filename="../scenes/scene_world.cpp" line="629"/>
         <source>Save and quit</source>
         <translation>Зберегти й вийти</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="626"/>
+        <location filename="../scenes/scene_world.cpp" line="631"/>
         <source>Exit without saving</source>
         <translation>Вийти без збереження</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="649"/>
+        <location filename="../scenes/scene_world.cpp" line="654"/>
         <source>Quit</source>
         <translation>Вийти</translation>
     </message>

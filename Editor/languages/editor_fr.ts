@@ -6394,6 +6394,30 @@ Veuillez choisir l&apos;application de moteur vous-même !</translation>
         <source>Show camera grid</source>
         <translation>Afficher la grille de la caméra</translation>
     </message>
+    <message>
+        <source>Level is incompatible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>World map is incompatible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>

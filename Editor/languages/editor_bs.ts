@@ -6935,7 +6935,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     <message>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="43"/>
-        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="35"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="80"/>
         <location filename="../main_window/file/file_reload.cpp" line="55"/>
         <location filename="../main_window/file/file_reload.cpp" line="164"/>
         <location filename="../main_window/file/file_reload.cpp" line="222"/>
@@ -6945,7 +6945,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     <message>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
         <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
-        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="36"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="81"/>
         <location filename="../main_window/file/file_reload.cpp" line="56"/>
         <location filename="../main_window/file/file_reload.cpp" line="165"/>
         <location filename="../main_window/file/file_reload.cpp" line="223"/>
@@ -7117,7 +7117,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
         <location filename="../main_window/file/file_open.cpp" line="140"/>
-        <location filename="../main_window/file/file_open.cpp" line="183"/>
+        <location filename="../main_window/file/file_open.cpp" line="258"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7168,57 +7168,85 @@ Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="184"/>
+        <location filename="../main_window/file/file_open.cpp" line="202"/>
+        <source>Level is incompatible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="203"/>
+        <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="228"/>
+        <source>World map is incompatible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="229"/>
+        <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/file/file_open.cpp" line="259"/>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="203"/>
+        <location filename="../main_window/file/file_open.cpp" line="278"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="204"/>
+        <location filename="../main_window/file/file_open.cpp" line="279"/>
         <source>Can&apos;t open the file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="237"/>
+        <location filename="../main_window/file/file_open.cpp" line="316"/>
         <source>Level file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="279"/>
+        <location filename="../main_window/file/file_open.cpp" line="366"/>
         <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="295"/>
+        <location filename="../main_window/file/file_open.cpp" line="383"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="313"/>
+        <location filename="../main_window/file/file_open.cpp" line="401"/>
         <source>NPC Config loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="409"/>
+        <location filename="../main_window/file/file_open.cpp" line="497"/>
         <source>Game save statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="416"/>
+        <location filename="../main_window/file/file_open.cpp" line="504"/>
         <source>Bad file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="417"/>
+        <location filename="../main_window/file/file_open.cpp" line="505"/>
         <source>This file have unknown extension</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8556,7 +8584,7 @@ Reason: %1
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="546"/>
+        <location filename="../data_configs/data_configs.cpp" line="549"/>
         <source>Finishing loading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8622,18 +8650,18 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="295"/>
+        <location filename="../main_window/file/file_open.cpp" line="383"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="302"/>
+        <location filename="../main_window/file/file_open.cpp" line="390"/>
         <source>Unknown values are presented</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="303"/>
+        <location filename="../main_window/file/file_open.cpp" line="391"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation type="unfinished"></translation>
@@ -9015,18 +9043,18 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>SmartImporter</name>
     <message>
-        <location filename="../tools/smart_import/smartimporter.cpp" line="56"/>
-        <location filename="../tools/smart_import/smartimporter.cpp" line="105"/>
+        <location filename="../tools/smart_import/smartimporter.cpp" line="65"/>
+        <location filename="../tools/smart_import/smartimporter.cpp" line="113"/>
         <source>File not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/smart_import/smartimporter.cpp" line="56"/>
+        <location filename="../tools/smart_import/smartimporter.cpp" line="65"/>
         <source>You need to save the level, so you can import custom graphics!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../tools/smart_import/smartimporter.cpp" line="105"/>
+        <location filename="../tools/smart_import/smartimporter.cpp" line="113"/>
         <source>You need to save the world, so you can import custom graphics!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10841,7 +10869,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="123"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="412"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="414"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10928,23 +10956,23 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="279"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="281"/>
         <source>SMBX file version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="280"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="282"/>
         <source>Which version do you want to save as? (from 0 to 64)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="292"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="300"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="294"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="302"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="301"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="303"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -10952,60 +10980,60 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="312"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="330"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="314"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="332"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="313"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="331"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="315"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="333"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="371"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="373"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="372"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="374"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="412"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="413"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="414"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="415"/>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="450"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="452"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="451"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="453"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="471"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="473"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="473"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="475"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="475"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
         <source>World title:</source>
         <translation type="unfinished"></translation>
     </message>
