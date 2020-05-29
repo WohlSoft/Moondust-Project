@@ -484,11 +484,11 @@ therefore you can use same link to get an updated version.</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</translation>
+        <translation>This world map is incompatible: You may get unexpected gameplay results or errors. Browse the log for details.</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</translation>
+        <translation>This level is incompatible: You may get unexpected gameplay results or errors. Browse the log for details.</translation>
     </message>
 </context>
 <context>
