@@ -496,7 +496,7 @@ Klarte ikke å starte verdenskart
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <location filename="../main.cpp" line="333"/>
         <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verdenskartet er ukompatibelt: Det kan hende du får uventede resultater i spillet, eller feil. Se loggføring for detaljer.</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="352"/>
@@ -520,7 +520,7 @@ Klarte ikke å starte verdenskart
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <location filename="../main.cpp" line="510"/>
         <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dette nivået er ukompatibelt: Det kan hende du får uventede resultater i spillet, eller feil. Se loggføring for detaljer.</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
         <location filename="../main.cpp" line="580"/>
