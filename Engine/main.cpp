@@ -115,6 +115,15 @@ struct AppInstance
 };
 
 
+static int verifyCompatibility(const std::string &fileId, const std::string &configId)
+{
+    if(fileId.empty() || configId.empty())
+        return 0; // Nothing to check
+    if(fileId == configId)
+        return 0; // Compatibility is valid
+    return -1; // incompatibility detected!
+}
+
 static void pgeLoadingScreen(AppInstance &a)
 {
     LoadingScene ttl;
@@ -309,6 +318,24 @@ static void pgeWorldMapScreen(AppInstance &a)
         }
     }
 
+    auto *wldData = wScene->worldData();
+    if(verifyCompatibility(wldData->meta.configPackId, ConfigManager::configPackId) < 0)
+    {
+        PGE_Delay(50);
+        pLogWarning("World map is incompatible: This world map file was created in an editor that was using an unrecognized config pack. "
+                    "Filename: %s; World map config pack-ID: %s; Expected config pack ID: %s.",
+                    wldData->meta.filename.c_str(),
+                    wldData->meta.configPackId.c_str(),
+                    ConfigManager::configPackId.c_str());
+        PGE_MsgBox msgBox(nullptr,
+                          fmt::format_ne("{0}\n\n{1}",
+                                         //% "This world map is incompatible: you may get unexpected gameplay results or errors. See log for details."
+                                         qtTrId("WARNING_INCOMPATIBLE_WORLDMAP"),
+                                         g_Episode.worldfile),
+                          PGE_MsgBox::msg_warn);
+        msgBox.exec();
+    }
+
     if(sceneResult)
         sceneResult = wScene->init();
 
@@ -402,7 +429,6 @@ static void pgeWorldMapScreen(AppInstance &a)
     a.next = AppInstance::G_MAIN_MENU;
 }
 
-
 static void pgeLevelPlayScreen(AppInstance &a)
 {
     bool playAgain = true;
@@ -467,6 +493,24 @@ static void pgeLevelPlayScreen(AppInstance &a)
                                   PGE_MsgBox::msg_error);
                 msgBox.exec();
             }
+        }
+
+        auto *lvlData = lScene->levelData();
+        if(verifyCompatibility(lvlData->meta.configPackId, ConfigManager::configPackId) < 0)
+        {
+            PGE_Delay(50);
+            pLogWarning("Level is incompatible: This level file was created in an editor that was using an unrecognized config pack. "
+                        "Filename: %s; Level config pack-ID: %s; Expected config pack ID: %s.",
+                        lvlData->meta.filename.c_str(),
+                        lvlData->meta.configPackId.c_str(),
+                        ConfigManager::configPackId.c_str());
+            PGE_MsgBox msgBox(nullptr,
+                              fmt::format_ne("{0}\n\n{1}",
+                                             //% "This level is incompatible: you may get unexpected gameplay results or errors. See log for details."
+                                             qtTrId("WARNING_INCOMPATIBLE_LEVEL"),
+                                             a.gameState.m_nextLevelFile),
+                              PGE_MsgBox::msg_warn);
+            msgBox.exec();
         }
 
         if(sceneResult)
