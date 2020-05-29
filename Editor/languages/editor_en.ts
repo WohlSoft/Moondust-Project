@@ -9666,7 +9666,7 @@ See %2 for more information.</translation>
     </message>
     <message>
         <source>Level is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Level is incompatible</translation>
     </message>
     <message>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -9674,11 +9674,15 @@ See %2 for more information.</translation>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</translation>
     </message>
     <message>
         <source>World map is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>World map is incompatible</translation>
     </message>
     <message>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -9686,7 +9690,11 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</translation>
     </message>
 </context>
 <context>

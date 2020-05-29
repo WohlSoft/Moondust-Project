@@ -488,11 +488,11 @@ therefore you can use same link to get updated version.</oldsource>
     </message>
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Эта карта мира несовместима: возможно непредсказуемое поведение игры или ошибки. Подробности в отчёте.</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот уровень несовместим: возможно непредсказуемое поведение игры или ошибки. Подробности в отчёте.</translation>
     </message>
 </context>
 <context>

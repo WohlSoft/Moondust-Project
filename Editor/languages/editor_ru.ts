@@ -9655,7 +9655,7 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>Level is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Уровень несовместим</translation>
     </message>
     <message>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -9663,11 +9663,15 @@ See %2 for more information.</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот файл уровня был создан в редакторе, который использовал неопознанный конфиг-пакет. Возможно, что данный уровень был создан для другого движка, отличного от &quot;%1&quot;. То есть, некоторые блоки/нИПы/скрипты/и т.п. будут несовместимы: это приведёт к непредсказуемому поведению игры или к ошибкам.
+
+Имя файла: %2
+ID конфиг-пакета уровня: %3
+Ожидаемый ID конфиг-пакета: %4</translation>
     </message>
     <message>
         <source>World map is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Карта мира несовместима</translation>
     </message>
     <message>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -9675,7 +9679,11 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот файл карты мира был создан в редакторе, который использовал неопознанный конфиг-пакет. Возможно, что данная карта мира была создана для другого движка, отличного от &quot;%1&quot;. То есть, некоторые ландшифтные плитки/уровни/скрипты/и т.п. будут несовместимы: это приведёт к непредсказуемому поведению игры или к ошибкам.
+
+Имя файла: %2
+ID конфиг-пакета карты мира: %3
+Ожидаемый ID конфиг-пакета: %4</translation>
     </message>
 </context>
 <context>
