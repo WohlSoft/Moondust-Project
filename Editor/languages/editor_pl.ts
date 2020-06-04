@@ -6983,7 +6983,7 @@ Zobacz %2 aby uzyskać więcej informacji.</translation>
     </message>
     <message>
         <source>Level is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Poziom jest niekompatybilny</translation>
     </message>
     <message>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -6991,11 +6991,15 @@ Zobacz %2 aby uzyskać więcej informacji.</translation>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten plik poziomu został utworzony w edytorze korzystającym z nierozpoznanego pakietu konfiguracyjnego. To najprawdopodobniej oznacza, że ten poziom został zaprojektowany do użycia z innym silnikiem niż %1. Jest prawdopodobne, że niektóre bloki/NPC/skrypty/ itp. nie będą kompatybilne i mogą powodować nieoczekiwane wyniki lub błędy w grze.
+
+Nazwa pliku: %2
+Indetyfikator pakietu konfiguracyjnego poziomu: %3
+Oczekiwany Identyfikator pakietu konfiguracji: %4</translation>
     </message>
     <message>
         <source>World map is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa świata jest niekompatybilna</translation>
     </message>
     <message>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -7003,7 +7007,11 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten plik mapy świata został utworzony w edytorze korzystającym z nierozpoznanego pakietu konfiguracyjnego. To najprawdopodobniej oznacza, że ta mapa świata została zaprojektowana do użycia z innym silnikiem niż %1. Jest prawdopodobne, że niektóre tereny/poziomy/skrypty/ itp. Nie będą kompatybilne i mogą powodować nieoczekiwane wyniki lub błędy w grze.
+
+Nazwa pliku: %2
+Indetyfikator pakietu konfiguracyjnego poziomu: %3
+Oczekiwany Indetyfikator pakietu konfiguracji: %4</translation>
     </message>
 </context>
 <context>
