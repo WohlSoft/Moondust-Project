@@ -467,11 +467,11 @@ dlatego możesz użyć tego samego linku, aby uzyskać zaktualizowaną wersję.<
     </message>
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta mapa świata jest niekompatybilna: Mogą pojawić się nieoczekiwane wyniki lub błędy w grze. Przejrzyj dziennik, aby uzyskać szczegółowe informacje.</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten poziom jest niekompatybilny: Możesz uzyskać nieoczekiwane wyniki lub błędy w grze. Przejrzyj dziennik, aby uzyskać szczegółowe informacje.</translation>
     </message>
 </context>
 </TS>
