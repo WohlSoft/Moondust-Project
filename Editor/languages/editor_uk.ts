@@ -6103,7 +6103,7 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>Level is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Рівень несумісний</translation>
     </message>
     <message>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -6111,11 +6111,15 @@ See %2 for more information.</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей файл рівня створений у редагувачі, який використовує неопізнаний конфіг-пакет. Можливо, що даний рівень створений для іншого двигуна, який відрізняється від &quot;%1&quot;. Тобто, деякі блоки/НІП/скрипти/і т.д. будуть несумісні: це призведе до непередбачуваної поведінки гри, або помилок.
+
+Ім&apos;я файлу: %2
+ID конфіг-пакету рівня: %3
+Очікуємий ID конфіг-пакету: %4</translation>
     </message>
     <message>
         <source>World map is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Несумісна карта світу</translation>
     </message>
     <message>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -6123,7 +6127,11 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей файл карти світу створений у редагувачі, який використовує неопізнаний конфіг-пакет. Можливо, що дана карта світу створена для іншого двигуна, який відрізняється від &quot;%1&quot;. Тобто, деякі плити/рівні/скрипти/і т.д. будуть несумісні: це призведе до непередбачуваної поведінки гри, або помилок.
+
+Ім&apos;я файлу: %2
+ID конфіг-пакету карти світу: %3
+Очікуємий ID конфіг-пакету: %4</translation>
     </message>
 </context>
 <context>
