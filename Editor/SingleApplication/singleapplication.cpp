@@ -79,13 +79,18 @@ SingleApplication::SingleApplication(QStringList &args) :
     server(nullptr),
     m_shouldContinue(false) //By default this is not the main process
 {
+    //! is another copy of Editor running?
     bool isRunning = false;
+    //! Don't create semaphore listening because another copy of Editor runs
+    bool forceRun = false;
     m_sema.acquire();   //Avoid races
 
     if(!m_shmem.create(1))//Detect shared memory copy
     {
+        // Clean-up of garbage possibly left from a previously crashed Editor copy
         m_shmem.attach();
         m_shmem.detach();
+        // Try to create a memory block
         if(!m_shmem.create(1))
         {
             isRunning = true;
@@ -97,14 +102,12 @@ SingleApplication::SingleApplication(QStringList &args) :
     //Force run second copy of application
     if(args.contains("--force-run", Qt::CaseInsensitive))
     {
-        isRunning=false;
+        isRunning = false;
+        forceRun = true;
         args.removeAll("--force-run");
+        m_shmem.detach();
     }
 
-    if(args.contains("--force-run", Qt::CaseInsensitive))
-    {
-        args.removeAll("--force-run");
-    }
     m_arguments = args;
 
     if(isRunning)
@@ -120,16 +123,19 @@ SingleApplication::SingleApplication(QStringList &args) :
     {
         // The attempt was insuccessful, so we continue the program
         m_shouldContinue = true;
-        server = new LocalServer();
-        server->start();
-        QObject::connect(server,SIGNAL(showUp()),
-                         this,  SLOT(slotShowUp()));
-        QObject::connect(server,SIGNAL(dataReceived(QString)),
-                         this,  SLOT(slotOpenFile(QString)));
-        QObject::connect(server,SIGNAL(acceptedCommand(QString)),
-                         this,  SLOT(slotAcceptedCommand(QString)));
-        QObject::connect(this,  SIGNAL(stopServer()),
-                         server,SLOT(stopServer()));
+        if(!forceRun)
+        {
+            server = new LocalServer();
+            server->start();
+            QObject::connect(server,SIGNAL(showUp()),
+                             this,  SLOT(slotShowUp()));
+            QObject::connect(server,SIGNAL(dataReceived(QString)),
+                             this,  SLOT(slotOpenFile(QString)));
+            QObject::connect(server,SIGNAL(acceptedCommand(QString)),
+                             this,  SLOT(slotAcceptedCommand(QString)));
+            QObject::connect(this,  SIGNAL(stopServer()),
+                             server,SLOT(stopServer()));
+        }
     }
     m_sema.release();//Free semaphore
 }

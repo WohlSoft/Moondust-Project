@@ -31,14 +31,14 @@ void obj_BG::copyTo(obj_BG &bg)
     bg.isValid         = isValid;
     bg.animator_id     = animator_id;
     bg.cur_image       = cur_image;
-    if(cur_image == nullptr)
+    if(!cur_image)
         bg.cur_image   = &image;
-    if(cur_image_second == nullptr)
+    if(!cur_image_second)
         bg.cur_image_second = &image;
     bg.setup = setup;
 }
 
-bool dataconfigs::loadLevelBackground(obj_BG &sbg,
+bool DataConfig::loadLevelBackground(obj_BG &sbg,
                                       QString section,
                                       obj_BG *merge_with,
                                       QString iniFile,
@@ -78,7 +78,7 @@ bool dataconfigs::loadLevelBackground(obj_BG &sbg,
 }
 
 
-void dataconfigs::loadLevelBackgrounds()
+void DataConfig::loadLevelBackgrounds()
 {
     unsigned int i;
     obj_BG sbg;

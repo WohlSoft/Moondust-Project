@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>277</width>
-    <height>500</height>
+    <width>264</width>
+    <height>529</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -31,6 +31,9 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents">
    <layout class="QGridLayout" name="gridLayout_4" rowstretch="0,0,0,0">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -41,9 +44,6 @@
      <number>0</number>
     </property>
     <property name="bottomMargin">
-     <number>0</number>
-    </property>
-    <property name="spacing">
      <number>0</number>
     </property>
     <item row="3" column="0" colspan="2">
@@ -68,8 +68,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>277</width>
-         <height>480</height>
+         <width>264</width>
+         <height>510</height>
         </rect>
        </property>
        <property name="sizePolicy">
@@ -79,9 +79,6 @@
         </sizepolicy>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,100">
-        <property name="spacing">
-         <number>1</number>
-        </property>
         <property name="leftMargin">
          <number>2</number>
         </property>
@@ -96,7 +93,10 @@
         </property>
         <item>
          <widget class="QWidget" name="LVLSectionTopSettings" native="true">
-          <layout class="QGridLayout" name="gridLayout_6">
+          <layout class="QGridLayout" name="gridLayout_6" columnstretch="1000,0">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -121,6 +121,9 @@
               <string>Current Section</string>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout" stretch="50,0,0,50">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetMinimumSize</enum>
+              </property>
               <property name="leftMargin">
                <number>4</number>
               </property>
@@ -189,7 +192,7 @@
              </property>
              <layout class="QGridLayout" name="gridLayout_5" columnstretch="50,50">
               <property name="sizeConstraint">
-               <enum>QLayout::SetNoConstraint</enum>
+               <enum>QLayout::SetMinimumSize</enum>
               </property>
               <property name="leftMargin">
                <number>0</number>
@@ -245,16 +248,10 @@
         <item>
          <widget class="QGroupBox" name="LVLPropStyleGr">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>129</height>
-           </size>
           </property>
           <property name="autoFillBackground">
            <bool>false</bool>
@@ -265,21 +262,9 @@
           <property name="flat">
            <bool>false</bool>
           </property>
-          <layout class="QGridLayout" name="gridLayout" columnstretch="100,0">
-           <property name="leftMargin">
-            <number>2</number>
-           </property>
-           <property name="topMargin">
-            <number>2</number>
-           </property>
-           <property name="rightMargin">
-            <number>2</number>
-           </property>
-           <property name="bottomMargin">
-            <number>2</number>
-           </property>
-           <property name="horizontalSpacing">
-            <number>2</number>
+          <layout class="QGridLayout" name="gridLayout" columnstretch="10000,0">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
            </property>
            <item row="0" column="0">
             <widget class="QLabel" name="LVLPropBckrImg">
@@ -288,25 +273,14 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="editBackground2Ini">
-             <property name="toolTip">
-              <string>Edit a custom background config...</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/images/pencil_16x16.png</normaloff>:/images/pencil_16x16.png</iconset>
-             </property>
-             <property name="flat">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="0" colspan="2">
             <widget class="QComboBox" name="LVLPropsBackImage">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -336,50 +310,43 @@
              </item>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="editBackground2Ini">
+             <property name="toolTip">
+              <string>Edit a custom background config...</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/pencil_16x16.png</normaloff>:/images/pencil_16x16.png</iconset>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
         <item>
          <widget class="QGroupBox" name="LVLPropMusicGr">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>83</height>
-           </size>
           </property>
           <property name="title">
            <string>Music</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_2" columnstretch="400,0,0">
-           <property name="leftMargin">
-            <number>2</number>
-           </property>
-           <property name="topMargin">
-            <number>2</number>
-           </property>
-           <property name="rightMargin">
-            <number>2</number>
-           </property>
-           <property name="bottomMargin">
-            <number>2</number>
-           </property>
-           <property name="horizontalSpacing">
-            <number>2</number>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
            </property>
            <item row="0" column="0">
             <widget class="QComboBox" name="LVLPropsMusicNumber">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>24</height>
-              </size>
-             </property>
              <property name="focusPolicy">
               <enum>Qt::WheelFocus</enum>
              </property>
@@ -395,11 +362,11 @@
            </item>
            <item row="0" column="1" colspan="2">
             <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>16</height>
-              </size>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
              <property name="text">
               <string comment="Flag of custom music on the level">Custom</string>
@@ -411,11 +378,11 @@
            </item>
            <item row="1" column="0" colspan="3">
             <widget class="QLabel" name="LVLPropCMusicLbl">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>12</height>
-              </size>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
              <property name="text">
               <string>Music file:</string>
@@ -425,21 +392,18 @@
              </property>
             </widget>
            </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLineEdit" name="LVLPropsMusicCustom"/>
+           </item>
            <item row="2" column="2">
-            <widget class="QPushButton" name="LVLPropsMusicCustomBrowse">
+            <widget class="QToolButton" name="LVLPropsMusicCustomBrowse">
              <property name="toolTip">
               <string>Browse...</string>
              </property>
              <property name="text">
               <string notr="true">...</string>
              </property>
-             <property name="flat">
-              <bool>false</bool>
-             </property>
             </widget>
-           </item>
-           <item row="2" column="0" colspan="2">
-            <widget class="QLineEdit" name="LVLPropsMusicCustom"/>
            </item>
           </layout>
          </widget>
@@ -447,32 +411,17 @@
         <item>
          <widget class="QGroupBox" name="LVLPropSettingsGrp">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>139</height>
-           </size>
           </property>
           <property name="title">
            <string>Section Settings</string>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
-           <property name="leftMargin">
-            <number>4</number>
-           </property>
-           <property name="topMargin">
-            <number>4</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>4</number>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
            </property>
            <item>
             <widget class="QCheckBox" name="LVLPropsWrapHorizontal">
@@ -529,12 +478,6 @@
         </item>
         <item>
          <widget class="QFrame" name="extraSettings">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>200</height>
-           </size>
-          </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>

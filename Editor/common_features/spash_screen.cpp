@@ -4,26 +4,26 @@
 #include <QCloseEvent>
 #include <Utils/maths.h>
 #ifdef Q_OS_ANDROID
-#include <QPixmap>
-#include <QDesktopWidget>
-#define RatioWidth *width_ratio
-#define RatioHeight *height_ratio
+#   include <QPixmap>
+#   include <QDesktopWidget>
+#   define RatioWidth *width_ratio
+#   define RatioHeight *height_ratio
 #else
-#define RatioWidth
-#define RatioHeight
+#   define RatioWidth
+#   define RatioHeight
 #endif
 
 EditorSpashScreen::EditorSpashScreen()
 {
-    opacity = 1;
-    width_ratio = 1.0;
-    height_ratio = 1.0;
+    m_opacity = 1;
+    m_width_ratio = 1.0;
+    m_height_ratio = 1.0;
     construct();
 }
 
 EditorSpashScreen::EditorSpashScreen(QPixmap &pixmap)
 {
-    opacity = 1;
+    m_opacity = 1;
     QPixmap newx(pixmap.width(), pixmap.height() + 50);
     newx.fill(QColor(Qt::transparent));
     QPainter x(&newx);
@@ -43,19 +43,19 @@ void EditorSpashScreen::drawContents(QPainter *painter)
 
     painter->setOpacity(1);
     painter->fillRect(rect(), QBrush(Qt::transparent));
-    painter->setOpacity(opacity);
-    painter->drawPixmap(rect(), buffer, buffer.rect());
+    painter->setOpacity(m_opacity);
+    painter->drawPixmap(rect(), m_buffer, m_buffer.rect());
     painter->setPen(Qt::black);
     painter->setBrush(Qt::white);
     painter->setRenderHint(QPainter::TextAntialiasing);
     painter->setRenderHint(QPainter::Antialiasing);
-    for(int i = 0; i < animations.size(); i++)
+    for(int i = 0; i < m_animations.size(); i++)
     {
-        QPixmap &frame = animations[i].second->wholeImage();
-        QRect frameRect = animations[i].second->frameRect();
+        QPixmap &frame = m_animations[i].second->wholeImage();
+        QRect frameRect = m_animations[i].second->frameRect();
         QRect x;
-        x.setX(animations[i].first.x() RatioWidth);
-        x.setY(animations[i].first.y() RatioHeight);
+        x.setX(m_animations[i].first.x() RatioWidth);
+        x.setY(m_animations[i].first.y() RatioHeight);
         x.setWidth(frameRect.width() RatioWidth);
         x.setHeight(frameRect.height() RatioHeight);
         painter->drawPixmap(x, frame, frameRect);
@@ -80,7 +80,7 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     painter->setBrush(QBrush(Qt::green));
     painter->setPen(Qt::transparent);
 
-    int progressLineLength = Maths::iRound(double(rect().width()) * ((double)_percents / 100.0));
+    int progressLineLength = Maths::iRound(double(rect().width()) * ((double)m_percents / 100.0));
     painter->drawRect(rtl ? (rect().width() - progressLineLength) : 0,
                       rect().height() - 4,
                       progressLineLength,
@@ -98,68 +98,69 @@ void EditorSpashScreen::drawContents(QPainter *painter)
     if(!rtl)
     {
         QPainterPath path;
-        path.addText(rect().x() + 20, rect().bottom() - 20, painter->font(), _label);
+        path.addText(rect().x() + 20, rect().bottom() - 20, painter->font(), m_label);
         painter->strokePath(path, QPen(QColor(Qt::black), 4));
     }
 
-    painter->drawText(rectToDraw, Qt::AlignTop | Qt::AlignLeft, _label);
+    painter->drawText(rectToDraw, Qt::AlignTop | Qt::AlignLeft, m_label);
 
     painter->restore();
 }
 
 void EditorSpashScreen::addAnimation(QPoint p, QPixmap &pixmap, int frames, int speed)
 {
-    if(pixmap.isNull()) return;
+    if(pixmap.isNull())
+        return;
 
     SplashPiece ani;
-    animations.push_back(ani);
-    SplashPiece &aniP = animations.last();
+    m_animations.push_back(ani);
+    SplashPiece &aniP = m_animations.last();
     aniP.first = p;
     aniP.second = QSharedPointer<SimpleAnimator>(new SimpleAnimator(pixmap, true, frames, speed));
-    animator.registerAnimation(aniP.second.data());
+    m_animator.registerAnimation(aniP.second.data());
 }
 
 void EditorSpashScreen::startAnimations()
 {
-    animator.start(32);
-    scaler.start();
+    m_animator.start(32);
+    m_scaler.start();
 }
 
 void EditorSpashScreen::opacityUP()
 {
-    if(opacity >= 1.0)
-        opacity = 1;
+    if(m_opacity >= 1.0)
+        m_opacity = 1;
     else
-        opacity += 0.09;
+        m_opacity += 0.09;
     repaint();
 }
 
 void EditorSpashScreen::progressValue(int val)
 {
-    _label_val = val;
+    m_labelVal = val;
     rebuildLabel();
 }
 
 void EditorSpashScreen::progressMax(int val)
 {
-    _label_max = val;
+    m_labelMax = val;
 }
 
 void EditorSpashScreen::progressTitle(QString val)
 {
-    _label_str = val;
+    m_labelString = val;
     rebuildLabel();
 }
 
 void EditorSpashScreen::progressPartsMax(int val)
 {
-    _parts_max = val;
+    m_partsMax = val;
     rebuildLabel();
 }
 
 void EditorSpashScreen::progressPartsVal(int val)
 {
-    _parts_val = val;
+    m_partsVal = val;
 }
 
 void EditorSpashScreen::keyPressEvent(QKeyEvent *)
@@ -175,41 +176,29 @@ void EditorSpashScreen::closeEvent(QCloseEvent *e)
 
 void EditorSpashScreen::construct()
 {
-    _label_val = 0.0;
-    _label_max = 100.0;
-    _percents = 0;
+    m_labelVal = 0.0;
+    m_labelMax = 100.0;
+    m_percents = 0;
 
-    _parts_max = 1.0;
-    _parts_val = 0.0;
+    m_partsMax = 1.0;
+    m_partsVal = 0.0;
 
-    buffer = this->pixmap();
+    m_buffer = this->pixmap();
 
-#ifdef Q_OS_ANDROID
-    QDesktopWidget *desktopWidget = qApp->desktop();
-    QRect screenGeometry = desktopWidget->screenGeometry();
-    int screenWidth = screenGeometry.width();
-    int screenHeight = screenGeometry.height();
-    qreal oldHeight = buffer.height();
-    qreal oldWidth = buffer.width();
-    buffer = buffer.scaled(screenWidth, screenHeight, Qt::KeepAspectRatio);
-    height_ratio = qreal(buffer.height()) / oldHeight;
-    width_ratio =  qreal(buffer.width()) / oldWidth;
-#endif
-
-    QPixmap t = QPixmap(buffer.width(), buffer.height());
+    QPixmap t = QPixmap(m_buffer.width(), m_buffer.height());
     t.fill(Qt::transparent);
     this->setPixmap(t);
 
-    opacity = 0.0;
-    scaler.setTimerType(Qt::PreciseTimer);
-    scaler.setInterval(64);
-    connect(&scaler, SIGNAL(timeout()), this, SLOT(opacityUP()));
+    m_opacity = 0.0;
+    m_scaler.setTimerType(Qt::PreciseTimer);
+    m_scaler.setInterval(64);
+    QObject::connect(&m_scaler, SIGNAL(timeout()), this, SLOT(opacityUP()));
 }
 
 void EditorSpashScreen::rebuildLabel()
 {
-    double onePice = ((_parts_val < _parts_max) ? (_label_val / _label_max) : 0.0);
-    _percents = (int)round(((_parts_val + onePice) / _parts_max) * 100.0);
-    _label = QString("%1% - %2").arg(_percents).arg(_label_str);
+    double onePice = ((m_partsVal < m_partsMax) ? (m_labelVal / m_labelMax) : 0.0);
+    m_percents = (int)round(((m_partsVal + onePice) / m_partsMax) * 100.0);
+    m_label = QString("%1% - %2").arg(m_percents).arg(m_labelString);
 }
 

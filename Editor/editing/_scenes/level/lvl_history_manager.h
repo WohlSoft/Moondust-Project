@@ -41,12 +41,12 @@ class LvlHistoryManager : public QObject
     Q_OBJECT
 
     friend class LvlScene;
-    LvlScene* m_scene;
+    LvlScene *m_scene = nullptr;
     bool    historyChanged;
     int     historyIndex;
     QList<QSharedPointer<IHistoryElement> > operationList;
 public:
-    explicit LvlHistoryManager(LvlScene* scene, QObject* parent = nullptr);
+    explicit LvlHistoryManager(LvlScene *scene, QObject *parent = nullptr);
 
     void addRemove(LevelData removedItems);
     void addPlace(LevelData placedItems);
@@ -58,12 +58,12 @@ public:
     void addChangeSettings(LevelData modifiedItems, HistoryElementCustomSetting *setting, QVariant extraData);
 
     void addResizeSection(int sectionID, long oldLeft, long oldTop, long oldRight, long oldBottom,
-                                 long newLeft, long newTop, long newRight, long newBottom);
+                          long newLeft, long newTop, long newRight, long newBottom);
 
     void addResizeBlock(LevelBlock bl, long oldLeft, long oldTop, long oldRight, long oldBottom,
-                               long newLeft, long newTop, long newRight, long newBottom);
+                        long newLeft, long newTop, long newRight, long newBottom);
     void addResizePhysEnv(LevelPhysEnv wt, long oldLeft, long oldTop, long oldRight, long oldBottom,
-                               long newLeft, long newTop, long newRight, long newBottom);
+                          long newLeft, long newTop, long newRight, long newBottom);
 
     void addAddWarp(int array_id, int listindex, int doorindex);
     void addRemoveWarp(LevelDoor removedDoor);
@@ -105,7 +105,7 @@ public slots:
 
 signals:
     void refreshHistoryButtons();
-    void showStatusMessage(QString text, int delay=2000);
+    void showStatusMessage(QString text, int delay = 2000);
 };
 
 

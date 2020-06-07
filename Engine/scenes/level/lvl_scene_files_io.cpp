@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Moondust, a free game engine for platform game making
  * Copyright (c) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
@@ -46,7 +46,8 @@ bool LevelScene::loadFile(const std::string &filePath)
 
 bool LevelScene::loadFileIP()
 {
-    if(!IntProc::isEnabled()) return false;
+    if(!IntProc::isEnabled())
+        return false;
 
     FileFormats::CreateLevelData(m_data);
     m_data.meta.ReadFileValid = false;
@@ -57,19 +58,24 @@ bool LevelScene::loadFileIP()
     //wait for accepting of level data
     bool timeOut = false;
     int attempts = 0;
-    pLogDebug("ICP: Waiting reply....");
 
-    while(!IntProc::editor->levelIsLoad())
+    pLogDebug("ICP: Waiting reply....");
+    IntProc::setState("Waiting for input data...");
+    while(!IntProc::hasLevelData())
     {
         loaderStep();
 
         //Abort loading process and exit from game if window was closed
         if(!m_isLevelContinues)
+        {
+            stopLoaderAnimation();
             return false;
+        }
 
-        if(time.elapsed() > 1500)
+        if(!IntProc::levelReceivingInProcess() && time.elapsed() > 1500)
         {
             pLogDebug("ICP: Waiting #%d....", attempts);
+            IntProc::sendMessage("CMD:CONNECT_TO_ENGINE"); // Re-ask again
             time.restart();
             attempts += 1;
         }
@@ -81,7 +87,7 @@ bool LevelScene::loadFileIP()
             break;
         }
 
-        PGE_Delay(30);
+        PGE_Delay(2);
     }
 
     m_data = IntProc::editor->m_acceptedLevel;

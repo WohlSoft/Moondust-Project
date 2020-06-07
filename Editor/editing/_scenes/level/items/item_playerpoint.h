@@ -30,8 +30,8 @@ class ItemPlayerPoint : public LvlBaseItem
     Q_OBJECT
     void construct();
 public:
-    explicit ItemPlayerPoint(QGraphicsItem *parent = 0);
-    explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = 0);
+    explicit ItemPlayerPoint(QGraphicsItem *parent = nullptr);
+    explicit ItemPlayerPoint(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     ~ItemPlayerPoint();
 
     QRectF boundingRect() const;
@@ -45,7 +45,7 @@ public:
     void returnBack();
     QPoint sourcePos();
 
-    void setPointData(PlayerPoint pnt, bool init=false);
+    void setPointData(PlayerPoint pnt, bool init = false);
     void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
     PlayerPoint m_data;

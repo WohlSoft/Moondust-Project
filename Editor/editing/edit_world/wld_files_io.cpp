@@ -38,7 +38,7 @@
 #include "world_edit.h"
 #include <ui_world_edit.h>
 
-bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
+bool WorldEdit::newFile(DataConfig &configs, EditingSettings options)
 {
     static int sequenceNumber = 1;
     m_isUntitled = true;
@@ -52,6 +52,7 @@ bool WorldEdit::newFile(dataconfigs &configs, EditingSettings options)
     {
     case EditorSetup::DefaultFileFormats::SMBX64:
         WldData.meta.RecentFormat = LevelData::SMBX64;
+        WldData.meta.RecentFormatVersion = 64;
         WldData.meta.smbx64strict = true;
         break;
     case EditorSetup::DefaultFileFormats::PGEX:
@@ -258,6 +259,8 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         return false;
     }
 
+    WldData.meta.configPackId = getMainWindow()->configs.configPackId;
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
 
     FileKeeper fileKeeper = FileKeeper(fileName);
@@ -355,7 +358,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 }
 
 
-bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, dataconfigs &configs, EditingSettings options)
+bool WorldEdit::loadFile(const QString &fileName, WorldData FileData, DataConfig &configs, EditingSettings options)
 {
     QFile file(fileName);
     WldData = FileData;
@@ -443,7 +446,7 @@ void WorldEdit::showCustomStuffWarnings()
     if(m_mw->configs.checkCustom())
     {
         QString errorsList;
-        for(QString &e : m_mw->configs.errorsList[dataconfigs::ERR_CUSTOM])
+        for(QString &e : m_mw->configs.errorsList[DataConfig::ERR_CUSTOM])
             errorsList += " - " + e + "\n";
         QMessageBox::warning(m_mw,
                              tr("Incorrect custom configs"),
@@ -452,7 +455,7 @@ void WorldEdit::showCustomStuffWarnings()
                                 "your config files in the current and in the custom folders:"
                                 "\n\n%1").arg(errorsList),
                              QMessageBox::Ok);
-        m_mw->configs.errorsList[dataconfigs::ERR_CUSTOM].clear();
+        m_mw->configs.errorsList[DataConfig::ERR_CUSTOM].clear();
     }
 }
 

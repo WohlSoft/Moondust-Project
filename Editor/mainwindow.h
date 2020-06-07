@@ -20,6 +20,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <memory>
+
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QPixmap>
@@ -40,7 +42,6 @@
 #include <windows.h>
 #include <QWinThumbnailToolBar>
 #endif
-class LunaTester;
 
 #include <PGE_File_Formats/lvl_filedata.h>
 #include <PGE_File_Formats/wld_filedata.h>
@@ -62,6 +63,7 @@ class LunaTester;
 #include <main_window/dock/_dock_vizman.h>
 
 #include <main_window/plugins/pge_editorpluginmanager.h>
+#include <testing/abstract_engine.h>
 
 QT_BEGIN_NAMESPACE
     class QMimeData;
@@ -91,7 +93,7 @@ public:
     bool initEverything(const QString &configDir, const QString &themePack);
 
     //! Global game configucrations
-    dataconfigs configs;
+    DataConfig configs;
 
 /* //////////////////////Contents/////////////////////////////
  * COMMON
@@ -165,11 +167,16 @@ public:
          */
         void showStatusMsg(QString msg, int time=2000); //Send status message
 
+        /**
+         * @brief Apply currently set theme or load a default one
+         */
+        void applyCurrentTheme();
+
         /*!
          * \brief Apply icons/cusors/images theme from selected path (where valid theme.ini is located)
          * \param themeDir Path to the valid PGE Editor theme package
          */
-        void applyTheme(QString themeDir="");
+        void applyTheme(QString themeDir = QString());
 
         //! Is everything has been successfuly initialized
         bool m_isAppInited;
@@ -187,6 +194,8 @@ public:
         /// \brief saveSettings save settings into configuration file
         ///
         void saveSettings();
+
+        void applySetup(bool startup = false);
 
         ///
         /// \brief getCurrentSceneCoordinates Returns the scene coordinates either from level window or world window
@@ -223,6 +232,10 @@ public:
         /// \brief setUiDefults Init UI settings of application on start
         ///
         void setUiDefults();
+        /**
+         * @brief Initialize config pack side UI defaults
+         */
+        void setUiDefultsConfigPack();
 
         //! Manager of level specific toolboxes
         DockVizibilityManager docks_level;
@@ -288,6 +301,23 @@ public:
          * \brief Update "Window" Menu
          */
         void updateWindowMenu();
+    public:
+        /* Menu binds */
+
+        QMenu *getFileMenu();
+        QMenu *getEditMenu();
+        QMenu *getViewMenu();
+        QMenu *getLevelMenu();
+        QMenu *getLevelCurrSectionMenu();
+        QMenu *getLevelModSectionMenu();
+        QMenu *getWorldMenu();
+        QMenu *getTestMenu();
+        QMenu *getScriptMenu();
+        QMenu *getConfigMenu();
+        QMenu *getToolsMenu();
+        QMenu *getWindowMenu();
+        QMenu *getPluginsMenu();
+        QMenu *getHelpMenu();
 
     private slots:
         /*!
@@ -917,6 +947,7 @@ public:
     public slots:
         void on_actionGridEn_triggered(bool checked);
         void on_actionShowGrid_triggered(bool checked);
+        void on_actionShowCameraGrid_triggered(bool checked);
         void customGrid(bool checked=false);
 
     private slots:
@@ -1065,6 +1096,10 @@ public:
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Testing////////////////////////////////////////
 // ////////////////////////////////////////////////////////////////////////////////
+    private:
+        void initTesting();
+        void closeTesting();
+
     private slots:
         /*!
          * \brief Unlocks music button and starts music if that was started pre-testing state
@@ -1076,17 +1111,21 @@ public:
         void stopMusicForTesting();
 
         /*!
-         * \brief Starts level testing in PGE Engine with interprocess communication (File saving is not needed)
+         * \brief Starts level testing with interprocess communication (File saving is not needed)
          */
         void on_action_doTest_triggered();
         /*!
-         * \brief Starts world map testing in PGE Engine with interprocess communication (File saving is not needed)
+         * \brief Starts world map testing with interprocess communication (File saving is not needed)
          */
         void on_action_doTestWld_triggered();
         /*!
-         * \brief Starts level testing in PGE Engine without interprocess communication (File saving is needed)
+         * \brief Starts level testing without interprocess communication (File saving is needed)
          */
         void on_action_doSafeTest_triggered();
+        /*!
+         * \brief Starts world map testing without interprocess communication (File saving is needed)
+         */
+        void on_action_doSafeTestWld_triggered();
 
         /*!
          * \brief Starts PGE Engine with current configuration package selected
@@ -1098,12 +1137,22 @@ public:
         void on_action_testSettings_triggered();
 
     private:
-        //! Engine application handler
-        QProcess engine_proc;
-        //! Mutex which helps to avoid multiple launches of engine
-        QMutex   engine_mutex;
-        //! LunaTester sub-system
-        LunaTester * m_luna;
+        friend class PgeEngine;
+        friend class LunaTesterEngine;
+        friend class TheXTechEngine;
+        friend class SanBaEiRuntimeEngine;
+        //! Default testing engine
+        AbstractRuntimeEngine *m_testEngine;
+        //! All available engines
+        QVector<std::unique_ptr<AbstractRuntimeEngine> *> m_testAllEngines;
+        //! PGE Engine
+        std::unique_ptr<AbstractRuntimeEngine> m_testPGE;
+        //! LunaTester
+        std::unique_ptr<AbstractRuntimeEngine> m_testLunaTester;
+        //! TheXTech
+        std::unique_ptr<AbstractRuntimeEngine> m_testTheXTech;
+        //! SMBX-38A
+        std::unique_ptr<AbstractRuntimeEngine> m_testSMBX38A;
 
 // ////////////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////Plugins////////////////////////////////////////

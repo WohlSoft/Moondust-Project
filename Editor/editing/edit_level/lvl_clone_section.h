@@ -24,8 +24,9 @@
 
 #include "level_edit.h"
 
-namespace Ui {
-class LvlCloneSection;
+namespace Ui
+{
+    class LvlCloneSection;
 }
 
 class LvlCloneSection : public QDialog
@@ -33,14 +34,14 @@ class LvlCloneSection : public QDialog
     Q_OBJECT
 
 public:
-    explicit LvlCloneSection(QWidget *parent = 0);
+    explicit LvlCloneSection(QWidget *parent = nullptr);
     ~LvlCloneSection();
-    void addLevelList(QList<LevelEdit* > _levels, LevelEdit *active = NULL);
+    void addLevelList(QList<LevelEdit * > _levels, LevelEdit *active = nullptr);
 
     int         clone_margin = 32;
-    LevelEdit*  clone_source = nullptr;
+    LevelEdit  *clone_source = nullptr;
     int         clone_source_id = 0;
-    LevelEdit*  clone_target = nullptr;
+    LevelEdit  *clone_target = nullptr;
     int         clone_target_id = 0;
 
     bool        override_destinition = false;
@@ -51,8 +52,8 @@ private slots:
     void on_buttonBox_accepted();
 
 private:
-    QList<LevelEdit* > levels;
-    Ui::LvlCloneSection *ui;
+    QList<LevelEdit * > levels;
+    Ui::LvlCloneSection *ui = nullptr;
 };
 
 #endif // LVL_CLONE_SECTION_H

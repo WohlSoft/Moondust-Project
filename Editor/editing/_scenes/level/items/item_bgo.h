@@ -30,11 +30,11 @@ class ItemBGO : public LvlBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemBGO(QGraphicsItem *parent=0);
-    ItemBGO(LvlScene *parentScene, QGraphicsItem *parent=0);
+    ItemBGO(QGraphicsItem *parent = nullptr);
+    ItemBGO(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     ~ItemBGO();
 
-    void setBGOData(LevelBGO inD, obj_bgo *mergedSet=0, long *animator_id=0);
+    void setBGOData(LevelBGO inD, obj_bgo *mergedSet = nullptr, long *animator_id = nullptr);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -43,7 +43,7 @@ public:
     void setAnimator(long aniID);
 
     void setLayer(QString layer);
-    void setZMode(int mode, qreal offset, bool init=false);
+    void setZMode(int mode, qreal offset, bool init = false);
 
     void transformTo(long target_id);
 
@@ -62,7 +62,7 @@ public:
     qreal       m_zOffset = 0.0;
 
     bool itemTypeIsLocked();
-    void contextMenu(QGraphicsSceneMouseEvent *event );
+    void contextMenu(QGraphicsSceneMouseEvent *event);
 
 };
 

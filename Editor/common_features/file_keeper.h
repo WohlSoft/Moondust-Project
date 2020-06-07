@@ -28,8 +28,10 @@ class FileKeeper
 {
     //! Original file path
     QString m_origPath;
-    //! Backup file path
+    //! New temp file path
     QString m_tempPath;
+    //! Backup file path, creates after swap of original file with a temp file
+    QString m_backupPath;
 public:
     /**
      * \brief Keeps file about new temp file

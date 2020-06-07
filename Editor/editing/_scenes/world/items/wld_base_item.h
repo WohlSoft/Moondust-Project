@@ -29,7 +29,7 @@
 
 class WldScene;
 class WldBaseItem: public QObject,
-                   public QGraphicsItem
+    public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -39,8 +39,8 @@ class WldBaseItem: public QObject,
      */
     void construct();
 public:
-    WldBaseItem(QGraphicsItem *parent=0);
-    WldBaseItem(WldScene *parentScene, QGraphicsItem *parent=0);
+    WldBaseItem(QGraphicsItem *parent = nullptr);
+    WldBaseItem(WldScene *parentScene, QGraphicsItem *parent = nullptr);
 
     /*!
      * \brief Changes pointer to parent scene of this item
@@ -130,44 +130,44 @@ public:
 
 protected:
     //! Is item locked
-    bool m_locked;
+    bool m_locked = false;
 
     //! Size of grid cell
-    int m_gridSize;
+    int m_gridSize = 0;
 
     //! offset X at grid edge
-    int m_gridOffsetX;
+    int m_gridOffsetX = 0;
     //! offset Y at grid edge
-    int m_gridOffsetY;
+    int m_gridOffsetY = 0;
 
     //! Offset X of image render
-    int m_imgOffsetX;
+    int m_imgOffsetX = 0;
     //! Offset Y of image render
-    int m_imgOffsetY;
+    int m_imgOffsetY = 0;
 
     //! Index of animator
-    long    m_animatorID;
+    long    m_animatorID = 0;
     //! Size of picture to render
     QRectF  m_imageSize;
 
     //! Left mouse key is busy
-    bool m_mouseLeftPressed;
+    bool m_mouseLeftPressed = false;
     //! Middle mouse key is busy
-    bool m_mouseMidPressed;
+    bool m_mouseMidPressed = false;
     //! Right mouse key is busy
-    bool m_mouseRightPressed;
+    bool m_mouseRightPressed = false;
     /*!
      * \brief Mouse press event
      * \param mouseEvent Mouse evernt preferences
      */
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     /*!
      * \brief Mouse release event
      * \param mouseEvent Mouse evernt preferences
      */
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
     //! Pointer to parent scene
-    WldScene * m_scene;
+    WldScene *m_scene = nullptr;
 };
 
 #endif // WLD_BASE_ITEM_H

@@ -34,17 +34,26 @@ SmartImporter::SmartImporter(QWidget *parentWid, const QString &importPath, QWid
     else
         this->importPath = importPath + QString("/");
 
-    targetLevelWindow = NULL;
-    targetWorldWindow = NULL;
-    if(QString(targetImport->metaObject()->className())==LEVEL_EDIT_CLASS)
-        targetLevelWindow = qobject_cast<LevelEdit*>(targetImport);
-    else if(QString(targetImport->metaObject()->className())==WORLD_EDIT_CLASS)
-        targetWorldWindow = qobject_cast<WorldEdit*>(targetImport);
+    targetLevelWindow = nullptr;
+    targetWorldWindow = nullptr;
+    if(QString(targetImport->metaObject()->className()) == LEVEL_EDIT_CLASS)
+        targetLevelWindow = qobject_cast<LevelEdit *>(targetImport);
+    else if(QString(targetImport->metaObject()->className()) == WORLD_EDIT_CLASS)
+        targetWorldWindow = qobject_cast<WorldEdit *>(targetImport);
 }
 
 bool SmartImporter::isValid()
 {
     return targetLevelWindow || targetWorldWindow;
+}
+
+static bool testCanImport(const QString &fName, const QString &prefix)
+{
+    return fName.startsWith(prefix, Qt::CaseInsensitive) &&
+           (fName.endsWith(".gif", Qt::CaseInsensitive) ||
+            fName.endsWith(".png", Qt::CaseInsensitive) ||
+            fName.endsWith(".ini", Qt::CaseInsensitive) ||
+            fName.endsWith(".txt", Qt::CaseInsensitive));
 }
 
 bool SmartImporter::attemptFastImport()
@@ -63,35 +72,33 @@ bool SmartImporter::attemptFastImport()
 
         QStringList allFiles = sourceDir.entryList(QDir::Files | QDir::Readable, QDir::Name);
         QStringList filteredFiles;
-        foreach (QString tarFile, allFiles)
+        for(const QString &tarFile : allFiles)
         {
             if(tarFile.endsWith(".tileset.ini", Qt::CaseInsensitive))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("block-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "block-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("background-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "background-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("background2-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "background2-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("npc-", Qt::CaseInsensitive) &&
-                    (tarFile.endsWith(".gif", Qt::CaseInsensitive)||
-                    tarFile.endsWith(".txt", Qt::CaseInsensitive)))
+            if(testCanImport(tarFile, "npc-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("effect-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "effect-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("yoshib-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "yoshib-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("yoshit-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "yoshit-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("mario-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "mario-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("luigi-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "luigi-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("peach-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "peach-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("toad-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "toat-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("link-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "link-"))
                 filteredFiles << importPath + tarFile;
         }
 
@@ -101,7 +108,8 @@ bool SmartImporter::attemptFastImport()
     }
     else if(targetWorldWindow)
     {
-        if(targetWorldWindow->isUntitled()){
+        if(targetWorldWindow->isUntitled())
+        {
             QMessageBox::warning(parentWid, tr("File not saved"), tr("You need to save the world, so you can import custom graphics!"), QMessageBox::Ok);
             return false;
         }
@@ -113,18 +121,18 @@ bool SmartImporter::attemptFastImport()
 
         QStringList allFiles = sourceDir.entryList(QDir::Files | QDir::Readable, QDir::Name);
         QStringList filteredFiles;
-        foreach (QString tarFile, allFiles)
+        for(const QString &tarFile : allFiles)
         {
             //Also import global used custom level data
-            if(tarFile.startsWith("player-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "player-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("tile-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "tile-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("path-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "path-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("level-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "level-"))
                 filteredFiles << importPath + tarFile;
-            if(tarFile.startsWith("scene-", Qt::CaseInsensitive) && tarFile.endsWith(".gif", Qt::CaseInsensitive))
+            if(testCanImport(tarFile, "scene-"))
                 filteredFiles << importPath + tarFile;
         }
 
@@ -134,6 +142,7 @@ bool SmartImporter::attemptFastImport()
     }
     return false;
 }
+
 QString SmartImporter::getImportPath() const
 {
     return importPath;

@@ -25,7 +25,7 @@
 class LVL_ModeLine : public EditMode
 {
 public:
-    LVL_ModeLine(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    LVL_ModeLine(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModeLine();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

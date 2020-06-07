@@ -21,26 +21,26 @@
 
 void WldBaseItem::construct()
 {
-    m_gridSize=32;
-    m_gridOffsetX=0;
-    m_gridOffsetY=0;
+    m_gridSize = 32;
+    m_gridOffsetX = 0;
+    m_gridOffsetY = 0;
 
-    m_locked=false;
+    m_locked = false;
 
-    m_imgOffsetX=0;
-    m_imgOffsetY=0;
+    m_imgOffsetX = 0;
+    m_imgOffsetY = 0;
     m_animatorID = -1;
-    m_imageSize = QRectF(0,0,10,10);
+    m_imageSize = QRectF(0, 0, 10, 10);
 
-    m_mouseLeftPressed=false;
-    m_mouseMidPressed=false;
-    m_mouseRightPressed=false;
+    m_mouseLeftPressed = false;
+    m_mouseMidPressed = false;
+    m_mouseRightPressed = false;
 
     setData(ITEM_IS_ITEM, 1);
 }
 
 WldBaseItem::WldBaseItem(QGraphicsItem *parent) :
-    QGraphicsItem(parent), m_scene(NULL)
+    QGraphicsItem(parent), m_scene(nullptr)
 {
     construct();
 }
@@ -70,7 +70,7 @@ void WldBaseItem::removeFromArray()
 
 void WldBaseItem::setLayer(QString layer)
 {
-    Q_UNUSED(layer);
+    Q_UNUSED(layer)
 }
 
 int WldBaseItem::getGridSize()
@@ -90,7 +90,7 @@ QPoint WldBaseItem::gridOffset()
 
 QPoint WldBaseItem::sourcePos()
 {
-    return QPoint(0,0);
+    return QPoint(0, 0);
 }
 
 bool WldBaseItem::isLocked()
@@ -107,7 +107,7 @@ void WldBaseItem::setLocked(bool lock)
 
 void WldBaseItem::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 bool WldBaseItem::itemTypeIsLocked()
@@ -115,11 +115,12 @@ bool WldBaseItem::itemTypeIsLocked()
     return false;
 }
 
-void WldBaseItem::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
+void WldBaseItem::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if((this->flags()&QGraphicsItem::ItemIsSelectable)==0)
+    if((this->flags()&QGraphicsItem::ItemIsSelectable) == 0)
     {
-        QGraphicsItem::mousePressEvent(mouseEvent); return;
+        QGraphicsItem::mousePressEvent(mouseEvent);
+        return;
     }
 
     if(m_scene->m_busyMode)
@@ -131,57 +132,56 @@ void WldBaseItem::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent )
     }
 
     //Discard multi-mouse keys
-    if((m_mouseLeftPressed)||(m_mouseMidPressed)||(m_mouseRightPressed))
+    if((m_mouseLeftPressed) || (m_mouseMidPressed) || (m_mouseRightPressed))
     {
         mouseEvent->accept();
         return;
     }
 
-    if( mouseEvent->buttons() & Qt::LeftButton )
-        m_mouseLeftPressed=true;
-    if( mouseEvent->buttons() & Qt::MiddleButton )
-        m_mouseMidPressed=true;
-    if( mouseEvent->buttons() & Qt::RightButton )
-        m_mouseRightPressed=true;
+    if(mouseEvent->buttons() & Qt::LeftButton)
+        m_mouseLeftPressed = true;
+    if(mouseEvent->buttons() & Qt::MiddleButton)
+        m_mouseMidPressed = true;
+    if(mouseEvent->buttons() & Qt::RightButton)
+        m_mouseRightPressed = true;
 
     QGraphicsItem::mousePressEvent(mouseEvent);
 }
 
 void WldBaseItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    int multimouse=0;
-    bool callContext=false;
-    if(((m_mouseMidPressed)||(m_mouseRightPressed))&&( m_mouseLeftPressed^(mouseEvent->buttons() & Qt::LeftButton) ))
+    int multimouse = 0;
+    bool callContext = false;
+    if(((m_mouseMidPressed) || (m_mouseRightPressed)) && (m_mouseLeftPressed ^ (mouseEvent->buttons() & Qt::LeftButton)))
         multimouse++;
-    if( (((m_mouseLeftPressed)||(m_mouseRightPressed)))&&( m_mouseMidPressed^(mouseEvent->buttons() & Qt::MiddleButton) ))
+    if((((m_mouseLeftPressed) || (m_mouseRightPressed))) && (m_mouseMidPressed ^ (mouseEvent->buttons() & Qt::MiddleButton)))
         multimouse++;
-    if((((m_mouseLeftPressed)||(m_mouseMidPressed)))&&( m_mouseRightPressed^(mouseEvent->buttons() & Qt::RightButton) ))
+    if((((m_mouseLeftPressed) || (m_mouseMidPressed))) && (m_mouseRightPressed ^ (mouseEvent->buttons() & Qt::RightButton)))
         multimouse++;
-    if(multimouse>0)
+    if(multimouse > 0)
     {
-        mouseEvent->accept(); return;
+        mouseEvent->accept();
+        return;
     }
 
-    if( mouseEvent->button()==Qt::LeftButton )
-        m_mouseLeftPressed=false;
+    if(mouseEvent->button() == Qt::LeftButton)
+        m_mouseLeftPressed = false;
 
-    if( mouseEvent->button()==Qt::MiddleButton )
-        m_mouseMidPressed=false;
+    if(mouseEvent->button() == Qt::MiddleButton)
+        m_mouseMidPressed = false;
 
-    if( mouseEvent->button()==Qt::RightButton )
+    if(mouseEvent->button() == Qt::RightButton)
     {
-        callContext=true;
-        m_mouseRightPressed=false;
+        callContext = true;
+        m_mouseRightPressed = false;
     }
 
     QGraphicsItem::mouseReleaseEvent(mouseEvent);
 
     /////////////////////////CONTEXT MENU:///////////////////////////////
-    if((callContext)&&(!m_scene->m_contextMenuIsOpened))
+    if((callContext) && (!m_scene->m_contextMenuIsOpened))
     {
-        if((!itemTypeIsLocked())&&(!m_scene->m_busyMode)&&(!m_locked))
-        {
+        if((!itemTypeIsLocked()) && (!m_scene->m_busyMode) && (!m_locked))
             contextMenu(mouseEvent);
-        }
     }
 }

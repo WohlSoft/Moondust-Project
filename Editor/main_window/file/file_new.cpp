@@ -82,7 +82,7 @@ void MainWindow::on_actionNewLevel_triggered()
     {
         child->show();
         child->updateGeometry();
-        child->ResetPosition();
+        child->resetPosition();
         dock_LvlItemBox->initItemLists();
         setCurrentLevelSection(0);
         on_actionSelect_triggered();

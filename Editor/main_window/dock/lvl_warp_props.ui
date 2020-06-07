@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>285</width>
-    <height>753</height>
+    <width>302</width>
+    <height>736</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -53,21 +53,21 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>285</width>
-      <height>734</height>
+      <width>288</width>
+      <height>845</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_6">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinimumSize</enum>
+     </property>
      <property name="leftMargin">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="topMargin">
       <number>0</number>
      </property>
      <property name="rightMargin">
-      <number>2</number>
-     </property>
-     <property name="bottomMargin">
       <number>2</number>
      </property>
      <property name="horizontalSpacing">
@@ -90,7 +90,7 @@
        <property name="lineWidth">
         <number>0</number>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,25,25">
+       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -117,7 +117,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="entryAdd">
+         <widget class="QToolButton" name="entryAdd">
           <property name="minimumSize">
            <size>
             <width>25</width>
@@ -140,7 +140,7 @@ Every warp point pair requires a warp entry.</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="entryRemove">
+         <widget class="QToolButton" name="entryRemove">
           <property name="minimumSize">
            <size>
             <width>25</width>
@@ -307,12 +307,6 @@ Every warp point pair requires a warp entry.</string>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>130</height>
-        </size>
-       </property>
        <property name="title">
         <string>Level door</string>
        </property>
@@ -389,23 +383,8 @@ If this flag is enabled, you can only place a warp exit.</string>
         <string>Warp to World map</string>
        </property>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <property name="spacing">
-         <number>1</number>
-        </property>
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
-        </property>
-        <property name="leftMargin">
-         <number>2</number>
-        </property>
-        <property name="topMargin">
-         <number>2</number>
-        </property>
-        <property name="rightMargin">
-         <number>2</number>
-        </property>
-        <property name="bottomMargin">
-         <number>2</number>
         </property>
         <item>
          <widget class="QLabel" name="label_5">
@@ -438,7 +417,7 @@ when you exit from a level through this warp.</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="WarpGetXYFromWorldMap">
+         <widget class="QToolButton" name="WarpGetXYFromWorldMap">
           <property name="toolTip">
            <string>Browse the world map to set an exit point</string>
           </property>
@@ -452,33 +431,12 @@ when you exit from a level through this warp.</string>
      </item>
      <item row="1" column="0" colspan="2">
       <widget class="QGroupBox" name="warpBoxMain">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="title">
         <string>Main</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_5" columnstretch="0,80,0">
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
-        </property>
-        <property name="leftMargin">
-         <number>2</number>
-        </property>
-        <property name="topMargin">
-         <number>2</number>
-        </property>
-        <property name="rightMargin">
-         <number>2</number>
-        </property>
-        <property name="bottomMargin">
-         <number>2</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>0</number>
         </property>
         <item row="3" column="0" rowspan="2" colspan="2">
          <spacer name="verticalSpacer_6">
@@ -557,6 +515,9 @@ when you exit from a level through this warp.</string>
            <property name="spacing">
             <number>0</number>
            </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -581,18 +542,6 @@ when you exit from a level through this warp.</string>
            </item>
            <item>
             <widget class="QComboBox" name="WarpLayer">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>25</height>
-              </size>
-             </property>
              <property name="maxVisibleItems">
               <number>50</number>
              </property>
@@ -613,6 +562,9 @@ when you exit from a level through this warp.</string>
            <enum>QFrame::Raised</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,60,0">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -633,18 +585,6 @@ when you exit from a level through this warp.</string>
            </property>
            <item row="2" column="0" colspan="3">
             <widget class="QComboBox" name="WarpType">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>25</height>
-              </size>
-             </property>
              <property name="toolTip">
               <string>Defines the type of warp:
 0 - Instant, player will be teleported movement speed will be reset to 0.
@@ -707,12 +647,6 @@ does not have the required number of stars</string>
            </item>
            <item row="5" column="0">
             <widget class="QSpinBox" name="WarpNeedAStars">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>25</height>
-              </size>
-             </property>
              <property name="toolTip">
               <string>Required number of stars
 to enter this warp</string>
@@ -942,33 +876,12 @@ The special state is defined by the active configuration pack.</string>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>130</height>
-        </size>
-       </property>
        <property name="title">
         <string>Warp to other level</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_3" columnstretch="80,80,0">
+       <layout class="QGridLayout" name="gridLayout_3" columnstretch="8000,8000,0">
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <property name="spacing">
-         <number>1</number>
         </property>
         <item row="1" column="0" colspan="2">
          <widget class="QLineEdit" name="WarpLevelFile">
@@ -1008,31 +921,6 @@ If set to zero, the player will start at the pre-defined level start point.</str
           </property>
          </spacer>
         </item>
-        <item row="1" column="2">
-         <widget class="QPushButton" name="WarpBrowseLevels">
-          <property name="minimumSize">
-           <size>
-            <width>27</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>16</width>
-            <height>16</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Browse for another level file</string>
-          </property>
-          <property name="text">
-           <string notr="true">...</string>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
         <item row="3" column="0" colspan="3">
          <widget class="QCheckBox" name="WarpHideLevelEnterScreen">
           <property name="toolTip">
@@ -1065,38 +953,27 @@ show the current playable character(s) and number of lives.</string>
           </property>
          </widget>
         </item>
+        <item row="1" column="2">
+         <widget class="QToolButton" name="WarpBrowseLevels">
+          <property name="toolTip">
+           <string>Browse for another level file</string>
+          </property>
+          <property name="text">
+           <string notr="true">...</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
      <item row="3" column="0" colspan="2">
       <widget class="QGroupBox" name="warpBoxCannon">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="title">
         <string>Cannon shoot exit</string>
        </property>
        <layout class="QGridLayout" name="gridLayout_7" rowstretch="0,0" columnstretch="0,90">
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
-        </property>
-        <property name="leftMargin">
-         <number>2</number>
-        </property>
-        <property name="topMargin">
-         <number>2</number>
-        </property>
-        <property name="rightMargin">
-         <number>2</number>
-        </property>
-        <property name="bottomMargin">
-         <number>2</number>
-        </property>
-        <property name="spacing">
-         <number>0</number>
         </property>
         <item row="1" column="0">
          <widget class="QLabel" name="label_10">

@@ -44,7 +44,7 @@
 
 #include "../version.h"
 
-DevConsole *DevConsole::currentDevConsole = 0;
+DevConsole *DevConsole::currentDevConsole = nullptr;
 
 void DevConsole::init()
 {
@@ -123,10 +123,10 @@ DevConsole::DevConsole(QWidget *parent) :
     registerCommands();
     LogWriter::installConsole(this);
 
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
     QFont font = ui->plainTextEdit->font();
@@ -147,7 +147,15 @@ DevConsole::DevConsole(QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-    #endif
+
+#   if QT_VERSION_CHECK(5, 5, 0)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_WINDOWS10)
+    {
+        // Erase style sheet from here, it won't work correctly...
+        ui->plainTextEdit->setStyleSheet(QString());
+    }
+#   endif
+#endif
     if(!hasFocus()) setWindowOpacity(0.9);
 }
 
@@ -410,7 +418,7 @@ void DevConsole::doThrowUnhandledException(const QStringList &/*args*/)
     throw std::runtime_error("Test Exception of Toast!");
 }
 
-void DevConsole::doSegmentationViolation(const QStringList&)
+void DevConsole::doSegmentationViolation(const QStringList &)
 {
 #ifndef _MSC_VER //Unfortunately MSVC swearing with hard erros on detecting this
     int *my_nullptr = nullptr;
@@ -439,15 +447,15 @@ void DevConsole::doMemLeakResearch(const QStringList &args)
     for(unsigned int i = 0; i < cycles; i++)
     {
         auto *ddd = new ItemSelectDialog(&MainWinConnect::pMainWin->configs,
-                                                     ItemSelectDialog::TAB_BLOCK|
-                                                     ItemSelectDialog::TAB_BGO|
-                                                     ItemSelectDialog::TAB_NPC|
-                                                     ItemSelectDialog::TAB_TILE|
-                                                     ItemSelectDialog::TAB_SCENERY|
-                                                     ItemSelectDialog::TAB_PATH|
-                                                     ItemSelectDialog::TAB_LEVEL|
-                                                     ItemSelectDialog::TAB_MUSIC,
-                                                     0, 0, 0, 0, 0, 0, 0, 0, 0, MainWinConnect::pMainWin, 0);
+                                         ItemSelectDialog::TAB_BLOCK |
+                                         ItemSelectDialog::TAB_BGO |
+                                         ItemSelectDialog::TAB_NPC |
+                                         ItemSelectDialog::TAB_TILE |
+                                         ItemSelectDialog::TAB_SCENERY |
+                                         ItemSelectDialog::TAB_PATH |
+                                         ItemSelectDialog::TAB_LEVEL |
+                                         ItemSelectDialog::TAB_MUSIC,
+                                         0, 0, 0, 0, 0, 0, 0, 0, 0, MainWinConnect::pMainWin, 0);
         //ddd->show();
         qApp->processEvents();
         //ddd->hide();
@@ -549,7 +557,7 @@ void DevConsole::doSendCheat(const QStringList &args)
     src.replace('\n', ' ');
     src.replace("\\n", "\n");
 
-    if(IntEngine::sendMessageBox(src))
+    if(g_intEngine.sendMessageBox(src))
         log(QString("-> command sent"), ui->tabWidget->tabText(0));
     else
         log(QString("-> Fail to send command: engine is not running"), ui->tabWidget->tabText(0));

@@ -31,29 +31,42 @@ void Items::getItemGFX(const obj_npc *inObj, QPixmap &outImg, bool whole, QSize 
     if(inObj->isValid)
     {
         const QPixmap *srcImage = inObj->cur_image ? inObj->cur_image : &inObj->image;
-        if(!whole)
+        const QPixmap *srcIcon = inObj->cur_icon ? inObj->cur_icon : &inObj->icon;
+
+        if(whole) // Return the whole sprite
+            outImg = *srcImage;
+        else if(srcIcon && !srcIcon->isNull()) // return icon if not null
+            outImg = *srcIcon;
+        else
         {
             outImg = srcImage->copy(0,
                                     inObj->setup.gfx_h * inObj->setup.display_frame,
                                     inObj->setup.gfx_w,
                                     inObj->setup.gfx_h);
         }
-        else
-            outImg = *srcImage;
+
         if(!targetSize.isNull())
             GraphicsHelps::squareImageR(outImg, targetSize);
     }
     else
-        outImg = Themes::Image(Themes::dummy_terrain);
+    {
+        outImg = Themes::Image(Themes::dummy_npc);
+    }
 }
 
 template<class OBJ_ITEM>
-inline void TPL_getItemGFX(const OBJ_ITEM *inObj, QPixmap &outImg, bool &whole, QSize &targetSize, Themes::Images imgType)
+inline void TPL_getItemGFX(const OBJ_ITEM *inObj, QPixmap &outImg, bool whole, QSize &targetSize, Themes::Images imgType)
 {
     if(inObj->isValid)
     {
         const QPixmap *srcImage = inObj->cur_image ? inObj->cur_image : &inObj->image;
-        if((!whole) && (inObj->setup.animated))
+        const QPixmap *srcIcon = inObj->cur_icon ? inObj->cur_icon : &inObj->icon;
+
+        if(whole) // Return the whole sprite
+            outImg = *srcImage;
+        else if(srcIcon && !srcIcon->isNull()) // return icon if not null
+            outImg = *srcIcon;
+        else if(inObj->setup.animated) // return one of animation frames
         {
             double h = srcImage->height();
             double frames = inObj->setup.frames;
@@ -63,13 +76,16 @@ inline void TPL_getItemGFX(const OBJ_ITEM *inObj, QPixmap &outImg, bool &whole, 
                                      srcImage->width(),
                                      frameHeight);
         }
-        else
+        else // return the whole srpite if no way to return other options
             outImg = *srcImage;
+
         if(!targetSize.isNull())
-            GraphicsHelps::squareImageR(outImg, targetSize);
+            GraphicsHelps::squareImageR(outImg, targetSize); // Adjust frame to given size
     }
     else
+    {
         outImg = Themes::Image(imgType);
+    }
 }
 
 void Items::getItemGFX(const obj_block *inObj, QPixmap &outImg, bool whole, QSize targetSize)
@@ -109,7 +125,7 @@ void Items::getItemGFX(int itemType, unsigned long ItemID, QPixmap &outImg, QGra
 {
     LvlScene *scene_lvl = dynamic_cast<LvlScene *>(scene);
     WldScene *scene_wld = dynamic_cast<WldScene *>(scene);
-    dataconfigs &config = MainWinConnect::pMainWin->configs;
+    DataConfig &config = MainWinConnect::pMainWin->configs;
     switch(itemType)
     {
     case ItemTypes::LVL_Block:
@@ -164,7 +180,7 @@ QString Items::getTilesetToolTip(int itemType, unsigned long ItemID, QGraphicsSc
 {
     LvlScene *scene_lvl = dynamic_cast<LvlScene *>(scene);
     WldScene *scene_wld = dynamic_cast<WldScene *>(scene);
-    dataconfigs &config = MainWinConnect::pMainWin->configs;
+    DataConfig &config = MainWinConnect::pMainWin->configs;
     switch(itemType)
     {
     case ItemTypes::LVL_Block:

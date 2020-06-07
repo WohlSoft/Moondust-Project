@@ -18,6 +18,7 @@
 
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QClipboard>
 #include <SDL2/SDL_version.h>
 #include <SDL2/SDL_mixer_ext.h>
 #include <signal.h>
@@ -65,8 +66,8 @@ static const char *g_messageToUser =
     "SDL Mixer X " STR(SDL_MIXER_MAJOR_VERSION) "." STR(SDL_MIXER_MINOR_VERSION) "." STR(SDL_MIXER_PATCHLEVEL) "\n"
     "================================================\n"
     " Please send this log file to the developers by one of ways:\n"
-    " - Via contact form:          http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin\n"
-    " - Official forums:           http://wohlsoft.ru/forum/\n"
+    " - Via contact form:          https://wohlsoft.ru/contacts/\n"
+    " - Official forums:           https://wohlsoft.ru/forum/\n"
     " - Make issue at GitHub repo: https://github.com/WohlSoft/PGE-Project\n\n"
     "================================================\n";
 
@@ -184,12 +185,12 @@ QString CrashHandler::getStacktrace()
     return bkTrace;
 }
 
-CrashHandler::CrashHandler(QString &crashText, QWidget *parent) :
+CrashHandler::CrashHandler(const QString &crashText, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CrashHandler)
 {
     ui->setupUi(this);
-    ui->crashData->setText(crashText);
+    ui->crashData->setPlainText(crashText);
 }
 
 
@@ -302,7 +303,7 @@ void CrashHandler::attemptCrashsave()
      */
     if(crashSave.exists("__crashsave"))
     {
-        LogCriticalNC("We are detected that crash has been occouped on attempt to load or initialize backup files. Backup directory has been renamed into \"__crashsave_danger\".");
+        LogCriticalNC("We had to detect that crash has occured on an attempt to load or initialize level backup files. Backup directory has been renamed into \"__crashsave_danger\".");
         LogCriticalNC("Please attach all files in that directory and, if possible, additional contents (custom images, sounds, musics, configs and scripts) while reporting this crash.");
         QDir    dupeDir(AppPathManager::userAppDir() + "/__crashsave_danger");
 
@@ -463,6 +464,18 @@ void CrashHandler::initCrashHandlers()
     signal(SIGINT,  &crashBySIGNAL);
     signal(SIGABRT, &crashBySIGNAL);
 #endif
+}
+
+void CrashHandler::on_copyReport_clicked()
+{
+    auto *clipboard = QApplication::clipboard();
+    clipboard->setText(ui->crashData->toPlainText());
+    ui->copyReport->setText(tr("Copied!"));
+}
+
+void CrashHandler::on_pgeRepoButton_clicked()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/WohlSoft/PGE-Project/issues/new/choose"));
 }
 
 void CrashHandler::on_pgeForumButton_clicked()

@@ -47,7 +47,7 @@ bool ConfigManager::loadLevelBlock(obj_block &sblock, std::string section, obj_b
     }
 
     sblock.isInit = false;
-    sblock.image = NULL;
+    sblock.image = nullptr;
     sblock.textureArrayId = 0;
     sblock.animator_ID = -1;
 

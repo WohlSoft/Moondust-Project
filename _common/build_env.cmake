@@ -24,7 +24,9 @@ if(APPLE)
 endif()
 set(CMAKE_OSX_DEPLOYMENT_TARGET ${PGE_OSX_TARGET})
 
-set(ANDROID_PLATFORM "android-16")
+if(ANDROID)
+    set(ANDROID_PLATFORM "android-16")
+endif()
 
 if(POLICY CMP0058) # Dependencies
     cmake_policy(SET CMP0058 NEW)

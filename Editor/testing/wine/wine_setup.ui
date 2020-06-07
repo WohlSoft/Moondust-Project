@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WineSetup</class>
+ <widget class="QDialog" name="WineSetup">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>598</width>
+    <height>555</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Wine configuration</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="4" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Test</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item row="0" column="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="runWineCfg">
+        <property name="text">
+         <string>Wine config</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="5">
+       <widget class="QPlainTextEdit" name="testLog">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+         </font>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="runWineCmd">
+        <property name="text">
+         <string>Version dialog</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="wineStopProc">
+        <property name="text">
+         <string>Stop process</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="testState">
+        <property name="text">
+         <string>Not running</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QGroupBox" name="importFromPlay">
+     <property name="title">
+      <string notr="true">---------------------------</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="1000,0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item row="0" column="0">
+       <widget class="QComboBox" name="playOnLinuxDrive"/>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="doImportFromPoL">
+        <property name="text">
+         <string>Import</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QGroupBox" name="wineCustomEnvGroup">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Specify a custom environment (PlayOnLinux/Mac)</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,0,0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="winePrefixPath">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="winePrefix">
+        <property name="toolTip">
+         <string>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</string>
+        </property>
+        <property name="text">
+         <string>Wine home prefix</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="winePrefixBrowse">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="wineLocationGroup">
+     <property name="title">
+      <string>Location of Wine</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,10000,0">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="wineRootPath">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="2">
+       <widget class="QRadioButton" name="pathDefault">
+        <property name="toolTip">
+         <string>Use a system-wide installed Wine from a PATH environment.</string>
+        </property>
+        <property name="text">
+         <string>System default</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="pathCustom">
+        <property name="toolTip">
+         <string>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</string>
+        </property>
+        <property name="text">
+         <string>Custom:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="wineRootPathBrowse">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="wineDebug">
+     <property name="text">
+      <string>Enable Wine debug printing into &quot;WineDebug&quot; console</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>WineSetup</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>381</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>WineSetup</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>313</x>
+     <y>381</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pathCustom</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>wineCustomEnvGroup</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>26</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>343</x>
+     <y>142</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pathCustom</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>wineRootPath</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>53</x>
+     <y>92</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>382</x>
+     <y>78</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pathCustom</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>wineRootPathBrowse</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>576</x>
+     <y>94</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>winePrefix</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>winePrefixPath</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>90</x>
+     <y>153</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>197</x>
+     <y>160</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>winePrefix</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>winePrefixBrowse</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>46</x>
+     <y>155</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>498</x>
+     <y>163</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

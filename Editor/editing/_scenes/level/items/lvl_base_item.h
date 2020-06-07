@@ -31,7 +31,7 @@
 class LvlScene;
 
 class LvlBaseItem: public QObject,
-                   public QGraphicsItem
+    public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
@@ -39,8 +39,8 @@ class LvlBaseItem: public QObject,
 private:
     void construct();
 public:
-    LvlBaseItem(QGraphicsItem *parent=0);
-    LvlBaseItem(LvlScene *parentScene, QGraphicsItem *parent=0);
+    LvlBaseItem(QGraphicsItem *parent = nullptr);
+    LvlBaseItem(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     virtual ~LvlBaseItem();
 
     virtual void setScenePoint(LvlScene *theScene);
@@ -94,7 +94,7 @@ public:
     //! \brief Implementation of context menu for current item type
     //! \param mouseEvent
     //!
-    virtual void contextMenu( QGraphicsSceneMouseEvent * mouseEvent );
+    virtual void contextMenu(QGraphicsSceneMouseEvent *mouseEvent);
 
     virtual QPainterPath shape() const;
 
@@ -117,12 +117,12 @@ protected:
     long        m_animatorID;
     QRectF      m_imageSize;
     bool        m_animated;
-    LvlScene *  m_scene;
+    LvlScene   *m_scene;
 
     bool m_mouseLeft;
     bool m_mouseMid;
     bool m_mouseRight;
-    virtual void mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent );
+    virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 };
 

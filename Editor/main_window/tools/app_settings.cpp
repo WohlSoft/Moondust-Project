@@ -38,13 +38,13 @@
 #include "app_settings.h"
 #include <ui_app_settings.h>
 
-g_AppSettings::g_AppSettings(QWidget *parent) :
+AppSettings::AppSettings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AppSettings)
 {
     ui->setupUi(this);
 
-    #ifdef Q_OS_MAC
+#ifdef Q_OS_MAC
     this->setWindowIcon(QIcon(":/cat_builder.icns"));
     //Setting sizes of some elements to look nicer
     ui->gridLayout->setMargin(12);
@@ -52,16 +52,16 @@ g_AppSettings::g_AppSettings(QWidget *parent) :
     ui->directionGrp->setMinimumHeight(52);
     ui->defaults_npc_generator_delay->setMinimumHeight(24);
     updateGeometry();
-    #endif
-    #ifdef Q_OS_WIN
+#endif
+#ifdef Q_OS_WIN
     this->setWindowIcon(QIcon(":/cat_builder.ico"));
 
-    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
     {
         if(QtWin::isCompositionEnabled())
         {
             this->setAttribute(Qt::WA_TranslucentBackground, true);
-            QtWin::extendFrameIntoClientArea(this, -1,-1,-1,-1);
+            QtWin::extendFrameIntoClientArea(this, -1, -1, -1, -1);
             QtWin::enableBlurBehindWindow(this);
             ui->gridLayout->setMargin(0);
         }
@@ -71,9 +71,9 @@ g_AppSettings::g_AppSettings(QWidget *parent) :
             setAttribute(Qt::WA_TranslucentBackground, false);
         }
     }
-    #endif
+#endif
 
-    QStringList themes=Themes::availableThemes();
+    auto themes = Themes::availableThemes();
 
     ui->Theme->clear();
 
@@ -81,20 +81,20 @@ g_AppSettings::g_AppSettings(QWidget *parent) :
     {
         QStringList theme = themes.first().split('|');
         themes.pop_front();
-        QString data = theme.size()>=1 ? theme[0] : "[untitled theme]";
-        QString title = theme.size()>=2 ? theme[1] : "";
+        QString data = theme.size() >= 1 ? theme[0] : "[untitled theme]";
+        QString title = theme.size() >= 2 ? theme[1] : "";
         ui->Theme->addItem(title, data);
     }
 
     loadSettings();
 }
 
-g_AppSettings::~g_AppSettings()
+AppSettings::~AppSettings()
 {
     delete ui;
 }
 
-void g_AppSettings::loadSettings()
+void AppSettings::loadSettings()
 {
     ui->autoPlayMusic->setChecked(GlobalSettings::autoPlayMusic);
     ui->Animations->setChecked(GlobalSettings::LvlOpts.animationEnabled);
@@ -118,58 +118,80 @@ void g_AppSettings::loadSettings()
     ui->screengrabH->setValue(GlobalSettings::screenGrab.height);
 
     LogWriter::loadLogLevels(ui->logLevel);
-    ui->logLevel->setCurrentIndex( int(LogWriter::logLevel) );
-    ui->logFileName->setText( LogWriter::DebugLogFile );
+    ui->logLevel->setCurrentIndex(int(LogWriter::logLevel));
+    ui->logFileName->setText(LogWriter::DebugLogFile);
 
-    if(GlobalSettings::MainWindowView==QMdiArea::SubWindowView)
+    if(GlobalSettings::MainWindowView == QMdiArea::SubWindowView)
         ui->MView_SubWindows->setChecked(true);
-    if(GlobalSettings::MainWindowView==QMdiArea::TabbedView)
+    if(GlobalSettings::MainWindowView == QMdiArea::TabbedView)
         ui->MView_Tabs->setChecked(true);
 
-    if(GlobalSettings::LVLToolboxPos == QTabWidget::West){
+    if(GlobalSettings::LVLToolboxPos == QTabWidget::West)
         ui->LVLToolboxVertical->setChecked(true);
-    }else{
+    else
         ui->LVLToolboxHorizontal->setChecked(true);
-    }
 
-    if(GlobalSettings::WLDToolboxPos == QTabWidget::North){
+    if(GlobalSettings::WLDToolboxPos == QTabWidget::North)
         ui->WLDToolboxHorizontal->setChecked(true);
-    }else{
+    else
         ui->WLDToolboxVertical->setChecked(true);
-    }
 
     if(GlobalSettings::TSTToolboxPos == QTabWidget::North)
-    {
         ui->TSTToolboxHorizontal->setChecked(true);
-    }else{
+    else
         ui->TSTToolboxVertical->setChecked(true);
-    }
 
     if(!GlobalSettings::currentTheme.isEmpty())
-        for(int i=0; i< ui->Theme->count(); i++)
+    {
+        for(int i = 0; i < ui->Theme->count(); i++)
         {
-            if(ui->Theme->itemData(i).toString()==GlobalSettings::currentTheme)
+            if(ui->Theme->itemData(i).toString() == GlobalSettings::currentTheme)
             {
                 ui->Theme->setCurrentIndex(i);
                 break;
             }
         }
+    }
+
+    ui->fontSize->setRange(1, 1000);
+    if(GlobalSettings::fontSize < 0)
+    {
+        auto f = qApp->font();
+        ui->fontSize->setValue(f.pointSize());
+        ui->fontDefaultSetup->setChecked(true);
+    }
+    else
+    {
+        ui->fontSize->setValue(GlobalSettings::fontSize);
+        ui->fontDefaultSetup->setChecked(false);
+    }
 
     /************************Item Defaults***************************/
     switch(GlobalSettings::LvlItemDefaults.npc_direction)
     {
-        case 1: ui->defaults_npc_direction_right->setChecked(true);break;
-        case 0: ui->defaults_npc_direction_random->setChecked(true);break;
-        case -1: default: ui->defaults_npc_direction_left->setChecked(true);break;
+    case 1:
+        ui->defaults_npc_direction_right->setChecked(true);
+        break;
+    case 0:
+        ui->defaults_npc_direction_random->setChecked(true);
+        break;
+    case -1:
+    default:
+        ui->defaults_npc_direction_left->setChecked(true);
+        break;
     }
 
     switch(GlobalSettings::LvlItemDefaults.npc_generator_type)
     {
-        case 1:ui->defaults_npc_generator_type->setCurrentIndex(0);break;
-        case 2:ui->defaults_npc_generator_type->setCurrentIndex(1);break;
+    case 1:
+        ui->defaults_npc_generator_type->setCurrentIndex(0);
+        break;
+    case 2:
+        ui->defaults_npc_generator_type->setCurrentIndex(1);
+        break;
     }
 
-    ui->defaults_npc_generator_delay->setValue(((float)GlobalSettings::LvlItemDefaults.npc_generator_delay)/10.0);
+    ui->defaults_npc_generator_delay->setValue(static_cast<double>(GlobalSettings::LvlItemDefaults.npc_generator_delay) / 10.0);
     ui->defaults_warps_type->setCurrentIndex(GlobalSettings::LvlItemDefaults.warp_type);
 
     ui->defaults_eventtab_layviz->setChecked(GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz);
@@ -184,16 +206,16 @@ void g_AppSettings::loadSettings()
     ui->extra_hdpiScale->setChecked(GlobalSettings::extra.attr_hdpi);
 }
 
-void g_AppSettings::on_setLogFile_clicked()
+void AppSettings::on_setLogFile_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Set log file"),
-        ui->logFileName->text(), tr("Text files (*.txt *.log)"));
-    if (fileName.isEmpty())
+                       ui->logFileName->text(), tr("Text files (*.txt *.log)"));
+    if(fileName.isEmpty())
         return;
     ui->logFileName->setText(fileName);
 }
 
-void g_AppSettings::on_buttonBox_accepted()
+void AppSettings::on_buttonBox_accepted()
 {
     GlobalSettings::autoPlayMusic = ui->autoPlayMusic->isChecked();
     GlobalSettings::animatorItemsLimit = ui->itemsLisit->value();
@@ -211,8 +233,7 @@ void g_AppSettings::on_buttonBox_accepted()
 
     if(ui->screengrabFit->isChecked())
         GlobalSettings::screenGrab.sizeType = SETTINGS_ScreenGrabSettings::GRAB_Fit;
-    else
-    if(ui->screengrabCustom->isChecked())
+    else if(ui->screengrabCustom->isChecked())
         GlobalSettings::screenGrab.sizeType = SETTINGS_ScreenGrabSettings::GRAB_Custom;
 
     GlobalSettings::screenGrab.width = ui->screengrabW->value();
@@ -238,32 +259,38 @@ void g_AppSettings::on_buttonBox_accepted()
     else
         GlobalSettings::TSTToolboxPos = QTabWidget::West;
 
-    Themes::loadTheme(ui->Theme->currentData().toString());
-    GlobalSettings::currentTheme = ui->Theme->currentData().toString();
+    if(ui->Theme->currentIndex() == 0)
+        GlobalSettings::currentTheme.clear();
+    else
+        GlobalSettings::currentTheme = ui->Theme->currentData().toString();
 
-    LogWriter::logLevel     = PGE_LogLevel( ui->logLevel->currentIndex() );
+    if(ui->fontDefaultSetup->isChecked())
+        GlobalSettings::fontSize = -1;
+    else
+        GlobalSettings::fontSize = ui->fontSize->value();
+
+    LogWriter::logLevel     = PGE_LogLevel(ui->logLevel->currentIndex());
     LogWriter::DebugLogFile = ui->logFileName->text();
 
     /************************Item Defaults***************************/
     if(ui->defaults_npc_direction_right->isChecked())
-        GlobalSettings::LvlItemDefaults.npc_direction=1;
+        GlobalSettings::LvlItemDefaults.npc_direction = 1;
+    else if(ui->defaults_npc_direction_random->isChecked())
+        GlobalSettings::LvlItemDefaults.npc_direction = 0;
     else
-    if(ui->defaults_npc_direction_random->isChecked())
-        GlobalSettings::LvlItemDefaults.npc_direction=0;
-    else
-        GlobalSettings::LvlItemDefaults.npc_direction=-1;
+        GlobalSettings::LvlItemDefaults.npc_direction = -1;
 
-    GlobalSettings::LvlItemDefaults.npc_generator_type = ui->defaults_npc_generator_type->currentIndex()+1;
+    GlobalSettings::LvlItemDefaults.npc_generator_type = ui->defaults_npc_generator_type->currentIndex() + 1;
     GlobalSettings::LvlItemDefaults.npc_generator_delay = static_cast<int>(round(ui->defaults_npc_generator_delay->value() * 10.0));
     GlobalSettings::LvlItemDefaults.warp_type = ui->defaults_warps_type->currentIndex();
 
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz=ui->defaults_eventtab_layviz->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov=ui->defaults_eventtab_laymov->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll=ui->defaults_eventtab_autoscroll->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_secset=ui->defaults_eventtab_secset->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_common=ui->defaults_eventtab_common->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons=ui->defaults_eventtab_holdbuttons->isChecked();
-    GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger=ui->defaults_eventtab_trigger->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_layviz = ui->defaults_eventtab_layviz->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_laymov = ui->defaults_eventtab_laymov->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_autoscroll = ui->defaults_eventtab_autoscroll->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_secset = ui->defaults_eventtab_secset->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_common = ui->defaults_eventtab_common->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_buttons = ui->defaults_eventtab_holdbuttons->isChecked();
+    GlobalSettings::LvlItemDefaults.classicevents_tabs_trigger = ui->defaults_eventtab_trigger->isChecked();
 
     /**************************** Extra **********************************/
     GlobalSettings::extra.attr_hdpi = ui->extra_hdpiScale->isChecked();
@@ -271,11 +298,11 @@ void g_AppSettings::on_buttonBox_accepted()
     accept();
 }
 
-void g_AppSettings::on_AssociateFiles_clicked()
+void AppSettings::on_AssociateFiles_clicked()
 {
     bool success = Installer::associateFiles(this);
 
-    if (success)
+    if(success)
         QMessageBox::information(this, tr("Success"), tr("All file associations have been set"), QMessageBox::Ok);
     else
         QMessageBox::warning(this, tr("Error"), QMessageBox::tr("File association failed."), QMessageBox::Ok);

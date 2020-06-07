@@ -25,7 +25,7 @@
 class WLD_ModeCircle : public EditMode
 {
 public:
-    WLD_ModeCircle(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    WLD_ModeCircle(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~WLD_ModeCircle();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

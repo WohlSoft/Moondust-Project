@@ -29,7 +29,7 @@ class CustomCounterGUI;
 }
 
 class MainWindow;
-class dataconfigs;
+class DataConfig;
 
 class CustomCounterGUI : public QDialog
 {
@@ -60,7 +60,7 @@ private:
     Ui::CustomCounterGUI *ui;
     bool            lockCombobox;
     MainWindow*     m_mainWindow;
-    dataconfigs*    m_configs;
+    DataConfig*    m_configs;
 };
 
 #endif // CUSTOM_COUNTER_GUI_H

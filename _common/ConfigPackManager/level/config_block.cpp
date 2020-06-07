@@ -32,9 +32,9 @@ bool BlockSetup::parse(IniProcessing *setup,
                        const BlockSetup *merge_with,
                        PGEString *error)
 {
-    #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
-    #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
-    #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
+#define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+#define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
+#define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString   section;
@@ -72,6 +72,10 @@ bool BlockSetup::parse(IniProcessing *setup,
     setup->read("grid-offset-y", grid_offset_y, pMerge(grid_offset_y, 0));
 
     setup->read("image",    image_n,    pMerge(image_n, ""));
+#ifdef PGE_EDITOR // alternative image for Editor
+    pAlias("editor-image", image_n);
+#endif
+
     if(!PGE_ImageInfo::getImageSize(blockImgPath + image_n, &w, &h, &errCode) && !merge_with)
     {
         if(error)
@@ -104,16 +108,18 @@ bool BlockSetup::parse(IniProcessing *setup,
     setup->read("sizable-border-width-left",    sizable_border_width_left,  pMerge(sizable_border_width_left, -1));
     setup->read("sizable-border-width-top",     sizable_border_width_top,   pMerge(sizable_border_width_top, -1));
     setup->read("sizable-border-width-right",   sizable_border_width_right, pMerge(sizable_border_width_right, -1));
-    setup->read("sizable-border-width-bottom",  sizable_border_width_bottom,pMerge(sizable_border_width_bottom, -1));
+    setup->read("sizable-border-width-bottom",  sizable_border_width_bottom, pMerge(sizable_border_width_bottom, -1));
 
     setup->read("danger",                   danger,                 pMerge(danger, 0));
-    setup->read("collision",                collision,              pMerge(collision, 1));
+    setup->read("clip-mode",                collision,              pMerge(collision, 1));
+    pAlias("collision", collision);//Alias
     setup->read("slope-slide",              slopeslide,             pMerge(slopeslide, 0));
-    setup->read("shape-type",               phys_shape,             pMerge(phys_shape, 0));
+    setup->read("shape",                    phys_shape,             pMerge(phys_shape, 0));
+    pAlias("shape-type", phys_shape);//Alias
     setup->read("lava",                     lava,                   pMerge(lava, false));
     setup->read("destroyable",              destroyable,            pMerge(destroyable, false));
     setup->read("destroyable-by-bomb",      destroyable_by_bomb,    pMerge(destroyable_by_bomb, false));
-    setup->read("destroyable-by-fireball",  destroyable_by_fireball,pMerge(destroyable_by_fireball, false));
+    setup->read("destroyable-by-fireball",  destroyable_by_fireball, pMerge(destroyable_by_fireball, false));
 
     {
         std::string spawnMe;
@@ -129,9 +135,7 @@ bool BlockSetup::parse(IniProcessing *setup,
             for(char &c : spawnMe)
             {
                 if(r)
-                {
                     right.push_back(c);
-                }
                 else
                 {
                     if(c == '-')
@@ -152,12 +156,14 @@ bool BlockSetup::parse(IniProcessing *setup,
             {
                 spawn = true;
                 spawn_obj = map[left];
-                spawn_obj_id = strtoul(right.c_str(), NULL, 10);
+                spawn_obj_id = strtoul(right.c_str(), nullptr, 10);
             }
-        } else {
+        }
+        else
+        {
             spawn =         pMerge(spawn, 0);
             spawn_obj =     pMerge(spawn_obj, 0);
-            spawn_obj_id =  pMerge(spawn_obj_id, 0);
+            spawn_obj_id =  pMerge(spawn_obj_id, 0u);
         }
     }
 
@@ -171,10 +177,10 @@ bool BlockSetup::parse(IniProcessing *setup,
     setup->read("switch-button",    switch_Button,      pMerge(switch_Button, false));
     setup->read("switch-block",     switch_Block,       pMerge(switch_Block, false));
     setup->read("switch-id",        switch_ID,          pMerge(switch_ID, switchID++));
-    setup->read("switch-transform", switch_transform,   pMerge(switch_transform, 1));
+    setup->read("switch-transform", switch_transform,   pMerge(switch_transform, 1u));
 
     setup->read("player-switch-button",     plSwitch_Button,    pMerge(plSwitch_Button, false));
-    setup->read("player-switch-button-id",  plSwitch_Button_id, pMerge(plSwitch_Button_id, 0));
+    setup->read("player-switch-button-id",  plSwitch_Button_id, pMerge(plSwitch_Button_id, 0u));
     plSwitch_frames_true.clear();
     plSwitch_frames_false.clear();
     frame_sequence.clear();
@@ -203,24 +209,28 @@ bool BlockSetup::parse(IniProcessing *setup,
     }
 
     {
-        IniProcessing::StrEnumMap zLayers = {
+        IniProcessing::StrEnumMap zLayers =
+        {
             {"background", 0},
             {"background1", 0},
             {"foreground", 1},
             {"foreground1", 1}
         };
-        setup->readEnum("z-layer",  z_layer, pMerge(z_layer, 0), zLayers);
+        setup->readEnum("z-layer",  z_layer, pMerge(z_layer, 0u), zLayers);
         setup->readEnum("view",     z_layer, z_layer, zLayers);//DEPRECATED
     }
 
     setup->read("animation-reverse",        animation_rev,  pMerge(animation_rev, false)); //Reverse animation
     setup->read("animation-bidirectional",  animation_bid,  pMerge(animation_bid, false)); //Bidirectional animation
-    setup->read("frames",                   frames,         pMerge(frames, 1));//Real
+    setup->read("frames",                   frames,         pMerge(frames, 1u));//Real
     pAlias("framecount",    frames);//Alias
     pAlias("frame-count",   frames);//Alias
+#ifdef PGE_EDITOR // alternative animation for Editor
+    pAlias("editor-frames",   frames);
+#endif
     NumberLimiter::apply(frames, 1u);
     animated = (frames > 1u);
-    setup->read("frame-delay", framespeed, pMerge(framespeed, 125));//Real
+    setup->read("frame-delay", framespeed, pMerge(framespeed, 125u));//Real
     pAlias("frame-speed", framespeed);//Alias
     if(setup->hasKey("framespeed"))
     {
@@ -228,9 +238,10 @@ bool BlockSetup::parse(IniProcessing *setup,
         framespeed = (framespeed * 1000u) / 65u;//Convert 1/65'th into milliseconds
     }
     NumberLimiter::apply(framespeed, 1u);
-    setup->read("hit-sound-id",             hit_sound_id,   pMerge(hit_sound_id, 0));
+
+    setup->read("hit-sound-id",             hit_sound_id,   pMerge(hit_sound_id, 0u));
     NumberLimiter::apply(hit_sound_id, 0u);
-    setup->read("destroy-sound-id",         destroy_sound_id,pMerge(destroy_sound_id, 0));
+    setup->read("destroy-sound-id",         destroy_sound_id, pMerge(destroy_sound_id, 0u));
     NumberLimiter::apply(destroy_sound_id, 0u);
     frame_h = (animated ? (h / frames) : h);
 
@@ -238,6 +249,9 @@ bool BlockSetup::parse(IniProcessing *setup,
     if(!plSwitch_Button && !plFilter_Block)
     {
         setup->read("frame-sequence", frame_sequence, pMergeMe(frame_sequence));
+#ifdef PGE_EDITOR // alternative animation for Editor
+        pAlias("editor-frame-sequence",   frame_sequence);
+#endif
     }
 
     setup->read("display-frame", display_frame, 0);
@@ -252,11 +266,11 @@ bool BlockSetup::parse(IniProcessing *setup,
     default_slippery_value  = (iTmp >= 0) ? bool(iTmp) : false;
 
     setup->read("default-npc-content", iTmp, pMerge(default_content, -1));
-    default_content =           (iTmp >= 0);
-    default_content_value   =   (iTmp >= 0) ? (iTmp < 1000 ? iTmp * -1 : iTmp - 1000) : 0;
+    default_content = (iTmp >= 0);
+    default_content_value   = (iTmp >= 0) ? (iTmp < 1000 ? iTmp * -1 : iTmp - 1000) : 0;
 
-    #undef pMerge
-    #undef pMergeMe
-    #undef pAlias
+#undef pMerge
+#undef pMergeMe
+#undef pAlias
     return true;
 }

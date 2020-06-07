@@ -44,8 +44,6 @@ class LocalServer : public QThread
     enum class IPCCMD {
         Unknown,
         ShowUP,
-        ConnectToEngine,
-        EngineClosed,
         TestSetup
     };
 

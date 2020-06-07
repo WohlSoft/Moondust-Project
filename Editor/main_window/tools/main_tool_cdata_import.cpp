@@ -24,8 +24,8 @@
 
 void MainWindow::on_actionCDATA_Import_triggered()
 {
-
     QString sourceDir = AppPathManager::userAppDir();
+
     if(activeChildWindow() == WND_Level)
     {
         if(activeLvlEditWin()->isUntitled())
@@ -56,7 +56,8 @@ void MainWindow::on_actionCDATA_Import_triggered()
 
     qDebug() << "File path: " << fileName;
 
-    if(fileName.isEmpty()) return;
+    if(fileName.isEmpty())
+        return;
 
     qApp->setActiveWindow(this);
     this->setFocus();

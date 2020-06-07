@@ -24,6 +24,22 @@ Editor 0.3.2-dev
 - Fixed unnecessary music enabling bug on a world map
 - Added "is-meta-object" element option in a config pack to hide elements from exported images or from the game entirely
 - Added French translation by NathanBnm
+- Reworked a testing sub-system to make it be more modular
+- Added a level testing integration with the TheXTech engine
+- The LunaTester has been reworked: now it's fully asynchronius and much more stable. It works with a full backward compatibility with a bunch of LunaLua versions: tested with next toolchains: LunaLua-SMBX 1.3.0.2 (LunaLua 0.7.3.1), SMBX2 Beta3, SMBX2 MAGLX3/PAL, and SMBX2 Beta4. For Beta3 and older it's need to put a "LunaLoader-exec.exe" module to make a testign work.
+- Fixed an incorrect logic of a theme loading and switching mechanism
+- Fixed an ignore of locks for item types by an eraser
+- Extended a context menu of level and world map surface
+- Better look of a crash handler dialog
+- Added a level testing integration with the SMBX-38A engine
+- Added an ability to change font size
+- Added the support for alternative Editor images and animations (config pack entry settings with "editor-" prefix)
+- Added the support for item icons (alternative pictures shown in tilesets and item lists)
+- Added camera grid for a preset grid for visualizing screens worth of a level
+- Added the "select all" item search option
+- Added the "Current section only" and the "Search in selection group" item search criterias
+- Improved the work of an unused resources clean-up tool
+- Fixed the logic of a resource importer that was broken a long time ago
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu

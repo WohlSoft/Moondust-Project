@@ -112,7 +112,7 @@ void WLD_SetPoint::goTo(long x, long y, QPoint offset)
 
 
 bool WLD_SetPoint::loadFile(const WorldData &fileData,
-                            dataconfigs &configs,
+                            DataConfig &configs,
                             EditingSettings options)
 {
     m_worldData = fileData;

@@ -30,16 +30,17 @@ class ItemDoor : public LvlBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemDoor(QGraphicsItem *parent=0);
-    ItemDoor(LvlScene *parentScene, QGraphicsItem *parent=0);
+    ItemDoor(QGraphicsItem *parent = nullptr);
+    ItemDoor(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
     ~ItemDoor();
 
-    void setDoorData(LevelDoor inD, int doorDir, bool init=false);
+    void setDoorData(LevelDoor inD, int doorDir, bool init = false);
     void setScenePoint(LvlScene *theScene);
 
     int m_pointSide;
-    enum doorDirect{
-        D_Entrance=0,
+    enum doorDirect
+    {
+        D_Entrance = 0,
         D_Exit
     };
 
@@ -65,10 +66,10 @@ public:
 private:
     QBrush m_brush;
     QPen   m_pen;
-    QGraphicsItemGroup *    m_grp;
-    QGraphicsPixmapItem *   m_doorLabel;
-    QGraphicsPixmapItem *   m_arrowEnter;
-    QGraphicsPixmapItem *   m_arrowExit;
+    QGraphicsItemGroup     *m_grp = nullptr;
+    QGraphicsPixmapItem    *m_doorLabel = nullptr;
+    QGraphicsPixmapItem    *m_arrowEnter = nullptr;
+    QGraphicsPixmapItem    *m_arrowExit = nullptr;
 };
 
 #endif // ITEM_DOOR_H

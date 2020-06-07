@@ -17,6 +17,8 @@
  */
 
 #include <QtConcurrent>
+#include <QFutureWatcher>
+#include <QEventLoop>
 #include <utility>
 #include <stdexcept>
 
@@ -26,8 +28,6 @@
 #include <main_window/dock/toolboxes.h>
 #include <common_features/logger_sets.h>
 #include <common_features/main_window_ptr.h>
-
-#include <main_window/testing/luna_tester.h>
 
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
@@ -51,8 +51,6 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     LogDebug(QString("Setting Lang..."));
     setDefLang();
-
-    m_luna = new LunaTester;
 
     LogDebug(QString("Setting UI Defaults..."));
     setUiDefults(); //Apply default UI settings
@@ -93,9 +91,6 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         EditorSpashScreen splash(splashimg);
         splash.setCursor(Qt::ArrowCursor);
         splash.setDisabled(true);
-        //#ifndef DEBUG_BUILD
-        //splash.setWindowFlags( splash.windowFlags() | Qt::WindowStaysOnTopHint );
-        //#endif
 
         for(auto &animation : configs.animations)
         {
@@ -108,35 +103,32 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
                                 int(animation.speed));
         }
 
-        splash.connect(&configs, SIGNAL(progressMax(int)),
+        QObject::connect(&configs, SIGNAL(progressMax(int)),
                        &splash, SLOT(progressMax(int)), Qt::QueuedConnection);
-        splash.connect(&configs, SIGNAL(progressTitle(QString)),
+        QObject::connect(&configs, SIGNAL(progressTitle(QString)),
                        &splash, SLOT(progressTitle(QString)), Qt::QueuedConnection);
-        splash.connect(&configs, SIGNAL(progressValue(int)),
+        QObject::connect(&configs, SIGNAL(progressValue(int)),
                        &splash, SLOT(progressValue(int)), Qt::QueuedConnection);
-        splash.connect(&configs, SIGNAL(progressPartsTotal(int)),
+        QObject::connect(&configs, SIGNAL(progressPartsTotal(int)),
                        &splash, SLOT(progressPartsMax(int)), Qt::QueuedConnection);
-        splash.connect(&configs, SIGNAL(progressPartNumber(int)),
+        QObject::connect(&configs, SIGNAL(progressPartNumber(int)),
                        &splash, SLOT(progressPartsVal(int)), Qt::QueuedConnection);
 
         /*********************Loading of config pack**********************/
+        QFutureWatcher<bool> isOk;
+        QEventLoop waitLoop;
+        QObject::connect(&isOk, SIGNAL(finished()), &waitLoop, SLOT(quit()));
         // Do the loading in a thread
-        QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
+        isOk.setFuture(QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig));
         /*********************Loading of config pack**********************/
 
         /*********************Splash Screen**********************/
-        // And meanwhile load the settings in the main thread
-        loadSettings();
 
-        #ifndef Q_OS_ANDROID
         splash.show();
-        #else
-        splash.showFullScreen();
-        #endif
         splash.startAnimations();
 
         // Now wait until the config load in finished.
-        while(!isOk.isFinished()) { qApp->processEvents(); QThread::msleep(10); }
+        waitLoop.exec();
 
         /*********************Splash Screen end**********************/
         splash.finish(this);
@@ -153,17 +145,7 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
             on_actionCurConfig_triggered();
         }
 
-        splash.progressTitle(tr("Loading theme..."));
-
-        applyTheme( Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme() );
-
-        m_luna->initLunaMenu(this,
-                             ui->menuTest,
-                             ui->action_Start_Engine,
-                             ui->action_doTest,
-                             ui->action_doSafeTest,
-                             ui->action_Start_Engine);
-
+        LogDebug(QString("Initializing dock widgets..."));
         splash.progressTitle(tr("Initializing dock widgets..."));
 
         //Apply objects into tools
@@ -174,9 +156,27 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         dock_WldItemProps->resetExitTypesList();
         dock_TilesetBox->setTileSetBox(true);
 
+        // Initialize config pack-side UI settings
+        setUiDefultsConfigPack();
+
+        LogDebug(QString("Initialize the testing sub-system..."));
+        initTesting();
+
+        LogDebug(QString("Initalizing plugins..."));
         splash.progressTitle(tr("Initalizing plugins..."));
         initPlugins();
 
+        // Load Editor's settings
+        loadSettings();
+
+        // Apply setup
+        applySetup(true);
+
+        LogDebug(QString("Loading theme..."));
+        splash.progressTitle(tr("Loading theme..."));
+        applyCurrentTheme();
+
+        LogDebug(QString("Finishing loading..."));
         splash.progressTitle(tr("Finishing loading..."));
 
         m_isAppInited = true;
@@ -209,10 +209,10 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
     }
 
 #ifdef Q_OS_MACX
-    foreach(QAction* menu, ui->menuBar->actions())
+    for(QAction* menu : ui->menuBar->actions())
     {
         menu->setVisible(true);
-        foreach(QAction* item, menu->menu()->actions())
+        for(QAction* item : menu->menu()->actions())
             item->setIconVisibleInMenu(false);
     }
     ui->Exit->setMenuRole(QAction::QuitRole);
@@ -232,16 +232,11 @@ MainWindow::~MainWindow()
     if(pge_thumbbar)
         delete pge_thumbbar;
 #endif
+    GlobalSettings::cleanUp();
     m_messageBoxer.disconnectAll();
-    if(m_luna)
-    {
-        m_luna->unInitRuntime();
-        delete m_luna;
-    }
+    closeTesting();
     delete ui;
-
     MainWinConnect::pMainWin = nullptr;
-
 }
 
 

@@ -60,14 +60,14 @@ LvlSearchBox::LvlSearchBox(QWidget *parent) :
     m_lockReset = false;
 
     m_curBlock.data.id = 0;
-    m_curBlock.data.meta.index = 0; //When incrementing then starting with 0
+    m_curBlock.data.index = 0; //When incrementing then starting with 0
     m_curBlock.data.npc_id = 0;
 
     m_curBgo.data.id = 0;
-    m_curBgo.data.meta.index = 0; //When incrementing then starting with 0
+    m_curBgo.data.index = 0; //When incrementing then starting with 0
 
     m_curNpc.data.id = 0;
-    m_curNpc.data.meta.index = 0; //When incrementing then starting with 0
+    m_curNpc.data.index = 0; //When incrementing then starting with 0
 
     m_currentSearches = 0;
 
@@ -254,11 +254,15 @@ void LvlSearchBox::on_FindStartBlock_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
-            if(!edit) return;
+            if(!edit)
+                return;
+
             m_currentSearches |= SEARCH_BLOCK;
             ui->FindStartBlock->setText(tr("Next Block"));
             ui->Find_Button_ResetBlock->setText(tr("Stop Search"));
-            if(doSearchBlock(edit))
+
+            if(doSearch(m_curBlock, &LvlSearchBox::checkBlockCriteria,
+                        edit, ui->blockCurSection->isChecked(), false, ui->blockSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_BLOCK;
                 ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
@@ -272,8 +276,11 @@ void LvlSearchBox::on_FindStartBlock_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
-            if(!edit) return;
-            if(doSearchBlock(edit))
+            if(!edit)
+                return;
+
+            if(doSearch(m_curBlock, &LvlSearchBox::checkBlockCriteria,
+                        edit, ui->blockCurSection->isChecked(), false, ui->blockSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_BLOCK;
                 ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
@@ -291,11 +298,14 @@ void LvlSearchBox::on_FindStartBGO_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
-            if(!edit) return;
+            if(!edit)
+                return;
+
             m_currentSearches |= SEARCH_BGO;
             ui->FindStartBGO->setText(tr("Next BGO"));
             ui->Find_Button_ResetBGO->setText(tr("Stop Search"));
-            if(doSearchBGO(edit))
+            if(doSearch(m_curBgo, &LvlSearchBox::checkBgoCriteria,
+                        edit, ui->bgoCurSection->isChecked(), false, ui->bgoSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_BGO;
                 ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
@@ -309,8 +319,11 @@ void LvlSearchBox::on_FindStartBGO_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
-            if(!edit) return;
-            if(doSearchBGO(edit))
+            if(!edit)
+                return;
+
+            if(doSearch(m_curBgo, &LvlSearchBox::checkBgoCriteria,
+                        edit, ui->bgoCurSection->isChecked(), false, ui->bgoSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_BGO;
                 ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
@@ -328,11 +341,14 @@ void LvlSearchBox::on_FindStartNPC_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
-            if(!edit) return;
+            if(!edit)
+                return;
+
             m_currentSearches |= SEARCH_NPC;
             ui->FindStartNPC->setText(tr("Next NPC"));
             ui->Find_Button_ResetNPC->setText(tr("Stop Search"));
-            if(doSearchNPC(edit))
+            if(doSearch(m_curNpc, &LvlSearchBox::checkNpcCriteria,
+                        edit, ui->npcCurSection->isChecked(), false, ui->npcSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_NPC;
                 ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
@@ -346,8 +362,11 @@ void LvlSearchBox::on_FindStartNPC_clicked()
         if(mw()->activeChildWindow() == MainWindow::WND_Level)
         {
             LevelEdit *edit = mw()->activeLvlEditWin();
-            if(!edit) return;
-            if(doSearchNPC(edit))
+            if(!edit)
+                return;
+
+            if(doSearch(m_curNpc, &LvlSearchBox::checkNpcCriteria,
+                        edit, ui->npcCurSection->isChecked(), false, ui->npcSelectionOnly->isChecked()))
             {
                 m_currentSearches ^= SEARCH_NPC;
                 ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
@@ -356,6 +375,57 @@ void LvlSearchBox::on_FindStartNPC_clicked()
             }
         }
     }
+}
+
+void LvlSearchBox::on_blockSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    auto *edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_BLOCK;
+    m_currentSearches ^= SEARCH_BLOCK;
+    ui->FindStartBlock->setText(tr("Search Block"));
+    ui->Find_Button_ResetBlock->setText(tr("Reset Search Fields"));
+    doSearch(m_curBlock, &LvlSearchBox::checkBlockCriteria, edit,
+             ui->blockCurSection->isChecked(), true, ui->blockSelectionOnly->isChecked());
+}
+
+void LvlSearchBox::on_bgoSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    auto *edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_BGO;
+    m_currentSearches ^= SEARCH_BGO;
+    ui->FindStartBGO->setText(tr("Search BGO"));
+    ui->Find_Button_ResetBGO->setText(tr("Reset Search Fields"));
+    doSearch(m_curBgo, &LvlSearchBox::checkBgoCriteria, edit,
+             ui->bgoCurSection->isChecked(), true, ui->bgoSelectionOnly->isChecked());
+}
+
+void LvlSearchBox::on_npcSelectAll_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    auto *edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    m_currentSearches |= SEARCH_NPC;
+    m_currentSearches ^= SEARCH_NPC;
+    ui->FindStartNPC->setText(tr("Search NPC"));
+    ui->Find_Button_ResetNPC->setText(tr("Reset Search Fields"));
+    doSearch(m_curNpc, &LvlSearchBox::checkNpcCriteria, edit,
+             ui->npcCurSection->isChecked(), true, ui->npcSelectionOnly->isChecked());
 }
 
 void LvlSearchBox::on_Find_Button_TypeBlock_clicked()
@@ -372,8 +442,8 @@ void LvlSearchBox::on_Find_Button_TypeBlock_clicked()
 void LvlSearchBox::on_Find_Button_ContainsNPCBlock_clicked()
 {
     ItemSelectDialog npcList(&(mw()->configs), ItemSelectDialog::TAB_NPC,
-            ItemSelectDialog::NPCEXTRA_WITHCOINS | (m_curBlock.data.npc_id < 0 && m_curBlock.data.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0), 0, 0,
-            (m_curBlock.data.npc_id < 0 && m_curBlock.data.npc_id != 0 ? m_curBlock.data.npc_id * (-1) : m_curBlock.data.npc_id), 0, 0, 0, 0, 0, this);
+                             ItemSelectDialog::NPCEXTRA_WITHCOINS | (m_curBlock.data.npc_id < 0 && m_curBlock.data.npc_id != 0 ? ItemSelectDialog::NPCEXTRA_ISCOINSELECTED : 0), 0, 0,
+                             (m_curBlock.data.npc_id < 0 && m_curBlock.data.npc_id != 0 ? m_curBlock.data.npc_id * (-1) : m_curBlock.data.npc_id), 0, 0, 0, 0, 0, this);
     if(npcList.exec() == QDialog::Accepted)
     {
         int selected = 0;
@@ -523,190 +593,218 @@ void LvlSearchBox::resetNPCSearch()
     m_lockReset = false;
 }
 
-//return true when finish searching
-bool LvlSearchBox::doSearchBlock(LevelEdit *edit)
+
+bool LvlSearchBox::checkBlockCriteria(QGraphicsItem *gri)
 {
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
+    if(gri->data(ITEM_TYPE).toString() != "Block")
+        return false;
 
-    //Reset search on changing total number of elements (something added or deleted)
-    //... however, will be continued if something replaced
-    if(grSize != m_curBlock.total)
-    {
-        m_curBlock.total = grSize;
-        m_curBlock.index = 0;
-    }
+    auto *it = qgraphicsitem_cast<ItemBlock *>(gri);
+    Q_ASSERT(it);
+    auto &d = it->m_data;
 
-    if(m_curBlock.index < grSize)
-    {
-        for(quint64 i = m_curBlock.index; i < grSize; ++i)
-        {
-            //qDebug() << "Next Index: " << i;
-            if(gr[i]->data(ITEM_TYPE).toString() == "Block")
-            {
-                bool toBeFound = true;
-                if(ui->Find_Check_TypeBlock->isChecked() && m_curBlock.data.id != 0 && toBeFound)
-                    toBeFound = ((ItemBlock *)gr[i])->m_data.id == (unsigned int)m_curBlock.data.id;
-                if(ui->Find_Check_LayerBlock->isChecked() && toBeFound)
-                    toBeFound = ((ItemBlock *)gr[i])->m_data.layer == ui->Find_Combo_LayerBlock->currentText();
-                if(ui->Find_Check_InvisibleBlock->isChecked() && toBeFound)
-                    toBeFound = ((ItemBlock *)gr[i])->m_data.invisible == ui->Find_Check_InvisibleActiveBlock->isChecked();
-                if(ui->Find_Check_SlipperyBlock->isChecked() && toBeFound)
-                    toBeFound = ((ItemBlock *)gr[i])->m_data.slippery == ui->Find_Check_SlipperyActiveBlock->isChecked();
-                if(ui->Find_Check_ContainsNPCBlock->isChecked() && toBeFound)
-                    toBeFound = ((ItemBlock *)gr[i])->m_data.npc_id == m_curBlock.data.npc_id;
-                if(ui->Find_Check_EventDestoryedBlock->isChecked() && toBeFound)
-                    toBeFound = ((ItemBlock *)gr[i])->m_data.event_destroy == ui->Find_Combo_EventDestoryedBlock->currentText();
-                if(ui->Find_Check_EventHitedBlock->isChecked() && toBeFound)
-                    toBeFound = ((ItemBlock *)gr[i])->m_data.event_hit == ui->Find_Combo_EventHitedBlock->currentText();
-                if(ui->Find_Check_EventLayerEmptyBlock->isChecked() && toBeFound)
-                    toBeFound = ((ItemBlock *)gr[i])->m_data.event_emptylayer == ui->Find_Combo_EventLayerEmptyBlock->currentText();
-                if(toBeFound)
-                {
-                    for(QGraphicsItem *it : edit->scene->selectedItems())
-                        it->setSelected(false);
-                    gr[i]->setSelected(true);
-                    edit->goTo(((ItemBlock *)gr[i])->m_data.x, ((ItemBlock *)gr[i])->m_data.y, true, QPoint(-300, -300));
-                    m_curBlock.index = i + 1;//Continue search at next
-                    return false;
-                }
-            }
-        }
-    }
+    bool toBeFound = true;
+    if(ui->Find_Check_TypeBlock->isChecked() && m_curBlock.data.id != 0 && toBeFound)
+        toBeFound = d.id == (unsigned int)m_curBlock.data.id;
 
-    //end search
-    m_curBlock.index = 0; //When incrementing then starting with 0
-    return true;
+    if(ui->Find_Check_LayerBlock->isChecked() && toBeFound)
+        toBeFound = d.layer == ui->Find_Combo_LayerBlock->currentText();
+
+    if(ui->Find_Check_InvisibleBlock->isChecked() && toBeFound)
+        toBeFound = d.invisible == ui->Find_Check_InvisibleActiveBlock->isChecked();
+
+    if(ui->Find_Check_SlipperyBlock->isChecked() && toBeFound)
+        toBeFound = d.slippery == ui->Find_Check_SlipperyActiveBlock->isChecked();
+
+    if(ui->Find_Check_ContainsNPCBlock->isChecked() && toBeFound)
+        toBeFound = d.npc_id == m_curBlock.data.npc_id;
+
+    if(ui->Find_Check_EventDestoryedBlock->isChecked() && toBeFound)
+        toBeFound = d.event_destroy == ui->Find_Combo_EventDestoryedBlock->currentText();
+
+    if(ui->Find_Check_EventHitedBlock->isChecked() && toBeFound)
+        toBeFound = d.event_hit == ui->Find_Combo_EventHitedBlock->currentText();
+
+    if(ui->Find_Check_EventLayerEmptyBlock->isChecked() && toBeFound)
+        toBeFound = d.event_emptylayer == ui->Find_Combo_EventLayerEmptyBlock->currentText();
+
+    return toBeFound;
 }
 
-bool LvlSearchBox::doSearchBGO(LevelEdit *edit)
+bool LvlSearchBox::checkBgoCriteria(QGraphicsItem *gri)
 {
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
+    if(gri->data(ITEM_TYPE).toString() != "BGO")
+        return false;
 
-    //Reset search on changing total number of elements (something added or deleted)
-    //... however, will be continued if something replaced
-    if(grSize != m_curBgo.total)
-    {
-        m_curBgo.total = grSize;
-        m_curBgo.index = 0;
-    }
+    auto *it = qgraphicsitem_cast<ItemBGO *>(gri);
+    Q_ASSERT(it);
+    auto &d = it->m_data;
 
-    if(m_curBgo.index < grSize)
-    {
-        for(quint64 i = m_curBgo.index; i < grSize; ++i)
-        {
-            if(gr[i]->data(ITEM_TYPE).toString() == "BGO")
-            {
-                bool toBeFound = true;
-                if(ui->Find_Check_TypeBGO->isChecked() && m_curBgo.data.id != 0 && toBeFound)
-                    toBeFound = ((ItemBGO *)gr[i])->m_data.id == (unsigned int)m_curBgo.data.id;
-                if(ui->Find_Check_LayerBGO->isChecked() && toBeFound)
-                    toBeFound = ((ItemBGO *)gr[i])->m_data.layer == ui->Find_Combo_LayerBGO->currentText();
-                if(ui->Find_Check_PriorityBGO->isChecked() && toBeFound)
-                    toBeFound = ((ItemBGO *)gr[i])->m_data.smbx64_sp == ui->Find_Spin_PriorityBGO->value();
-                if(toBeFound)
-                {
-                    for(QGraphicsItem *it : edit->scene->selectedItems())
-                        it->setSelected(false);
-                    gr[i]->setSelected(true);
-                    edit->goTo(((ItemBGO *)gr[i])->m_data.x, ((ItemBGO *)gr[i])->m_data.y, true, QPoint(-300, -300));
-                    m_curBgo.index = i + 1;//Continue search at next
-                    return false;
-                }
-            }
-        }
-    }
+    bool toBeFound = true;
+    if(ui->Find_Check_TypeBGO->isChecked() && m_curBgo.data.id != 0 && toBeFound)
+        toBeFound = d.id == (unsigned int)m_curBgo.data.id;
 
-    //end search
-    m_curBgo.index = 0; //When incrementing then starting with 0
-    return true;
+    if(ui->Find_Check_LayerBGO->isChecked() && toBeFound)
+        toBeFound = d.layer == ui->Find_Combo_LayerBGO->currentText();
+
+    if(ui->Find_Check_PriorityBGO->isChecked() && toBeFound)
+        toBeFound = d.smbx64_sp == ui->Find_Spin_PriorityBGO->value();
+
+    return toBeFound;
 }
 
-bool LvlSearchBox::doSearchNPC(LevelEdit *edit)
+bool LvlSearchBox::checkNpcCriteria(QGraphicsItem *gri)
 {
-    QList<QGraphicsItem *> gr = edit->scene->items();
-    quint64 grSize = static_cast<quint64>(gr.size());
+    if(gri->data(ITEM_TYPE).toString() != "NPC")
+        return false;
+
+    bool toBeFound = true;
+
+    auto *it = qgraphicsitem_cast<ItemNPC *>(gri);
+    Q_ASSERT(it);
+    auto &d = it->m_data;
+
+    if(ui->Find_Check_TypeNPC->isChecked() && m_curNpc.data.id != 0 && toBeFound)
+        toBeFound = d.id == (unsigned int)m_curNpc.data.id;
+    if(ui->Find_Check_LayerNPC->isChecked() && toBeFound)
+        toBeFound = d.layer == ui->Find_Combo_LayerNPC->currentText();
+    if(ui->Find_Check_DirNPC->isChecked() && toBeFound)
+    {
+        if(ui->Find_Radio_DirLeftNPC->isChecked())
+            toBeFound = d.direct == -1;
+        else if(ui->Find_Radio_DirRandomNPC->isChecked())
+            toBeFound = d.direct == 0;
+        else if(ui->Find_Radio_DirRightNPC->isChecked())
+            toBeFound = d.direct == 1;
+    }
+    if(ui->Find_Check_FriendlyNPC->isChecked() && toBeFound)
+        toBeFound = d.friendly == ui->Find_Check_FriendlyActiveNPC->isChecked();
+    if(ui->Find_Check_NotMoveNPC->isChecked() && toBeFound)
+        toBeFound = d.nomove == ui->Find_Check_NotMoveActiveNPC->isChecked();
+    if(ui->Find_Check_BossNPC->isChecked() && toBeFound)
+        toBeFound = d.is_boss == ui->Find_Check_BossActiveNPC->isChecked();
+    if(ui->Find_Check_MsgNPC->isChecked() && toBeFound)
+    {
+        toBeFound = d.msg.contains(ui->Find_Edit_MsgNPC->text(),
+                    (ui->Find_Check_MsgSensitiveNPC->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive));
+    }
+    if(ui->Find_Check_Layer_AttachedNPC->isChecked() && toBeFound)
+    {
+        toBeFound = d.attach_layer == ui->Find_Combo_Layer_AttachedNPC->currentText()
+                    || (d.attach_layer == "" && ui->Find_Combo_Layer_AttachedNPC->currentText() == "[None]");
+    }
+    if(ui->Find_Check_Event_ActivateNPC->isChecked() && toBeFound)
+    {
+        toBeFound = d.event_activate == ui->Find_Combo_Event_ActivateNPC->currentText()
+                    || (d.event_activate == "" && ui->Find_Combo_Event_ActivateNPC->currentText() == "[None]");
+    }
+    if(ui->Find_Check_Event_DeathNPC->isChecked() && toBeFound)
+    {
+        toBeFound = d.event_die == ui->Find_Combo_Event_DeathNPC->currentText()
+                    || (d.event_die == "" && ui->Find_Combo_Event_DeathNPC->currentText() == "[None]");
+    }
+    if(ui->Find_Check_Event_TalkNPC->isChecked() && toBeFound)
+    {
+        toBeFound = d.event_talk == ui->Find_Combo_Event_TalkNPC->currentText()
+                    || (d.event_talk == "" && ui->Find_Combo_Event_TalkNPC->currentText() == "[None]");
+    }
+    if(ui->Find_Check_Event_Empty_LayerNPC->isChecked() && toBeFound)
+    {
+        toBeFound = d.event_emptylayer == ui->Find_Combo_Event_Empty_LayerNPC->currentText()
+                    || (d.event_emptylayer == "" && ui->Find_Combo_Event_Empty_LayerNPC->currentText() == "[None]");
+    }
+
+    return toBeFound;
+}
+
+bool LvlSearchBox::doSearch(LvlSearchBox::SearchMeta &meta,
+                            LvlSearchBox::SearchCriteriaType checkCriteria,
+                            LevelEdit *edit,
+                            bool curSectionOnly, bool all, bool selectionOnly)
+{
+    auto gr = edit->scene->items();
+    auto grSize = static_cast<quint64>(gr.size());
+
+    bool foundAll = false;
+    QPoint foundFirst;
+    int foundCount = 0;
 
     //Reset search on changing total number of elements (something added or deleted)
     //... however, will be continued if something replaced
-    if(grSize != m_curNpc.total)
+    if(grSize != meta.total || all)
     {
-        m_curNpc.total = grSize;
-        m_curNpc.index = 0;
+        meta.total = grSize;
+        meta.index = 0;
+        if(all)
+        {
+            if(selectionOnly)
+            {
+                gr = edit->scene->selectedItems();
+                grSize = static_cast<quint64>(gr.size());
+            }
+
+            for(QGraphicsItem *it : edit->scene->selectedItems())
+                it->setSelected(false);
+        }
     }
 
-    if(m_curNpc.index < grSize)
+    if(meta.index < grSize)
     {
-        for(quint64 i = m_curNpc.index; i < grSize; ++i)
+        for(quint64 i = meta.index; i < grSize; ++i)
         {
-            if(gr[i]->data(ITEM_TYPE).toString() == "NPC")
+            auto *gri = gr[i];
+            long x = static_cast<long>(gri->x());
+            long y = static_cast<long>(gri->y());
+
+            bool toBeFound = (this->*checkCriteria)(gri);
+
+            if(curSectionOnly && toBeFound)
+                toBeFound = edit->getCurrentSection() == edit->findNearestSection(x, y);
+
+            if(toBeFound)
             {
-                bool toBeFound = true;
-                if(ui->Find_Check_TypeNPC->isChecked() && m_curNpc.data.id != 0 && toBeFound)
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.id == (unsigned int)m_curNpc.data.id;
-                if(ui->Find_Check_LayerNPC->isChecked() && toBeFound)
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.layer == ui->Find_Combo_LayerNPC->currentText();
-                if(ui->Find_Check_DirNPC->isChecked() && toBeFound)
-                {
-                    if(ui->Find_Radio_DirLeftNPC->isChecked())
-                        toBeFound = ((ItemNPC *)gr[i])->m_data.direct == -1;
-                    else if(ui->Find_Radio_DirRandomNPC->isChecked())
-                        toBeFound = ((ItemNPC *)gr[i])->m_data.direct == 0;
-                    else if(ui->Find_Radio_DirRightNPC->isChecked())
-                        toBeFound = ((ItemNPC *)gr[i])->m_data.direct == 1;
-                }
-                if(ui->Find_Check_FriendlyNPC->isChecked() && toBeFound)
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.friendly == ui->Find_Check_FriendlyActiveNPC->isChecked();
-                if(ui->Find_Check_NotMoveNPC->isChecked() && toBeFound)
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.nomove == ui->Find_Check_NotMoveActiveNPC->isChecked();
-                if(ui->Find_Check_BossNPC->isChecked() && toBeFound)
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.is_boss == ui->Find_Check_BossActiveNPC->isChecked();
-                if(ui->Find_Check_MsgNPC->isChecked() && toBeFound)
-                {
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.msg.contains(ui->Find_Edit_MsgNPC->text(),
-                                (ui->Find_Check_MsgSensitiveNPC->isChecked() ? Qt::CaseSensitive : Qt::CaseInsensitive));
-                }
-                if(ui->Find_Check_Layer_AttachedNPC->isChecked() && toBeFound)
-                {
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.attach_layer == ui->Find_Combo_Layer_AttachedNPC->currentText()
-                                || (((ItemNPC *)gr[i])->m_data.attach_layer == "" && ui->Find_Combo_Layer_AttachedNPC->currentText() == "[None]");
-                }
-                if(ui->Find_Check_Event_ActivateNPC->isChecked() && toBeFound)
-                {
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.event_activate == ui->Find_Combo_Event_ActivateNPC->currentText()
-                                || (((ItemNPC *)gr[i])->m_data.event_activate == "" && ui->Find_Combo_Event_ActivateNPC->currentText() == "[None]");
-                }
-                if(ui->Find_Check_Event_DeathNPC->isChecked() && toBeFound)
-                {
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.event_die == ui->Find_Combo_Event_DeathNPC->currentText()
-                                || (((ItemNPC *)gr[i])->m_data.event_die == "" && ui->Find_Combo_Event_DeathNPC->currentText() == "[None]");
-                }
-                if(ui->Find_Check_Event_TalkNPC->isChecked() && toBeFound)
-                {
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.event_talk == ui->Find_Combo_Event_TalkNPC->currentText()
-                                || (((ItemNPC *)gr[i])->m_data.event_talk == "" && ui->Find_Combo_Event_TalkNPC->currentText() == "[None]");
-                }
-                if(ui->Find_Check_Event_Empty_LayerNPC->isChecked() && toBeFound)
-                {
-                    toBeFound = ((ItemNPC *)gr[i])->m_data.event_emptylayer == ui->Find_Combo_Event_Empty_LayerNPC->currentText()
-                                || (((ItemNPC *)gr[i])->m_data.event_emptylayer == "" && ui->Find_Combo_Event_Empty_LayerNPC->currentText() == "[None]");
-                }
-                if(toBeFound)
+                if(!all)
                 {
                     for(QGraphicsItem *it : edit->scene->selectedItems())
                         it->setSelected(false);
-                    gr[i]->setSelected(true);
-                    edit->goTo(((ItemNPC *)gr[i])->m_data.x, ((ItemNPC *)gr[i])->m_data.y, true, QPoint(-300, -300));
-                    m_curNpc.index = i + 1;
+                }
+
+                gri->setSelected(true);
+
+                if(!all)
+                {
+                    edit->goTo(x, y, true, QPoint(-300, -300));
+                    meta.index = i + 1;//Continue search at next
                     return false;
                 }
+                else if(!foundAll)
+                {
+                    foundAll = true;
+                    foundFirst.setY(y);
+                    foundFirst.setX(x);
+                }
+                else
+                {
+                    // Move to left-top of selection group for convenience
+                    if(foundFirst.y() > y)
+                        foundFirst.setY(y);
+                    if(foundFirst.x() > x)
+                        foundFirst.setX(x);
+                }
+
+                foundCount++;
             }
         }
     }
 
+    if(foundAll)
+    {
+        edit->goTo(foundFirst.x(), foundFirst.y(), true, QPoint(-300, -300));
+        mw()->showStatusMsg(tr("%1 found elements were selected.").arg(foundCount), 3000);
+    }
+
     //end search
-    m_curNpc.index = 0; //When incrementing then starting with 0
+    meta.index = 0; //When incrementing then starting with 0
     return true;
 }
 

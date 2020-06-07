@@ -24,7 +24,7 @@
 
 
 NpcEdit::NpcEdit(MainWindow *mw,
-                 dataconfigs *configs,
+                 DataConfig *configs,
                  QWidget *parent) :
     EditBase(mw, parent),
     ui(new Ui::NpcEdit)

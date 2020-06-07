@@ -5,15 +5,15 @@
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
         <source>Unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eccezione non gestita!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation type="unfinished"></translation>
+        <translation>Il motore si è bloccato perché è stata accettata un&apos;eccezione non gestita!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <source>Out of memory!</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuori dalla memoria!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
@@ -437,6 +437,14 @@ therefore you can use same link to get updated version.</oldsource>
     </message>
     <message id="VSYNC_ERROR_INFO">
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WARNING_INCOMPATIBLE_WORLDMAP">
+        <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WARNING_INCOMPATIBLE_LEVEL">
+        <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

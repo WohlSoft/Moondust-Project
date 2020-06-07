@@ -237,6 +237,11 @@ void WorldScene::setGameState(EpisodeState *_state)
     }
 }
 
+WorldData *WorldScene::worldData()
+{
+    return &m_data;
+}
+
 bool WorldScene::init()
 {
     //Global script path

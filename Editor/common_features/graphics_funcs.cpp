@@ -24,7 +24,6 @@
 #include <memory>
 
 #include <common_features/logger.h>
-#include <FileMapper/file_mapper.h>
 
 #include "graphics_funcs.h"
 
@@ -34,48 +33,51 @@
 
 FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
 {
-#if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
-    FileMapper fileMap;
+    QFile fileMap(file);
 
-    if(!fileMap.open_file(file.toUtf8().data()))
+    FIBITMAP *img = nullptr;
+
+    if(!fileMap.open(QIODevice::ReadOnly))
         return nullptr;
 
-    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
-                                            static_cast<unsigned int>(fileMap.size()));
-    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
+    unsigned int m_size = static_cast<unsigned int>(fileMap.size());
+    unsigned char *m = fileMap.map(0, fileMap.size());
 
-    if(formato  == FIF_UNKNOWN)
-        return nullptr;
-
-    FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
-    FreeImage_CloseMemory(imgMEM);
-    fileMap.close_file();
-
-    if(!img)
-        return nullptr;
-
-#else
-    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
-
-    if(formato  == FIF_UNKNOWN)
-        return nullptr;
-
-    FIBITMAP *img = FreeImage_Load(formato, file.toUtf8().data());
-
-    if(!img)
-        return nullptr;
-
-#endif
-
-    if(convertTo32bit)
+    if(m)
     {
-        FIBITMAP *temp;
-        temp = FreeImage_ConvertTo32Bits(img);
+        FIMEMORY *imgMEM = FreeImage_OpenMemory(m, m_size);
+        FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
 
+        if(formato  == FIF_UNKNOWN)
+        {
+            fileMap.unmap(m);
+            return nullptr;
+        }
+
+        img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+        FreeImage_CloseMemory(imgMEM);
+
+        fileMap.unmap(m);
+    }
+    else
+    {
+        FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.toUtf8().data(), 0);
+        if(formato  == FIF_UNKNOWN)
+            return nullptr;
+        img = FreeImage_Load(formato, file.toUtf8().data());
+    }
+
+    if(!img)
+        return nullptr;
+
+    unsigned int bpp = FreeImage_GetBPP(img);
+
+    if(convertTo32bit && bpp != 32)
+    {
+        FIBITMAP *temp = FreeImage_ConvertTo32Bits(img);
+        FreeImage_Unload(img);
         if(!temp)
             return nullptr;
-
-        FreeImage_Unload(img);
         img = temp;
     }
 
@@ -357,6 +359,19 @@ void GraphicsHelps::loadMaskedImage(QString rootDir, QString in_imgName, QString
     }
 
     out_errStr = "";
+}
+
+void GraphicsHelps::loadIconOpt(QString rootDir, QString in_imgName, QPixmap &out_Img)
+{
+    out_Img = QPixmap(); // null it
+
+    if(in_imgName.isEmpty())
+        return;
+
+    if(!QFile::exists(rootDir + in_imgName))
+        return;
+
+    out_Img.load(rootDir + in_imgName);
 }
 
 QPixmap GraphicsHelps::loadPixmap(QString file)

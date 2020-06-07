@@ -27,6 +27,7 @@ EditingSettings::EditingSettings()
     customGrid.setWidth(0);
     customGrid.setHeight(0);
     grid_show=false;
+    camera_grid_show=false;
     semiTransparentPaths=false;
 }
 
@@ -58,7 +59,10 @@ bool GlobalSettings::Placing_dontShowPropertiesBox  = false;
 
 int  GlobalSettings::historyLimit   = 300;
 
-QString GlobalSettings::currentTheme= "";
+QString GlobalSettings::currentTheme;
+std::unique_ptr<QFont> GlobalSettings::fontDefault;
+std::unique_ptr<QFont> GlobalSettings::font;
+int     GlobalSettings::fontSize = -1;
 
 bool GlobalSettings::ShowTipOfDay   = true;
 
@@ -92,7 +96,14 @@ QString ConfStatus::configPath;
 QString ConfStatus::configDataPath;
 
 QString ConfStatus::SmbxEXE_Name;
-bool    ConfStatus::SmbxTest_By_Default = false;
-bool    ConfStatus::SmbxTest_HidePgeEngine = false;
+
+ConfStatus::TestEngineType ConfStatus::defaultTestEngine = ConfStatus::ENGINE_PGE;
+bool ConfStatus::hideNonDefaultEngines = false;
 
 QString ConfStatus::defaultTheme;
+
+void GlobalSettings::cleanUp()
+{
+    font.reset();
+    fontDefault.reset();
+}

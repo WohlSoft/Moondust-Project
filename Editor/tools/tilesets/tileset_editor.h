@@ -38,7 +38,7 @@ class TilesetEditor : public QDialog
     Q_OBJECT
 
 public:
-    explicit TilesetEditor(dataconfigs *conf, QGraphicsScene *scene = nullptr, QWidget *parent = nullptr);
+    explicit TilesetEditor(DataConfig *conf, QGraphicsScene *scene = nullptr, QWidget *parent = nullptr);
     ~TilesetEditor();
     enum GFXMode
     {
@@ -86,7 +86,7 @@ private:
     int oldWidth;
     int oldHeight;
     ElementsListModel *m_model = nullptr;
-    dataconfigs *m_conf = nullptr;
+    DataConfig *m_conf = nullptr;
     //void setUpItems(ItemTypes type);
     ElementsListModel::ElementType toElementType(int type);
 };

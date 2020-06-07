@@ -22,39 +22,27 @@
 
 #include <QObject>
 #include <QProcess>
+#include <PGE_File_Formats/lvl_filedata.h>
 
-struct LevelData;
-
-class IntEngine: public QObject
+/**
+ * @brief Global re-usable IPC interface
+ */
+class IntEngineSignals : public QObject
 {
-        Q_OBJECT
-    public:
-        IntEngine();
-        ~IntEngine() override = default;
-        static void init(QProcess *engine_proc);
+    Q_OBJECT
+public:
+    explicit IntEngineSignals(QObject *parent = nullptr);
+    ~IntEngineSignals();
 
-        static void quit();
-        static bool isWorking();
-
-        static bool sendCheat(QString _args);
-        static bool sendMessageBox(QString _args);
-        static bool sendItemPlacing(QString _args);
-        static void sendLevelBuffer();
-
-        static void setTestLvlBuffer(LevelData &buffer);
-
-        static bool sendMessage(const char *msg);
-        static bool sendMessage(QString &msg);
-
-        static LevelData testBuffer;
-    signals:
-        void engineInputMsg(QString msg);
-
-    private slots:
-        void onData();
-
-    private:
-        static QProcess *engine;
+signals:
+    bool sendCheat(QString _args);
+    bool sendMessageBox(QString _args);
+    void sendPlacingBlock(const LevelBlock &block);
+    void sendPlacingBGO(const LevelBGO &bgo);
+    void sendPlacingNPC(const LevelNPC &npc);
+    void sendCurrentLayer(const QString &layerName);
 };
+
+extern IntEngineSignals g_intEngine;
 
 #endif // ENGINE_INTPROCINTPROC_H

@@ -56,6 +56,9 @@ if(PGE_ENABLE_STATIC_QT)
             "
         )
 
+        set(QT_HAS_WAYLAND FALSE)
+        set(QT_HAS_EGLX11 FALSE)
+
         if(WIN32)
             set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
                 Q_IMPORT_PLUGIN(QWindowsVistaStylePlugin)
@@ -67,11 +70,40 @@ if(PGE_ENABLE_STATIC_QT)
                 Q_IMPORT_PLUGIN(QCocoaIntegrationPlugin)"
             )
         elseif("${CMAKE_SYSTEM}" MATCHES "Linux")
-           set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-               Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
-               Q_IMPORT_PLUGIN(QXcbEglIntegrationPlugin)
-               Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)"
-           )
+            set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)"
+            )
+
+            find_library(QT_EGLX11_CHECK  qeglfs-x11-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/egldeviceintegrations")
+            if(QT_EGLX11_CHECK)
+                set(QT_HAS_EGLX11 TRUE)
+                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                    Q_IMPORT_PLUGIN(QXcbEglIntegrationPlugin)"
+                )
+            endif()
+            unset(QT_EGLX11_CHECK)
+
+            find_library(QT_GLXINT_CHECK  qxcb-glx-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
+            if(QT_GLXINT_CHECK)
+                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                    Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)"
+                )
+            endif()
+            unset(QT_GLXINT_CHECK)
+
+            find_library(QT_WAYLAND_GENERIC_PLUGIN qwayland-generic PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+            mark_as_advanced(QT_WAYLAND_GENERIC_PLUGIN)
+            if(QT_WAYLAND_GENERIC_PLUGIN)
+                set(QT_HAS_WAYLAND TRUE)
+                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                    Q_IMPORT_PLUGIN(QWaylandIntegrationPlugin)
+                    Q_IMPORT_PLUGIN(QWaylandEglPlatformIntegrationPlugin)
+                    Q_IMPORT_PLUGIN(QWaylandXCompositeEglPlatformIntegrationPlugin)
+                    Q_IMPORT_PLUGIN(QWaylandXCompositeGlxPlatformIntegrationPlugin)"
+                )
+                # Q_IMPORT_PLUGIN(QWaylandBrcmEglPlatformIntegrationPlugin)
+            endif()
+            unset(QT_WAYLAND_GENERIC_PLUGIN)
         endif()
 
         set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
@@ -81,10 +113,12 @@ if(PGE_ENABLE_STATIC_QT)
         )
 
         if("${CMAKE_SYSTEM}" MATCHES "Linux")
-            set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-                /* Q_IMPORT_PLUGIN(QEglFSEmulatorIntegrationPlugin) */
-                Q_IMPORT_PLUGIN(QEglFSX11IntegrationPlugin)"
-            )
+            if(QT_HAS_EGLX11)
+                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                    /* Q_IMPORT_PLUGIN(QEglFSEmulatorIntegrationPlugin) */
+                    Q_IMPORT_PLUGIN(QEglFSX11IntegrationPlugin)"
+                )
+            endif()
 
             find_package(PkgConfig)
             pkg_check_modules(GTK "gtk+-3.0")
@@ -104,11 +138,15 @@ if(PGE_ENABLE_STATIC_QT)
         find_library(QT_ICO     qico PATHS "${CMAKE_PREFIX_PATH}/plugins/imageformats" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/imageformats")
         list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_ICO})
 
+        mark_as_advanced(QT_QGIF QT_ICNS QT_ICO)
+
         if(APPLE)
             find_library(QT_MACSTYLE qmacstyle PATHS "${CMAKE_PREFIX_PATH}/plugins/styles" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/styles")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_MACSTYLE})
             find_library(QT_COCOA    qcocoa PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_COCOA})
+
+            mark_as_advanced(QT_MACSTYLE QT_COCOA)
 
             list(APPEND QT_FOUND_EXTRA_LIBS cups)
 
@@ -143,6 +181,7 @@ if(PGE_ENABLE_STATIC_QT)
             foreach(LIB ${MAC_LIBS_TO_FIND})
                     find_library(FOUND_LIB_${LIB} ${LIB})
                     list(APPEND QT_FOUND_EXTRA_LIBS ${FOUND_LIB_${LIB}})
+                    mark_as_advanced(FOUND_LIB_${LIB})
                     #message("Lib: ${LIB}")
                     #message("Found Lib: ${FOUND_LIB_${LIB}}")
             endforeach()
@@ -155,14 +194,34 @@ if(PGE_ENABLE_STATIC_QT)
             endif()
             find_library(QT_WINDOWS    qwindows PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WINDOWS})
+            mark_as_advanced(QT_WINVISTASTYLE QT_WINDOWS)
         endif()
 
         if("${CMAKE_SYSTEM}" MATCHES "Linux")
+            # GTK3
+            if(GTK_FOUND)
+                find_library(QT_GTK3 qgtk3 PATHS "${CMAKE_PREFIX_PATH}/plugins/platformthemes" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platformthemes")
+                if(QT_GTK3)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GTK3})
+                    list(APPEND QT_FOUND_EXTRA_LIBS ${GTK_LIBRARIES})
+                else()
+                    message("!!! GTK+3 FOUND, BUT qgtk3 IS NOT!!!")
+                endif()
+            endif()
 
             find_library(QT_QEGLFS  qeglfs PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QEGLFS})
-            find_library(QT_LINUXFB qlinuxfb PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_LINUXFB})
+            if(QT_QEGLFS)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QEGLFS})
+            else()
+                message("!!! qeglfs NOT FOUND!!!")
+            endif()
+
+            #find_library(QT_LINUXFB qlinuxfb PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+            #if(QT_LINUXFB)
+            #    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_LINUXFB})
+            #else()
+            #    message("!!! qlinuxfb NOT FOUND!!!")
+            #endif()
 
             # find_library(QT_EGLEMU  qeglfs-emu-integration PATHS ${CMAKE_PREFIX_PATH}/plugins/egldeviceintegrations)
             # list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLEMU})
@@ -170,12 +229,19 @@ if(PGE_ENABLE_STATIC_QT)
             if(QT_EGLX11)
                 list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLX11})
             else()
-                message("!!! QT_EGLX11 NOT FOUND!!!")
+                message("!!! qeglfs-x11-integration NOT FOUND!!!")
             endif()
 
             find_library(QT_QXCB    qxcb PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
             if(QT_QXCB)
                 list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QXCB})
+            else()
+                message("!!! qxcb NOT FOUND!!!")
+            endif()
+
+            find_library(QT_QXCB_STATIC_A xcb-static PATHS "${CMAKE_PREFIX_PATH}/lib")
+            if(QT_QXCB_STATIC_A)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_QXCB_STATIC_A})
             else()
                 find_library(QT_QXCB xcb)
                 if(QT_QXCB)
@@ -183,20 +249,53 @@ if(PGE_ENABLE_STATIC_QT)
                 endif()
             endif()
 
-            # GTK3
-            if(GTK_FOUND)
-                find_library(QT_GTK3 qgtk3 PATHS "${CMAKE_PREFIX_PATH}/plugins/platformthemes" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platformthemes")
-                if(QT_GTK3)
-                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GTK3})
-                    list(APPEND QT_FOUND_EXTRA_LIBS ${GTK_LIBRARIES})
-                endif()
+            find_library(QT_EGLINT  qxcb-egl-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
+            if(QT_EGLINT)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLINT})
+            else()
+                message("!!! qxcb-egl-integration NOT FOUND!!!")
             endif()
 
-            find_library(QT_EGLINT  qxcb-egl-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_EGLINT})
-
             find_library(QT_Qt5EglFSDeviceIntegration  Qt5EglFSDeviceIntegration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_Qt5EglFSDeviceIntegration})
+            if(QT_Qt5EglFSDeviceIntegration)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_Qt5EglFSDeviceIntegration})
+            else()
+                message("!!! Qt5EglFSDeviceIntegration NOT FOUND!!!")
+            endif()
+
+            mark_as_advanced(QT_QEGLFS QT_LINUXFB QT_EGLX11 QT_QXCB_STATIC_A QT_QXCB QT_GTK3 QT_EGLINT QT_Qt5EglFSDeviceIntegration)
+
+            if(QT_HAS_WAYLAND)
+                find_library(QT_WAYLAND_GENERIC_PLUGIN qwayland-generic PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+                if(QT_WAYLAND_GENERIC_PLUGIN)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WAYLAND_GENERIC_PLUGIN})
+                else()
+                    message("!!! qwayland-generic NOT FOUND!!!")
+                endif()
+
+                find_library(QT_WAYLAND_EGL_PLUGIN qwayland-egl PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+                if(QT_WAYLAND_EGL_PLUGIN)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WAYLAND_EGL_PLUGIN})
+                else()
+                    message("!!! qwayland-egl NOT FOUND!!!")
+                endif()
+
+                find_library(QT_WAYLAND_XCOMPOSITE_EGL_PLUGIN qwayland-xcomposite-egl PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+                if(QT_WAYLAND_XCOMPOSITE_EGL_PLUGIN)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WAYLAND_XCOMPOSITE_EGL_PLUGIN})
+                else()
+                    message("!!! qwayland-xcomposite-egl NOT FOUND!!!")
+                endif()
+
+                find_library(QT_WAYLAND_XCOMPOSITE_GLX_PLUGIN qwayland-xcomposite-glx PATHS "${CMAKE_PREFIX_PATH}/plugins/platforms" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platforms")
+                if(QT_WAYLAND_XCOMPOSITE_GLX_PLUGIN)
+                    list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_WAYLAND_XCOMPOSITE_GLX_PLUGIN})
+                else()
+                    message("!!! qwayland-xcomposite-glx NOT FOUND!!!")
+                endif()
+
+                mark_as_advanced(QT_WAYLAND_GENERIC_PLUGIN QT_WAYLAND_EGL_PLUGIN QT_WAYLAND_XCOMPOSITE_EGL_PLUGIN QT_WAYLAND_XCOMPOSITE_GLX_PLUGIN)
+            endif()
 
             foreach(qqlib
                     Qt5EventDispatcherSupport Qt5ServiceSupport
@@ -205,6 +304,7 @@ if(PGE_ENABLE_STATIC_QT)
                 if(QT_${qqlib})
                     message("-- Found ${QT_${qqlib}}!")
                     list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_${qqlib}})
+                    mark_as_advanced(${QT_${qqlib}})
                 endif()
             endforeach()
 
@@ -218,11 +318,18 @@ if(PGE_ENABLE_STATIC_QT)
                 if(QT_${qqlib})
                     message("-- Found ${QT_${qqlib}}!")
                     list(APPEND QT_FOUND_EXTRA_LIBS ${QT_${qqlib}})
+                    mark_as_advanced(${QT_${qqlib}})
                 endif()
             endforeach()
 
             find_library(QT_GLXINT  qxcb-glx-integration PATHS "${CMAKE_PREFIX_PATH}/plugins/xcbglintegrations" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/xcbglintegrations")
-            list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GLXINT})
+            if(QT_GLXINT)
+                list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GLXINT})
+            else()
+                message("!!! qxcb-glx-integration NOT FOUND!!!")
+            endif()
+
+            mark_as_advanced(QT_GLXINT)
 
             if(NOT QT_PRCE2)
                 find_library(QT_PRCESYS pcre)
@@ -235,6 +342,7 @@ if(PGE_ENABLE_STATIC_QT)
                     message("== SYS-pcre16 detected! (${QT_PRCE16SYS})==")
                     list(APPEND QT_FOUND_EXTRA_LIBS ${QT_PRCE16SYS})
                 endif()
+                mark_as_advanced(QT_PRCE16SYS QT_PRCESYS)
             endif()
 
             find_library(QT_GLIB glib NAMES glib glib-2.0)
@@ -257,6 +365,8 @@ if(PGE_ENABLE_STATIC_QT)
 #                endforeach()
             endif()
 
+            mark_as_advanced(QT_GLIB QT_XCB)
+
             foreach(xxlib
                     Xext
                     xcb-xinerama Xrender xcb-xkb xcb-sync xcb-xfixes xcb-randr
@@ -271,11 +381,13 @@ if(PGE_ENABLE_STATIC_QT)
                 if(QT_${xxlib})
                     message("-- Found ${QT_${xxlib}}!")
                     list(APPEND QT_FOUND_EXTRA_LIBS ${QT_${xxlib}})
+                    mark_as_advanced(${QT_${xxlib}})
                 endif()
             endforeach()
 
             find_library(QT_fontconfig fontconfig)
             list(APPEND QT_FOUND_EXTRA_LIBS ${QT_fontconfig})
+            mark_as_advanced(QT_fontconfig)
 
             if(NOT QT_FREETYPE)
             #     find_library(QT_freetype freetype)
@@ -288,11 +400,16 @@ if(PGE_ENABLE_STATIC_QT)
                 if(QT_${xxlib})
                     message("-- Found ${QT_${xxlib}}!")
                     list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_${xxlib}})
+                    mark_as_advanced(${QT_${xxlib}})
                 endif()
             endforeach()
 
             find_library(QT_EGL EGL)
-            list(APPEND QT_FOUND_EXTRA_LIBS ${QT_EGL})
+            if(QT_EGL)
+                list(APPEND QT_FOUND_EXTRA_LIBS ${QT_EGL})
+            else()
+                message("!!! EGL NOT FOUND!!!")
+            endif()
 
             find_library(QT_udev udev)
             list(APPEND QT_FOUND_EXTRA_LIBS ${QT_udev})
@@ -305,6 +422,8 @@ if(PGE_ENABLE_STATIC_QT)
                 # message("==DL detected! (${QT_DL})==")
                 list(APPEND QT_FOUND_EXTRA_LIBS ${QT_DL})
             endif()
+
+            mark_as_advanced(QT_EGL QT_udev QT_GL QT_DL)
         endif()
         # message("==Full list of libs: ${QT_FOUND_EXTRA_LIBS}==")
 

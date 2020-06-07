@@ -220,14 +220,20 @@ void util::CSV2DoubleArr(QString source, QVector<double> &dest)
 
 QRect util::getScreenGeometry(int screenIndex)
 {
+    auto *d = qApp->desktop();
+    Q_ASSERT(d);
+    auto screens = QGuiApplication::screens();
+
+    if(screens.size() <= 1) // if 1 monitor only in use
+        return d->geometry();
+
     QScreen *screen = QGuiApplication::primaryScreen();
     if(screenIndex < 0)
-        return screen ? screen->geometry() : qApp->desktop()->geometry();
+        return screen ? screen->geometry() : d->geometry();
     else
     {
-        QList<QScreen*> screens = QGuiApplication::screens();
         if(screenIndex >= screens.size())
-            return qApp->desktop()->geometry();
+            return d->geometry();
         else
             return screens[screenIndex]->geometry();
     }

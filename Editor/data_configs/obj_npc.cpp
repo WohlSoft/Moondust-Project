@@ -26,29 +26,26 @@
 
 #include "data_configs.h"
 
-obj_npc::obj_npc()
-{
-    isValid     = false;
-    animator_id = 0;
-    cur_image   = nullptr;
-}
-
 void obj_npc::copyTo(obj_npc &npc)
 {
     /* for internal usage */
     npc.isValid         = isValid;
     npc.animator_id     = animator_id;
     npc.cur_image       = cur_image;
+    npc.cur_icon        = cur_icon;
 
-    if(cur_image == nullptr)
+    if(!cur_image)
         npc.cur_image   = &image;
+
+    if(!cur_icon)
+        npc.cur_icon   = &icon;
 
     npc.setup.display_frame   = setup.display_frame;
     /* for internal usage */
     npc.setup = setup;
 }
 
-bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool internal = !setup;
     QString errStr;
@@ -79,7 +76,7 @@ bool dataconfigs::loadLevelNPC(obj_npc &snpc, QString section, obj_npc *merge_wi
 
 
 
-void dataconfigs::loadLevelNPC()
+void DataConfig::loadLevelNPC()
 {
     unsigned long i;
     obj_npc snpc;
@@ -149,6 +146,10 @@ void dataconfigs::loadLevelNPC()
                 valid = false;
                 addError(QString("NPC-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderLvlNPC.graphics,
+                                       snpc.setup.icon_n,
+                                       snpc.icon);
         }
 
         /***************Load image*end***************/

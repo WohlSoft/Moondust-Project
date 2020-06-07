@@ -16,16 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <common_features/graphics_funcs.h>
-#include <common_features/items.h>
 #include <editing/edit_level/level_edit.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <Utils/maths.h>
 
-#include "../../../../defines.h"
-
-#include "../lvl_scene.h"
-
+#include <defines.h>
+#include <editing/_scenes/level/lvl_scene.h>
+#include <editing/_scenes/common/load_cgfx.hpp>
 
 //Search and load custom User's files
 void LvlScene::loadUserData(QProgressDialog &progress)
@@ -35,7 +32,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     //UserNPCs uNPC;
     QImage tempImg;
 
-    bool WrongImagesDetected = false;
+    bool hasInvalidPictures = false;
 
     m_localConfigBlocks.clear();
     m_localConfigBGOs.clear();
@@ -141,7 +138,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         {
             GraphicsHelps::loadQImage(tempImg, CustomFile);
             if(tempImg.isNull())
-                WrongImagesDetected = true;
+                hasInvalidPictures = true;
             else
                 uBG.image = QPixmap::fromImage(tempImg);
             uBG.id = bgD->setup.id;
@@ -165,7 +162,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
             {
                 GraphicsHelps::loadQImage(tempImg, CustomFile);
                 if(tempImg.isNull())
-                    WrongImagesDetected = true;
+                    hasInvalidPictures = true;
                 else
                     uBG.second_image = QPixmap::fromImage(tempImg);
                 uBG.id = bgD->setup.id;
@@ -208,39 +205,22 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     //Load Blocks
     for(i = 1; i < m_configs->main_block.size(); i++) //Add user images
     {
-        obj_block *blockD = &m_configs->main_block[i];
-        obj_block t_block;
-        blockD->copyTo(t_block);
-
         bool custom = false;
+        obj_block &blockD = m_configs->main_block[i];
+        obj_block t_block;
+        blockD.copyTo(t_block);
 
         QStringList customINIs;
-        customINIs = uLVL.getCustomFiles("block-" + QString::number(blockD->setup.id), {".ini", ".txt"}, true);
+        customINIs = uLVL.getCustomFiles("block-" + QString::number(blockD.setup.id), {".ini", ".txt"}, true);
         for(QString &iniFile : customINIs)
         {
             m_configs->loadLevelBlock(t_block, "block", &t_block, iniFile);
             custom = true;
         }
 
-        QString CustomFile = uLVL.getCustomFile(t_block.setup.image_n, true);
-        if(!CustomFile.isEmpty())
-        {
-            if(!CustomFile.endsWith(".png", Qt::CaseInsensitive))
-            {
-                QString CustomMask = uLVL.getCustomFile(t_block.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomFile, CustomMask, &blockD->image);
-            }
-            else
-                GraphicsHelps::loadQImage(tempImg, CustomFile);
-            if(tempImg.isNull())
-                WrongImagesDetected = true;
-            else
-            {
-                m_localImages.push_back(QPixmap::fromImage(tempImg));
-                t_block.cur_image = &m_localImages.last();
-            }
-            custom = true;
-        }
+        custom |= loadCustomImage(tempImg, uLVL,
+                                  t_block, &blockD,
+                                  m_localImages, &hasInvalidPictures);
 
         SimpleAnimator *aniBlock = new SimpleAnimator(
             ((t_block.cur_image->isNull()) ?
@@ -287,39 +267,22 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     m_localConfigBGOs.allocateSlots(m_configs->main_bgo.total());
     for(int i = 1; i < m_configs->main_bgo.size(); i++)
     {
-        obj_bgo *bgoD = &m_configs->main_bgo[i];
-        obj_bgo t_bgo; //Allocate new BGO Config entry
         bool custom = false;
-
-        bgoD->copyTo(t_bgo);//init configs
+        obj_bgo &bgoD = m_configs->main_bgo[i];
+        obj_bgo t_bgo; //Allocate new BGO Config entry
+        bgoD.copyTo(t_bgo);//init configs
 
         QStringList customINIs;
-        customINIs = uLVL.getCustomFiles("background-" + QString::number(bgoD->setup.id), {".ini", ".txt"}, true);
+        customINIs = uLVL.getCustomFiles("background-" + QString::number(bgoD.setup.id), {".ini", ".txt"}, true);
         for(QString &iniFile : customINIs)
         {
             m_configs->loadLevelBGO(t_bgo, "background", &t_bgo, iniFile);
             custom = true;
         }
 
-        QString CustomImage = uLVL.getCustomFile(t_bgo.setup.image_n, true);
-        if(!CustomImage.isEmpty())
-        {
-            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
-            {
-                QString CustomMask = uLVL.getCustomFile(t_bgo.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &bgoD->image);
-            }
-            else
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
-            if(tempImg.isNull())
-                WrongImagesDetected = true;
-            else
-            {
-                m_localImages.push_back(QPixmap::fromImage(tempImg));
-                t_bgo.cur_image = &m_localImages.last();
-            }
-            custom = true;
-        }
+        custom |= loadCustomImage(tempImg, uLVL,
+                                  t_bgo, &bgoD,
+                                  m_localImages, &hasInvalidPictures);
 
         SimpleAnimator *aniBGO = new SimpleAnimator(
             ((t_bgo.cur_image->isNull()) ?
@@ -367,13 +330,13 @@ void LvlScene::loadUserData(QProgressDialog &progress)
 
     for(i = 1; i < m_configs->main_npc.size(); i++) //Add user images
     {
-        obj_npc *npcD = &m_configs->main_npc[i];
-        obj_npc t_npc; //Allocate new NPC Config entry
         bool custom = false;
         bool cimage = false;
         bool npctxt = false;
 
-        npcD->copyTo(t_npc);//init configs
+        obj_npc &npcD = m_configs->main_npc[i];
+        obj_npc t_npc; //Allocate new NPC Config entry
+        npcD.copyTo(t_npc);//init configs
 
         QSize capturedS = QSize(0, 0);
 
@@ -384,7 +347,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
         QString customINI = uLVL.getCustomFile("npc-" + QString::number(t_npc.setup.id) + ".ini", true);
         if(!customINI.isEmpty())
         {
-            m_configs->loadLevelNPC(t_npc, "npc", npcD, customINI);
+            m_configs->loadLevelNPC(t_npc, "npc", &npcD, customINI);
             custom = true;
         }
 
@@ -402,33 +365,16 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 custom = true;
             }
         }
+
         QString imgFileName = (npctxt && sets.en_image) ? sets.image : t_npc.setup.image_n;
 
         // ///////////////////////Looking for user's GFX
-        QString CustomImage = uLVL.getCustomFile(imgFileName, true);
-        if(CustomImage.isEmpty())
-            CustomImage = uLVL.getCustomFile(t_npc.setup.image_n, true);
-
-        if(!CustomImage.isEmpty())
-        {
-            if(!CustomImage.endsWith(".png", Qt::CaseInsensitive))
-            {
-                QString CustomMask = uLVL.getCustomFile(t_npc.setup.mask_n, false);
-                GraphicsHelps::loadQImage(tempImg, CustomImage, CustomMask, &npcD->image);
-            }
-            else
-                GraphicsHelps::loadQImage(tempImg, CustomImage);
-            if(tempImg.isNull())
-                WrongImagesDetected = true;
-            else
-            {
-                m_localImages.push_back(QPixmap::fromImage(tempImg));
-                t_npc.cur_image = &m_localImages.last();
-                capturedS = QSize(t_npc.cur_image->width(), t_npc.cur_image->height());
-            }
-            cimage = true;
-            custom = true;
-        }
+        cimage |= loadCustomImage(tempImg, uLVL,
+                                  t_npc, &npcD,
+                                  m_localImages,
+                                  &hasInvalidPictures,
+                                  &imgFileName, &capturedS);
+        custom |= cimage;
 
         if(npctxt)
         {
@@ -483,7 +429,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     qApp->processEvents();
 
     //Notification about wrong custom image sprites
-    if(WrongImagesDetected)
+    if(hasInvalidPictures)
     {
         QMessageBox *msg = new QMessageBox();
         msg->setWindowFlags(msg->windowFlags() | Qt::WindowStaysOnTopHint);

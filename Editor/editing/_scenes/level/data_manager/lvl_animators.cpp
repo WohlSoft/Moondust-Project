@@ -65,9 +65,9 @@ void LvlScene::buildAnimators()
         obj_block *blockD = &m_configs->main_block[i];
         obj_block t_block;
         blockD->copyTo(t_block);
-        #ifdef _DEBUG_
+#ifdef _DEBUG_
         WriteToLog(QtDebugMsg, QString("Block Animator ID: %1").arg(i));
-        #endif
+#endif
 
         SimpleAnimator *aniBlock = new SimpleAnimator(
             ((t_block.cur_image->isNull()) ?
@@ -127,9 +127,7 @@ void LvlScene::startAnimation()
 
     m_animationTimer.start(32);
     foreach(AdvNpcAnimator *npcA, m_animatorsNPC)
-    {
         npcA->start();
-    }
     m_subWindow->setAutoUpdateTimer(31);
 }
 
@@ -139,21 +137,19 @@ void LvlScene::stopAnimation()
     m_animationTimer.stop();
     int size = m_animatorsNPC.size();
     for(i = 0; i < size; i++)
-    {
         m_animatorsNPC[i]->stop();
-    }
     m_subWindow->stopAutoUpdateTimer();
     update();
 }
 
 void LvlScene::setMetaSignsVisibility(bool visible)
 {
-    QList<QGraphicsItem*> everything = items();
-    for(QGraphicsItem* it : everything)
+    QList<QGraphicsItem *> everything = items();
+    for(QGraphicsItem *it : everything)
     {
         if(it->data(ITEM_IS_ITEM).isNull())
             continue;
-        LvlBaseItem *item = qgraphicsitem_cast<LvlBaseItem*>(it);
+        LvlBaseItem *item = qgraphicsitem_cast<LvlBaseItem *>(it);
         item->setMetaSignsVisibility(visible);
     }
 }

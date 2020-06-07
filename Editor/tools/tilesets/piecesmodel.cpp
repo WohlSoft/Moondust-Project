@@ -25,7 +25,7 @@
 
 #include "piecesmodel.h"
 
-ElementsListModel::ElementsListModel(dataconfigs* conf, ElementType pieceType, int pieceSize, QGraphicsScene *scene, QObject *parent)
+ElementsListModel::ElementsListModel(DataConfig* conf, ElementType pieceType, int pieceSize, QGraphicsScene *scene, QObject *parent)
     : QAbstractListModel(parent), m_PieceSize(pieceSize), m_conf(conf), m_type(pieceType)
 {
     mode = GFX_Staff;

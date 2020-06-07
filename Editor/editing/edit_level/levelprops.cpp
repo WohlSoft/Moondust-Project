@@ -31,7 +31,7 @@ LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
 {
     if(parent)
     {
-        if(std::strcmp(parent->metaObject()->className(), "MainWindow")==0)
+        if(std::strcmp(parent->metaObject()->className(), "MainWindow") == 0)
             m_mw = qobject_cast<MainWindow *>(parent);
         else
             m_mw = nullptr;

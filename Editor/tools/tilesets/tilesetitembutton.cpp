@@ -21,7 +21,7 @@
 
 #include "tilesetitembutton.h"
 
-TilesetItemButton::TilesetItemButton(dataconfigs *conf, QGraphicsScene *scene, QWidget *parent) :
+TilesetItemButton::TilesetItemButton(DataConfig *conf, QGraphicsScene *scene, QWidget *parent) :
     QFrame(parent)
 {
     scn = scene;
@@ -32,12 +32,12 @@ TilesetItemButton::TilesetItemButton(dataconfigs *conf, QGraphicsScene *scene, Q
     setLineWidth(2);
 }
 
-dataconfigs *TilesetItemButton::config() const
+DataConfig *TilesetItemButton::config() const
 {
     return m_config;
 }
 
-void TilesetItemButton::setConfig(dataconfigs *config)
+void TilesetItemButton::setConfig(DataConfig *config)
 {
     m_config = config;
 }

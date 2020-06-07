@@ -23,6 +23,7 @@
 #include <networking/intproc.h>
 #include <common_features/logger.h>
 #include <audio/pge_audio.h>
+#include <fontman/font_manager.h>
 
 void LevelScene::process_InterprocessCommands()
 {
@@ -44,6 +45,15 @@ void LevelScene::process_InterprocessCommands()
 
         case IntProc::Cheat:
             break;
+
+        case IntProc::SetLayer:
+        {
+            std::string layer = IntProc::getCMD();
+            m_placingMode_bgo.layer = layer;
+            m_placingMode_block.layer = layer;
+            m_placingMode_npc.layer = layer;
+            break;
+        }
 
         case IntProc::PlaceItem:
         {
@@ -148,8 +158,8 @@ void LevelScene::process_InterprocessCommands()
             else PGE_Audio::playSoundByRole(obj_sound_role::WeaponExplosion);
 
             break;
-        }
-        }
+        }// place
+        }// switch
     }
 
     IntProc::cmdUnLock();
@@ -162,30 +172,49 @@ void LevelScene::drawPlacingItem()
     AniPos x(0, 1);
     int d = 0;
 
+    double posX = m_placingMode_renderAt.x();
+    double posY = m_placingMode_renderAt.y();
+    double posW = m_placingMode_drawSize.x();
+    double posH = m_placingMode_drawSize.y();
+
     switch(m_placingMode_item_type)
     {
     case 0:
-        if(m_placingMode_animated) x = ConfigManager::Animator_Blocks[m_placingMode_animatorID].image();
+        if(m_placingMode_animated)
+            x = ConfigManager::Animator_Blocks[m_placingMode_animatorID].image();
 
         GlRenderer::renderTexture(&m_placingMode_texture,
-                                  static_cast<float>(m_placingMode_renderAt.x()),
-                                  static_cast<float>(m_placingMode_renderAt.y()),
-                                  static_cast<float>(m_placingMode_drawSize.x()),
-                                  static_cast<float>(m_placingMode_drawSize.y()),
+                                  static_cast<float>(posX),
+                                  static_cast<float>(posY),
+                                  static_cast<float>(posW),
+                                  static_cast<float>(posH),
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
+        if(!m_placingMode_block.layer.empty() &&
+            SDL_strcasecmp(m_placingMode_block.layer.c_str(), "Default") != 0)
+        {
+            FontManager::printText(m_placingMode_block.layer,
+                                   int(posX) + 28, int(posY) + 34);
+        }
         break;
 
     case 1:
-        if(m_placingMode_animated) x = ConfigManager::Animator_BGO[m_placingMode_animatorID].image();
+        if(m_placingMode_animated)
+            x = ConfigManager::Animator_BGO[m_placingMode_animatorID].image();
 
         GlRenderer::renderTexture(&m_placingMode_texture,
-                                  static_cast<float>(m_placingMode_renderAt.x()),
-                                  static_cast<float>(m_placingMode_renderAt.y()),
-                                  static_cast<float>(m_placingMode_drawSize.x()),
-                                  static_cast<float>(m_placingMode_drawSize.y()),
+                                  static_cast<float>(posX),
+                                  static_cast<float>(posY),
+                                  static_cast<float>(posW),
+                                  static_cast<float>(posH),
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
+        if(!m_placingMode_bgo.layer.empty() &&
+            SDL_strcasecmp(m_placingMode_bgo.layer.c_str(), "Default") != 0)
+        {
+            FontManager::printText(m_placingMode_bgo.layer,
+                                   int(posX) + 28, int(posY) + 34);
+        }
         break;
 
     case 2:
@@ -199,12 +228,18 @@ void LevelScene::drawPlacingItem()
         if(d == 0) d = -1;
 
         GlRenderer::renderTexture(&m_placingMode_texture,
-                                  static_cast<float>(m_placingMode_renderAt.x() + m_placingMode_renderOffset.x()*d),
-                                  static_cast<float>(m_placingMode_renderAt.y() + m_placingMode_renderOffset.y()),
-                                  static_cast<float>(m_placingMode_drawSize.x()),
-                                  static_cast<float>(m_placingMode_drawSize.y()),
+                                  static_cast<float>(posX + m_placingMode_renderOffset.x()*d),
+                                  static_cast<float>(posY + m_placingMode_renderOffset.y()),
+                                  static_cast<float>(posW),
+                                  static_cast<float>(posH),
                                   static_cast<float>(x.first),
                                   static_cast<float>(x.second));
+        if(!m_placingMode_npc.layer.empty() &&
+            SDL_strcasecmp(m_placingMode_npc.layer.c_str(), "Default") != 0)
+        {
+            FontManager::printText(m_placingMode_npc.layer,
+                                   int(posX) + 28, int(posY) + 34);
+        }
         break;
     }
 }

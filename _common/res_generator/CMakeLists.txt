@@ -13,4 +13,3 @@ add_executable(res_generator
     ${INIPROCESSOR_SRCS}
     ${UTF8MAIN_SRCS}
 )
-

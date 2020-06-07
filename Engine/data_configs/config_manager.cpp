@@ -35,12 +35,14 @@
 #include <fmt/fmt_qformat.h>
 #include <algorithm>
 
-DataFolders      ConfigManager::dirs;
-std::string      ConfigManager::config_name;
-std::string      ConfigManager::config_dirSTD;
-std::string      ConfigManager::config_idSTD = "dummy";
-std::string      ConfigManager::data_dirSTD;
-unsigned int     ConfigManager::default_grid = 32u;
+std::string     ConfigManager::configPackId;
+
+DataFolders     ConfigManager::dirs;
+std::string     ConfigManager::config_name;
+std::string     ConfigManager::config_dirSTD;
+std::string     ConfigManager::config_idSTD = "dummy";
+std::string     ConfigManager::data_dirSTD;
+unsigned int    ConfigManager::default_grid = 32u;
 
 ScriptsSetup ConfigManager::setup_Scripts;
 
@@ -162,6 +164,8 @@ bool ConfigManager::loadBasics()
         unsigned int apiVersion = mainset.value("api-version", 1).toUInt();
         bool ver_notify = mainset.value("enable-version-notify", true).toBool();
         bool    ver_invalid = false;
+
+        mainset.read("config-pack-id", configPackId, std::string());
 
         if(hasApiVersion)
             ver_invalid = (apiVersion != V_CP_API) || (apiVersion < 41);

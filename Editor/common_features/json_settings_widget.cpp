@@ -311,7 +311,7 @@ void JsonSettingsWidget::setSearchDirectories(const QString &episode, const QStr
         m_directoryData.append('/');
 }
 
-void JsonSettingsWidget::setConfigPack(dataconfigs *config)
+void JsonSettingsWidget::setConfigPack(DataConfig *config)
 {
     m_configPack = config;
 }

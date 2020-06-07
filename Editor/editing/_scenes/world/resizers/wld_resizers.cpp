@@ -28,7 +28,7 @@
 
 void WldScene::applyResizers()
 {
-    if(m_resizeBox!=NULL )
+    if(m_resizeBox != nullptr)
     {
         switch(m_resizeBox->m_resizerType)
         {
@@ -44,7 +44,7 @@ void WldScene::applyResizers()
 
 void WldScene::resetResizers()
 {
-    if(m_resizeBox!=NULL )
+    if(m_resizeBox != nullptr)
     {
         switch(m_resizeBox->m_resizerType)
         {
@@ -56,6 +56,3 @@ void WldScene::resetResizers()
         }
     }
 }
-
-
-

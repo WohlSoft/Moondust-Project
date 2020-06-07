@@ -25,7 +25,7 @@
 class WLD_ModePlace : public EditMode
 {
 public:
-    WLD_ModePlace(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    WLD_ModePlace(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~WLD_ModePlace();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

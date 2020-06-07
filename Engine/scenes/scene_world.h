@@ -83,6 +83,8 @@ public:
     std::string getLastError();
     void setGameState(EpisodeState *_state);
 
+    WorldData *worldData();
+
 private:
     bool            m_isInit;
 

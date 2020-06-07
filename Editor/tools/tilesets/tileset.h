@@ -38,7 +38,7 @@ public:
         GFX_World
     };
 
-    explicit tileset(dataconfigs *conf, int type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3, QGraphicsScene *scene=0);
+    explicit tileset(DataConfig *conf, int type, QWidget *parent = 0, int m_baseSize = 32, int rows = 3, int cols = 3, QGraphicsScene *scene=0);
 
     void clear();
 
@@ -94,7 +94,7 @@ private:
     int m_cols;
     int m_baseSize;
     QString m_name;
-    dataconfigs *m_conf;
+    DataConfig *m_conf;
     int m_type;
     bool m_editMode;
 

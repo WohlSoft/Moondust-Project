@@ -54,6 +54,7 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     loadingTime.start();
     fReadTime.start();
 #endif
+
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
     FileMapper fileMap;
 
@@ -91,18 +92,17 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     long long imgConvertElapsed = 0;
 #endif
 
-    if(convertTo32bit)
+    unsigned int bpp = FreeImage_GetBPP(img);
+
+    if(convertTo32bit && bpp != 32)
     {
 #ifdef DEBUG_BUILD
         imgConvTime.start();
 #endif
-        FIBITMAP *temp;
-        temp = FreeImage_ConvertTo32Bits(img);
-
+        FIBITMAP *temp = FreeImage_ConvertTo32Bits(img);
+        FreeImage_Unload(img);
         if(!temp)
             return nullptr;
-
-        FreeImage_Unload(img);
         img = temp;
 #ifdef DEBUG_BUILD
         imgConvertElapsed = static_cast<long long>(imgConvTime.nanoelapsed());

@@ -18,30 +18,43 @@ then
     QtCacheFolder=qtcache
 
     if [[ "${QT_VER}" == "" ]]; then
-        QtTarballName=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
-        QtStaticVersion=5.10.1_static
+        QtTarballName=qt-5.9.9-static-ubuntu-14-04-x64-gcc8.tar.bz2
+        QtStaticVersion=5.9.9_static
+    fi
+
+    if [[ ! -d /home/runner/Qt/$QtCacheFolder ]]; then
+        mkdir -p /home/runner
+        sudo chown $USER /home/runner
+    fi
+
+    if [[ "${CI_NEED_LFTP_U1604}" != "" ]]; then
+        echo "Downloading a custom lftp build for Ubuntu 16.04..."
+        wget --quiet http://wohlsoft.ru/docs/Software/lftp_4.9.1-1_amd64-ubuntu1604.deb -O /home/runner/lftp_4.9.1-1_amd64.deb
+        echo "Installing custom lftp..."
+        sudo dpkg -i /home/runner/lftp_4.9.1-1_amd64.deb
     fi
 
     if ${IS_SEMAPHORECI}; then
         sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
         sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
-        sudo add-apt-repository --yes ppa:george-edison55/cmake-3.x
+        sudo add-apt-repository --yes ppa:adrozdoff/cmake
         sudo apt-get update -qq
         # sudo DEBIAN_FRONTEND=noninteractive apt-get -yq upgrade
         sudo apt-get install -qq "^libxcb.*" libx11-dev libx11-xcb-dev \
+            libgtk-3-dev libgegl-dev \
             libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev \
             libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev \
             libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev \
             libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev \
             libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev \
             libglu1-mesa-dev libgles2-mesa libgles2-mesa-dev libmirclient-dev \
-            libproxy-dev ccache gcc-6 g++-6 libc6 libstdc++6 cmake ninja-build
+            libproxy-dev ccache gcc-8 g++-8 libc6 libstdc++6 cmake ninja-build
     fi
 
     sudo update-alternatives --remove-all gcc
     sudo update-alternatives --remove-all g++
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 60
-    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 60
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80
+    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 80
 
     echo "================================================"
     g++ --version

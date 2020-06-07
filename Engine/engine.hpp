@@ -27,15 +27,6 @@
     "Moondust Engine - v" V_FILE_VERSION V_FILE_RELEASE \
     " build " V_BUILD_VER "-" V_BUILD_BRANCH " (Arch: " FILE_CPU ")"
 
-enum Level_returnTo
-{
-    RETURN_TO_MAIN_MENU = 0,
-    RETURN_TO_WORLDMAP,
-    RETURN_TO_GAMEOVER_SCREEN,
-    RETURN_TO_CREDITS_SCREEN,
-    RETURN_TO_EXIT
-};
-
 struct PGEEngineCmdArgs
 {
     PGEEngineCmdArgs();
@@ -64,14 +55,10 @@ struct PGEEngineCmdArgs
 
 //! Global flags states configured from the command line
 extern PGEEngineCmdArgs     g_flags;
-//! Target scene after exiting from the level scene
-extern Level_returnTo       g_jumpOnLevelEndTo;
 //! Path to config pack configured from the command line
 extern std::string          g_configPackPath;
 //! Path to the file to open (requested from a command line)
 extern std::string          g_fileToOpen;
-//! Global game state
-extern EpisodeState         g_GameState;
 //! Episode state meta data
 extern PlayEpisodeResult    g_Episode;
 

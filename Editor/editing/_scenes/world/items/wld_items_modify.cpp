@@ -27,7 +27,7 @@
 
 void WldScene::applyArrayForItemGroup(QList<QGraphicsItem * >items)
 {
-    foreach(QGraphicsItem * it, items)
+    foreach(QGraphicsItem *it, items)
     {
         if(it) applyArrayForItem(it);
     }
@@ -38,13 +38,11 @@ void WldScene::applyArrayForItemGroup(QList<QGraphicsItem * >items)
 /// \param item
 /// Register all changes of item into the main data arrays
 ///
-void WldScene::applyArrayForItem(QGraphicsItem * item)
+void WldScene::applyArrayForItem(QGraphicsItem *item)
 {
     if(!item) return;
     if(!item->data(ITEM_IS_ITEM).isNull())
-    {
         dynamic_cast<WldBaseItem *>(item)->arrayApply();
-    }
 }
 
 void WldScene::collectDataFromItem(WorldData &dataToStore, QGraphicsItem *item)
@@ -52,56 +50,39 @@ void WldScene::collectDataFromItem(WorldData &dataToStore, QGraphicsItem *item)
     if(!item) return;
 
     QString ObjType = item->data(ITEM_TYPE).toString();
-    if( ObjType == "TILE")
-    {
+    if(ObjType == "TILE")
         dataToStore.tiles << dynamic_cast<ItemTile *>(item)->m_data;
-    }
-    else
-    if( ObjType == "SCENERY")
-    {
+    else if(ObjType == "SCENERY")
         dataToStore.scenery << dynamic_cast<ItemScene *>(item)->m_data;
-    }
-    else
-    if( ObjType == "PATH")
-    {
+    else if(ObjType == "PATH")
         dataToStore.paths << dynamic_cast<ItemPath *>(item)->m_data;
-    }
-    else
-    if( ObjType == "LEVEL")
-    {
+    else if(ObjType == "LEVEL")
         dataToStore.levels << dynamic_cast<ItemLevel *>(item)->m_data;
-    }
-    else
-    if( ObjType == "MUSICBOX" )
-    {
+    else if(ObjType == "MUSICBOX")
         dataToStore.music << dynamic_cast<ItemMusic *>(item)->m_data;
-    }
 }
 
 void WldScene::collectDataFromItems(WorldData &dataToStore, QList<QGraphicsItem *> items)
 {
-    foreach (QGraphicsItem* item, items) {
+    foreach(QGraphicsItem *item, items)
         collectDataFromItem(dataToStore, item);
-    }
 }
 
 
 void WldScene::returnItemBackGroup(QList<QGraphicsItem * >items)
 {
-    foreach(QGraphicsItem * it, items)
+    foreach(QGraphicsItem *it, items)
     {
         if(it) returnItemBack(it);
     }
 }
 
-void WldScene::returnItemBack(QGraphicsItem * item)
+void WldScene::returnItemBack(QGraphicsItem *item)
 {
     if(!item) return;
 
     if(!item->data(ITEM_IS_ITEM).isNull())
-    {
         dynamic_cast<WldBaseItem *>(item)->returnBack();
-    }
 }
 
 
@@ -114,7 +95,7 @@ void WldScene::placeItemsByRectArray()
     //This function placing items by yellow rectangles
     if(item_rectangles::rectArray.isEmpty()) return;
 
-    QGraphicsItem * backup = m_cursorItemImg;
+    QGraphicsItem *backup = m_cursorItemImg;
     while(!item_rectangles::rectArray.isEmpty())
     {
         m_cursorItemImg = item_rectangles::rectArray.first();
@@ -130,11 +111,11 @@ void WldScene::placeItemsByRectArray()
     m_cursorItemImg = backup;
     m_cursorItemImg->hide();
 
-    if(!m_overwritedItems.tiles.isEmpty()||
-        !m_overwritedItems.scenery.isEmpty()||
-        !m_overwritedItems.paths.isEmpty()||
-        !m_overwritedItems.levels.isEmpty()||
-        !m_overwritedItems.music.isEmpty() )
+    if(!m_overwritedItems.tiles.isEmpty() ||
+       !m_overwritedItems.scenery.isEmpty() ||
+       !m_overwritedItems.paths.isEmpty() ||
+       !m_overwritedItems.levels.isEmpty() ||
+       !m_overwritedItems.music.isEmpty())
     {
         m_history->addOverwriteHistory(m_overwritedItems, m_placingItems);
         m_overwritedItems.tiles.clear();
@@ -148,12 +129,12 @@ void WldScene::placeItemsByRectArray()
         m_placingItems.levels.clear();
         m_placingItems.music.clear();
     }
-    else
-    if(!m_placingItems.tiles.isEmpty()||
-            !m_placingItems.paths.isEmpty()||
-            !m_placingItems.scenery.isEmpty()||
-            !m_placingItems.levels.isEmpty()||
-            !m_placingItems.music.isEmpty()){
+    else if(!m_placingItems.tiles.isEmpty() ||
+            !m_placingItems.paths.isEmpty() ||
+            !m_placingItems.scenery.isEmpty() ||
+            !m_placingItems.levels.isEmpty() ||
+            !m_placingItems.music.isEmpty())
+    {
         m_history->addPlaceHistory(m_placingItems);
         m_placingItems.tiles.clear();
         m_placingItems.paths.clear();
@@ -167,52 +148,54 @@ void WldScene::placeItemsByRectArray()
 void WldScene::placeItemUnderCursor()
 {
     //using namespace wld_control;
-    bool wasPlaced=false;
+    bool wasPlaced = false;
 
     if(WldPlacingItems::overwriteMode)
-    {   //remove all colliaded items before placing
-        QGraphicsItem * xxx;
-        while( (xxx=itemCollidesWith(m_cursorItemImg)) != NULL )
+    {
+        //remove all colliaded items before placing
+        QGraphicsItem *xxx;
+        while((xxx = itemCollidesWith(m_cursorItemImg)) != NULL)
         {
-            bool removed=false;
-            if(xxx->data(ITEM_TYPE).toString()=="TILE")
+            bool removed = false;
+            if(xxx->data(ITEM_TYPE).toString() == "TILE")
             {
-                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>m_lastTerrainArrayID) break;
-                m_overwritedItems.tiles.push_back( ((ItemTile *)xxx)->m_data );
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastTerrainArrayID) break;
+                m_overwritedItems.tiles.push_back(((ItemTile *)xxx)->m_data);
                 ((ItemTile *)xxx)->removeFromArray();
-                delete xxx; removed=true;
+                delete xxx;
+                removed = true;
             }
-            else
-            if(xxx->data(ITEM_TYPE).toString()=="SCENERY")
+            else if(xxx->data(ITEM_TYPE).toString() == "SCENERY")
             {
-                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>m_lastSceneryArrayID) break;
-                m_overwritedItems.scenery.push_back( ((ItemScene *)xxx)->m_data );
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastSceneryArrayID) break;
+                m_overwritedItems.scenery.push_back(((ItemScene *)xxx)->m_data);
                 ((ItemScene *)xxx)->removeFromArray();
-                delete xxx; removed=true;
+                delete xxx;
+                removed = true;
             }
-            else
-            if(xxx->data(ITEM_TYPE).toString()=="PATH")
+            else if(xxx->data(ITEM_TYPE).toString() == "PATH")
             {
-                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>m_lastPathArrayID) break;
-                m_overwritedItems.paths.push_back( ((ItemPath *)xxx)->m_data );
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastPathArrayID) break;
+                m_overwritedItems.paths.push_back(((ItemPath *)xxx)->m_data);
                 ((ItemPath *)xxx)->removeFromArray();
-                delete xxx; removed=true;
+                delete xxx;
+                removed = true;
             }
-            else
-            if(xxx->data(ITEM_TYPE).toString()=="LEVEL")
+            else if(xxx->data(ITEM_TYPE).toString() == "LEVEL")
             {
-                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>m_lastLevelArrayID) break;
-                m_overwritedItems.levels.push_back( ((ItemLevel *)xxx)->m_data );
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastLevelArrayID) break;
+                m_overwritedItems.levels.push_back(((ItemLevel *)xxx)->m_data);
                 ((ItemLevel *)xxx)->removeFromArray();
-                delete xxx; removed=true;
+                delete xxx;
+                removed = true;
             }
-            else
-            if(xxx->data(ITEM_TYPE).toString()=="MUSICBOX")
+            else if(xxx->data(ITEM_TYPE).toString() == "MUSICBOX")
             {
-                if(xxx->data(ITEM_ARRAY_ID).toLongLong()>m_lastMusicBoxArrayID) break;
-                m_overwritedItems.music.push_back( ((ItemMusic *)xxx)->m_data );
+                if(xxx->data(ITEM_ARRAY_ID).toLongLong() > m_lastMusicBoxArrayID) break;
+                m_overwritedItems.music.push_back(((ItemMusic *)xxx)->m_data);
                 ((ItemMusic *)xxx)->removeFromArray();
-                delete xxx; removed=true;
+                delete xxx;
+                removed = true;
             }
 
             if(removed) //Remove pointer of deleted item
@@ -223,16 +206,14 @@ void WldScene::placeItemUnderCursor()
         }
     }
 
-//    QList<QGraphicsItem *> * checkZone;
-//    if(collisionCheckBuffer.isEmpty())
-//        checkZone = NULL;
-//    else
-//        checkZone = &collisionCheckBuffer;
+    //    QList<QGraphicsItem *> * checkZone;
+    //    if(collisionCheckBuffer.isEmpty())
+    //        checkZone = NULL;
+    //    else
+    //        checkZone = &collisionCheckBuffer;
 
-    if( itemCollidesWith(m_cursorItemImg) )
-    {
+    if(itemCollidesWith(m_cursorItemImg))
         return;
-    }
     else
     {
         if(m_placingItemType == PLC_Terrain)
@@ -246,10 +227,9 @@ void WldScene::placeItemUnderCursor()
             m_data->tiles.push_back(WldPlacingItems::terrainSet);
             placeTile(WldPlacingItems::terrainSet, true);
             m_placingItems.tiles.push_back(WldPlacingItems::terrainSet);
-            wasPlaced=true;
+            wasPlaced = true;
         }
-        else
-        if(m_placingItemType == PLC_Scene)
+        else if(m_placingItemType == PLC_Scene)
         {
             WldPlacingItems::sceneSet.x = m_cursorItemImg->scenePos().x();
             WldPlacingItems::sceneSet.y = m_cursorItemImg->scenePos().y();
@@ -260,10 +240,9 @@ void WldScene::placeItemUnderCursor()
             m_data->scenery.push_back(WldPlacingItems::sceneSet);
             placeScenery(WldPlacingItems::sceneSet, true);
             m_placingItems.scenery.push_back(WldPlacingItems::sceneSet);
-            wasPlaced=true;
+            wasPlaced = true;
         }
-        else
-        if(m_placingItemType == PLC_Path)
+        else if(m_placingItemType == PLC_Path)
         {
             WldPlacingItems::pathSet.x = m_cursorItemImg->scenePos().x();
             WldPlacingItems::pathSet.y = m_cursorItemImg->scenePos().y();
@@ -274,10 +253,9 @@ void WldScene::placeItemUnderCursor()
             m_data->paths.push_back(WldPlacingItems::pathSet);
             placePath(WldPlacingItems::pathSet, true);
             m_placingItems.paths.push_back(WldPlacingItems::pathSet);
-            wasPlaced=true;
+            wasPlaced = true;
         }
-        else
-        if(m_placingItemType == PLC_Level)
+        else if(m_placingItemType == PLC_Level)
         {
             WldPlacingItems::levelSet.x = m_cursorItemImg->scenePos().x();
             WldPlacingItems::levelSet.y = m_cursorItemImg->scenePos().y();
@@ -288,10 +266,9 @@ void WldScene::placeItemUnderCursor()
             m_data->levels.push_back(WldPlacingItems::levelSet);
             placeLevel(WldPlacingItems::levelSet, true);
             m_placingItems.levels.push_back(WldPlacingItems::levelSet);
-            wasPlaced=true;
+            wasPlaced = true;
         }
-        else
-        if(m_placingItemType == PLC_Musicbox)
+        else if(m_placingItemType == PLC_Musicbox)
         {
             WldPlacingItems::musicSet.x = m_cursorItemImg->scenePos().x();
             WldPlacingItems::musicSet.y = m_cursorItemImg->scenePos().y();
@@ -302,7 +279,7 @@ void WldScene::placeItemUnderCursor()
             m_data->music.push_back(WldPlacingItems::musicSet);
             placeMusicbox(WldPlacingItems::musicSet, true);
             m_placingItems.music.push_back(WldPlacingItems::musicSet);
-            wasPlaced=true;
+            wasPlaced = true;
         }
 
     }
@@ -328,7 +305,7 @@ void WldScene::removeItemUnderCursor()
 {
     if(m_contextMenuIsOpened) return;
 
-    QGraphicsItem * findItem;
+    QGraphicsItem *findItem;
     findItem = itemCollidesCursor(m_cursorItemImg);
     removeWldItem(findItem, true);
 }
@@ -336,13 +313,13 @@ void WldScene::removeItemUnderCursor()
 
 void WldScene::removeSelectedWldItems()
 {
-    QList<QGraphicsItem*> selectedList = selectedItems();
+    QList<QGraphicsItem *> selectedList = selectedItems();
     if(selectedList.isEmpty()) return;
     removeWldItems(selectedList);
     Debugger_updateItemList();
 }
 
-void WldScene::removeWldItem(QGraphicsItem * item, bool globalHistory)
+void WldScene::removeWldItem(QGraphicsItem *item, bool globalHistory)
 {
     if(!item) return;
     QList<QGraphicsItem * > items;
@@ -353,55 +330,51 @@ void WldScene::removeWldItem(QGraphicsItem * item, bool globalHistory)
 void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
 {
     WorldData historyBuffer;
-    bool deleted=false;
+    bool deleted = false;
     QString objType;
 
-    for (QList<QGraphicsItem*>::iterator it = items.begin(); it != items.end(); it++)
+    for(QList<QGraphicsItem *>::iterator it = items.begin(); it != items.end(); it++)
     {
-            objType=(*it)->data(ITEM_TYPE).toString();
+        objType = (*it)->data(ITEM_TYPE).toString();
 
-            if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
+        if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
 
-            //remove data from main array before deletion item from scene
-            if( objType=="TILE" )
-            {
-                historyBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
-                ((ItemTile *)(*it))->removeFromArray();
-                if((*it)) delete (*it);
-                deleted=true;
-            }
-            else
-            if( objType=="SCENERY" )
-            {
-                historyBuffer.scenery.push_back(((ItemScene*)(*it))->m_data);
-                ((ItemScene *)(*it))->removeFromArray();
-                if((*it)) delete (*it);
-                deleted=true;
-            }
-            else
-            if( objType=="PATH" )
-            {
-                historyBuffer.paths.push_back(((ItemPath*)(*it))->m_data);
-                ((ItemPath *)(*it))->removeFromArray();
-                if((*it)) delete (*it);
-                deleted=true;
-            }
-            else
-            if( objType=="LEVEL" )
-            {
-                historyBuffer.levels.push_back(((ItemLevel*)(*it))->m_data);
-                ((ItemLevel *)(*it))->removeFromArray();
-                if((*it)) delete (*it);
-                deleted=true;
-            }
-            else
-            if( objType=="MUSICBOX" )
-            {
-                historyBuffer.music.push_back(((ItemMusic*)(*it))->m_data);
-                ((ItemMusic *)(*it))->removeFromArray();
-                if((*it)) delete (*it);
-                deleted=true;
-            }
+        //remove data from main array before deletion item from scene
+        if(objType == "TILE")
+        {
+            historyBuffer.tiles.push_back(((ItemTile *)(*it))->m_data);
+            ((ItemTile *)(*it))->removeFromArray();
+            if((*it)) delete(*it);
+            deleted = true;
+        }
+        else if(objType == "SCENERY")
+        {
+            historyBuffer.scenery.push_back(((ItemScene *)(*it))->m_data);
+            ((ItemScene *)(*it))->removeFromArray();
+            if((*it)) delete(*it);
+            deleted = true;
+        }
+        else if(objType == "PATH")
+        {
+            historyBuffer.paths.push_back(((ItemPath *)(*it))->m_data);
+            ((ItemPath *)(*it))->removeFromArray();
+            if((*it)) delete(*it);
+            deleted = true;
+        }
+        else if(objType == "LEVEL")
+        {
+            historyBuffer.levels.push_back(((ItemLevel *)(*it))->m_data);
+            ((ItemLevel *)(*it))->removeFromArray();
+            if((*it)) delete(*it);
+            deleted = true;
+        }
+        else if(objType == "MUSICBOX")
+        {
+            historyBuffer.music.push_back(((ItemMusic *)(*it))->m_data);
+            ((ItemMusic *)(*it))->removeFromArray();
+            if((*it)) delete(*it);
+            deleted = true;
+        }
 
     }
 
@@ -423,32 +396,33 @@ void WldScene::removeWldItems(QList<QGraphicsItem * > items, bool globalHistory)
     }
 }
 
-void WldScene::placeAll(const WorldData &data){
-    foreach (WorldTerrainTile tile, data.tiles)
+void WldScene::placeAll(const WorldData &data)
+{
+    foreach(WorldTerrainTile tile, data.tiles)
     {
         //place them back
         m_data->tiles.push_back(tile);
         placeTile(tile);
     }
-    foreach (WorldPathTile path, data.paths)
+    foreach(WorldPathTile path, data.paths)
     {
         //place them back
         m_data->paths.push_back(path);
         placePath(path);
     }
-    foreach (WorldScenery scenery, data.scenery)
+    foreach(WorldScenery scenery, data.scenery)
     {
         //place them back
         m_data->scenery.push_back(scenery);
         placeScenery(scenery);
     }
-    foreach (WorldLevelTile level, data.levels)
+    foreach(WorldLevelTile level, data.levels)
     {
         //place them back
         m_data->levels.push_back(level);
         placeLevel(level);
     }
-    foreach (WorldMusicBox music, data.music)
+    foreach(WorldMusicBox music, data.music)
     {
         m_data->music.push_back(music);
         placeMusicbox(music);

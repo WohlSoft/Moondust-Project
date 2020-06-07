@@ -35,7 +35,7 @@
 #include "level_edit.h"
 #include <ui_leveledit.h>
 
-bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
+bool LevelEdit::newFile(DataConfig &configs, EditingSettings options)
 {
     static int sequenceNumber = 1;
     m_isUntitled = true;
@@ -48,6 +48,7 @@ bool LevelEdit::newFile(dataconfigs &configs, EditingSettings options)
     {
     case EditorSetup::DefaultFileFormats::SMBX64:
         LvlData.meta.RecentFormat = LevelData::SMBX64;
+        LvlData.meta.RecentFormatVersion = 64;
         LvlData.meta.smbx64strict = true;
         break;
     case EditorSetup::DefaultFileFormats::PGEX:
@@ -309,6 +310,12 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     // //////////////////////////////////////////////////////////////////////
     QFileInfo finfo(fileName);
     GlobalSettings::savePath = finfo.path();
+    LogDebug(QString("-------------------------------\n"
+                     "Saving file name: %1").arg(fileName));
+    LogDebug(QString("-------------------------------\n"
+                     "Saving path: %1").arg(finfo.path()));
+    LogDebug(QString("-------------------------------\n"
+                     "Saving filename computed: %1").arg(finfo.fileName()));
     LvlData.meta.path = finfo.path();
     LvlData.meta.filename = util::getBaseFilename(finfo.fileName());
     QApplication::restoreOverrideCursor();
@@ -441,7 +448,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
 
 
 
-bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, dataconfigs &configs, EditingSettings options)
+bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, DataConfig &configs, EditingSettings options)
 {
     QFile file(fileName);
     LvlData = FileData;
@@ -541,7 +548,7 @@ void LevelEdit::showCustomStuffWarnings()
     if(m_mw->configs.checkCustom())
     {
         QString errorsList;
-        for(QString &e : m_mw->configs.errorsList[dataconfigs::ERR_CUSTOM])
+        for(QString &e : m_mw->configs.errorsList[DataConfig::ERR_CUSTOM])
             errorsList += " - " + e + "\n";
         QMessageBox::warning(m_mw,
                              tr("Incorrect custom configs"),
@@ -550,7 +557,7 @@ void LevelEdit::showCustomStuffWarnings()
                                 "your config files in the the current and in the custom folders:"
                                 "\n\n%1").arg(errorsList),
                              QMessageBox::Ok);
-        m_mw->configs.errorsList[dataconfigs::ERR_CUSTOM].clear();
+        m_mw->configs.errorsList[DataConfig::ERR_CUSTOM].clear();
     }
 }
 

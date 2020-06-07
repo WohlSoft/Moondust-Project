@@ -26,12 +26,7 @@ class NpcEditScene : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    explicit NpcEditScene(QObject *parent = 0);
-
-signals:
-
-public slots:
-
+    explicit NpcEditScene(QObject *parent = nullptr);
 };
 
 #endif // NPCEDITSCENE_H

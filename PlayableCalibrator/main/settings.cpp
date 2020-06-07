@@ -255,8 +255,8 @@ bool CalibrationMain::saveConfig(QString fileName, bool customPath)
                 //conf.setValue("width", frameWidth);
                 conf.setValue("offsetX", g_framesX[x][y].offsetX);
                 conf.setValue("offsetY", g_framesX[x][y].offsetY);
-                // Don't write this field anymire, the "usage" logic will use presence of the field
-                // conf.setValue("used", g_framesX[x][y].used);
+                // This filed is no longer useful, the "usage" logic will use presence of the frame section in the file, however
+                conf.setValue("used", g_framesX[x][y].used); // Keep it writing for backward compatibility with other applications
                 if(g_framesX[x][y].isDuck) conf.setValue("duck", g_framesX[x][y].isDuck);
                 if(g_framesX[x][y].isRightDir) conf.setValue("isRightDir", g_framesX[x][y].isRightDir);
                 if(g_framesX[x][y].showGrabItem) conf.setValue("showGrabItem", g_framesX[x][y].showGrabItem);

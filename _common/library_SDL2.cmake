@@ -148,12 +148,17 @@ elseif(SDL2_VIA_AUTOTOOLS)
             "${SDL2_A_Lib}"
             "${SDL2_main_Lib}"
     )
-    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
-    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
+
+    if(MINGW) # Required for SDL_Main
+        target_link_libraries(PGE_SDL2 INTERFACE -lmingw32)
+        target_link_libraries(PGE_SDL2_static INTERFACE -lmingw32)
+    endif()
     if((WIN32 OR HAIKU) AND NOT EMSCRIPTEN)
         target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_main_Lib})
         target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
     endif()
+    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
+    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
 
 else()
     # ============================================================
@@ -178,6 +183,7 @@ else()
             # $<$<BOOL:WIN32>:-DWASAPI=OFF>  #For some experiment, enable WASAPI support
             $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
             $<$<BOOL:LINUX>:-DSNDIO=OFF>
+            $<$<BOOL:LINUX>:-DVIDEO_WAYLAND_QT_TOUCH=OFF>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DEXTRA_CFLAGS=-s USE_PTHREADS=1>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS=ON>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS_SEM=ON>
@@ -187,12 +193,16 @@ else()
             "${SDL2_main_Lib}"
     )
 
-    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
-    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
+    if(MINGW) # Required for SDL_Main
+        target_link_libraries(PGE_SDL2 INTERFACE -lmingw32)
+        target_link_libraries(PGE_SDL2_static INTERFACE -lmingw32)
+    endif()
     if((WIN32 OR HAIKU) AND NOT EMSCRIPTEN)
         target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_main_Lib})
         target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
     endif()
+    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
+    target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
 endif()
 
 set(SDL2_DEPENDENT_LIBS)

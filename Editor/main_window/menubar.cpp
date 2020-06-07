@@ -73,6 +73,17 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     emit windowActiveWorld( WinType == WND_World );
     emit windowActiveNPC( WinType == WND_NpcTxt );
 
+    if(m_testEngine)
+    {
+        ui->action_doTest->setEnabled(WinType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+        ui->action_doSafeTest->setEnabled(WinType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
+        if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA)
+            ui->action_doSafeTest->setVisible(false);
+
+        ui->action_doTestWld->setEnabled(WinType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+        ui->action_doSafeTestWld->setEnabled(WinType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+    }
+
     ui->PlacingToolbar->setVisible(false);
     ui->ResizingToolbar->setVisible(false);
 
@@ -152,6 +163,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
             LogDebug("-> Get scene flags: grid");
             ui->actionGridEn->setChecked(scn->m_opts.grid_snap);
             ui->actionShowGrid->setChecked(scn->m_opts.grid_show);
+            ui->actionShowCameraGrid->setChecked(scn->m_opts.camera_grid_show);
 
             GlobalSettings::LvlOpts = scn->m_opts;
 
@@ -186,6 +198,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
             LogDebug("-> Get scene flags: grid");
             ui->actionGridEn->setChecked(scn->m_opts.grid_snap);
             ui->actionShowGrid->setChecked(scn->m_opts.grid_show);
+            ui->actionShowCameraGrid->setChecked(scn->m_opts.camera_grid_show);
 
             LogDebug("-> Get scene flags: animation and collision");
             GlobalSettings::LvlOpts = scn->m_opts;
@@ -277,6 +290,76 @@ void MainWindow::updateWindowMenu()
             setActiveSubWindow(window);
         });
     }
+}
+
+QMenu *MainWindow::getFileMenu()
+{
+    return ui->menuFile;
+}
+
+QMenu *MainWindow::getEditMenu()
+{
+    return ui->menuEdit;
+}
+
+QMenu *MainWindow::getViewMenu()
+{
+    return ui->menuView;
+}
+
+QMenu *MainWindow::getLevelMenu()
+{
+    return ui->menuLevel;
+}
+
+QMenu *MainWindow::getLevelCurrSectionMenu()
+{
+    return ui->menuCurrent_section;
+}
+
+QMenu *MainWindow::getLevelModSectionMenu()
+{
+    return ui->menuSection_tools;
+}
+
+QMenu *MainWindow::getWorldMenu()
+{
+    return ui->menuWorld;
+}
+
+QMenu *MainWindow::getTestMenu()
+{
+    return ui->menuTest;
+}
+
+QMenu *MainWindow::getScriptMenu()
+{
+    return ui->menuScript;
+}
+
+QMenu *MainWindow::getConfigMenu()
+{
+    return ui->menuConfiguration;
+}
+
+QMenu *MainWindow::getToolsMenu()
+{
+    return ui->menuTools;
+}
+
+QMenu *MainWindow::getWindowMenu()
+{
+    return  ui->menuWindow;
+}
+
+QMenu *MainWindow::getPluginsMenu()
+{
+    return ui->menuPlugins;
+}
+
+QMenu *MainWindow::getHelpMenu()
+{
+    return ui->menuHelp;
 }
 
 

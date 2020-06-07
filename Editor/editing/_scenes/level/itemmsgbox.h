@@ -22,8 +22,9 @@
 
 #include <QDialog>
 
-namespace Ui {
-class ItemMsgBox;
+namespace Ui
+{
+    class ItemMsgBox;
 }
 
 enum Opened_By { NPC, EVENT, BLOCK };
@@ -35,7 +36,9 @@ class ItemMsgBox : public QDialog
 public:
     Opened_By whoOpened;
     QString currentText;
-    explicit ItemMsgBox(Opened_By openedBy, QString text="", bool isFriendly=false, QString label="", QString title="", QWidget *parent = 0);
+    explicit ItemMsgBox(Opened_By openedBy, QString text = QString(),
+                        bool isFriendly = false, QString label = QString(),
+                        QString title = QString(), QWidget *parent = nullptr);
     ~ItemMsgBox();
 
     bool isFriendlyChecked();

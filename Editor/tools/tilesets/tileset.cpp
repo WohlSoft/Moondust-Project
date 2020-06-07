@@ -26,7 +26,7 @@
 
 #include "tileset.h"
 
-tileset::tileset(dataconfigs *conf, int type, QWidget *parent, int baseSize, int rows, int cols, QGraphicsScene *scene) :
+tileset::tileset(DataConfig *conf, int type, QWidget *parent, int baseSize, int rows, int cols, QGraphicsScene *scene) :
     QWidget(parent)
 {
     mode = GFX_Staff;

@@ -32,10 +32,10 @@ class TilesetItemButton : public QFrame
     Q_OBJECT
 
 public:
-    explicit TilesetItemButton(dataconfigs* conf, QGraphicsScene *scene=0, QWidget *parent = 0);
+    explicit TilesetItemButton(DataConfig* conf, QGraphicsScene *scene=0, QWidget *parent = 0);
 
-    dataconfigs *config() const;
-    void setConfig(dataconfigs *config);
+    DataConfig *config() const;
+    void setConfig(DataConfig *config);
     void applyItem(const int &type_i, const int &id, const int &width = -1, const int &height = -1);
     void applySize(const int &width, const int &height);
     ItemTypes::itemTypes itemType() const;
@@ -52,7 +52,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent*);
 
 private:
-    dataconfigs* m_config;
+    DataConfig* m_config;
     ItemTypes::itemTypes m_itemType;
     unsigned int m_id;
     QPixmap m_drawItem;

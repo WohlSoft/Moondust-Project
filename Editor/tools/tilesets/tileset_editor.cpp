@@ -29,7 +29,7 @@
 #include "tileset_editor.h"
 #include <ui_tileset_editor.h>
 
-TilesetEditor::TilesetEditor(dataconfigs *conf, QGraphicsScene *scene, QWidget *parent) :
+TilesetEditor::TilesetEditor(DataConfig *conf, QGraphicsScene *scene, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TilesetEditor)
 {

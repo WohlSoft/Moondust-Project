@@ -48,7 +48,7 @@ void WldHistoryManager::addRemoveHistory(WorldData removedItems)
     //add cleanup redo elements
     updateHistoryBuffer();
     //add new element
-    HistoryElementModification* modf = new HistoryElementModification(removedItems, WorldData());
+    HistoryElementModification *modf = new HistoryElementModification(removedItems, WorldData());
     modf->setCustomHistoryName(tr("Remove"));
     modf->setScene(m_scene);
 
@@ -63,7 +63,7 @@ void WldHistoryManager::addPlaceHistory(WorldData placedItems)
     //add cleanup redo elements
     updateHistoryBuffer();
     //add new element
-    HistoryElementModification* modf = new HistoryElementModification(WorldData(), placedItems);
+    HistoryElementModification *modf = new HistoryElementModification(WorldData(), placedItems);
     modf->setCustomHistoryName(tr("Place"));
     modf->setScene(m_scene);
 
@@ -77,7 +77,7 @@ void WldHistoryManager::addOverwriteHistory(WorldData removedItems, WorldData pl
 {
     updateHistoryBuffer();
 
-    HistoryElementModification* modf = new HistoryElementModification(removedItems, placedItems);
+    HistoryElementModification *modf = new HistoryElementModification(removedItems, placedItems);
     modf->setCustomHistoryName(tr("Place & Overwrite"));
     modf->setScene(m_scene);
 
@@ -92,7 +92,7 @@ void WldHistoryManager::addMoveHistory(WorldData sourceMovedItems, WorldData tar
     updateHistoryBuffer();
 
     //set first base
-    HistoryElementModification* modf = new HistoryElementModification(sourceMovedItems, targetMovedItems);
+    HistoryElementModification *modf = new HistoryElementModification(sourceMovedItems, targetMovedItems);
     modf->setCustomHistoryName(tr("Move"));
     modf->setScene(m_scene);
 
@@ -106,7 +106,7 @@ void WldHistoryManager::addChangeWorldSettingsHistory(HistorySettings::WorldSett
 {
     updateHistoryBuffer();
 
-    HistoryElementMainSetting* modf = new HistoryElementMainSetting(subtype, extraData);
+    HistoryElementMainSetting *modf = new HistoryElementMainSetting(subtype, extraData);
     modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
@@ -119,7 +119,7 @@ void WldHistoryManager::addChangeSettingsHistory(WorldData modifiedItems, Histor
 {
     updateHistoryBuffer();
 
-    HistoryElementItemSetting* modf = new HistoryElementItemSetting(modifiedItems, subType, extraData);
+    HistoryElementItemSetting *modf = new HistoryElementItemSetting(modifiedItems, subType, extraData);
     modf->setScene(m_scene);
 
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
@@ -132,7 +132,7 @@ void WldHistoryManager::addRotateHistory(WorldData rotatedItems, WorldData unrot
 {
     updateHistoryBuffer();
 
-    HistoryElementModification* modf = new HistoryElementModification(unrotatedItems, rotatedItems);
+    HistoryElementModification *modf = new HistoryElementModification(unrotatedItems, rotatedItems);
     modf->setCustomHistoryName(tr("Rotate"));
     modf->setScene(m_scene);
 
@@ -146,7 +146,7 @@ void WldHistoryManager::addFlipHistory(WorldData flippedItems, WorldData unflipp
 {
     updateHistoryBuffer();
 
-    HistoryElementModification* modf = new HistoryElementModification(unflippedItems, flippedItems);
+    HistoryElementModification *modf = new HistoryElementModification(unflippedItems, flippedItems);
     modf->setCustomHistoryName(tr("Flip"));
     modf->setScene(m_scene);
 
@@ -160,7 +160,7 @@ void WldHistoryManager::addTransformHistory(WorldData transformedItems, WorldDat
 {
     updateHistoryBuffer();
 
-    HistoryElementModification* modf = new HistoryElementModification(sourceItems, transformedItems);
+    HistoryElementModification *modf = new HistoryElementModification(sourceItems, transformedItems);
     modf->setCustomHistoryName(tr("Transform"));
     modf->setScene(m_scene);
 
@@ -202,12 +202,11 @@ void WldHistoryManager::updateHistoryBuffer()
     {
         int lastSize = operationList.size();
         for(int i = historyIndex; i < lastSize; i++)
-        {
             operationList.pop_back();
-        }
     }
 
-    while(operationList.size() >= GlobalSettings::historyLimit){
+    while(operationList.size() >= GlobalSettings::historyLimit)
+    {
         operationList.pop_front();
         historyIndex--;
     }
