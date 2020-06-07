@@ -215,7 +215,7 @@ Fail to start world map
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
         <location filename="../main.cpp" line="333"/>
         <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ця карта світу несумісна: можлива непередбачувана поведінка гри, або помилки. Подробиці у звіті.</translation>
     </message>
     <message id="WLD_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="352"/>
@@ -239,7 +239,7 @@ Fail to start world map
     <message id="WARNING_INCOMPATIBLE_LEVEL">
         <location filename="../main.cpp" line="510"/>
         <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей рівень несумісний: можлива непередбачувана поведінка гри, або помилки. Подробиці у звіті.</translation>
     </message>
     <message id="LVL_EXIT_WARP_INFO">
         <location filename="../main.cpp" line="580"/>
