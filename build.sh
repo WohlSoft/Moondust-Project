@@ -361,7 +361,7 @@ do
             echo ""
             echo "Running translation refreshing...";
 
-            LANGS_LIST="bg bs de en es fr he-il id it ja nl nb-no pl pt-br pt-pt ru sv sr uk zh"
+            LANGS_LIST="bg bs de en es fr he-il id it ja nl nb-no pl pt-br pt-pt ru ro sv sr uk zh"
 
             printLine "Editor" "\E[0;42;37m" "\E[0;34m"
             cd Editor
