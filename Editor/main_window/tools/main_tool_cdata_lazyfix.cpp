@@ -27,6 +27,7 @@
 
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <Graphics/bitmask2rgba.h>
 
 #include <FreeImageLite.h>
 
@@ -96,45 +97,8 @@ static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
     if(!mask)
         return false;//Nothing to do.
 
-    unsigned int img_w  = FreeImage_GetWidth(image);
-    unsigned int img_h  = FreeImage_GetHeight(image);
-    unsigned int mask_w = FreeImage_GetWidth(mask);
-    unsigned int mask_h = FreeImage_GetHeight(mask);
+    bitmask_to_rgba(image, mask);
 
-    RGBQUAD Fpix;
-    RGBQUAD Bpix;
-    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
-
-    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
-    {
-        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
-        {
-
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-            FreeImage_GetPixelColor(mask, x, y, &Bpix);
-
-            Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
-            Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
-            Npix.rgbBlue    = ((0x7F & Bpix.rgbBlue) | Fpix.rgbBlue);
-            int newAlpha = 255 -
-                           ((int(Bpix.rgbRed) +
-                             int(Bpix.rgbGreen) +
-                             int(Bpix.rgbBlue)) / 3);
-            if((Bpix.rgbRed > 240u) //is almost White
-               && (Bpix.rgbGreen > 240u)
-               && (Bpix.rgbBlue > 240u))
-                newAlpha = 0;
-
-            newAlpha = newAlpha + ((int(Fpix.rgbRed) +
-                                    int(Fpix.rgbGreen) +
-                                    int(Fpix.rgbBlue)) / 3);
-            if(newAlpha > 255)
-                newAlpha = 255;
-            Npix.rgbReserved = newAlpha;
-
-            FreeImage_SetPixelColor(image, x, y, &Npix);
-        }
-    }
     FreeImage_Unload(mask);
     return true;
 }

@@ -50,6 +50,7 @@ include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/Utils/Utils.cmake)
 include(../_common/Utils/UtilsSDL.cmake)
 include(../_common/Utils/openUrl.cmake)
+include(../_common/Graphics/bitmask2rgba.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
@@ -356,6 +357,7 @@ set(PGE_ENGINE_SRC_ARGS
     ${OPENURL_SRCS}
     ${UTILS_SRCS}
     ${UTILS_SDL_SRCS}
+    ${BITMASK2RGBA_SRCS}
 )
 
 if(ANDROID)
