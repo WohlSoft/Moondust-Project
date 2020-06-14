@@ -151,50 +151,6 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *
     FreeImage_Unload(mask);
 }
 
-
-
-
-
-
-QPixmap GraphicsHelps::mergeToRGBA(QPixmap image, QImage mask)
-{
-    if(mask.isNull())
-        return image;
-
-    if(image.isNull())
-        return image;
-
-    QImage target = image.toImage();
-
-    if(target.format() != QImage::Format_ARGB32)
-        target = target.convertToFormat(QImage::Format_ARGB32);
-
-    mergeToRGBA_BitWise(target, mask);
-    return QPixmap::fromImage(target);
-}
-
-void GraphicsHelps::mergeToRGBA(QPixmap &img, QImage &mask, QString path, QString maskpath)
-{
-    if(path.isNull())
-        return;
-
-    QImage target;
-    target = loadQImage(path);
-
-    if(target.format() != QImage::Format_ARGB32)
-        target = target.convertToFormat(QImage::Format_ARGB32);
-
-    if(maskpath.isNull())
-    {
-        img.convertFromImage(target);
-        return;
-    }
-
-    mask = loadQImage(maskpath);
-    mergeToRGBA_BitWise(target, mask);
-    img.convertFromImage(target);
-}
-
 void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, QImage &mask)
 {
     unsigned int img_w   = static_cast<unsigned int>(srcimage.width());
@@ -240,64 +196,6 @@ void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, FIBITMAP *&mask)
             Npix.rgbBlue = gray;
             Npix.rgbReserved = 0xFF;
             FreeImage_SetPixelColor(mask,  x, y, &Npix);
-        }
-    }
-}
-
-//Implementation of Bitwise merging of bit-mask to RGBA image
-void GraphicsHelps::mergeToRGBA_BitWise(QImage &image, QImage mask)
-{
-    if(mask.isNull())
-        return;
-
-    if(image.isNull())
-        return;
-
-    //bool isWhiteMask = true;
-    //QImage target(image.width(), image.height(), QImage::Format_ARGB32);
-
-    //QImage newmask = mask.convertToFormat(QImage::Format_ARGB32);
-    //newmask = newmask.convertToFormat(QImage::Format_ARGB32);
-    //    if(target.size()!= mask.size())
-    //    {
-    //        mask = mask.copy(0, 0, target.width(), target.height());
-    //    }
-
-    for(int y = 0; (y < image.height()) && (y < mask.height()); y++)
-    {
-        for(int x = 0; (x < image.width()) && (x < mask.width()); x++)
-        {
-            QColor Fpix = QColor(image.pixel(x, y));
-            QColor Dpix = QColor(qRgb(128, 128, 128));
-            QColor Spix = QColor(mask.pixel(x, y));
-            QColor Npix;
-            Npix.setAlpha(255);
-            //AND
-            Npix.setRed(Dpix.red() & Spix.red());
-            Npix.setGreen(Dpix.green() & Spix.green());
-            Npix.setBlue(Dpix.blue() & Spix.blue());
-            //OR
-            Npix.setRed(Fpix.red() | Npix.red());
-            Npix.setGreen(Fpix.green() | Npix.green());
-            Npix.setBlue(Fpix.blue() | Npix.blue());
-            //            isWhiteMask &= ( (Spix.red()>240) //is almost White
-            //                             &&(Spix.green()>240)
-            //                             &&(Spix.blue()>240));
-            //Calculate alpha-channel level
-            int newAlpha = 255 - ((Spix.red() + Spix.green() + Spix.blue()) / 3);
-
-            if((Spix.red() > 240) //is almost White
-               && (Spix.green() > 240)
-               && (Spix.blue() > 240))
-                newAlpha = 0;
-
-            newAlpha = newAlpha + ((Fpix.red() + Fpix.green() + Fpix.blue()) / 3);
-
-            if(newAlpha > 255)
-                newAlpha = 255;
-
-            Npix.setAlpha(newAlpha);
-            image.setPixel(x, y, Npix.rgba());
         }
     }
 }
