@@ -89,44 +89,67 @@ static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask, FI
     unsigned int mask_w = FreeImage_GetWidth(mask);
     unsigned int mask_h = FreeImage_GetHeight(mask);
 
-    RGBQUAD Fpix;
-    RGBQUAD Bpix;
-    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
+    BYTE *img_bits  = FreeImage_GetBits(image);
+    BYTE *mask_bits = FreeImage_GetBits(mask);
+    BYTE *FPixP = img_bits;
+    BYTE *SPixP = mask_bits;
+    RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   //Destination pixel color
+    BYTE Wpix[] = {0xFF, 0xFF, 0xFF, 0xFF};   //Dummy white pixel
+    unsigned short newAlpha = 0xFF; //Calculated destination alpha-value
 
+    bool endOfY = false;
     unsigned int ym = mask_h - 1;
     unsigned int y = img_h - 1;
+
     while(1)
     {
-        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
-        {
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-            FreeImage_GetPixelColor(mask, x, ym, &Bpix);
+        FPixP = img_bits + (img_w * y * 4);
+        if(!endOfY)
+            SPixP = mask_bits + (mask_w * ym * 4);
 
-            Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
-            Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
-            Npix.rgbBlue    = ((0x7F & Bpix.rgbBlue) | Fpix.rgbBlue);
-            int newAlpha = 255 -
-                           ((int(Bpix.rgbRed) +
-                             int(Bpix.rgbGreen) +
-                             int(Bpix.rgbBlue)) / 3);
-            if((Bpix.rgbRed > 240u) //is almost White
-               && (Bpix.rgbGreen > 240u)
-               && (Bpix.rgbBlue > 240u))
+        for(unsigned int x = 0; (x < img_w); x++)
+        {
+            Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
+            Npix.rgbGreen = ((SPixP[FI_RGBA_GREEN] & 0x7F) | FPixP[FI_RGBA_GREEN]);
+            Npix.rgbRed = ((SPixP[FI_RGBA_RED] & 0x7F) | FPixP[FI_RGBA_RED]);
+            newAlpha = 255 - ((static_cast<unsigned short>(SPixP[FI_RGBA_RED]) +
+                               static_cast<unsigned short>(SPixP[FI_RGBA_GREEN]) +
+                               static_cast<unsigned short>(SPixP[FI_RGBA_BLUE])) / 3);
+
+            if((SPixP[FI_RGBA_RED] > 240u) //is almost White
+               && (SPixP[FI_RGBA_GREEN] > 240u)
+               && (SPixP[FI_RGBA_BLUE] > 240u))
                 newAlpha = 0;
 
-            newAlpha = newAlpha + ((int(Fpix.rgbRed) +
-                                    int(Fpix.rgbGreen) +
-                                    int(Fpix.rgbBlue)) / 3);
-            if(newAlpha > 255)
-                newAlpha = 255;
-            Npix.rgbReserved = static_cast<BYTE>(newAlpha);
+            newAlpha += ((static_cast<unsigned short>(FPixP[FI_RGBA_RED]) +
+                          static_cast<unsigned short>(FPixP[FI_RGBA_GREEN]) +
+                          static_cast<unsigned short>(FPixP[FI_RGBA_BLUE])) / 3);
 
-            FreeImage_SetPixelColor(image, x, y, &Npix);
+            if(newAlpha > 255) newAlpha = 255;
+
+            FPixP[FI_RGBA_BLUE]  = Npix.rgbBlue;
+            FPixP[FI_RGBA_GREEN] = Npix.rgbGreen;
+            FPixP[FI_RGBA_RED]   = Npix.rgbRed;
+            FPixP[FI_RGBA_ALPHA] = static_cast<BYTE>(newAlpha);
+            FPixP += 4;
+
+            if(x >= mask_w - 1)
+                SPixP = Wpix;
+            else
+                SPixP += 4;
         }
 
-        if(y == 0 || ym == 0)
+        if(ym == 0)
+        {
+            endOfY = true;
+            SPixP = Wpix;
+        }
+        else
+            ym--;
+
+        if(y == 0)
             break;
-        y--; ym--;
+        y--;
     }
 
     if(!extMask)
