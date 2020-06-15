@@ -393,14 +393,36 @@ unsigned long WorldSettingsBox::starCounter_checkLevelFile(QString FilePath, QSe
             return 0;
 
         unsigned long foundStars = 0;
+        auto &npcs = mw()->configs.main_npc;
 
         //Mark all stars
-        for(int q = 0; q < getLevelHead.npc.size(); q++)
+        for(auto &npc : getLevelHead.npc)
         {
-            getLevelHead.npc[q].is_star = mw()->configs.main_npc[static_cast<int>(getLevelHead.npc[q].id)].setup.is_star;
+            npc.is_star = npcs[static_cast<int>(npc.id)].setup.is_star;
 
-            if((getLevelHead.npc[q].is_star) && (!getLevelHead.npc[q].friendly))
-                foundStars++;
+            if(!npc.friendly)
+            {
+                if(npc.is_star)
+                    foundStars++;
+                else if(npc.contents > 0)
+                {
+                    if(npcs[static_cast<int>(npc.contents)].setup.is_star)
+                        foundStars++;
+                }
+            }
+
+            if(m_starCounter_canceled)
+                return starCount;
+        }
+
+        //Also find stars inside of blocks
+        for(auto &block : getLevelHead.blocks)
+        {
+            if(block.npc_id > 0)
+            {
+                if(npcs[static_cast<int>(block.npc_id)].setup.is_star)
+                    foundStars++;
+            }
 
             if(m_starCounter_canceled)
                 return starCount;
