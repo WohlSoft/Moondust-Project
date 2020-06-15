@@ -20,6 +20,8 @@
 #include <locale>
 #include <iostream>
 #include <set>
+#include <algorithm>
+#include <cctype>
 #include <stdio.h>
 
 #include <FileMapper/file_mapper.h>
@@ -152,13 +154,20 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     if(Files::hasSuffix(imgFileIn, "m.gif"))
         return; //Skip mask files
 
+    //! Lower-case filename for case-insensitive checks
+    std::string imgFileInL = imgFileIn;
+    std::transform(imgFileInL.begin(), imgFileInL.end(), imgFileInL.begin(),
+                   [](unsigned char c){ return std::tolower(c); });
+
     std::string imgPathIn = pathIn + "/" + imgFileIn;
     std::string maskPathIn;
 
     std::cout << imgPathIn;
     std::cout.flush();
 
-    if(setup.skipBackground2 && (imgFileIn.compare(0, 11, "background2", 11) == 0))
+    bool isBackground2 = (imgFileInL.compare(0, 11, "background2", 11) == 0);
+
+    if(setup.skipBackground2 && isBackground2)
     {
         setup.count_skipped++;
         std::cout << "...SKIP!\n";
@@ -186,7 +195,7 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
 
     if(maskIsExists) /* When mask exists, use it */
         mergeBitBltToRGBA(image, maskPathIn);
-    else /* Try to find the PNG as source of the mask */
+    else if(!isBackground2)/* Try to find the PNG as source of the mask, except of backgrounds */
     {
         maskFileIn = Files::changeSuffix(imgFileIn, ".png");
         maskPathIn = cnf.getFile(maskFileIn);
