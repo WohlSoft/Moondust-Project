@@ -401,7 +401,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation>Konwertuj Audio (SoX)</translation>
+        <translation>Konwertuj Dźwięk (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -417,15 +417,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Resample to</source>
-        <translation>Resampluj do</translation>
+        <translation>Przepróbkuj do</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation>Uruchom</translation>
     </message>
     <message>
         <source>SoX error</source>
-        <translation>Błąd SoX</translation>
+        <translation>Błąd SoX&apos;a</translation>
     </message>
     <message>
         <source>SoX executable path is not defined.
@@ -445,11 +445,11 @@ Ustaw ścieżkę ponownie</translation>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation>Brak plików do konwertowania</translation>
+        <translation>Nie ma plików do przekonwertowania</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>Zatrzymaj</translation>
     </message>
     <message>
         <source>Operation canceled</source>
@@ -501,7 +501,7 @@ Ustaw ścieżkę ponownie</translation>
     </message>
     <message>
         <source>Convert specified files</source>
-        <translation>Konwertuj wybrane pliki</translation>
+        <translation>Konwertuj określone pliki</translation>
     </message>
     <message>
         <source>Convert into new format
@@ -519,7 +519,7 @@ Ustaw ścieżkę ponownie</translation>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation>Ustaw bitrate</translation>
+        <translation>Ustaw prędkość megabitów na sekundę</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
@@ -4328,7 +4328,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
-        <translation>Czy chcesz usunąć tą warstwę? Wszystkie obiekty zostaną przeniesione do warstwy &quot;Default&quot;.</translation>
+        <translation>Czy chcesz usunąć tą warstwę? 
+Wszystkie obiekty zostaną przeniesione do warstwy &quot;Default&quot;.</translation>
     </message>
     <message>
         <source>Rename layer</source>
@@ -4345,12 +4346,14 @@ All objects on this layer will be moved to the &apos;Default&apos; layer.</sourc
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
-        <translation>Czy chcesz usunąć tą warstwę? Wszystkie obiekty zostaną przeniesione do warstwy &quot;Default&quot;!</translation>
+        <translation>Czy chcesz usunąć tą warstwę? 
+Wszystkie obiekty zostaną przeniesione do warstwy &quot;Default&quot;!</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
-        <translation>Czy chcesz usunąć tą warstwę? Wszystkie obiekty zostaną usunięte!</translation>
+        <translation>Czy chcesz usunąć tą warstwę? 
+Wszystkie obiekty związane z tą warstwą zostaną usunięte!</translation>
     </message>
 </context>
 <context>
@@ -5047,9 +5050,9 @@ Po użyciu można wstawić tylko wyjście.</translation>
     <message>
         <source>Determines the warp through which the player will enter the target level.
 If set to zero, the player will start at the pre-defined level start point.</source>
-        <translation>Definiuje ID Przejścia, jeśli nie jest zerem.
+        <translation>Definiuje Identyfikator przejścia, jeśli nie jest zerem.
 Gracz wejdzie do poziomu przez wybrane przejście.
-Jeżeli wartość jest zerem, wystartujem poziom w ustawionym punkcie startowym.</translation>
+Jeżeli wartość jest zerem, wystartuje poziom w ustawionym punkcie startowym.</translation>
     </message>
     <message>
         <source>Browse for another level file</source>
@@ -5074,8 +5077,7 @@ obecny gracz i liczba żyć.</translation>
     </message>
     <message>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation>Trzymaj noszonego NPC, kiedy wchodzisz do przejścia
-do innego poziomu.</translation>
+        <translation>Trzymaj noszonego NPC, kiedy wchodzisz do przejścia do innego poziomu.</translation>
     </message>
     <message>
         <source>Allow inter-level NPC</source>
@@ -7942,7 +7944,8 @@ Plik: %1</translation>
     <message>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
-        <translation>Twój plik zawiera nieznane wartości, które zostaną usunięte</translation>
+        <translation>Twój plik zawiera nieznane wartości, które zostaną usunięte
+jeżeli zapiszesz plik</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
@@ -10447,7 +10450,7 @@ dlatego możesz użyć tego samego linku, aby pobać najnowszą wersję</transla
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>Notatka: Jeśli obrazy są niepoprawnie przekonwertowanie, uruchom narzędzie LazyFix  i spróbuj konwersji ponownie</translation>
+        <translation>Uwaga: Jeśli obrazy są niepoprawnie przekonwertowane, uruchom narzędzie LazyFix  i spróbuj konwersji ponownie</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
@@ -10503,7 +10506,7 @@ Proszę sprawdź katalog aplikacji i upewnij się, że jest poprawnie zainstalow
     <message>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>To jest narzędzie, które pozwala konwertować grafikę SMBX z formatu  PNG obsługującego przezroczystość przezroczystości do formatu Gif z maskami.</translation>
+        <translation>To jest narzędzie, które pozwala konwertować grafikę SMBX z formatu PNG obsługującego przezroczystość przezroczystości do formatu GIF z maskami.</translation>
     </message>
     <message>
         <source>Browse</source>
