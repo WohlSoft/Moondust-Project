@@ -438,7 +438,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation>Конвертировать Аудио (SoX)</translation>
+        <translation>Преобразовать аудио (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -454,7 +454,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Resample to</source>
-        <translation>Пересемплировать в</translation>
+        <translation>Пересэмплировать в</translation>
     </message>
     <message>
         <source>Start</source>
@@ -538,7 +538,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Convert specified files</source>
-        <translation>Преобразовать определённые файлы</translation>
+        <translation>Преобразовать выбранные файлы</translation>
     </message>
     <message>
         <source>Convert into new format
@@ -556,7 +556,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation>Уст. Битрейт</translation>
+        <translation>Установить битрейт</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
