@@ -56,7 +56,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
         <source>What do you want?</source>
-        <translation>Чего бы вы хотели сделать?</translation>
+        <translation>Что вы хотите?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
