@@ -155,7 +155,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="276"/>
         <source>Export a map of hitboxes as image...</source>
-        <translation>Eksportuj mapę hitboxów jako obrazek...</translation>
+        <translation>Eksportuj mapę hitboxów jako obrazek…</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="316"/>
@@ -376,7 +376,7 @@
     <message>
         <location filename="../calibrationmain.cpp" line="199"/>
         <source>Save into custom place...</source>
-        <translation>Zapisz w niestandardowym miejscu...</translation>
+        <translation>Zapisz w niestandardowym miejscu…</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="298"/>
@@ -509,7 +509,7 @@
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="235"/>
         <source>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</source>
-        <translation>To jest kalibrator obrazków. Kiedy zmieniasz wartości  przesunięcia, przesuwasz fizycznie ruch klatki na obrazku. Ustawienia hitboxów pozostaną niezmienione.</translation>
+        <translation>To jest kalibrator obrazków. Kiedy zmieniasz wartości przesunięcia, przesuwasz fizycznie ruch klatki na obrazku. Ustawienia hitboxów pozostaną niezmienione.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="251"/>
