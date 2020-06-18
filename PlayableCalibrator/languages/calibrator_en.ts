@@ -155,7 +155,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="276"/>
         <source>Export a map of hitboxes as image...</source>
-        <translation>Export a map of hitboxes as image...</translation>
+        <translation>Export a map of hitboxes as image…</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="316"/>
@@ -393,7 +393,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibrationmain.cpp" line="199"/>
         <source>Save into custom place...</source>
-        <translation>Save into custom place...</translation>
+        <translation>Save into custom place…</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="298"/>
@@ -416,7 +416,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <location filename="../calibrationmain.cpp" line="299"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type of image file to open</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="301"/>
@@ -443,12 +443,12 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibrationmain.cpp" line="351"/>
         <source>Calibration is not saved!</source>
-        <translation type="unfinished"></translation>
+        <translation>Calibration is not saved!</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="352"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration was modified and not saved. Do you want to save it?</translation>
     </message>
     <message>
         <source>There are physical settings for a sprite, this need only for creation of new character sprite
