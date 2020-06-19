@@ -166,7 +166,7 @@ Please set SoX path first</translation>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="276"/>
         <source>SoX was crashed</source>
-        <translation>SoX was crashed</translation>
+        <translation>SoX has crashed</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="286"/>
@@ -300,7 +300,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation>Episode path wasn&apos;t declared. Please choice target episode path first.</translation>
+        <translation>Episode path wasn&apos;t declared. Please choose target episode path first.</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="307"/>
@@ -325,7 +325,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="327"/>
         <source>Error occouped while work process</source>
-        <translation>Error occouped while work process</translation>
+        <translation>Error occured while work process</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
@@ -444,7 +444,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="277"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation>Episode path wasn&apos;t declared. Please choice target episode path first.</translation>
+        <translation>Episode path wasn&apos;t declared. Please choose target episode path first.</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="302"/>
@@ -474,7 +474,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Error occouped while work process</source>
-        <translation>Error occouped while work process</translation>
+        <translation>Error occured while work process</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="334"/>
@@ -645,7 +645,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="205"/>
         <source>Conversion has been termiated.</source>
-        <translation>Conversion has been termiated.</translation>
+        <translation>Conversion has been terminated.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="210"/>
@@ -655,7 +655,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="211"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation>Conversion was been completed with errors. Please look the output log for more detailed information.</translation>
+        <translation>Conversion has been completed with errors. Please look the output log for more detailed information.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="271"/>
@@ -878,7 +878,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="163"/>
         <source>Conversion has been termiated.</source>
-        <translation>Conversion has been termiated.</translation>
+        <translation>Conversion has been terminated.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="168"/>
@@ -888,7 +888,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="169"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation>Conversion was been completed with errors. Please look the output log for more detailed information.</translation>
+        <translation>Conversion has been completed with errors. Please look the output log for more detailed information.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="182"/>
