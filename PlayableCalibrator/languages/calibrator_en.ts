@@ -404,7 +404,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <location filename="../calibrationmain.cpp" line="302"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
-        <translation>SMBX playble sprite</translation>
+        <translation>SMBX playable sprite</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="300"/>
@@ -438,7 +438,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibrationmain.cpp" line="328"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
-        <translation>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</translation>
+        <translation>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with the current frame&apos;s settings. Do you want to continue?</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="351"/>
