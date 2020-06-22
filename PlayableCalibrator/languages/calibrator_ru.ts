@@ -416,7 +416,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <location filename="../calibrationmain.cpp" line="299"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тип файла картинки для открытия</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="301"/>
