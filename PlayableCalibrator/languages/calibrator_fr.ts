@@ -260,7 +260,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="185"/>
         <source>Is duck frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Position assise</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="139"/>
@@ -310,7 +310,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="74"/>
         <source>Duck height of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hauteur de la boîte de collision du joueur (hitbox) en position assise</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="523"/>
@@ -399,7 +399,7 @@
         <location filename="../calibrationmain.cpp" line="299"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Type de fichier d&apos;image à ouvrir</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="301"/>
