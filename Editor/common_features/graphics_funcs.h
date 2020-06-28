@@ -32,9 +32,6 @@ public:
     static FIBITMAP *loadImage(QString file, bool convertTo32bit);
     static void mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *maskFallback = nullptr);
 
-    static QPixmap mergeToRGBA(QPixmap image, QImage mask);
-    static void mergeToRGBA_BitWise(QImage &image, QImage mask);
-    static void mergeToRGBA(QPixmap &img, QImage &mask, QString path, QString maskpath);
     static void getMaskFromRGBA(const QPixmap &srcimage, QImage &mask);
     static void getMaskFromRGBA(const QPixmap &srcimage, FIBITMAP *&mask);
     static void loadMaskedImage(QString rootDir, QString in_imgName, QString &out_maskName, QPixmap &out_Img, QImage &out_Mask, QString &out_errStr);

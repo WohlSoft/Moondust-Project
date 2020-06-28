@@ -1078,6 +1078,10 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             {
                 if(!type.compare("npc", Qt::CaseInsensitive))
                     button->setText(value ? QString("NPC-%1").arg(value) : tr("[empty]"));
+                else if(!type.compare("npcOrCoins", Qt::CaseInsensitive))
+                    button->setText(value ? (
+                                            (value > 0) ? QString("NPC-%1").arg(value) : tr("%1 coins").arg(-value)
+                                            ) : tr("[empty]"));
                 else if(!type.compare("block", Qt::CaseInsensitive))
                     button->setText(value ? QString("BLOCK-%1").arg(value) : tr("[empty]"));
                 else if(!type.compare("bgo", Qt::CaseInsensitive))
@@ -1105,94 +1109,83 @@ void JsonSettingsWidget::loadLayoutEntries(JsonSettingsWidget::SetupStack setupT
             {
 #ifndef UNIT_TEST
                 int value = retrieve_property(m_setupStack, id, valueDefault).toInt();
+                ItemSelectDialog *itemsList = nullptr;
+                int *itemListValuePtr = nullptr;
                 if(!type.compare("block", Qt::CaseInsensitive))
                 {
-                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_BLOCK,
-                                                                     0, value, 0, 0, 0, 0, 0, 0, 0,
-                                                                     target, ItemSelectDialog::TAB_BLOCK);
-                    util::DialogToCenter(itemsList, true);
-                    if(itemsList->exec() == QDialog::Accepted)
-                    {
-                        updateButton(it, itemsList->blockID);
-                        m_setupStack.setValue(id, itemsList->blockID);
-                        emit settingsChanged();
-                    }
+                    itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_BLOCK,
+                                                     0, value, 0, 0, 0, 0, 0, 0, 0,
+                                                     target, ItemSelectDialog::TAB_BLOCK);
+                    itemListValuePtr = &itemsList->blockID;
                 }
                 else if(!type.compare("bgo", Qt::CaseInsensitive))
                 {
-                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_BGO,
-                                                                     0, 0, value, 0, 0, 0, 0, 0, 0,
-                                                                     target, ItemSelectDialog::TAB_BGO);
-                    util::DialogToCenter(itemsList, true);
-                    if(itemsList->exec() == QDialog::Accepted)
-                    {
-                        updateButton(it, itemsList->bgoID);
-                        m_setupStack.setValue(id, itemsList->bgoID);
-                        emit settingsChanged();
-                    }
+                    itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_BGO,
+                                                     0, 0, value, 0, 0, 0, 0, 0, 0,
+                                                     target, ItemSelectDialog::TAB_BGO);
+                    itemListValuePtr = &itemsList->bgoID;
                 }
                 else if(!type.compare("npc", Qt::CaseInsensitive))
                 {
-                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_NPC,
-                                                                     0, 0, 0, value, 0, 0, 0, 0, 0,
-                                                                     target, ItemSelectDialog::TAB_NPC);
-                    util::DialogToCenter(itemsList, true);
-                    if(itemsList->exec() == QDialog::Accepted)
+                    itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_NPC,
+                                                     0, 0, 0, value, 0, 0, 0, 0, 0,
+                                                     target, ItemSelectDialog::TAB_NPC);
+                    itemListValuePtr = &itemsList->npcID;
+                }
+                else if(!type.compare("npcOrCoins", Qt::CaseInsensitive))
+                {
+                    int npcExtraData = ItemSelectDialog::NPCEXTRA_WITHCOINS;
+                    if (value < 0)
                     {
-                        updateButton(it, itemsList->npcID);
-                        m_setupStack.setValue(id, itemsList->npcID);
-                        emit settingsChanged();
+                        value = -value;
+                        npcExtraData |= ItemSelectDialog::NPCEXTRA_ISCOINSELECTED;
                     }
+                    itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_NPC,
+                                                     npcExtraData, 0, 0, value, 0, 0, 0, 0, 0,
+                                                     target, ItemSelectDialog::TAB_NPC);
+                    itemListValuePtr = &itemsList->npcID;
                 }
                 else if(!type.compare("tile", Qt::CaseInsensitive) || !type.compare("terrain", Qt::CaseInsensitive))
                 {
-                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_TILE,
-                                                                     0, 0, 0, 0, value, 0, 0, 0, 0,
-                                                                     target, ItemSelectDialog::TAB_TILE);
-                    util::DialogToCenter(itemsList, true);
-                    if(itemsList->exec() == QDialog::Accepted)
-                    {
-                        updateButton(it, itemsList->tileID);
-                        m_setupStack.setValue(id, itemsList->tileID);
-                        emit settingsChanged();
-                    }
+                    itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_TILE,
+                                                     0, 0, 0, 0, value, 0, 0, 0, 0,
+                                                     target, ItemSelectDialog::TAB_TILE);
+                    itemListValuePtr = &itemsList->tileID;
                 }
                 else if(!type.compare("scenery", Qt::CaseInsensitive))
                 {
-                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_SCENERY,
-                                                                     0, 0, 0, 0, 0, value, 0, 0, 0,
-                                                                     target, ItemSelectDialog::TAB_SCENERY);
-                    util::DialogToCenter(itemsList, true);
-                    if(itemsList->exec() == QDialog::Accepted)
-                    {
-                        updateButton(it, itemsList->sceneryID);
-                        m_setupStack.setValue(id, itemsList->sceneryID);
-                        emit settingsChanged();
-                    }
+                    itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_SCENERY,
+                                                     0, 0, 0, 0, 0, value, 0, 0, 0,
+                                                     target, ItemSelectDialog::TAB_SCENERY);
+                    itemListValuePtr = &itemsList->sceneryID;
                 }
                 else if(!type.compare("path", Qt::CaseInsensitive))
                 {
-                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_PATH,
-                                                                     0, 0, 0, 0, 0, 0, value, 0, 0,
-                                                                     target, ItemSelectDialog::TAB_PATH);
-                    util::DialogToCenter(itemsList, true);
-                    if(itemsList->exec() == QDialog::Accepted)
-                    {
-                        updateButton(it, itemsList->pathID);
-                        m_setupStack.setValue(id, itemsList->pathID);
-                        emit settingsChanged();
-                    }
+                    itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_PATH,
+                                                     0, 0, 0, 0, 0, 0, value, 0, 0,
+                                                     target, ItemSelectDialog::TAB_PATH);
+                    itemListValuePtr = &itemsList->pathID;
                 }
                 else if(!type.compare("level", Qt::CaseInsensitive))
                 {
-                    ItemSelectDialog *itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_LEVEL,
-                                                                     0, 0, 0, 0, 0, 0, 0, value, 0,
-                                                                     target, ItemSelectDialog::TAB_LEVEL);
+                    itemsList = new ItemSelectDialog(m_configPack, ItemSelectDialog::TAB_LEVEL,
+                                                     0, 0, 0, 0, 0, 0, 0, value, 0,
+                                                     target, ItemSelectDialog::TAB_LEVEL);
+                    itemListValuePtr = &itemsList->levelID;
+                }
+                
+                if (itemsList)
+                {
                     util::DialogToCenter(itemsList, true);
                     if(itemsList->exec() == QDialog::Accepted)
                     {
-                        updateButton(it, itemsList->levelID);
-                        m_setupStack.setValue(id, itemsList->levelID);
+                        int newValue = *itemListValuePtr;
+                        if (itemsList->isCoin)
+                        {
+                            newValue = -newValue;
+                        }
+                        updateButton(it, newValue);
+                        m_setupStack.setValue(id, newValue);
                         emit settingsChanged();
                     }
                 }

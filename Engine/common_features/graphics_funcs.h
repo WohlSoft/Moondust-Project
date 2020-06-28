@@ -76,13 +76,6 @@ public:
      */
     static void closeImage(FIBITMAP *img);
 
-    /**
-     * @brief Generate mask from off RGBA source
-     * @param image [in] Source Image
-     * @param mask [out] Target image to write a mask
-     */
-    static void getMaskFromRGBA(FIBITMAP *&image, FIBITMAP *&mask);
-
     /*!
      * \brief Merges mask and foreground image with bit blitting algorithm
      * 1) draw mask over grey-filled image with bitwise AND per each pixel (white pixels are will not change background)

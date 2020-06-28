@@ -1081,7 +1081,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
-        <translation>Args  : {Chaîne} Calcule le hachage MD5 de la chaîne de caractères</translation>
+        <translation>Args : {Chaîne} Calcule le hachage MD5 de la chaîne de caractères</translation>
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
@@ -7449,7 +7449,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation>LTR</translation>
+        <translation>De gauche à droite</translation>
     </message>
     <message>
         <source>Block user data change</source>
@@ -8271,7 +8271,7 @@ Des données pourraient être corrompues !</translation>
     <message>
         <source>Failed to load tileset group!
 Data may be corrupted!</source>
-        <translation>Échec du chargement du  groupe de jeux de tuiles !
+        <translation>Échec du chargement du groupe de jeux de tuiles !
 Des données pourraient être corrompues !</translation>
     </message>
     <message>
@@ -9253,7 +9253,7 @@ Boîtes à musique :	%5
     </message>
     <message>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
-        <translation>Remarque :  Les dossiers personnalisés ne sont pas pris en charge par l&apos;ancien moteur SMBX !</translation>
+        <translation>Remarque : Les dossiers personnalisés ne sont pas pris en charge par l&apos;ancien moteur SMBX !</translation>
     </message>
     <message>
         <source>Extension is not set</source>

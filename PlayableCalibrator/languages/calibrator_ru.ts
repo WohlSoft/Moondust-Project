@@ -155,7 +155,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="276"/>
         <source>Export a map of hitboxes as image...</source>
-        <translation>Экспортировать карту хитбоксов...</translation>
+        <translation>Экспортировать карту хитбоксов…</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="316"/>
@@ -393,7 +393,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibrationmain.cpp" line="199"/>
         <source>Save into custom place...</source>
-        <translation>Сохранить в другом месте...</translation>
+        <translation>Сохранить в другом месте…</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="298"/>
@@ -416,7 +416,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <location filename="../calibrationmain.cpp" line="299"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тип файла картинки для открытия</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="301"/>
@@ -443,12 +443,12 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibrationmain.cpp" line="351"/>
         <source>Calibration is not saved!</source>
-        <translation type="unfinished"></translation>
+        <translation>Калибровка не сохранена!</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="352"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Конфигурация была изменена, но не сохранена. Хотите ли сохранить её?</translation>
     </message>
     <message>
         <source>There are physical settings for a sprite, this need only for creation of new character sprite
@@ -573,7 +573,7 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
-        <translation></translation>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>

@@ -56,7 +56,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
         <source>What do you want?</source>
-        <translation>Чего бы вы хотели сделать?</translation>
+        <translation>Что вы хотите?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
@@ -998,7 +998,7 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
-        <translation></translation>
+        <translation>LTR</translation>
     </message>
 </context>
 </TS>

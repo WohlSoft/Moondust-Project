@@ -22,13 +22,14 @@
 #include <QFileInfo>
 #include <QTextStream>
 #include <memory>
+#include <FreeImageLite.h>
+#include <QtDebug>
 
 #include <common_features/logger.h>
 
+#include "Graphics/bitmask2rgba.h"
 #include "graphics_funcs.h"
 
-#include <FreeImageLite.h>
-#include <QtDebug>
 
 
 FIBITMAP *GraphicsHelps::loadImage(QString file, bool convertTo32bit)
@@ -95,104 +96,12 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, QString pathToMask, QPixmap *
     if(!mask && maskFallback)
         getMaskFromRGBA(*maskFallback, mask);
 
-    if(!mask) return;//Nothing to do.
+    if(!mask)
+        return;//Nothing to do.
 
-    unsigned int img_w = FreeImage_GetWidth(image);
-    unsigned int img_h = FreeImage_GetHeight(image);
-    unsigned int mask_w = FreeImage_GetWidth(mask);
-    unsigned int mask_h = FreeImage_GetHeight(mask);
-    BYTE *img_bits  = FreeImage_GetBits(image);
-    BYTE *mask_bits = FreeImage_GetBits(mask);
-    BYTE *FPixP = img_bits;
-    BYTE *SPixP = mask_bits;
-    RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   //Destination pixel color
-    unsigned short newAlpha = 255; //Calculated destination alpha-value
-
-    unsigned int ym = mask_h - 1;
-    unsigned int y = img_h - 1;
-    while(1)
-    {
-        FPixP = img_bits + (img_w * y * 4);
-        SPixP = mask_bits + (mask_w * ym * 4);
-        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
-        {
-            Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
-            Npix.rgbGreen = ((SPixP[FI_RGBA_GREEN] & 0x7F) | FPixP[FI_RGBA_GREEN]);
-            Npix.rgbRed = ((SPixP[FI_RGBA_RED] & 0x7F) | FPixP[FI_RGBA_RED]);
-            newAlpha = 255 - ((static_cast<unsigned short>(SPixP[FI_RGBA_RED]) +
-                               static_cast<unsigned short>(SPixP[FI_RGBA_GREEN]) +
-                               static_cast<unsigned short>(SPixP[FI_RGBA_BLUE])) / 3);
-
-            if((SPixP[FI_RGBA_RED] > 240u) //is almost White
-               && (SPixP[FI_RGBA_GREEN] > 240u)
-               && (SPixP[FI_RGBA_BLUE] > 240u))
-                newAlpha = 0;
-
-            newAlpha += ((short(FPixP[FI_RGBA_RED]) +
-                          short(FPixP[FI_RGBA_GREEN]) +
-                          short(FPixP[FI_RGBA_BLUE])) / 3);
-
-            if(newAlpha > 255)
-                newAlpha = 255;
-
-            FPixP[FI_RGBA_BLUE]  = Npix.rgbBlue;
-            FPixP[FI_RGBA_GREEN] = Npix.rgbGreen;
-            FPixP[FI_RGBA_RED]   = Npix.rgbRed;
-            FPixP[FI_RGBA_ALPHA] = static_cast<BYTE>(newAlpha);
-            FPixP += 4;
-            SPixP += 4;
-        }
-
-        if(y == 0 || ym == 0)
-            break;
-        y--; ym--;
-    }
+    bitmask_to_rgba(image, mask);
 
     FreeImage_Unload(mask);
-}
-
-
-
-
-
-
-QPixmap GraphicsHelps::mergeToRGBA(QPixmap image, QImage mask)
-{
-    if(mask.isNull())
-        return image;
-
-    if(image.isNull())
-        return image;
-
-    QImage target = image.toImage();
-
-    if(target.format() != QImage::Format_ARGB32)
-        target = target.convertToFormat(QImage::Format_ARGB32);
-
-    mergeToRGBA_BitWise(target, mask);
-    return QPixmap::fromImage(target);
-}
-
-void GraphicsHelps::mergeToRGBA(QPixmap &img, QImage &mask, QString path, QString maskpath)
-{
-    if(path.isNull())
-        return;
-
-    QImage target;
-    target = loadQImage(path);
-
-    if(target.format() != QImage::Format_ARGB32)
-        target = target.convertToFormat(QImage::Format_ARGB32);
-
-    if(maskpath.isNull())
-    {
-        img.convertFromImage(target);
-        return;
-    }
-
-    mask = loadQImage(maskpath);
-    mergeToRGBA_BitWise(target, mask);
-    img.convertFromImage(target);
 }
 
 void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, QImage &mask)
@@ -240,64 +149,6 @@ void GraphicsHelps::getMaskFromRGBA(const QPixmap &srcimage, FIBITMAP *&mask)
             Npix.rgbBlue = gray;
             Npix.rgbReserved = 0xFF;
             FreeImage_SetPixelColor(mask,  x, y, &Npix);
-        }
-    }
-}
-
-//Implementation of Bitwise merging of bit-mask to RGBA image
-void GraphicsHelps::mergeToRGBA_BitWise(QImage &image, QImage mask)
-{
-    if(mask.isNull())
-        return;
-
-    if(image.isNull())
-        return;
-
-    //bool isWhiteMask = true;
-    //QImage target(image.width(), image.height(), QImage::Format_ARGB32);
-
-    //QImage newmask = mask.convertToFormat(QImage::Format_ARGB32);
-    //newmask = newmask.convertToFormat(QImage::Format_ARGB32);
-    //    if(target.size()!= mask.size())
-    //    {
-    //        mask = mask.copy(0, 0, target.width(), target.height());
-    //    }
-
-    for(int y = 0; (y < image.height()) && (y < mask.height()); y++)
-    {
-        for(int x = 0; (x < image.width()) && (x < mask.width()); x++)
-        {
-            QColor Fpix = QColor(image.pixel(x, y));
-            QColor Dpix = QColor(qRgb(128, 128, 128));
-            QColor Spix = QColor(mask.pixel(x, y));
-            QColor Npix;
-            Npix.setAlpha(255);
-            //AND
-            Npix.setRed(Dpix.red() & Spix.red());
-            Npix.setGreen(Dpix.green() & Spix.green());
-            Npix.setBlue(Dpix.blue() & Spix.blue());
-            //OR
-            Npix.setRed(Fpix.red() | Npix.red());
-            Npix.setGreen(Fpix.green() | Npix.green());
-            Npix.setBlue(Fpix.blue() | Npix.blue());
-            //            isWhiteMask &= ( (Spix.red()>240) //is almost White
-            //                             &&(Spix.green()>240)
-            //                             &&(Spix.blue()>240));
-            //Calculate alpha-channel level
-            int newAlpha = 255 - ((Spix.red() + Spix.green() + Spix.blue()) / 3);
-
-            if((Spix.red() > 240) //is almost White
-               && (Spix.green() > 240)
-               && (Spix.blue() > 240))
-                newAlpha = 0;
-
-            newAlpha = newAlpha + ((Fpix.red() + Fpix.green() + Fpix.blue()) / 3);
-
-            if(newAlpha > 255)
-                newAlpha = 255;
-
-            Npix.setAlpha(newAlpha);
-            image.setPixel(x, y, Npix.rgba());
         }
     }
 }
