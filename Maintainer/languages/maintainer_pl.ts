@@ -444,7 +444,7 @@ Wspierane formaty:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="277"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation>Scieżka epizodu nie została zadeklarowany. Proszę najpierw wybierz docelową ścieżkę odcinka.</translation>
+        <translation>Scieżka epizodu nie została zadeklarowana. Proszę najpierw wybierz docelową ścieżkę odcinka.</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="302"/>
@@ -655,7 +655,7 @@ Wspierane formaty:
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="211"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation>Konwersja została skończona z błędami. Proszę spojrzeć na dziennik wyjściowy dla bardziej sprecyzowanych informacji.</translation>
+        <translation>Konwersja została skończona z błędami. Proszę poszukaj bardziej szczegółowych informacji w dzienniku wyjściowym.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="271"/>
@@ -888,7 +888,7 @@ Wspierane formaty:
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="169"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation>Konwersja została zakończona z błędami. Poszukaj bardziej szczegółowych informacji w dzienniku wyjściowym.</translation>
+        <translation>Konwersja została zakończona z błędami. Proszę poszukaj bardziej szczegółowych informacji w dzienniku wyjściowym.</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="182"/>
