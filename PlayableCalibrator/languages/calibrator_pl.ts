@@ -387,7 +387,7 @@
         <location filename="../calibrationmain.cpp" line="302"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
-        <translation>Grywalny sprite SMBX&apos;a</translation>
+        <translation>Grywalny duszek SMBX&apos;a</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="300"/>
@@ -399,7 +399,7 @@
         <location filename="../calibrationmain.cpp" line="299"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation>Obrazki GIF i PNG</translation>
+        <translation>Typ pliku obrazu do otwarcia</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="301"/>

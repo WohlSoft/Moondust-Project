@@ -8090,7 +8090,7 @@ Maksymalny numer bloków muzyki to %2.</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation>LTR (Od Lewej do Prawej)</translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <source>Block user data change</source>
