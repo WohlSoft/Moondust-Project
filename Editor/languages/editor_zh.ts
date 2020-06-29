@@ -7311,15 +7311,12 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>非常抱歉，PGE 遭到异常终止。
+        <translation>非常抱歉，PGE 编辑器遭到异常终止。
 原因：未处理异常
 
-请通知论坛管理员，或在 Github 上提问
-以便于我们处理问题。
+请将报告发送给论坛管理员，以便于我们处理问题。
 
-GitHub 链接: https://github.com/WohlSoft/PGE-Project
-Forum 链接: http://wohlsoft.ru/forum
-（英文注意）</translation>
+论坛链接: wohlsoft.ru/forum（需要英文）</translation>
     </message>
     <message>
         <source>Terminal was closed [SIGHUP]</source>
