@@ -79,13 +79,14 @@ Download: %1
 Note: most of config packs are updates togeter with PGE,
 therefore you can use same link to get updated version.</source>
         <translation>您的配置包版本过旧。
-&lt;br&gt;编辑器即将启动，但您会在对象和设置中遇到问题。
-&lt;br&gt;
-&lt;br&gt;请下载并安装最新版本的配置包：
-&lt;br&gt;
-&lt;br&gt;下载： %1
-&lt;br&gt;注：部分配置包和PGE同步更新，
-&lt;br&gt;确保可以在同一链接里下载到新版本。</translation>
+编辑器即将启动，但您会在对象和设置中遇到问题。
+
+请下载并安装最新版本的配置包：
+
+下载： %1
+
+注：部分配置包和PGE同步更新，
+确保可以在同一链接里下载到新版本。</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
         <location filename="../data_configs/config_manager.cpp" line="240"/>
@@ -488,6 +489,7 @@ Fail to start world map
 %1</source>
         <translation>错误：
 无法启动大地图。
+
 %1</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
