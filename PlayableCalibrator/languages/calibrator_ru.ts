@@ -534,7 +534,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="235"/>
         <source>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</source>
-        <translation>Это - калибровщик изображения. Если менять значения смещений, кадр будет физически сдвинут на смом изображении. Настройки хитбоксов при этом останутся прежними.</translation>
+        <translation>Это - калибровщик изображения. Если менять значения смещений, кадр будет физически сдвинут в самом изображении. Настройки хитбоксов при этом останутся прежними.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="251"/>

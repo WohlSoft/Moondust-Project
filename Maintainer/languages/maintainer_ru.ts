@@ -108,7 +108,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="587"/>
         <source>Sox binary path:</source>
-        <translation>Испольняемый файл SoX:</translation>
+        <translation>Исполняемый файл SoX:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="594"/>
@@ -541,7 +541,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="102"/>
         <source>Path to an input directory with a source data</source>
-        <translation>Путь ко входной дитерктории с исходными данными</translation>
+        <translation>Путь ко входной директории с исходными данными</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
@@ -796,7 +796,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="85"/>
         <source>Path to an input directory with a source data</source>
-        <translation>Путь ко входной дитерктории с исходными данными</translation>
+        <translation>Путь ко входной директории с исходными данными</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="98"/>

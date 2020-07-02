@@ -386,7 +386,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation>Конвертувати Аудіо (SoX)</translation>
+        <translation>Конвертувати аудіо (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -406,7 +406,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Start</source>
-        <translation>Старт</translation>
+        <translation>Почати</translation>
     </message>
     <message>
         <source>SoX error</source>
@@ -474,7 +474,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>What do you want?</source>
-        <translation>Що ви хочете?</translation>
+        <translation>Чого ви бажаєте?</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
@@ -486,7 +486,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Convert specified files</source>
-        <translation>Конвертувати специфічні файли</translation>
+        <translation>Конвертувати вибрані файли</translation>
     </message>
     <message>
         <source>Convert into new format
@@ -508,15 +508,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
-        <translation>Файли будуть конвертовані в MP3 формат</translation>
+        <translation>Файли будуть конвертовані у формат MP3</translation>
     </message>
     <message>
         <source>Files will be converted into FLAC</source>
-        <translation>Файли будуть конвертовані у FLAC формат</translation>
+        <translation>Файли будуть конвертовані у формат FLAC</translation>
     </message>
     <message>
         <source>Files will be converted into OGG</source>
-        <translation>Файли будуть конвертовані в OGG формат</translation>
+        <translation>Файли будуть конвертовані у формат OGG</translation>
     </message>
     <message>
         <source>Set quality</source>
@@ -524,7 +524,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Files will be converted into WAV</source>
-        <translation>Файли будуть конвертовані у WAV формат</translation>
+        <translation>Файли будуть конвертовані у формат WAV</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
