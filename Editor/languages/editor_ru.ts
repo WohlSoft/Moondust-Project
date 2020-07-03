@@ -11507,7 +11507,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
