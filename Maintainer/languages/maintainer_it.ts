@@ -6,7 +6,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Converti Audio (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
@@ -118,7 +118,7 @@
         <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="180"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Inizia</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
