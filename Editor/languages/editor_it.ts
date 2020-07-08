@@ -884,7 +884,7 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Invia una segnalazione al forum PGE (wohlsoft.ru/forum/)</translation>
+        <translation type="unfinished">Invia una segnalazione al forum PGE (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
