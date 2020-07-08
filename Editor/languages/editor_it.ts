@@ -5,15 +5,15 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Il Testing delle mappe tramite IPC non è supportato</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Il Testing delle mappe non è supportato</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa caratteristica non è implementata</translation>
     </message>
 </context>
 <context>
@@ -332,11 +332,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Ambiente</translation>
     </message>
     <message>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingrandimento di base:</translation>
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
@@ -344,11 +344,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Carattere</translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensione del carattere</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -379,7 +379,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation>Conteggio stelle...</translation>
+        <translation type="unfinished">Conteggio stelle…</translation>
     </message>
 </context>
 <context>
@@ -561,11 +561,11 @@ Imposta un percorso SoX</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distanza:</translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensioni di un solo blocco:</translation>
     </message>
 </context>
 <context>
@@ -845,30 +845,33 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
     </message>
     <message>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished"></translation>
+        <translation>Potresti voler segnalare questi dati agli sviluppatori:</translation>
     </message>
     <message>
         <source>Copy report into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia la segnalazione negli appunti</translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Invia una segnalazione al forum PGE (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Segnala un errore al deposito di GitHub (WohlSoft/PGE-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation type="unfinished"></translation>
+        <translation>Quando stai scrivendo una segnalazione, cerca di spiegare cosa hai fatto per causare l&apos;errore che ha causato il crash. 
+-Scrivici una lista di azioni che hai fatto prima dell&apos;avvenimento del crash
+-Se il crash è accaduto mentre stavi modificando un file specifico, allegalo nella segnalazione
+-Quale sistema operativo stavi usando?</translation>
     </message>
     <message>
         <source>Copied!</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiato!</translation>
     </message>
 </context>
 <context>
@@ -1083,7 +1086,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation>Creati ed eliminati ItemSelectDialog per analizzare perdite di memoria</translation>
     </message>
 </context>
 <context>
@@ -1163,14 +1166,14 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi blocchi invisibili e meta-oggetti</translation>
     </message>
 </context>
 <context>
     <name>FileListBrowser</name>
     <message>
         <source>Files list</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista di file</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1178,7 +1181,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Please select a file from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona un file dalla lista:</translation>
     </message>
 </context>
 <context>
@@ -1505,7 +1508,7 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica il raw user data...</translation>
     </message>
 </context>
 <context>
@@ -1658,22 +1661,22 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cerca tramite nome</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cerca tramite ID</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cerca tramite ID (Contenuto)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ordina per</translation>
     </message>
     <message>
         <source>Name</source>
@@ -1688,7 +1691,7 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>Discendente</translation>
     </message>
     <message>
         <source>Uniform item sizes view</source>
@@ -1698,12 +1701,12 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     <message>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostra gli elementi personalizzati</translation>
     </message>
     <message>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mostra gli elementi di base</translation>
     </message>
 </context>
 <context>
@@ -2084,7 +2087,7 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica i raw user data...</translation>
     </message>
 </context>
 <context>
@@ -2513,11 +2516,11 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
     <name>JsonSettingsWidget</name>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Sfoglia</translation>
     </message>
     <message>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>Gioca</translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -2526,12 +2529,12 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
     <message>
         <source>W</source>
         <comment>Width, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation>W</translation>
     </message>
     <message>
         <source>H</source>
         <comment>Height, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
 </context>
 <context>
@@ -2844,15 +2847,15 @@ Vuoi salvare i cambiamenti?</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;Salva il file prima&gt;</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca tramite il Browser</translation>
     </message>
 </context>
 <context>
@@ -2967,12 +2970,13 @@ Vuoi salvare i cambiamenti?</translation>
     </message>
     <message>
         <source>No settings available</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessuna impostazione disponibile</translation>
     </message>
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Errore nel file %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -3323,20 +3327,20 @@ E&apos; consigliato disattivare questa funzione su sistemi lenti o se si riscont
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Termina il processo in corso</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>Termina il processo &quot;Lunatester&quot; per far in modo che l&apos;engine possa essere caricato dalla base.</translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Inizia il gioco</translation>
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avvia LunaTester come un gioco normale.</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
@@ -3354,24 +3358,24 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei sicuro che vuoi chiudere LunaTester? Se stai testando un livello, questo verrà interrotto immediatamente!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester è stato chiuso con successo.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester non è in esecuzione.</translation>
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation type="unfinished"></translation>
+        <translation>Per favore scegli un percorso per LunaTester:</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Usa di base</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -3380,7 +3384,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sfoglia...</translation>
     </message>
     <message>
         <source>Save</source>
@@ -3494,16 +3498,16 @@ Per usare LunaTester devi avere il giusto pacchetto di configurazione Integratio
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation type="unfinished"></translation>
+        <translation>Cambia il percorso per il LunaTester...</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Scegli il luogo di LunaTester.</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Percorso per LunaTester</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
