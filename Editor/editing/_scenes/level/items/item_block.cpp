@@ -935,9 +935,9 @@ void ItemBlock::drawSizableBlock(int w, int h, const QPixmap &srcimg)
     //! Summary of top and bottom bottom sizes
     const int32_t yB2 = ybT + ybB;
     //! Width of center piece
-    const int32_t pWidth = wT - xB2;
+    const int32_t pWidth = (wT > xB2) ? wT - xB2 : 1;
     //! Height of center piece
-    const int32_t pHeight = hT - yB2;
+    const int32_t pHeight = (hT > yB2) ? hT - yB2 : 1;
 
     //! Iterator 1
     int32_t i;
