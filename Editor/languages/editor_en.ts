@@ -2856,7 +2856,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>%1 coins</source>
-        <translation type="unfinished">%1 coin(s)</translation>
+        <translation>%1 coin(s)</translation>
     </message>
 </context>
 <context>
@@ -13907,31 +13907,31 @@ Do you want to save your changes?</translation>
     </message>
     <message>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation>By Wohlstand</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Architecture: %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor, version %1</translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation>Revision</translation>
     </message>
     <message>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Build date</translation>
     </message>
     <message>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation>Our project site</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation>This program is distributed under %1</translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
+        <translation>Architecture: %1</translation>
     </message>
 </context>
 <context>
