@@ -355,7 +355,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="172"/>
         <source>Looking for resources...</source>
-        <translation type="unfinished"></translation>
+        <translation>A procurar por recursos...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="192"/>
@@ -397,7 +397,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
         <source>Target format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de destino:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="88"/>
