@@ -140,6 +140,8 @@
         <file>images/item_browser_world.png</file>
         <file>images/musicboxes.png</file>
         <file>images/38a.ico</file>
+        <file>constributors/Tails608.png</file>
+        <file>constributors/FunnyCat.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/00.png</file>
