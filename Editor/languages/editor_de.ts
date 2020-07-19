@@ -12636,10 +12636,6 @@ Möchtest du die Änderungen speichern?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Architecture: %4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Revision</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12653,6 +12649,10 @@ Möchtest du die Änderungen speichern?</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

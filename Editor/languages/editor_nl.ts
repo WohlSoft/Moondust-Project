@@ -12191,7 +12191,7 @@ Wilt u uw wijzigingen opslaan?</translation>
     </message>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="82"/>
-        <source>Architecture: %4</source>
+        <source>Architecture: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

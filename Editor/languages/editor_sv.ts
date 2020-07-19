@@ -8722,10 +8722,6 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Architecture: %4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Revision</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8739,6 +8735,10 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>This program is distributed under %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
