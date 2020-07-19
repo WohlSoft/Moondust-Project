@@ -2990,29 +2990,35 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="1080"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1082"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1084"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1086"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1088"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1090"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1092"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1094"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1096"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1319"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1372"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1597"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1697"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1083"/>
+        <source>%1 coins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/json_settings_widget.cpp" line="1312"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1365"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1590"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1690"/>
         <source>W</source>
         <comment>Width, shortly</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/json_settings_widget.cpp" line="1331"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1383"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1609"/>
-        <location filename="../common_features/json_settings_widget.cpp" line="1708"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1324"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1376"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1602"/>
+        <location filename="../common_features/json_settings_widget.cpp" line="1701"/>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation type="unfinished"></translation>
@@ -6864,36 +6870,36 @@ See %1 for more information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="355"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="371"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="319"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="335"/>
         <source>File is untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="356"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="372"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="320"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="336"/>
         <source>File doesn&apos;t use custom graphics.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="405"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="369"/>
         <source>Nothing to do.</source>
         <translation type="unfinished">Ingenting å gjøre.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="406"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="370"/>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="412"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <source>Fixing of masks...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="412"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
@@ -6901,18 +6907,18 @@ See %1 for more information.</source>
         <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="413"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="453"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="417"/>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="454"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="418"/>
         <source>Masks has been fixed!
 Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
@@ -11173,22 +11179,22 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="531"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="553"/>
         <source>Counting...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="536"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="558"/>
         <source>Calculating total star count in accessible levels</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="537"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
         <source>Abort</source>
         <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="541"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="563"/>
         <source>Counting stars...</source>
         <translation type="unfinished">Teller stjerner…</translation>
     </message>
@@ -11196,13 +11202,48 @@ Do you want to save your changes?</source>
 <context>
     <name>aboutDialog</name>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.ui" line="37"/>
+        <location filename="../main_window/about_dialog/aboutdialog.ui" line="32"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.ui" line="147"/>
+        <location filename="../main_window/about_dialog/aboutdialog.ui" line="130"/>
         <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="80"/>
+        <source>By Wohlstand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="81"/>
+        <source>Editor, version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="82"/>
+        <source>Architecture: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="85"/>
+        <source>Revision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
+        <source>Build date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="94"/>
+        <source>Our project site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="95"/>
+        <source>This program is distributed under %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
