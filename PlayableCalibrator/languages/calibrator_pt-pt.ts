@@ -6,27 +6,27 @@
     <message>
         <location filename="../animator/animate.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation>Animador</translation>
     </message>
     <message>
         <location filename="../animator/animate.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direção</translation>
     </message>
     <message>
         <location filename="../animator/animate.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Esquerda</translation>
     </message>
     <message>
         <location filename="../animator/animate.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Direita</translation>
     </message>
     <message>
         <location filename="../animator/animate.ui" line="82"/>
         <source>Edit animations</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar animações</translation>
     </message>
     <message>
         <location filename="../animator/animate.ui" line="102"/>
@@ -36,7 +36,7 @@
     <message>
         <location filename="../animator/animate.ui" line="119"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animação</translation>
     </message>
 </context>
 <context>
@@ -44,18 +44,18 @@
     <message>
         <location filename="../animator/animationedit.ui" line="20"/>
         <source>Animation editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de animação</translation>
     </message>
     <message>
         <location filename="../animator/animationedit.ui" line="52"/>
         <location filename="../animator/animationedit.ui" line="104"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar</translation>
     </message>
     <message>
         <location filename="../animator/animationedit.ui" line="65"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Pré-visualizar</translation>
     </message>
     <message>
         <location filename="../animator/animationedit.ui" line="88"/>
@@ -66,7 +66,7 @@
         <location filename="../animator/animationedit.ui" line="120"/>
         <location filename="../animator/animationedit.ui" line="220"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir</translation>
     </message>
     <message>
         <location filename="../animator/animationedit.ui" line="136"/>
@@ -110,7 +110,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="192"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Altura</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="244"/>
@@ -120,7 +120,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="339"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Largura</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="412"/>
@@ -170,7 +170,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="366"/>
         <source>Global:</source>
-        <translation type="unfinished"></translation>
+        <translation>Global:</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="396"/>
@@ -180,17 +180,17 @@
     <message>
         <location filename="../calibrationmain.ui" line="447"/>
         <source>Save config</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar configuração</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="507"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="555"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Sobre</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="568"/>
@@ -200,7 +200,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="578"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Idioma</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="602"/>
@@ -305,7 +305,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="488"/>
         <source>Apply to all</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar para tudo</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="74"/>
@@ -315,12 +315,12 @@
     <message>
         <location filename="../calibrationmain.ui" line="523"/>
         <source>Paste from internal clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Colar da área de transferência interna</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="526"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Colar</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="539"/>
@@ -330,7 +330,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="542"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation>Animador</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="90"/>
@@ -399,7 +399,7 @@
         <location filename="../calibrationmain.cpp" line="299"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de ficheiro de imagem para abrir</translation>
     </message>
     <message>
         <location filename="../calibrationmain.cpp" line="301"/>
