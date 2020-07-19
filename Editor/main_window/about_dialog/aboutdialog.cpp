@@ -76,10 +76,10 @@ aboutDialog::aboutDialog(QWidget *parent) :
         "<br>"
         "%7"
         "</div>")
-        .arg("Moonudst")
+        .arg("Moondust")
         .arg(tr("By Wohlstand"))
         .arg(tr("Editor, version %1").arg(V_FILE_VERSION V_FILE_RELEASE))
-        .arg(tr("Architecture: %4").arg(FILE_CPU))
+        .arg(tr("Architecture: %1").arg(FILE_CPU))
         .arg(QString("<b>%1:</b> %2-%3, <b>%4:</b> <u>%5</u><br/>"
                      "<b>Qt:</b> %6, <b>SDL2:</b> %7.%8.%9, <b>SDL Mixer X:</b> %10.%11.%12")
              .arg(tr("Revision"))
