@@ -62,20 +62,54 @@ aboutDialog::aboutDialog(QWidget *parent) :
     SDL_GetVersion(&sdlVer);
     const SDL_version *mixerXVer = Mix_Linked_Version();
 
-    ui->About1->setText(ui->About1->text()
-                        .arg(V_FILE_VERSION)
-                        .arg(V_FILE_RELEASE)
-                        .arg(FILE_CPU)
-                        .arg(QString("<b>Revision:</b> %1-%2, <b>Build date:</b> <u>%3</u><br/>"
-                                     "<b>Qt:</b> %4, <b>SDL2:</b> %5.%6.%7, <b>SDL Mixer X:</b> %8.%9.%10")
-                             .arg(V_BUILD_VER)
-                             .arg(V_BUILD_BRANCH)
-                             .arg(V_DATE_OF_BUILD)
-                             .arg(qVersion())
-                             .arg(sdlVer.major).arg(sdlVer.minor).arg(sdlVer.patch)
-                             .arg(mixerXVer->major).arg(mixerXVer->minor).arg(mixerXVer->patch)
-                            )
-                       );
+    QString aboutText = QString("<div style=\"width: 100%; text-align: center;\">"
+        "<p><img src=\":/images/cat_builder/cat_builder_128_logo.png\" /></p>"
+
+        "<b>%1</b><br>"
+        "<u>%2</u><br>"
+        "<i>%3</i><br>"
+        "<i>%4</i><br>"
+        "%5<br>"
+        "<br>"
+        "%6:<br>"
+        "<a href=\"http://wohlsoft.ru/PGE/\">http://wohlsoft.ru/PGE/</a><br>"
+        "<br>"
+        "%7"
+        "</div>")
+        .arg("Moonudst")
+        .arg(tr("By Wohlstand"))
+        .arg(tr("Editor, version %1").arg(V_FILE_VERSION V_FILE_RELEASE))
+        .arg(tr("Architecture: %4").arg(FILE_CPU))
+        .arg(QString("<b>%1:</b> %2-%3, <b>%4:</b> <u>%5</u><br/>"
+                     "<b>Qt:</b> %6, <b>SDL2:</b> %7.%8.%9, <b>SDL Mixer X:</b> %10.%11.%12")
+             .arg(tr("Revision"))
+             .arg(V_BUILD_VER)
+             .arg(V_BUILD_BRANCH)
+             .arg(tr("Build date"))
+             .arg(V_DATE_OF_BUILD)
+             .arg(qVersion())
+             .arg(sdlVer.major).arg(sdlVer.minor).arg(sdlVer.patch)
+             .arg(mixerXVer->major).arg(mixerXVer->minor).arg(mixerXVer->patch)
+            )
+        .arg(tr("Our project site"))
+        .arg(tr("This program is distributed under %1").arg("<a href=\"http://www.gnu.org/licenses/gpl.html\">GNU GPLv3</a>"));
+
+/*
+    <p align="center"><img src=":/images/cat_builder/cat_builder_128_logo.png" /></p>
+
+    <b>Platformer Game Engine</b><br>
+    <u>By Wohlstand</u><br>
+    <i>Editor, version %1%2</i>
+    <i>Architecture: %3</i>
+    <i>%4</i>
+
+    Our project site:
+    <a href="http://wohlsoft.ru/PGE/">http://wohlsoft.ru/PGE/</a>
+
+    This program is distributed under <a href="http://www.gnu.org/licenses/gpl.html">GNU GPLv3</a>.
+*/
+
+    ui->About1->setText(aboutText);
 
     QFile mFile(":/credits.html");
 
