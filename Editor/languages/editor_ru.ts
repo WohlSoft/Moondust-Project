@@ -458,7 +458,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Start</source>
-        <translation>Старт</translation>
+        <translation>Запустить</translation>
     </message>
     <message>
         <source>SoX error</source>
@@ -482,7 +482,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation>Нет файлов для конвертирования</translation>
+        <translation>Нету файлов для преобразования</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -2811,6 +2811,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation>В</translation>
+    </message>
+    <message>
+        <source>%1 coins</source>
+        <translation>%1 монеток</translation>
     </message>
 </context>
 <context>
@@ -8450,7 +8454,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Set second player position</source>
-        <translation>Установить  позицию второго  игрока</translation>
+        <translation>Установить позицию второго игрока</translation>
     </message>
     <message>
         <source>Set second player start point</source>
@@ -10867,37 +10871,37 @@ The maximum number of blocks is %2.</source>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 фоновых объектов
-Максимальное число фоновых объектов -  %2.</translation>
+Максимальное число фоновых объектов - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 неигровых персонажей
-Максимальное число неигровых персонажей -  %2.</translation>
+Максимальное число неигровых персонажей - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 проходов
-Максимальное число проходов -  %2.</translation>
+Максимальное число проходов - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Водяных зон
-Максимальное число водяных зон -  %2.</translation>
+Максимальное число водяных зон - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Слоёв
-Максимальное число слоёв -  %2.</translation>
+Максимальное число слоёв - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Событий
-Максимальное число событий -  %2.</translation>
+Максимальное число событий - %2.</translation>
     </message>
     <message>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
@@ -10911,31 +10915,31 @@ The maximum number of Events is %2.</source>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Плиток
-Максимальное число плиток -  %2.</translation>
+Максимальное число плиток - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 декораций
-Максимальное число декораций -  %2.</translation>
+Максимальное число декораций - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 путей
-Максимальное число путей -  %2.</translation>
+Максимальное число путей - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Уровней
-Максимальное число уровней -  %2.</translation>
+Максимальное число уровней - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Музыкальных шкатулок
-Максимальное число музыкальных шкатулок -  %2.</translation>
+Максимальное число музыкальных шкатулок - %2.</translation>
     </message>
     <message>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
@@ -13871,6 +13875,34 @@ Do you want to save your changes?</source>
     <message>
         <source>Close</source>
         <translation>Закрыть</translation>
+    </message>
+    <message>
+        <source>By Wohlstand</source>
+        <translation>От Wohlstand</translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation>Редактор, версия %1</translation>
+    </message>
+    <message>
+        <source>Revision</source>
+        <translation>Ревизия</translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation>Дата сборки</translation>
+    </message>
+    <message>
+        <source>Our project site</source>
+        <translation>Сайт нашего проекта</translation>
+    </message>
+    <message>
+        <source>This program is distributed under %1</source>
+        <translation>Данная программа распространяется по лицензии %1</translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
+        <translation>Архитектура: %1</translation>
     </message>
 </context>
 <context>

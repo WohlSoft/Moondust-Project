@@ -40,6 +40,7 @@ Editor 0.3.2-dev
 - Added the "Current section only" and the "Search in selection group" item search criterias
 - Improved the work of an unused resources clean-up tool
 - Fixed the logic of a resource importer that was broken a long time ago
+- New icons by Tails608
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu

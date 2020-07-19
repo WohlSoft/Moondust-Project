@@ -405,7 +405,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation>Conversão de Áudio (SoX)</translation>
+        <translation>Converter Áudio (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -429,7 +429,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>SoX error</source>
-        <translation>Erro do SoX</translation>
+        <translation>Erro de SoX</translation>
     </message>
     <message>
         <source>SoX executable path is not defined.
@@ -449,7 +449,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation>Nenhum ficheiro para converter</translation>
+        <translation>Sem ficheiros para converter</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -493,7 +493,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>What do you want?</source>
-        <translation>O que você gostaria de fazer?</translation>
+        <translation>O que deseja?</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
@@ -505,7 +505,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>Convert specified files</source>
-        <translation>Converter os arquivos a seguir</translation>
+        <translation>Converter ficheiros especificados</translation>
     </message>
     <message>
         <source>Convert into new format
@@ -515,7 +515,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>Don&apos;t change format</source>
-        <translation>Não mudar formato</translation>
+        <translation>Não alterar formato</translation>
     </message>
     <message>
         <source>The files&apos; format will not be changed</source>
@@ -523,19 +523,19 @@ Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation>Definir taxa de bits</translation>
+        <translation>Definir taxa de bit</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
-        <translation>Arquivos serão convertidos em MP3</translation>
+        <translation>Os ficheiros serão convertidos para MP3</translation>
     </message>
     <message>
         <source>Files will be converted into FLAC</source>
-        <translation>Arquivos serão convertidos para a Flac</translation>
+        <translation>Os ficheiros serão convertidos para FLAC</translation>
     </message>
     <message>
         <source>Files will be converted into OGG</source>
-        <translation>Arquivos serão convertidos para OGG</translation>
+        <translation>Os ficheiros serão convertidos para OGG</translation>
     </message>
     <message>
         <source>Set quality</source>
@@ -543,7 +543,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>Files will be converted into WAV</source>
-        <translation>Arquivos serão convertidos em WAV</translation>
+        <translation>Os ficheiros serão convertidos para WAV</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
@@ -1652,7 +1652,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
+        <translation>Por favor, selecione a que distância dos limites da secção (em píxeis) para remover itens.</translation>
     </message>
     <message>
         <source>Event name</source>
@@ -1806,7 +1806,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation></translation>
+        <translation>Sem montagens</translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -2133,7 +2133,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished">Por favor, escolha o quão longe intens fora das margens da seção serão removidos (em pixels)</translation>
+        <translation>Por favor, selecione a que distância dos limites da secção (em píxeis) para remover itens.</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -2600,6 +2600,10 @@ Apenas 27 caracteres por linha</translation>
         <source>H</source>
         <comment>Height, shortly</comment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 coins</source>
+        <translation type="unfinished">%1 Moedas</translation>
     </message>
 </context>
 <context>
@@ -4489,7 +4493,7 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Search Block</source>
-        <translation>Procurar por bloco</translation>
+        <translation>Procurar por Bloco</translation>
     </message>
     <message>
         <source>Search?</source>
@@ -4501,11 +4505,11 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>Evento &apos;Bater&apos;</translation>
+        <translation>Evento &apos;Bater&apos;:</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
-        <translation>Evento &apos;Camada vazia&apos;:</translation>
+        <translation>Evento &apos;Camada Vazia&apos;:</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -4529,7 +4533,7 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Attached layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Camada anexada:</translation>
     </message>
     <message>
         <source>Search NPC</source>
@@ -4537,19 +4541,19 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Evt activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento &apos;Ativar&apos;:</translation>
     </message>
     <message>
         <source>Evt death:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento &apos;Morte&apos;:</translation>
     </message>
     <message>
         <source>Evt talk:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento &apos;Falar&apos;:</translation>
     </message>
     <message>
         <source>Evt empty layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evento &apos;Camada vazia&apos;:</translation>
     </message>
     <message>
         <source>Doesn&apos;t move</source>
@@ -4837,7 +4841,7 @@ para trás)</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished">3 - Portal</translation>
+        <translation>3 - Portal</translation>
     </message>
     <message>
         <source>Message which will be shown if the player
@@ -7670,11 +7674,11 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Autoscroll Layer Speed Horizontal</source>
-        <translation>Velocidade horizontal da  rolagem automática de camada</translation>
+        <translation>Velocidade Horizontal do Deslocamento Automático da Secção</translation>
     </message>
     <message>
         <source>Autoscroll Layer Speed Vertical</source>
-        <translation>Velocidade vertical da  rolagem automática de camada</translation>
+        <translation>Velocidade Vertical do Deslocamento Automático de Secção</translation>
     </message>
     <message>
         <source>Section Size</source>
@@ -8147,7 +8151,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Fatal</source>
-        <translation type="unfinished">Fatal</translation>
+        <translation>Fatal</translation>
     </message>
     <message>
         <source>Critical</source>
@@ -10020,7 +10024,7 @@ Caixas de música:	%5
     </message>
     <message>
         <source>Type:</source>
-        <translation>Tipo:</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -10527,6 +10531,34 @@ Deseja salvar sua mudanças?</translation>
     <message>
         <source>Close</source>
         <translation>Fechar</translation>
+    </message>
+    <message>
+        <source>By Wohlstand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Our project site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is distributed under %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

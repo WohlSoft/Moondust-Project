@@ -352,7 +352,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Use default</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Usa di base</translation>
     </message>
     <message>
         <source>Success</source>
@@ -2536,6 +2536,10 @@ limite del messaggio: la lunghezza massima di una linea è 28 lettere</translati
         <comment>Height, shortly</comment>
         <translation>H</translation>
     </message>
+    <message>
+        <source>%1 coins</source>
+        <translation type="unfinished">%1 monete</translation>
+    </message>
 </context>
 <context>
     <name>LazyFixTool_gui</name>
@@ -4283,7 +4287,8 @@ Questa opzione usa il bug di SMBX del rendering degli oggetti di sfondo. Per far
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Errore nel file %1:
+%2</translation>
     </message>
     <message>
         <source>Left</source>
@@ -4854,7 +4859,8 @@ Sone di Ambiente Fisico:	%6
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Errore nel file %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -6929,7 +6935,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerca tramite il Browser</translation>
     </message>
     <message>
         <source>Items browser with a search</source>
@@ -6955,7 +6961,7 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>Start Game</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inizia il gioco</translation>
     </message>
     <message>
         <source>Test world map</source>
@@ -7363,7 +7369,7 @@ Descrizione errore:
     <message>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inizia il gioco</translation>
     </message>
     <message>
         <source>Unsupported yet</source>
@@ -8611,7 +8617,7 @@ file: %1</translation>
     <message>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inizia il gioco</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
@@ -8629,7 +8635,7 @@ file: %1</translation>
     <message>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Usa di base</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -8901,7 +8907,7 @@ file: %1</translation>
     <message>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inizia il gioco</translation>
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
@@ -8910,7 +8916,7 @@ file: %1</translation>
     <message>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Usa di base</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -9253,7 +9259,7 @@ Se vuoi creare tileset specifici per un livello/mondo con grafica personalizzata
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerca</translation>
     </message>
     <message>
         <source>Search settings</source>
@@ -9262,22 +9268,22 @@ Se vuoi creare tileset specifici per un livello/mondo con grafica personalizzata
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerca tramite nome</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerca tramite ID</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cerca tramite ID (Contenuto)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ordina per</translation>
     </message>
     <message>
         <source>Name</source>
@@ -9292,7 +9298,7 @@ Se vuoi creare tileset specifici per un livello/mondo con grafica personalizzata
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Discendente</translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
@@ -10667,6 +10673,34 @@ Vuoi salvare le modifiche?</translation>
     <message>
         <source>Close</source>
         <translation>Chiudi</translation>
+    </message>
+    <message>
+        <source>By Wohlstand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Our project site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is distributed under %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

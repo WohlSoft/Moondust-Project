@@ -2477,6 +2477,10 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
         <comment>Height, shortly</comment>
         <translation>H</translation>
     </message>
+    <message>
+        <source>%1 coins</source>
+        <translation type="unfinished">%1 pièce(s)</translation>
+    </message>
 </context>
 <context>
     <name>LazyFixTool_gui</name>
@@ -9450,6 +9454,34 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     <message>
         <source>Close</source>
         <translation>Fermer</translation>
+    </message>
+    <message>
+        <source>By Wohlstand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Our project site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is distributed under %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
