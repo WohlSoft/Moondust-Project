@@ -101,8 +101,8 @@ TilesetEditor::TilesetEditor(DataConfig *conf, QGraphicsScene *scene, QWidget *p
 
     connect(this, SIGNAL(windowShowed()), SLOT(showNotify()), Qt::QueuedConnection);
     connect(ui->comboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
-    connect(ui->spin_width, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
-    connect(ui->spin_height, SIGNAL(currentIndexChanged(int)), this, SLOT(update()));
+    connect(ui->spin_width, SIGNAL(valueChanged(int)), this, SLOT(update()));
+    connect(ui->spin_height, SIGNAL(valueChanged(int)), this, SLOT(update()));
 
     {
         QAction *searchByName = m_searchSetup.addAction(tr("Search by Name", "Element search criteria"));
