@@ -32,7 +32,7 @@ inline void loadCustomIcon(CustomDirManager &uLVL, T &t_item, QList<QPixmap> &lo
     if(!t_item.setup.icon_n.isEmpty()) // Load custom icon in only when custom image is used
     {
         auto customIconFile = uLVL.getCustomFile(t_item.setup.icon_n, true);
-        if(customIconFile.isEmpty())
+        if(!customIconFile.isEmpty())
         {
             auto icon = GraphicsHelps::loadPixmap(customIconFile);
             if(!icon.isNull())
