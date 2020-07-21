@@ -16,12 +16,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    image_selector.cpp \
+    ../../../Editor/common_features/image_selector.cpp \
     main.cpp \
     window.cpp
 
+INCLUDEPATH += ../../../Editor/common_features/
+
 HEADERS += \
-    image_selector.h \
+    ../../../Editor/common_features/image_selector.h \
     window.h
 
 FORMS += \
