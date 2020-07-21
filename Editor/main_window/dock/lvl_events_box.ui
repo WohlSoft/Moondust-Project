@@ -183,9 +183,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-601</y>
+       <y>-1142</y>
        <width>271</width>
-       <height>1725</height>
+       <height>1721</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -1066,18 +1066,12 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="LVLEvent_SctBg_List">
-              <property name="maximumSize">
+             <widget class="ImageSelector" name="sctBg_image" native="true">
+              <property name="minimumSize">
                <size>
-                <width>16777215</width>
-                <height>80</height>
+                <width>0</width>
+                <height>18</height>
                </size>
-              </property>
-              <property name="mouseTracking">
-               <bool>false</bool>
-              </property>
-              <property name="focusPolicy">
-               <enum>Qt::ClickFocus</enum>
               </property>
              </widget>
             </item>
@@ -1425,6 +1419,14 @@
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ImageSelector</class>
+   <extends>QWidget</extends>
+   <header>common_features/image_selector.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="../../_resources/editor.qrc"/>
  </resources>

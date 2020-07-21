@@ -297,3 +297,7 @@ int ImageSelector::currentItem()
     return m_menuBox->currentItem();
 }
 
+QSize ImageSelector::sizeHint() const
+{
+    return QSize(width(), 80);
+}

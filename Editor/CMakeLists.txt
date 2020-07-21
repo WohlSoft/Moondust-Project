@@ -182,6 +182,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/graphicsworkspace.cpp
     common_features/grid.cpp
     common_features/installer.cpp
+    common_features/image_selector.cpp
     common_features/item_rectangles.cpp
     common_features/items.cpp
     common_features/json_settings_widget.cpp

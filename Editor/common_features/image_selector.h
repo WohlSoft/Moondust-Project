@@ -71,6 +71,7 @@ public:
 
     void setItem(int key);
     int  currentItem();
+    QSize sizeHint() const override;
 
 signals:
     void currentItemChanged(int key);

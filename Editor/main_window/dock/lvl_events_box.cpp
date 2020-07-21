@@ -54,6 +54,10 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
     );
     connect(ui->LVLEvents_List->model(), SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)),
             this, SLOT(dragAndDroppedEvent(QModelIndex, int, int, QModelIndex, int)));
+
+    QObject::connect(ui->sctBg_image, &ImageSelector::currentItemChanged,
+                     this, &LvlEventsBox::sctBackgroundImageChanged);
+
     m_lastVisibilityState = isVisible();
     mw()->docks_level.
     addState(this, &m_lastVisibilityState);
@@ -98,9 +102,9 @@ QComboBox *LvlEventsBox::cbox_sct_mus()
     return ui->LVLEvent_SctMus_List;
 }
 
-QComboBox *LvlEventsBox::cbox_sct_bg()
+ImageSelector *LvlEventsBox::cbox_sct_bg()
 {
-    return ui->LVLEvent_SctBg_List;
+    return ui->sctBg_image;
 }
 
 QToolButton *LvlEventsBox::button_event_dupe()
@@ -642,7 +646,7 @@ void LvlEventsBox::eventSectionSettingsSync()
             break;
         }
 
-        ui->LVLEvent_SctBg_List->setEnabled(false);
+        ui->sctBg_image->setEnabled(false);
         long backgrndID = SectionSet.background_id;
 
         switch(backgrndID)
@@ -657,19 +661,9 @@ void LvlEventsBox::eventSectionSettingsSync()
 
         default:
             ui->LVLEvent_SctBg_define->setChecked(true);
-            ui->LVLEvent_SctBg_List->setEnabled(true);
+            ui->sctBg_image->setEnabled(true);
             m_lockEventSectionDataList = true;
-            ui->LVLEvent_SctBg_List->setCurrentIndex(0);
-
-            for(int q = 0; q < ui->LVLEvent_SctBg_List->count(); q++)
-            {
-                if(ui->LVLEvent_SctBg_List->itemData(q).toInt() == backgrndID)
-                {
-                    ui->LVLEvent_SctBg_List->setCurrentIndex(q);
-                    break;
-                }
-            }
-
+            ui->sctBg_image->setItem(backgrndID);
             break;
         }
     }
@@ -2078,7 +2072,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_none_clicked()
 
         if(!edit) return;
 
-        ui->LVLEvent_SctBg_List->setEnabled(false);
+        ui->sctBg_image->setEnabled(false);
         m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
@@ -2112,7 +2106,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_reset_clicked()
 
         if(!edit) return;
 
-        ui->LVLEvent_SctBg_List->setEnabled(false);
+        ui->sctBg_image->setEnabled(false);
         m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
@@ -2146,11 +2140,13 @@ void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
 
         if(!edit) return;
 
-        ui->LVLEvent_SctBg_List->setEnabled(true);
+        ui->sctBg_image->setEnabled(true);
         m_lockEventSectionDataList = true;
         long i = getEventArrayIndex();
 
         if(i < 0) return;
+
+        int bgId = ui->sctBg_image->currentItem();
 
         LevelSMBX64Event &event = edit->LvlData.events[i];
         checkSectionSet(event.sets, m_curSectionField);
@@ -2158,15 +2154,15 @@ void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
         QList<QVariant> bgData;
         bgData.push_back(qlonglong(m_curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
-        bgData.push_back(qlonglong(ui->LVLEvent_SctBg_List->currentData().toInt()));
+        bgData.push_back(qlonglong(bgId));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
-        SectionSet.background_id = ui->LVLEvent_SctBg_List->currentData().toInt();
+        SectionSet.background_id = bgId;
     }
 
     m_lockEventSectionDataList = false;
 }
 
-void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
+void LvlEventsBox::sctBackgroundImageChanged(int index)
 {
     if(m_internalLock || m_externalLock) return;
 
@@ -2193,9 +2189,9 @@ void LvlEventsBox::on_LVLEvent_SctBg_List_currentIndexChanged(int index)
         QList<QVariant> bgData;
         bgData.push_back(qlonglong(m_curSectionField));
         bgData.push_back(qlonglong(SectionSet.background_id));
-        bgData.push_back(qlonglong(ui->LVLEvent_SctBg_List->itemData(index).toInt()));
+        bgData.push_back(qlonglong(index));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
-        SectionSet.background_id = ui->LVLEvent_SctBg_List->itemData(index).toInt();
+        SectionSet.background_id = index;
     }
 
     m_lockEventSectionDataList = false;

@@ -42,7 +42,7 @@ public slots:
     void on_cancelResize_clicked();
 
     void on_LVLPropsMusicCustom_editingFinished();
-    void on_LVLPropsBackImage_currentIndexChanged(int index);
+    void backgroundImageChanged(int index);
     void on_editBackground2Ini_clicked();
 
     void switchResizeMode(bool mode);

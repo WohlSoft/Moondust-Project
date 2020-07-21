@@ -86,6 +86,8 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     connect(mw()->ui->actionSection_Settings, SIGNAL(triggered(bool)), this, SLOT(setVisible(bool)));
 
+    QObject::connect(ui->imageSelector, &ImageSelector::currentItemChanged, this, &LvlSectionProps::backgroundImageChanged);
+
     m_lastVisibilityState = isVisible();
     mw()->docks_level.
     addState(this, &m_lastVisibilityState);
@@ -234,59 +236,35 @@ void LvlSectionProps::initDefaults()
     m_externalLock = true;
     mw()->dock_LvlEvents->setEventToolsLocked(true);
 
-    LogDebug(QString("Set level Section Data"));
-    ui->LVLPropsBackImage->clear();
-    ui->LVLPropsMusicNumber->clear();
+    auto *eventsSctMus = mw()->dock_LvlEvents->cbox_sct_mus();
+    auto *eventsSctBg = mw()->dock_LvlEvents->cbox_sct_bg();
 
-    mw()->dock_LvlEvents->cbox_sct_mus()->clear(); //Music list in events
-    mw()->dock_LvlEvents->cbox_sct_bg()->clear();  //Background list in events
+    eventsSctBg->setMinimumHeight(80);
+
+    LogDebug(QString("Set level Section Data"));
+    ui->LVLPropsMusicNumber->clear();
+    ui->imageSelector->clear();
+    ui->imageSelector->setMinimumHeight(80);
+
+
+    eventsSctMus->clear(); //Music list in events
+    eventsSctBg->clear();  //Background list in events
 
     QPixmap empty(100, 70);
     empty.fill(QColor(Qt::black));
 
-    ui->LVLPropsBackImage->addItem(QIcon(empty), tr("[No image]"), QVariant::fromValue<unsigned long>(0));
-    mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(empty), tr("[No image]"), QVariant::fromValue<unsigned long>(0));
+    ui->imageSelector->addItem(empty, tr("[No image]"), 0);
+
+    eventsSctBg->addItem(empty, tr("[No image]"), 0);
+    eventsSctBg->setItem(0);
     ui->LVLPropsMusicNumber->addItem(tr("[Silence]"), QVariant::fromValue<unsigned long>(0));
-    mw()->dock_LvlEvents->cbox_sct_mus()->addItem(tr("[Silence]"), QVariant::fromValue<unsigned long>(0));
-
-#ifdef Q_OS_WIN
-#define BkgIconHeight 70
-#else
-#define BkgIconHeight 25
-#endif
-
-    ui->LVLPropsBackImage->setIconSize(QSize(100, BkgIconHeight));
-    mw()->dock_LvlEvents->cbox_sct_bg()->setIconSize(QSize(100, BkgIconHeight));
-
-    QAbstractItemView *abVw = ui->LVLPropsBackImage->view();
-    QListView *listVw = qobject_cast<QListView *>(abVw);
-    if(listVw)
-    {
-        listVw->setSpacing(2);
-        listVw->setDragEnabled(false);
-#ifdef Q_OS_WIN
-        listVw->setViewMode(QListView::IconMode);
-#endif
-        listVw->setUniformItemSizes(true);
-    }
-
-    abVw = mw()->dock_LvlEvents->cbox_sct_bg()->view();
-    listVw = qobject_cast<QListView *>(abVw);
-    if(listVw)
-    {
-        listVw->setSpacing(2);
-        listVw->setDragEnabled(false);
-#ifdef Q_OS_WIN
-        listVw->setViewMode(QListView::IconMode);
-#endif
-        listVw->setUniformItemSizes(true);
-    }
+    eventsSctMus->addItem(tr("[Silence]"), QVariant::fromValue<unsigned long>(0));
 
     PGE_DataArray<obj_BG > &main_bg = mw()->configs.main_bg;
     for(int i = 1; i < main_bg.size(); i++)
     {
         const obj_BG &bgD = main_bg[i];
-        QPixmap bgThumb(100, BkgIconHeight);
+        QPixmap bgThumb(100, 70);
         bgThumb.fill(QColor(Qt::white));
         QPainter xx(&bgThumb);
         bool isCustom = false;
@@ -316,26 +294,21 @@ void LvlSectionProps::initDefaults()
         }
         xx.end();
 
-#ifndef Q_OS_WIN
-        bgThumb = bgThumb.copy(0, ((bgThumb.height() / 2) - (25 / 2)), bgThumb.width(), 25);
-#endif
+        ui->imageSelector->addItem(bgThumb,
+                                   QString("%2%3")
+                                   .arg(isCustom ? "* " : "") //Show a star over customized background
+                                   .arg(bgTitle), //Background title
+                                   bgD.setup.id);
 
-        ui->LVLPropsBackImage->addItem(QIcon(bgThumb),
-                                       QString("%1: %2%3")
-                                       .arg(bgD.setup.id) //Background ID
-                                       .arg(isCustom ? "* " : "") //Show a star over customized background
-                                       .arg(bgTitle), //Background title
-                                       QVariant::fromValue<unsigned long>(bgD.setup.id));
-        mw()->dock_LvlEvents->cbox_sct_bg()->addItem(QIcon(bgThumb), bgTitle, QVariant::fromValue<unsigned long>(bgD.setup.id));
+        eventsSctBg->addItem(bgThumb, bgTitle, bgD.setup.id);
     }
 
     PGE_DataArray<obj_music > &main_music_lvl = mw()->configs.main_music_lvl;
-    QComboBox *musicList_events = mw()->dock_LvlEvents->cbox_sct_mus();
     for(int i = 1; i < main_music_lvl.size(); i++)
     {
         const obj_music &mus = main_music_lvl[i];
         ui->LVLPropsMusicNumber->addItem(mus.name, QString::number(mus.id));
-        musicList_events->addItem(mus.name, QString::number(mus.id));
+        eventsSctMus->addItem(mus.name, QString::number(mus.id));
     }
 
     mw()->dock_LvlEvents->setEventToolsLocked(false);
@@ -361,16 +334,7 @@ void LvlSectionProps::refreshFileData()
 
         ui->LVLProp_CurSect->setText(QString::number(edit->LvlData.CurSection));
 
-        ui->LVLPropsBackImage->setCurrentIndex(0);
-        for(int i = 0; i < ui->LVLPropsBackImage->count(); i++)
-        {
-            if((unsigned long)ui->LVLPropsBackImage->itemData(i).toInt() ==
-               edit->LvlData.sections[edit->LvlData.CurSection].background)
-            {
-                ui->LVLPropsBackImage->setCurrentIndex(i);
-                break;
-            }
-        }
+        ui->imageSelector->setItem(edit->LvlData.sections[edit->LvlData.CurSection].background);
 
         ui->LVLPropsMusicNumber->setCurrentIndex(0);
         for(int i = 0; i < ui->LVLPropsMusicNumber->count(); i++)
@@ -502,7 +466,7 @@ void LvlSectionProps::on_cancelResize_clicked()
 
 
 // ////////////////////////////////////////////////////////////////////////////////
-void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
+void LvlSectionProps::backgroundImageChanged(int index)
 {
     if(m_externalLock) return;
 
@@ -512,9 +476,8 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
         return;
     }
 
-    //if(ui->LVLPropsBackImage->hasFocus())
-    //{
-    ui->LVLPropsBackImage->setEnabled(false);
+    ui->imageSelector->setEnabled(false);
+
     LogDebug("Change BG to " + QString::number(index));
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
@@ -523,12 +486,13 @@ void LvlSectionProps::on_LVLPropsBackImage_currentIndexChanged(int index)
 
         QList<QVariant> backData;
         backData.push_back(edit->LvlData.sections[edit->LvlData.CurSection].background);
-        backData.push_back(ui->LVLPropsBackImage->currentData().toInt());
+        backData.push_back(index);
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECBACKGROUNDIMG, QVariant(backData));
-        edit->scene->ChangeSectionBG(ui->LVLPropsBackImage->currentData().toInt());
+        edit->scene->ChangeSectionBG(index);
         edit->LvlData.meta.modified = true;
     }
-    ui->LVLPropsBackImage->setEnabled(true);
+
+    ui->imageSelector->setEnabled(true);
 }
 
 void LvlSectionProps::on_editBackground2Ini_clicked()
@@ -546,7 +510,7 @@ void LvlSectionProps::on_editBackground2Ini_clicked()
         return;
     }
 
-    int backgroundId = ui->LVLPropsBackImage->currentData().toInt();
+    int backgroundId = ui->imageSelector->currentItem();
     if(backgroundId <= 0)
     {
         QMessageBox::information(this,
