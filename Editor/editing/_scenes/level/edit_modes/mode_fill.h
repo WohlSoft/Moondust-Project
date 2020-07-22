@@ -27,7 +27,7 @@
 class LVL_ModeFill : public EditMode
 {
 public:
-    LVL_ModeFill(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    LVL_ModeFill(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModeFill();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
@@ -38,7 +38,7 @@ public:
     void keyRelease(QKeyEvent *keyEvent);
 
 private:
-    void attemptFlood(LvlScene * scene);
+    void attemptFlood(LvlScene *scene);
 };
 
 #endif // MODE_FILL_H

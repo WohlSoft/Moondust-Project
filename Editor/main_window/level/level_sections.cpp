@@ -74,9 +74,8 @@ void MainWindow::on_actionGotoLeftBottom_triggered()
             return;
         int SectionId = edit->LvlData.CurSection;
         int xb = edit->LvlData.sections[SectionId].size_left;
-        int yb = edit->LvlData.sections[SectionId].size_bottom -
-                 edit->scene->m_viewPort->viewport()->height() + 10;
-        edit->goTo(xb, yb, false, QPoint(-10, 10));
+        int yb = edit->LvlData.sections[SectionId].size_bottom;
+        edit->goTo(xb, yb, false, QPoint(-10, 10 - edit->scene->m_viewPort->viewport()->height()));
     }
     else if(activeChildWindow() == WND_World)
     {
@@ -111,10 +110,9 @@ void MainWindow::on_actionGotoTopRight_triggered()
         if(!edit)
             return;
         int SectionId = edit->LvlData.CurSection;
-        int xb = edit->LvlData.sections[SectionId].size_right -
-                 edit->scene->m_viewPort->viewport()->width() + 10;
+        int xb = edit->LvlData.sections[SectionId].size_right;
         int yb = edit->LvlData.sections[SectionId].size_top;
-        edit->goTo(xb, yb, false, QPoint(10, -10));
+        edit->goTo(xb, yb, false, QPoint(10 - edit->scene->m_viewPort->viewport()->width(), -10));
     }
 }
 
@@ -128,11 +126,9 @@ void MainWindow::on_actionGotoRightBottom_triggered()
         if(!edit)
             return;
         int SectionId = edit->LvlData.CurSection;
-        int xb = edit->LvlData.sections[SectionId].size_right -
-                 edit->scene->m_viewPort->viewport()->width() + 10;
-        int yb = edit->LvlData.sections[SectionId].size_bottom -
-                 edit->scene->m_viewPort->viewport()->height() + 10;
-        edit->goTo(xb, yb, false, QPoint(10, 10));
+        int xb = edit->LvlData.sections[SectionId].size_right;
+        int yb = edit->LvlData.sections[SectionId].size_bottom;
+        edit->goTo(xb, yb, false, QPoint(10 - edit->scene->m_viewPort->viewport()->width(), 10 - edit->scene->m_viewPort->viewport()->height()));
     }
 }
 

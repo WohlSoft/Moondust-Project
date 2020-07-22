@@ -139,7 +139,7 @@ void LVL_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
             item_rectangles::drawLine(s, sz,
                                       QSize((int)LvlPlacingItems::itemW, (int)LvlPlacingItems::itemH)
-                                      );
+                                     );
 
             if(LvlPlacingItems::npcSpecialAutoIncrement)
             {
@@ -157,7 +157,7 @@ void LVL_ModeLine::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LVL_ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 
     if(!scene) return;
     LvlScene *s = dynamic_cast<LvlScene *>(scene);
@@ -176,12 +176,12 @@ void LVL_ModeLine::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 
 void LVL_ModeLine::keyPress(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }
 
 void LVL_ModeLine::keyRelease(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
     switch(keyEvent->key())
     {
     case(Qt::Key_Escape):

@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>206</width>
-    <height>226</height>
+    <width>240</width>
+    <height>242</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>150</width>
+    <width>240</width>
     <height>153</height>
    </size>
   </property>
@@ -30,6 +30,9 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents_7">
    <layout class="QGridLayout" name="gridLayout_31">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>

@@ -35,8 +35,8 @@
 #include "edit_modes/wld_mode_setpoint.h"
 
 WldScene::WldScene(MainWindow *mw,
-                   GraphicsWorkspace * parentView,
-                   dataconfigs &configs,
+                   GraphicsWorkspace *parentView,
+                   DataConfig &configs,
                    WorldData &FileData,
                    QObject *parent) :
     QGraphicsScene(parent),
@@ -102,15 +102,13 @@ WldScene::WldScene(MainWindow *mw,
 
     m_resizeBox(nullptr),
 
-    m_history(new WldHistoryManager(this, this) )
+    m_history(new WldHistoryManager(this, this))
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
     if(parent)
     {
-        if(strcmp(parent->metaObject()->className(), WORLD_EDIT_CLASS)==0)
-        {
-            m_subWindow = qobject_cast<WorldEdit*>(parent);
-        }
+        if(strcmp(parent->metaObject()->className(), WORLD_EDIT_CLASS) == 0)
+            m_subWindow = qobject_cast<WorldEdit *>(parent);
     }
 
     resetCursor();
@@ -123,15 +121,15 @@ WldScene::WldScene(MainWindow *mw,
     Z_MusicBoxes    = 20.0; // musicboxes
 
     //Build animators for dummies
-    SimpleAnimator * tmpAnimator;
-        tmpAnimator = new SimpleAnimator(m_dummyTerrainImg, 0);
-    m_animatorsTerrain.push_back( tmpAnimator );
-        tmpAnimator = new SimpleAnimator(m_dummySceneryImg, 0);
-    m_animatorsScenery.push_back( tmpAnimator );
-        tmpAnimator = new SimpleAnimator(m_dummyPathImg, 0);
-    m_animatorsPaths.push_back( tmpAnimator );
-        tmpAnimator = new SimpleAnimator(m_dummyLevelImg, 0);
-    m_animatorsLevels.push_back( tmpAnimator );
+    SimpleAnimator *tmpAnimator;
+    tmpAnimator = new SimpleAnimator(m_dummyTerrainImg, 0);
+    m_animatorsTerrain.push_back(tmpAnimator);
+    tmpAnimator = new SimpleAnimator(m_dummySceneryImg, 0);
+    m_animatorsScenery.push_back(tmpAnimator);
+    tmpAnimator = new SimpleAnimator(m_dummyPathImg, 0);
+    m_animatorsPaths.push_back(tmpAnimator);
+    tmpAnimator = new SimpleAnimator(m_dummyLevelImg, 0);
+    m_animatorsLevels.push_back(tmpAnimator);
 
     //Init default rotation tables
     local_rotation_table_tiles.clear();
@@ -140,56 +138,53 @@ WldScene::WldScene(MainWindow *mw,
     local_rotation_table_levels.clear();
     foreach(obj_rotation_table x, m_configs->main_rotation_table)
     {
-        if(x.type==ItemTypes::WLD_Tile)
-            local_rotation_table_tiles[x.id]=x;
-        else
-        if(x.type==ItemTypes::WLD_Scenery)
-            local_rotation_table_sceneries[x.id]=x;
-        else
-        if(x.type==ItemTypes::WLD_Path)
-            local_rotation_table_paths[x.id]=x;
-        else
-        if(x.type==ItemTypes::WLD_Level)
-            local_rotation_table_levels[x.id]=x;
+        if(x.type == ItemTypes::WLD_Tile)
+            local_rotation_table_tiles[x.id] = x;
+        else if(x.type == ItemTypes::WLD_Scenery)
+            local_rotation_table_sceneries[x.id] = x;
+        else if(x.type == ItemTypes::WLD_Path)
+            local_rotation_table_paths[x.id] = x;
+        else if(x.type == ItemTypes::WLD_Level)
+            local_rotation_table_levels[x.id] = x;
     }
 
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
-    long padding=100000;
+    long padding = 100000;
 
-    QGraphicsRectItem * bigRect = addRect(-padding, -padding, padding*2, padding*2, QPen(Qt::transparent), QBrush(Qt::transparent));
+    QGraphicsRectItem *bigRect = addRect(-padding, -padding, padding * 2, padding * 2, QPen(Qt::transparent), QBrush(Qt::transparent));
     bigRect->setZValue(-10000000000);
 
 
     //Build edit mode classes
-    WLD_ModeHand * modeHand = new WLD_ModeHand(this);
+    WLD_ModeHand *modeHand = new WLD_ModeHand(this);
     m_editModes.push_back(modeHand);
 
-    WLD_ModeSelect * modeSelect = new WLD_ModeSelect(this);
+    WLD_ModeSelect *modeSelect = new WLD_ModeSelect(this);
     m_editModes.push_back(modeSelect);
 
-    WLD_ModeResize * modeResize = new WLD_ModeResize(this);
+    WLD_ModeResize *modeResize = new WLD_ModeResize(this);
     m_editModes.push_back(modeResize);
 
-    WLD_ModeErase * modeErase = new WLD_ModeErase(this);
+    WLD_ModeErase *modeErase = new WLD_ModeErase(this);
     m_editModes.push_back(modeErase);
 
-    WLD_ModePlace * modePlace = new WLD_ModePlace(this);
+    WLD_ModePlace *modePlace = new WLD_ModePlace(this);
     m_editModes.push_back(modePlace);
 
-    WLD_ModeRect * modeSquare = new WLD_ModeRect(this);
+    WLD_ModeRect *modeSquare = new WLD_ModeRect(this);
     m_editModes.push_back(modeSquare);
 
-    WLD_ModeCircle * modeCircle = new WLD_ModeCircle(this);
+    WLD_ModeCircle *modeCircle = new WLD_ModeCircle(this);
     m_editModes.push_back(modeCircle);
 
-    WLD_ModeLine * modeLine = new WLD_ModeLine(this);
+    WLD_ModeLine *modeLine = new WLD_ModeLine(this);
     m_editModes.push_back(modeLine);
 
-    WLD_ModeSetPoint * modeSetPoint = new WLD_ModeSetPoint(this);
+    WLD_ModeSetPoint *modeSetPoint = new WLD_ModeSetPoint(this);
     m_editModes.push_back(modeSetPoint);
 
-    WLD_ModeFill * modeFill = new WLD_ModeFill(this);
+    WLD_ModeFill *modeFill = new WLD_ModeFill(this);
     m_editModes.push_back(modeFill);
 
     m_editModeObj = modeSelect;
@@ -210,22 +205,51 @@ WldScene::~WldScene()
 void WldScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);
-    if(!m_opts.grid_show) return;
 
-    int gridSize=m_configs->defaultGrid.general;
-    qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
-    qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
+    if(m_opts.grid_show)
+    {
+        int gridSize = int(m_configs->defaultGrid.general);
+        qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
+        qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
 
-    QVarLengthArray<QLineF, 100> lines;
-    for (qreal x = left; x < rect.right(); x += gridSize)
-        lines.append(QLineF(x, rect.top(), x, rect.bottom()));
-    for (qreal y = top; y < rect.bottom(); y += gridSize)
-        lines.append(QLineF(rect.left(), y, rect.right(), y));
+        QVarLengthArray<QLineF, 100> lines;
+        for(qreal x = left; x < rect.right(); x += gridSize)
+            lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+        for(qreal y = top; y < rect.bottom(); y += gridSize)
+            lines.append(QLineF(rect.left(), y, rect.right(), y));
 
-    painter->setRenderHint(QPainter::Antialiasing, false);
-    painter->setOpacity(0.5);
-    painter->setPen(QPen(QBrush(Qt::black), 1, Qt::SolidLine));
-    painter->drawLines(lines.data(), lines.size());
-    painter->setPen(QPen(QBrush(Qt::white), 1, Qt::DashLine));
-    painter->drawLines(lines.data(), lines.size());
+        painter->setRenderHint(QPainter::Antialiasing, false);
+        painter->setOpacity(0.9);
+        painter->setPen(QPen(QBrush(QColor(51, 51, 51)), 0, Qt::SolidLine));
+        painter->drawLines(lines.data(), lines.size());
+        painter->setPen(QPen(QBrush(QColor(204, 204, 204)), 0, Qt::DashLine));
+        painter->drawLines(lines.data(), lines.size());
+    }
+
+    if(m_opts.camera_grid_show)
+    {
+        // Get viewport size from config pack engine.ini settings
+        int gridSizeX = m_configs->engine.wld_viewport_w;
+        int gridSizeY = m_configs->engine.wld_viewport_h;
+
+        // Round up to multiple of default level grid size
+        gridSizeY = m_configs->defaultGrid.levels * qRound(ceil((qreal)gridSizeY / m_configs->defaultGrid.levels));
+        gridSizeX = m_configs->defaultGrid.levels * qRound(ceil((qreal)gridSizeX / m_configs->defaultGrid.levels));
+
+        qreal left = int(rect.left()) - (int(rect.left()) % gridSizeX);
+        qreal top = int(rect.top()) - (int(rect.top()) % gridSizeY);
+
+        QVarLengthArray<QLineF, 100> lines;
+        for(qreal x = left; x < rect.right(); x += gridSizeX)
+            lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+        for(qreal y = top; y < rect.bottom(); y += gridSizeY)
+            lines.append(QLineF(rect.left(), y, rect.right(), y));
+
+        painter->setRenderHint(QPainter::Antialiasing, false);
+        painter->setOpacity(1.0);
+        painter->setPen(QPen(QBrush(QColor(128, 0, 128)), 0, Qt::SolidLine));
+        painter->drawLines(lines.data(), lines.size());
+        painter->setPen(QPen(QBrush(QColor(255, 0, 255)), 0, Qt::DashLine));
+        painter->drawLines(lines.data(), lines.size());
+    }
 }

@@ -143,7 +143,7 @@ void LvlWarpBox::setSettingsLock(bool locked)
 
 void LvlWarpBox::setSMBX64Strict(bool en)
 {
-    dataconfigs &c = mw()->configs;
+    DataConfig &c = mw()->configs;
     bool shown = !en;
 
     {

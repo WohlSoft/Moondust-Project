@@ -44,12 +44,11 @@ include(../_common/static_qt.cmake)
 # include shared code modules
 include(../_common/ConfigPackManager/PGE_ConfigPackManager.cmake)
 include(../_common/DirManager/dirman.cmake)
-include(../_common/FileMapper/FileMapper.cmake)
 add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
 include(../_common/IniProcessor/IniProcessor.cmake)
-include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
+include(../_common/Graphics/bitmask2rgba.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
@@ -98,7 +97,9 @@ if(WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5WinExtras_EXECUTABLE_COMPILE_FLAGS}")
 endif()
 
-qt5_wrap_ui(UIS_HDRS
+set(PGE_EDITOR_UI)
+
+list(APPEND PGE_EDITOR_UI
     common_features/crashhandler.ui
     data_configs/config_status/config_status.ui
     data_configs/selection_dialog/config_manager.ui
@@ -181,6 +182,7 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/graphicsworkspace.cpp
     common_features/grid.cpp
     common_features/installer.cpp
+    common_features/image_selector.cpp
     common_features/item_rectangles.cpp
     common_features/items.cpp
     common_features/json_settings_widget.cpp
@@ -194,7 +196,6 @@ list(APPEND PGE_EDITOR_SRCS
     common_features/simple_animator.cpp
     common_features/spash_screen.cpp
     common_features/themes.cpp
-    common_features/timecounter.cpp
     common_features/util.cpp
     common_features/version_cmp.cpp
     data_configs/config_status/config_status.cpp
@@ -415,6 +416,14 @@ list(APPEND PGE_EDITOR_SRCS
     SingleApplication/editor_application.cpp
     SingleApplication/localserver.cpp
     SingleApplication/singleapplication.cpp
+    testing/abstract_engine.cpp
+    testing/pge_engine.cpp
+    testing/luna_tester_engine.cpp
+    testing/thextech_engine.cpp
+    testing/38a_engine.cpp
+    testing/ipc/pge_engine_ipc.cpp
+    testing/ipc/luna_capabilities.cpp
+    testing/ipc/38A_client.cpp
     tools/async/asyncstarcounter.cpp
     tools/debugger/custom_counter.cpp
     tools/debugger/custom_counter_gui.cpp
@@ -429,19 +438,16 @@ list(APPEND PGE_EDITOR_SRCS
     tools/tilesets/tileset.cpp
     tools/tilesets/tilesetgroupeditor.cpp
     tools/tilesets/tilesetitembutton.cpp
-    ${UIS_HDRS}
-    ${RESOURCE_ADDED}
-    ${QT_PLUGINS_CPP}
 )
 
-#if(WIN32)
-    # TODO: Create external executable API
-    # which will allow usage of LunaTester on the Wine with
-    # Linux/Mac native builds or from 64-bit editor builds
+if(NOT WIN32) # Wine setup dialog
     list(APPEND PGE_EDITOR_SRCS
-        main_window/testing/luna_tester.cpp
+        testing/wine/wine_setup.cpp
     )
-#endif()
+    list(APPEND PGE_EDITOR_UI
+        testing/wine/wine_setup.ui
+    )
+endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
@@ -458,15 +464,100 @@ if(WIN32 AND NOT EMSCRIPTEN)
     list(APPEND PGE_EDITOR_SRCS _resources/pge_editor.rc)
 endif()
 
+qt5_wrap_ui(PGE_EDITOR_UI_HDRS ${PGE_EDITOR_UI})
+
+list(APPEND PGE_EDITOR_SRCS
+    ${PGE_EDITOR_UI_HDRS}
+    ${RESOURCE_ADDED}
+    ${QT_PLUGINS_CPP}
+)
+
+
+if(NOT HAIKU)
+    # Generic folder for IPC bridge executables
+    if(NOT EXISTS ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
+        make_directory(${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc)
+    endif()
+
+
+    # 38A IPC bridge
+    set(38A_IPC_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/38a_ipc_bridge.exe")
+
+    add_custom_target(38a_ipc_bridge_bin ALL
+        COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz"
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/38a_ipc_bridge.tar.gz
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        COMMENT "Unpacking 38a_ipc_bridge.exe"
+        VERBATIM
+        BYPRODUCTS "${38A_IPC_BRIDGE_BIN}"
+    )
+
+    if(APPLE) # Embed into the bundle
+        list(APPEND PGE_EDITOR_SRCS "${38A_IPC_BRIDGE_BIN}")
+        set_source_files_properties(${38A_IPC_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
+    else()
+        install(FILES "${38A_IPC_BRIDGE_BIN}"
+            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+        )
+    endif()
+
+
+    # LunaTester IPC bridge
+    set(LUNATESTER_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/LunaLoader-exec.exe")
+
+    add_custom_target(lunatester_bridge_bin ALL
+        COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/LunaLoader-exec.tar.gz"
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/LunaLoader-exec.tar.gz
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        COMMENT "Unpacking LunaLoader-exec.exe"
+        VERBATIM
+        BYPRODUCTS "${LUNATESTER_BRIDGE_BIN}"
+    )
+
+    if(APPLE) # Embed into the bundle
+        list(APPEND PGE_EDITOR_SRCS "${LUNATESTER_BRIDGE_BIN}")
+        set_source_files_properties(${LUNATESTER_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
+    else()
+        install(FILES "${LUNATESTER_BRIDGE_BIN}"
+            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+        )
+    endif()
+
+endif()
+
+if(NOT WIN32 AND NOT HAIKU)
+
+    set(LUNA_HWND_SHOW_BRIDGE_BIN "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc/luna_hwnd_show.exe")
+
+    # LunaTester Wine helper
+    add_custom_target(luna_hwnd_show_bin ALL
+        COMMAND ${CMAKE_COMMAND} -E tar xzf "${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz"
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/testing/bridges/luna_hwnd_show.tar.gz
+        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}/ipc"
+        COMMENT "Unpacking luna_hwnd_show.exe"
+        VERBATIM
+        BYPRODUCTS "${LUNA_HWND_SHOW_BRIDGE_BIN}"
+    )
+
+    if(APPLE) # Embed into the bundle
+        list(APPEND PGE_EDITOR_SRCS "${LUNA_HWND_SHOW_BRIDGE_BIN}")
+        set_source_files_properties(${LUNA_HWND_SHOW_BRIDGE_BIN} PROPERTIES GENERATED TRUE)
+    else()
+        install(FILES "${LUNA_HWND_SHOW_BRIDGE_BIN}"
+            DESTINATION "${PGE_INSTALL_DIRECTORY}/ipc"
+        )
+    endif()
+
+endif()
+
 add_executable(pge_editor
     ${PGE_EDITOR_SRCS}
     ${CONFIG_PACK_MANAGER_SRCS}
     ${DIRMANAGER_SRCS}
-    ${FILEMAPPER_SRCS}
     ${INIPROCESSOR_SRCS}
     ${STACK_WALKER_SRCS}
-    ${UTF8MAIN_SRCS}
     ${UTILS_SRCS}
+    ${BITMASK2RGBA_SRCS}
 )
 
 add_library(PGE_QtLibs INTERFACE)
@@ -609,6 +700,9 @@ if(APPLE)
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${PGE_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    set_source_files_properties("${38A_IPC_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
+    set_source_files_properties("${LUNA_HWND_SHOW_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
+    set_source_files_properties("${LUNATESTER_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
 
     list(APPEND PGE_EDITOR_LINK_LIBS iconv)
 endif()

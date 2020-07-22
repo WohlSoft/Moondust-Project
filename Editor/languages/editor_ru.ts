@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>AbstractRuntimeEngine</name>
+    <message>
+        <source>World map testing via IPC is not supported</source>
+        <translation>Тестирование карт мира через IPC не поддерживается</translation>
+    </message>
+    <message>
+        <source>World map testing is not supported</source>
+        <translation>Тестирование карт мира не поддерживается</translation>
+    </message>
+    <message>
+        <source>This feature is not implemented</source>
+        <translation>Эта возможность ещё не реализована</translation>
+    </message>
+</context>
+<context>
     <name>AdditionalSettings</name>
     <message>
         <source>Additional settings</source>
@@ -341,11 +356,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Set log file</source>
-        <translation type="vanished">Выбор файла отчёта</translation>
+        <translation>Выбор файла отчёта</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Текстовые файлы (*.txt *.log)</translation>
+        <translation>Текстовые файлы (*.txt *.log)</translation>
     </message>
     <message>
         <source>PGE Level file</source>
@@ -369,15 +384,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Success</source>
-        <translation type="vanished">Успешно</translation>
+        <translation>Успешно</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation type="vanished">Все расширения файлов успешно установлены</translation>
+        <translation>Все расширения файлов успешно установлены</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="vanished">Ошибка</translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <source>Environment</source>
@@ -390,6 +405,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation>Стандартный масштаб, устанавливаемый при открытии или создании файла.</translation>
+    </message>
+    <message>
+        <source>Font</source>
+        <translation>Шрифт</translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation>Размер шрифта</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <translation>По-умолчанию</translation>
     </message>
 </context>
 <context>
@@ -411,7 +438,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation>Конвертировать Аудио (SoX)</translation>
+        <translation>Преобразовать аудио (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -423,15 +450,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Make backup</source>
-        <translation>сделать резервную копию</translation>
+        <translation>Создать резервную копию</translation>
     </message>
     <message>
         <source>Resample to</source>
-        <translation>Пересемплировать в</translation>
+        <translation>Пересэмплировать в</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Старт</translation>
+        <translation>Запустить</translation>
     </message>
     <message>
         <source>SoX error</source>
@@ -455,7 +482,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation>Нет файлов для конвертирования</translation>
+        <translation>Нету файлов для преобразования</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -511,7 +538,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Convert specified files</source>
-        <translation>Преобразовать определённые файлы</translation>
+        <translation>Преобразовать выбранные файлы</translation>
     </message>
     <message>
         <source>Convert into new format
@@ -529,7 +556,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation>Уст. Битрейт</translation>
+        <translation>Установить битрейт</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
@@ -566,7 +593,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>Размер блока:</translation>
+        <translation type="vanished">Размер блока:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -579,6 +606,18 @@ Please set SoX path first</source>
     <message>
         <source> second</source>
         <translation> секунд</translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation>Время пути:</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation>Расстояние:</translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
+        <translation>Размер одного блока:</translation>
     </message>
 </context>
 <context>
@@ -898,7 +937,7 @@ Are you want to configure it?</source>
     </message>
     <message>
         <source>You might want to report this data to developers or post it at:</source>
-        <translation>Вы можете отправить эти данные разработчикам, или отправить на:</translation>
+        <translation type="vanished">Вы можете отправить эти данные разработчикам, или отправить на:</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
@@ -914,7 +953,7 @@ Are you want to configure it?</source>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation>Форум PGE (http://wohlsoft.ru/forum/)</translation>
+        <translation type="vanished">Форум PGE (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</source>
@@ -946,13 +985,43 @@ Are you want to configure it?</source>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>После недавней аварии, редактор восстановил некоторые файлы.
-Пожалуйста сохраните их прежде чем делать что либо.</translation>
+Пожалуйста, сохраните их, прежде чем делать что либо.</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recorved some files.
 Please save them first before doing anything else.</source>
         <translation type="vanished">После недавней аварии, редактор восстановил некоторые файлы.
 Пожалуйста сохраните их прежде чем делать что либо.</translation>
+    </message>
+    <message>
+        <source>You might want to report this data to developers:</source>
+        <translation>Вы можете отправить эти данные разработчикам:</translation>
+    </message>
+    <message>
+        <source>Copy report into clipboard</source>
+        <translation>Скопировать отчёт</translation>
+    </message>
+    <message>
+        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
+        <translation>Отправить репорт на форуме PGE (wohlsoft.ru/forum/)</translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
+        <translation>Создать задачу на репозитории GitHub (WohlSoft/PGE-Project)</translation>
+    </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation>Создавая отчёт, пожалуйста, подробно опишите, что именно было сделано, чтобы обвалить редактор.
+- Напишите список действий, сделанных, чтобы спровоцировать аварию.
+- Если авария произошла при редактировании определённого файла, пожалуйста, вложите его в отчёт.
+- Какую операционную систему вы используете?</translation>
+    </message>
+    <message>
+        <source>Copied!</source>
+        <translation>Скопировано!</translation>
     </message>
 </context>
 <context>
@@ -1024,6 +1093,27 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Change item...</source>
         <translation>Изменить элемент...</translation>
+    </message>
+</context>
+<context>
+    <name>DataConfig</name>
+    <message>
+        <source>You have a legacy configuration package.
+&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
+&lt;br&gt;
+&lt;br&gt;Please download and install latest version of a configuration package:
+&lt;br&gt;
+&lt;br&gt;Download: %1
+&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
+therefore you can use same link to get updated version</source>
+        <translation>Обнаружено, что используется устаревший конфигурационный пакет.
+&lt;br&gt;Редактор запустится, однако, имеются возможные проблемы с игровыми элементами или с их настройками.
+&lt;br&gt;
+&lt;br&gt;Пожалуйста, загрузите и установите последнюю версию вашего конфиг-пакета:
+&lt;br&gt;
+&lt;br&gt;Загрузить: %1
+&lt;br&gt;Примечание: большинство конфиг-пакетов обновляются вместе с комплектом PGE,&lt;br&gt;
+поэтому вы можете использовать ту же самую ссылку чтобы получить обновлённую версию</translation>
     </message>
 </context>
 <context>
@@ -1153,7 +1243,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Агрументы: {команды движка} Отправить команду или сообщение в запущенный движок</translation>
+        <translation>Аргументы: {команды движка} Отправить команду или сообщение в запущенный движок</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1205,7 +1295,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;С этой опцией будут автоматически рассчитаны значения ширины или высоты. чтобы размер конечного изображения был пропорционален&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;С этой опцией будут автоматически рассчитаны значения ширины или высоты, чтобы размер конечного изображения был пропорционален&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Save proportion</source>
@@ -1261,6 +1351,21 @@ Please save them first before doing anything else.</source>
     </message>
 </context>
 <context>
+    <name>FileListBrowser</name>
+    <message>
+        <source>Files list</source>
+        <translation>Список файлов</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это список файлов уровней, которые размещены в той же папки, что и текущий файл&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Please select a file from the list:</source>
+        <translation>Пожалуйста, выберите файлы из списка:</translation>
+    </message>
+</context>
+<context>
     <name>GreetingDialog</name>
     <message>
         <source>Welcome!</source>
@@ -1302,7 +1407,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 &lt;br/&gt;
 &lt;b&gt;Совет 2:&lt;/b&gt; В отличии от старого редактора, большинство возможностей доступно через контекстное меню (открывается нажатием правой кнопки мыши), окна инструментов из панелей значков (перетаскиваемые панели со значками в верхней части окна) и меню. Этот редактор использует мульти-выбор!&lt;br/&gt;
 &lt;br/&gt;
-&lt;b&gt;Совет 3:&lt;/b&gt; Используйте среднюю кнопку мыши чтобы включать размещение выбранного элемента, или дублировать группу!&lt;/p&gt;</translation>
+&lt;b&gt;Совет 3:&lt;/b&gt; Используйте среднюю кнопку мыши чтобы включать размещение выбранного элемента, или дублировать группу элементов!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1681,7 +1786,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
         <translation>Пожалуйста, наберите сообщение, которое будет показано.
-(максимальная длина строки 27 символов)</translation>
+(максимальная длина строки - 27 символов)</translation>
     </message>
     <message>
         <source>Hit message text</source>
@@ -1829,7 +1934,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation>Разрешить предметы</translation>
+        <translation>Разрешить вспомогательные предметы</translation>
     </message>
     <message>
         <source>Locked</source>
@@ -1959,13 +2064,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это сообщение. которое будет отображено игроку при разговоре с этим неигровым персонажем.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Замечание:&lt;/span&gt; Все кавычки и символы переноса строки будут удалены.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это сообщение, которое будет отображено игроку при разговоре с этим неигровым персонажем.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Замечание:&lt;/span&gt; Все кавычки и символы переноса строки будут удалены.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
         <translation>Введите сообщение диалога NPC:
-(Макс. длина одной строки 27 символов)</translation>
+(Макс. длина одной строки - 27 символов)</translation>
     </message>
     <message>
         <source>Please, enter NPC&apos;s talkative message
@@ -2098,7 +2203,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC-ID: %1</source>
-        <translation>ID нИП: %1</translation>
+        <translation>ID НИП: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2277,11 +2382,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC Touch Event (Once)</source>
-        <translation>Событие касания нИП (Один раз)</translation>
+        <translation>Событие касания НИП (Один раз)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Every frame)</source>
-        <translation>Событие касания нИП (Циклически)</translation>
+        <translation>Событие касания НИП (Циклически)</translation>
     </message>
     <message>
         <source>Mouse click Event</source>
@@ -2289,11 +2394,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation>Событие касания нИП или игрока (Один раз)</translation>
+        <translation>Событие касания НИП или игрока (Один раз)</translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation>Событие касания нИП или игрока (Циклически)</translation>
+        <translation>Событие касания НИП или игрока (Циклически)</translation>
     </message>
     <message>
         <source>Collision script</source>
@@ -2684,6 +2789,35 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
 </context>
 <context>
+    <name>JsonSettingsWidget</name>
+    <message>
+        <source>Browse</source>
+        <translation>Обзор</translation>
+    </message>
+    <message>
+        <source>Play</source>
+        <translation>Воспроизвести</translation>
+    </message>
+    <message>
+        <source>[empty]</source>
+        <translation>[пусто]</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Width, shortly</comment>
+        <translation>Ш</translation>
+    </message>
+    <message>
+        <source>H</source>
+        <comment>Height, shortly</comment>
+        <translation>В</translation>
+    </message>
+    <message>
+        <source>%1 coins</source>
+        <translation>%1 монеток</translation>
+    </message>
+</context>
+<context>
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
@@ -2738,7 +2872,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Это консольная утилита, которая исправляет лениво сделанные маски, созданые для SMBX. Эта утилита корректирует маску через сравнение цветов. Изображения будут перезаписаны, но при этом всегда создаётся резервная копя. Если конвертирование окажется неудачным, вы всегда можете восстановить исходные изображения.</translation>
+        <translation>Это консольная утилита, которая исправляет лениво сделанные маски, созданые для SMBX. Эта утилита корректирует маску через сравнение цветов. Изображения будут перезаписаны, но при этом всегда создаётся резервная копия. Если конвертирование окажется неудачным, вы всегда можете восстановить исходные изображения.</translation>
     </message>
     <message>
         <source>Output dir, where will be saved fixed images
@@ -3093,7 +3227,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это список файлов уровней, которые размещены в той же папки, что и текущий файл&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это список файлов уровней, которые размещены в той же папки, что и текущий файл&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
@@ -3345,11 +3479,11 @@ To have this feature work, latest LunaLUA must be installed.</source>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation>Сбросить контрольные точки</translation>
+        <translation type="vanished">Сбросить контрольные точки</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation>Сбросить все контрольные точки в исходное состояние.</translation>
+        <translation type="vanished">Сбросить все контрольные точки в исходное состояние.</translation>
     </message>
     <message>
         <source>Kill frozen runner</source>
@@ -3365,7 +3499,7 @@ To have this feature work, latest LunaLUA must be installed.</source>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation>Ошибка LunaTester</translation>
+        <translation type="vanished">Ошибка LunaTester</translation>
     </message>
     <message>
         <source>:P</source>
@@ -3397,15 +3531,15 @@ Otherwise it will be very limited.</source>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>Прерывание зависшего потока позволяет запустить тест заново.</translation>
+        <translation type="vanished">Прерывание зависшего потока позволяет запустить тест заново.</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation>Поток загрузчика LunaLUA-теста занят, попробуйте ещё раз, или попробуйте прервать зависший загрузчик!</translation>
+        <translation type="vanished">Поток загрузчика LunaLUA-теста занят, попробуйте ещё раз, или попробуйте прервать зависший загрузчик!</translation>
     </message>
     <message>
         <source>Are you really want to terminate loader thread?</source>
-        <translation>Действительно ли вы хотите прервать поток загрузчика?</translation>
+        <translation type="vanished">Действительно ли вы хотите прервать поток загрузчика?</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
@@ -3414,77 +3548,77 @@ Otherwise it will be very limited.</source>
     <message>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation>Тестировать уровень</translation>
+        <translation type="vanished">Тестировать уровень</translation>
     </message>
     <message>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation>Запустить тест уровня в устаревшем движке.
+        <translation type="vanished">Запустить тест уровня в устаревшем движке.
 Чтобы эта возможность работала, требуется наличие последней версии LunaLua.
 Иначе, эта возможность будет работать очень ограниченно.</translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation>Отключить OpenGL</translation>
+        <translation type="vanished">Отключить OpenGL</translation>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation>Отключить отрисовку через OpenGL и использовать GDI. Полезно в случае если ваша видеокарта не поддерживает OpenGL или LunaLua аварийно завершается при попытке его использовать.</translation>
+        <translation type="vanished">Отключить отрисовку через OpenGL и использовать GDI. Полезно в случае если ваша видеокарта не поддерживает OpenGL или LunaLua аварийно завершается при попытке его использовать.</translation>
     </message>
     <message>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation>Оставить работать фоном</translation>
+        <translation type="vanished">Оставить работать фоном</translation>
     </message>
     <message>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation>Позволяет запускать уровни очень быстро после первого запуска.
+        <translation type="vanished">Позволяет запускать уровни очень быстро после первого запуска.
 Требуется мощный компьютер, иначе движок зависнет при повторной попытке запуска тестирования.
 Желательно отключать эту опцию на медленных компьютерах или если имеются какие-нибудь трудности при попытках запуска тестирования.</translation>
     </message>
     <message>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation>Прервать зависший загрузчик</translation>
+        <translation type="vanished">Прервать зависший загрузчик</translation>
     </message>
     <message>
         <source>Start Legacy Engine</source>
         <comment>Launch legacy engine in game mode</comment>
-        <translation>Запустить устаревший движок</translation>
+        <translation type="vanished">Запустить устаревший движок</translation>
     </message>
     <message>
         <source>Launch legacy engine in game mode.</source>
-        <translation>Запустить старый движок в режиме игры.</translation>
+        <translation type="vanished">Запустить старый движок в режиме игры.</translation>
     </message>
     <message>
         <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation>LunaTester не может тестировать карты мира, потому что устаревший движок не поддерживает такую возможность. Для этого вы можете использовать движок PGE (пункт меню &quot;Тест&quot; -&gt; &quot;Тестировать сохранённый файл&quot;), чтобы тестировать карту мира в действии без запуска эпизода.</translation>
+        <translation type="vanished">LunaTester не может тестировать карты мира, потому что устаревший движок не поддерживает такую возможность. Для этого вы можете использовать движок PGE (пункт меню &quot;Тест&quot; -&gt; &quot;Тестировать сохранённый файл&quot;), чтобы тестировать карту мира в действии без запуска эпизода.</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation>Поток загрузчика не запущен.</translation>
+        <translation type="vanished">Поток загрузчика не запущен.</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation>Контрольные точки успешно сброшены!</translation>
+        <translation type="vanished">Контрольные точки успешно сброшены!</translation>
     </message>
     <message>
         <source>LunaTester error!</source>
-        <translation>Ошибка LunaTester!</translation>
+        <translation type="vanished">Ошибка LunaTester!</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
-        <translation>Тестировщик LunaLUA не запущен!</translation>
+        <translation type="vanished">Тестировщик LunaLUA не запущен!</translation>
     </message>
     <message>
         <source>SMBX64 limits are excited!</source>
-        <translation>Превышены ограничения SMBX64!</translation>
+        <translation type="vanished">Превышены ограничения SMBX64!</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3492,34 +3626,34 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation>Обнаружено нарушение стандарта SMBX64!
+        <translation type="vanished">Обнаружено нарушение стандарта SMBX64!
 %1, устаревший движок может не заработать!
 Рекомендуется удалить все лишние элементы.
 Хотите продолжить процесс?</translation>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation>Папка SMBX сконфигурирована неверно</translation>
+        <translation type="vanished">Папка SMBX сконфигурирована неверно</translation>
     </message>
     <message>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation>Файл %1 не найден!
+        <translation type="vanished">Файл %1 не найден!
 Чтобы запустить тест SMBX, вы должны иметь корректную конфигурацию &quot;SMBX Integration&quot;!</translation>
     </message>
     <message>
         <source>SMBX Test is already runned</source>
-        <translation>SMBX-тест уже запущен</translation>
+        <translation type="vanished">SMBX-тест уже запущен</translation>
     </message>
     <message>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation>SMBX-Движок уже тестирует другой уровень.
+        <translation type="vanished">SMBX-Движок уже тестирует другой уровень.
 Хотите ли вы прервать процесс тестирования?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation>Обнаружена устаревшая сборка SMBX!</translation>
+        <translation type="vanished">Обнаружена устаревшая сборка SMBX!</translation>
     </message>
     <message>
         <source>%2 not found!
@@ -3532,7 +3666,7 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation>%2 не найден!
+        <translation type="vanished">%2 не найден!
 Обнаружен устаревшая сборка SMBX (&quot;ванильный&quot;, &quot;vanilla&quot;)!&lt;br&gt;
 Это значит, что автозапуск теста уровня невозможен. Из-за чего для возможности запустить тестовый уровень, будет сгенерирован временный эпизод, который вы сможете запустить, выбрав вручную.&lt;br&gt;
 &lt;br&gt;
@@ -3545,17 +3679,17 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>File save error</source>
-        <translation>Ошибка сохранения файла</translation>
+        <translation type="vanished">Ошибка сохранения файла</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>Невозможно сохранить файл %1:
+        <translation type="vanished">Невозможно сохранить файл %1:
 %2.</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation>Неудачная попытка отправить данные в LunaLUA-SMBX!</translation>
+        <translation type="vanished">Неудачная попытка отправить данные в LunaLUA-SMBX!</translation>
     </message>
     <message>
         <source>process execution is failed.</source>
@@ -3567,7 +3701,7 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation>Невозможно запустить SMBX-Движок, потому что %1</translation>
+        <translation type="vanished">Невозможно запустить SMBX-Движок, потому что %1</translation>
     </message>
     <message>
         <source>Save file first</source>
@@ -3601,17 +3735,17 @@ Will be created a temporary file. Do you want to continue?</source>
     </message>
     <message>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation>Папка Устаревшего Движка не настроена</translation>
+        <translation type="vanished">Папка Устаревшего Движка не настроена</translation>
     </message>
     <message>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation>Файл %1 не найден!
+        <translation type="vanished">Файл %1 не найден!
 Чтобы работать с LunaTester, вы должны иметь корректный интеграционный пакет конфигурации!</translation>
     </message>
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation>Невозможно запустить SMBX-движок, потому что %1</translation>
+        <translation type="vanished">Невозможно запустить SMBX-движок, потому что %1</translation>
     </message>
     <message>
         <source>SMBX Level test</source>
@@ -3651,7 +3785,129 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
+        <translation type="vanished">Прерывает работающий процесс LunaTester, после чего движок можно заново запустить.</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
+        <translation type="vanished">Вы уверены, что хотите завершить LunaTester? Это также прервёт запущенный тест уровня!</translation>
+    </message>
+    <message>
+        <source>LunaTester has been successfully closed.</source>
+        <translation type="vanished">LunaTester успешно завершён.</translation>
+    </message>
+    <message>
+        <source>LunaTester is not running.</source>
+        <translation type="vanished">LunaTester не запущен.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="vanished">Прервать запущенный процесс</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation type="vanished">%2 не найден!
+У Вас устаревшая сборка SMBX (&quot;ванильная&quot;, &quot;Vanilla&quot;)&lt;br&gt;!
+Это значит, что с данной сборкой невозможно запустить тестовый уровень на вашей операционной системе. LunaLua требуется для возможности запуска тестов через SMBX на не-Windows операционных системах.</translation>
+    </message>
+</context>
+<context>
+    <name>LunaTesterEngine</name>
+    <message>
+        <source>Test level</source>
+        <comment>Run the LunaTester based level testing.</comment>
+        <translation>Тестировать уровень</translation>
+    </message>
+    <message>
+        <source>Starts level testing in the legacy engine.
+To have this feature work, latest LunaLUA must be installed.
+Otherwise, it will be very limited.</source>
+        <translation>Запустить тест уровня на движке SMBX.
+Эта возможность требует LunaLua.</translation>
+    </message>
+    <message>
+        <source>Reset checkpoints</source>
+        <translation>Сбросить контрольные точки</translation>
+    </message>
+    <message>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation>Сбросить все контрольные точки в исходное состояние.</translation>
+    </message>
+    <message>
+        <source>Disable OpenGL</source>
+        <comment>Disable OpenGL on LunaTester side</comment>
+        <translation>Отключить OpenGL</translation>
+    </message>
+    <message>
+        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
+        <translation>Отключить отрисовку через OpenGL и использовать GDI. Полезно в случае если ваша видеокарта не поддерживает OpenGL или LunaLua аварийно завершается при попытке его использовать.</translation>
+    </message>
+    <message>
+        <source>Keep running in background</source>
+        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
+        <translation>Оставить работать фоном</translation>
+    </message>
+    <message>
+        <source>Allows to start level testing very fast after first launch.
+Requires powerful computer, otherwise engine will freeze on next test launch.
+Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
+        <translation>Позволяет запускать уровни очень быстро после первого запуска.
+Требуется мощный компьютер, иначе движок зависнет при повторной попытке запуска тестирования.
+Желательно отключать эту опцию на медленных компьютерах или если имеются какие-нибудь трудности при попытках запуска тестирования.</translation>
+    </message>
+    <message>
+        <source>Terminate frozen loader</source>
+        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
+        <translation type="vanished">Прервать зависший загрузчик</translation>
+    </message>
+    <message>
+        <source>Termiates frozen thread to allow you to run a test again.</source>
+        <translation type="vanished">Прерывание зависшего потока позволяет запустить тест заново.</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>Прервать запущенный процесс</translation>
+    </message>
+    <message>
+        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>Прерывает работающий процесс LunaTester, после чего движок можно заново запустить.</translation>
+    </message>
+    <message>
+        <source>Select LunaTester path...</source>
+        <comment>Select a path to LunaTester for use.</comment>
+        <translation type="vanished">Указать путь к LunaTester...</translation>
+    </message>
+    <message>
+        <source>Select a path to LunaTester for use.</source>
+        <translation type="vanished">Выберите путь к LunaTester для работы.</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch LunaTester as a normal game.</comment>
+        <translation>Запустить игру</translation>
+    </message>
+    <message>
+        <source>Launch LunaTester as a normal game.</source>
+        <translation>Запустить LunaTester как обычную игру.</translation>
+    </message>
+    <message>
+        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
+        <translation type="vanished">Поток загрузчика LunaLUA-теста занят, попробуйте ещё раз, или попробуйте прервать зависший загрузчик!</translation>
+    </message>
+    <message>
+        <source>Are you really want to terminate loader thread?</source>
+        <translation type="vanished">Действительно ли вы хотите прервать поток загрузчика?</translation>
+    </message>
+    <message>
+        <source>Loader thread is not running.</source>
+        <comment>LunaTester thread now doing nothing.
+This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
+        <translation type="vanished">Поток загрузчика не запущен.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -3666,18 +3922,326 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation>LunaTester не запущен.</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Прервать запущенный процесс</translation>
+        <source>LunaTester path select</source>
+        <translation type="vanished">Выбор пути к LunaTester</translation>
+    </message>
+    <message>
+        <source>Please select a path to LunaTester:</source>
+        <translation>Пожалуйста, укажите путь к LunaTester:</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default LunaTester path, specified by a config pack</comment>
+        <translation>По-умолчанию</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation>Другой</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Обзор...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Select a LunaTester path</source>
+        <translation type="vanished">Укажите путь к LunaTester</translation>
+    </message>
+    <message>
+        <source>Checkpoints successfully reseted!</source>
+        <translation>Контрольные точки успешно сброшены!</translation>
+    </message>
+    <message>
+        <source>LunaTester error!</source>
+        <translation type="vanished">Ошибка LunaTester!</translation>
+    </message>
+    <message>
+        <source>LunaLUA tester is not started!</source>
+        <translation>Тестировщик LunaLUA не запущен!</translation>
+    </message>
+    <message>
+        <source>SMBX64 limits are excited!</source>
+        <translation type="vanished">Превышены ограничения SMBX64!</translation>
+    </message>
+    <message>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Are you want continue process?</source>
+        <translation type="vanished">Обнаружено нарушение стандарта SMBX64!
+%1, устаревший движок может не заработать!
+Рекомендуется удалить все лишние элементы.
+Хотите продолжить процесс?</translation>
+    </message>
+    <message>
+        <source>SMBX Directory wasn&apos;t configured right</source>
+        <translation type="vanished">Папка SMBX сконфигурирована неверно</translation>
+    </message>
+    <message>
+        <source>%1 not found!
+To run testing via SMBX you should have right SMBX Integration configuration package!</source>
+        <translation type="vanished">Файл %1 не найден!
+Чтобы запустить тест SMBX, вы должны иметь корректную конфигурацию &quot;SMBX Integration&quot;!</translation>
+    </message>
+    <message>
+        <source>SMBX Test is already runned</source>
+        <translation type="vanished">SMBX-тест уже запущен</translation>
+    </message>
+    <message>
+        <source>SMBX Engine is already testing another level.
+Do you want to abort current testing process?</source>
+        <translation type="vanished">SMBX-Движок уже тестирует другой уровень.
+Хотите ли вы прервать процесс тестирования?</translation>
+    </message>
+    <message>
+        <source>Vanilla SMBX detected!</source>
+        <translation>Обнаружен старый SMBX (Vanilla SMBX)!</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
+&lt;br&gt;
+Name of episode to generate: %1&lt;br&gt;
+&lt;br&gt;
+Are you still want to launch a test?&lt;br&gt;
+&lt;br&gt;
+If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
+%3</source>
+        <translation type="vanished">%2 не найден!
+Обнаружен устаревшая сборка SMBX (&quot;ванильный&quot;, &quot;vanilla&quot;)!&lt;br&gt;
+Это значит, что автозапуск теста уровня невозможен. Из-за чего для возможности запустить тестовый уровень, будет сгенерирован временный эпизод, который вы сможете запустить, выбрав вручную.&lt;br&gt;
+&lt;br&gt;
+Имя генерируемого эпизода: %1&lt;br&gt;
+&lt;br&gt;
+Вы уверены, что всё ещё хотите запустить тест?&lt;br&gt;
+&lt;br&gt;
+Если вы хотите полноценный тест уровней, вам нужно загрузить LunaLUA здесь:&lt;br&gt;
+%3</translation>
+    </message>
+    <message>
+        <source>File save error</source>
+        <translation type="vanished">Ошибка сохранения файла</translation>
+    </message>
+    <message>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation type="vanished">Невозможно сохранить файл %1:
+%2.</translation>
     </message>
     <message>
         <source>%2 not found!
 You have a Vanilla SMBX!&lt;br&gt;
 That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation>%2 не найден!
+        <translation type="vanished">%2 не найден!
 У Вас устаревшая сборка SMBX (&quot;ванильная&quot;, &quot;Vanilla&quot;)&lt;br&gt;!
 Это значит, что с данной сборкой невозможно запустить тестовый уровень на вашей операционной системе. LunaLua требуется для возможности запуска тестов через SMBX на не-Windows операционных системах.</translation>
+    </message>
+    <message>
+        <source>Failed to send level into LunaLUA-SMBX!</source>
+        <translation>Неудачная попытка отправить данные в LunaLUA-SMBX!</translation>
+    </message>
+    <message>
+        <source>LunaTester error</source>
+        <translation>Ошибка LunaTester</translation>
+    </message>
+    <message>
+        <source>Impossible to launch SMBX Engine, because %1</source>
+        <translation type="vanished">Невозможно запустить SMBX-Движок, потому что %1</translation>
+    </message>
+    <message>
+        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
+        <translation type="vanished">Папка Устаревшего Движка не настроена</translation>
+    </message>
+    <message>
+        <source>%1 not found!
+To use LunaTester you should have right Integration configuration package!</source>
+        <translation type="vanished">Файл %1 не найден!
+Чтобы работать с LunaTester, вы должны иметь корректный интеграционный пакет конфигурации!</translation>
+    </message>
+    <message>
+        <source>Impossible to launch Legacy Engine, because %1</source>
+        <translation type="vanished">Невозможно запустить SMBX-движок, потому что %1</translation>
+    </message>
+    <message>
+        <source>Change the path to LunaTester...</source>
+        <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
+        <translation>Изменить путь к LunaTester...</translation>
+    </message>
+    <message>
+        <source>Select the location of LunaTester.</source>
+        <translation>Укажите путь к LunaTester.</translation>
+    </message>
+    <message>
+        <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
+        <translation type="vanished">Поток загрузчика LunaTester-а занят, попробуйте ещё раз, или попробуйте прервать зависший загрузчик!</translation>
+    </message>
+    <message>
+        <source>Path to LunaTester</source>
+        <comment>Title of dialog</comment>
+        <translation>Путь к LunaTester</translation>
+    </message>
+    <message>
+        <source>Select a location of LunaTester</source>
+        <comment>Directory select dialog title</comment>
+        <translation>Укажите путь к LunaTester</translation>
+    </message>
+    <message>
+        <source>SMBX64 limits are exceeded!</source>
+        <translation>Превышены ограничения SMBX64!</translation>
+    </message>
+    <message>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Do you want to continue the process?</source>
+        <translation>Обнаружено нарушение стандарта SMBX64!
+%1
+, устаревший движок может аварийно прерваться!
+Рекомендуется удалить все ненужные элементы.
+Хотите продолжить процесс?</translation>
+    </message>
+    <message>
+        <source>LunaTester directory check failed</source>
+        <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
+        <translation>Ошибка в директории LunaTester-а</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
+        <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
+        <translation>Невозможно запустить LunaTester, потому что файл &quot;%1&quot; не найден! Это могло случился по одной из следующих причин:</translation>
+    </message>
+    <message>
+        <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
+- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
+        <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
+        <translation>- Указан некорректный путь LunaTester-а (или папки данных SMBX2). Пожалуйста, проверьте настройки пути к LunaTester.
+- Возможное удаление файлов вашим антивирусом (ложное срабатывание или заражение файла). Проверьте пожалуйста карантин вашего антивируса или отчёт о недавно удалённых угрозах.
+- Некорректная установка SMBX2, в результате которой не хватает некоторых файлов. Пожалуйста, переустановите SMBX2, чтобы устранить проблему.</translation>
+    </message>
+    <message>
+        <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
+        <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
+        <translation>- Возможное удаление файлов вашим антивирусом (ложное срабатывание или заражение файла). Проверьте пожалуйста карантин вашего антивируса или отчёт о недавно удалённых угрозах.
+- Некорректная установка SMBX2, в результате которой не хватает некоторых файлов. Пожалуйста, переустановите SMBX2, чтобы устранить проблему.</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; not found!
+You have a Vanilla SMBX!
+That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
+        <translation>&quot;%1&quot; не найден!
+Обнаружена устаревшая сборка SMBX (Vanilla)!
+Это значит, что невозможно запустить тест уровня с помощью LunaTester-а. LunaLua обязательна для запуска теста уровней с помощью SMBX-движка.</translation>
+    </message>
+    <message>
+        <source>Impossible to launch LunaTester, due to %1</source>
+        <translation type="vanished">Невозможно запустить SMBX-Движок, потому что %1</translation>
+    </message>
+    <message>
+        <source>LunaTester Directory wasn&apos;t configured right</source>
+        <translation type="vanished">Папка LunaTester-а сконфигурирована неверно</translation>
+    </message>
+    <message>
+        <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
+        <translation type="vanished">Файл &quot;%1&quot; не найден! Чтобы работать с LunaTester, вы должны указать корректный путь к SMBX.</translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in LunaTester from disk.</comment>
+        <translation>Тестировать файл уровня/мира</translation>
+    </message>
+    <message>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
+        <translation>Настройки Wine...</translation>
+    </message>
+    <message>
+        <source>Select a Wine toolchain for use.</source>
+        <translation>Выбор комплекта Wine для работы.</translation>
+    </message>
+    <message>
+        <source>Failed to start: %1</source>
+        <translation>Ошибка запуска: %1</translation>
+    </message>
+    <message>
+        <source>Crashed: %1</source>
+        <translation>Авария: %1</translation>
+    </message>
+    <message>
+        <source>Timed out: %1</source>
+        <translation>Время ожидания истеклоt: %1</translation>
+    </message>
+    <message>
+        <source>Write error: %1</source>
+        <translation>Ошибка записи: %1</translation>
+    </message>
+    <message>
+        <source>Read error: %1</source>
+        <translation>Ошибка чтения: %1</translation>
+    </message>
+    <message>
+        <source>Unknown error: %1</source>
+        <translation>Неизвестная ошибка: %1</translation>
+    </message>
+    <message>
+        <source>Error has occured: (Error %1) %2</source>
+        <translation>Возникла ошибка: (Ошибка %1) %2</translation>
+    </message>
+    <message>
+        <source>LunaTester is still active</source>
+        <translation>LunaTester всё ещё рабтоает</translation>
+    </message>
+    <message>
+        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shot down LunaTester now?</source>
+        <translation type="obsolete">Чтобы изменить путь к LunaTester, необходимо завершить работающую игру. Завершить LunaTester сейчас?</translation>
+    </message>
+    <message>
+        <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
+        <translation>Не удалось распознать возможности выбранной сборки LunaLua, игра может не заработать. Пожалуйста, укажите другой путь.</translation>
+    </message>
+    <message>
+        <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
+        <translation>Чтобы изменить настройки Wine, необходимо завершить работающую игру. Завершить LunaTester сейчас?</translation>
+    </message>
+    <message>
+        <source>Incompatible LunaDll found</source>
+        <translation>Обнаружена несовместимая сборка LunaLua</translation>
+    </message>
+    <message>
+        <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
+        <translation>Невозможно запустить LunaTester из-за несовместимого модуля LunaDll.dll, обнаруженного по пути: %1</translation>
+    </message>
+    <message>
+        <source>Incompatible LunaLua</source>
+        <translation>Несовместимая сборка LunaLua</translation>
+    </message>
+    <message>
+        <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
+        <translation>Невозможно запустить LunaTester из-за несовместимой сборки LunaLua по пути: %1</translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode out of LunaTester worlds root.</source>
+        <translation>Невозможно запустить эпизод за пределами корня миров (папки &quot;worlds&quot;) в выбранной сборке LunaTester.</translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode because of an invalid world file.</source>
+        <translation>Невозможно запустить эпизод из-за повреждённого файла карты мира.</translation>
+    </message>
+    <message>
+        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
+        <translation>Чтобы изменить путь к LunaTester, необходимо завершить работающую игру. Завершить LunaTester сейчас?</translation>
+    </message>
+    <message>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
+        <translation>Невозможно запустить эпизод, потому что файл карты мира сохранён в неподдерживаемом формате. Пожалуйста, сохраните карту мира в формат SMBX64-WLD.</translation>
     </message>
 </context>
 <context>
@@ -4228,7 +4792,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
         <source>Please, enter message
 (Max line length is 27 characters)</source>
         <translation>Пожалуйста, введите сообщение
-(Макс. длина одной строки 27 символов)</translation>
+(Макс. длина одной строки - 27 символов)</translation>
     </message>
 </context>
 <context>
@@ -4376,7 +4940,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
         <translation>Это - приоритет сортировки в массиве. С помощью этой опции возможно поставить фоновый объект на передний план. (если значение установлено в -1: будет использоваться глобальное значение для данного ID фонового объекта).
-Эта опция использует баг SMBX в рендеринге фоновых объектов. Чтобы эта опция сработала, нужно поместить хотя бы один фоновый объект переднего плана. Эта опция не сохраняется в LVL-файл, и после переоткрытия файла вам нужно повторно настроить  эту опцию.</translation>
+Эта опция использует баг SMBX в рендеринге фоновых объектов. Чтобы эта опция сработала, нужно поместить хотя бы один фоновый объект переднего плана. Эта опция не сохраняется в LVL-файл; после переоткрытия файла вам нужно повторно настроить эту опцию.</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -5262,6 +5826,22 @@ Physical env. zones:	%6
         <source>%1 coins</source>
         <translation type="vanished">%1 монеток</translation>
     </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation>Искать в выбранной группе</translation>
+    </message>
+    <message>
+        <source>Search in current section</source>
+        <translation>Искать в текущей секции</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>Выделить всё</translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation>Выбрано %1 найденных элементов.</translation>
+    </message>
 </context>
 <context>
     <name>LvlSectionProps</name>
@@ -5730,12 +6310,11 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation>Сохранить переносимого нИП, когда игрок входит
-на другой уровень через этот проход.</translation>
+        <translation>Сохранить переносимого НИП, когда игрок входит на другой уровень через этот проход.</translation>
     </message>
     <message>
         <source>Allow inter-level NPC</source>
-        <translation>Разрешить меж-уровн. нИП</translation>
+        <translation>Разрешить меж-уровн. НИП</translation>
     </message>
     <message>
         <source>Choose a warp entry to edit</source>
@@ -5795,7 +6374,7 @@ Please, select necessary world map in a list:</source>
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
         <translation>Показать пустой экран вместо экрана загрузки.
-Инчае, на экране загрузки в устеревшем движке будет показан 
+Иначе, на экране загрузки в устеревшем движке будет показан 
 действующий игровой персонаж(и) и остаток жизней.</translation>
     </message>
     <message>
@@ -6779,7 +7358,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
-        <translation>Открыть локальный сценарий уровня / карты мира. Если файл не существует, то будет создван новый, с нуля.</translation>
+        <translation>Открыть локальный сценарий уровня / карты мира. Если файл не существует, то будет создан новый, с нуля.</translation>
     </message>
     <message>
         <source>Open episode script</source>
@@ -6811,7 +7390,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Test world map (Alpha)</source>
-        <translation>Тестировать карту мира (Альфа)</translation>
+        <translation type="vanished">Тестировать карту мира (Альфа)</translation>
     </message>
     <message>
         <source>Global level scrupt for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
@@ -6920,7 +7499,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Test level (Alpha)</source>
-        <translation>Начать тестирование &lt;Альфа&gt;</translation>
+        <translation type="vanished">Начать тестирование &lt;Альфа&gt;</translation>
     </message>
     <message>
         <source>Testing options...</source>
@@ -6940,7 +7519,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Start Engine</source>
-        <translation>Запустить игру</translation>
+        <translation type="vanished">Запустить игру</translation>
     </message>
     <message>
         <source>Launch game engine application.</source>
@@ -6952,7 +7531,7 @@ Attempt to move selected elements over another group of elements will reject mov
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Открыть папку эпизода, который содержит текущий файл</translation>
+        <translation>Открыть папку эпизода, который содержит текущий файл.</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
@@ -7875,7 +8454,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Set second player position</source>
-        <translation>Установить  позицию второго  игрока</translation>
+        <translation>Установить позицию второго игрока</translation>
     </message>
     <message>
         <source>Set second player start point</source>
@@ -8769,7 +9348,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>File is untitled</source>
-        <translation>Файл не сохранён</translation>
+        <translation>Файл не имеет имени</translation>
     </message>
     <message>
         <source>File doesn&apos;t use custom graphics.
@@ -9058,6 +9637,58 @@ See %2 for more information.</source>
 %1.
 Для подробностей, смотрите %2.</translation>
     </message>
+    <message>
+        <source>Test level</source>
+        <translation>Тестировать уровень</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <translation>Запустить игру</translation>
+    </message>
+    <message>
+        <source>Test world map</source>
+        <translation>Тестировать карту мира</translation>
+    </message>
+    <message>
+        <source>&lt;no extra settings&gt;</source>
+        <translation>&lt;доп-настройки отсутствуют&gt;</translation>
+    </message>
+    <message>
+        <source>Show camera grid</source>
+        <translation>Показать сетку камеры</translation>
+    </message>
+    <message>
+        <source>Level is incompatible</source>
+        <translation>Уровень несовместим</translation>
+    </message>
+    <message>
+        <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</source>
+        <translation>Этот файл уровня был создан в редакторе, который использовал неопознанный конфиг-пакет. Возможно, что данный уровень был создан для другого движка, отличного от &quot;%1&quot;. То есть, некоторые блоки/нИПы/скрипты/и т.п. будут несовместимы: это приведёт к непредсказуемому поведению игры или к ошибкам.
+
+Имя файла: %2
+ID конфиг-пакета уровня: %3
+Ожидаемый ID конфиг-пакета: %4</translation>
+    </message>
+    <message>
+        <source>World map is incompatible</source>
+        <translation>Карта мира несовместима</translation>
+    </message>
+    <message>
+        <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</source>
+        <translation>Этот файл карты мира был создан в редакторе, который использовал неопознанный конфиг-пакет. Возможно, что данная карта мира была создана для другого движка, отличного от &quot;%1&quot;. То есть, некоторые ландшифтные плитки/уровни/скрипты/и т.п. будут несовместимы: это приведёт к непредсказуемому поведению игры или к ошибкам.
+
+Имя файла: %2
+ID конфиг-пакета карты мира: %3
+Ожидаемый ID конфиг-пакета: %4</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -9067,11 +9698,11 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это список музыкальных файлов, которые размещены в той же папки что и текущий файл а так же и в подпапках.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это список музыкальных файлов, которые размещены в той же папки что и текущий файл а так же и в подпапках.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select music file for use as custom</source>
-        <translation>Пожалуйста, выберите из списка файл, который
+        <translation type="vanished">Пожалуйста, выберите из списка файл, который
 будет использован в качестве фоновой музыки
 уровня</translation>
     </message>
@@ -9084,6 +9715,18 @@ See %2 for more information.</source>
 Do you want to continue?</source>
         <translation type="vanished">Если вы продолжите эту операцию, приложение может зависнуть.
 Вы хотите продолжить?</translation>
+    </message>
+    <message>
+        <source>Select SFX file</source>
+        <translation>Выбор звукового файла</translation>
+    </message>
+    <message>
+        <source>Please select SFX file to use</source>
+        <translation>Пожалуйста, выберите звуковой файл</translation>
+    </message>
+    <message>
+        <source>Please select music file to use as custom</source>
+        <translation>Пожалуйста, выберите файл музыки</translation>
     </message>
 </context>
 <context>
@@ -9432,6 +10075,32 @@ Error description:
     <message>
         <source>%1 at line %2</source>
         <translation>%1 на %2-й строке</translation>
+    </message>
+</context>
+<context>
+    <name>PgeEngine</name>
+    <message>
+        <source>Test level/world</source>
+        <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
+        <translation>Тестировать уровень/мир</translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in PGE Engine from disk.</comment>
+        <translation>Тестировать файл уровня/мира</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch PGE Engine as a normal game</comment>
+        <translation>Запустить игру</translation>
+    </message>
+    <message>
+        <source>Unsupported yet</source>
+        <translation>Пока не поддерживается</translation>
+    </message>
+    <message>
+        <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
+        <translation>Для карт мира это пока не поддерживается. Пожалуйста, используйте &quot;Тестировать файл уровня/мира&quot; для запуска теста карты мира.</translation>
     </message>
 </context>
 <context>
@@ -10069,7 +10738,7 @@ Reason: Signal Segmentation Violation [SIGSERV]
     </message>
     <message>
         <source>Cut top here</source>
-        <translation>Срезать  верх здесь</translation>
+        <translation>Срезать верх здесь</translation>
     </message>
     <message>
         <source>Cut bottom here</source>
@@ -10195,44 +10864,44 @@ All boundaries and settings of more than 21 sections will be lost.</source>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation>Стандарт SMBX64 не позволяет сохранить %1 блоков
-Максимальное число блоков -  %2.</translation>
+        <translation>Стандарт SMBX64 не позволяет сохранить %1 блоков.
+Максимальное число блоков - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 фоновых объектов
-Максимальное число фоновых объектов -  %2.</translation>
+Максимальное число фоновых объектов - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 неигровых персонажей
-Максимальное число неигровых персонажей -  %2.</translation>
+Максимальное число неигровых персонажей - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 проходов
-Максимальное число проходов -  %2.</translation>
+Максимальное число проходов - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Водяных зон
-Максимальное число водяных зон -  %2.</translation>
+Максимальное число водяных зон - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Слоёв
-Максимальное число слоёв -  %2.</translation>
+Максимальное число слоёв - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Событий
-Максимальное число событий -  %2.</translation>
+Максимальное число событий - %2.</translation>
     </message>
     <message>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
@@ -10240,37 +10909,37 @@ The maximum number of Events is %2.</source>
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
         <translation>Во время сохранения уровня в формат SMBX64 произошли неполадки:
 
-%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание уровень в формат LVLX.</translation>
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохраните уровень в формат LVLX.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Плиток
-Максимальное число плиток -  %2.</translation>
+Максимальное число плиток - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 декораций
-Максимальное число декораций -  %2.</translation>
+Максимальное число декораций - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 путей
-Максимальное число путей -  %2.</translation>
+Максимальное число путей - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Уровней
-Максимальное число уровней -  %2.</translation>
+Максимальное число уровней - %2.</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
         <translation>Стандарт SMBX64 не позволяет сохранить %1 Музыкальных шкатулок
-Максимальное число музыкальных шкатулок -  %2.</translation>
+Максимальное число музыкальных шкатулок - %2.</translation>
     </message>
     <message>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
@@ -10278,7 +10947,7 @@ The maximum number of Music Boxes is %2.</source>
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
         <translation>Во время сохранения карты мира в формат SMBX64 произошли неполадки:
 
-%1Пожалуйста, удалите лишние элементы (или настройки) или сохрание карту мира в формат WLDX.</translation>
+%1Пожалуйста, удалите лишние элементы (или настройки) или сохраните карту мира в формат WLDX.</translation>
     </message>
     <message>
         <source>Loading rotation rules table...</source>
@@ -10360,7 +11029,7 @@ Forum link: wohlsoft.ru/forum</source>
         <translation>Извините, но PGE Editor сломался.
 Причина: необработанное исключение
 
-Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку, Спасибо.
+Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку. Спасибо.
 
 Ссылка форума: wohlsoft.ru/forum</translation>
     </message>
@@ -10676,6 +11345,161 @@ The maximum number of Music Boxes is %2.</source>
     </message>
 </context>
 <context>
+    <name>SanBaEiRuntimeEngine</name>
+    <message>
+        <source>Test level</source>
+        <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation>Тестировать уровень</translation>
+    </message>
+    <message>
+        <source>Test level in battle mode</source>
+        <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation>Запустить режим битвы</translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in SMBX-38A from disk.</comment>
+        <translation>Тестировать файл уровня/мира</translation>
+    </message>
+    <message>
+        <source>Reset checkpoints</source>
+        <translation>Сбросить контрольные точки</translation>
+    </message>
+    <message>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation>Сбросить все контрольные точки в исходное состояние.</translation>
+    </message>
+    <message>
+        <source>Enable magic hand</source>
+        <comment>Allow real-time picking-up of elements while playing a level test.</comment>
+        <translation>Включить &quot;волшебную руку&quot;</translation>
+    </message>
+    <message>
+        <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
+        <translation>Включает редактирование в реальном времени: подбирание элементов со сцены уровня, размещение новых, выбранных тем временем в редакторе, а также стирание. Не работает во время тестирования сохранённого файла.</translation>
+    </message>
+    <message>
+        <source>Don&apos;t auto-suspend game</source>
+        <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
+        <translation>Не приостанавливать игру</translation>
+    </message>
+    <message>
+        <source>Game will always run and it will never suspend while window is unfocused.</source>
+        <translation>Игра будет работать всегда, и она никогда не заснёт, если убрать фокус с окна.</translation>
+    </message>
+    <message>
+        <source>Change the path to SMBX-38A...</source>
+        <comment>Select the path to SMBX-38A executable.</comment>
+        <translation>Изменить путь к SMBX-38A...</translation>
+    </message>
+    <message>
+        <source>Select the path to SMBX-38A executable.</source>
+        <translation>Указать путь к исполняемому файлу SMBX-38A.</translation>
+    </message>
+    <message>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
+        <translation>Настройки Wine...</translation>
+    </message>
+    <message>
+        <source>Select a Wine toolchain for use.</source>
+        <translation>Выбор комплекта Wine для работы.</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch SMBX-38A as a normal game</comment>
+        <translation>Запустить игру</translation>
+    </message>
+    <message>
+        <source>Checkpoints successfully reseted!</source>
+        <translation>Контрольные точки успешно сброшены!</translation>
+    </message>
+    <message>
+        <source>Path to SMBX-38A</source>
+        <comment>Title of dialog</comment>
+        <translation>Путь к SMBX-38A</translation>
+    </message>
+    <message>
+        <source>Please select a path to SMBX-38A executable:</source>
+        <translation>Пожалуйста, укажите путь к исполняемому файлу SMBX-38A:</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
+        <translation>По-умолчанию</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected SMBX-38A path</comment>
+        <translation>Другой</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Обзор...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Select a path to SMBX-38A executable</source>
+        <comment>File dialog title</comment>
+        <translation>Выбор пути к SMBX-38A</translation>
+    </message>
+    <message>
+        <source>SMBX-38A is still active</source>
+        <translation>SMBX-38A всё ещё работает</translation>
+    </message>
+    <message>
+        <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
+        <translation>Чтобы изменить настройки Wine, необходимо завершить работающую игру. Завершить SMBX-38A сейчас?</translation>
+    </message>
+    <message>
+        <source>Executable not found</source>
+        <translation>Исполняемый файл не найден</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the TheXTech path setup.</source>
+        <translation type="obsolete">Невозможно запустить игру SMBX-38A, потому что файл &quot;%1&quot; не найден. Это могло произойти из-за неправильной настройки пути к исполняемому файлу SMBX-38A, п.</translation>
+    </message>
+    <message>
+        <source>Impossible to prepare a temp file for a test run.</source>
+        <translation>Невозможно подготовить временный файл для запуска теста.</translation>
+    </message>
+    <message>
+        <source>Impossible to launch a level because of an invalid file.</source>
+        <translation>Невозможно запустить уровень из-за некорректного файла.</translation>
+    </message>
+    <message>
+        <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
+        <translation>Невозможно запустить уровень, потому чть файл уровня сохранён в неподдерживаемом формате. Пожалуйста, сохраните уровень в формат SMBX-38A или в SMBX64-LVL.</translation>
+    </message>
+    <message>
+        <source>Caution</source>
+        <translation>Осторожно</translation>
+    </message>
+    <message>
+        <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation>Ваш уровень не в формате SMBX-38A. Это значит, что игра АВТОМАТИЧЕСКИ преобразует его в формат SMBX-38A. Ваш уровень станет несовместим с классическим SMBX. Хотите ли вы продолжить на свой страх и риск?</translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode because of an invalid file.</source>
+        <translation>Невозможно запустить уровень из-за повреждённого файла уровня.</translation>
+    </message>
+    <message>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
+        <translation>Невозможно запустить эпизод, потому что файл карты мира сохранён в неподдерживаемом формате. Пожалуйста, сохраните карту мира в формат SMBX-38A или в SMBX64-LVL.</translation>
+    </message>
+    <message>
+        <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation>Ваша карта мира не в формате SMBX-38A. Это значит, что игра АВТОМАТИЧЕСКИ преобразует его в формат SMBX-38A. Ваш эпизод станет несовместим с классическим SMBX. Хотите ли вы продолжить на свой страх и риск?</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
+        <translation>Невозможно запустить игру SMBX-38A, потому что файл &quot;%1&quot; не найден. Это могло произойти из-за неправильной настройки пути к исполняемому файлу SMBX-38A. Пожалуйста, проверьте настройки пути SMBX-38A.</translation>
+    </message>
+</context>
+<context>
     <name>SavingNotificationDialog</name>
     <message>
         <source>Save</source>
@@ -10687,7 +11511,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
@@ -10864,6 +11688,164 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <source>Bulldozer mode</source>
         <translation>Режим бульдозера</translation>
+    </message>
+</context>
+<context>
+    <name>TheXTechEngine</name>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation type="obsolete">Своя</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Обзор...</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Test level</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation>Тестировать уровень</translation>
+    </message>
+    <message>
+        <source>Test saved level</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation>Тестировать сохранённый уровень</translation>
+    </message>
+    <message>
+        <source>Select TheXTech path...</source>
+        <comment>Select a path to TheXTech for use.</comment>
+        <translation type="vanished">Указать путь к TheXTech...</translation>
+    </message>
+    <message>
+        <source>Select a path to TheXTech for use.</source>
+        <translation type="vanished">Выберите путь к TheXTech для работы.</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch TheXTech as a normal game</comment>
+        <translation>Запустить игру</translation>
+    </message>
+    <message>
+        <source>TheXTech path select</source>
+        <translation type="vanished">Выбор пути к TheXTech</translation>
+    </message>
+    <message>
+        <source>Please select a path to TheXTech executable:</source>
+        <translation>Пожалуйста, укажите путь к исполняемому файлу TheXTech:</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
+        <translation>По-умолчанию</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected TheXTech path</comment>
+        <translation>Другой</translation>
+    </message>
+    <message>
+        <source>Select a path to TheXTech executable</source>
+        <comment>File dialog title</comment>
+        <translation>Выбор пути к TheXTech</translation>
+    </message>
+    <message>
+        <source>Test level in battle mode</source>
+        <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation>Запустить режим битвы</translation>
+    </message>
+    <message>
+        <source>Graphics type</source>
+        <comment>Choose a rendering system: software or accelerated</comment>
+        <translation>Режим графики</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Automatically selected rendering engine</comment>
+        <translation>По-умолчанию</translation>
+    </message>
+    <message>
+        <source>Software</source>
+        <comment>Software rendering</comment>
+        <translation>Программная отрисовка</translation>
+    </message>
+    <message>
+        <source>Accelerated</source>
+        <comment>Hardware accelerated rendering</comment>
+        <translation>Аппаратно-ускоренный</translation>
+    </message>
+    <message>
+        <source>Accelerated with V-Sync</source>
+        <comment>Hardware accelerated rendering with vertical synchronization support</comment>
+        <translation>Аппаратно-ускоренный с вертикальной синхронизацией</translation>
+    </message>
+    <message>
+        <source>Enable magic hand</source>
+        <comment>Allow real-time picking-up of elements while playing a level test.</comment>
+        <translation>Включить &quot;волшебную руку&quot;</translation>
+    </message>
+    <message>
+        <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
+        <translation>Включает редактирование в реальном времени: подбирание элементов со сцены уровня, размещение новых, выбранных тем временем в редакторе, а также стирание. Не работает во время тестирования сохранённого файла.</translation>
+    </message>
+    <message>
+        <source>Enable max FPS</source>
+        <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
+        <translation>Максимальная частота кадров</translation>
+    </message>
+    <message>
+        <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
+        <translation>Во время игры без вертикальной синхронизации, запустить игру с максимально возможной частотой кадров.</translation>
+    </message>
+    <message>
+        <source>Enable grab all</source>
+        <comment>Allow player to grab absolutely any NPCs in a game.</comment>
+        <translation>Включить захват всего</translation>
+    </message>
+    <message>
+        <source>Allow player to grab any NPCs in a game.</source>
+        <translation>Позволяет игровому персонажу хватать любых НИП в игре.</translation>
+    </message>
+    <message>
+        <source>Path to TheXTech</source>
+        <comment>Title of dialog</comment>
+        <translation>Путь к TheXTech</translation>
+    </message>
+    <message>
+        <source>Change the path to TheXTech...</source>
+        <comment>Select the path to TheXTech executable.</comment>
+        <translation>Изменить путь к TheXTech...</translation>
+    </message>
+    <message>
+        <source>Select the path to TheXTech executable.</source>
+        <translation>Выбор пути к исполняемому файлу TheXTech.</translation>
+    </message>
+    <message>
+        <source>Executable not found</source>
+        <translation>Исполняемый файл не найден</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
+        <translation>Невозможно запустить TheXTech, потому что файл &quot;%1&quot; не найден. Это могло произойти, потому что путь к исполняемому файлу TheXTech был задан неправильно. Пожалуйста, проверьте настройки пути к TheXTech.</translation>
+    </message>
+    <message>
+        <source>TheXtech start failed</source>
+        <translation>Ошибка запуска TheXTech</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start TheXTech because of following reason:
+%3.
+
+Command: &quot;%1&quot;
+Arguments: %2</source>
+        <translation>Невозможно запустить TheXTech по следующей причине:
+%3
+
+Команда: %1
+Аргументы: %2</translation>
     </message>
 </context>
 <context>
@@ -11662,7 +12644,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>6 - Warp Exit</source>
-        <translation>6 - Выход через дверь</translation>
+        <translation>6 - Выход через проход/дверь</translation>
     </message>
     <message>
         <source>7 - Star Exit</source>
@@ -11709,7 +12691,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation>Вы измените текущую позицию на последнюю размещённую точку. Если точка на выбрана, позиция останется прежней.</translation>
+        <translation>Вы измените текущую позицию на последнюю размещённую точку. Если точка не выбрана, позиция останется прежней.</translation>
     </message>
     <message>
         <source>Go to point</source>
@@ -11804,6 +12786,116 @@ because object configurations are not loaded
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
         <translation>Невозможно загрузить карту мира &quot;%1&quot;, потому что конфигурационный пакет содержит ошибки.</translation>
+    </message>
+</context>
+<context>
+    <name>WineSetup</name>
+    <message>
+        <source>Wine configuration</source>
+        <translation>Настройки Wine</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Тест</translation>
+    </message>
+    <message>
+        <source>Wine config</source>
+        <translation>Конфигурация Wine</translation>
+    </message>
+    <message>
+        <source>Version dialog</source>
+        <translation>Диалог версии</translation>
+    </message>
+    <message>
+        <source>Stop process</source>
+        <translation>Остановить процесс</translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <translation>Не запущенно</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Импортировать</translation>
+    </message>
+    <message>
+        <source>Specify a custom environment (PlayOnLinux/Mac)</source>
+        <translation>Указать пользовательскую среду (PlayOnLinux/Mac)</translation>
+    </message>
+    <message>
+        <source>Wine home prefix</source>
+        <translation>Домашняя папка Wine</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Обзор...</translation>
+    </message>
+    <message>
+        <source>Location of Wine</source>
+        <translation>Расположение Wine</translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translation>Системный</translation>
+    </message>
+    <message>
+        <source>Custom:</source>
+        <translation>Другой:</translation>
+    </message>
+    <message>
+        <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
+        <translation>Включить отладочный вывод Wine в консоль &quot;WineDebug&quot;</translation>
+    </message>
+    <message>
+        <source>Import setup from PlayOnMac</source>
+        <translation>Импортировать настройки из PlayOnMac</translation>
+    </message>
+    <message>
+        <source>Import setup from PlayOnLinux</source>
+        <translation>Импортировать настройки из PlayOnLinux</translation>
+    </message>
+    <message>
+        <source>Select a Wine install prefix path</source>
+        <translation>Выбрать путь к установке Wine</translation>
+    </message>
+    <message>
+        <source>Select a Wine home prefix path</source>
+        <translation>Выбрать путь к домашней папке Wine</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Ошибка</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
+        <translation>Невозможно запустит &quot;%1&quot; потому что: %2</translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <comment>State of a test app</comment>
+        <translation>Не запущенно</translation>
+    </message>
+    <message>
+        <source>Starting...</source>
+        <comment>State of a test app</comment>
+        <translation>Запуск...</translation>
+    </message>
+    <message>
+        <source>Running...</source>
+        <comment>State of a test app</comment>
+        <translation>Работает...</translation>
+    </message>
+    <message>
+        <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
+        <translation>Локальная пользовательская домашняя папка Wine, содержащая настройки, корень диска C, и некоторые другие вещи.</translation>
+    </message>
+    <message>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
+        <translation>Использовать Wine, установленный в системе и видимый через среду PATH.</translation>
+    </message>
+    <message>
+        <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
+        <translation>Указать другой путь установки Wine (папка, которая содержит папки &quot;bin&quot;, &quot;lib&quot;, &quot;share&quot;, содержащие рабочий комплект Wine).</translation>
     </message>
 </context>
 <context>
@@ -11957,7 +13049,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;С этой опцией будут автоматически рассчитаны значения ширины или высоты. чтобы размер конечного изображения был пропорционален&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;С этой опцией будут автоматически рассчитаны значения ширины или высоты, чтобы размер конечного изображения был пропорционален.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
@@ -12214,7 +13306,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Search Tile</source>
-        <translation>Искать  плитку</translation>
+        <translation>Искать плитку</translation>
     </message>
     <message>
         <source>Terrain tile</source>
@@ -12331,6 +13423,18 @@ Music boxes:		%5
     <message>
         <source>Music search completed!</source>
         <translation>Поиск музыки завешён!</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation>Искать в выбранной группе</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>Выделить всё</translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation>Выбрано %1 найденных элементов.</translation>
     </message>
 </context>
 <context>
@@ -12772,6 +13876,34 @@ Do you want to save your changes?</source>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
+    <message>
+        <source>By Wohlstand</source>
+        <translation>От Wohlstand</translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation>Редактор, версия %1</translation>
+    </message>
+    <message>
+        <source>Revision</source>
+        <translation>Ревизия</translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation>Дата сборки</translation>
+    </message>
+    <message>
+        <source>Our project site</source>
+        <translation>Сайт нашего проекта</translation>
+    </message>
+    <message>
+        <source>This program is distributed under %1</source>
+        <translation>Данная программа распространяется по лицензии %1</translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
+        <translation>Архитектура: %1</translation>
+    </message>
 </context>
 <context>
     <name>dataconfigs</name>
@@ -12784,7 +13916,7 @@ Do you want to save your changes?</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>Вы имеете устаревший конфигурационный пакет.
+        <translation type="vanished">Вы имеете устаревший конфигурационный пакет.
 &lt;br&gt;Редактор будет запущен, но, у вас могут проявиться проблемы с элементами или с настройками.
 &lt;br&gt;
 &lt;br&gt;Пожалуйста, загрузите и установите последнюю версию вашего пакета конфигурации:
@@ -12798,23 +13930,23 @@ therefore you can use same link to get updated version</source>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>Выбор файла отчёта</translation>
+        <translation type="vanished">Выбор файла отчёта</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>Текстовые файлы (*.txt *.log)</translation>
+        <translation type="vanished">Текстовые файлы (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Успешно</translation>
+        <translation type="vanished">Успешно</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>Все расширения файлов успешно установлены</translation>
+        <translation type="vanished">Все расширения файлов успешно установлены</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation type="vanished">Ошибка</translation>
     </message>
 </context>
 <context>
@@ -13387,7 +14519,7 @@ Do you want to save your changes?</source>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Выходная папка, куда будут сохранены файлы SMBX-GIF (*.gif and *m.gif)
+        <translation>Выходная папка, куда будут сохранены файлы SMBX-GIF (*.gif и *m.gif)
 (если поле пустое, то конечные изображения будут сохранены вместе с исходными в той же папке)</translation>
     </message>
     <message>

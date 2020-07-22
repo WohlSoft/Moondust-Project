@@ -1,0 +1,182 @@
+v0.2
+Now this system is only available on level testing mode.(use command to load a lvl file)
+-------------------------------------------------------------------------------
+
+share memory block struct:
+unsigned char BufferA[8192];
+unsigned char BufferB[8192];
+
+BufferA: you can only read data from this buffer.
+BufferB: you can only write data to this buffer.
+
+Buffer struct:
+short Length;
+unsigned char Buffer[8190];
+
+Length: the length of the command in the buffer.
+After you read all data from the BufferA, you must set the BufferA's Length to 0.
+Also, smbx will set the BufferB's Length to 0 after receive your command.
+
+You can send multiple commands at the same time, use '\n' to split.
+You may receive multiple return values at the same time, use '\n' to split.
+
+Base elements:
+parameters: same as 1.4 file format
+Block Data:
+layer|id|x|y|contain|b1|b2|e1,e2,e3|w|h
+Background Object Data:
+layer|id|x|y
+NPC Data:
+layer|id|x|y|b1,b2,b3,b4|sp|e1,e2,e3,e4,e5,e6,e7|a1,a2|c1[,c2,c3,c4,c5,c6,c7]|msg
+
+Command List:
+
+Create a Block:
+CB|... (Block Data)
+
+Create a Background Object:
+CT|... (Background Data)
+
+Create a NPC:
+CN|... (NPC Data)
+
+Get current object:
+GB
+possible return values:
+GB|NULL
+GB|ERASER
+GB|CURSOR
+GB|B|... (Block Data)
+GB|T|... (Background Data)
+GB|N|... (NPC Data)
+
+Cursor Functions:
+Disable Edit mode:
+SO
+Cursor:
+SO|CURSOR
+Eraser:
+SO|ERASER
+Place Block:
+SO|B|... (Block Data without layer field)
+Place Background object
+SO|T|... (Background Data without layer field)
+Place NPC
+SO|N|... (NPC Data without layer field)
+
+Set Layer State:
+SLT|layername|type|nosmoke
+layername: Layer name. [***urlencode!***]
+type: 1=Show,2=Hide,3=Toggle
+nosmoke: Whether smoke effects are shown,set to 0 to show them,set to values other than 0 to stop them from showing.
+
+Trigger Event:
+SET|eventname
+eventname: Event name. [***urlencode!***]
+
+Show a message box:
+TMG|msg
+msg: Messages shown.   [***urlencode!***]
+
+Set Player State:
+PM|idn|pid|pr
+idn:1 = player-1, 2 = player-2
+pid: player's id: 0=Mario 1=Luigi 2=Peach 3=Toad 4=Link
+pr: powerup.
+
+Get Game State:
+Get Player State:
+GGI|PI
+possible return values:
+if 2 player:
+GGI|PIT|d1|pid1|pr1|d2|pid2|pr2
+d* = Is Player Died?
+pid* = player's id
+pr* = powerup
+
+Get the number of objects:
+GGI|ON
+possible return values:
+GGI|ON|*Block|*Background|*NPC|*Warp|*Liquid
+*: the number of objects
+
+Get the number of layers and events:
+GGI|LN
+possible return values:
+GGI|LN|*Layer|*Event
+*: the number of objects
+
+Get Cursor Coordinates:
+GGI|CP
+possible return values:
+GGI|CP|x|y
+
+Get Camera Position:
+GGI|VP
+possible return values:
+if 2 screen:
+GGI|VP|x1|y1|x2|y2
+else:
+GGI|VP|x|y
+
+Get Variable State:
+GGI|VV|Name
+Name: Variable Name. [***urlencode!***]
+possible return values:
+GGI|VV|Name|id|val|string
+Name: Variable Name. [***urlencode!***]
+id: Variable IDN
+val: the value of the variable(double)
+string: the value of the variable(string)
+
+Toggle the switch which decide whether the game will send a message to you when you get an object from cursor.(Default=TRUE)
+GGI|SS
+
+Toggle the switch which decide whether the game will send a message to you when smbx.exe is going to exit.(Default=FALSE)
+If the game crashed, you will get nothing.
+GGI|GM
+You will receive a message with specified format:
+GGI|GM|exitcode|levelname,cid,id|hp,co,sr
+exitcode = {0 = 'X Button', 99 = player failed, else: same as world map's level exit code.}
+levelname = if the player arrived the checkpoint, this value will be set to the level's filename[***urlencode!***]
+cid = if the player arrived the checkpoint, this value will be set to the checkpoint's perm ID.
+id = if the player arrived the checkpoint, this value will be set to the checkpoint's advset value.
+hp = current 1up number
+co = the coins number
+sr = current score
+
+Set Current Layer:
+GGI|SLN|Name
+Name: Layer name. [***urlencode!***]
+
+The game process will not auto pause when the game window is not activated.
+GGI|NOPAUSE
+
+
+
+
+
+
+
+
+Startup args(only available on level testing mode):
+-------------------------------------------------------------------------------
+smbx.exe filepath mode p1 p2 args
+filepath = lvl filepath
+mode 0 = "1 player",1 = "2 player",2 = "battlemode"
+p1 = player1's id
+p2 = player2's id[0=Mario 1=Luigi 2=Peach 3=Toad 4=Link]
+
+args[***urlencode!***] =
+SMBXArgs|hp,co,sr|p1p,p1i,p2p,p2i|levelname,cppid,cpidn
+hp = initial 1up number
+co = initial coins number
+sr = initial score
+p1p = player1's state
+p1i = player1's mount
+p2p = player2's state [1~12]
+p2i = player2's mount [-3~8]
+levelname = level's filename(same as "GGI|GM"'s levelname)[***urlencode!***]
+cppid = checkpoint's perm ID
+cpidn = checkpoint's advset value
+

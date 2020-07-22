@@ -17,6 +17,7 @@
  */
 
 #include <QDesktopWidget>
+#include <QFile>
 
 #include <common_features/graphics_funcs.h>
 #include <common_features/app_path.h>
@@ -24,47 +25,62 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-#include <FileMapper/file_mapper.h>
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <Graphics/bitmask2rgba.h>
 
 #include <FreeImageLite.h>
 
 static FIBITMAP *loadImage(const std::string &file, bool convertTo32bit = true)
 {
-    #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32)
-    FileMapper fileMap;
-    if(!fileMap.open_file(file.c_str()))
-        return NULL;
+    QFile fileMap(QString::fromStdString(file));
 
-    FIMEMORY *imgMEM = FreeImage_OpenMemory(reinterpret_cast<unsigned char *>(fileMap.data()),
-                                            (unsigned int)fileMap.size());
-    FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
-    if(formato  == FIF_UNKNOWN)
-        return NULL;
-    FIBITMAP *img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
-    FreeImage_CloseMemory(imgMEM);
-    fileMap.close_file();
-    if(!img)
-        return NULL;
-    #else
-    FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
-    if(formato  == FIF_UNKNOWN)
-        return NULL;
-    FIBITMAP *img = FreeImage_Load(formato, file.c_str());
-    if(!img)
-        return NULL;
-    #endif
+    FIBITMAP *img = nullptr;
 
-    if(convertTo32bit)
+    if(!fileMap.open(QIODevice::ReadOnly))
+        return nullptr;
+
+    unsigned int m_size = static_cast<unsigned int>(fileMap.size());
+    unsigned char *m = fileMap.map(0, fileMap.size());
+
+    if(m)
     {
-        FIBITMAP *temp;
-        temp = FreeImage_ConvertTo32Bits(img);
-        if(!temp)
-            return NULL;
+        FIMEMORY *imgMEM = FreeImage_OpenMemory(m, m_size);
+        FREE_IMAGE_FORMAT formato = FreeImage_GetFileTypeFromMemory(imgMEM);
+
+        if(formato  == FIF_UNKNOWN)
+        {
+            fileMap.unmap(m);
+            return nullptr;
+        }
+
+        img = FreeImage_LoadFromMemory(formato, imgMEM, 0);
+        FreeImage_CloseMemory(imgMEM);
+
+        fileMap.unmap(m);
+    }
+    else
+    {
+        FREE_IMAGE_FORMAT formato = FreeImage_GetFileType(file.c_str(), 0);
+        if(formato  == FIF_UNKNOWN)
+            return nullptr;
+        img = FreeImage_Load(formato, file.c_str());
+    }
+
+    if(!img)
+        return nullptr;
+
+    unsigned int bpp = FreeImage_GetBPP(img);
+
+    if(convertTo32bit && bpp != 32)
+    {
+        FIBITMAP *temp = FreeImage_ConvertTo32Bits(img);
         FreeImage_Unload(img);
+        if(!temp)
+            return nullptr;
         img = temp;
     }
+
     return img;
 }
 
@@ -81,45 +97,8 @@ static bool mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask)
     if(!mask)
         return false;//Nothing to do.
 
-    unsigned int img_w  = FreeImage_GetWidth(image);
-    unsigned int img_h  = FreeImage_GetHeight(image);
-    unsigned int mask_w = FreeImage_GetWidth(mask);
-    unsigned int mask_h = FreeImage_GetHeight(mask);
+    bitmask_to_rgba(image, mask);
 
-    RGBQUAD Fpix;
-    RGBQUAD Bpix;
-    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
-
-    for(unsigned int y = 0; (y < img_h) && (y < mask_h); y++)
-    {
-        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
-        {
-
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-            FreeImage_GetPixelColor(mask, x, y, &Bpix);
-
-            Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
-            Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
-            Npix.rgbBlue    = ((0x7F & Bpix.rgbBlue) | Fpix.rgbBlue);
-            int newAlpha = 255 -
-                           ((int(Bpix.rgbRed) +
-                             int(Bpix.rgbGreen) +
-                             int(Bpix.rgbBlue)) / 3);
-            if((Bpix.rgbRed > 240u) //is almost White
-               && (Bpix.rgbGreen > 240u)
-               && (Bpix.rgbBlue > 240u))
-                newAlpha = 0;
-
-            newAlpha = newAlpha + ((int(Fpix.rgbRed) +
-                                    int(Fpix.rgbGreen) +
-                                    int(Fpix.rgbBlue)) / 3);
-            if(newAlpha > 255)
-                newAlpha = 255;
-            Npix.rgbReserved = newAlpha;
-
-            FreeImage_SetPixelColor(image, x, y, &Npix);
-        }
-    }
     FreeImage_Unload(mask);
     return true;
 }
@@ -259,7 +238,7 @@ skipBackpDir:
         return;
     }
 
-    FIBITMAP *mask = NULL;
+    FIBITMAP *mask = nullptr;
     if(Files::fileExists(maskPathIn))
     {
         bool hasMask = mergeBitBltToRGBA(image, maskPathIn);

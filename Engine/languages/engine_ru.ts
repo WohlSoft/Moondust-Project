@@ -34,7 +34,7 @@
     </message>
     <message id="CRASH_TIMEOUT_MSG">
         <source>Engine has abourted because alarm() time out!</source>
-        <translation>Работа движок была прервана в связи с истечением времени alarm()!</translation>
+        <translation>Работа движка была прервана в связи с истечением времени alarm()!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <source>Physical memory address error!</source>
@@ -485,6 +485,14 @@ therefore you can use same link to get updated version.</oldsource>
     <message id="VSYNC_ERROR_INFO">
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
         <translation>Обнаружена слишком быстрая частота кадров. Чтобы предотвратить проблемы, вертикальная синхронизация (V-Sync) будет отключена. Пожалуйста, включите V-Sync в настройках видео-драйвера.</translation>
+    </message>
+    <message id="WARNING_INCOMPATIBLE_WORLDMAP">
+        <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation>Эта карта мира несовместима: возможно непредсказуемое поведение игры или ошибки. Подробности в отчёте.</translation>
+    </message>
+    <message id="WARNING_INCOMPATIBLE_LEVEL">
+        <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation>Этот уровень несовместим: возможно непредсказуемое поведение игры или ошибки. Подробности в отчёте.</translation>
     </message>
 </context>
 <context>

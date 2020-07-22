@@ -54,11 +54,8 @@
 
 PGEEngineCmdArgs    g_flags;
 
-Level_returnTo      g_jumpOnLevelEndTo = RETURN_TO_EXIT;
-
-std::string         g_configPackPath  = "";
-std::string         g_fileToOpen  = "";
-EpisodeState        g_GameState;
+std::string         g_configPackPath;
+std::string         g_fileToOpen;
 PlayEpisodeResult   g_Episode;
 
 PGEEngineCmdArgs::PGEEngineCmdArgs() :

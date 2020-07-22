@@ -37,7 +37,7 @@
 #include "level_edit.h"
 #include <ui_leveledit.h>
 
-LevelEdit::LevelEdit(MainWindow* mw, QWidget *parent) :
+LevelEdit::LevelEdit(MainWindow *mw, QWidget *parent) :
     EditBase(mw, parent),
     scene(nullptr),
     sceneCreated(false),
@@ -64,10 +64,10 @@ LevelEdit::LevelEdit(MainWindow* mw, QWidget *parent) :
     if(GlobalSettings::LvlOpts.default_zoom != 100)
         setZoom(GlobalSettings::LvlOpts.default_zoom);
 
-    #ifdef Q_OS_ANDROID
+#ifdef Q_OS_ANDROID
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    #endif
+#endif
 }
 
 void LevelEdit::reTranslate()
@@ -82,7 +82,9 @@ void LevelEdit::prepareLevelFile(LevelData &data)
     if(!sceneCreated || !scene)
         return;
 
-    dataconfigs *config = scene->m_configs;
+    DataConfig *config = scene->m_configs;
+
+    data.meta.configPackId = config->configPackId;
 
     FileFormats::arrayIdLevelSortBGOs(data);
 
@@ -118,9 +120,8 @@ void LevelEdit::focusInEvent(QFocusEvent *event)
 void LevelEdit::dragEnterEvent(QDragEnterEvent *e)
 {
     qDebug() << "Entered data into LevelEdit";
-    if (e->mimeData()->hasUrls()) {
+    if(e->mimeData()->hasUrls())
         e->acceptProposedAction();
-    }
 }
 
 void LevelEdit::dropEvent(QDropEvent *e)
@@ -131,13 +132,16 @@ void LevelEdit::dropEvent(QDropEvent *e)
 
     bool requestReload = false;
 
-    foreach (const QUrl &url, e->mimeData()->urls()) {
+    foreach(const QUrl &url, e->mimeData()->urls())
+    {
         const QString &fileName = url.toLocalFile();
         if(QFileInfo(fileName).isDir())
         {
-            SmartImporter * importer = new SmartImporter((QWidget*)this, fileName, (QWidget*)this);
-            if(importer->isValid()){
-                if(importer->attemptFastImport()){
+            SmartImporter *importer = new SmartImporter((QWidget *)this, fileName, (QWidget *)this);
+            if(importer->isValid())
+            {
+                if(importer->attemptFastImport())
+                {
                     requestReload = true;
                     delete importer;
                     break;
@@ -150,37 +154,38 @@ void LevelEdit::dropEvent(QDropEvent *e)
         emit forceReload();
 }
 
-static int renderTime=0;
+static int renderTime = 0;
 void LevelEdit::updateScene()
 {
-    if(renderTime>32)
+    if(renderTime > 32)
     {
-        renderTime-=32;
+        renderTime -= 32;
         return;
     }
 
-    QElapsedTimer t; t.start();
+    QElapsedTimer t;
+    t.start();
 
     if(scene->m_opts.animationEnabled)
     {
         QRect viewport_rect(0, 0, ui->graphicsView->viewport()->width(), ui->graphicsView->viewport()->height());
-        scene->update( ui->graphicsView->mapToScene(viewport_rect).boundingRect() );
+        scene->update(ui->graphicsView->mapToScene(viewport_rect).boundingRect());
         ui->graphicsView->viewport()->update();
         update();
     }
 
-    renderTime+=t.elapsed();
+    renderTime += t.elapsed();
 }
 
 void LevelEdit::setAutoUpdateTimer(int ms)
 {
-    if(updateTimer!=NULL)
+    if(updateTimer != nullptr)
         delete updateTimer;
     updateTimer = new QTimer;
     updateTimer->connect(
-                updateTimer, SIGNAL(timeout()),
-                this,
-                SLOT( updateScene()) );
+        updateTimer, SIGNAL(timeout()),
+        this,
+        SLOT(updateScene()));
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::NoViewportUpdate);
     renderTime = 0;
     updateTimer->start(ms);
@@ -188,11 +193,11 @@ void LevelEdit::setAutoUpdateTimer(int ms)
 
 void LevelEdit::stopAutoUpdateTimer()
 {
-    if(updateTimer!=NULL)
+    if(updateTimer != nullptr)
     {
         updateTimer->stop();
         delete updateTimer;
-        updateTimer=NULL;
+        updateTimer = nullptr;
     }
     ui->graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
     renderTime = 0;

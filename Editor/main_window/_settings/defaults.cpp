@@ -186,7 +186,6 @@ void MainWindow::setUiDefults()
 
     connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow *)), this, SLOT(updateMenus(QMdiSubWindow *)));
     //connect(ui->centralWidget, SIGNAL(subWindowActivated(QMdiSubWindow*)), this, SLOT(recordSwitchedWindow(QMdiSubWindow*)));
-    connect(&engine_proc, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(testingFinished()));
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptLocal, &QAction::setDisabled);
     connect(this, &MainWindow::setSMBX64Strict, ui->actionCreateScriptEpisode, &QAction::setDisabled);
 
@@ -203,6 +202,11 @@ void MainWindow::setUiDefults()
     ui->actionFill->setVisible(false);
     ui->actionFloodSectionOnly->setVisible(false);
     ui->actionFloodSectionOnly->setEnabled(false);
+
+    auto ziKey = QKeySequence::keyBindings(QKeySequence::ZoomIn);
+    ziKey.append(QKeySequence(Qt::CTRL + Qt::Key_Equal));
+    ui->actionZoomIn->setShortcuts(ziKey);
+    ui->actionZoomOut->setShortcuts(QKeySequence::ZoomOut);
 
 #ifndef Q_OS_WIN
     addToolBar(Qt::LeftToolBarArea, ui->LevelObjectToolbar);
@@ -243,7 +247,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *select = new QPushButton(m_toolbarVanilla);
         select->setText(tr("Select", "Vanilla-like toolbar"));
-        select->connect(this, &MainWindow::languageSwitched, [this, select](){
+        select->connect(this, &MainWindow::languageSwitched, [select](){
                                 select->setText(tr("Select", "Vanilla-like toolbar"));
                            });
         select->setCheckable(true);
@@ -256,7 +260,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *erase  = new QPushButton(m_toolbarVanilla);
         erase->setText(tr("Erase", "Vanilla-like toolbar"));
-        erase->connect(this, &MainWindow::languageSwitched, [this, erase](){
+        erase->connect(this, &MainWindow::languageSwitched, [erase](){
                                 erase->setText(tr("Erase", "Vanilla-like toolbar"));
                            });
         erase->setCheckable(true);
@@ -269,7 +273,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *items  = new QPushButton(m_toolbarVanilla);
         items->setText(tr("Items", "Vanilla-like toolbar"));
-        items->connect(this, &MainWindow::languageSwitched, [this, items](){
+        items->connect(this, &MainWindow::languageSwitched, [items](){
                                 items->setText(tr("Items", "Vanilla-like toolbar"));
                            });
         items->setCheckable(true);
@@ -282,7 +286,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *player  = new QPushButton(m_toolbarVanilla);
         player->setText(tr("Player", "Vanilla-like toolbar"));
-        player->connect(this, &MainWindow::languageSwitched, [this, player]() {
+        player->connect(this, &MainWindow::languageSwitched, [player]() {
                                 player->setText(tr("Player", "Vanilla-like toolbar"));
                            });
         connect(player, &QPushButton::clicked, [ = ](bool)
@@ -298,7 +302,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *section  = new QPushButton(m_toolbarVanilla);
         section->setText(tr("Section", "Vanilla-like toolbar"));
-        section->connect(this, &MainWindow::languageSwitched, [this, section](){
+        section->connect(this, &MainWindow::languageSwitched, [section](){
                                 section->setText(tr("Section", "Vanilla-like toolbar"));
                            });
         section->setCheckable(true);
@@ -310,7 +314,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *wldProps  = new QPushButton(m_toolbarVanilla);
         wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
-        wldProps->connect(this, &MainWindow::languageSwitched, [this, wldProps](){
+        wldProps->connect(this, &MainWindow::languageSwitched, [wldProps](){
                                 wldProps->setText(tr("World settings", "Vanilla-like toolbar"));
                            });
         wldProps->setCheckable(true);
@@ -322,7 +326,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *doors  = new QPushButton(m_toolbarVanilla);
         doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
-        doors->connect(this, &MainWindow::languageSwitched, [this, doors](){
+        doors->connect(this, &MainWindow::languageSwitched, [doors](){
                                 doors->setText(tr("Warps and Doors", "Vanilla-like toolbar"));
                            });
         doors->setCheckable(true);
@@ -334,7 +338,7 @@ void MainWindow::setUiDefults()
 
         QPushButton *water  = new QPushButton(m_toolbarVanilla);
         water->setText(tr("Water", "Vanilla-like toolbar"));
-        water->connect(this, &MainWindow::languageSwitched, [this, water](){
+        water->connect(this, &MainWindow::languageSwitched, [water](){
                                 water->setText(tr("Water", "Vanilla-like toolbar"));
                            });
         connect(water, &QPushButton::clicked, [ = ](bool)
@@ -354,6 +358,7 @@ void MainWindow::setUiDefults()
 
             menu->insertAction(nullptr, ui->actionGridEn);
             menu->insertAction(nullptr, ui->actionShowGrid);
+            menu->insertAction(nullptr, ui->actionShowCameraGrid);
             menu->addMenu(ui->menuSetGridSize);
             menu->addSeparator();
             menu->insertAction(nullptr, ui->actionAnimation);
@@ -362,7 +367,7 @@ void MainWindow::setUiDefults()
 
             options->setMenu(menu);
             options->setText(tr("Options"));
-            options->connect(this, &MainWindow::languageSwitched, [this, options](){
+            options->connect(this, &MainWindow::languageSwitched, [options](){
                                     options->setText(tr("Options"));
                                });
             options->setPopupMode(QToolButton::InstantPopup);
@@ -408,6 +413,10 @@ void MainWindow::setUiDefults()
     dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
     dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
     ui->centralWidget->setTabsClosable(true);
+
+    /**********************Default font size********************************/
+    GlobalSettings::fontDefault.reset(new QFont(qApp->font()));
+    GlobalSettings::font.reset(new QFont(qApp->font()));
 
     /*********************Music volume regulator*************************/
     m_ui_musicVolume = new QSlider(Qt::Horizontal, ui->EditionToolBar);
@@ -460,9 +469,9 @@ void MainWindow::setUiDefults()
 
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionGridEn, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowCameraGrid, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->actionCollisions, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevelWorld, ui->menuSetGridSize, &QMenu::setEnabled);
-    connect(this, &MainWindow::windowActiveLevelWorld, ui->actionShowGrid, &QAction::setEnabled);
 
     connect(this, &MainWindow::windowActiveLevel,  ui->menuLevel->menuAction(), &QAction::setVisible);
     connect(this, &MainWindow::windowActiveWorld,  ui->menuWorld->menuAction(), &QAction::setVisible);
@@ -481,7 +490,12 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveWorld,       ui->action_doTestWld, &QAction::setVisible);
 
-    connect(this, &MainWindow::windowActiveLevelWorld,  ui->action_doSafeTest, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,  ui->action_doSafeTest, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveLevel,  ui->action_doSafeTest, &QAction::setVisible);
+
+    connect(this, &MainWindow::windowActiveWorld,  ui->action_doSafeTestWld, &QAction::setEnabled);
+    connect(this, &MainWindow::windowActiveWorld,  ui->action_doSafeTestWld, &QAction::setVisible);
+
     connect(this, &MainWindow::windowActiveLevel, ui->LevelObjectToolbar, &QWidget::setVisible);
     connect(this, &MainWindow::windowActiveWorld, ui->WorldObjectToolbar, &QWidget::setVisible);
 
@@ -550,4 +564,17 @@ void MainWindow::setUiDefults()
     for(size_t i = 0; i < m_sectionButtonsCount; i++)
         connect(this, &MainWindow::windowActiveLevel,   m_sectionButtons[i], &QAction::setEnabled);
     connect(this, &MainWindow::windowActiveLevel,   ui->actionSectionMore, &QAction::setEnabled);
+}
+
+void MainWindow::setUiDefultsConfigPack()
+{
+    // 21+ More sections
+    if(configs.editor.supported_features.level_section_21plus == EditorSetup::FeaturesSupport::F_DISABLED)
+        ui->actionSectionMore->setEnabled(false);
+    else if(configs.editor.supported_features.level_section_21plus == EditorSetup::FeaturesSupport::F_HIDDEN)
+        ui->actionSectionMore->setVisible(false);
+    else
+        QObject::connect(this, &MainWindow::setSMBX64Strict, ui->actionSectionMore, &QAction::setDisabled);
+
+    // TODO: Maoe more options of tune, for example, a default visibility and location of toolboxes, showing of default dialogs, etc.
 }

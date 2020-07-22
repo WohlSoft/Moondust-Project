@@ -30,6 +30,7 @@ include(../_common/Utils/Utils.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/IniProcessor/IniProcessor.cmake)
+include(../_common/Graphics/bitmask2rgba.cmake)
 
 pge_cxx_standard(14)
 
@@ -53,6 +54,7 @@ add_executable(GIFs2PNG
     ${INIPROCESSOR_SRCS}
     ${UTF8MAIN_SRCS}
     ${UTILS_SRCS}
+    ${BITMASK2RGBA_SRCS}
 )
 
 if(WIN32 AND NOT EMSCRIPTEN)

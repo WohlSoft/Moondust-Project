@@ -30,11 +30,11 @@ class ItemPath : public WldBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemPath(QGraphicsItem *parent=0);
-    ItemPath(WldScene *parentScene, QGraphicsItem *parent=0);
+    ItemPath(QGraphicsItem *parent = nullptr);
+    ItemPath(WldScene *parentScene, QGraphicsItem *parent = nullptr);
     ~ItemPath();
 
-    void setPathData(WorldPathTile inD, obj_w_path *mergedSet=0, long *animator_id=0);
+    void setPathData(WorldPathTile inD, obj_w_path *mergedSet = nullptr, long *animator_id = nullptr);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

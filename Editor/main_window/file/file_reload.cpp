@@ -118,7 +118,7 @@ void MainWindow::on_actionReload_triggered()
             child->show();
             LastActiveSubWindow->setGeometry(wnGeom);
             child->updateGeometry();
-            child->ResetPosition();
+            child->resetPosition();
             statusBar()->showMessage(tr("Level file reloaded"), 2000);
             LvlMusPlay::musicForceReset = true; //reset musics
             updateMenus(LastActiveSubWindow, true);

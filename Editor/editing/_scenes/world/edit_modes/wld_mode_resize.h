@@ -25,7 +25,7 @@
 class WLD_ModeResize : public EditMode
 {
 public:
-    WLD_ModeResize(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    WLD_ModeResize(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~WLD_ModeResize();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

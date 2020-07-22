@@ -34,7 +34,7 @@ class ConfigStatus : public QDialog
     Q_OBJECT
 
 public:
-    explicit ConfigStatus(dataconfigs &conf, QWidget *parent = 0);
+    explicit ConfigStatus(DataConfig &conf, QWidget *parent = 0);
     ~ConfigStatus();
 
 private slots:
@@ -42,7 +42,7 @@ private slots:
 
 private:
     Ui::ConfigStatus *ui;
-    dataconfigs * configs;
+    DataConfig * configs;
 };
 
 #endif // CONFIGSTATUS_H

@@ -57,7 +57,8 @@ class WldScene : public QGraphicsScene
     friend class WorldEdit;
     friend class WldHistoryManager;
 public:
-    WldScene(MainWindow *mw, GraphicsWorkspace *parentView, dataconfigs &configs, WorldData &FileData, QObject *parent = 0);
+    WldScene(MainWindow *mw, GraphicsWorkspace *parentView,
+             DataConfig &configs, WorldData &FileData, QObject *parent = nullptr);
     ~WldScene();
 
     /* //////////////////////Contents/////////////////////////////
@@ -95,15 +96,15 @@ public:
     // ///////////////////Common////////////////////////
 public:
     //! Main window pointer
-    MainWindow         *m_mw;
+    MainWindow         *m_mw = nullptr;
     //! Pointer to global configuration in the main window
-    dataconfigs        *m_configs;
+    DataConfig        *m_configs = nullptr;
     //! Pointer to level data storage in the sub-window class
-    WorldData          *m_data;
+    WorldData          *m_data = nullptr;
     //! Pointer to parent graphics view
-    GraphicsWorkspace *m_viewPort;
+    GraphicsWorkspace *m_viewPort = nullptr;
     //! Pointer to parent edit sub-window;
-    WorldEdit          *m_subWindow;
+    WorldEdit          *m_subWindow = nullptr;
 
     //! Data buffer
     WorldData WldBuffer;
@@ -111,15 +112,15 @@ public:
 public:
     //default objects Z value
     //! Z-Layer of terrain tiles
-    qreal Z_Terrain;
+    qreal Z_Terrain = 0.0;
     //! Z-Layer of sceneries
-    qreal Z_Scenery;
+    qreal Z_Scenery = 0.0;
     //! Z-Layer of path tiles
-    qreal Z_Paths;
+    qreal Z_Paths = 0.0;
     //! Z-Layer of level entrance points
-    qreal Z_Levels;
+    qreal Z_Levels = 0.0;
     //! Z-Layer of visible music boxes frontents
-    qreal Z_MusicBoxes;
+    qreal Z_MusicBoxes = 0.0;
 
     // ///////////////////Miscellaneous////////////////////////
 public:
@@ -227,11 +228,11 @@ public:
 public:
 
     //the last Array ID's, which used before hold mouse key
-    qlonglong m_lastTerrainArrayID;
-    qlonglong m_lastSceneryArrayID;
-    qlonglong m_lastPathArrayID;
-    qlonglong m_lastLevelArrayID;
-    qlonglong m_lastMusicBoxArrayID;
+    qlonglong m_lastTerrainArrayID = 0;
+    qlonglong m_lastSceneryArrayID = 0;
+    qlonglong m_lastPathArrayID = 0;
+    qlonglong m_lastLevelArrayID = 0;
+    qlonglong m_lastMusicBoxArrayID = 0;
 
     //Defining indexes for data values of items
 #define ITEM_TYPE                    0 //String
@@ -272,17 +273,17 @@ public:
     /* TODO: Make a separated structure/class to inject this into it  */
     /******************************************************************/
     //! Is scene created in the point selection dialog
-    bool m_isSelectionDialog; // disable all cols via activeWldEditWin()-> and disable rightclick
+    bool m_isSelectionDialog = false; // disable all cols via activeWldEditWin()-> and disable rightclick
     // for change mode into "select"
     WldPointSelector m_pointSelector;
 
     // ///////////////////Item Locks////////////////////////////
 public:
-    bool m_lockTerrain;
-    bool m_lockScenery;
-    bool m_lockPath;
-    bool m_lockLevel;
-    bool m_lockMusicBox;
+    bool m_lockTerrain = false;
+    bool m_lockScenery = false;
+    bool m_lockPath = false;
+    bool m_lockLevel = false;
+    bool m_lockMusicBox = false;
     void setLocked(int type, bool lock);
 
     // ///////////////////Item Modifying/////////////////////////
@@ -334,7 +335,7 @@ public:
 
     typedef QList<QGraphicsItem *> PGE_ItemList;
     bool checkGroupCollisions(QList<QGraphicsItem *> *items);
-    QGraphicsItem *itemCollidesWith(QGraphicsItem *item, QList<QGraphicsItem *> *itemgrp = 0);
+    QGraphicsItem *itemCollidesWith(QGraphicsItem *item, QList<QGraphicsItem *> *itemgrp = nullptr);
     QGraphicsItem *itemCollidesCursor(QGraphicsItem *item);
 
     typedef RTree<QGraphicsItem *, double, 2, double > IndexTree;
@@ -443,7 +444,7 @@ public:
 
     // ///////////////////Resizers///////////////////////////
 public:
-    ItemResizer *m_resizeBox;  //reisizer pointer
+    ItemResizer *m_resizeBox = nullptr;  //reisizer pointer
 
     QRectF captutedSize;
     void setScreenshotSelector(bool enabled, bool accept = false);
@@ -491,7 +492,7 @@ public:
      */
     bool canRedo();
     //! History manager
-    WldHistoryManager *m_history;
+    WldHistoryManager *m_history = nullptr;
 
     // ////////////////////Unsorted slots/////////////////////////////
     // ///////Please move them into it's category/////////////////////

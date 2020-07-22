@@ -51,7 +51,7 @@ void closeFreeType()
 }
 
 // Default dummy glyph
-const TtfFont::TheGlyph TtfFont::dummyGlyph;
+const TtfFont::TheGlyph TtfFont::dummyGlyph = TtfFont::TheGlyph();
 
 TtfFont::TtfFont() : BaseFontEngine()
 {

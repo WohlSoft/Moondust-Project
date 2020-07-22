@@ -23,7 +23,7 @@
 
 
 LVL_ModeHand::LVL_ModeHand(QGraphicsScene *parentScene, QObject *parent)
-: EditMode("HandScroll", parentScene, parent)
+    : EditMode("HandScroll", parentScene, parent)
 {}
 
 LVL_ModeHand::~LVL_ModeHand()
@@ -39,10 +39,10 @@ void LVL_ModeHand::set()
     s->resetCursor();
     s->resetResizers();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=true;
-    s->m_disableMoveItems=false;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = true;
+    s->m_disableMoveItems = false;
 
     s->m_viewPort->setCursor(Qt::ArrowCursor);
     s->m_viewPort->setInteractive(false);
@@ -51,25 +51,25 @@ void LVL_ModeHand::set()
 
 void LVL_ModeHand::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 void LVL_ModeHand::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 void LVL_ModeHand::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 void LVL_ModeHand::keyPress(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }
 
 void LVL_ModeHand::keyRelease(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 }

@@ -25,7 +25,7 @@
 #include "asyncstarcounter.h"
 
 
-AsyncStarCounter::AsyncStarCounter(const QString &dir, const QVector<WorldLevelTile> &levels, const QString &introLevel, dataconfigs* configs, QObject *parent) :
+AsyncStarCounter::AsyncStarCounter(const QString &dir, const QVector<WorldLevelTile> &levels, const QString &introLevel, DataConfig* configs, QObject *parent) :
     QObject(parent),
     m_dir(dir),
     m_levels(levels),

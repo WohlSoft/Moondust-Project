@@ -30,8 +30,8 @@ class ItemMusic : public WldBaseItem
     Q_OBJECT
     void construct();
 public:
-    ItemMusic(QGraphicsItem *parent=0);
-    ItemMusic(WldScene *parentScene, QGraphicsItem *parent=0);
+    ItemMusic(QGraphicsItem *parent = nullptr);
+    ItemMusic(WldScene *parentScene, QGraphicsItem *parent = nullptr);
     ~ItemMusic();
 
     void setMusicData(WorldMusicBox inD);

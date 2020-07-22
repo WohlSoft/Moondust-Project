@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>294</width>
-    <height>537</height>
+    <width>300</width>
+    <height>554</height>
    </rect>
   </property>
   <property name="focusPolicy">
@@ -57,9 +57,9 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>0</y>
-         <width>280</width>
-         <height>1727</height>
+         <y>-1186</y>
+         <width>286</width>
+         <height>1721</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,100">
@@ -80,12 +80,6 @@
         </property>
         <item>
          <widget class="QGroupBox" name="blockProp">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>281</height>
-           </size>
-          </property>
           <property name="title">
            <string>Block</string>
           </property>
@@ -105,9 +99,6 @@
            <property name="bottomMargin">
             <number>2</number>
            </property>
-           <property name="spacing">
-            <number>2</number>
-           </property>
            <item row="4" column="0" colspan="2">
             <widget class="QCheckBox" name="PROPS_BlockInvis">
              <property name="minimumSize">
@@ -118,70 +109,6 @@
              </property>
              <property name="text">
               <string>Invisible</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QLabel" name="label">
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Events</string>
-             </property>
-             <property name="textFormat">
-              <enum>Qt::PlainText</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="2">
-            <widget class="QPushButton" name="PROPS_BlkEventDestroyedLock">
-             <property name="maximumSize">
-              <size>
-               <width>24</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Don't reset event to 'none'</string>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/images/lock_open.png</normaloff>
-               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="2">
-            <widget class="QPushButton" name="PROPS_BlkEventLEmptyLock">
-             <property name="maximumSize">
-              <size>
-               <width>24</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Don't reset event to 'none'</string>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/images/lock_open.png</normaloff>
-               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -218,30 +145,6 @@
                <string notr="true">[none]</string>
               </property>
              </item>
-            </widget>
-           </item>
-           <item row="12" column="2">
-            <widget class="QPushButton" name="PROPS_BlkEventHitLock">
-             <property name="maximumSize">
-              <size>
-               <width>24</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Don't reset event to 'none'</string>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/images/lock_open.png</normaloff>
-               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
             </widget>
            </item>
            <item row="11" column="1">
@@ -321,19 +224,6 @@
              </property>
             </widget>
            </item>
-           <item row="6" column="0" colspan="2">
-            <widget class="QLabel" name="label_10">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>17</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Block contents:</string>
-             </property>
-            </widget>
-           </item>
            <item row="13" column="0">
             <widget class="QLabel" name="BlockLayerEmpty">
              <property name="text">
@@ -391,12 +281,6 @@
            </item>
            <item row="3" column="0" colspan="3">
             <widget class="QFrame" name="sizeOfBlock">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>25</height>
-              </size>
-             </property>
              <property name="frameShape">
               <enum>QFrame::StyledPanel</enum>
              </property>
@@ -404,6 +288,9 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetMinimumSize</enum>
+              </property>
               <item>
                <widget class="QLabel" name="label_3">
                 <property name="text">
@@ -447,6 +334,107 @@
              </layout>
             </widget>
            </item>
+           <item row="6" column="0" colspan="3">
+            <widget class="QLabel" name="label_10">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>17</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Block contents:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0" colspan="3">
+            <widget class="QLabel" name="label">
+             <property name="font">
+              <font>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>Events</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="2">
+            <widget class="QToolButton" name="PROPS_BlkEventDestroyedLock">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Don't reset event to 'none'</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/lock_open.png</normaloff>
+               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="2">
+            <widget class="QToolButton" name="PROPS_BlkEventHitLock">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Don't reset event to 'none'</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/lock_open.png</normaloff>
+               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="2">
+            <widget class="QToolButton" name="PROPS_BlkEventLEmptyLock">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Don't reset event to 'none'</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/lock_open.png</normaloff>
+               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
           <zorder>PROPS_BlkEventHited</zorder>
           <zorder>PROPS_blockPos</zorder>
@@ -482,7 +470,7 @@
           <property name="title">
            <string>BGO</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_14" columnstretch="10,0">
+          <layout class="QGridLayout" name="gridLayout_14" columnstretch="0,1000">
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
@@ -496,9 +484,6 @@
             <number>2</number>
            </property>
            <property name="bottomMargin">
-            <number>2</number>
-           </property>
-           <property name="spacing">
             <number>2</number>
            </property>
            <item row="4" column="0" colspan="2">
@@ -673,16 +658,10 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
         </item>
         <item>
          <widget class="QGroupBox" name="npcProps">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>647</height>
-           </size>
-          </property>
           <property name="title">
            <string>NPC</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_15" columnstretch="35,0,0">
+          <layout class="QGridLayout" name="gridLayout_15" columnstretch="0,1000,0">
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
@@ -696,9 +675,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <number>2</number>
            </property>
            <property name="bottomMargin">
-            <number>2</number>
-           </property>
-           <property name="spacing">
             <number>2</number>
            </property>
            <item row="14" column="0" colspan="3">
@@ -722,54 +698,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
             <widget class="QLabel" name="NpcEventActivate">
              <property name="text">
               <string>Activate:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="31" column="2">
-            <widget class="QPushButton" name="PROPS_NpcEventDeathLock">
-             <property name="maximumSize">
-              <size>
-               <width>24</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Don't reset event to 'none'</string>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/images/lock_open.png</normaloff>
-               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="33" column="2">
-            <widget class="QPushButton" name="PROPS_NpcEventLEmptyLock">
-             <property name="maximumSize">
-              <size>
-               <width>24</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Don't reset event to 'none'</string>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/images/lock_open.png</normaloff>
-               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -945,30 +873,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </item>
             </widget>
            </item>
-           <item row="32" column="2">
-            <widget class="QPushButton" name="PROPS_NpcEventTalkLock">
-             <property name="maximumSize">
-              <size>
-               <width>24</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Don't reset event to 'none'</string>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/images/lock_open.png</normaloff>
-               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="28" column="0">
             <widget class="QLabel" name="NpcLayerAttach">
              <property name="text">
@@ -986,16 +890,10 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <item row="25" column="0" colspan="3">
             <widget class="QGroupBox" name="PROPS_NPCGenBox">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>97</height>
-              </size>
              </property>
              <property name="title">
               <string>Generator</string>
@@ -1005,25 +903,13 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </property>
              <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,1000,0">
               <property name="sizeConstraint">
-               <enum>QLayout::SetDefaultConstraint</enum>
-              </property>
-              <property name="leftMargin">
-               <number>5</number>
+               <enum>QLayout::SetNoConstraint</enum>
               </property>
               <property name="topMargin">
                <number>0</number>
               </property>
-              <property name="rightMargin">
-               <number>5</number>
-              </property>
               <property name="bottomMargin">
                <number>2</number>
-              </property>
-              <property name="horizontalSpacing">
-               <number>5</number>
-              </property>
-              <property name="verticalSpacing">
-               <number>0</number>
               </property>
               <item row="0" column="0">
                <widget class="QLabel" name="NPCGenType">
@@ -1064,12 +950,12 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                </widget>
               </item>
               <item row="0" column="2" rowspan="2">
-               <widget class="QGroupBox" name="groupBox_2">
-                <property name="minimumSize">
-                 <size>
-                  <width>74</width>
-                  <height>78</height>
-                 </size>
+               <widget class="QGroupBox" name="npcDirectionGroupBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
                 <property name="title">
                  <string>Direction</string>
@@ -1077,11 +963,11 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
                 </property>
-                <layout class="QGridLayout" name="gridLayout">
-                 <property name="leftMargin">
-                  <number>0</number>
+                <layout class="QGridLayout" name="npcDirectionGroupLayout">
+                 <property name="sizeConstraint">
+                  <enum>QLayout::SetMinimumSize</enum>
                  </property>
-                 <property name="topMargin">
+                 <property name="leftMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
@@ -1096,7 +982,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                  <item row="0" column="0">
                   <widget class="DirectionSwitchWidget" name="npcGeneratorDirection" native="true">
                    <property name="sizePolicy">
-                    <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
                      <verstretch>0</verstretch>
                     </sizepolicy>
@@ -1113,30 +999,6 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item row="30" column="2">
-            <widget class="QPushButton" name="PROPS_NpcEventActovateLock">
-             <property name="maximumSize">
-              <size>
-               <width>24</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="toolTip">
-              <string>Don't reset event to 'none'</string>
-             </property>
-             <property name="text">
-              <string notr="true"/>
-             </property>
-             <property name="icon">
-              <iconset resource="../../_resources/editor.qrc">
-               <normaloff>:/images/lock_open.png</normaloff>
-               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
             </widget>
            </item>
            <item row="8" column="0" colspan="3">
@@ -1162,16 +1024,10 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
            <item row="3" column="0" colspan="3">
             <widget class="QGroupBox" name="PROPS_NpcDir">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                <horstretch>0</horstretch>
-               <verstretch>30</verstretch>
+               <verstretch>0</verstretch>
               </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>30</height>
-              </size>
              </property>
              <property name="title">
               <string>Direction</string>
@@ -1180,23 +1036,8 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
               <set>Qt::AlignCenter</set>
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout">
-              <property name="spacing">
-               <number>0</number>
-              </property>
               <property name="sizeConstraint">
-               <enum>QLayout::SetFixedSize</enum>
-              </property>
-              <property name="leftMargin">
-               <number>5</number>
-              </property>
-              <property name="topMargin">
-               <number>5</number>
-              </property>
-              <property name="rightMargin">
-               <number>5</number>
-              </property>
-              <property name="bottomMargin">
-               <number>5</number>
+               <enum>QLayout::SetMinimumSize</enum>
               </property>
               <item>
                <widget class="QRadioButton" name="PROPS_NPCDirLeft">
@@ -1285,6 +1126,102 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
              </property>
             </widget>
            </item>
+           <item row="33" column="2">
+            <widget class="QToolButton" name="PROPS_NpcEventLEmptyLock">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Don't reset event to 'none'</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/lock_open.png</normaloff>
+               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="32" column="2">
+            <widget class="QToolButton" name="PROPS_NpcEventTalkLock">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Don't reset event to 'none'</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/lock_open.png</normaloff>
+               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="31" column="2">
+            <widget class="QToolButton" name="PROPS_NpcEventDeathLock">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Don't reset event to 'none'</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/lock_open.png</normaloff>
+               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="30" column="2">
+            <widget class="QToolButton" name="PROPS_NpcEventActovateLock">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Don't reset event to 'none'</string>
+             </property>
+             <property name="text">
+              <string notr="true"/>
+             </property>
+             <property name="icon">
+              <iconset resource="../../_resources/editor.qrc">
+               <normaloff>:/images/lock_open.png</normaloff>
+               <normalon>:/images/lock_closed.png</normalon>:/images/lock_open.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
           </layout>
          </widget>
         </item>
@@ -1293,7 +1230,7 @@ This option using the SMBX's bug of BGO rendering. For this can be works, you ne
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>200</height>
+            <height>10</height>
            </size>
           </property>
           <property name="lineWidth">

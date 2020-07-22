@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name>AbstractRuntimeEngine</name>
+    <message>
+        <source>World map testing via IPC is not supported</source>
+        <translation>不支持从 IPC 测试大地图</translation>
+    </message>
+    <message>
+        <source>World map testing is not supported</source>
+        <translation>不支持测试大地图</translation>
+    </message>
+    <message>
+        <source>This feature is not implemented</source>
+        <translation>此功能尚未生效</translation>
+    </message>
+</context>
+<context>
     <name>AdditionalSettings</name>
     <message>
         <source>Additional settings</source>
@@ -314,6 +329,38 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation>新建或打开文件时的默认缩放级别。</translation>
     </message>
+    <message>
+        <source>Font</source>
+        <translation>字体</translation>
+    </message>
+    <message>
+        <source>Font size</source>
+        <translation>字体大小</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <translation>使用默认值</translation>
+    </message>
+    <message>
+        <source>Set log file</source>
+        <translation>设置日志文件</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt *.log)</source>
+        <translation>文本文件 (*.txt *.log)</translation>
+    </message>
+    <message>
+        <source>Success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <source>All file associations have been set</source>
+        <translation>文件关联已设置</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -489,7 +536,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Block Size:</source>
-        <translation>砖块大小：</translation>
+        <translation type="vanished">砖块大小：</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -502,6 +549,18 @@ Please set SoX path first</source>
     <message>
         <source> second</source>
         <translation> 秒</translation>
+    </message>
+    <message>
+        <source>Move time:</source>
+        <translation>移动时间：</translation>
+    </message>
+    <message>
+        <source>Distance:</source>
+        <translation>距离：</translation>
+    </message>
+    <message>
+        <source>Size of one block:</source>
+        <translation>砖块大小：</translation>
     </message>
 </context>
 <context>
@@ -742,7 +801,7 @@ File path: %3</source>
     </message>
     <message>
         <source>You might want to report this data to developers or post it at:</source>
-        <translation>你可能想把这份报告发给开发人员或者：</translation>
+        <translation type="vanished">你可能想把这份报告发给开发人员或者：</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
@@ -750,7 +809,7 @@ File path: %3</source>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation>PGE 论坛 (https://wohlsoft.ru/forum/)</translation>
+        <translation type="vanished">PGE 论坛 (https://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Exit from application</source>
@@ -766,6 +825,36 @@ File path: %3</source>
 Please save them before doing anything else.</source>
         <translation>由于上次崩溃，因此编辑器已恢复了这些文件。
 请保存这些文件，以免丢失。</translation>
+    </message>
+    <message>
+        <source>You might want to report this data to developers:</source>
+        <translation>您可能想将此数据报告给开发人员：</translation>
+    </message>
+    <message>
+        <source>Copy report into clipboard</source>
+        <translation>复制报告到剪贴板</translation>
+    </message>
+    <message>
+        <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
+        <translation>在 PGE 论坛中反馈问题（需英文）</translation>
+    </message>
+    <message>
+        <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
+        <translation>在 Github 仓库中反馈问题（需英文）</translation>
+    </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation>反馈问题时，请描述您遇到了什么异常错误。
+- 请您说明由于什么原因遇到了异常错误。
+- 若是编辑相关文件时异常终止，请在问题中将附件。
+- 您使用的是什么操作系统？</translation>
+    </message>
+    <message>
+        <source>Copied!</source>
+        <translation>已复制！</translation>
     </message>
 </context>
 <context>
@@ -830,6 +919,27 @@ Please save them before doing anything else.</source>
     <message>
         <source>Change item...</source>
         <translation>更换物品……</translation>
+    </message>
+</context>
+<context>
+    <name>DataConfig</name>
+    <message>
+        <source>You have a legacy configuration package.
+&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
+&lt;br&gt;
+&lt;br&gt;Please download and install latest version of a configuration package:
+&lt;br&gt;
+&lt;br&gt;Download: %1
+&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
+therefore you can use same link to get updated version</source>
+        <translation>您的配置包版本过旧。
+&lt;br&gt;编辑器即将启动，但您会在对象和设置中遇到问题。
+&lt;br&gt;
+&lt;br&gt;请下载并安装最新版本的配置包：
+&lt;br&gt;
+&lt;br&gt;下载: %1
+&lt;br&gt;注：部分配置包和PGE同步更新，
+&lt;br&gt;确保可以在同一链接里下载到新版本</translation>
     </message>
 </context>
 <context>
@@ -1035,6 +1145,21 @@ Please save them before doing anything else.</source>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
         <translation>隐藏隐形砖块及元对象</translation>
+    </message>
+</context>
+<context>
+    <name>FileListBrowser</name>
+    <message>
+        <source>Files list</source>
+        <translation>文件列表</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是当前文件所在目录中的所有关卡文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Please select a file from the list:</source>
+        <translation>请从下方列表选择文件：</translation>
     </message>
 </context>
 <context>
@@ -2303,6 +2428,35 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
 </context>
 <context>
+    <name>JsonSettingsWidget</name>
+    <message>
+        <source>Browse</source>
+        <translation>浏览</translation>
+    </message>
+    <message>
+        <source>Play</source>
+        <translation>播放</translation>
+    </message>
+    <message>
+        <source>[empty]</source>
+        <translation>[空]</translation>
+    </message>
+    <message>
+        <source>W</source>
+        <comment>Width, shortly</comment>
+        <translation>宽</translation>
+    </message>
+    <message>
+        <source>H</source>
+        <comment>Height, shortly</comment>
+        <translation>高</translation>
+    </message>
+    <message>
+        <source>%1 coins</source>
+        <translation type="unfinished">%1 个金币</translation>
+    </message>
+</context>
+<context>
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
@@ -2548,7 +2702,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是当前文件所在目录中的所有关卡文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是当前文件所在目录中的所有关卡文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
@@ -2739,29 +2893,234 @@ Do you want to save your changes?</source>
     <name>LunaTester</name>
     <message>
         <source>Reset checkpoints</source>
-        <translation>重置存档点</translation>
+        <translation type="vanished">重置存档点</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation>重置所有存档点。</translation>
+        <translation type="vanished">重置所有存档点。</translation>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation>LunaTester 错误</translation>
+        <translation type="vanished">LunaTester 错误</translation>
     </message>
     <message>
         <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation>结束进程以允许你再测试关卡。</translation>
+        <translation type="vanished">结束进程以允许你再测试关卡。</translation>
     </message>
     <message>
         <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
         <translatorcomment>&quot;Terminate Frozen Loader&quot; 是什么意思？我也不知道……</translatorcomment>
-        <translation>LunaLua 测试器进程很忙，请重试或使用“结束被冻结的进程”功能！</translation>
+        <translation type="vanished">LunaLua 测试器进程很忙，请重试或使用“结束被冻结的进程”功能！</translation>
     </message>
     <message>
         <source>Are you really want to terminate loader thread?</source>
-        <translation>你想结束进程吗？</translation>
+        <translation type="vanished">你想结束进程吗？</translation>
     </message>
+    <message>
+        <source>Test level</source>
+        <comment>Run the LunaTester based level testing.</comment>
+        <translation type="vanished">测试关卡</translation>
+    </message>
+    <message>
+        <source>Starts level testing in the legacy engine.
+To have this feature work, latest LunaLUA must be installed.
+Otherwise, it will be very limited.</source>
+        <translation type="vanished">在 SMBX 引擎测试关卡，
+需要 LunaLua 的支持。</translation>
+    </message>
+    <message>
+        <source>Disable OpenGL</source>
+        <comment>Disable OpenGL on LunaTester side</comment>
+        <translation type="vanished">禁用 OpenGL</translation>
+    </message>
+    <message>
+        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
+        <translation type="vanished">如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，此时改用 GDI 渲染。</translation>
+    </message>
+    <message>
+        <source>Keep running in background</source>
+        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
+        <translation type="vanished">后台运行</translation>
+    </message>
+    <message>
+        <source>Allows to start level testing very fast after first launch.
+Requires powerful computer, otherwise engine will freeze on next test launch.
+Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
+        <translation type="vanished">允许启动引擎后直接测试关卡。
+需要很高的配置，否则下次执行可能将会死机。
+对于低端电脑推荐禁用此项。</translation>
+    </message>
+    <message>
+        <source>Terminate frozen loader</source>
+        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
+        <translation type="vanished">结束被冻结的进程</translation>
+    </message>
+    <message>
+        <source>Start Legacy Engine</source>
+        <comment>Launch legacy engine in game mode</comment>
+        <translation type="vanished">启动 SMBX 引擎</translation>
+    </message>
+    <message>
+        <source>Launch legacy engine in game mode.</source>
+        <translation type="vanished">在游戏模式里执行 SMBX 1.3 引擎。</translation>
+    </message>
+    <message>
+        <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
+        <translation type="vanished">SMBX 引擎中不能直接测试大地图，因此 LunaTester 不能在大地图上使用，请从主菜单加载或者使用 PGE 引擎测试你的地图文件。</translation>
+    </message>
+    <message>
+        <source>Loader thread is not running.</source>
+        <comment>LunaTester thread now doing nothing.
+This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
+        <translation type="vanished">启动器进程未执行。</translation>
+    </message>
+    <message>
+        <source>Checkpoints successfully reseted!</source>
+        <translation type="vanished">存档点已成功重置！</translation>
+    </message>
+    <message>
+        <source>LunaTester error!</source>
+        <translation type="vanished">LunaTester 错误！</translation>
+    </message>
+    <message>
+        <source>LunaLUA tester is not started!</source>
+        <translation type="vanished">未启动 LunaLua 测试器！</translation>
+    </message>
+    <message>
+        <source>SMBX64 limits are excited!</source>
+        <translation type="vanished">已超出 SMBX64 数量限制！</translation>
+    </message>
+    <message>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Are you want continue process?</source>
+        <translation type="vanished">发现超出 SMBX64 标准的元素！
+%1
+，可能会使 SMBX 1.3 引擎崩溃！
+建议移除所有已超出元素的对象。
+你还要继续测试吗？</translation>
+    </message>
+    <message>
+        <source>SMBX Directory wasn&apos;t configured right</source>
+        <translation type="vanished">SMBX 目录未配置正确</translation>
+    </message>
+    <message>
+        <source>%1 not found!
+To run testing via SMBX you should have right SMBX Integration configuration package!</source>
+        <translation type="vanished">未找到 %1！
+你必须使用 SMBX 集成配置包才能在 SMBX 上测试！</translation>
+    </message>
+    <message>
+        <source>SMBX Test is already runned</source>
+        <translation type="vanished">SMBX 测试已经执行</translation>
+    </message>
+    <message>
+        <source>SMBX Engine is already testing another level.
+Do you want to abort current testing process?</source>
+        <translation type="vanished">该引擎已在测试另一个关卡。
+你要取消当前的测试进度吗？</translation>
+    </message>
+    <message>
+        <source>Vanilla SMBX detected!</source>
+        <translation type="vanished">检测到 SMBX 1.3！</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
+&lt;br&gt;
+Name of episode to generate: %1&lt;br&gt;
+&lt;br&gt;
+Are you still want to launch a test?&lt;br&gt;
+&lt;br&gt;
+If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
+%3</source>
+        <translation type="vanished">未找到 %2 ！
+你使用的是 SMBX 1.3！&lt;br&gt;
+因此不能自动执行关卡测试，此时将会产生一个空白地图以手动开始并选择它们。&lt;br&gt;
+&lt;br&gt;
+生成的地图名称： %1&lt;br&gt;
+&lt;br&gt;
+你还要这样做吗？&lt;br&gt;
+&lt;br&gt;
+请下载 LunaLua 以体验完整功能的 SMBX 关卡测试：&lt;br&gt;
+%3</translation>
+    </message>
+    <message>
+        <source>File save error</source>
+        <translation type="vanished">保存文件出错</translation>
+    </message>
+    <message>
+        <source>Cannot save file %1:
+%2.</source>
+        <translation type="vanished">保存文件 %1 失败：
+%2。</translation>
+    </message>
+    <message>
+        <source>Failed to send level into LunaLUA-SMBX!</source>
+        <translation type="vanished">发送关卡到 LunaLua 失败！</translation>
+    </message>
+    <message>
+        <source>process execution is failed.</source>
+        <translation type="vanished">执行失败。</translation>
+    </message>
+    <message>
+        <source>patching has failed.</source>
+        <translation type="vanished">补丁导入失败。</translation>
+    </message>
+    <message>
+        <source>Impossible to launch SMBX Engine, because %1</source>
+        <translation type="vanished">启动 SMBX 引擎失败，原因： %1</translation>
+    </message>
+    <message>
+        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
+        <translation type="vanished">SMBX 引擎所在目录配置错误</translation>
+    </message>
+    <message>
+        <source>%1 not found!
+To use LunaTester you should have right Integration configuration package!</source>
+        <translation type="vanished">未找到 %1！
+你必须使用 SMBX 集成配置包才能在 LunaTester 上测试！</translation>
+    </message>
+    <message>
+        <source>Impossible to launch Legacy Engine, because %1</source>
+        <translation type="vanished">启动 SMBX 引擎失败，原因： %1</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="vanished">结束进程</translation>
+    </message>
+    <message>
+        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
+        <translation type="vanished">结束 LunaTester 进程，使引擎重新开始。</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
+        <translation type="vanished">你确定关闭 LunaTester 吗？这会在当你测试关卡时直接结束进程！</translation>
+    </message>
+    <message>
+        <source>LunaTester has been successfully closed.</source>
+        <translation type="vanished">LunaTester 已成功关闭。</translation>
+    </message>
+    <message>
+        <source>LunaTester is not running.</source>
+        <translation type="vanished">LunaTester 未运行。</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation type="vanished">没有找到 %2！
+您使用的是 SMBX 1.3！&lt;br&gt;
+因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
+    </message>
+</context>
+<context>
+    <name>LunaTesterEngine</name>
     <message>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
@@ -2773,6 +3132,14 @@ To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
         <translation>在 SMBX 引擎测试关卡，
 需要 LunaLua 的支持。</translation>
+    </message>
+    <message>
+        <source>Reset checkpoints</source>
+        <translation>重置存档点</translation>
+    </message>
+    <message>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation>重置所有存档点。</translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
@@ -2799,26 +3166,78 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Terminate frozen loader</source>
         <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation>结束被冻结的进程</translation>
+        <translation type="vanished">结束被冻结的进程</translation>
     </message>
     <message>
-        <source>Start Legacy Engine</source>
-        <comment>Launch legacy engine in game mode</comment>
-        <translation>启动 SMBX 引擎</translation>
+        <source>Termiates frozen thread to allow you to run a test again.</source>
+        <translation type="vanished">结束进程以允许你再测试关卡。</translation>
     </message>
     <message>
-        <source>Launch legacy engine in game mode.</source>
-        <translation>在游戏模式里执行 SMBX 1.3 引擎。</translation>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>结束进程</translation>
     </message>
     <message>
-        <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation>SMBX 引擎中不能直接测试大地图，因此 LunaTester 不能在大地图上使用，请从主菜单加载或者使用 PGE 引擎测试你的地图文件。</translation>
+        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
+        <translation>结束 LunaTester 进程，使引擎重新开始。</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch LunaTester as a normal game.</comment>
+        <translation>开始游戏</translation>
+    </message>
+    <message>
+        <source>Launch LunaTester as a normal game.</source>
+        <translation>使用 LunaTester 执行普通游戏。</translation>
+    </message>
+    <message>
+        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
+        <translation type="obsolete">LunaLua 测试器进程很忙，请重试或使用“结束被冻结的进程”功能！</translation>
+    </message>
+    <message>
+        <source>Are you really want to terminate loader thread?</source>
+        <translation type="vanished">你想结束进程吗？</translation>
     </message>
     <message>
         <source>Loader thread is not running.</source>
         <comment>LunaTester thread now doing nothing.
 This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation>启动器进程未执行。</translation>
+        <translation type="vanished">启动器进程未执行。</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
+        <translation>你确定关闭 LunaTester 吗？这会在当你测试关卡时直接结束进程！</translation>
+    </message>
+    <message>
+        <source>LunaTester has been successfully closed.</source>
+        <translation>LunaTester 已成功关闭。</translation>
+    </message>
+    <message>
+        <source>LunaTester is not running.</source>
+        <translation>LunaTester 未运行。</translation>
+    </message>
+    <message>
+        <source>Please select a path to LunaTester:</source>
+        <translation>请选择 LunaTester 路径：</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default LunaTester path, specified by a config pack</comment>
+        <translation>使用默认值</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>浏览……</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
@@ -2826,7 +3245,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>LunaTester error!</source>
-        <translation>LunaTester 错误！</translation>
+        <translation type="vanished">LunaTester 错误！</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
@@ -2834,7 +3253,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>SMBX64 limits are excited!</source>
-        <translation>已超出 SMBX64 数量限制！</translation>
+        <translation type="obsolete">已超出 SMBX64 数量限制！</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -2842,7 +3261,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Are you want continue process?</source>
-        <translation>发现超出 SMBX64 标准的元素！
+        <translation type="obsolete">发现超出 SMBX64 标准的元素！
 %1
 ，可能会使 SMBX 1.3 引擎崩溃！
 建议移除所有已超出元素的对象。
@@ -2850,22 +3269,22 @@ Are you want continue process?</source>
     </message>
     <message>
         <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation>SMBX 目录未配置正确</translation>
+        <translation type="obsolete">SMBX 目录未配置正确</translation>
     </message>
     <message>
         <source>%1 not found!
 To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation>未找到 %1！
+        <translation type="obsolete">未找到 %1！
 你必须使用 SMBX 集成配置包才能在 SMBX 上测试！</translation>
     </message>
     <message>
         <source>SMBX Test is already runned</source>
-        <translation>SMBX 测试已经执行</translation>
+        <translation type="vanished">SMBX 测试已经执行</translation>
     </message>
     <message>
         <source>SMBX Engine is already testing another level.
 Do you want to abort current testing process?</source>
-        <translation>该引擎已在测试另一个关卡。
+        <translation type="vanished">该引擎已在测试另一个关卡。
 你要取消当前的测试进度吗？</translation>
     </message>
     <message>
@@ -2883,7 +3302,7 @@ Are you still want to launch a test?&lt;br&gt;
 &lt;br&gt;
 If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
 %3</source>
-        <translation>未找到 %2 ！
+        <translation type="obsolete">未找到 %2 ！
 你使用的是 SMBX 1.3！&lt;br&gt;
 因此不能自动执行关卡测试，此时将会产生一个空白地图以手动开始并选择它们。&lt;br&gt;
 &lt;br&gt;
@@ -2896,73 +3315,218 @@ If you want to have a full featured level testing, you need to get a LunaLUA her
     </message>
     <message>
         <source>File save error</source>
-        <translation>保存文件出错</translation>
+        <translation type="obsolete">保存文件出错</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>保存文件 %1 失败：
+        <translation type="obsolete">保存文件 %1 失败：
 %2。</translation>
+    </message>
+    <message>
+        <source>%2 not found!
+You have a Vanilla SMBX!&lt;br&gt;
+That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
+        <translation type="obsolete">没有找到 %2！
+您使用的是 SMBX 1.3！&lt;br&gt;
+因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation>发送关卡到 LunaLua 失败！</translation>
     </message>
     <message>
-        <source>process execution is failed.</source>
-        <translation type="vanished">执行失败。</translation>
-    </message>
-    <message>
-        <source>patching has failed.</source>
-        <translation type="vanished">补丁导入失败。</translation>
+        <source>LunaTester error</source>
+        <translation>LunaTester 错误</translation>
     </message>
     <message>
         <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation>启动 SMBX 引擎失败，原因： %1</translation>
+        <translation type="obsolete">启动 SMBX 引擎失败，原因： %1</translation>
     </message>
     <message>
         <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation>SMBX 引擎所在目录配置错误</translation>
+        <translation type="obsolete">SMBX 引擎所在目录配置错误</translation>
     </message>
     <message>
         <source>%1 not found!
 To use LunaTester you should have right Integration configuration package!</source>
-        <translation>未找到 %1！
+        <translation type="obsolete">未找到 %1！
 你必须使用 SMBX 集成配置包才能在 LunaTester 上测试！</translation>
     </message>
     <message>
         <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation>启动 SMBX 引擎失败，原因： %1</translation>
+        <translation type="obsolete">启动 SMBX 引擎失败，原因： %1</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>结束进程</translation>
+        <source>Change the path to LunaTester...</source>
+        <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
+        <translation>更改 LunaTester 路径……</translation>
     </message>
     <message>
-        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation>结束 LunaTester 进程，使引擎重新开始。</translation>
+        <source>Select the location of LunaTester.</source>
+        <translation>选择 LunaTester 位置。</translation>
     </message>
     <message>
-        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation>你确定关闭 LunaTester 吗？这会在当你测试关卡时直接结束进程！</translation>
+        <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
+        <translation type="vanished">LunaTester 进程繁忙，请重试或使用“结束被冻结的进程”选项！</translation>
     </message>
     <message>
-        <source>LunaTester has been successfully closed.</source>
-        <translation>LunaTester 已成功关闭。</translation>
+        <source>Path to LunaTester</source>
+        <comment>Title of dialog</comment>
+        <translation>LunaTester 路径</translation>
     </message>
     <message>
-        <source>LunaTester is not running.</source>
-        <translation>LunaTester 未运行。</translation>
+        <source>Select a location of LunaTester</source>
+        <comment>Directory select dialog title</comment>
+        <translation>选择 LunaTester 位置</translation>
     </message>
     <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation>没有找到 %2！
-您使用的是 SMBX 1.3！&lt;br&gt;
-因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
+        <source>SMBX64 limits are exceeded!</source>
+        <translation>SMBX64 上限到达！</translation>
+    </message>
+    <message>
+        <source>Violation of SMBX64 standard has been found!
+%1
+, legacy engine may crash!
+Suggested to remove all excess elements.
+Do you want to continue the process?</source>
+        <translation>已超出 SMBX64 标准！
+%1
+, SMBX 1.3 引擎可能异常终止！
+建议移除所有的超出对象。
+您要继续吗？</translation>
+    </message>
+    <message>
+        <source>LunaTester directory check failed</source>
+        <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
+        <translation>LunaTester 目录检测失败</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
+        <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
+        <translation>由于 &quot;%1&quot; 未找到，无法启动 LunaTester! 可能由于以下原因：</translation>
+    </message>
+    <message>
+        <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
+- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
+        <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
+        <translation>- LunaTester (或 SMBX2 根目录) 路径设置错误，请检查 LunaTester 路径是否正确。
+- 可能由于杀毒软件误报而被移除，请检查您的杀毒软件中隔离区是否有对应文件。
+- 错误的 SMBX2 安装方式，请重装 SMBX2 以修复您的问题。</translation>
+    </message>
+    <message>
+        <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
+- Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
+        <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
+        <translation>- 可能由于杀毒软件误报而被移除，请检查您的杀毒软件中隔离区是否有对应文件。
+- 错误的 SMBX2 安装方式，请重装 SMBX2 以修复您的问题。</translation>
+    </message>
+    <message>
+        <source>&quot;%1&quot; not found!
+You have a Vanilla SMBX!
+That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
+        <translation>&quot;%1&quot; 未找到！
+您找到的是 SMBX 1.3！
+因此无法执行关卡测试。需要 LunaLua 的支持。</translation>
+    </message>
+    <message>
+        <source>Impossible to launch LunaTester, due to %1</source>
+        <translation type="vanished">由于 %1，无法启动 LunaTester</translation>
+    </message>
+    <message>
+        <source>LunaTester Directory wasn&apos;t configured right</source>
+        <translation type="vanished">LunaTester 路径设置错误</translation>
+    </message>
+    <message>
+        <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
+        <translation type="vanished">未找到 %1！请指定正确的 SMBX 路径以运行 LunaTester。</translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in LunaTester from disk.</comment>
+        <translation>测试已保存的关卡/大地图</translation>
+    </message>
+    <message>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
+        <translation>Wine 设置……</translation>
+    </message>
+    <message>
+        <source>Select a Wine toolchain for use.</source>
+        <translation>选择要使用的 Wine 工具链。</translation>
+    </message>
+    <message>
+        <source>Failed to start: %1</source>
+        <translation>启动失败：%1</translation>
+    </message>
+    <message>
+        <source>Crashed: %1</source>
+        <translation>异常终止：%1</translation>
+    </message>
+    <message>
+        <source>Timed out: %1</source>
+        <translation>超时：%1</translation>
+    </message>
+    <message>
+        <source>Write error: %1</source>
+        <translation>写入错误：%1</translation>
+    </message>
+    <message>
+        <source>Read error: %1</source>
+        <translation>读取错误：%1</translation>
+    </message>
+    <message>
+        <source>Unknown error: %1</source>
+        <translation>未知错误：%1</translation>
+    </message>
+    <message>
+        <source>Error has occured: (Error %1) %2</source>
+        <translation>发生错误：（错误 %1）%2</translation>
+    </message>
+    <message>
+        <source>LunaTester is still active</source>
+        <translation>LunaTester 仍在运行</translation>
+    </message>
+    <message>
+        <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
+        <translation>由于无法识别所选的 LunaLua 目录，故游戏无法运行，请选择其他目录。</translation>
+    </message>
+    <message>
+        <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
+        <translation>您必须关闭正在运行的 LunaTester 进程才能更改 Wine 目录。您现在要关闭 LunaTester 吗？</translation>
+    </message>
+    <message>
+        <source>Incompatible LunaDll found</source>
+        <translation>存在不兼容的 LunaDLL</translation>
+    </message>
+    <message>
+        <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
+        <translation>启动 LunaTester 失败，因为存在不兼容的 LunaDll.dll 于目录：%1</translation>
+    </message>
+    <message>
+        <source>Incompatible LunaLua</source>
+        <translation>存在不兼容的 LunaLua</translation>
+    </message>
+    <message>
+        <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
+        <translation>启动 LunaTester 失败，因为存在不兼容的 LunaLua 于目录：%1</translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode out of LunaTester worlds root.</source>
+        <translation>启动大地图失败，worlds 根目录中数量超出上限。</translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode because of an invalid world file.</source>
+        <translation>由于文件不支持，大地图启动失败。</translation>
+    </message>
+    <message>
+        <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
+        <translation>您必须关闭正在运行的游戏才能更改 LunaTester 目录。您现在要关闭 LunaTester 吗？</translation>
+    </message>
+    <message>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
+        <translation>由于保存的大地图文件是不支持的格式，因此无法打开大地图。请使用 SMBX64-WLD 格式保存。</translation>
     </message>
 </context>
 <context>
@@ -3870,6 +4434,22 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>NPC search completed!</source>
         <translation>NPC 搜索完毕！</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation>在选区组搜索</translation>
+    </message>
+    <message>
+        <source>Search in current section</source>
+        <translation>在当前选区搜索</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>全选</translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation>已选择 %1 个已找到的对象。</translation>
     </message>
 </context>
 <context>
@@ -5063,7 +5643,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Test world map (Alpha)</source>
-        <translation>测试大地图 （内测）</translation>
+        <translation type="vanished">测试大地图 （内测）</translation>
     </message>
     <message>
         <source>Overwrite mode</source>
@@ -5222,7 +5802,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Test level (Alpha)</source>
-        <translation>测试关卡 （内测）</translation>
+        <translation type="vanished">测试关卡 （内测）</translation>
     </message>
     <message>
         <source>Fill</source>
@@ -5350,7 +5930,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Start Engine</source>
-        <translation>启动引擎</translation>
+        <translation type="vanished">启动引擎</translation>
     </message>
     <message>
         <source>Launch game engine application.</source>
@@ -5914,6 +6494,58 @@ See %2 for more information.</source>
 %1.
 请查看 %2 以获取更多信息。</translation>
     </message>
+    <message>
+        <source>Test level</source>
+        <translation>测试关卡</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <translation>开始游戏</translation>
+    </message>
+    <message>
+        <source>Test world map</source>
+        <translation>测试大地图</translation>
+    </message>
+    <message>
+        <source>&lt;no extra settings&gt;</source>
+        <translation>&lt;无附加设置&gt;</translation>
+    </message>
+    <message>
+        <source>Show camera grid</source>
+        <translation>显示镜像网格</translation>
+    </message>
+    <message>
+        <source>Level is incompatible</source>
+        <translation>不兼容的关卡</translation>
+    </message>
+    <message>
+        <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</source>
+        <translation>这是一个使用无法识别的配置包制作的关卡文件。这是因为该关卡使用的是另一个引擎而非 %1，因此可能使部分砖块、NPC、脚本或其他的对象不兼容，且您可能会遇到未如预期的结果或错误。
+
+文件名：%2
+关卡配置包编号：%3
+预期配置包编号：%4</translation>
+    </message>
+    <message>
+        <source>World map is incompatible</source>
+        <translation>不兼容的大地图</translation>
+    </message>
+    <message>
+        <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
+
+Filename: %2
+Level&apos;s config pack ID: %3
+Expected config pack ID: %4</source>
+        <translation>这是一个使用无法识别的配置包制作的大地图文件。这是因为该大地图使用的是另一个引擎而非 %1，因此可能使部分地形、关卡、脚本或其他的对象不兼容，且您可能会遇到未如预期的结果或错误。
+
+文件名：%2
+关卡配置包编号：%3
+预期配置包编号：%4</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -5923,11 +6555,23 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这里是文件所在路径中所有的音乐列表，包含子目录。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这里是文件所在路径中所有的音乐列表，包含子目录。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select music file for use as custom</source>
-        <translation>请选择音乐文件</translation>
+        <translation type="vanished">请选择音乐文件</translation>
+    </message>
+    <message>
+        <source>Select SFX file</source>
+        <translation>选择音效</translation>
+    </message>
+    <message>
+        <source>Please select SFX file to use</source>
+        <translation>请选择音效</translation>
+    </message>
+    <message>
+        <source>Please select music file to use as custom</source>
+        <translation>请选择自定义音乐</translation>
     </message>
 </context>
 <context>
@@ -6208,6 +6852,32 @@ Error description:
     </message>
 </context>
 <context>
+    <name>PgeEngine</name>
+    <message>
+        <source>Test level/world</source>
+        <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
+        <translation>测试关卡/大地图</translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in PGE Engine from disk.</comment>
+        <translation>测试已保存的关卡/大地图</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch PGE Engine as a normal game</comment>
+        <translation>开始游戏</translation>
+    </message>
+    <message>
+        <source>Unsupported yet</source>
+        <translation>不支持</translation>
+    </message>
+    <message>
+        <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
+        <translation>目前暂不支持测试大地图。请使用 &apos;测试已保存的关卡/大地图&apos; 进行测试。</translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
         <source>File association failed.</source>
@@ -6238,7 +6908,7 @@ Error description:
     </message>
     <message>
         <source>Boss</source>
-        <translation>Boss</translation>
+        <translation>首脑</translation>
     </message>
     <message>
         <source>Not Moveable</source>
@@ -6645,15 +7315,12 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>非常抱歉，PGE 遭到异常终止。
+        <translation>非常抱歉，PGE 编辑器遭到异常终止。
 原因：未处理异常
 
-请通知论坛管理员，或在 Github 上提问
-以便于我们处理问题。
+请将报告发送给论坛管理员，以便于我们处理问题。
 
-GitHub 链接: https://github.com/WohlSoft/PGE-Project
-Forum 链接: http://wohlsoft.ru/forum
-（英文注意）</translation>
+论坛链接: wohlsoft.ru/forum（需要英文）</translation>
     </message>
     <message>
         <source>Terminal was closed [SIGHUP]</source>
@@ -7037,6 +7704,157 @@ The maximum number of Music Boxes is %2.</source>
     </message>
 </context>
 <context>
+    <name>SanBaEiRuntimeEngine</name>
+    <message>
+        <source>Test level</source>
+        <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation>测试关卡</translation>
+    </message>
+    <message>
+        <source>Test level in battle mode</source>
+        <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
+        <translation>在对战模式中测试关卡</translation>
+    </message>
+    <message>
+        <source>Test saved level/world</source>
+        <comment>Run the testing of current file in SMBX-38A from disk.</comment>
+        <translation>测试已保存的关卡/大地图</translation>
+    </message>
+    <message>
+        <source>Reset checkpoints</source>
+        <translation>重置存档点</translation>
+    </message>
+    <message>
+        <source>Reset all checkpoint states to initial state.</source>
+        <translation>重置所有存档点。</translation>
+    </message>
+    <message>
+        <source>Enable magic hand</source>
+        <comment>Allow real-time picking-up of elements while playing a level test.</comment>
+        <translation>启用鼠标</translation>
+    </message>
+    <message>
+        <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
+        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。不支持执行已保存的关卡。</translation>
+    </message>
+    <message>
+        <source>Don&apos;t auto-suspend game</source>
+        <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
+        <translation>窗口未激活时运行</translation>
+    </message>
+    <message>
+        <source>Game will always run and it will never suspend while window is unfocused.</source>
+        <translation>即使窗口未激活，游戏仍会继续运行。</translation>
+    </message>
+    <message>
+        <source>Change the path to SMBX-38A...</source>
+        <comment>Select the path to SMBX-38A executable.</comment>
+        <translation>更改 SMBX-38A 目录……</translation>
+    </message>
+    <message>
+        <source>Select the path to SMBX-38A executable.</source>
+        <translation>选择 SMBX-38A 程序所在的目录。</translation>
+    </message>
+    <message>
+        <source>Wine settings...</source>
+        <comment>Open Wine settings to choose which Wine toolchain use</comment>
+        <translation>Wine 设置……</translation>
+    </message>
+    <message>
+        <source>Select a Wine toolchain for use.</source>
+        <translation>选择要使用的 Wine 工具链。</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch SMBX-38A as a normal game</comment>
+        <translation>开始游戏</translation>
+    </message>
+    <message>
+        <source>Checkpoints successfully reseted!</source>
+        <translation>存档点已成功重置！</translation>
+    </message>
+    <message>
+        <source>Path to SMBX-38A</source>
+        <comment>Title of dialog</comment>
+        <translation>SMBX-38A 目录</translation>
+    </message>
+    <message>
+        <source>Please select a path to SMBX-38A executable:</source>
+        <translation>请选择 SMBX-38A 程序所在目录：</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
+        <translation>使用默认值</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected SMBX-38A path</comment>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>浏览……</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Select a path to SMBX-38A executable</source>
+        <comment>File dialog title</comment>
+        <translation>选择 SMBX-38A 程序目录</translation>
+    </message>
+    <message>
+        <source>SMBX-38A is still active</source>
+        <translation>SMBX-38A 仍在运行</translation>
+    </message>
+    <message>
+        <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
+        <translation>您必须关闭正在运行的 SMBX-38A 才能更改 Wine 设置。您现在要关闭 SMBX-38A 吗？</translation>
+    </message>
+    <message>
+        <source>Executable not found</source>
+        <translation>未找到程序</translation>
+    </message>
+    <message>
+        <source>Impossible to prepare a temp file for a test run.</source>
+        <translation>临时文件准备失败，无法测试。</translation>
+    </message>
+    <message>
+        <source>Impossible to launch a level because of an invalid file.</source>
+        <translation>由于文件不支持，关卡启动失败。</translation>
+    </message>
+    <message>
+        <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
+        <translation>由于保存的关卡文件是不支持的格式，因此无法打开关卡。请使用 SMBX-38A 或 SMBX64-LVL 格式保存。</translation>
+    </message>
+    <message>
+        <source>Caution</source>
+        <translation>注意</translation>
+    </message>
+    <message>
+        <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation>您的关卡不是 SMBX-38A 格式，因此该游戏将自动转换为 SMBX-38A 格式，且不再兼容经典版的 SMBX。您要接受风险并继续吗？</translation>
+    </message>
+    <message>
+        <source>Impossible to launch an episode because of an invalid file.</source>
+        <translation>由于文件不支持，大地图启动失败。</translation>
+    </message>
+    <message>
+        <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
+        <translation>由于保存的大地图文件是不支持的格式，因此无法打开大地图。请使用 SMBX-38A 或 SMBX64-WLD 格式保存。</translation>
+    </message>
+    <message>
+        <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
+        <translation>您的大地图不是 SMBX-38A 格式，因此该游戏将自动转换为 SMBX-38A 格式，且不再兼容经典版的 SMBX。您要接受风险并继续吗？</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
+        <translation>由于 %1 未找到，因此无法启动 SMBX-38A。可能的原因是 SMBX-38A 程序所在目录设置错误，请检查 SMBX-38A 目录设置是否正确。</translation>
+    </message>
+</context>
+<context>
     <name>SavingNotificationDialog</name>
     <message>
         <source>Save</source>
@@ -7209,6 +8027,151 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Bulldozer mode</source>
         <translation>挖掘模式</translation>
+    </message>
+</context>
+<context>
+    <name>TheXTechEngine</name>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected LunaTester path</comment>
+        <translation type="obsolete">自定义</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>浏览……</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Test level</source>
+        <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation>测试关卡</translation>
+    </message>
+    <message>
+        <source>Test saved level</source>
+        <comment>Run the testing of current file in TheXTech from disk.</comment>
+        <translation>测试已保存的关卡</translation>
+    </message>
+    <message>
+        <source>Start Game</source>
+        <comment>Launch TheXTech as a normal game</comment>
+        <translation>开始游戏</translation>
+    </message>
+    <message>
+        <source>Please select a path to TheXTech executable:</source>
+        <translation>请选择 TheXTech 路径：</translation>
+    </message>
+    <message>
+        <source>Use default</source>
+        <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
+        <translation>使用默认值</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Using a user selected TheXTech path</comment>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <source>Select a path to TheXTech executable</source>
+        <comment>File dialog title</comment>
+        <translation>选择 TheXTech 路径</translation>
+    </message>
+    <message>
+        <source>Test level in battle mode</source>
+        <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
+        <translation>在战斗模式中测试关卡</translation>
+    </message>
+    <message>
+        <source>Graphics type</source>
+        <comment>Choose a rendering system: software or accelerated</comment>
+        <translation>图形类型</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Automatically selected rendering engine</comment>
+        <translation>默认</translation>
+    </message>
+    <message>
+        <source>Software</source>
+        <comment>Software rendering</comment>
+        <translation>软件渲染</translation>
+    </message>
+    <message>
+        <source>Accelerated</source>
+        <comment>Hardware accelerated rendering</comment>
+        <translation>硬件加速</translation>
+    </message>
+    <message>
+        <source>Accelerated with V-Sync</source>
+        <comment>Hardware accelerated rendering with vertical synchronization support</comment>
+        <translation>垂直同步</translation>
+    </message>
+    <message>
+        <source>Enable magic hand</source>
+        <comment>Allow real-time picking-up of elements while playing a level test.</comment>
+        <translation>启用鼠标</translation>
+    </message>
+    <message>
+        <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
+        <translation>允许实时编辑：在关卡中捕捉对象、放置新元素、在编辑器中选择和擦除。不支持执行已保存的关卡。</translation>
+    </message>
+    <message>
+        <source>Enable max FPS</source>
+        <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
+        <translation>最大帧数</translation>
+    </message>
+    <message>
+        <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
+        <translation>在没有垂直同步的情况下，游戏将以最大帧数运行。</translation>
+    </message>
+    <message>
+        <source>Enable grab all</source>
+        <comment>Allow player to grab absolutely any NPCs in a game.</comment>
+        <translation>随手抓</translation>
+    </message>
+    <message>
+        <source>Allow player to grab any NPCs in a game.</source>
+        <translation>允许玩家在游戏里拿走任何 NPC。</translation>
+    </message>
+    <message>
+        <source>Path to TheXTech</source>
+        <comment>Title of dialog</comment>
+        <translation>TheXTech 路径</translation>
+    </message>
+    <message>
+        <source>Change the path to TheXTech...</source>
+        <comment>Select the path to TheXTech executable.</comment>
+        <translation>更改 TheXTech 路径……</translation>
+    </message>
+    <message>
+        <source>Select the path to TheXTech executable.</source>
+        <translation>选择 TheXTech 路径。</translation>
+    </message>
+    <message>
+        <source>Executable not found</source>
+        <translation>未找到程序</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
+        <translation>由于未找到 &quot;%1&quot;，因此无法启动 TheXTech。TheXTech 路径可能设置错误，请检查 TheXTech 路径。</translation>
+    </message>
+    <message>
+        <source>TheXtech start failed</source>
+        <translation>TheXTech 启动失败</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start TheXTech because of following reason:
+%3.
+
+Command: &quot;%1&quot;
+Arguments: %2</source>
+        <translation>由于以下原因，未能启动 TheXTech:
+%3.
+
+指令: &quot;%1&quot;
+参数: %2</translation>
     </message>
 </context>
 <context>
@@ -8128,6 +9091,116 @@ because object configurations are not loaded
     </message>
 </context>
 <context>
+    <name>WineSetup</name>
+    <message>
+        <source>Wine configuration</source>
+        <translation>Wine 设置</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>测试</translation>
+    </message>
+    <message>
+        <source>Wine config</source>
+        <translation>Wine 设置</translation>
+    </message>
+    <message>
+        <source>Version dialog</source>
+        <translation>版本信息</translation>
+    </message>
+    <message>
+        <source>Stop process</source>
+        <translation>结束进程</translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <translation>未运行</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>导入</translation>
+    </message>
+    <message>
+        <source>Specify a custom environment (PlayOnLinux/Mac)</source>
+        <translation>确定自定义环境（PlayOnLinux/Mac）</translation>
+    </message>
+    <message>
+        <source>Wine home prefix</source>
+        <translation>Wine 主目录</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>浏览……</translation>
+    </message>
+    <message>
+        <source>Location of Wine</source>
+        <translation>Wine 位置</translation>
+    </message>
+    <message>
+        <source>System default</source>
+        <translation>系统默认</translation>
+    </message>
+    <message>
+        <source>Custom:</source>
+        <translation>自定义：</translation>
+    </message>
+    <message>
+        <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
+        <translation>在“WineDebug”控制台中显示调试信息</translation>
+    </message>
+    <message>
+        <source>Import setup from PlayOnMac</source>
+        <translation>从 PlayOnMac 导入设置</translation>
+    </message>
+    <message>
+        <source>Import setup from PlayOnLinux</source>
+        <translation>从 PlayOnLinux 导入设置</translation>
+    </message>
+    <message>
+        <source>Select a Wine install prefix path</source>
+        <translation>选择 Wine 安装目录</translation>
+    </message>
+    <message>
+        <source>Select a Wine home prefix path</source>
+        <translation>选择 Wine 主目录</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
+        <translation>启动“%1”失败，因为：%2</translation>
+    </message>
+    <message>
+        <source>Not running</source>
+        <comment>State of a test app</comment>
+        <translation>未运行</translation>
+    </message>
+    <message>
+        <source>Starting...</source>
+        <comment>State of a test app</comment>
+        <translation>启动中……</translation>
+    </message>
+    <message>
+        <source>Running...</source>
+        <comment>State of a test app</comment>
+        <translation>运行中……</translation>
+    </message>
+    <message>
+        <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
+        <translation>Wine 目录，包含设置、C 盘根目录以及其他一些要素。</translation>
+    </message>
+    <message>
+        <source>Use a system-wide installed Wine from a PATH environment.</source>
+        <translation>使用 Wine 中 PATH 的环境变量。</translation>
+    </message>
+    <message>
+        <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
+        <translation>确定自定义 Wine 安装目录（包含“Bin”、“Lib”、“Share”三个子目录和一个工作中的 Wine 工具链）。</translation>
+    </message>
+</context>
+<context>
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
@@ -8423,6 +9496,18 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <source>Music search completed!</source>
         <translation>音乐搜索完毕！</translation>
+    </message>
+    <message>
+        <source>Search in selection group</source>
+        <translation>在选区组搜索</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>全选</translation>
+    </message>
+    <message>
+        <source>%1 found elements were selected.</source>
+        <translation>已选择 %1 个已找到的对象。</translation>
     </message>
 </context>
 <context>
@@ -8723,6 +9808,34 @@ Do you want to save your changes?</source>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
+    <message>
+        <source>By Wohlstand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Our project site</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This program is distributed under %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architecture: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>dataconfigs</name>
@@ -8735,7 +9848,7 @@ Do you want to save your changes?</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>您的配置包版本过旧。
+        <translation type="vanished">您的配置包版本过旧。
 &lt;br&gt;编辑器即将启动，但您会在对象和设置中遇到问题。
 &lt;br&gt;
 &lt;br&gt;请下载并安装最新版本的配置包：
@@ -8749,23 +9862,23 @@ therefore you can use same link to get updated version</source>
     <name>g_AppSettings</name>
     <message>
         <source>Set log file</source>
-        <translation>设置日志文件</translation>
+        <translation type="vanished">设置日志文件</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation>文本文件 (*.txt *.log)</translation>
+        <translation type="vanished">文本文件 (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>成功</translation>
+        <translation type="vanished">成功</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation>文件关联已设置</translation>
+        <translation type="vanished">文件关联已设置</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>错误</translation>
+        <translation type="vanished">错误</translation>
     </message>
 </context>
 <context>

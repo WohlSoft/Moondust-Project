@@ -27,19 +27,14 @@
 ////////////////////World map items///////////////////////////
 struct obj_wld_generic
 {
-    obj_wld_generic()
-    {
-        isValid     = false;
-        animator_id = 0;
-        cur_image   = nullptr;
-        m_itemType  = 0;
-    }
-
-    bool isValid;
-    unsigned long animator_id;
-    QPixmap *cur_image;
+    bool isValid = false;
+    unsigned long animator_id = 0;
+    QPixmap *cur_image = nullptr;
+    QPixmap *cur_icon = nullptr;
     QPixmap image;
-    int m_itemType;
+    QPixmap icon;
+
+    int m_itemType = 0;
 
     /*!
      * \brief Quickly copies all properties except images
@@ -51,9 +46,12 @@ struct obj_wld_generic
         item.isValid         = isValid;
         item.animator_id     = animator_id;
         item.cur_image       = cur_image;
+        item.cur_icon         = cur_icon;
 
         if(cur_image == nullptr)
             item.cur_image   = &image;
+        if(!cur_icon)
+            item.cur_icon   = &icon;
 
         item.setup = setup;
     }
@@ -69,12 +67,8 @@ typedef obj_wld_generic obj_w_level;
 //Markers
 struct wld_levels_Markers
 {
-    wld_levels_Markers():
-        path(0),
-        bigpath(0)
-    {}
-    unsigned long path;
-    unsigned long bigpath;
+    unsigned long path = 0;
+    unsigned long bigpath = 0;
 };
 
 #endif // OBJ_WLD_ITEMS_H

@@ -42,6 +42,50 @@
 #include <algorithm> // std::replace from \\ into /
 #endif
 
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+
+static bool loadingLocked = false;
+
+extern "C" void unlockLoadingCustomState()
+{
+    loadingLocked = false;
+}
+
+static void loadCustomState()
+{
+    loadingLocked = true;
+    EM_ASM(
+        FS.mkdir('/settings');
+        FS.mount(IDBFS, {}, '/settings');
+
+        // sync from persisted state into memory and then
+        // run the 'test' function
+        FS.syncfs(true, function (err) {
+            assert(!err);
+            ccall('unlockLoadingCustomState', 'v');
+        });
+    );
+
+    while(loadingLocked)
+        emscripten_sleep(10);
+}
+
+static void saveCustomState()
+{
+    loadingLocked = true;
+    EM_ASM(
+        FS.syncfs(function (err) {
+            assert(!err);
+            ccall('unlockLoadingCustomState', 'v');
+        });
+    );
+
+    while(loadingLocked)
+        emscripten_sleep(10);
+}
+#endif
+
 #include "app_path.h"
 #include "../version.h"
 
@@ -52,7 +96,7 @@ std::string  ApplicationPathSTD;
 std::string AppPathManager::m_settingsPath;
 std::string AppPathManager::m_userPath;
 
-#if defined(__ANDROID__) || defined(__APPLE__)
+#if defined(__ANDROID__) || defined(__APPLE__) || defined(__HAIKU__)
 #define UserDirName "/PGE Project"
 #else
 #define UserDirName "/.PGE_Project"
@@ -88,6 +132,11 @@ static std::string getPgeUserDirectory()
     }
 #elif defined(__ANDROID__)
     path = "/sdcard/";
+#elif defined(__HAIKU__)
+    {
+        const char *home = SDL_getenv("HOME");
+        path.append(home);
+    }
 #elif defined(__gnu_linux__)
     {
         passwd *pw = getpwuid(getuid());
@@ -100,14 +149,6 @@ static std::string getPgeUserDirectory()
 
 void AppPathManager::initAppPath()
 {
-    //PGE_Application::setOrganizationName(V_COMPANY);
-    //PGE_Application::setOrganizationDomain(V_PGE_URL);
-    //PGE_Application::setApplicationName("PGE Engine");
-    /*
-    ApplicationPathSTD = DirMan(Files::dirname(argv0)).absolutePath();
-    ApplicationPath =   QString::fromStdString(ApplicationPathSTD);
-    ApplicationPath_x = ApplicationPath;
-    */
 #ifdef __APPLE__
     {
         CFURLRef appUrlRef;
@@ -126,11 +167,10 @@ void AppPathManager::initAppPath()
             if(!ApplicationPathSTD.empty() && (ApplicationPathSTD.back() != '/'))
                 ApplicationPathSTD.push_back('/');
         }
-        //CFRelease(filePathRef);
         CFRelease(appUrlRef);
     }
 #else //__APPLE__
-    char *path = SDL_GetBasePath();//DirMan(Files::dirname(argv0)).absolutePath();
+    char *path = SDL_GetBasePath();
     if(!path)
     {
         std::fprintf(stderr, "== Failed to recogonize application path by using of SDL_GetBasePath! Using current working directory \"./\" instead.\n");
@@ -142,6 +182,10 @@ void AppPathManager::initAppPath()
     std::replace(ApplicationPathSTD.begin(), ApplicationPathSTD.end(), '\\', '/');
 #   endif
     SDL_free(path);
+#endif
+
+#ifdef __EMSCRIPTEN__
+    loadCustomState();
 #endif
 
     if(isPortable())
@@ -172,7 +216,9 @@ void AppPathManager::initAppPath()
         initSettingsPath();
     }
     else
+    {
         goto defaultSettingsPath;
+    }
 
     return;
 defaultSettingsPath:
@@ -218,7 +264,7 @@ std::string AppPathManager::languagesDir()
 std::string AppPathManager::screenshotsDir()
 {
 #ifndef __APPLE__
-    return m_userPath + "/screenshots";
+    return m_userPath + "screenshots";
 #else
     std::string path = m_userPath;
     char *base_path = getScreenCaptureDir();
@@ -229,6 +275,11 @@ std::string AppPathManager::screenshotsDir()
     }
     return path + "/Moondust Game Screenshots";
 #endif
+}
+
+std::string AppPathManager::gameSaveRootDir()
+{
+    return m_settingsPath + "gamesaves";
 }
 
 void AppPathManager::install()
@@ -272,6 +323,13 @@ bool AppPathManager::userDirIsAvailable()
     return (m_userPath != ApplicationPathSTD);
 }
 
+#ifdef __EMSCRIPTEN__
+void AppPathManager::syncFs()
+{
+    saveCustomState();
+}
+#endif
+
 
 void AppPathManager::initSettingsPath()
 {
@@ -282,4 +340,8 @@ void AppPathManager::initSettingsPath()
 
     if(!DirMan::exists(m_settingsPath))
         DirMan::mkAbsPath(m_settingsPath);
+
+    // Also make the gamesaves root folder to be exist
+    if(!DirMan::exists(gameSaveRootDir()))
+        DirMan::mkAbsPath(gameSaveRootDir());
 }

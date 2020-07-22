@@ -26,6 +26,7 @@
 #include <main_window/dock/lvl_warp_props.h>
 #include <main_window/dock/lvl_search_box.h>
 #include <main_window/dock/lvl_events_box.h>
+#include <networking/engine_intproc.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -251,13 +252,9 @@ void LvlLayersBox::removeCurrentLayer(bool moveToDefault)
     }
 
     if(moveToDefault)
-    {
         modifyLayer(selected[0]->text(), "Default", layerVisible, 0);
-    }
     else
-    {
         removeLayerItems(selected[0]->text());
-    }
 
     if(selected.isEmpty()) return;
 
@@ -395,38 +392,28 @@ void LvlLayersBox::modifyLayer(QString layerName, bool visible)
         if((*it)->data(ITEM_TYPE).toString() == "Block")
         {
             if(((ItemBlock *)(*it))->m_data.layer == layerName)
-            {
                 (*it)->setVisible(visible);
-            }
 
         }
         else if((*it)->data(ITEM_TYPE).toString() == "BGO")
         {
             if(((ItemBGO *)(*it))->m_data.layer == layerName)
-            {
                 (*it)->setVisible(visible);
-            }
         }
         else if((*it)->data(ITEM_TYPE).toString() == "NPC")
         {
             if(((ItemNPC *)(*it))->m_data.layer == layerName)
-            {
                 (*it)->setVisible(visible);
-            }
         }
         else if((*it)->data(ITEM_TYPE).toString() == "Water")
         {
             if(((ItemPhysEnv *)(*it))->m_data.layer == layerName)
-            {
                 (*it)->setVisible(visible);
-            }
         }
         else if(((*it)->data(ITEM_TYPE).toString() == "Door_enter") || ((*it)->data(ITEM_TYPE).toString() == "Door_exit"))
         {
             if(((ItemDoor *)(*it))->m_data.layer == layerName)
-            {
                 (*it)->setVisible(visible);
-            }
         }
     }
     mw()->LayerListsSync();  //Sync comboboxes in properties
@@ -722,9 +709,7 @@ void LvlLayersBox::modifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
                                                   tr("Layer with name '%1' already exist, do you want to merge layers?").arg(newLayerName),
                                                   QMessageBox::Yes | QMessageBox::No);
                     if(reply == QMessageBox::Yes)
-                    {
                         merge = true;
-                    }
                 }
             }
 
@@ -808,7 +793,9 @@ void LvlLayersBox::on_LvlLayerList_itemClicked(QListWidgetItem *item)
 {
     int WinType = mw()->activeChildWindow();
     int itemType = 0;
-    LevelEdit *edit = (WinType == MainWindow::WND_Level) ? mw()->activeLvlEditWin() : nullptr;
+    LevelEdit *edit = nullptr;
+    if(WinType == MainWindow::WND_Level)
+        edit = mw()->activeLvlEditWin();
     bool allow = (edit && edit->sceneCreated);
 
     if(allow)
@@ -820,18 +807,20 @@ void LvlLayersBox::on_LvlLayerList_itemClicked(QListWidgetItem *item)
                    itemType == LvlScene::PLC_Water))
         LvlPlacingItems::layer = item->text();
     else
-        LvlPlacingItems::layer = "";
+        LvlPlacingItems::layer.clear();
+
     LvlPlacingItems::blockSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::bgoSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::npcSet.layer = LvlPlacingItems::layer;
     LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer;
-    mw()->dock_LvlItemProps->LvlItemProps_updateLayer(LvlPlacingItems::layer);
+    mw()->dock_LvlItemProps->syncLayerFields(LvlPlacingItems::layer);
+    g_intEngine.sendCurrentLayer(LvlPlacingItems::layer);
 }
 
 void LvlLayersBox::on_LvlLayerList_itemSelectionChanged()
 {
     if(ui->LvlLayerList->selectedItems().isEmpty())
-        LvlPlacingItems::layer = "";
+        LvlPlacingItems::layer.clear();
     else
         LvlPlacingItems::layer = ui->LvlLayerList->selectedItems().first()->text();
 
@@ -893,9 +882,7 @@ void LvlLayersBox::on_LvlLayerList_customContextMenuRequested(const QPoint &pos)
 
     QAction *selected = layer_menu->exec(globPos);
     if(selected == rename)
-    {
         ui->LvlLayerList->editItem(ui->LvlLayerList->selectedItems()[0]);
-    }
     else if((selected == removeLayer) || (selected == removeLayerOnly))
     {
         if(selected == removeLayerOnly)

@@ -62,7 +62,7 @@ void LevelScene::drawLoader()
 }
 
 
-void LevelScene::setLoaderAnimation(int speed)
+void LevelScene::setLoaderAnimation(Uint32 speed)
 {
     using namespace lvl_scene_loader;
     m_loaderSpeed = speed;
@@ -83,23 +83,22 @@ void LevelScene::setLoaderAnimation(int speed)
                                      128,
                                      0, -1, false, false);
     loading_Ani->start();
-    m_loader_timer_id = SDL_AddTimer(static_cast<Uint32>(speed), &LevelScene::nextLoadAniFrame, this);
+    m_loader_prevFrameTime = SDL_GetTicks();
     m_loaderIsWorks = true;
 }
 
 void LevelScene::stopLoaderAnimation()
 {
     using namespace lvl_scene_loader;
-    m_loaderDoStep = false;
     m_loaderIsWorks = false;
-    SDL_RemoveTimer(m_loader_timer_id);
+    m_loader_prevFrameTime = 0;
     render();
 
     if(loading_Ani)
     {
         loading_Ani->stop();
         delete loading_Ani;
-        loading_Ani = NULL;
+        loading_Ani = nullptr;
     }
 }
 
@@ -109,25 +108,12 @@ void LevelScene::destroyLoaderTexture()
     GlRenderer::deleteTexture(loading_texture);
 }
 
-unsigned int LevelScene::nextLoadAniFrame(unsigned int x, void *p)
-{
-    (void)(x);
-    LevelScene *self = reinterpret_cast<LevelScene *>(p);
-    self->loaderTick();
-    return 0;
-}
-
-void LevelScene::loaderTick()
-{
-    m_loaderDoStep = true;
-}
-
 void LevelScene::loaderStep()
 {
     if(!m_loaderIsWorks)
         return;
 
-    if(!m_loaderDoStep)
+    if(m_loader_prevFrameTime > (SDL_GetTicks() - m_loaderSpeed))
         return;
 
     SDL_Event event; //  Events of SDL
@@ -149,14 +135,7 @@ void LevelScene::loaderStep()
     drawLoader();
     GlRenderer::flush();
     GlRenderer::repaint();
-    m_loader_timer_id = SDL_AddTimer(static_cast<Uint32>(m_loaderSpeed),
-                                   &LevelScene::nextLoadAniFrame, this);
-    m_loaderDoStep = false;
-}
-
-LevelData *LevelScene::levelData()
-{
-    return &m_data;
+    m_loader_prevFrameTime = SDL_GetTicks();
 }
 
 /**************************LoadAnimation**end**************************/

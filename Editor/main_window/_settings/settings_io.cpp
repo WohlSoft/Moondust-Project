@@ -30,8 +30,6 @@
 #include <audio/music_player.h>
 #include <editing/_scenes/level/lvl_item_placing.h>
 
-#include <main_window/testing/luna_tester.h>
-
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
@@ -79,6 +77,7 @@ void MainWindow::loadSettings()
         GlobalSettings::LvlOpts.animationEnabled = settings.value("animation", true).toBool();
         GlobalSettings::LvlOpts.collisionsEnabled = settings.value("collisions", true).toBool();
         GlobalSettings::LvlOpts.grid_show = settings.value("grid-show", false).toBool();
+        GlobalSettings::LvlOpts.camera_grid_show = settings.value("camera-grid-show", false).toBool();
         GlobalSettings::LvlOpts.default_zoom = settings.value("default-zoom", 100).toUInt();
 
         GlobalSettings::LvlItemDefaults.npc_direction = settings.value("defaults-npc-directuin", -1).toInt();
@@ -116,6 +115,7 @@ void MainWindow::loadSettings()
         GlobalSettings::TSTToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("tileset-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
 
         GlobalSettings::currentTheme = settings.value("current-theme", "").toString();
+        GlobalSettings::fontSize = settings.value("font-size", -1).toInt();
 
         GlobalSettings::ShowTipOfDay = settings.value("show-tip-of-a-day", true).toBool();
 
@@ -217,13 +217,6 @@ void MainWindow::loadSettings()
         GlobalSettings::extra.attr_hdpi = settings.value("high-dpi-scaling", GlobalSettings::extra.attr_hdpi).toBool();
     }
     settings.endGroup();
-
-    settings.beginGroup("LunaTester");
-    {
-        m_luna->m_noGL = settings.value("nogl", false).toBool();
-        m_luna->m_killPreviousSession = settings.value("kill-engine-on-every-test", false).toBool();
-    }
-    settings.endGroup();
 }
 
 
@@ -286,6 +279,7 @@ void MainWindow::saveSettings()
         settings.setValue("animation", GlobalSettings::LvlOpts.animationEnabled);
         settings.setValue("collisions", GlobalSettings::LvlOpts.collisionsEnabled);
         settings.setValue("grid-show", GlobalSettings::LvlOpts.grid_show);
+        settings.setValue("camera-grid-show", GlobalSettings::LvlOpts.camera_grid_show);
         settings.setValue("default-zoom", GlobalSettings::LvlOpts.default_zoom);
         settings.setValue("animation-item-limit", QString::number(GlobalSettings::animatorItemsLimit));
 
@@ -304,6 +298,7 @@ void MainWindow::saveSettings()
         settings.setValue("language", GlobalSettings::locale);
 
         settings.setValue("current-theme", GlobalSettings::currentTheme);
+        settings.setValue("font-size", GlobalSettings::fontSize);
         settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
 
         settings.setValue("sdl-sample-rate", MixerX::sampleRate());
@@ -360,13 +355,6 @@ void MainWindow::saveSettings()
     }
     settings.endGroup();
 
-    settings.beginGroup("LunaTester");
-    {
-        settings.setValue("nogl", m_luna->m_noGL);
-        settings.setValue("kill-engine-on-every-test", m_luna->m_killPreviousSession);
-    }
-    settings.endGroup();
-
     settings.beginGroup("logging");
     {
         settings.setValue("log-path",  LogWriter::DebugLogFile);
@@ -391,31 +379,42 @@ void MainWindow::on_actionApplication_settings_triggered()
 {
     if(!m_isAppInited) return;
 
-    g_AppSettings *appSettings = new g_AppSettings(this);
+    AppSettings *appSettings = new AppSettings(this);
     util::DialogToCenter(appSettings, true);
     //appSettings->setWindowFlags (Qt::Window | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     //appSettings->setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, appSettings->size(), util::getScreenGeometry()));
 
     if(appSettings->exec() == QDialog::Accepted)
     {
-        ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
-        on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
-
-        ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
-        on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
-
-        ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
-        dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
-        dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
-        dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
-
-        applyTheme(GlobalSettings::currentTheme.isEmpty() ?
-                   (Themes::currentTheme().isEmpty() ? ConfStatus::defaultTheme : Themes::currentTheme())
-                   : GlobalSettings::currentTheme);
-
+        applySetup(false);
         saveSettings();
     }
 
     delete appSettings;
+}
 
+void MainWindow::applySetup(bool startup)
+{
+    ui->actionAnimation->setChecked(GlobalSettings::LvlOpts.animationEnabled);
+    on_actionAnimation_triggered(GlobalSettings::LvlOpts.animationEnabled);
+
+    ui->actionCollisions->setChecked(GlobalSettings::LvlOpts.collisionsEnabled);
+    on_actionCollisions_triggered(GlobalSettings::LvlOpts.collisionsEnabled);
+
+    ui->centralWidget->setViewMode(GlobalSettings::MainWindowView);
+    dock_LvlItemBox->tabWidget()->setTabPosition(GlobalSettings::LVLToolboxPos);
+    dock_WldItemBox->tabWidget()->setTabPosition(GlobalSettings::WLDToolboxPos);
+    dock_TilesetBox->setTabPosition(GlobalSettings::TSTToolboxPos);
+
+    applyCurrentTheme();
+
+    if(GlobalSettings::fontSize > 0)
+    {
+        GlobalSettings::font->setPointSize(GlobalSettings::fontSize);
+        qApp->setFont(*GlobalSettings::font);
+    }
+    else if(!startup)
+    {
+        qApp->setFont(*GlobalSettings::fontDefault);
+    }
 }

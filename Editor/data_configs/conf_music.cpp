@@ -21,21 +21,21 @@
 #include <main_window/global_settings.h>
 #include "data_configs.h"
 
-long dataconfigs::getMusLvlI(unsigned long itemID)
+long DataConfig::getMusLvlI(unsigned long itemID)
 {
     if((itemID>0) && main_music_lvl.contains(int(itemID)))
         return long(itemID);
     return -1;
 }
 
-long dataconfigs::getMusWldI(unsigned long itemID)
+long DataConfig::getMusWldI(unsigned long itemID)
 {
     if((itemID>0) && main_music_wld.contains(int(itemID)))
         return long(itemID);
     return -1;
 }
 
-long dataconfigs::getMusSpcI(unsigned long itemID)
+long DataConfig::getMusSpcI(unsigned long itemID)
 {
     if((itemID>0) && main_music_spc.contains(int(itemID)))
         return long(itemID);
@@ -43,7 +43,7 @@ long dataconfigs::getMusSpcI(unsigned long itemID)
 }
 
 
-void dataconfigs::loadMusic()
+void DataConfig::loadMusic()
 {
     unsigned int i;
 

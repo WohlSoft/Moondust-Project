@@ -41,10 +41,10 @@ void WLD_ModePlace::set()
     s->resetResizers();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=true;
-    s->m_disableMoveItems=false;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = true;
+    s->m_disableMoveItems = false;
 
     s->m_viewPort->setInteractive(true);
     s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_placing));
@@ -58,7 +58,7 @@ void WLD_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = qobject_cast<WldScene *>(scene);
 
-    if( mouseEvent->buttons() & Qt::RightButton )
+    if(mouseEvent->buttons() & Qt::RightButton)
     {
         item_rectangles::clearArray();
         MainWinConnect::pMainWin->on_actionSelect_triggered();
@@ -67,16 +67,17 @@ void WLD_ModePlace::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
-    s->m_lastTerrainArrayID=s->m_data->tile_array_id;
-    s->m_lastSceneryArrayID=s->m_data->scene_array_id;
-    s->m_lastPathArrayID=s->m_data->path_array_id;
-    s->m_lastLevelArrayID=s->m_data->level_array_id;
-    s->m_lastMusicBoxArrayID=s->m_data->musicbox_array_id;
+    s->m_lastTerrainArrayID = s->m_data->tile_array_id;
+    s->m_lastSceneryArrayID = s->m_data->scene_array_id;
+    s->m_lastPathArrayID = s->m_data->path_array_id;
+    s->m_lastLevelArrayID = s->m_data->level_array_id;
+    s->m_lastMusicBoxArrayID = s->m_data->musicbox_array_id;
 
-    if(s->m_cursorItemImg){
-        s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
+    if(s->m_cursorItemImg)
+    {
+        s->m_cursorItemImg->setPos(QPointF(s->applyGrid(mouseEvent->scenePos().toPoint() -
                                            QPoint(WldPlacingItems::c_offset_x,
-                                                  WldPlacingItems::c_offset_y),
+                                                   WldPlacingItems::c_offset_y),
                                            WldPlacingItems::gridSz,
                                            WldPlacingItems::gridOffset)));
     }
@@ -96,27 +97,27 @@ void WLD_ModePlace::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
     s->clearSelection();
 
-    if(mouseEvent->modifiers() & Qt::ControlModifier )
+    if(mouseEvent->modifiers() & Qt::ControlModifier)
         s->setMessageBoxItem(true, mouseEvent->scenePos(),
-                               (s->m_cursorItemImg?
-                                    (
-                               QString::number( s->m_cursorItemImg->scenePos().toPoint().x() ) + "x" +
-                               QString::number( s->m_cursorItemImg->scenePos().toPoint().y() )
-                                    )
-                                        :""));
+                             (s->m_cursorItemImg ?
+                              (
+                                  QString::number(s->m_cursorItemImg->scenePos().toPoint().x()) + "x" +
+                                  QString::number(s->m_cursorItemImg->scenePos().toPoint().y())
+                              )
+                              : ""));
     else
         s->setMessageBoxItem(false);
 
     if(s->m_cursorItemImg)
     {
-               s->m_cursorItemImg->setPos( QPointF(s->applyGrid( mouseEvent->scenePos().toPoint()-
-                                                   QPoint(WldPlacingItems::c_offset_x,
-                                                          WldPlacingItems::c_offset_y),
-                                                 WldPlacingItems::gridSz,
-                                                 WldPlacingItems::gridOffset)));
-               s->m_cursorItemImg->show();
+        s->m_cursorItemImg->setPos(QPointF(s->applyGrid(mouseEvent->scenePos().toPoint() -
+                                           QPoint(WldPlacingItems::c_offset_x,
+                                                   WldPlacingItems::c_offset_y),
+                                           WldPlacingItems::gridSz,
+                                           WldPlacingItems::gridOffset)));
+        s->m_cursorItemImg->show();
     }
-    if( mouseEvent->buttons() & Qt::LeftButton )
+    if(mouseEvent->buttons() & Qt::LeftButton)
     {
         s->placeItemUnderCursor();
         s->Debugger_updateItemList();
@@ -129,11 +130,11 @@ void WLD_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
     if(!scene) return;
     WldScene *s = qobject_cast<WldScene *>(scene);
 
-    if(!s->m_overwritedItems.tiles.isEmpty()||
-        !s->m_overwritedItems.scenery.isEmpty()||
-        !s->m_overwritedItems.paths.isEmpty()||
-        !s->m_overwritedItems.levels.isEmpty()||
-        !s->m_overwritedItems.music.isEmpty() )
+    if(!s->m_overwritedItems.tiles.isEmpty() ||
+       !s->m_overwritedItems.scenery.isEmpty() ||
+       !s->m_overwritedItems.paths.isEmpty() ||
+       !s->m_overwritedItems.levels.isEmpty() ||
+       !s->m_overwritedItems.music.isEmpty())
     {
         s->m_history->addOverwriteHistory(s->m_overwritedItems, s->m_placingItems);
         s->m_overwritedItems.tiles.clear();
@@ -147,12 +148,12 @@ void WLD_ModePlace::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
         s->m_placingItems.levels.clear();
         s->m_placingItems.music.clear();
     }
-    else
-    if(!s->m_placingItems.tiles.isEmpty()||
-            !s->m_placingItems.paths.isEmpty()||
-            !s->m_placingItems.scenery.isEmpty()||
-            !s->m_placingItems.levels.isEmpty()||
-            !s->m_placingItems.music.isEmpty()){
+    else if(!s->m_placingItems.tiles.isEmpty() ||
+            !s->m_placingItems.paths.isEmpty() ||
+            !s->m_placingItems.scenery.isEmpty() ||
+            !s->m_placingItems.levels.isEmpty() ||
+            !s->m_placingItems.music.isEmpty())
+    {
         s->m_history->addPlaceHistory(s->m_placingItems);
         s->m_placingItems.tiles.clear();
         s->m_placingItems.paths.clear();
@@ -171,10 +172,10 @@ void WLD_ModePlace::keyRelease(QKeyEvent *keyEvent)
 {
     switch(keyEvent->key())
     {
-        case (Qt::Key_Escape):
-            MainWinConnect::pMainWin->on_actionSelect_triggered();
-            break;
-        default:
-            break;
+    case(Qt::Key_Escape):
+        MainWinConnect::pMainWin->on_actionSelect_triggered();
+        break;
+    default:
+        break;
     }
 }

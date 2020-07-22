@@ -155,7 +155,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="276"/>
         <source>Export a map of hitboxes as image...</source>
-        <translation>Экспортировать карту хитбоксов...</translation>
+        <translation>Экспортировать карту хитбоксов…</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="316"/>
@@ -370,13 +370,13 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Сохранить карту хитбоксов как картинку</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="254"/>
+        <location filename="../main/settings.cpp" line="270"/>
         <location filename="../main/files_io.cpp" line="101"/>
         <source>Saved</source>
         <translation>Сохранено</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="254"/>
+        <location filename="../main/settings.cpp" line="270"/>
         <source>Configuration saved in file</source>
         <translation>Конфигурация сохранена в файле</translation>
     </message>
@@ -386,53 +386,69 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Карта хитбоксов сохранена!</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="189"/>
+        <location filename="../calibrationmain.cpp" line="197"/>
         <source>Save in the same folder with image file</source>
         <translation>Сохранить в той же папке, что и спрайт</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="191"/>
+        <location filename="../calibrationmain.cpp" line="199"/>
         <source>Save into custom place...</source>
-        <translation>Сохранить в другом месте...</translation>
+        <translation>Сохранить в другом месте…</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="280"/>
+        <location filename="../calibrationmain.cpp" line="298"/>
         <source>Open sprite file</source>
         <translation>Открыть спрайт</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="281"/>
+        <location filename="../calibrationmain.cpp" line="302"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation>Спрайт персонажа SMBX</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="282"/>
+        <location filename="../calibrationmain.cpp" line="300"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation>Изображения GIF</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="283"/>
+        <location filename="../calibrationmain.cpp" line="299"/>
+        <source>GIF and PNG images</source>
+        <comment>Type of image file to open</comment>
+        <translation>Тип файла картинки для открытия</translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.cpp" line="301"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>Изображения PNG</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="284"/>
+        <location filename="../calibrationmain.cpp" line="303"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>Все файлы</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="307"/>
+        <location filename="../calibrationmain.cpp" line="327"/>
         <source>Warning</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="../calibrationmain.cpp" line="308"/>
+        <location filename="../calibrationmain.cpp" line="328"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>Это действие скопирует настройки хитбокса текущего кадра на все остальные. Настройки всех остальных кадров будут потеряны. Продолжить?</translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.cpp" line="351"/>
+        <source>Calibration is not saved!</source>
+        <translation>Калибровка не сохранена!</translation>
+    </message>
+    <message>
+        <location filename="../calibrationmain.cpp" line="352"/>
+        <source>Configuration was modified and not saved. Do you want to save it?</source>
+        <translation>Конфигурация была изменена, но не сохранена. Хотите ли сохранить её?</translation>
     </message>
     <message>
         <source>There are physical settings for a sprite, this need only for creation of new character sprite
@@ -518,7 +534,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="235"/>
         <source>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</source>
-        <translation>Это - калибровщик изображения. Если менять значения смещений, кадр будет физически сдвинут на смом изображении. Настройки хитбоксов при этом останутся прежними.</translation>
+        <translation>Это - калибровщик изображения. Если менять значения смещений, кадр будет физически сдвинут в самом изображении. Настройки хитбоксов при этом останутся прежними.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="251"/>
@@ -557,7 +573,7 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
-        <translation></translation>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>

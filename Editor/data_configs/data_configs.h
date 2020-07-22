@@ -105,6 +105,8 @@ struct EditorSetup
         };
         State level_section_vertical_wrap = F_ENABLED;
 
+        State level_section_21plus = F_ENABLED;
+
         State level_phys_ez_new_types = F_ENABLED;
 
         State level_bgo_z_layer = F_ENABLED;
@@ -178,14 +180,14 @@ struct obj_blockGlobalSetup
     int32_t sizable_block_border_size = -1;
 };
 
-class dataconfigs : public QObject
+class DataConfig : public QObject
 {
     Q_OBJECT
 public:
-    dataconfigs();
-    ~dataconfigs() override = default;
+    DataConfig();
+    ~DataConfig() override = default;
 
-    bool loadconfigs();
+    bool loadFullConfig();
     DataFolders dirs;
     QString config_dir;
     QString data_dir;
@@ -196,6 +198,11 @@ public:
 
     QString splash_logo;
     QList<obj_splash_ani > animations;
+
+    //! An identify key to mark level and world files to maintain a compatibility between different config packs.
+    QString configPackId;
+    //! Target engine name, shown in the incompatibility warning message
+    QString targetEngineName;
 
     EditorSetup editor;
     EngineSetup engine;

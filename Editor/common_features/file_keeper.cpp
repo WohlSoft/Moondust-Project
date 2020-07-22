@@ -20,6 +20,37 @@
 
 #include <QFileInfo>
 #include <QDir>
+#include <QTimer>
+
+#ifndef __WIN32
+
+#include <fcntl.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+#else
+
+#include <windows.h>
+#include <common_features/logger.h>
+
+static QString errorToString()
+{
+    // Retrieve the system error message for the last-error code
+    LPVOID lpMsgBuf;
+    DWORD dw = GetLastError();
+
+    FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+                   nullptr, dw, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&lpMsgBuf, 0, nullptr);
+
+    QString ret = QString::fromWCharArray((LPCWSTR)lpMsgBuf);
+
+    LocalFree(lpMsgBuf);
+
+    return ret;
+}
+
+#endif // __WIN32
+
 
 static QString getRandomString()
 {
@@ -37,7 +68,8 @@ static QString getRandomString()
 }
 
 FileKeeper::FileKeeper(const QString &path) :
-    m_origPath(path)
+    m_origPath(path),
+    m_backupPath(path + QStringLiteral(".bak"))
 {
     if(!QFile::exists(path))
     {
@@ -56,10 +88,7 @@ FileKeeper::FileKeeper(const QString &path) :
         targetPath = dirPath + baseName + "." + getRandomString() + "." + suffix;
     } while(QFile::exists(targetPath));
 
-    if(QFile::rename(m_origPath, targetPath))
-    {
-        m_tempPath = targetPath;
-    }
+    m_tempPath = targetPath;
 }
 
 FileKeeper::~FileKeeper()
@@ -87,11 +116,63 @@ void FileKeeper::restore()
 {
     if(m_tempPath == m_origPath)
         return;
+
     if(!m_origPath.isEmpty() && !m_tempPath.isEmpty() && QFile::exists(m_tempPath))
     {
+#ifndef __WIN32
+        int fd = open(m_tempPath.toUtf8().data(), O_FSYNC | O_APPEND, 0660);
+        if(fd)
+        {
+            fsync(fd);
+            close(fd);
+        }
+
         if(QFile::exists(m_origPath))
-            QFile::remove(m_origPath);// Clean up for just a case
+        {
+            if(QFile::exists(m_backupPath))
+                QFile::remove(m_backupPath);
+            QFile::rename(m_origPath, m_backupPath);
+        }
         QFile::rename(m_tempPath, m_origPath);
+
+#else
+        std::wstring srcPath = m_tempPath.toStdWString();
+        std::wstring dstPath = m_origPath.toStdWString();
+        std::wstring backupPath = m_backupPath.toStdWString();
+        if(QFile::exists(m_backupPath))
+            QFile::remove(m_backupPath);
+        LogDebug("Attempt to override " + m_origPath + " file with " + m_tempPath + " file and making a backup " + m_backupPath + " backup path...");
+        BOOL ret = ReplaceFileW(dstPath.c_str(),
+                                srcPath.c_str(),
+                                backupPath.c_str(),
+                                0, nullptr, nullptr);
+        if(ret == FALSE)
+        {
+            DWORD reterr = GetLastError();
+            LogWarning("Failed to override " + m_origPath + " file with " + m_tempPath + "! ["+ errorToString() + "]");
+            if(reterr == ERROR_UNABLE_TO_MOVE_REPLACEMENT)
+                LogWarning("The replacement file could not be renamed.");
+            else if(reterr == ERROR_UNABLE_TO_MOVE_REPLACEMENT_2)
+                LogWarning("The replacement file could not be moved.");
+            else if(reterr == ERROR_UNABLE_TO_REMOVE_REPLACED)
+                LogWarning("The replaced file could not be deleted.");
+
+            if(QFile::exists(m_origPath))
+            {
+                if(QFile::exists(m_backupPath))
+                    QFile::remove(m_backupPath);
+                QFile::rename(m_origPath, m_backupPath);
+            }
+            QFile::rename(m_tempPath, m_origPath);
+        }
+#endif
+
+        QString backupPathToRemove = m_backupPath;
+        QTimer::singleShot(4000, Qt::CoarseTimer, [backupPathToRemove](){
+            if(QFile::exists(backupPathToRemove))
+                QFile::remove(backupPathToRemove);
+        }); // automatically remove backup file after 4 seconds
+
         m_tempPath.clear();
     }
 }

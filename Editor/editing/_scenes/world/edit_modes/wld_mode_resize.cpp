@@ -39,10 +39,10 @@ void WLD_ModeResize::set()
     s->resetCursor();
     s->m_pointSelector.unserPointSelector();
 
-    s->m_eraserIsEnabled=false;
-    s->m_pastingMode=false;
-    s->m_busyMode=true;
-    s->m_disableMoveItems=true;
+    s->m_eraserIsEnabled = false;
+    s->m_pastingMode = false;
+    s->m_busyMode = true;
+    s->m_disableMoveItems = true;
 
     s->m_viewPort->setInteractive(true);
     s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_resizing));
@@ -51,7 +51,7 @@ void WLD_ModeResize::set()
 
 void WLD_ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
 
@@ -62,7 +62,7 @@ void WLD_ModeResize::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WLD_ModeResize::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
     if(!scene) return;
     WldScene *s = dynamic_cast<WldScene *>(scene);
     s->clearSelection();
@@ -74,12 +74,12 @@ void WLD_ModeResize::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
 
 void WLD_ModeResize::mouseRelease(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_UNUSED(mouseEvent);
+    Q_UNUSED(mouseEvent)
 }
 
 void WLD_ModeResize::keyPress(QKeyEvent *keyEvent)
 {
-    Q_UNUSED(keyEvent);
+    Q_UNUSED(keyEvent)
 
 }
 
@@ -90,15 +90,15 @@ void WLD_ModeResize::keyRelease(QKeyEvent *keyEvent)
 
     switch(keyEvent->key())
     {
-        case (Qt::Key_Escape):
-            s->resetResizers();
-            break;
-        case (Qt::Key_Enter):
-        case (Qt::Key_Return):
-            s->applyResizers();
-                //setSectionResizer(false, true);
-            break;
-        default:
-            break;
+    case(Qt::Key_Escape):
+        s->resetResizers();
+        break;
+    case(Qt::Key_Enter):
+    case(Qt::Key_Return):
+        s->applyResizers();
+        //setSectionResizer(false, true);
+        break;
+    default:
+        break;
     }
 }

@@ -50,6 +50,7 @@ include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/Utils/Utils.cmake)
 include(../_common/Utils/UtilsSDL.cmake)
 include(../_common/Utils/openUrl.cmake)
+include(../_common/Graphics/bitmask2rgba.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
@@ -328,7 +329,8 @@ if(EMSCRIPTEN)
     #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s ASSERTIONS=1")
     # -s \"EMTERPRETIFY_WHITELIST=['_main']\"
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ASYNCIFY=1") #-s USE_SDL=2
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s ASYNCIFY=1")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s ASYNCIFY=1 -lidbfs.js")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s \"EXPORTED_FUNCTIONS=['_main', '_unlockLoadingCustomState']\"")
 #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s 'BINARYEN_TRAP_MODE=\"clamp\"'")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s TOTAL_MEMORY=83886080 --no-heap-copy -s ALLOW_MEMORY_GROWTH=1")
 #    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s \"EXTRA_EXPORTED_RUNTIME_METHODS=['Pointer_stringify']\"")
@@ -355,6 +357,7 @@ set(PGE_ENGINE_SRC_ARGS
     ${OPENURL_SRCS}
     ${UTILS_SRCS}
     ${UTILS_SDL_SRCS}
+    ${BITMASK2RGBA_SRCS}
 )
 
 if(ANDROID)

@@ -29,7 +29,7 @@ signals:
     void sizeChanged(QSize newSize);
 };
 
-class dataconfigs;
+class DataConfig;
 class JsonSettingsWidget : public QObject
 {
     Q_OBJECT
@@ -63,7 +63,7 @@ public:
     virtual ~JsonSettingsWidget();
 
     void setSearchDirectories(const QString &episode, const QString &data);
-    void setConfigPack(dataconfigs *config);
+    void setConfigPack(DataConfig *config);
 
     bool loadSettingsFromFile(const QString &path);
     bool saveSettingsIntoFile(const QString &path);
@@ -99,7 +99,7 @@ private:
     QString m_directoryEpisode;
     QString m_directoryData;
 
-    dataconfigs *m_configPack = nullptr;
+    DataConfig *m_configPack = nullptr;
 
     QVariant retrieve_property(const SetupStack &setupTree, QString prop, const QVariant &defaultValue);
 

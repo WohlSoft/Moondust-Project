@@ -327,8 +327,8 @@ QWidget *TilesetItemBox::makeCategory(const QString &categoryItem)
     menuButton->setPopupMode(QToolButton::InstantPopup);
     catLayout->addWidget(menuButton, 0, 2, 1, 1);
 
-    tileSetGroup->setProperty("menuButton", qVariantFromValue(menuButton));
-    tileSetGroup->setProperty("menu", qVariantFromValue(menuGroups));
+    tileSetGroup->setProperty("menuButton", QVariant::fromValue(menuButton));
+    tileSetGroup->setProperty("menu", QVariant::fromValue(menuGroups));
 
     TileSets = new QScrollArea(catWid);
     TileSets->setWidget(scrollWid);

@@ -22,8 +22,9 @@
 
 #include <QDialog>
 
-namespace Ui {
-class CrashHandler;
+namespace Ui
+{
+    class CrashHandler;
 }
 
 class CrashHandler : public QDialog
@@ -31,7 +32,7 @@ class CrashHandler : public QDialog
     Q_OBJECT
 
 public:
-    explicit CrashHandler(QString& crashText, QWidget *parent = 0);
+    explicit CrashHandler(const QString &crashText, QWidget *parent = nullptr);
     ~CrashHandler();
 
     //Crash Handlers
@@ -43,7 +44,6 @@ public:
 
     static void attemptCrashsave();
     static void checkCrashsaves();
-
     //Crash Handlers end
 
     static void initCrashHandlers();
@@ -51,58 +51,13 @@ public:
     static QString getStacktrace();
 
 private slots:
+    void on_copyReport_clicked();
     void on_pgeForumButton_clicked();
+    void on_pgeRepoButton_clicked();
     void on_exitButton_clicked();
 
 private:
-    Ui::CrashHandler *ui;
+    Ui::CrashHandler *ui = nullptr;
 };
-
-#ifdef _WIN32
-//#include <StackWalker/StackWalker.h>
-//#include <sstream>
-/*
-#include <tlhelp32.h>
-
-class StackTracer : public StackWalker
-{
-public:
-    StackTracer() : StackWalker(), theOutput(""){}
-
-    void runStackTracerForAllThreads(){
-        HANDLE h = CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0);
-        if (h != INVALID_HANDLE_VALUE) {
-            THREADENTRY32 te;
-            te.dwSize = sizeof(te);
-            if (Thread32First(h, &te)) {
-                do {
-                    if (te.dwSize >= FIELD_OFFSET(THREADENTRY32, th32OwnerProcessID) +
-                                sizeof(te.th32OwnerProcessID)) {
-                        if(GetCurrentProcessId() == te.th32OwnerProcessID){
-                            theOutput += QString("\n\nThread #%1:\n").arg(te.th32ThreadID);
-                            HANDLE theThread = OpenThread(THREAD_ALL_ACCESS, false, te.th32ThreadID);
-                            ShowCallstack(theThread);
-                            CloseHandle(theThread);
-                        }
-                    }
-                    te.dwSize = sizeof(te);
-                } while (Thread32Next(h, &te));
-            }
-            CloseHandle(h);
-        }else{
-            theOutput = "Failed to create stacktrace!";
-        }
-    }
-
-    QString theOutput;
-
-protected:
-    virtual void OnOutput(LPCSTR szText)
-    {
-        theOutput += szText;
-    }
-};
-*/
-#endif
 
 #endif // CRASHHANDLER_H

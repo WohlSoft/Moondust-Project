@@ -26,12 +26,12 @@
 
 void WldScene::setScreenshotSelector(bool enabled, bool accept)
 {
-    bool do_signal=false;
-    if((enabled)&&(m_resizeBox==NULL))
+    bool do_signal = false;
+    if((enabled) && (m_resizeBox == nullptr))
     {
         MainWinConnect::pMainWin->on_actionSelect_triggered(); //Reset mode
 
-        m_resizeBox = new ItemResizer( QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 32 );
+        m_resizeBox = new ItemResizer(QSize(captutedSize.width(), captutedSize.height()), Qt::yellow, 32);
         this->addItem(m_resizeBox);
         m_resizeBox->setPos(captutedSize.x(), captutedSize.y());
         m_resizeBox->m_resizerType = ItemResizer::Resizer_Capturer;
@@ -43,27 +43,27 @@ void WldScene::setScreenshotSelector(bool enabled, bool accept)
     }
     else
     {
-        if(m_resizeBox!=NULL)
+        if(m_resizeBox != nullptr)
         {
             if(accept)
             {
-                #ifdef _DEBUG_
+#ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("SCREENSHOT SELECTION ZONE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
-                #endif
+#endif
 
-                captutedSize = QRectF( m_resizeBox->pos().x(),
-                                       m_resizeBox->pos().y(),
-                                       m_resizeBox->m_width,
-                                       m_resizeBox->m_height);
-                do_signal=true;
+                captutedSize = QRectF(m_resizeBox->pos().x(),
+                                      m_resizeBox->pos().y(),
+                                      m_resizeBox->m_width,
+                                      m_resizeBox->m_height);
+                do_signal = true;
             }
             delete m_resizeBox;
-            m_resizeBox = NULL;
+            m_resizeBox = nullptr;
             MainWinConnect::pMainWin->on_actionSelect_triggered();
             MainWinConnect::pMainWin->resizeToolbarVisible(false);
             //resetResizingSection=true;
         }
-        m_busyMode=false;
+        m_busyMode = false;
     }
 
     if(do_signal) emit screenshotSizeCaptured();

@@ -484,5 +484,13 @@ sin embargo puede usar el mismo enlace para la versión actualizada.</translatio
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
         <translation>Los Cuadros por segundo detectados son muy altos. Sincronización vertical será deshabilitada para prevenir resultados problemáticos. Por favor, habilite Sincronización vertical en su controlador de video.</translation>
     </message>
+    <message id="WARNING_INCOMPATIBLE_WORLDMAP">
+        <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="WARNING_INCOMPATIBLE_LEVEL">
+        <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

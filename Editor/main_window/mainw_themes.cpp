@@ -39,6 +39,18 @@ static void setToolButtonMenuIcon(QToolBar *bar, QMenu *menu, const QIcon &icon)
     }
 }
 
+void MainWindow::applyCurrentTheme()
+{
+    QString theme;
+    if(GlobalSettings::currentTheme.isEmpty())
+        theme = ConfStatus::defaultTheme;
+    else
+        theme = GlobalSettings::currentTheme;
+
+    LogDebug(QString("Loading theme [%1]...").arg(theme));
+    applyTheme(theme);
+}
+
 void MainWindow::applyTheme(QString themeDir)
 {
     if(!themeDir.isEmpty())
@@ -76,6 +88,8 @@ void MainWindow::applyTheme(QString themeDir)
 
     ui->actionPlayMusic->setIcon(Themes::icon(Themes::playmusic));
     ui->actionGridEn->setIcon(Themes::icon(Themes::grid_snap));
+    ui->actionShowGrid->setIcon(Themes::icon(Themes::show_grid));
+    ui->actionShowCameraGrid->setIcon(Themes::icon(Themes::camera_grid));
     ui->actionAnimation->setIcon(Themes::icon(Themes::animation));
 
     ui->actionWLD_SearchBox->setIcon(Themes::icon(Themes::search));

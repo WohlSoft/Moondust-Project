@@ -159,6 +159,7 @@ static void writeToFile(const QString &txt)
     QFile outFile(LogWriter::DebugLogFile);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
+    ts.setCodec("UTF-8");
     ts << txt << endl;
     outFile.close();
 }
@@ -168,6 +169,7 @@ static void writeToFile(const QString &txt)
 static void writeToScreen(const QString &txt)
 {
     QTextStream ts(stdout);
+    ts.setCodec("UTF-8");
     ts << txt << endl;
     ts.flush();
 }

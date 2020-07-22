@@ -69,6 +69,7 @@ include(_common/tool_unix2dos.cmake)
 include(_common/res_generator.cmake)
 # Dependent libraries
 include(_common/library_libpng.cmake)
+include(_common/library_libjpeg.cmake)
 include(_common/library_sqlite.cmake)
 include(_common/library_luajit.cmake)
 include(_common/library_luabind.cmake)
@@ -82,7 +83,7 @@ include(_common/library_PGE_FL.cmake)
 if(NOT USE_SYSTEM_LIBPNG)
     add_dependencies(libpng_Local AudioCodecs_Local) #Zlib is needed to libPNG
     add_dependencies(FREETYPE_Local libpng_Local) #libPNG is needed to FreeType
-    add_dependencies(FreeImage_Local libpng_Local) #libPNG needed to FreeImage
+    add_dependencies(FreeImage_Local libpng_Local libJPEG_Local) #libPNG and libJPEG are needed to FreeImage
 endif()
 
 if(NOT USE_SYSTEM_LIBPNG AND NOT USE_SYSTEM_LIBFREETYPE)

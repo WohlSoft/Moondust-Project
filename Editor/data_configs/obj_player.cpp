@@ -20,7 +20,7 @@
 #include "data_configs.h"
 #include <main_window/global_settings.h>
 
-void dataconfigs::loadPlayers()
+void DataConfig::loadPlayers()
 {
     main_characters.clear();
 

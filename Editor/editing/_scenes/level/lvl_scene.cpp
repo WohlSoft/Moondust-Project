@@ -33,9 +33,9 @@
 #include "edit_modes/mode_resize.h"
 #include "edit_modes/mode_fill.h"
 
-LvlScene::LvlScene(MainWindow* mw,
-                   GraphicsWorkspace * parentView,
-                   dataconfigs &configs,
+LvlScene::LvlScene(MainWindow *mw,
+                   GraphicsWorkspace *parentView,
+                   DataConfig &configs,
                    LevelData &FileData,
                    QObject *parent) :
     QGraphicsScene(parent),
@@ -97,16 +97,14 @@ LvlScene::LvlScene(MainWindow* mw,
     m_resizeBox(nullptr),
     m_captureFullSection(false),
 
-    m_history(new LvlHistoryManager(this, this) )
+    m_history(new LvlHistoryManager(this, this))
 
 {
     setItemIndexMethod(QGraphicsScene::NoIndex);
     if(parent)
     {
-        if(strcmp(parent->metaObject()->className(), LEVEL_EDIT_CLASS)==0)
-        {
-            m_subWindow = qobject_cast<LevelEdit*>(parent);
-        }
+        if(strcmp(parent->metaObject()->className(), LEVEL_EDIT_CLASS) == 0)
+            m_subWindow = qobject_cast<LevelEdit *>(parent);
     }
 
     //set Default Z Indexes
@@ -134,27 +132,28 @@ LvlScene::LvlScene(MainWindow* mw,
     Z_sys_sctBorder = 1020.0; // section Border
 
     //Build animators for dummies
-    SimpleAnimator * tmpAnimator;
-        tmpAnimator = new SimpleAnimator(m_dummyBlockImg, 0);
-    m_animatorsBlocks.push_back( tmpAnimator );
-        tmpAnimator = new SimpleAnimator(m_dummyBgoImg, 0);
-    m_animatorsBGO.push_back( tmpAnimator );
+    SimpleAnimator *tmpAnimator;
+    tmpAnimator = new SimpleAnimator(m_dummyBlockImg, 0);
+    m_animatorsBlocks.push_back(tmpAnimator);
+    tmpAnimator = new SimpleAnimator(m_dummyBgoImg, 0);
+    m_animatorsBGO.push_back(tmpAnimator);
 
-        obj_npc dummyNpc;
-        dummyNpc.setup.frames = 1;
-        dummyNpc.setup.framestyle = 0;
-        dummyNpc.setup.framespeed = 64;
-        dummyNpc.setup.width = m_dummyNpcImg.width();
-        dummyNpc.setup.height = m_dummyNpcImg.height();
-        dummyNpc.setup.gfx_w = m_dummyNpcImg.width();
-        dummyNpc.setup.gfx_h = m_dummyNpcImg.height();
-        dummyNpc.setup.ani_bidir = false;
-        dummyNpc.setup.ani_direct = false;
-        dummyNpc.setup.ani_directed_direct = false;
-        dummyNpc.setup.custom_animate = false;
-        dummyNpc.setup.custom_physics_to_gfx = true;
-        AdvNpcAnimator * tmpNpcAnimator = new AdvNpcAnimator(m_dummyNpcImg, dummyNpc);
-    m_animatorsNPC.push_back( tmpNpcAnimator );
+    obj_npc dummyNpc;
+    dummyNpc.setup.frames = 1;
+    dummyNpc.setup.framestyle = 0;
+    dummyNpc.setup.framespeed = 64;
+    dummyNpc.setup.width = m_dummyNpcImg.width();
+    dummyNpc.setup.height = m_dummyNpcImg.height();
+    dummyNpc.setup.gfx_w = m_dummyNpcImg.width();
+    dummyNpc.setup.gfx_h = m_dummyNpcImg.height();
+    dummyNpc.setup.ani_bidir = false;
+    dummyNpc.setup.ani_direct = false;
+    dummyNpc.setup.ani_directed_direct = false;
+    dummyNpc.setup.custom_animate = false;
+    dummyNpc.setup.custom_physics_to_gfx = true;
+
+    AdvNpcAnimator *tmpNpcAnimator = new AdvNpcAnimator(m_dummyNpcImg, dummyNpc);
+    m_animatorsNPC.push_back(tmpNpcAnimator);
 
     //Init default rotation tables
     local_rotation_table_blocks.clear();
@@ -162,14 +161,12 @@ LvlScene::LvlScene(MainWindow* mw,
     local_rotation_table_npc.clear();
     foreach(obj_rotation_table x, m_configs->main_rotation_table)
     {
-        if(x.type==ItemTypes::LVL_Block)
-            local_rotation_table_blocks[x.id]=x;
-        else
-        if(x.type==ItemTypes::LVL_BGO)
-            local_rotation_table_bgo[x.id]=x;
-        else
-        if(x.type==ItemTypes::LVL_NPC)
-            local_rotation_table_npc[x.id]=x;
+        if(x.type == ItemTypes::LVL_Block)
+            local_rotation_table_blocks[x.id] = x;
+        else if(x.type == ItemTypes::LVL_BGO)
+            local_rotation_table_bgo[x.id] = x;
+        else if(x.type == ItemTypes::LVL_NPC)
+            local_rotation_table_npc[x.id] = x;
     }
 
     resetCursor();
@@ -177,31 +174,31 @@ LvlScene::LvlScene(MainWindow* mw,
     connect(this, SIGNAL(selectionChanged()), this, SLOT(selectionChanged()));
 
     //Build edit mode classes
-    LVL_ModeHand * modeHand = new LVL_ModeHand(this);
+    LVL_ModeHand *modeHand = new LVL_ModeHand(this);
     m_editModes.push_back(modeHand);
 
-    LVL_ModeSelect * modeSelect = new LVL_ModeSelect(this);
+    LVL_ModeSelect *modeSelect = new LVL_ModeSelect(this);
     m_editModes.push_back(modeSelect);
 
-    LVL_ModeResize * modeResize = new LVL_ModeResize(this);
+    LVL_ModeResize *modeResize = new LVL_ModeResize(this);
     m_editModes.push_back(modeResize);
 
-    LVL_ModeErase * modeErase = new LVL_ModeErase(this);
+    LVL_ModeErase *modeErase = new LVL_ModeErase(this);
     m_editModes.push_back(modeErase);
 
-    LVL_ModePlace * modePlace = new LVL_ModePlace(this);
+    LVL_ModePlace *modePlace = new LVL_ModePlace(this);
     m_editModes.push_back(modePlace);
 
-    LVL_ModeSquare * modeSquare = new LVL_ModeSquare(this);
+    LVL_ModeSquare *modeSquare = new LVL_ModeSquare(this);
     m_editModes.push_back(modeSquare);
 
-    LVL_ModeCircle * modeCircle = new LVL_ModeCircle(this);
+    LVL_ModeCircle *modeCircle = new LVL_ModeCircle(this);
     m_editModes.push_back(modeCircle);
 
-    LVL_ModeLine * modeLine = new LVL_ModeLine(this);
+    LVL_ModeLine *modeLine = new LVL_ModeLine(this);
     m_editModes.push_back(modeLine);
 
-    LVL_ModeFill * modeFill = new LVL_ModeFill(this);
+    LVL_ModeFill *modeFill = new LVL_ModeFill(this);
     m_editModes.push_back(modeFill);
 
     m_editModeObj = modeSelect;
@@ -232,22 +229,72 @@ LvlScene::~LvlScene()
 void LvlScene::drawForeground(QPainter *painter, const QRectF &rect)
 {
     QGraphicsScene::drawForeground(painter, rect);
-    if(!m_opts.grid_show) return;
 
-    int gridSize = m_configs->defaultGrid.general;
-    qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
-    qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
+    if(m_opts.grid_show)
+    {
+        int gridSize = int(m_configs->defaultGrid.general);
+        qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
+        qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
 
-    QVarLengthArray<QLineF, 100> lines;
-    for (qreal x = left; x < rect.right(); x += gridSize)
-        lines.append(QLineF(x, rect.top(), x, rect.bottom()));
-    for (qreal y = top; y < rect.bottom(); y += gridSize)
-        lines.append(QLineF(rect.left(), y, rect.right(), y));
+        QVarLengthArray<QLineF, 100> lines;
+        for(qreal x = left; x < rect.right(); x += gridSize)
+            lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+        for(qreal y = top; y < rect.bottom(); y += gridSize)
+            lines.append(QLineF(rect.left(), y, rect.right(), y));
 
-    painter->setRenderHint(QPainter::Antialiasing, false);
-    painter->setOpacity(0.5);
-    painter->setPen(QPen(QBrush(Qt::black), 1, Qt::SolidLine));
-    painter->drawLines(lines.data(), lines.size());
-    painter->setPen(QPen(QBrush(Qt::white), 1, Qt::DashLine));
-    painter->drawLines(lines.data(), lines.size());
+        painter->setRenderHint(QPainter::Antialiasing, false);
+        painter->setOpacity(0.9);
+        painter->setPen(QPen(QBrush(QColor(51, 51, 51)), 0, Qt::SolidLine));
+        painter->drawLines(lines.data(), lines.size());
+        painter->setPen(QPen(QBrush(QColor(204, 204, 204)), 0, Qt::DashLine));
+        painter->drawLines(lines.data(), lines.size());
+    }
+
+    if(m_opts.camera_grid_show)
+    {
+        // Get viewport size from config pack engine.ini settings
+        int gridSizeX = m_configs->engine.screen_w;
+        int gridSizeY = m_configs->engine.screen_h;
+
+        // Round y-axis camera grid to a multiple of default block grid size, since the player will normally stand on
+        // a block and thus typical camera position will be relative to that
+        gridSizeY = m_configs->defaultGrid.block * qRound((qreal)gridSizeY / m_configs->defaultGrid.block);
+
+        // Get offset to grid alignment such that things are aligned sensibly for default section positions.
+        qreal sectionOffset = 20000.0 * (m_data->CurSection - 10);
+
+        // Get top-left corner
+        qreal left = int(rect.left() - sectionOffset) - (int(rect.left() - sectionOffset) % gridSizeX) + sectionOffset;
+        qreal top = int(rect.top() - sectionOffset) - (int(rect.top() - sectionOffset) % gridSizeY) + sectionOffset;
+        qreal cam_top = top + (gridSizeY - m_configs->engine.screen_h);
+        if (cam_top > (rect.top() + gridSizeY))
+            cam_top -= gridSizeY;
+
+        QVarLengthArray<QLineF, 100> lines;
+        QVarLengthArray<QLineF, 100> top_lines;
+        for(qreal x = left; x < rect.right(); x += gridSizeX)
+            lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+        for(qreal y = top; y < rect.bottom(); y += gridSizeY)
+            lines.append(QLineF(rect.left(), y, rect.right(), y));
+        for(qreal y = cam_top; y < rect.bottom(); y += gridSizeY)
+            top_lines.append(QLineF(rect.left(), y, rect.right(), y));
+
+        // Draw regular lines
+        painter->setRenderHint(QPainter::Antialiasing, false);
+        painter->setOpacity(1.0);
+        painter->setPen(QPen(QBrush(QColor(128, 0, 128)), 0, Qt::SolidLine));
+        painter->drawLines(lines.data(), lines.size());
+        painter->setPen(QPen(QBrush(QColor(255, 0, 255)), 0, Qt::DashLine));
+        painter->drawLines(lines.data(), lines.size());
+
+        // Draw extra top-edge lines fainter
+        if (gridSizeY != (int)m_configs->engine.screen_h)
+        {
+            painter->setOpacity(0.5);
+            painter->setPen(QPen(QBrush(QColor(128, 0, 128)), 0, Qt::SolidLine));
+            painter->drawLines(top_lines.data(), top_lines.size());
+            painter->setPen(QPen(QBrush(QColor(255, 0, 255)), 0, Qt::DashLine));
+            painter->drawLines(top_lines.data(), top_lines.size());
+        }
+    }
 }

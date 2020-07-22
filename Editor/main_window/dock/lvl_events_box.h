@@ -12,6 +12,8 @@ class QListWidget;
 class QListWidgetItem;
 class QComboBox;
 class QPushButton;
+class QToolButton;
+class ImageSelector;
 
 namespace Ui {
 class LvlEventsBox;
@@ -37,8 +39,8 @@ public:
     QComboBox* cbox_layer_to_move();
     QComboBox* cbox_event_trigger();
     QComboBox* cbox_sct_mus();
-    QComboBox* cbox_sct_bg();
-    QPushButton *button_event_dupe();
+    ImageSelector* cbox_sct_bg();
+    QToolButton *button_event_dupe();
 
     bool eventIsExist(QString evt);
 
@@ -118,7 +120,7 @@ private slots:
     void on_LVLEvent_SctBg_none_clicked();
     void on_LVLEvent_SctBg_reset_clicked();
     void on_LVLEvent_SctBg_define_clicked();
-    void on_LVLEvent_SctBg_List_currentIndexChanged(int index);
+    void sctBackgroundImageChanged(int index);
 
     void on_LVLEvent_Key_Up_clicked(bool checked);
     void on_LVLEvent_Key_Down_clicked(bool checked);

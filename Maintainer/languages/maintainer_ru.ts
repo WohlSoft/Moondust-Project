@@ -56,7 +56,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
         <source>What do you want?</source>
-        <translation>Чего бы вы хотели сделать?</translation>
+        <translation>Что вы хотите?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
@@ -108,7 +108,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="587"/>
         <source>Sox binary path:</source>
-        <translation>Испольняемый файл SoX:</translation>
+        <translation>Исполняемый файл SoX:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="594"/>
@@ -541,7 +541,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="102"/>
         <source>Path to an input directory with a source data</source>
-        <translation>Путь ко входной дитерктории с исходными данными</translation>
+        <translation>Путь ко входной директории с исходными данными</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
@@ -796,7 +796,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="85"/>
         <source>Path to an input directory with a source data</source>
-        <translation>Путь ко входной дитерктории с исходными данными</translation>
+        <translation>Путь ко входной директории с исходными данными</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="98"/>
@@ -998,7 +998,7 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
-        <translation></translation>
+        <translation>LTR</translation>
     </message>
 </context>
 </TS>

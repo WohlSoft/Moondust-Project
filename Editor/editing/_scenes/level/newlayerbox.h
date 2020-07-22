@@ -26,8 +26,9 @@
 
 #include <PGE_File_Formats/lvl_filedata.h>
 
-namespace Ui {
-class ToNewLayerBox;
+namespace Ui
+{
+    class ToNewLayerBox;
 }
 
 class ToNewLayerBox : public QDialog
@@ -35,14 +36,14 @@ class ToNewLayerBox : public QDialog
     Q_OBJECT
 
 public:
-    explicit ToNewLayerBox(LevelData *lData, QWidget *parent = 0);
+    explicit ToNewLayerBox(LevelData *lData, QWidget *parent = nullptr);
     ~ToNewLayerBox();
     QString lName;
     bool lHidden;
     bool lLocked;
     bool valid;
 
-    LevelData * LvlData;
+    LevelData *LvlData;
 
 protected:
     virtual void closeEvent(QCloseEvent *event);

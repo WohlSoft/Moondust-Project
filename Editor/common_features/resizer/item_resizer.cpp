@@ -105,6 +105,11 @@ void ItemResizer::setGridSize(int gridSize)
     m_grid = gridSize;
 }
 
+void ItemResizer::setNoGrid(bool en)
+{
+    m_no_grid = en;
+}
+
 /**
   * This scene event filter has been registered with all four corner grabber items.
   * When called, a pointer to the sending item is provided along with a generic

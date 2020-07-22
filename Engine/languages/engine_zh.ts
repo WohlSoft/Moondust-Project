@@ -4,71 +4,71 @@
 <context>
     <name></name>
     <message id="MSGBOX_INFO">
-        <location filename="../gui/pge_msgbox.cpp" line="247"/>
+        <location filename="../gui/pge_msgbox.cpp" line="249"/>
         <source>Information</source>
         <translation>信息</translation>
     </message>
     <message id="MSGBOX_WARN">
-        <location filename="../gui/pge_msgbox.cpp" line="262"/>
+        <location filename="../gui/pge_msgbox.cpp" line="264"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message id="MSGBOX_ERROR">
-        <location filename="../gui/pge_msgbox.cpp" line="277"/>
+        <location filename="../gui/pge_msgbox.cpp" line="279"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message id="MSGBOX_FATAL">
-        <location filename="../gui/pge_msgbox.cpp" line="292"/>
+        <location filename="../gui/pge_msgbox.cpp" line="294"/>
         <source>Fatal error</source>
         <translation>致命错误</translation>
     </message>
     <message id="CONFIG_SELECT">
-        <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="60"/>
+        <location filename="../data_configs/config_select_scene/scene_config_select.cpp" line="61"/>
         <source>Choose a game:</source>
         <translation>选择游戏：</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="115"/>
+        <location filename="../data_configs/config_manager.cpp" line="117"/>
         <source>Config pack directory error</source>
         <translation>配置包目录错误</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING">
-        <location filename="../data_configs/config_manager.cpp" line="117"/>
+        <location filename="../data_configs/config_manager.cpp" line="119"/>
         <source>Config directory is not found at:
 %1</source>
         <translation>未找到配置目录：
 %1</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="127"/>
+        <location filename="../data_configs/config_manager.cpp" line="129"/>
         <source>Missing main.ini</source>
         <translation>未找到 main.ini</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_MAININI_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="129"/>
+        <location filename="../data_configs/config_manager.cpp" line="131"/>
         <source>Can&apos;t open the &apos;main.ini&apos; config file!</source>
         <translation>打开文件“main.ini”失败！</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="150"/>
+        <location filename="../data_configs/config_manager.cpp" line="152"/>
         <source>Missing config pack data directory</source>
         <translation>未找到配置包数据路径</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="152"/>
+        <location filename="../data_configs/config_manager.cpp" line="154"/>
         <source>Config pack data path not exists:
 %1</source>
         <translation>配置包数据路径不存在：
 %1</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="183"/>
+        <location filename="../data_configs/config_manager.cpp" line="187"/>
         <source>Legacy configuration package</source>
         <translation>配置包过旧</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK">
-        <location filename="../data_configs/config_manager.cpp" line="190"/>
+        <location filename="../data_configs/config_manager.cpp" line="194"/>
         <source>You have a legacy configuration package.
 Game will be started, but you may have a some problems with gameplay.
 
@@ -79,101 +79,102 @@ Download: %1
 Note: most of config packs are updates togeter with PGE,
 therefore you can use same link to get updated version.</source>
         <translation>您的配置包版本过旧。
-&lt;br&gt;编辑器即将启动，但您会在对象和设置中遇到问题。
-&lt;br&gt;
-&lt;br&gt;请下载并安装最新版本的配置包：
-&lt;br&gt;
-&lt;br&gt;下载： %1
-&lt;br&gt;注：部分配置包和PGE同步更新，
-&lt;br&gt;确保可以在同一链接里下载到新版本。</translation>
+编辑器即将启动，但您会在对象和设置中遇到问题。
+
+请下载并安装最新版本的配置包：
+
+下载： %1
+
+注：部分配置包和PGE同步更新，
+确保可以在同一链接里下载到新版本。</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="236"/>
+        <location filename="../data_configs/config_manager.cpp" line="240"/>
         <source>main.ini is invalid</source>
         <translation>错误的 main.ini 文件</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="238"/>
+        <location filename="../data_configs/config_manager.cpp" line="242"/>
         <source>Error has occouped in main.ini in line %1.</source>
         <translation>main.ini 在第 %1 行出现错误。</translation>
     </message>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="363"/>
+        <location filename="../common_features/crash_handler.cpp" line="371"/>
         <source>Unhandled exception!</source>
         <translation>未处理异常！</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="365"/>
+        <location filename="../common_features/crash_handler.cpp" line="373"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
         <translation>发生未处理异常，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="377"/>
+        <location filename="../common_features/crash_handler.cpp" line="385"/>
         <source>Out of memory!</source>
         <translation>内存不足！</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="379"/>
+        <location filename="../common_features/crash_handler.cpp" line="387"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
         <translation>由于内存不足，因此引擎已停止运行！请关闭其他应用再重新开始游戏。</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="415"/>
+        <location filename="../common_features/crash_handler.cpp" line="423"/>
         <source>Time out!</source>
         <translation>超时！</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="417"/>
+        <location filename="../common_features/crash_handler.cpp" line="425"/>
         <source>Engine has abourted because alarm() time out!</source>
         <translation>由于 alarm() 超时，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="462"/>
+        <location filename="../common_features/crash_handler.cpp" line="470"/>
         <source>Physical memory address error!</source>
         <translation>物理内存地址错误！</translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="464"/>
+        <location filename="../common_features/crash_handler.cpp" line="472"/>
         <source>Engine has crashed because a physical memory address error</source>
         <translation>由于物理内存地址错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="481"/>
+        <location filename="../common_features/crash_handler.cpp" line="489"/>
         <source>Wrong CPU Instruction!</source>
         <translation>CPU 命令错误！</translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="483"/>
+        <location filename="../common_features/crash_handler.cpp" line="491"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
         <translation>由于 CPU 命令错误，因此引擎已停止运行</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="538"/>
+        <location filename="../common_features/crash_handler.cpp" line="546"/>
         <source>Wrong arithmetical operation</source>
         <translation>算法错误</translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="540"/>
+        <location filename="../common_features/crash_handler.cpp" line="548"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
         <translation>由于算法错误，因此引擎已停止运行！</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="552"/>
+        <location filename="../common_features/crash_handler.cpp" line="560"/>
         <source>Aborted</source>
         <translation>异常终止</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="554"/>
+        <location filename="../common_features/crash_handler.cpp" line="562"/>
         <source>Engine has been aborted because critical error was occouped.</source>
         <translation>由于致命错误，因此引擎已停止运行。</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="599"/>
+        <location filename="../common_features/crash_handler.cpp" line="607"/>
         <source>Segmentation fault</source>
         <translation>段落错误</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="603"/>
+        <location filename="../common_features/crash_handler.cpp" line="611"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
@@ -182,12 +183,12 @@ and retry your recent actions to get more detailed information.</source>
 进行重试以获得更多的详细信息。</translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="612"/>
+        <location filename="../common_features/crash_handler.cpp" line="620"/>
         <source>Interrupt</source>
         <translation>中断</translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="614"/>
+        <location filename="../common_features/crash_handler.cpp" line="622"/>
         <source>Engine has been interrupted</source>
         <translation>引擎已损坏</translation>
     </message>
@@ -247,53 +248,53 @@ and retry your recent actions to get more detailed information.</source>
         <translation>重新开始关卡</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="550"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="302"/>
+        <location filename="../scenes/scene_world.cpp" line="556"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <source>Invalid playable character ID</source>
         <translation>错误的人物编号</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="559"/>
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="311"/>
+        <location filename="../scenes/scene_world.cpp" line="565"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <source>Invalid playable character state ID</source>
         <translation>错误的人物形态编号</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="436"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="447"/>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>错误：无法找到起点。
 请问您将起点（或者传送入口）放在场景以外的范围了吗？</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="611"/>
-        <location filename="../scenes/scene_world.cpp" line="638"/>
+        <location filename="../scenes/scene_world.cpp" line="617"/>
+        <location filename="../scenes/scene_world.cpp" line="644"/>
         <source>Pause</source>
         <translation>暂停</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="619"/>
-        <location filename="../scenes/scene_world.cpp" line="646"/>
+        <location filename="../scenes/scene_world.cpp" line="625"/>
+        <location filename="../scenes/scene_world.cpp" line="652"/>
         <source>Continue</source>
         <translation>继续</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="621"/>
+        <location filename="../scenes/scene_world.cpp" line="627"/>
         <source>Save and continue</source>
         <translation>保存并继续</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="623"/>
+        <location filename="../scenes/scene_world.cpp" line="629"/>
         <source>Save and quit</source>
         <translation>保存并退出</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="625"/>
+        <location filename="../scenes/scene_world.cpp" line="631"/>
         <source>Exit without saving</source>
         <translation>退出而不保存</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="648"/>
+        <location filename="../scenes/scene_world.cpp" line="654"/>
         <source>Quit</source>
         <translation>退出</translation>
     </message>
@@ -454,63 +455,74 @@ Did you placed player start point (or entrance warp point) too far off of the se
         <translation>&lt;未找到关卡&gt;</translation>
     </message>
     <message id="SDL_INIT_ERROR">
-        <location filename="../main.cpp" line="116"/>
+        <location filename="../main.cpp" line="729"/>
         <source>Unable to init SDL!</source>
         <translation>SDL 初始化失败！</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TTL">
-        <location filename="../main.cpp" line="177"/>
+        <location filename="../main.cpp" line="790"/>
         <source>Config packs not found</source>
         <translation>未找到配置包</translation>
     </message>
     <message id="ERROR_NO_CONFIG_PACKS_TEXT">
-        <location filename="../main.cpp" line="180"/>
+        <location filename="../main.cpp" line="793"/>
         <source>Can&apos;t start game, because available
 configuration packages are not found!</source>
         <translation>没有可用的配置包，因此无法启动游戏！</translation>
     </message>
     <message id="CONFIG_SELECT_TEST">
-        <location filename="../main.cpp" line="190"/>
+        <location filename="../main.cpp" line="803"/>
         <source>Choose a game to test:</source>
         <translation>选择游戏进行测试：</translation>
     </message>
     <message id="ERROR_NO_OPEN_FILES_MSG">
-        <location filename="../main.cpp" line="417"/>
-        <location filename="../main.cpp" line="561"/>
+        <location filename="../main.cpp" line="295"/>
+        <location filename="../main.cpp" line="480"/>
         <source>No opened files</source>
         <translation>无已打开文件</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
-        <location filename="../main.cpp" line="432"/>
+        <location filename="../main.cpp" line="316"/>
         <source>ERROR:
 Fail to start world map
 
 %1</source>
         <translation>错误：
 无法启动大地图。
+
 %1</translation>
     </message>
+    <message id="WARNING_INCOMPATIBLE_WORLDMAP">
+        <location filename="../main.cpp" line="333"/>
+        <source>This world map is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation>不兼容的大地图：您可能会遇到未如预期的结果或错误，详情查看日志文件。</translation>
+    </message>
     <message id="WLD_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="450"/>
+        <location filename="../main.cpp" line="352"/>
         <source>World map was closed with error.
 %1</source>
         <translation>由于大地图有错误，因此大地图已关闭。
 %1</translation>
     </message>
     <message id="MSG_START_LEVEL">
-        <location filename="../main.cpp" line="467"/>
+        <location filename="../main.cpp" line="370"/>
         <source>Start level
 %1</source>
         <translation>启动关卡
 %1</translation>
     </message>
     <message id="MSG_WLDTEST_EXIT_CODE">
-        <location filename="../main.cpp" line="469"/>
+        <location filename="../main.cpp" line="372"/>
         <source>Type an exit code (signed integer)</source>
         <translation>输入出口代码：（整数）</translation>
     </message>
+    <message id="WARNING_INCOMPATIBLE_LEVEL">
+        <location filename="../main.cpp" line="510"/>
+        <source>This level is incompatible: you may get unexpected gameplay results or errors. See log for details.</source>
+        <translation>不兼容的关卡：您可能会遇到未如预期的结果或错误，详情查看日志文件。</translation>
+    </message>
     <message id="LVL_EXIT_WARP_INFO">
-        <location filename="../main.cpp" line="639"/>
+        <location filename="../main.cpp" line="580"/>
         <source>Warp exit
 
 Exit into:
@@ -525,7 +537,7 @@ Entrance point: %2</source>
 入口点 #：%2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
-        <location filename="../main.cpp" line="698"/>
+        <location filename="../main.cpp" line="649"/>
         <source>Level was closed with error.
 %1</source>
         <translation>由于关卡有错误，因此关卡已关闭。

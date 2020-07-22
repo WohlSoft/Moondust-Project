@@ -208,6 +208,9 @@ void loadCustomConfig(PGE_DataArray<obj_T> &container,
 
 namespace ConfigManager
 {
+    //! An identify key to mark level and world files to maintain a compatibility between different config packs.
+    extern std::string configPackId;
+
     extern DataFolders dirs;
     extern std::string  config_idSTD;
     extern std::string  config_name;

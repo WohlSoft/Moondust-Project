@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>293</width>
-    <height>466</height>
+    <width>270</width>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowIcon">
@@ -43,6 +43,9 @@
        <string>Level</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_16" columnstretch="0,100,0">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -74,16 +77,13 @@
        </item>
        <item row="13" column="0" colspan="3">
         <widget class="QGroupBox" name="groupBox_3">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>60</height>
-          </size>
-         </property>
          <property name="title">
           <string>Go to coordinates:</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <item>
            <widget class="QLabel" name="label_53">
             <property name="text">
@@ -124,12 +124,6 @@
        </item>
        <item row="12" column="0" colspan="3">
         <widget class="QGroupBox" name="group_pathOpens">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>121</height>
-          </size>
-         </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
@@ -143,6 +137,9 @@
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <layout class="QGridLayout" name="gridLayout_17">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetMinimumSize</enum>
+          </property>
           <item row="0" column="0" rowspan="2" colspan="3">
            <widget class="QFrame" name="frame">
             <property name="minimumSize">

@@ -10,10 +10,10 @@
 void PGE_JsEngine::logError(const QJSValue &erroredValue)
 {
     QString message =
-                  "Error of the script " + m_scriptFile + ": \n"
-                + "Uncaught exception at line "
-                + QString::number(erroredValue.property("lineNumber").toInt())
-                + ":\n" + erroredValue.toString();
+        "Error of the script " + m_scriptFile + ": \n"
+        + "Uncaught exception at line "
+        + QString::number(erroredValue.property("lineNumber").toInt())
+        + ":\n" + erroredValue.toString();
     LogWarning(message);
 }
 
@@ -21,21 +21,22 @@ PGE_JsEngine::PGE_JsEngine(QObject *parent) :
     QObject(parent),
     m_jsengine(this)
 {
-    #if ((QT_VERSION_MAJOR == 5 && QT_VERSION_MINOR >= 6)||(QT_VERSION_MAJOR > 5))
+#if ((QT_VERSION_MAJOR == 5 && QT_VERSION_MINOR >= 6)||(QT_VERSION_MAJOR > 5))
     m_jsengine.installExtensions(QJSEngine::GarbageCollectionExtension);
-    #endif
+#endif
 
     QFile bootFile(":/plugin/plugin/main_boot.js");
     bool openResult = bootFile.open(QIODevice::ReadOnly | QIODevice::Text);
     assert(openResult); // This file must open!
-    Q_UNUSED(openResult);
+    Q_UNUSED(openResult)
 
     QTextStream bootFileStream(&bootFile);
     bootFileStream.setCodec("UTF-8");
 
     int numOfNewlines = 0;
     QString bootFileContents;
-    while(!bootFileStream.atEnd()){
+    while(!bootFileStream.atEnd())
+    {
         numOfNewlines++;
         bootFileContents += bootFileStream.readLine() + "\n";
     }
@@ -46,7 +47,7 @@ PGE_JsEngine::PGE_JsEngine(QObject *parent) :
 bool PGE_JsEngine::setFile(QString filePath)
 {
     QFile file(filePath);
-    if(!file.open(QIODevice::ReadOnly|QIODevice::Text))
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return false;
 
     QTextStream str(&file);
@@ -78,7 +79,8 @@ QString PGE_JsEngine::getLastError() const
 
 bool PGE_JsEngine::checkForErrors(const QJSValue &possibleErrVal, bool *ok)
 {
-    if(possibleErrVal.isError()){
+    if(possibleErrVal.isError())
+    {
         m_lastError = possibleErrVal;
         logError(possibleErrVal);
         if(ok)
@@ -90,6 +92,3 @@ bool PGE_JsEngine::checkForErrors(const QJSValue &possibleErrVal, bool *ok)
         *ok = true;
     return true;
 }
-
-
-

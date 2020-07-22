@@ -36,7 +36,7 @@
 
 #include "data_configs.h"
 
-dataconfigs::dataconfigs()
+DataConfig::DataConfig()
 {
     total_data = 0;
 
@@ -72,7 +72,7 @@ frames = 1          ; default = 1
 frame-speed=125         ; default = 125 ms, etc. 8 frames per sec
 */
 
-QString dataconfigs::getFullIniPath(QString iniFileName)
+QString DataConfig::getFullIniPath(QString iniFileName)
 {
     QString path_ini = config_dir + iniFileName;
     if(!QFile::exists(path_ini))
@@ -83,7 +83,7 @@ QString dataconfigs::getFullIniPath(QString iniFileName)
     return path_ini;
 }
 
-bool dataconfigs::openSection(IniProcessing *config, const std::string &section, bool tryGeneral)
+bool DataConfig::openSection(IniProcessing *config, const std::string &section, bool tryGeneral)
 {
     //Check for availability of the INI section
     if(!config->beginGroup(section))
@@ -99,20 +99,20 @@ bool dataconfigs::openSection(IniProcessing *config, const std::string &section,
     return true;
 }
 
-void dataconfigs::addError(QString bug, PGE_LogLevel level)
+void DataConfig::addError(QString bug, PGE_LogLevel level)
 {
     WriteToLog(level, QString("LoadConfig -> %1").arg(bug));
     errorsList[m_errOut] << bug;
 }
 
-void dataconfigs::setConfigPath(QString p)
+void DataConfig::setConfigPath(QString p)
 {
     config_dir = p;
     if(!config_dir.endsWith('/'))
         config_dir.append('/');
 }
 
-bool dataconfigs::loadBasics()
+bool DataConfig::loadBasics()
 {
     errorsList[ERR_GLOBAL].clear();
     errorsList[ERR_CUSTOM].clear();
@@ -128,6 +128,7 @@ bool dataconfigs::loadBasics()
     guiset.beginGroup("gui");
     {
         guiset.read("editor-splash", splash_logo, "");
+        guiset.read("default-theme", ConfStatus::defaultTheme, "");
 #ifdef __linux__
         QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
         QString envir = env.value("XDG_CURRENT_DESKTOP", "");
@@ -136,19 +137,14 @@ bool dataconfigs::loadBasics()
 #   else
         qApp->setStyle("GTK");
 #   endif
-        if(envir == "KDE" || envir == "XFCE")
+        if(ConfStatus::defaultTheme.isEmpty() && (envir == "KDE" || envir == "XFCE"))
             ConfStatus::defaultTheme = "Breeze";
-        else
-            guiset.read("default-theme", ConfStatus::defaultTheme, "");
 #elif __APPLE__
-        ConfStatus::defaultTheme = "Breeze";
-#elif _WIN32
-        if(QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
+        if(ConfStatus::defaultTheme.isEmpty())
             ConfStatus::defaultTheme = "Breeze";
-        else
-            guiset.read("default-theme", ConfStatus::defaultTheme, "");
-#else
-        guiset.read("default-theme", ConfStatus::defaultTheme, "");
+#elif _WIN32
+        if(ConfStatus::defaultTheme.isEmpty() && QSysInfo::WindowsVersion == QSysInfo::WV_WINDOWS10)
+            ConfStatus::defaultTheme = "Breeze";
 #endif
         guiset.read("animations", Animations, 0);
     }
@@ -225,6 +221,8 @@ bool dataconfigs::loadBasics()
                 {"2", EditorSetup::FeaturesSupport::F_HIDDEN}
         };
         guiset.readEnum("level-section-vertical-wrap", editor.supported_features.level_section_vertical_wrap, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
+        guiset.readEnum("level-section-21-plus", editor.supported_features.level_section_21plus, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
         guiset.readEnum("level-phys-ez-new-types", editor.supported_features.level_phys_ez_new_types, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
@@ -333,7 +331,7 @@ bool dataconfigs::loadBasics()
     return true;
 }
 
-bool dataconfigs::loadconfigs()
+bool DataConfig::loadFullConfig()
 {
     total_data = 0;
     defaultGrid.general = 0;
@@ -384,8 +382,41 @@ bool dataconfigs::loadconfigs()
         mainSet.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
         // For LunaTester
         mainSet.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
-        mainSet.read("smbx-test-by-default",    ConfStatus::SmbxTest_By_Default,    false);
-        mainSet.read("smbx-test-hide-pge-engine-menu", ConfStatus::SmbxTest_HidePgeEngine, false);
+
+        mainSet.read("config-pack-id",          configPackId, QString());
+        mainSet.read("target-engine-name",      targetEngineName, QString());
+
+        mainSet.readEnum("default-engine-type",
+                         ConfStatus::defaultTestEngine,
+                         ConfStatus::ENGINE_PGE,
+        {
+            {"pge", ConfStatus::ENGINE_PGE},
+
+            {"luna", ConfStatus::ENGINE_LUNA},
+            {"lunatester", ConfStatus::ENGINE_LUNA},
+            {"smbx", ConfStatus::ENGINE_LUNA},
+
+            {"xtech", ConfStatus::ENGINE_THEXTECH},
+            {"thextech", ConfStatus::ENGINE_THEXTECH},
+
+            {"38a", ConfStatus::ENGINE_38A},
+            {"smbx38a", ConfStatus::ENGINE_38A},
+        });
+        mainSet.read("hide-non-default-engines", ConfStatus::hideNonDefaultEngines, false);
+
+        { // Deprecated, kept for compatibility
+            bool lunaDefault = false;
+            bool hidePgeEngine = false;
+
+            mainSet.read("smbx-test-by-default", lunaDefault, false);
+            mainSet.read("smbx-test-hide-pge-engine-menu", hidePgeEngine, false);
+
+            if(lunaDefault)
+            {
+                ConfStatus::defaultTestEngine = ConfStatus::ENGINE_LUNA;
+                ConfStatus::hideNonDefaultEngines = hidePgeEngine;
+            }
+        }
 
         dirs.worlds     = data_dir + mainSet.value("worlds", "worlds").toQString() + "/";
 
@@ -541,7 +572,7 @@ bool dataconfigs::loadconfigs()
     return true;
 }
 
-bool dataconfigs::check()
+bool DataConfig::check()
 {
     return
         (
@@ -561,12 +592,12 @@ bool dataconfigs::check()
                 )/* && (!m_isValid)*/;
 }
 
-bool dataconfigs::checkCustom()
+bool DataConfig::checkCustom()
 {
     return !errorsList[ERR_CUSTOM].isEmpty();
 }
 
-long dataconfigs::getCharacterI(unsigned long itemID)
+long DataConfig::getCharacterI(unsigned long itemID)
 {
     int j;
     bool found = false;
@@ -584,53 +615,53 @@ long dataconfigs::getCharacterI(unsigned long itemID)
 }
 
 
-QString dataconfigs::getBgoPath()
+QString DataConfig::getBgoPath()
 {
     return folderLvlBgo.graphics;
 }
 
-QString dataconfigs::getBGPath()
+QString DataConfig::getBGPath()
 {
     return folderLvlBG.graphics;
 }
 
-QString dataconfigs::getBlockPath()
+QString DataConfig::getBlockPath()
 {
     return folderLvlBlocks.graphics;
 }
 
-QString dataconfigs::getNpcPath()
+QString DataConfig::getNpcPath()
 {
     return folderLvlNPC.graphics;
 }
 
-QString dataconfigs::getTilePath()
+QString DataConfig::getTilePath()
 {
     return folderWldTerrain.graphics;
 }
 
-QString dataconfigs::getScenePath()
+QString DataConfig::getScenePath()
 {
     return folderWldScenery.graphics;
 }
 
-QString dataconfigs::getPathPath()
+QString DataConfig::getPathPath()
 {
     return folderWldPaths.graphics;
 }
 
-QString dataconfigs::getWlvlPath()
+QString DataConfig::getWlvlPath()
 {
     return folderWldLevelPoints.graphics;
 }
 
-bool dataconfigs::isExtraSettingsLocalAtRoot()
+bool DataConfig::isExtraSettingsLocalAtRoot()
 {
     return m_extraSettingsLocalAtRoot;
 }
 
 
-QString dataconfigs::getBgoExtraSettingsPath()
+QString DataConfig::getBgoExtraSettingsPath()
 {
     if(folderLvlBgo.extraSettings.isEmpty())
         return config_dir + "items/bgo";
@@ -642,7 +673,7 @@ QString dataconfigs::getBgoExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getBlockExtraSettingsPath()
+QString DataConfig::getBlockExtraSettingsPath()
 {
     if(folderLvlBlocks.extraSettings.isEmpty())
         return config_dir + "items/blocks";
@@ -654,7 +685,7 @@ QString dataconfigs::getBlockExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getNpcExtraSettingsPath()
+QString DataConfig::getNpcExtraSettingsPath()
 {
     if(folderLvlNPC.extraSettings.isEmpty())
         return config_dir + "items/npc";
@@ -666,7 +697,7 @@ QString dataconfigs::getNpcExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getTileExtraSettingsPath()
+QString DataConfig::getTileExtraSettingsPath()
 {
     if(folderWldTerrain.extraSettings.isEmpty())
         return config_dir + "items/terrain";
@@ -678,7 +709,7 @@ QString dataconfigs::getTileExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getSceneExtraSettingsPath()
+QString DataConfig::getSceneExtraSettingsPath()
 {
     if(folderWldScenery.extraSettings.isEmpty())
         return config_dir + "items/scenery";
@@ -690,7 +721,7 @@ QString dataconfigs::getSceneExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getPathExtraSettingsPath()
+QString DataConfig::getPathExtraSettingsPath()
 {
     if(folderWldPaths.extraSettings.isEmpty())
         return config_dir + "items/paths";
@@ -702,7 +733,7 @@ QString dataconfigs::getPathExtraSettingsPath()
     }
 }
 
-QString dataconfigs::getWlvlExtraSettingsPath()
+QString DataConfig::getWlvlExtraSettingsPath()
 {
     if(folderWldLevelPoints.extraSettings.isEmpty())
         return config_dir + "items/levels";

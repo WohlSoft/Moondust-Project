@@ -95,9 +95,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         obj_block &blockC = m_localConfigBlocks[itemID];
         Items::getItemGFX(&blockC, tImg, false);
         if(tImg.isNull())
-        {
             tImg = m_dummyBlockImg;
-        }
         if(!blockC.isValid)
         {
             blockC = m_configs->main_block[1];
@@ -224,9 +222,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         obj_bgo &bgoC = m_localConfigBGOs[itemID];
         Items::getItemGFX(&bgoC, tImg, false);
         if(tImg.isNull())
-        {
             tImg = m_dummyBgoImg;
-        }
         if(!bgoC.isValid)
         {
             bgoC = m_configs->main_bgo[1];
@@ -344,6 +340,14 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         // Clean up previously added extra settings
         LvlPlacingItems::npcSet.meta.custom_params.clear();
 
+        // Clean up previously added contents if this is not a container
+        if(!mergedSet.setup.container)
+            LvlPlacingItems::npcSet.contents = 0;
+
+        // Clean up previously added special option if this doesn't have it
+        if(!mergedSet.setup.special_option)
+            LvlPlacingItems::npcSet.special_data = 0;
+
         if(LvlPlacingItems::npcSet.generator)
             LvlPlacingItems::gridSz = (m_configs->defaultGrid.general / 2);
         else
@@ -420,10 +424,10 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
             m_cursorItemImg->setData(itemFlag.first, itemFlag.second);
 
         ((QGraphicsPixmapItem *) m_cursorItemImg)->setOffset(
-                (LvlPlacingItems::npcGfxOffsetX1 +
-                 (LvlPlacingItems::npcGfxOffsetX2 *
-                  ((LvlPlacingItems::npcSet.direct == 0) ? -1 : LvlPlacingItems::npcSet.direct))),
-                LvlPlacingItems::npcGfxOffsetY);
+            (LvlPlacingItems::npcGfxOffsetX1 +
+             (LvlPlacingItems::npcGfxOffsetX2 *
+              ((LvlPlacingItems::npcSet.direct == 0) ? -1 : LvlPlacingItems::npcSet.direct))),
+            LvlPlacingItems::npcGfxOffsetY);
 
         m_cursorItemImg->setZValue(7000);
         m_cursorItemImg->setOpacity(0.8);
@@ -442,7 +446,7 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
         LvlPlacingItems::waterSet.layer = LvlPlacingItems::layer.isEmpty() ? "Default" : LvlPlacingItems::layer;
         setRectDrawer();
         return;
-        break;
+
     case 4: //doorPoint
         m_placingItemType = PLC_Door;
         LvlPlacingItems::doorType = dType;
@@ -460,14 +464,14 @@ void LvlScene::setItemPlacer(int itemType, unsigned long itemID, int dType)
 
         ((QGraphicsRectItem *) m_cursorItemImg)->setBrush(QBrush(QColor(qRgb(0xff, 0x00, 0x7f))));
         ((QGraphicsRectItem *) m_cursorItemImg)->setPen(
-                QPen(QColor(qRgb(0xff, 0x00, 0x7f)), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
+            QPen(QColor(qRgb(0xff, 0x00, 0x7f)), 2, Qt::SolidLine, Qt::SquareCap, Qt::MiterJoin));
         m_cursorItemImg->setData(ITEM_IS_CURSOR, "CURSOR");
         m_cursorItemImg->setZValue(7000);
         m_cursorItemImg->setOpacity(0.8);
         m_cursorItemImg->setVisible(false);
         m_cursorItemImg->setEnabled(true);
-
         break;
+
     case 5: //PlayerPoint
     {
         m_placingItemType = PLC_PlayerPoint;
@@ -549,7 +553,8 @@ void LvlScene::setRectDrawer()
         {
             pen = QPen(Qt::yellow, 2);
             brush = QBrush(Qt::darkYellow);
-        } else
+        }
+        else
         {
             pen = QPen(Qt::green, 2);
             brush = QBrush(Qt::darkGreen);
@@ -717,9 +722,9 @@ void LvlScene::updateCursoredNpcDirection()
 
     const QPixmap &p = getNPCimg(LvlPlacingItems::npcSet.id, LvlPlacingItems::npcSet.direct);
     long offsetX = (LvlPlacingItems::npcGfxOffsetX1 +
-                   (LvlPlacingItems::npcGfxOffsetX2 *
-                   ((LvlPlacingItems::npcSet.direct == 0) ? -1 : LvlPlacingItems::npcSet.direct)));
-    auto cursor = qgraphicsitem_cast<QGraphicsPixmapItem*>(m_cursorItemImg);
+                    (LvlPlacingItems::npcGfxOffsetX2 *
+                     ((LvlPlacingItems::npcSet.direct == 0) ? -1 : LvlPlacingItems::npcSet.direct)));
+    auto cursor = qgraphicsitem_cast<QGraphicsPixmapItem *>(m_cursorItemImg);
     Q_ASSERT(cursor);
     cursor->setPixmap(p);
     cursor->setOffset(offsetX, LvlPlacingItems::npcGfxOffsetY);

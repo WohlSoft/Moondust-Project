@@ -139,7 +139,7 @@ void MainWindow::on_actionLoad_configs_triggered()
     dock_TilesetBox->m_lockSettings = true;
     dock_TilesetBox->clearTilesetGroups();
     // Do the loading in a thread
-    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &dataconfigs::loadconfigs);
+    QFuture<bool> isOk = QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig);
 
     while(!isOk.isFinished())
     {

@@ -6,82 +6,82 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter Áudio (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Não alterar formato</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="34"/>
         <source>Files will be in same format</source>
-        <translation type="unfinished"></translation>
+        <translation>Os ficheiros irão estar no mesmo formato</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="57"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir taxa de bit</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="155"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Os ficheiros serão convertidos para MP3</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="198"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Os ficheiros serão convertidos para FLAC</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="215"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Os ficheiros serão convertidos para OGG</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="231"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Definir qualidade</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="310"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Os ficheiros serão convertidos para WAV</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="324"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorar...</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>O que deseja?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
         <source>Path to a level file to process</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho para um ficheiro de nível para processar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="386"/>
         <source>Convert all music files of specific episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter todos os ficheiros de música do episódio específico</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="409"/>
         <source>Convert music of specific level</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter música de nível específico</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="419"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Converter ficheiros especificados</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="429"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho para uma diretoria de episódio para processar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="455"/>
@@ -112,20 +112,20 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="594"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="180"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erro de SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
@@ -143,27 +143,27 @@ Please set SoX path first</source>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="447"/>
         <source>Nothing to do</source>
-        <translation type="unfinished"></translation>
+        <translation>Nada para realizar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Sem ficheiros para converter</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="156"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Parar</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
         <source>Operation cancaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Operação cancelada</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="276"/>
         <source>SoX was crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX crachou</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="286"/>
@@ -174,7 +174,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="316"/>
         <source>All works completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Todos as tarefas concluídas</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="317"/>
@@ -193,12 +193,12 @@ Overwritten worlds: %3
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="508"/>
         <source>Open SoX binary path</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir caminho do binário de SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="520"/>
         <source>Add file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar ficheiro para converter</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="558"/>
@@ -237,12 +237,12 @@ Overwritten worlds: %3
         <location filename="../EpisodeCvt/case_fixer.ui" line="57"/>
         <location filename="../EpisodeCvt/case_fixer.ui" line="120"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Navegar...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="67"/>
         <source>Choose the mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Escolher o modo:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="73"/>
@@ -277,12 +277,12 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="153"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="173"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="277"/>
@@ -307,7 +307,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
         <source>Work finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarefa terminada</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
@@ -335,7 +335,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="80"/>
         <source>Initializing...</source>
-        <translation type="unfinished"></translation>
+        <translation>A inicializar...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="87"/>
@@ -355,12 +355,12 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="172"/>
         <source>Looking for resources...</source>
-        <translation type="unfinished"></translation>
+        <translation>A procurar por recursos...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="192"/>
         <source>Processing resources...</source>
-        <translation type="unfinished"></translation>
+        <translation>A processar os recursos...</translation>
     </message>
 </context>
 <context>
@@ -382,7 +382,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="41"/>
         <source>Episode path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Caminho do episódio:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
@@ -392,22 +392,22 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Navegar...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
         <source>Target format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato de destino:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="88"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Versão:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="105"/>
         <source>Look for subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Procurar por subdiretorias</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="112"/>
@@ -417,12 +417,12 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="122"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Fechar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="276"/>
@@ -452,7 +452,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
         <source>Work finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarefa terminada</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>

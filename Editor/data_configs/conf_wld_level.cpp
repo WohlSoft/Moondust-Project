@@ -23,7 +23,7 @@
 
 #include "data_configs.h"
 
-bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_level *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
@@ -50,7 +50,7 @@ bool dataconfigs::loadWorldLevel(obj_w_level &slevel, QString section, obj_w_lev
     return valid;
 }
 
-void dataconfigs::loadWorldLevels()
+void DataConfig::loadWorldLevels()
 {
     unsigned int i;
 
@@ -122,6 +122,10 @@ void dataconfigs::loadWorldLevels()
                 valid = false;
                 addError(QString("LEVEL-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderWldLevelPoints.graphics,
+                                       slevel.setup.icon_n,
+                                       slevel.icon);
         }
         /***************Load image*end***************/
         slevel.setup.id = i;

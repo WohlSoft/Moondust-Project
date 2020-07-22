@@ -29,6 +29,7 @@ public:
 private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();
+    void on_toggleSign_clicked();
 
 private:
     unsigned int m_blockSize;

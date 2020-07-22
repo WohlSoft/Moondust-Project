@@ -20,6 +20,7 @@
 #ifndef GLOBAL_SETTINGS_H
 #define GLOBAL_SETTINGS_H
 
+#include <memory>
 #include <QString>
 #include <QMdiArea>
 
@@ -33,6 +34,7 @@ struct EditingSettings
     bool grid_override = false;
     QSize customGrid;
     bool grid_show = false;
+    bool camera_grid_show = false;
     unsigned int default_zoom = 100;
     //World map only
     bool semiTransparentPaths = false;
@@ -94,8 +96,12 @@ struct SETTINGS_Extra
     bool attr_hdpi = true;
 };
 
+/**
+ * @brief A container of globally visible settings
+ */
 class GlobalSettings
 {
+    // TODO: Make it being a non-static global singleton
 public:
     static EditingSettings  LvlOpts;
     static SETTINGS_ItemDefaults LvlItemDefaults;
@@ -155,12 +161,22 @@ public:
     static QTabWidget::TabPosition  TSTToolboxPos;
     static QString                  currentTheme;
 
+    static std::unique_ptr<QFont>   fontDefault;
+    static std::unique_ptr<QFont>   font;
+    static int                      fontSize;
+
     static bool ShowTipOfDay;
+
+    static void cleanUp();
 };
 
+
+/**
+ * @brief A container of current config pack status information
+ */
 class ConfStatus
 {
-    //Configuration status
+    // TODO: Make it being a non-static global singleton
 public:
     static long total_characters;
     static long total_blocks;
@@ -186,8 +202,16 @@ public:
     static QString configDataPath;
 
     static QString SmbxEXE_Name;
-    static bool    SmbxTest_By_Default;
-    static bool    SmbxTest_HidePgeEngine;
+
+    enum TestEngineType
+    {
+        ENGINE_PGE,
+        ENGINE_LUNA,
+        ENGINE_THEXTECH,
+        ENGINE_38A
+    };
+    static TestEngineType defaultTestEngine;
+    static bool           hideNonDefaultEngines;
 };
 
 #endif // GLOBAL_SETTINGS_H

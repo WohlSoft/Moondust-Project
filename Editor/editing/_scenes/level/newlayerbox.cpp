@@ -21,7 +21,7 @@
 #include "newlayerbox.h"
 #include <ui_tonewlayerbox.h>
 
-ToNewLayerBox::ToNewLayerBox(LevelData * lData, QWidget *parent) :
+ToNewLayerBox::ToNewLayerBox(LevelData *lData, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ToNewLayerBox)
 {
@@ -42,35 +42,33 @@ void ToNewLayerBox::closeEvent(QCloseEvent *event)
 
 void ToNewLayerBox::on_buttonBox_clicked(QAbstractButton *button)
 {
-    if(ui->buttonBox->buttonRole(button)==QDialogButtonBox::AcceptRole)
+    if(ui->buttonBox->buttonRole(button) == QDialogButtonBox::AcceptRole)
     {
         lName = ui->layerName->text();
         lLocked = ui->Lock->isChecked();
         lHidden = ui->hide->isChecked();
 
-        bool AlreadyExist=false;
+        bool AlreadyExist = false;
         foreach(LevelLayer layer, LvlData->layers)
         {
-            if( layer.name==lName )
+            if(layer.name == lName)
             {
-                AlreadyExist=true;
+                AlreadyExist = true;
                 break;
             }
         }
         if(AlreadyExist)
         {
-            valid=false;
-            QMessageBox::warning(this,tr("Layer exists"), tr("Layer \"%1\" is exist, please, set other name.").arg(lName), QMessageBox::Ok);
+            valid = false;
+            QMessageBox::warning(this, tr("Layer exists"), tr("Layer \"%1\" is exist, please, set other name.").arg(lName), QMessageBox::Ok);
             return;
         }
         else
         {
-            valid=true;
+            valid = true;
             QDialog::accept();
         }
     }
     else
-    {
-            QDialog::reject();
-    }
+        QDialog::reject();
 }

@@ -132,7 +132,7 @@ void WldScene::placePath(WorldPathTile &path, bool toGrid)
 
 void WldScene::placeLevel(WorldLevelTile &level, bool toGrid)
 {
-    long animator=0, pathAnimator=0, bPathAnimator=0;
+    long animator = 0, pathAnimator = 0, bPathAnimator = 0;
     obj_w_level &mergedSet = m_localConfigLevels[level.id];
     animator =      mergedSet.animator_id;
     if(!mergedSet.isValid)
@@ -181,12 +181,12 @@ void WldScene::placeMusicbox(WorldMusicBox &musicbox, bool toGrid)
     }
 
     MusicBoxItem->setMusicData(musicbox);
-    if(j>=0)
+    if(j >= 0)
     {
         MusicBoxItem->m_musicTitle =
-                (m_configs->music_w_custom_id==musicbox.id) ?
-                    musicbox.music_file:
-                    m_configs->main_music_wld[j].name;
+            (m_configs->music_w_custom_id == musicbox.id) ?
+            musicbox.music_file :
+            m_configs->main_music_wld[j].name;
     }
 
     MusicBoxItem->setFlag(QGraphicsItem::ItemIsSelectable, (!m_lockMusicBox));

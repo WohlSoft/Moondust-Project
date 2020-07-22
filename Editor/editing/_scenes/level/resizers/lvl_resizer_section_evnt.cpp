@@ -60,9 +60,9 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
         {
             if(accept)
             {
-                #ifdef _DEBUG_
+#ifdef _DEBUG_
                 WriteToLog(QtDebugMsg, QString("SECTION RESIZE -> to %1 x %2").arg(pResizer->_width).arg(pResizer->_height));
-                #endif
+#endif
                 long l = (long)m_resizeBox->pos().x();
                 long t = (long)m_resizeBox->pos().y();
                 long r = l + (long)m_resizeBox->m_width;
@@ -89,7 +89,7 @@ void LvlScene::setEventSctSizeResizer(long event, bool enabled, bool accept)
                 m_mw->dock_LvlEvents->eventSectionSettingsSync();
             }
             delete m_resizeBox;
-            m_resizeBox = NULL;
+            m_resizeBox = nullptr;
             m_mw->on_actionSelect_triggered();
             m_mw->resizeToolbarVisible(false);
         }

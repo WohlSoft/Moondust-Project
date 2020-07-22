@@ -20,11 +20,14 @@
 #include <locale>
 #include <iostream>
 #include <set>
+#include <algorithm>
+#include <cctype>
 #include <stdio.h>
 
 #include <FileMapper/file_mapper.h>
 #include <DirManager/dirman.h>
 #include <Utils/files.h>
+#include <Graphics/bitmask2rgba.h>
 #include <Utf8Main/utf8main.h>
 #include <tclap/CmdLine.h>
 #include "version.h"
@@ -84,90 +87,12 @@ static void mergeBitBltToRGBA(FIBITMAP *image, const std::string &pathToMask, FI
     if(!mask)
         return;//Nothing to do
 
-    unsigned int img_w  = FreeImage_GetWidth(image);
-    unsigned int img_h  = FreeImage_GetHeight(image);
-    unsigned int mask_w = FreeImage_GetWidth(mask);
-    unsigned int mask_h = FreeImage_GetHeight(mask);
-
-    RGBQUAD Fpix;
-    RGBQUAD Bpix;
-    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
-
-    unsigned int ym = mask_h - 1;
-    unsigned int y = img_h - 1;
-    while(1)
-    {
-        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
-        {
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-            FreeImage_GetPixelColor(mask, x, ym, &Bpix);
-
-            Npix.rgbRed     = ((0x7F & Bpix.rgbRed) | Fpix.rgbRed);
-            Npix.rgbGreen   = ((0x7F & Bpix.rgbGreen) | Fpix.rgbGreen);
-            Npix.rgbBlue    = ((0x7F & Bpix.rgbBlue) | Fpix.rgbBlue);
-            int newAlpha = 255 -
-                           ((int(Bpix.rgbRed) +
-                             int(Bpix.rgbGreen) +
-                             int(Bpix.rgbBlue)) / 3);
-            if((Bpix.rgbRed > 240u) //is almost White
-               && (Bpix.rgbGreen > 240u)
-               && (Bpix.rgbBlue > 240u))
-                newAlpha = 0;
-
-            newAlpha = newAlpha + ((int(Fpix.rgbRed) +
-                                    int(Fpix.rgbGreen) +
-                                    int(Fpix.rgbBlue)) / 3);
-            if(newAlpha > 255)
-                newAlpha = 255;
-            Npix.rgbReserved = static_cast<BYTE>(newAlpha);
-
-            FreeImage_SetPixelColor(image, x, y, &Npix);
-        }
-
-        if(y == 0 || ym == 0)
-            break;
-        y--; ym--;
-    }
+    bitmask_to_rgba(image, mask);
 
     if(!extMask)
         FreeImage_Unload(mask);
 }
 
-/**
- * @brief Generate mask from off RGBA source
- * @param image [in] Source Image
- * @param mask [out] Target image to write a mask
- */
-static void getMaskFromRGBA(FIBITMAP*&image, FIBITMAP *&mask)
-{
-    unsigned int img_w   = FreeImage_GetWidth(image);
-    unsigned int img_h   = FreeImage_GetHeight(image);
-
-    mask = FreeImage_AllocateT(FIT_BITMAP,
-                               int(img_w), int(img_h),
-                               int(FreeImage_GetBPP(image)),
-                               FreeImage_GetRedMask(image),
-                               FreeImage_GetGreenMask(image),
-                               FreeImage_GetBlueMask(image));
-
-    RGBQUAD Fpix;
-    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
-
-    for(unsigned int y = 0; (y < img_h); y++)
-    {
-        for(unsigned int x = 0; (x < img_w); x++)
-        {
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-
-            uint8_t grey = (255 - Fpix.rgbReserved);
-            Npix.rgbRed  = grey;
-            Npix.rgbGreen = grey;
-            Npix.rgbBlue = grey;
-            Npix.rgbReserved = 0xFF;
-            FreeImage_SetPixelColor(mask,  x, y, &Npix);
-        }
-    }
-}
 
 struct GIFs2PNG_Setup
 {
@@ -229,13 +154,20 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
     if(Files::hasSuffix(imgFileIn, "m.gif"))
         return; //Skip mask files
 
+    //! Lower-case filename for case-insensitive checks
+    std::string imgFileInL = imgFileIn;
+    std::transform(imgFileInL.begin(), imgFileInL.end(), imgFileInL.begin(),
+                   [](unsigned char c){ return std::tolower(c); });
+
     std::string imgPathIn = pathIn + "/" + imgFileIn;
     std::string maskPathIn;
 
     std::cout << imgPathIn;
     std::cout.flush();
 
-    if(setup.skipBackground2 && (imgFileIn.compare(0, 11, "background2", 11) == 0))
+    bool isBackground2 = (imgFileInL.compare(0, 11, "background2", 11) == 0);
+
+    if(setup.skipBackground2 && isBackground2)
     {
         setup.count_skipped++;
         std::cout << "...SKIP!\n";
@@ -263,7 +195,7 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
 
     if(maskIsExists) /* When mask exists, use it */
         mergeBitBltToRGBA(image, maskPathIn);
-    else /* Try to find the PNG as source of the mask */
+    else if(!isBackground2)/* Try to find the PNG as source of the mask, except of backgrounds */
     {
         maskFileIn = Files::changeSuffix(imgFileIn, ".png");
         maskPathIn = cnf.getFile(maskFileIn);
@@ -275,7 +207,7 @@ void doGifs2PNG(std::string pathIn,  std::string imgFileIn,
             {
                 FIBITMAP *mask = nullptr;
                 std::cout << ".PNG-AS-MASK.";
-                getMaskFromRGBA(front, mask);
+                bitmask_get_mask_from_rgba(front, &mask);
                 FreeImage_Unload(front);
                 mergeBitBltToRGBA(image, "", mask);
                 FreeImage_Unload(mask);

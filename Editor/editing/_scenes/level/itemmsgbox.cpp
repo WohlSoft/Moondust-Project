@@ -45,11 +45,11 @@ ItemMsgBox::ItemMsgBox(Opened_By openedBy, QString text, bool isFriendly, QStrin
     if(!title.isEmpty())
         this->setWindowTitle(title);
 
-//#ifdef Q_OS_MACX
-//    QFont theFont("Press Start 2P", 11);
-//#else
-//    QFont theFont("Press Start 2P", 11);
-//#endif
+    //#ifdef Q_OS_MACX
+    //    QFont theFont("Press Start 2P", 11);
+    //#else
+    //    QFont theFont("Press Start 2P", 11);
+    //#endif
     QFont theFont("Press Start 2P");
     theFont.setPixelSize(8);
     theFont.setStyleHint(QFont::Monospace);

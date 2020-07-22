@@ -77,23 +77,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QPushButton" name="searchSetup">
-        <property name="maximumSize">
-         <size>
-          <width>35</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="toolTip">
-         <string>Search settings</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../_resources/editor.qrc">
-          <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="2">
        <widget class="QScrollArea" name="tilesetScrollArea">
         <property name="widgetResizable">
@@ -105,7 +88,7 @@
            <x>0</x>
            <y>0</y>
            <width>322</width>
-           <height>217</height>
+           <height>244</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout">
@@ -316,6 +299,32 @@
          </spacer>
         </item>
        </layout>
+      </item>
+      <item row="1" column="1">
+       <widget class="QToolButton" name="searchSetup">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>35</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Search settings</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../_resources/editor.qrc">
+          <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

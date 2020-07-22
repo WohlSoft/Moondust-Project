@@ -105,13 +105,18 @@ void EditorPipe::shut()
     stop();
 }
 
-bool EditorPipe::levelIsLoad()
+bool EditorPipe::hasLevelData()
 {
     m_levelAccepted_lock.lock();
     bool state = m_levelAccepted;
     m_levelAccepted = false;
     m_levelAccepted_lock.unlock();
     return state;
+}
+
+bool EditorPipe::levelReceivingInProcess()
+{
+    return m_doAcceptLevelData;
 }
 
 void EditorPipe::icomingData(const std::string &in)
@@ -169,6 +174,11 @@ void EditorPipe::icomingData(const std::string &in)
     {
         D_pLogDebugNA("Accepted Placing item!");
         IntProc::storeCommand(in.c_str() + 11, in.size() - 11, IntProc::PlaceItem);
+    }
+    else if(in.compare(0, 11, "SET_LAYER: ") == 0)
+    {
+        D_pLogDebugNA("Accepted layer change!");
+        IntProc::storeCommand(in.c_str() + 11, in.size() - 11, IntProc::SetLayer);
     }
     else if(in.compare(0, 8, "MSGBOX: ") == 0)
     {

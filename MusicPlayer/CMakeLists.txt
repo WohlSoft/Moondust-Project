@@ -145,10 +145,6 @@ target_compile_definitions(PGE_MusPlay_QtLibs
     ${Qt5Network_DEFINITIONS}
 )
 
-if(MINGW) # Required for SDL_Main
-    target_compile_definitions(pge_musplay PRIVATE -DSDL_MAIN_HANDLED)
-endif()
-
 target_link_libraries(PGE_MusPlay_QtLibs
     INTERFACE
     ${QT_EXTRA_LIBS_PRE}

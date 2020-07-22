@@ -73,12 +73,10 @@ bool PGE_JS_File::isDirExists(QString dirPath)
 
 bool PGE_JS_File::copy(QString source, QString target, bool override)
 {
-    if( QFile::exists(source) )
+    if(QFile::exists(source))
     {
         if(QDir(target).exists())//Is target a directory
-        {
-            target += "/"+QFile(source).fileName();
-        }
+            target += "/" + QFile(source).fileName();
     }
     if(override)
     {

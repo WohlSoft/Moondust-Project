@@ -6,7 +6,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Converti Audio (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
@@ -118,7 +118,7 @@
         <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="180"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Inizia</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
@@ -282,7 +282,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="173"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inizia</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="277"/>
@@ -422,7 +422,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inizia</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="276"/>
@@ -555,7 +555,7 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="163"/>
         <location filename="../Graphics/gifs2png.cpp" line="273"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inizia</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="170"/>
@@ -805,7 +805,7 @@ Supported formats:
         <location filename="../Graphics/png2gifs.ui" line="139"/>
         <location filename="../Graphics/png2gifs.cpp" line="184"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Inizia</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="146"/>

@@ -7,6 +7,7 @@
 - Fixed incorrect utf8 processing of translation data
 - Fixed unstable glypth length value in message box with mixed TTF and raster fonts
 - Added French translation by NathanBnm
+- New icons by Tails608
 
 0.3.2
 - Fixed incorrect management of custom config files caused missing of them

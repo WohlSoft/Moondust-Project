@@ -37,10 +37,10 @@ void LvlScene::applyResizers()
             setScreenshotSelector(false, true);
             break;
         case ItemResizer::Resizer_PhyzEnvZone:
-            setPhysEnvResizer(NULL, false, true);
+            setPhysEnvResizer(nullptr, false, true);
             break;
         case ItemResizer::Resizer_Item:
-            setBlockResizer(NULL, false, true);
+            setBlockResizer(nullptr, false, true);
             break;
         case ItemResizer::Resizer_InEventSection:
             setEventSctSizeResizer(-1, false, true);
@@ -63,10 +63,10 @@ void LvlScene::resetResizers()
             setScreenshotSelector(false, false);
             break;
         case ItemResizer::Resizer_PhyzEnvZone:
-            setPhysEnvResizer(NULL, false, false);
+            setPhysEnvResizer(nullptr, false, false);
             break;
         case ItemResizer::Resizer_Item:
-            setBlockResizer(NULL, false, false);
+            setBlockResizer(nullptr, false, false);
             break;
         case ItemResizer::Resizer_InEventSection:
             setEventSctSizeResizer(-1, false, false);

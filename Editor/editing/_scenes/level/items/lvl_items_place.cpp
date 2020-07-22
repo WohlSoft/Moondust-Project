@@ -137,16 +137,16 @@ ItemPhysEnv *LvlScene::placeEnvironmentZone(LevelPhysEnv &water, bool toGrid)
 
 ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 {
-    ItemPlayerPoint * player = NULL;
+    ItemPlayerPoint *player = nullptr;
     bool found = false;
     if(!init)
     {
-        foreach(QGraphicsItem * plrt, this->items())
+        foreach(QGraphicsItem *plrt, this->items())
         {
             if(
                 (plrt->data(ITEM_TYPE).toString() == "playerPoint") &&
-                ((unsigned int)plrt->data(ITEM_ARRAY_ID).toInt()==plr.id)
-               )
+                ((unsigned int)plrt->data(ITEM_ARRAY_ID).toInt() == plr.id)
+            )
             {
                 player = dynamic_cast<ItemPlayerPoint *>(plrt);
                 found = true;
@@ -163,7 +163,7 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
     }
     else
     {
-        if((plr.h!=0)||(plr.w!=0)||(plr.x!=0)||(plr.y!=0))
+        if((plr.h != 0) || (plr.w != 0) || (plr.x != 0) || (plr.y != 0))
         {
             player = new ItemPlayerPoint(this);
             player->setPointData(plr, init);
@@ -176,15 +176,11 @@ ItemPlayerPoint *LvlScene::placePlayerPoint(PlayerPoint plr, bool init)
 
 void LvlScene::placeDoor(LevelDoor &door, bool toGrid)
 {
-    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)) )
-    {
+    if(((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_o) && (!door.lvl_i)))
         placeDoorEnter(door, toGrid, true);
-    }
 
-    if( ((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)) )
-    {
+    if(((!door.lvl_o) && (!door.lvl_i)) || ((door.lvl_i)))
         placeDoorExit(door, toGrid, true);
-    }
 }
 
 
@@ -198,7 +194,7 @@ void LvlScene::placeDoorEnter(LevelDoor &door, bool toGrid, bool init)
         door.iy = newPosI.y();
     }
 
-    ItemDoor* doorItemEntrance = new ItemDoor(this);
+    ItemDoor *doorItemEntrance = new ItemDoor(this);
     door.userdata_enter = doorItemEntrance;
     doorItemEntrance->setDoorData(door, ItemDoor::D_Entrance, init);
 }
@@ -214,10 +210,7 @@ void LvlScene::placeDoorExit(LevelDoor &door, bool toGrid, bool init)
         door.ox = newPosO.x();
         door.oy = newPosO.y();
     }
-    ItemDoor * doorItemExit = new ItemDoor(this);
+    ItemDoor *doorItemExit = new ItemDoor(this);
     door.userdata_exit = doorItemExit;
     doorItemExit->setDoorData(door, ItemDoor::D_Exit, init);
 }
-
-
-

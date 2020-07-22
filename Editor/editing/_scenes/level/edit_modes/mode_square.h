@@ -25,7 +25,7 @@
 class LVL_ModeSquare : public EditMode
 {
 public:
-    LVL_ModeSquare(QGraphicsScene * parentScene = 0, QObject *parent = 0);
+    LVL_ModeSquare(QGraphicsScene *parentScene = nullptr, QObject *parent = nullptr);
     ~LVL_ModeSquare();
     void set();
     void mousePress(QGraphicsSceneMouseEvent *mouseEvent);

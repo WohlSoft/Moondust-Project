@@ -185,17 +185,14 @@ public:
 
 
     /**************LoadScreen**************/
-    int     m_loaderSpeed = 32;
+    Uint32  m_loaderSpeed = 32;
     bool    m_loaderIsWorks = false;
     void    drawLoader();
-    void    setLoaderAnimation(int speed);
+    void    setLoaderAnimation(Uint32 speed);
     void    stopLoaderAnimation();
     void    destroyLoaderTexture();
-    static  unsigned int nextLoadAniFrame(unsigned int x, void *p);
-    void    loaderTick();
-    bool    m_loaderDoStep = false;
     void    loaderStep();
-    SDL_TimerID m_loader_timer_id = 0;
+    Uint32  m_loader_prevFrameTime = 0;
     /**************LoadScreen**************/
 
     /*!

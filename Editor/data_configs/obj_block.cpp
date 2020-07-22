@@ -25,22 +25,18 @@
 #include "data_configs.h"
 
 
-obj_block::obj_block()
-{
-    isValid     = false;
-    animator_id = 0;
-    cur_image   = nullptr;
-}
-
-
 void obj_block::copyTo(obj_block &block)
 {
     /* for internal usage */
     block.isValid         = isValid;
     block.animator_id     = animator_id;
     block.cur_image       = cur_image;
-    if(cur_image == nullptr)
+    block.cur_icon        = cur_icon;
+
+    if(!cur_image)
         block.cur_image   = &image;
+    if(!cur_icon)
+        block.cur_icon    = &icon;
     block.setup = setup;
 }
 
@@ -53,7 +49,7 @@ void obj_block::copyTo(obj_block &block)
  * \param setup loaded INI-file descriptor to load from global nested INI-file
  * \return true on success loading, false if error has occouped
  */
-bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadLevelBlock(obj_block &sblock, QString section, obj_block *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
@@ -81,7 +77,7 @@ bool dataconfigs::loadLevelBlock(obj_block &sblock, QString section, obj_block *
 }
 
 
-void dataconfigs::loadLevelBlocks()
+void DataConfig::loadLevelBlocks()
 {
     unsigned int i;
 
@@ -156,6 +152,10 @@ void dataconfigs::loadLevelBlocks()
                 valid = false;
                 addError(QString("BLOCK-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderLvlBlocks.graphics,
+                                       sblock.setup.icon_n,
+                                       sblock.icon);
         }
         /***************Load image*end***************/
         sblock.setup.id = i;

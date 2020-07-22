@@ -17,6 +17,7 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 #include <Utils/files.h>
+#include <Graphics/bitmask2rgba.h>
 #include <FileMapper/file_mapper.h>
 
 #include "graphics_funcs.h"
@@ -54,6 +55,7 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     loadingTime.start();
     fReadTime.start();
 #endif
+
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
     FileMapper fileMap;
 
@@ -91,18 +93,17 @@ FIBITMAP *GraphicsHelps::loadImage(std::string file, bool convertTo32bit)
     long long imgConvertElapsed = 0;
 #endif
 
-    if(convertTo32bit)
+    unsigned int bpp = FreeImage_GetBPP(img);
+
+    if(convertTo32bit && bpp != 32)
     {
 #ifdef DEBUG_BUILD
         imgConvTime.start();
 #endif
-        FIBITMAP *temp;
-        temp = FreeImage_ConvertTo32Bits(img);
-
+        FIBITMAP *temp = FreeImage_ConvertTo32Bits(img);
+        FreeImage_Unload(img);
         if(!temp)
             return nullptr;
-
-        FreeImage_Unload(img);
         img = temp;
 #ifdef DEBUG_BUILD
         imgConvertElapsed = static_cast<long long>(imgConvTime.nanoelapsed());
@@ -155,37 +156,6 @@ void GraphicsHelps::closeImage(FIBITMAP *img)
     FreeImage_Unload(img);
 }
 
-void GraphicsHelps::getMaskFromRGBA(FIBITMAP *&image, FIBITMAP *&mask)
-{
-    unsigned int img_w   = FreeImage_GetWidth(image);
-    unsigned int img_h   = FreeImage_GetHeight(image);
-
-    mask = FreeImage_AllocateT(FIT_BITMAP,
-                               int(img_w), int(img_h),
-                               int(FreeImage_GetBPP(image)),
-                               FreeImage_GetRedMask(image),
-                               FreeImage_GetGreenMask(image),
-                               FreeImage_GetBlueMask(image));
-
-    RGBQUAD Fpix;
-    RGBQUAD Npix = {0x0, 0x0, 0x0, 0xFF};
-
-    for(unsigned int y = 0; (y < img_h); y++)
-    {
-        for(unsigned int x = 0; (x < img_w); x++)
-        {
-            FreeImage_GetPixelColor(image, x, y, &Fpix);
-
-            uint8_t grey = (255 - Fpix.rgbReserved);
-            Npix.rgbRed  = grey;
-            Npix.rgbGreen = grey;
-            Npix.rgbBlue = grey;
-            Npix.rgbReserved = 0xFF;
-            FreeImage_SetPixelColor(mask,  x, y, &Npix);
-        }
-    }
-}
-
 SDL_Surface *GraphicsHelps::fi2sdl(FIBITMAP *img)
 {
     int h = static_cast<int>(FreeImage_GetHeight(img));
@@ -208,62 +178,14 @@ void GraphicsHelps::mergeWithMask(FIBITMAP *image, std::string pathToMask, std::
     if(!mask && !pathToMaskFallback.empty())
     {
         FIBITMAP *front = loadImage(pathToMaskFallback, true);
-        getMaskFromRGBA(front, mask);
+        bitmask_get_mask_from_rgba(front, &mask);
         closeImage(front);
     }
 
     if(!mask)
         return;//Nothing to do
 
-    unsigned int img_w = FreeImage_GetWidth(image);
-    unsigned int img_h = FreeImage_GetHeight(image);
-    unsigned int mask_w = FreeImage_GetWidth(mask);
-    unsigned int mask_h = FreeImage_GetHeight(mask);
-    BYTE *img_bits  = FreeImage_GetBits(image);
-    BYTE *mask_bits = FreeImage_GetBits(mask);
-    BYTE *FPixP = img_bits;
-    BYTE *SPixP = mask_bits;
-    RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   //Destination pixel color
-    unsigned short newAlpha = 0xFF; //Calculated destination alpha-value
-
-    unsigned int ym = mask_h - 1;
-    unsigned int y = img_h - 1;
-    while(1)
-    {
-        FPixP = img_bits + (img_w * y * 4);
-        SPixP = mask_bits + (mask_w * ym * 4);
-        for(unsigned int x = 0; (x < img_w) && (x < mask_w); x++)
-        {
-            Npix.rgbBlue = ((SPixP[FI_RGBA_BLUE] & 0x7F) | FPixP[FI_RGBA_BLUE]);
-            Npix.rgbGreen = ((SPixP[FI_RGBA_GREEN] & 0x7F) | FPixP[FI_RGBA_GREEN]);
-            Npix.rgbRed = ((SPixP[FI_RGBA_RED] & 0x7F) | FPixP[FI_RGBA_RED]);
-            newAlpha = 255 - ((static_cast<unsigned short>(SPixP[FI_RGBA_RED]) +
-                               static_cast<unsigned short>(SPixP[FI_RGBA_GREEN]) +
-                               static_cast<unsigned short>(SPixP[FI_RGBA_BLUE])) / 3);
-
-            if((SPixP[FI_RGBA_RED] > 240u) //is almost White
-               && (SPixP[FI_RGBA_GREEN] > 240u)
-               && (SPixP[FI_RGBA_BLUE] > 240u))
-                newAlpha = 0;
-
-            newAlpha += ((static_cast<unsigned short>(FPixP[FI_RGBA_RED]) +
-                          static_cast<unsigned short>(FPixP[FI_RGBA_GREEN]) +
-                          static_cast<unsigned short>(FPixP[FI_RGBA_BLUE])) / 3);
-
-            if(newAlpha > 255) newAlpha = 255;
-
-            FPixP[FI_RGBA_BLUE]  = Npix.rgbBlue;
-            FPixP[FI_RGBA_GREEN] = Npix.rgbGreen;
-            FPixP[FI_RGBA_RED]   = Npix.rgbRed;
-            FPixP[FI_RGBA_ALPHA] = static_cast<BYTE>(newAlpha);
-            FPixP += 4;
-            SPixP += 4;
-        }
-
-        if(y == 0 || ym == 0)
-            break;
-        y--; ym--;
-    }
+    bitmask_to_rgba(image, mask);
 
     FreeImage_Unload(mask);
 }

@@ -34,9 +34,9 @@ bool NpcSetup::parse(IniProcessing *setup,
                      const NpcSetup *merge_with,
                      PGEString *error)
 {
-    #define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
-    #define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
-    #define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
+#define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
+#define pMergeMe(param) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(param))
+#define pAlias(paramName, destValue) setup->read(paramName, destValue, destValue)
 
     int errCode = PGE_ImageInfo::ERR_OK;
     PGEString section;
@@ -67,6 +67,10 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("description", description, pMerge(description, ""));
 
     setup->read("image", image_n, pMergeMe(image_n));
+#ifdef PGE_EDITOR // alternative image for Editor
+    pAlias("editor-image", image_n);
+#endif
+
     if(!merge_with && !PGE_ImageInfo::getImageSize(npcImgPath + image_n, &gfx_w, &gfx_h, &errCode))
     {
         if(error)
@@ -94,7 +98,7 @@ bool NpcSetup::parse(IniProcessing *setup,
     assert(merge_with || ((gfx_w > 0) && (gfx_h > 0) && "Width or height of image has zero or negative value!"));
     mask_n = PGE_ImageInfo::getMaskName(image_n);
 
-    setup->read("icon", icon_n, pMerge(icon_n, ""));
+    setup->read("icon", icon_n, pMerge(icon_n, PGESTRING()));
 
     setup->read("algorithm",        algorithm_script,   pMerge(algorithm_script, (section + ".lua")));
     setup->read("default-effect",   effect_1,           pMerge(effect_1, 10u));
@@ -130,18 +134,32 @@ bool NpcSetup::parse(IniProcessing *setup,
     setup->read("gfx-offset-x",     gfx_offset_x,   pMerge(gfx_offset_x, 0));
     setup->read("gfx-offset-y",     gfx_offset_y,   pMerge(gfx_offset_y, 0));
     setup->read("frame-style",      framestyle,     pMerge(framestyle, 0u));
+#ifdef PGE_EDITOR // alternative animation for Editor
+    pAlias("editor-gfx-offset-x",    gfx_offset_x);
+    pAlias("editor-gfx-offset-y",    gfx_offset_y);
+    pAlias("editor-frame-style",    framestyle);
+#endif
     NumberLimiter::apply(framestyle, 0u, 4u);
+
     setup->read("frames",       frames,         pMerge(frames, 1u));//Real
     pAlias("framecount",        frames);//Alias
     pAlias("frame-count",       frames);//Alias
+#ifdef PGE_EDITOR // alternative animation for Editor
+    pAlias("editor-frames",   frames);
+#endif
     NumberLimiter::apply(frames, 1u);
+
     /****************Calculating of default frame height******************/
     defGFX_h = gfx_h / (frames * static_cast<unsigned int>(std::pow(2.0, static_cast<double>(framestyle))));
     /****************Calculating of default frame height**end*************/
     setup->read("physics-to-gfx",   custom_physics_to_gfx, pMerge(custom_physics_to_gfx, true));
-    setup->read("gfx-height",       gfx_h, pMerge(gfx_h, defGFX_h));
-    NumberLimiter::apply(gfx_h, 1u);
     setup->read("gfx-width",        gfx_w, pMerge(gfx_w, gfx_w));
+    setup->read("gfx-height",       gfx_h, pMerge(gfx_h, defGFX_h));
+#ifdef PGE_EDITOR // alternative animation for Editor
+    pAlias("editor-gfx-width",   gfx_w);
+    pAlias("editor-gfx-height",  gfx_h);
+#endif
+    NumberLimiter::apply(gfx_h, 1u);
     NumberLimiter::apply(gfx_w, 1u);
 
     setup->read("frame-delay", framespeed, pMerge(framespeed, 125u));//Real
@@ -169,13 +187,13 @@ bool NpcSetup::parse(IniProcessing *setup,
     // ====================================
 
     /*************Build custom animation settings***************/
-    if( setup->hasKey("editor-animation-sequence") ||
-        setup->hasKey("ani-frames-cmn") ||
-        setup->hasKey("editor-animation-sequence-left") ||
-        setup->hasKey("ani-frames-left")||
-        setup->hasKey("editor-animation-sequence-right") ||
-        setup->hasKey("ani-frames-right")
-            )
+    if(setup->hasKey("editor-animation-sequence") ||
+       setup->hasKey("ani-frames-cmn") ||
+       setup->hasKey("editor-animation-sequence-left") ||
+       setup->hasKey("ani-frames-left") ||
+       setup->hasKey("editor-animation-sequence-right") ||
+       setup->hasKey("ani-frames-right")
+      )
     {
         custom_animate = true;
         custom_ani_alg = 2;
@@ -194,8 +212,8 @@ bool NpcSetup::parse(IniProcessing *setup,
         setup->read("ani-frames-right", frames_right, frames_right); //right direction
         if(!common.empty())
         {
-            uint32_t framesOffset = ((framestyle > 0)? 1 : 0) * frames;
-            for(int & i : frames_right)
+            uint32_t framesOffset = ((framestyle > 0) ? 1 : 0) * frames;
+            for(int &i : frames_right)
                 i += framesOffset;
         }
 
@@ -374,9 +392,9 @@ bool NpcSetup::parse(IniProcessing *setup,
     default_special = (iTmp >= 0);
     default_special_value = (iTmp >= 0) ? iTmp : pMerge(default_special_value, 0);
 
-    #undef pMerge
-    #undef pMergeMe
-    #undef pAlias
+#undef pMerge
+#undef pMergeMe
+#undef pAlias
     return true;
 }
 
@@ -387,9 +405,9 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     //*this = global;
     name = (local->en_name) ? local->name : global.name;
 
-    group =  (local->en_group) ? local->group : global.group;
-    category =  (local->en_category) ? local->category : global.category;
-    description =  (local->en_description) ? local->description : global.description;
+    group = (local->en_group) ? local->group : global.group;
+    category = (local->en_category) ? local->category : global.category;
+    description = (local->en_description) ? local->description : global.description;
 
     image_n = (local->en_image) ? local->image : global.image_n;
     mask_n = PGE_ImageInfo::getMaskName(image_n);

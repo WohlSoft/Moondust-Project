@@ -31,11 +31,12 @@
 
 struct obj_npc
 {
-    obj_npc();
-    bool            isValid;
-    unsigned long   animator_id;
-    QPixmap *       cur_image;
+    bool            isValid = false;
+    unsigned long   animator_id = 0;
+    QPixmap        *cur_image = nullptr;
+    QPixmap        *cur_icon = nullptr;
     QPixmap         image;
+    QPixmap         icon;
 
     /*!
      * \brief Quickly copies all properties except images

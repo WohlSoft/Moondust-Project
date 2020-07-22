@@ -21,12 +21,11 @@
 #include "blocksperseconddialog.h"
 #include <ui_blocksperseconddialog.h>
 
-//(1000.0/65.0)
-#define FRAMEVALUE 15.285
+#define FRAMEVALUE 65.0
 
 BlocksPerSecondDialog::BlocksPerSecondDialog(QWidget *parent) :
     QDialog(parent),
-    m_framesPerSecond( 1000.0/FRAMEVALUE ),
+    m_framesPerSecond(FRAMEVALUE),
     ui(new Ui::BlocksPerSecondDialog)
 {
     ui->setupUi(this);
@@ -35,8 +34,8 @@ BlocksPerSecondDialog::BlocksPerSecondDialog(QWidget *parent) :
 
 BlocksPerSecondDialog::BlocksPerSecondDialog(unsigned int defBlockSize, QWidget *parent) :
     QDialog(parent),
-    m_framesPerSecond( 1000.0/FRAMEVALUE ),
-    ui( new Ui::BlocksPerSecondDialog )
+    m_framesPerSecond(FRAMEVALUE),
+    ui(new Ui::BlocksPerSecondDialog)
 {
     ui->setupUi(this);
     ui->spinBlockSize->setValue(defBlockSize);
@@ -54,7 +53,13 @@ void BlocksPerSecondDialog::on_buttonBox_accepted()
         QMessageBox::warning(this, "Error", "Seconds value or blocks value must be non-zero.");
         return;
     }
-    m_result = (double)ui->spinBlockSize->value() * ui->spinBlocks->value() / ui->spinSecond->value() / m_framesPerSecond;
+
+    auto blockSize = (double)ui->spinBlockSize->value();
+    auto blocksCount = ui->spinBlocks->value();
+    auto seconds = ui->spinSecond->value();
+
+    m_result = (blockSize * blocksCount) / (seconds * m_framesPerSecond);
+
     this->accept();
 }
 
@@ -66,6 +71,12 @@ double BlocksPerSecondDialog::framesPerSecond() const
 {
     return m_framesPerSecond;
 }
+
+void BlocksPerSecondDialog::on_toggleSign_clicked()
+{
+    ui->spinBlocks->setValue(ui->spinBlocks->value() * -1.0);
+}
+
 
 void BlocksPerSecondDialog::setFramesPerSecond(double framesPerSecond)
 {

@@ -24,7 +24,7 @@ WldPointSelector::WldPointSelector(WldScene *scene, QObject *parent) :
     m_scene(scene),
     m_pointItem(nullptr),
     m_pointImg(QPixmap(":/images/set_point.png")),
-    m_pointCoord(0,0),
+    m_pointCoord(0, 0),
     m_pointNotPlaced(true)
 {
     m_animator.setSettings(m_pointImg, true, 31, 16);
@@ -39,23 +39,23 @@ WldPointSelector::~WldPointSelector()
 
 void WldPointSelector::setPoint(QPoint p)
 {
-     m_pointCoord = p;
-     m_pointNotPlaced=false;
+    m_pointCoord = p;
+    m_pointNotPlaced = false;
 
-     if(!m_pointItem)
-     {
-         ItemPoint* itemPtr = new ItemPoint(m_scene, nullptr);
-         m_pointItem = itemPtr;
-         itemPtr->setGridSize(m_scene->m_configs->defaultGrid.general);
-         m_scene->addItem(itemPtr);
-         itemPtr->setData(ITEM_TYPE, "POINT");
-         itemPtr->setZValue(6000);
-         //A small trick to avoid non-null pointer if object destroyed
-         itemPtr->connect( itemPtr,
-                  &ItemPoint::destroyed,
-                  [this]()->void{ m_pointItem = nullptr; } );
-     }
-     m_pointItem->setPos(QPointF(p));
+    if(!m_pointItem)
+    {
+        ItemPoint *itemPtr = new ItemPoint(m_scene, nullptr);
+        m_pointItem = itemPtr;
+        itemPtr->setGridSize(m_scene->m_configs->defaultGrid.general);
+        m_scene->addItem(itemPtr);
+        itemPtr->setData(ITEM_TYPE, "POINT");
+        itemPtr->setZValue(6000);
+        //A small trick to avoid non-null pointer if object destroyed
+        itemPtr->connect(itemPtr,
+                         &ItemPoint::destroyed,
+                         [this]()->void{ m_pointItem = nullptr; });
+    }
+    m_pointItem->setPos(QPointF(p));
 }
 
 void WldPointSelector::unserPointSelector()

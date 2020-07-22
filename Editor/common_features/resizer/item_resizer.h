@@ -57,6 +57,8 @@ public:
 
     void setGridSize(int gridSize);
 
+    void setNoGrid(bool en);
+
 private:
 
     virtual QRectF boundingRect() const; ///< must be re-implemented in this class to provide the diminsions of the box to the QGraphicsView

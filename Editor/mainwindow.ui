@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>1675</width>
-     <height>22</height>
+     <height>19</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -275,6 +275,7 @@
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
     <addaction name="actionShowGrid"/>
+	<addaction name="actionShowCameraGrid"/>
     <addaction name="actionAnimation"/>
     <addaction name="actionSemi_transparent_paths"/>
    </widget>
@@ -373,8 +374,12 @@
     <addaction name="action_doTest"/>
     <addaction name="action_doTestWld"/>
     <addaction name="action_doSafeTest"/>
+    <addaction name="action_doSafeTestWld"/>
     <addaction name="separator"/>
     <addaction name="action_Start_Engine"/>
+    <addaction name="separator"/>
+    <addaction name="sepEngineExtras"/>
+    <addaction name="separator"/>
     <addaction name="action_testSettings"/>
    </widget>
    <widget class="QMenu" name="menuScript">
@@ -1568,7 +1573,7 @@
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/grid.png</normaloff>:/images/grid.png</iconset>
+     <normaloff>:/images/grid_snap.png</normaloff>:/images/grid_snap.png</iconset>
    </property>
    <property name="text">
     <string>Attach to grid</string>
@@ -2377,9 +2382,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
    <property name="text">
     <string>Zoom In</string>
    </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl++</string>
-   </property>
   </action>
   <action name="actionZoomOut">
    <property name="icon">
@@ -2388,9 +2390,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="text">
     <string>Zoom Out</string>
-   </property>
-   <property name="shortcut">
-    <string notr="true">Ctrl+-</string>
    </property>
   </action>
   <action name="actionZoomReset">
@@ -2402,7 +2401,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <string>Reset Zoom</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+=</string>
+    <string notr="true">Ctrl+0</string>
    </property>
   </action>
   <action name="actionTilesetBox">
@@ -2455,7 +2454,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
   </action>
   <action name="action_doTest">
    <property name="text">
-    <string>Test level (Alpha)</string>
+    <string>Test level</string>
    </property>
    <property name="shortcut">
     <string notr="true">F5</string>
@@ -2746,12 +2745,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
   </action>
   <action name="action_Start_Engine">
-   <property name="icon">
-    <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/cat/cat_16.png</normaloff>:/images/cat/cat_16.png</iconset>
-   </property>
    <property name="text">
-    <string>Start Engine</string>
+    <string>Start Game</string>
    </property>
    <property name="toolTip">
     <string>Launch game engine application.</string>
@@ -2814,10 +2809,28 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="icon">
     <iconset resource="_resources/editor.qrc">
-     <normaloff>:/images/grid.png</normaloff>:/images/grid.png</iconset>
+     <normaloff>:/images/show_grid.png</normaloff>:/images/show_grid.png</iconset>
    </property>
    <property name="text">
     <string>Show grid</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"/>
+   </property>
+  </action>
+  <action name="actionShowCameraGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="_resources/editor.qrc">
+     <normaloff>:/images/camera_grid.png</normaloff>:/images/camera_grid.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show camera grid</string>
    </property>
    <property name="shortcut">
     <string notr="true"/>
@@ -2926,7 +2939,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Test world map (Alpha)</string>
+    <string>Test world map</string>
    </property>
    <property name="shortcut">
     <string notr="true">F5</string>
@@ -2956,6 +2969,19 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+N</string>
+   </property>
+  </action>
+  <action name="action_doSafeTestWld">
+   <property name="text">
+    <string>Run testing of saved file</string>
+   </property>
+  </action>
+  <action name="sepEngineExtras">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&lt;no extra settings&gt;</string>
    </property>
   </action>
  </widget>

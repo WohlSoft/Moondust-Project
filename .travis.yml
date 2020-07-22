@@ -43,8 +43,8 @@ matrix:
       dist: trusty
       compiler: gcc
       env:
-        - QT_VER=5.10.1_static
-        - QT_TARBALL=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
+        - QT_VER=5.9.9_static
+        - QT_TARBALL=qt-5.9.9-static-ubuntu-14-04-x64-gcc8.tar.bz2
         - IS_COVERITY_SCAN=true
       addons:
         coverity_scan:
@@ -52,13 +52,13 @@ matrix:
             name: "WohlSoft/PGE-Project"
             description: "PGE Project - a free and open source game engine to create games of platform genre"
           notification_email: admin@wohlnet.ru
-          build_command:   "bash ./build.sh no-pause ninja noqt noeditor nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer;"
+          build_command:   "bash ./build.sh no-pause ninja noqt noeditor nocalibrator nogifs2png nopng2gifs nolazyfixtool nomanager nomaintainer nomusicplayer"
           branch_pattern: master
         apt:
           sources:
             - sourceline: "ppa:ubuntu-toolchain-r/test"
             - sourceline: "ppa:ubuntu-sdk-team/ppa"
-            - sourceline: "ppa:george-edison55/cmake-3.x"
+            - sourceline: "ppa:adrozdoff/cmake"
           packages:
             - build-essential
             - "^libxcb.*"
@@ -79,6 +79,8 @@ matrix:
             - libasound2-dev
             - libpulse-dev
             - libdbus-1-dev
+            - libgtk-3-dev
+            - libgegl-dev
             - udev
             - mtdev-tools
             - webp
@@ -94,8 +96,8 @@ matrix:
             - libmirclient-dev
             - libproxy-dev
             - ccache
-            - gcc-6
-            - g++-6
+            - gcc-8
+            - g++-8
             - libc6
             - libstdc++6
             - cmake
@@ -104,13 +106,18 @@ matrix:
       dist: xenial
       compiler: gcc
       env:
-        - QT_VER=5.10.1_static
-        - QT_TARBALL=qt-5.10.1-static-ubuntu-14-04-x64-gcc6.tar.bz2
+        - QT_VER=5.14.2_static
+        - QT_TARBALL=qt-5.14.2-static-ubuntu-16-04-x64-gcc8.tar.bz2
+        - UPLOAD_TARGET=ubuntu-16-04
+        - UPLOAD_VERSION_SUFFIX=ubuntu1604
+        - CI_NEED_LFTP_U1604=true
       addons:
         apt:
           sources:
             - sourceline: "ppa:ubuntu-toolchain-r/test"
             - sourceline: "ppa:ubuntu-sdk-team/ppa"
+            - sourceline: 'deb https://apt.kitware.com/ubuntu/ xenial-rc main'
+              keyurl: "https://apt.kitware.com/keys/kitware-archive-latest.asc"
           packages:
             - build-essential
             - "^libxcb.*"
@@ -131,6 +138,9 @@ matrix:
             - libasound2-dev
             - libpulse-dev
             - libdbus-1-dev
+            - libgtk-3-dev
+            - libgegl-dev
+            - libgegl-0.0-dev
             - udev
             - mtdev-tools
             - webp
@@ -138,26 +148,32 @@ matrix:
             - libglm-dev
             - libwayland-dev
             - libegl1-mesa-dev
+            - xwayland
+            - wayland-protocols
             - mesa-common-dev
             - libgl1-mesa-dev
             - libglu1-mesa-dev
             - libgles2-mesa
             - libgles2-mesa-dev
             - libmirclient-dev
+            - libwayland-server0
             - libproxy-dev
             - ccache
-            - gcc-6
-            - g++-6
+            - gcc-8
+            - g++-8
             - libc6
             - libstdc++6
             - cmake
             - ninja-build
+            - libreadline6
+            - libgnutls30
+            - libexpat1-dev
     - os: osx
       osx_image: xcode10.2
       compiler: clang
       env:
-        - QT_VER=5.12.4
-        - QT_TARBALL=qt-5-12-4-static-macosx-10-14-5.tar.bz2
+        - QT_VER=5.14.2
+        - QT_TARBALL=qt-5-14-2-static-macosx-10-14-6.tar.bz2
       before_cache:
         - brew cleanup
       cache:
@@ -173,6 +189,7 @@ matrix:
             - gnu-sed
             - lftp
             - axel
+          update: true
 
 before_install:
   - bash _common/travis-ci/before-install.sh

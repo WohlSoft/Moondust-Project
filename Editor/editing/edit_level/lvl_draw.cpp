@@ -34,68 +34,68 @@ bool LevelEdit::DrawObjects(QProgressDialog &progress)
     int DataSize = progress.maximum();
     int TotalSteps = 6;
 
-        if(!progress.wasCanceled())
-            progress.setLabelText(tr("1/%1 Loading user data...").arg(TotalSteps));
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("1/%1 Loading user data...").arg(TotalSteps));
 
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->loadUserData(progress);
 
-        if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled()) return false;
 
-        if(!progress.wasCanceled())
-            progress.setLabelText(tr("1/%1 Loading Backgrounds...").arg(TotalSteps));
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("1/%1 Loading Backgrounds...").arg(TotalSteps));
 
-    progress.setValue(progress.value()+1);
+    progress.setValue(progress.value() + 1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->makeSectionBG(progress);
 
-        if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled()) return false;
 
-        if(!progress.wasCanceled())
-            progress.setLabelText(tr("2/%1 Loading BGOs...").arg(TotalSteps));
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("2/%1 Loading BGOs...").arg(TotalSteps));
 
-    progress.setValue(progress.value()+1);
+    progress.setValue(progress.value() + 1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setBGO(progress);
 
-        if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled()) return false;
 
-        if(!progress.wasCanceled())
-            progress.setLabelText(tr("3/%1 Loading Blocks...").arg(TotalSteps));
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("3/%1 Loading Blocks...").arg(TotalSteps));
 
-    progress.setValue(progress.value()+1);
+    progress.setValue(progress.value() + 1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setBlocks(progress);
 
-        if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled()) return false;
 
-        if(!progress.wasCanceled())
-            progress.setLabelText(tr("4/%1 Loading NPCs...").arg(TotalSteps));
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("4/%1 Loading NPCs...").arg(TotalSteps));
 
-    progress.setValue(progress.value()+1);
-    progress.setValue(progress.value()+1);
+    progress.setValue(progress.value() + 1);
+    progress.setValue(progress.value() + 1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setNPC(progress);
 
-        if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled()) return false;
 
-        if(!progress.wasCanceled())
-            progress.setLabelText(tr("5/%1 Loading PhysEZ...", "PhysEZ - Physical Environment Zone.").arg(TotalSteps));
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("5/%1 Loading PhysEZ...", "PhysEZ - Physical Environment Zone.").arg(TotalSteps));
 
-    progress.setValue(progress.value()+1);
+    progress.setValue(progress.value() + 1);
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setWaters(progress);
 
-        if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled()) return false;
 
-        if(!progress.wasCanceled())
-            progress.setLabelText(tr("6/%1 Loading Doors...").arg(TotalSteps));
+    if(!progress.wasCanceled())
+        progress.setLabelText(tr("6/%1 Loading Doors...").arg(TotalSteps));
 
 
     qApp->processEvents(QEventLoop::ExcludeUserInputEvents);
     scene->setDoors(progress);
 
-        if(progress.wasCanceled()) return false;
+    if(progress.wasCanceled()) return false;
 
     scene->setPlayerPoints();
 

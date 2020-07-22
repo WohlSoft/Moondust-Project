@@ -49,7 +49,7 @@ void ItemDoor::construct()
     m_itemSize = QSize(32, 32);
     this->setData(ITEM_WIDTH, 32);
     this->setData(ITEM_HEIGHT, 32);
-    m_grp = NULL;
+    m_grp = nullptr;
     m_doorLabel = nullptr;
     m_arrowEnter = nullptr;
     m_arrowExit = nullptr;
@@ -90,7 +90,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QList<QAction *> layerItems;
 
     QAction *newLayer =    LayerName->addAction(tr("Add to new layer..."));
-    LayerName->addSeparator()->deleteLater();;
+    LayerName->addSeparator()->deleteLater();
     for(LevelLayer &layer : m_scene->m_data->layers)
     {
         //Skip system layers
@@ -106,7 +106,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     ItemMenu.addSeparator();
     /*************Layers*end***************/
 
-    QAction *jumpTo = NULL;
+    QAction *jumpTo = nullptr;
     if(this->data(ITEM_TYPE).toString() == "Door_enter")
     {
         jumpTo =                ItemMenu.addAction(tr("Jump to exit"));
@@ -697,5 +697,5 @@ void ItemDoor::setScenePoint(LvlScene *theScene)
     LvlBaseItem::setScenePoint(theScene);
     if(m_grp) delete m_grp;
     m_grp = new QGraphicsItemGroup(this);
-    m_doorLabel = NULL;
+    m_doorLabel = nullptr;
 }

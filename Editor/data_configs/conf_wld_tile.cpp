@@ -23,7 +23,7 @@
 
 #include "data_configs.h"
 
-bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with, QString iniFile, IniProcessing *setup)
+bool DataConfig::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_tile *merge_with, QString iniFile, IniProcessing *setup)
 {
     bool valid = true;
     bool internal = !setup;
@@ -50,7 +50,7 @@ bool dataconfigs::loadWorldTerrain(obj_w_tile &stile, QString section, obj_w_til
     return valid;
 }
 
-void dataconfigs::loadWorldTiles()
+void DataConfig::loadWorldTiles()
 {
     unsigned int i;
 
@@ -119,6 +119,10 @@ void dataconfigs::loadWorldTiles()
                 valid = false;
                 addError(QString("TILE-%1 %2").arg(i).arg(errStr));
             }
+
+            GraphicsHelps::loadIconOpt(folderWldTerrain.graphics,
+                                       stile.setup.icon_n,
+                                       stile.icon);
         }
         /***************Load image*end***************/
         stile.setup.id = i;

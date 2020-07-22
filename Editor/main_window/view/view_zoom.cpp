@@ -41,7 +41,7 @@ void MainWindow::on_actionZoomOut_triggered()
 void MainWindow::on_actionZoomReset_triggered()
 {
     if(activeChildWindow() == WND_Level)
-        activeLvlEditWin()->ResetZoom();
+        activeLvlEditWin()->zoomReset();
     else if(activeChildWindow() == WND_World)
         activeWldEditWin()->ResetZoom();
 }

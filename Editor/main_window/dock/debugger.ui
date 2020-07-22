@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>280</width>
-    <height>525</height>
+    <height>464</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -34,6 +34,9 @@
   </property>
   <widget class="QWidget" name="dockWidgetContents_6">
    <layout class="QGridLayout" name="gridLayout_29" rowstretch="0,0,0,80,0">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
     <property name="leftMargin">
      <number>2</number>
     </property>
@@ -255,6 +258,9 @@
        <string>Custom counters</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_34">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetMinimumSize</enum>
+       </property>
        <property name="leftMargin">
         <number>5</number>
        </property>
@@ -270,17 +276,16 @@
        <property name="spacing">
         <number>2</number>
        </property>
-       <item row="0" column="0">
-        <widget class="QPushButton" name="DEBUG_AddCustomCounter">
-         <property name="text">
-          <string>Add</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1">
         <spacer name="horizontalSpacer_8">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
         </spacer>
        </item>
@@ -305,6 +310,13 @@
          </property>
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QToolButton" name="DEBUG_AddCustomCounter">
+         <property name="text">
+          <string>Add</string>
          </property>
         </widget>
        </item>

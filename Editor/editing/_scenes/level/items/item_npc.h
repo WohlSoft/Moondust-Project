@@ -31,7 +31,7 @@ class ItemNPC : public LvlBaseItem
     void construct();
 public:
     ItemNPC(LvlScene *parentScene, QGraphicsItem *parent = nullptr);
-    ItemNPC(bool noScene=false, QGraphicsItem *parent = nullptr);
+    ItemNPC(bool noScene = false, QGraphicsItem *parent = nullptr);
     ~ItemNPC();
 
     void setMainPixmap(const QPixmap &pixmap);
@@ -42,14 +42,14 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 
-    AdvNpcAnimator* _internal_animator;
+    AdvNpcAnimator *_internal_animator;
 
     void setFriendly(bool fri);
     void setNoMovable(bool stat);
     void setLegacyBoss(bool boss);
     void setMsg(QString message);
-    void setIncludedNPC(int npcID, bool init=false);
-    void setGenerator(bool enable, int direction=1, int type=1, bool init=false);
+    void setIncludedNPC(int npcID, bool init = false);
+    void setGenerator(bool enable, int direction = 1, int type = 1, bool init = false);
     void setLayer(QString layer);
 
     void changeDirection(int dir);
@@ -80,19 +80,15 @@ public:
     void setMetaSignsVisibility(bool visible);
 
 private:
-    bool    m_extAnimator;
-    long    m_animatorID;
-    QRectF  m_imageSize;
+    bool    m_extAnimator = false;
+    bool    m_DisableScene = false;
 
-    bool    m_DisableScene;
-
-    QGraphicsItemGroup *    m_grp;
-    QGraphicsItem *         m_includedNPC;
-    QGraphicsPixmapItem *   m_generatorArrow;
+    QGraphicsItemGroup     *m_grp = nullptr;
+    QGraphicsItem          *m_includedNPC = nullptr;
+    QGraphicsPixmapItem    *m_generatorArrow = nullptr;
 
     QRectF  m_offseted;
-    bool    m_animated;
-    int     m_direction;
+    int     m_direction = -1;
 };
 
 #endif // ITEM_NPC_H

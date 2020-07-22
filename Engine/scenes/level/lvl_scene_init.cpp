@@ -247,14 +247,15 @@ bool LevelScene::loadConfigs()
     ConfigManager::Dir_EFFECT.setCustomDirs(metaPath, metaFName, ConfigManager::PathLevelEffect(), extraPaths);
 
     //Load INI-files
+    loaderStep();
     success = ConfigManager::loadLevelBlocks(); //!< Blocks
-
     if(!success)
     {
         m_exitLevelCode = LvlExit::EXIT_Error;
         goto abortInit;
     }
 
+    loaderStep();
     success = ConfigManager::loadLevelBGO();    //!< BGO
     if(!success)
     {
@@ -262,6 +263,7 @@ bool LevelScene::loadConfigs()
         goto abortInit;
     }
 
+    loaderStep();
     success = ConfigManager::loadLevelNPC();  //!< NPC
     if(!success)
     {
@@ -269,6 +271,7 @@ bool LevelScene::loadConfigs()
         goto abortInit;
     }
 
+    loaderStep();
     success = ConfigManager::loadLevelBackG();  //!< Backgrounds
     if(!success)
     {
@@ -276,6 +279,7 @@ bool LevelScene::loadConfigs()
         goto abortInit;
     }
 
+    loaderStep();
     success = ConfigManager::loadPlayableCharacters();  //!< Playalbe Characters
     if(!success)
     {
@@ -283,6 +287,7 @@ bool LevelScene::loadConfigs()
         goto abortInit;
     }
 
+    loaderStep();
     success = ConfigManager::loadLevelEffects();  //!< Effects
     if(!success)
     {
@@ -290,6 +295,7 @@ bool LevelScene::loadConfigs()
         goto abortInit;
     }
 
+    loaderStep();
     //Validate all playable characters until use game state!
     if(m_gameState)
     {
@@ -350,8 +356,11 @@ bool LevelScene::init_items()
     if(m_luaEngine.shouldShutdown())
         return false;
 
+    m_luaEngine.initNPCClassTable();
+
     for(unsigned long i = 1; i < ConfigManager::lvl_npc_indexes.size(); i++)
     {
+        loaderStep();
         obj_npc &npc = ConfigManager::lvl_npc_indexes[i];
         std::string scriptPath = ConfigManager::Dir_NPCScript.getCustomFile(npc.setup.algorithm_script);
 
@@ -359,6 +368,7 @@ bool LevelScene::init_items()
             m_luaEngine.loadNPCClass(npc.setup.id, scriptPath);
     }
 
+    loaderStep();
     for(unsigned long i = 1; i < ConfigManager::playable_characters.size(); i++)
     {
         obj_player &player = ConfigManager::playable_characters[i];
@@ -459,6 +469,7 @@ bool LevelScene::init_items()
     //blocks
     for(size_t i = 0; i < m_data.blocks.size(); i++)
     {
+        loaderStep();
         if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
         placeBlock(m_data.blocks[i]);
@@ -470,6 +481,7 @@ bool LevelScene::init_items()
     //BGO
     for(size_t i = 0; i < m_data.bgo.size(); i++)
     {
+        loaderStep();
         if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
         placeBGO(m_data.bgo[i]);
@@ -478,14 +490,16 @@ bool LevelScene::init_items()
     //NPC
     for(size_t i = 0; i < m_data.npc.size(); i++)
     {
+        loaderStep();
         if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
         placeNPC(m_data.npc[i]);
     }
 
-    //BGO
+    //Warps
     for(size_t i = 0; i < m_data.doors.size(); i++)
     {
+        loaderStep();
         if(!m_isLevelContinues)
             return false;//!< quit from game if window was closed
         //Don't put contactable points for "level entrance" points
@@ -520,7 +534,8 @@ place_door_again:
         }
     }
 
-    //BGO
+    //Physical environment zones
+    loaderStep();
     for(size_t i = 0; i < m_data.physez.size(); i++)
     {
         if(!m_isLevelContinues)
@@ -538,6 +553,7 @@ place_door_again:
     int added_players = 0;
 
     if(!m_isWarpEntrance) //Dont place players if entered through warp
+    {
         for(int i = 1; i <= m_numberOfPlayers; i++)
         {
             if(!m_isLevelContinues) return false;//!< quit from game if window was closed
@@ -551,6 +567,7 @@ place_door_again:
             addPlayer(startPoint);
             added_players++;
         }
+    }
 
     if(added_players <= 0 && !m_isWarpEntrance)
     {
@@ -560,7 +577,7 @@ place_door_again:
     }
 
     D_pLogDebugNA("Apply layers");
-
+    loaderStep();
     for(size_t i = 0; i < m_data.layers.size(); i++)
     {
         if(m_data.layers[i].hidden)
@@ -568,7 +585,7 @@ place_door_again:
     }
 
     D_pLogDebugNA("Apply Events");
-
+    loaderStep();
     for(size_t i = 0; i < m_data.events.size(); i++)
         m_events.addSMBX64Event(m_data.events[i]);
 
