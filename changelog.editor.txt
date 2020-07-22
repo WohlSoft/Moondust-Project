@@ -41,6 +41,7 @@ Editor 0.3.2-dev
 - Improved the work of an unused resources clean-up tool
 - Fixed the logic of a resource importer that was broken a long time ago
 - New icons by Tails608
+- The background image selection menu has been reworked
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
