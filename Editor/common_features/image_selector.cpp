@@ -19,10 +19,7 @@
 ImageSelectorMenu::ImageSelectorMenu(QWidget *parent):
     QDialog(parent)
 {
-//    setWindowFlag(Qt::FramelessWindowHint, true);
-//    setWindowFlag(Qt::Dialog, true);
-    setWindowFlag(Qt::Popup, true);
-    setWindowFlag(Qt::Tool, true);
+    setWindowFlags(Qt::Popup|Qt::Tool);
     setModal(true);
     setWindowTitle(QString(" "));
 //    setAttribute(Qt::WA_AlwaysStackOnTop, true);
