@@ -2479,7 +2479,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>%1 coins</source>
-        <translation type="unfinished">%1 pièce(s)</translation>
+        <translation>%1 pièce(s)</translation>
     </message>
 </context>
 <context>
@@ -9457,31 +9457,31 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
     <message>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation>Par Wohlstand</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Éditeur, version %1</translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation>Révision</translation>
     </message>
     <message>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Date de compilation</translation>
     </message>
     <message>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation>Site de notre projet</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce programme est distribué sous %1</translation>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Architecture : %1</translation>
     </message>
 </context>
 <context>
