@@ -331,8 +331,9 @@ PGE_Size RasterFont::textSize(std::string &text, uint32_t max_line_lenght, bool 
                 {
                     TtfFont::TheGlyphInfo glyph = font->getGlyphInfo(&cx, m_letterWidth);
                     uint32_t glyph_width = glyph.width > 0 ? uint32_t(glyph.advance >> 6) : (m_letterWidth >> 2);
+                    auto lw = m_letterWidth + m_interLetterSpace;
                     // Raster fonts are monospace fonts. TTF glyphs shoudn't break mono-width until they are wider than a cell
-                    widthSumm += glyph_width > m_letterWidth ? glyph_width : m_letterWidth;
+                    widthSumm += glyph_width > lw ? glyph_width : lw;
                 } else {
                     widthSumm += m_letterWidth + m_interLetterSpace;
                 }
@@ -430,13 +431,18 @@ void RasterFont::printText(const std::string &text,
             TtfFont *font = reinterpret_cast<TtfFont*>(FontManager::getDefaultTtfFont());
             if(font)
             {
+                TtfFont::TheGlyphInfo glyph = font->getGlyphInfo(&cx, m_letterWidth);
+                uint32_t glyph_width = glyph.width > 0 ? uint32_t(glyph.advance >> 6) : (m_letterWidth >> 2);
+
                 font->drawGlyph(&cx,
                                 x + static_cast<int32_t>(offsetX),
-                                y + static_cast<int32_t>(offsetY),
-                                (doublePixel ? (w / 2) : w),
+                                y + static_cast<int32_t>(offsetY) - 2,
+                                (doublePixel ? (glyph_width / 2) : glyph_width),
                                 (doublePixel ? 2.0 : 1.0),
                                 Red, Green, Blue, Alpha);
-                offsetX += w + m_interLetterSpace;
+
+                auto lw = w + m_interLetterSpace;
+                offsetX += glyph_width > lw ? glyph_width : lw;
             } else {
                 offsetX += m_interLetterSpace;
             }
