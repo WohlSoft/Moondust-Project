@@ -1,5 +1,6 @@
 #include "image_selector.h"
 #include <QPushButton>
+#include <QToolButton>
 #include <QVBoxLayout>
 #include <QFocusEvent>
 #include <QtDebug>
@@ -7,6 +8,7 @@
 #include <QListWidget>
 #include <QLineEdit>
 #include <QPixmap>
+#include <QLabel>
 #include <QImage>
 #include <QDesktopWidget>
 #include <QScreen>
@@ -232,9 +234,10 @@ void ImageSelector::itemChangeProcess(int key)
 ImageSelector::ImageSelector(QWidget *parent) :
     QWidget(parent)
 {
-    m_button = new QPushButton(this);
+    m_button = new QToolButton(this);
     m_layout = new QVBoxLayout(this);
-    m_button->setStyleSheet("text-align: left; padding: 4pt;");
+
+    m_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 
     setMinimumHeight(ISM_ENTRY_HEIGHT + 4);
 
@@ -249,7 +252,7 @@ ImageSelector::ImageSelector(QWidget *parent) :
     m_layout->setMargin(0);
     m_menuBox = new ImageSelectorMenu(this);
     QObject::connect(m_button,
-    static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
+    static_cast<void (QToolButton::*)(bool)>(&QToolButton::clicked),
     [this](bool)
     {
         QPoint globalCursorPos = m_button->mapToGlobal(m_button->pos());
