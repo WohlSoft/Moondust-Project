@@ -2482,7 +2482,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>%1 coins</source>
-        <translation type="unfinished">%1 монет(и)</translation>
+        <translation>%1 монет(и)</translation>
     </message>
 </context>
 <context>
@@ -9175,31 +9175,31 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation>Від Wohlstand</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувач, версія %1</translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation>Ревізія</translation>
     </message>
     <message>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Дата збірки</translation>
     </message>
     <message>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation>Сайт нашого проекту</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Дана програма розповсюджується по ліцензії %1</translation>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Архітектура: %1</translation>
     </message>
 </context>
 <context>
