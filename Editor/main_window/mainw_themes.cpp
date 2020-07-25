@@ -18,6 +18,7 @@
 
 #include <QPushButton>
 #include <QToolButton>
+#include <QStyleFactory>
 
 #include <common_features/themes.h>
 #include <main_window/global_settings.h>
@@ -46,6 +47,16 @@ void MainWindow::applyCurrentTheme()
         theme = ConfStatus::defaultTheme;
     else
         theme = GlobalSettings::currentTheme;
+
+    Themes::togglePallete(static_cast<Themes::Palettes>(GlobalSettings::currentPallete));
+
+    LogDebug(QString("Applying pallete..."));
+    if(GlobalSettings::currentPallete != 0)
+        qApp->setStyle(QStyleFactory::create("Fusion"));
+    else
+        qApp->setStyle("default");
+
+    qApp->setPalette(Themes::pallete());
 
     LogDebug(QString("Loading theme [%1]...").arg(theme));
     applyTheme(theme);

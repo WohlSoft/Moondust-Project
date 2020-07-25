@@ -22,15 +22,20 @@ bool Themes::isLoaded = false;
 QString Themes::currentThemeDir = "";
 QString Themes::styleSheet = "";
 
+Themes::Palettes Themes::currentPalette = Themes::Palettes::Default;
+QPalette Themes::currentPaletteD;
+bool Themes::currentPaletteIsDark = false;
+
 QMap<Themes::Icons, QIcon > Themes::icons_map;
+QMap<Themes::Icons, QIcon > Themes::icons_map_dark;
 
 QMap<Themes::Images, QPixmap > Themes::images_map;
+QMap<Themes::Images, QPixmap > Themes::images_map_dark;
 
 QMap<Themes::Images, int > Themes::int_map;
-
 QMap<Themes::Images, QCursor> Themes::cursor_map;
 
-QString Themes::theme_dir = "";
+QString Themes::theme_dir = QString();
 
 
 Themes::Themes()
@@ -38,13 +43,12 @@ Themes::Themes()
 
 void Themes::init()
 {
-    if(icons_map.size() > 0 || images_map.size() > 0 || int_map.size() > 0 || cursor_map.size() > 0)
-    {
-        icons_map.clear();
-        images_map.clear();
-        int_map.clear();
-        cursor_map.clear();
-    }
+    icons_map.clear();
+    images_map.clear();
+    int_map.clear();
+    cursor_map.clear();
+    images_map_dark.clear();
+    icons_map_dark.clear();
 
     //init default icons
     icons_map[level_16]     = QIcon(":/lvl16.png");
@@ -68,9 +72,13 @@ void Themes::init()
     icons_map[bookmarks]    = QIcon(":/images/bookmarks.png");
 
     icons_map[playmusic]    = QIcon(":/images/playmusic.png");
+    icons_map_dark[playmusic] = QIcon(":/images/playmusic_dark.png");
     icons_map[grid_snap]    = QIcon(":/images/grid_snap.png");
+    icons_map_dark[grid_snap] = QIcon(":/images/grid_snap_dark.png");
     icons_map[show_grid]    = QIcon(":/images/show_grid.png");
+    icons_map_dark[show_grid] = QIcon(":/images/show_grid_dark.png");
     icons_map[camera_grid]  = QIcon(":/images/camera_grid.png");
+    icons_map_dark[camera_grid] = QIcon(":/images/camera_grid_dark.png");
     icons_map[animation]    = QIcon(":/images/animation.png");
     icons_map[search]       = QIcon(":/images/search.png");
     icons_map[pencil]       = QIcon(":/images/pencil_16x16.png");
@@ -160,7 +168,10 @@ void Themes::init()
     icons_map[section_goto_left_top] = QIcon(":/images/goto_left_top.png");
     icons_map[section_goto_top_right] = QIcon(":/images/goto_top_right.png");
     icons_map[section_goto_right_bottom] = QIcon(":/images/goto_right_bottom.png");
-
+    icons_map_dark[section_goto_left_bottom] = QIcon(":/images/goto_left_bottom_dark.png");
+    icons_map_dark[section_goto_left_top] = QIcon(":/images/goto_left_top_dark.png");
+    icons_map_dark[section_goto_top_right] = QIcon(":/images/goto_top_right_dark.png");
+    icons_map_dark[section_goto_right_bottom] = QIcon(":/images/goto_right_bottom_dark.png");
 
     images_map[blocks_free] = QPixmap(":/locks/block_op.png");
     images_map[blocks_locked] = QPixmap(":/locks/block_cl.png");
@@ -269,7 +280,6 @@ void Themes::loadTheme(const QString &themeDir)
 
     QString themesPath(ApplicationPath + "/themes/");
     theme_dir = themesPath + themeDir + "/";
-
 
     QString gui_ini = theme_dir + "theme.ini";
     if(!QFileInfo(gui_ini).exists()) return;
@@ -512,7 +522,7 @@ void Themes::loadStyleSheet(QSettings &s, QString value)
     if(!val.isEmpty())
     {
         QFile ss(theme_dir + val);
-        if(!ss.open(QIODevice::ReadOnly|QIODevice::Text))
+        if(!ss.open(QIODevice::ReadOnly | QIODevice::Text))
             return;
         QByteArray arr = ss.readAll();
         styleSheet = QString::fromUtf8(arr);
@@ -528,6 +538,16 @@ void Themes::loadIcon(QSettings &s, QString value, Themes::Icons icn)
         if(!tmpIcn.isNull())
             icons_map[icn] = tmpIcn;
     }
+
+    value += "-dark";
+
+    val = s.value(value, "").toString();
+    if(!val.isEmpty())
+    {
+        QPixmap tmpImg = QPixmap(theme_dir + val);
+        if(!tmpImg.isNull())
+            icons_map_dark[icn] = tmpImg;
+    }
 }
 
 void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
@@ -538,6 +558,16 @@ void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
         QPixmap tmpImg = QPixmap(theme_dir + val);
         if(!tmpImg.isNull())
             images_map[img] = tmpImg;
+    }
+
+    value += "-dark";
+
+    val = s.value(value, "").toString();
+    if(!val.isEmpty())
+    {
+        QPixmap tmpImg = QPixmap(theme_dir + val);
+        if(!tmpImg.isNull())
+            images_map_dark[img] = tmpImg;
     }
 }
 
@@ -611,7 +641,12 @@ void Themes::initCursors()
 
 QIcon Themes::icon(Themes::Icons icn)
 {
-    if(isLoaded && icons_map.contains(icn))
+    if(!isLoaded)
+        return QIcon();
+
+    if(currentPaletteIsDark && icons_map_dark.contains(icn))
+        return icons_map_dark[icn];
+    else if(icons_map.contains(icn))
         return icons_map[icn];
     else
         return QIcon();
@@ -619,7 +654,12 @@ QIcon Themes::icon(Themes::Icons icn)
 
 QPixmap Themes::Image(Themes::Images img)
 {
-    if(isLoaded && images_map.contains(img))
+    if(!isLoaded)
+        return QPixmap();
+
+    if(currentPaletteIsDark && images_map_dark.contains(img))
+        return images_map_dark[img];
+    else if(images_map.contains(img))
         return images_map[img];
     else
         return QPixmap();
@@ -646,4 +686,59 @@ const QString &Themes::StyleSheet()
     return styleSheet;
 }
 
+void Themes::togglePallete(Themes::Palettes pallete)
+{
+    switch(pallete)
+    {
+    default:
+    case Palettes::Default:
+    {
+        currentPaletteD = QPalette();
+        currentPaletteIsDark = false;
+        break;
+    }
 
+    case Palettes::DarkBlue:
+    {
+        QPalette darkPalette;
+
+        darkPalette.setColor(QPalette::Window, QColor(24, 35, 50));
+        darkPalette.setColor(QPalette::WindowText, QColor(150, 175, 200));
+        darkPalette.setColor(QPalette::Disabled, QPalette::WindowText, QColor(85, 100, 125));
+        darkPalette.setColor(QPalette::Base, QColor(32, 37, 42));
+        darkPalette.setColor(QPalette::AlternateBase, QColor(20, 40, 66));
+        darkPalette.setColor(QPalette::ToolTipBase, QColor(150, 175, 200));
+        darkPalette.setColor(QPalette::ToolTipText, QColor(150, 175, 200));
+        darkPalette.setColor(QPalette::Text, QColor(150, 175, 200));
+        darkPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(55, 85, 105));
+        darkPalette.setColor(QPalette::Dark, QColor(15, 22, 35));
+        darkPalette.setColor(QPalette::Shadow, QColor(10, 15, 20));
+        darkPalette.setColor(QPalette::Button, QColor(24, 35, 50));
+        darkPalette.setColor(QPalette::ButtonText, QColor(150, 175, 200));
+        darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(85, 100, 125));
+        darkPalette.setColor(QPalette::BrightText, Qt::red);
+        darkPalette.setColor(QPalette::Link, QColor(0, 100, 150));
+        darkPalette.setColor(QPalette::Highlight, QColor(0, 100, 150));
+        darkPalette.setColor(QPalette::Disabled, QPalette::Highlight, QColor(40, 60, 80));
+        darkPalette.setColor(QPalette::HighlightedText, QColor(150, 175, 200));
+        darkPalette.setColor(QPalette::Disabled, QPalette::HighlightedText, QColor(85, 100, 125));
+
+        currentPaletteD = darkPalette;
+
+        currentPaletteIsDark = true;
+        break;
+    }
+
+    }
+
+}
+
+QPalette Themes::pallete()
+{
+    return currentPaletteD;
+}
+
+bool Themes::isPalleteDark()
+{
+    return currentPaletteIsDark;
+}

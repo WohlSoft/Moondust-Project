@@ -55,31 +55,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     LogDebug(QString("Setting UI Defaults..."));
     setUiDefults(); //Apply default UI settings
-    qApp->setStyle(QStyleFactory::create("Fusion"));
-    // modify palette to dark
-    QPalette darkPalette;
-    darkPalette.setColor(QPalette::Window,QColor(24,35,50));
-    darkPalette.setColor(QPalette::WindowText,QColor(150,175,200));
-    darkPalette.setColor(QPalette::Disabled,QPalette::WindowText,QColor(85,100,125));
-    darkPalette.setColor(QPalette::Base,QColor(32,37,42));
-    darkPalette.setColor(QPalette::AlternateBase,QColor(20,40,66));
-    darkPalette.setColor(QPalette::ToolTipBase,QColor(150,175,200));
-    darkPalette.setColor(QPalette::ToolTipText,QColor(150,175,200));
-    darkPalette.setColor(QPalette::Text,QColor(150,175,200));
-    darkPalette.setColor(QPalette::Disabled,QPalette::Text,QColor(55,85,105));
-    darkPalette.setColor(QPalette::Dark,QColor(15,22,35));
-    darkPalette.setColor(QPalette::Shadow,QColor(10,15,20));
-    darkPalette.setColor(QPalette::Button,QColor(24,35,50));
-    darkPalette.setColor(QPalette::ButtonText,QColor(150,175,200));
-    darkPalette.setColor(QPalette::Disabled,QPalette::ButtonText,QColor(85,100,125));
-    darkPalette.setColor(QPalette::BrightText,Qt::red);
-    darkPalette.setColor(QPalette::Link,QColor(0,100,150));
-    darkPalette.setColor(QPalette::Highlight,QColor(0,100,150));
-    darkPalette.setColor(QPalette::Disabled,QPalette::Highlight,QColor(40,60,80));
-    darkPalette.setColor(QPalette::HighlightedText,QColor(150,175,200));
-    darkPalette.setColor(QPalette::Disabled,QPalette::HighlightedText,QColor(85,100,125));
 
-    qApp->setPalette(darkPalette);
+    loadBasicSettings();
+
+    applyCurrentTheme();
 
 #ifdef Q_OS_MACX
     foreach(QAction* act, ui->menuBar->actions())

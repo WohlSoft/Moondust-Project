@@ -57,6 +57,21 @@ static void saveToolboxProps(QSettings &s,
 }
 
 
+
+void MainWindow::loadBasicSettings()
+{
+    QString inifile = AppPathManager::settingsFile();
+    QSettings settings(inifile, QSettings::IniFormat);
+
+    settings.beginGroup("Main");
+    {
+        GlobalSettings::currentTheme = settings.value("current-theme", "").toString();
+        GlobalSettings::currentPallete = settings.value("current-pallete", "").toInt();
+        GlobalSettings::fontSize = settings.value("font-size", -1).toInt();
+    }
+}
+
+
 //////////Load settings from INI file///////////////
 void MainWindow::loadSettings()
 {
@@ -115,6 +130,7 @@ void MainWindow::loadSettings()
         GlobalSettings::TSTToolboxPos = static_cast<QTabWidget::TabPosition>(settings.value("tileset-toolbox-pos", static_cast<int>(QTabWidget::North)).toInt());
 
         GlobalSettings::currentTheme = settings.value("current-theme", "").toString();
+        GlobalSettings::currentPallete = settings.value("current-pallete", "").toInt();
         GlobalSettings::fontSize = settings.value("font-size", -1).toInt();
 
         GlobalSettings::ShowTipOfDay = settings.value("show-tip-of-a-day", true).toBool();
@@ -223,8 +239,6 @@ void MainWindow::loadSettings()
 
 
 
-
-
 //////////Save settings into INI file///////////////
 void MainWindow::saveSettings()
 {
@@ -298,6 +312,7 @@ void MainWindow::saveSettings()
         settings.setValue("language", GlobalSettings::locale);
 
         settings.setValue("current-theme", GlobalSettings::currentTheme);
+        settings.setValue("current-pallete", GlobalSettings::currentPallete);
         settings.setValue("font-size", GlobalSettings::fontSize);
         settings.setValue("show-tip-of-a-day", GlobalSettings::ShowTipOfDay);
 

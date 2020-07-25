@@ -160,6 +160,7 @@ public:
     static QTabWidget::TabPosition  WLDToolboxPos;
     static QTabWidget::TabPosition  TSTToolboxPos;
     static QString                  currentTheme;
+    static int                      currentPallete;
 
     static std::unique_ptr<QFont>   fontDefault;
     static std::unique_ptr<QFont>   font;

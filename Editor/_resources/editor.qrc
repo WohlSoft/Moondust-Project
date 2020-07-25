@@ -142,6 +142,17 @@
         <file>images/38a.ico</file>
         <file>constributors/Tails608.png</file>
         <file>constributors/FunnyCat.png</file>
+        <file>images/camera_grid_dark.png</file>
+        <file>images/grid_snap_dark.png</file>
+        <file>images/playmusic_dark.png</file>
+        <file>images/show_grid_dark.png</file>
+        <file>images/warp_entrance_dark.png</file>
+        <file>images/warp_exit_dark.png</file>
+        <file>images/wrench_16x16_dark.png</file>
+        <file>images/goto_left_bottom_dark.png</file>
+        <file>images/goto_left_top_dark.png</file>
+        <file>images/goto_right_bottom_dark.png</file>
+        <file>images/goto_top_right_dark.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/00.png</file>

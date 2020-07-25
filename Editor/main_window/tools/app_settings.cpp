@@ -75,16 +75,19 @@ AppSettings::AppSettings(QWidget *parent) :
 
     auto themes = Themes::availableThemes();
 
-    ui->Theme->clear();
-
+    ui->theme->clear();
     while(!themes.isEmpty())
     {
         QStringList theme = themes.first().split('|');
         themes.pop_front();
         QString data = theme.size() >= 1 ? theme[0] : "[untitled theme]";
         QString title = theme.size() >= 2 ? theme[1] : "";
-        ui->Theme->addItem(title, data);
+        ui->theme->addItem(title, data);
     }
+
+    ui->pallete->clear();
+    ui->pallete->addItem(tr("Default", "Name of pallete"), 0);
+    ui->pallete->addItem(tr("Dark blue", "Name of pallete"), 1);
 
     loadSettings();
 }
@@ -143,15 +146,17 @@ void AppSettings::loadSettings()
 
     if(!GlobalSettings::currentTheme.isEmpty())
     {
-        for(int i = 0; i < ui->Theme->count(); i++)
+        for(int i = 0; i < ui->theme->count(); i++)
         {
-            if(ui->Theme->itemData(i).toString() == GlobalSettings::currentTheme)
+            if(ui->theme->itemData(i).toString() == GlobalSettings::currentTheme)
             {
-                ui->Theme->setCurrentIndex(i);
+                ui->theme->setCurrentIndex(i);
                 break;
             }
         }
     }
+
+    ui->pallete->setCurrentIndex(GlobalSettings::currentPallete);
 
     ui->fontSize->setRange(1, 1000);
     if(GlobalSettings::fontSize < 0)
@@ -259,10 +264,12 @@ void AppSettings::on_buttonBox_accepted()
     else
         GlobalSettings::TSTToolboxPos = QTabWidget::West;
 
-    if(ui->Theme->currentIndex() == 0)
+    if(ui->theme->currentIndex() == 0)
         GlobalSettings::currentTheme.clear();
     else
-        GlobalSettings::currentTheme = ui->Theme->currentData().toString();
+        GlobalSettings::currentTheme = ui->theme->currentData().toString();
+
+    GlobalSettings::currentPallete = ui->pallete->currentIndex();
 
     if(ui->fontDefaultSetup->isChecked())
         GlobalSettings::fontSize = -1;
