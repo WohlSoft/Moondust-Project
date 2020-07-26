@@ -48,19 +48,19 @@ void WldScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
     QPoint offsetMax(0, 0);
     int gridSize = 0, gridSizeMax = 0; //, gridX, gridY, i=0;
     QGraphicsItem *lead = nullptr;
-    QString ObjType;
+    QString objType;
 
-    foreach(QGraphicsItem *it, items)
+    for(QGraphicsItem *it : items)
     {
         if(!it) continue;
         offset.setX(0);
         offset.setY(0);
-        ObjType = it->data(ITEM_TYPE).toString();
-        if(ObjType == "TILE" ||
-           ObjType == "SCENERY" ||
-           ObjType == "PATH" ||
-           ObjType == "LEVEL" ||
-           ObjType == "MUSICBOX")
+        objType = it->data(ITEM_TYPE).toString();
+        if(objType == "TILE" ||
+           objType == "SCENERY" ||
+           objType == "PATH" ||
+           objType == "LEVEL" ||
+           objType == "MUSICBOX")
         {
             WldBaseItem *item = dynamic_cast<WldBaseItem *>(it);
             offset    = item->gridOffset();
@@ -90,7 +90,7 @@ void WldScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
 
         if(items.size() > 1)
         {
-            foreach(QGraphicsItem *it, items)
+            for(QGraphicsItem *it : items)
             {
                 if(it != lead)
                 {
@@ -115,19 +115,19 @@ void WldScene::applyGridToEach(QList<QGraphicsItem *> items)
     QPoint sourcePos = QPoint(0, 0);
     QPoint offset;
     int gridSize = 0; //, gridX, gridY, i=0;
-    QString ObjType;
+    QString objType;
 
-    foreach(QGraphicsItem *it, items)
+    for(QGraphicsItem *it : items)
     {
         if(!it) continue;
         offset.setX(0);
         offset.setY(0);
-        ObjType = it->data(ITEM_TYPE).toString();
-        if(ObjType == "TILE" ||
-           ObjType == "SCENERY" ||
-           ObjType == "PATH" ||
-           ObjType == "LEVEL" ||
-           ObjType == "MUSICBOX")
+        objType = it->data(ITEM_TYPE).toString();
+        if(objType == "TILE" ||
+           objType == "SCENERY" ||
+           objType == "PATH" ||
+           objType == "LEVEL" ||
+           objType == "MUSICBOX")
         {
             WldBaseItem *item = dynamic_cast<WldBaseItem *>(it);
             offset    = item->gridOffset();
@@ -166,7 +166,7 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical)
     zone.setY(qRound(items.first()->scenePos().y()));
     zone.setHeight(items.first()->data(ITEM_HEIGHT).toInt() + 1);
 
-    foreach(QGraphicsItem *item, items)
+    for(QGraphicsItem *item : items)
     {
         if(item->data(ITEM_IS_ITEM).isNull())
             continue;
@@ -183,7 +183,7 @@ void WldScene::flipGroup(QList<QGraphicsItem *> items, bool vertical)
     }
 
     //Apply flipping formula to each item
-    foreach(QGraphicsItem *item, items)
+    for(QGraphicsItem *item : items)
     {
         if(vertical)
         {
@@ -230,7 +230,7 @@ void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise)
     zone.setY(qRound(items.first()->scenePos().y()));
     zone.setHeight(items.first()->data(ITEM_HEIGHT).toInt() + 1);
 
-    foreach(QGraphicsItem *item, items)
+    for(QGraphicsItem *item : items)
     {
         if(item->data(ITEM_IS_ITEM).isNull())
             continue;
@@ -247,7 +247,7 @@ void WldScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise)
     }
 
     //Apply rotate formula to each item
-    foreach(QGraphicsItem *item, items)
+    for(QGraphicsItem *item : items)
     {
         itemZone.setX(qRound(item->scenePos().x()));
         itemZone.setWidth(item->data(ITEM_WIDTH).toInt() + 1);
