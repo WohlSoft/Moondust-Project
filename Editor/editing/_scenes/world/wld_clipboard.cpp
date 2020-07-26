@@ -257,7 +257,47 @@ void WldScene::paste(WorldData &BufferIn, QPoint pos)
         newData.music.push_back(dumpMusic);
     }
 
-    applyGroupGrid(selectedItems(), true);
+    auto s = selectedItems();
+    applyGroupGrid(s, true);
+
+    QString objType;
+    newData.tiles.clear();
+    newData.scenery.clear();
+    newData.paths.clear();
+    newData.levels.clear();
+    newData.music.clear();
+
+    // Get an actual set of items after grid aligning
+    for(QGraphicsItem *it : s)
+    {
+        if(!it) continue;
+        objType = it->data(ITEM_TYPE).toString();
+        if(objType == "TILE")
+        {
+            ItemTile *item = dynamic_cast<ItemTile *>(it);
+            newData.tiles.push_back(item->m_data);
+        }
+        else if(objType == "SCENERY")
+        {
+            ItemScene *item = dynamic_cast<ItemScene *>(it);
+            newData.scenery.push_back(item->m_data);
+        }
+        else if(objType == "PATH")
+        {
+            ItemPath *item = dynamic_cast<ItemPath *>(it);
+            newData.paths.push_back(item->m_data);
+        }
+        else if(objType == "LEVEL")
+        {
+            ItemLevel *item = dynamic_cast<ItemLevel *>(it);
+            newData.levels.push_back(item->m_data);
+        }
+        else if(objType == "MUSICBOX")
+        {
+            ItemMusic *item = dynamic_cast<ItemMusic *>(it);
+            newData.music.push_back(item->m_data);
+        }
+    }
 
     m_data->meta.modified = true;
     m_history->addPlaceHistory(newData);
