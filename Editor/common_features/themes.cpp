@@ -729,7 +729,7 @@ void Themes::togglePallete(Themes::Palettes pallete)
         darkPalette.setColor(QPalette::Base, QColor(32, 37, 42));
         darkPalette.setColor(QPalette::AlternateBase, QColor(20, 40, 66));
         darkPalette.setColor(QPalette::ToolTipBase, QColor(150, 175, 200));
-        darkPalette.setColor(QPalette::ToolTipText, QColor(150, 175, 200));
+        darkPalette.setColor(QPalette::ToolTipText, QColor(0, 0, 0));
         darkPalette.setColor(QPalette::Text, QColor(150, 175, 200));
         darkPalette.setColor(QPalette::Disabled, QPalette::Text, QColor(55, 85, 105));
         darkPalette.setColor(QPalette::Dark, QColor(15, 22, 35));
