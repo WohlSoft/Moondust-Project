@@ -48,15 +48,15 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
     int gridSize = 0, gridSizeMax = 0, offsetX = 0, offsetY = 0, offsetXMax = 0, offsetYMax = 0; //, gridX, gridY, i=0;
     QGraphicsItem *lead = nullptr;
     //QGraphicsItemGroup *tmp = NULL;
-    QString ObjType;
+    QString objType;
 
-    foreach(QGraphicsItem *it, items)
+    for(QGraphicsItem *it : items)
     {
         if(!it) continue;
         offsetX = 0;
         offsetY = 0;
-        ObjType = it->data(ITEM_TYPE).toString();
-        if(ObjType == "NPC")
+        objType = it->data(ITEM_TYPE).toString();
+        if(objType == "NPC")
         {
             ItemNPC *item = dynamic_cast<ItemNPC *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
@@ -64,7 +64,7 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
             offsetX =  item->m_localProps.setup.grid_offset_x;
             offsetY =  item->m_localProps.setup.grid_offset_y;
         }
-        else if(ObjType == "Block")
+        else if(objType == "Block")
         {
             ItemBlock *item = dynamic_cast<ItemBlock *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
@@ -72,7 +72,7 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
             offsetX =  item->m_gridOffsetX;
             offsetY =  item->m_gridOffsetY;
         }
-        else if(ObjType == "BGO")
+        else if(objType == "BGO")
         {
             ItemBGO *item = dynamic_cast<ItemBGO *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
@@ -80,25 +80,25 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
             offsetX =  item->m_gridOffsetX;
             offsetY =  item->m_gridOffsetY;
         }
-        else if(ObjType == "Water")
+        else if(objType == "Water")
         {
             ItemPhysEnv *item = dynamic_cast<ItemPhysEnv *>(it);
             sourcePos = QPoint(item->m_data.x, item->m_data.y);
             gridSize  = item->m_gridSize;
         }
-        else if(ObjType == "Door_enter")
+        else if(objType == "Door_enter")
         {
             ItemDoor *item = dynamic_cast<ItemDoor *>(it);
             sourcePos = QPoint(item->m_data.ix, item->m_data.iy);
             gridSize  = item->m_gridSize;
         }
-        else if(ObjType == "Door_exit")
+        else if(objType == "Door_exit")
         {
             ItemDoor *item = dynamic_cast<ItemDoor *>(it);
             sourcePos = QPoint(item->m_data.ox, item->m_data.oy);
             gridSize  = item->m_gridSize;
         }
-        else if(ObjType == "playerPoint")
+        else if(objType == "playerPoint")
         {
             ItemPlayerPoint *item = dynamic_cast<ItemPlayerPoint *>(it);
             gridSize  = item->m_gridSize;
@@ -131,7 +131,7 @@ void LvlScene::applyGroupGrid(QList<QGraphicsItem *> items, bool force)
 
         if(items.size() > 1)
         {
-            foreach(QGraphicsItem *it, items)
+            for(QGraphicsItem *it : items)
             {
                 if(it != lead)
                 {
@@ -156,7 +156,7 @@ void LvlScene::applyGridToEach(QList<QGraphicsItem *> items)
     int gridSize = 0, offsetX = 0, offsetY = 0; //, gridX, gridY, i=0;
     QString ObjType;
 
-    foreach(QGraphicsItem *it, items)
+    for(QGraphicsItem *it : items)
     {
         if(!it) continue;
         offsetX = 0;
@@ -254,7 +254,8 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
         zone.setHeight(abs(tmp.y() - s_bottom) + 1);
     }
     else
-        foreach(QGraphicsItem *item, items)
+    {
+        for(QGraphicsItem *item : items)
         {
             if(item->data(ITEM_IS_ITEM).isNull())
                 continue;
@@ -269,9 +270,10 @@ void LvlScene::flipGroup(QList<QGraphicsItem *> items, bool vertical, bool recor
             if(itemZone.right() > zone.right()) zone.setRight(itemZone.right());
             if(itemZone.bottom() > zone.bottom()) zone.setBottom(itemZone.bottom());
         }
+    }
 
     //Apply flipping formula to each item
-    foreach(QGraphicsItem *item, items)
+    for(QGraphicsItem *item : items)
     {
         if(vertical)
         {
@@ -357,7 +359,8 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
         zone.setHeight(abs(tmp.y() - s_bottom) + 1);
     }
     else
-        foreach(QGraphicsItem *item, items)
+    {
+        for(QGraphicsItem *item : items)
         {
             if(item->data(ITEM_IS_ITEM).isNull())
                 continue;
@@ -372,9 +375,10 @@ void LvlScene::rotateGroup(QList<QGraphicsItem *> items, bool byClockwise, bool 
             if(itemZone.right() > zone.right()) zone.setRight(itemZone.right());
             if(itemZone.bottom() > zone.bottom()) zone.setBottom(itemZone.bottom());
         }
+    }
 
     //Apply rotate formula to each item
-    foreach(QGraphicsItem *item, items)
+    for(QGraphicsItem *item : items)
     {
         itemZone.setX(qRound(item->scenePos().x()));
         itemZone.setWidth(item->data(ITEM_WIDTH).toInt() + 1);
