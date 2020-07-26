@@ -1,26 +1,19 @@
 Editor
-- Improve detector of unused custom data to provide clean-up of unused data.
 * New custom stuff indexing system to have more convenient usage of customized stuff.
   It's a big work, but in result we will have much more convenient system to manage a custom stuff
 - Add re-configurable hot-keys
-- Speed-up render of editing scene with forcing of RTree usage with escaping usage of QGraphicsScene's update() function!
-- Add per lvl_block/lvl_bgo/lvl_npc/wld_tiles/etc. common grid value
-- Use lvl_characters.ini instead of main.ini to store characters information
-- Make spoilers / scroll-area in the warps box to support view on smaller screens
+- Speed-up render of editing scene with forcing of QuadTree usage with escaping usage of QGraphicsScene's update() function!
 
 Engine
-- Replace QDialog-based config pack selection box with the own-drawn scene in the SDL Window
 - Make global "loaderCallback" function pointer to allow processing of level/world loader screen from side
   without making of separated threads (which is not supported with single OpenGL context while texture loadings are in process)
 - Exclamation sign sprite over talkable NPC's
-- Fix a bug causes missing of custom lua-scripts declared in the custom npc.txt file
-- Replace all pixel per seconds NPC mover speeds with 1/64 second values
+* Fix a bug causes missing of custom lua-scripts declared in the custom npc.txt file
 
 Engine: Lua
 - Better Memory Management, either transfere ownership to C++ or use smart pointers.
 - setFramePos() NPC Animator function to provide ability jump to any frame position in sequence
 - effect-def based effect spawn function to allow easier and flexible way of effect spawning
-+ Detectors API for NPCs
 * Player-LUA events and allow external lua files like npc's are has.
 
   Player's events function:
@@ -33,7 +26,7 @@ Engine: Lua
    onControl(key)
 
 Engine: New level physics
-- Wall adheasing NPCs support 
+- Wall adheasing NPCs support
 * Walkhable slopes
 - Fix staying of NPC's on a top of other flying NPC's
 - Kill on crush
@@ -53,8 +46,6 @@ Common
 - Action-styled events for level subsystem
 * Completed Read/Write implementation of SMBX-38A file formats support
 
-SDL Mixer X
-- Reorganize SDL2_Mixer_ext into C++, build classes to reduce code size
 
 Completed works
 ============================================================
@@ -68,12 +59,19 @@ Editor
   spawned by SMBX Editor bug (such a vines and ladders): function anready finds junk NPC's
   but it doesn't removes them. Need to find and delete listed NPCs from scene and store the remove history entry.
 + Add R-Tree from engine into editor to increase performance of collision detection.
++ Improve detector of unused custom data to provide clean-up of unused data.
++ Add per lvl_block/lvl_bgo/lvl_npc/wld_tiles/etc. common grid value
++ Use lvl_characters.ini instead of main.ini to store characters information
++ Make spoilers / scroll-area in the warps box to support view on smaller screens
 
 Engine
 + Raster fonts support
 + Textures support for world map items
 + Playable character and it's state switching support
 + Add loading of NPC configs: copy stuff from editor and replace QImage/QPixmap with a GL Textures.
++ Replace QDialog-based config pack selection box with the own-drawn scene in the SDL Window
++ Replace all pixel per seconds NPC mover speeds with 1/65 second values
++ Detectors API for NPCs
 
 Engine: New level physics
 + R-Tree based physical world inside LevelScene with simple physics. PGE_PhysObj will a physical body
