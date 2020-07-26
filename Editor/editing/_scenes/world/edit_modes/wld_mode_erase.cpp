@@ -55,7 +55,7 @@ void WLD_ModeErase::set()
 
     s->m_viewPort->setInteractive(true);
     s->m_viewPort->setCursor(Themes::Cursor(Themes::cursor_erasing));
-    s->m_viewPort->setDragMode(QGraphicsView::RubberBandDrag);
+    s->m_viewPort->setDragMode(QGraphicsView::NoDrag);
 }
 
 void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
@@ -86,8 +86,9 @@ void WLD_ModeErase::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
     {
         s->removeItemUnderCursor();
         s->Debugger_updateItemList();
-        s->m_eraserIsEnabled = true;
     }
+
+    s->m_eraserIsEnabled = true;
 }
 
 void WLD_ModeErase::mouseMove(QGraphicsSceneMouseEvent *mouseEvent)
