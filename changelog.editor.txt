@@ -42,7 +42,10 @@ Editor 0.3.2-dev
 - Fixed the logic of a resource importer that was broken a long time ago
 - New icons by Tails608
 - The background image selection menu has been reworked
-- Added the dark color theme which can be switched in application settings
+- Added the dark color theme which can be switched in application settings (thanks to Enjl for some contribution)
+Known bugs:
+- Changing of pallete in some cases will not been updated properly. Restart of Editor will be needed to properly apply changes.
+- Changing of pallete into default will not restore the default UI style and Fusion will be used. Restart of Editor will be needed to properly apply changes.
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
