@@ -67,6 +67,9 @@ void LVL_ModeSquare::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
+    if(!(mouseEvent->buttons() & Qt::LeftButton)) // Deny any other mouse buttons
+        return;
+
     s->m_lastBlockArrayID = s->m_data->blocks_array_id;
     s->m_lastBgoArrayID = s->m_data->bgo_array_id;
     s->m_lastNpcArrayID = s->m_data->npc_array_id;

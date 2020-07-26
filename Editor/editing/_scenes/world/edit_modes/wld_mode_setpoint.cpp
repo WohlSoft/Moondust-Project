@@ -64,6 +64,9 @@ void WLD_ModeSetPoint::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
+    if(!(mouseEvent->buttons() & Qt::LeftButton)) // Deny any other mouse buttons
+        return;
+
     if(s->m_cursorItemImg)
     {
         s->m_cursorItemImg->setPos(QPointF(s->applyGrid(mouseEvent->scenePos().toPoint() -

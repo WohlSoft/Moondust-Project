@@ -73,6 +73,9 @@ void WLD_ModeRect::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
+    if(!(mouseEvent->buttons() & Qt::LeftButton)) // Deny any other mouse buttons
+        return;
+
     s->m_lastTerrainArrayID = s->m_data->tile_array_id;
     s->m_lastSceneryArrayID = s->m_data->scene_array_id;
     s->m_lastPathArrayID = s->m_data->path_array_id;

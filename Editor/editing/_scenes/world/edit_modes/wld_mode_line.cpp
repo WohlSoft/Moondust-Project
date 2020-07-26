@@ -73,6 +73,9 @@ void WLD_ModeLine::mousePress(QGraphicsSceneMouseEvent *mouseEvent)
         return;
     }
 
+    if(!(mouseEvent->buttons() & Qt::LeftButton)) // Deny any other mouse buttons
+        return;
+
     LogDebug(QString("Line mode %1").arg(s->m_editMode));
 
     s->m_lastTerrainArrayID = s->m_data->tile_array_id;
