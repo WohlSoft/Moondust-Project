@@ -1,51 +1,52 @@
 Editor 0.3.2-dev
-- Added support for element (Block, BGO, NPC), section, and level-wide Extra Settings
-- Config pack is able to specify the default file format
+- Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings
+- Config pack can specify the default file format
 - When SMBX64 formats are default, the strict mode is turned on in untitled files
 - Added Chinese translation by 快乐爱的小精灵
-- Added safer file saving strategy
-- Fixed imperfection that allows to use level file selector in the untitled world map file
+- Added a safer file saving strategy
+- Fixed the imperfection that allows using level file selector in the untitled world map file
 - Added an ability to hide or disable certain field or feature from the config pack
 - Added Dutch translation by Gameinsky
-- LunaTester now is cross-platform and no more needs 32-bit Editor on Windows for a work (`LunaLoader-exec.exe` module is required)
+- LunaTester now is cross-platform and no more needs 32-bit Editor on Windows for work (`LunaLoader-exec.exe` module is required)
 - Fixed unneeded special values reset for NPCs
 - Fixed incorrect animation setup after height change via user's NPC.txt configs
 - Fixed a clumping of elements inside the Tileset Editor
 - Added separated music boxes toolbox for world map
-- On Linux and macOS is no more need to try restart Editor twice after crash: single try should start Editor normally
-- Added NPC config pack option to disable "Auto-Increment" support for custom value of spin-box type
-- Fixed inability to change special value by level/episode custom NPC INI config file
-- Added hot keys for "Create New": Ctrl+N for levels; Alt+N, M for world maps; and Alt+N, N for NPC configs; Ctrl+Shift+N will spawn a menu to select a type of file to create
+- On Linux and macOS is no more need to try restart Editor twice after the crash: single try should start Editor normally
+- Added NPC config pack option to disable "Auto-Increment" support for custom values of spin-box type
+- Fixed inability to change the special value by level/episode custom NPC INI config file
+- Added hotkeys for "Create New": Ctrl+N for levels; Alt+N, M for world maps; and Alt+N, N for NPC configs; Ctrl+Shift+N will spawn a menu to select a type of file to create
 - Fixed an incorrect NPC frame shown as the new-placing cursor phantom
 - Improved UI of Tileset Editor
 - Added scroll area into Tileset Editor's scene to allow use it on smaller monitors
 - Added a grid drawing in the Tileset Editor's scene
 - Fixed confusion of world map scenery order while going through editing history or copy-pasting
 - Fixed unnecessary music enabling bug on a world map
-- Added "is-meta-object" element option in a config pack to hide elements from exported images or from the game entirely
+- Added "is-meta-object" element option in a config pack to hide elements from exported images or the game entirely
 - Added French translation by NathanBnm
-- Reworked a testing sub-system to make it be more modular
+- Reworked a testing sub-system to make it more modular
 - Added a level testing integration with the TheXTech engine
-- The LunaTester has been reworked: now it's fully asynchronius and much more stable. It works with a full backward compatibility with a bunch of LunaLua versions: tested with next toolchains: LunaLua-SMBX 1.3.0.2 (LunaLua 0.7.3.1), SMBX2 Beta3, SMBX2 MAGLX3/PAL, and SMBX2 Beta4. For Beta3 and older it's need to put a "LunaLoader-exec.exe" module to make a testign work.
+- The LunaTester has been reworked: now it's fully asynchronous and much more stable. It works with full backward compatibility with a bunch of LunaLua versions: tested with next toolchains: LunaLua-SMBX 1.3.0.2 (LunaLua 0.7.3.1), SMBX2 Beta3, SMBX2 MAGLX3/PAL, and SMBX2 Beta4. For Beta3 and older it needs to put a "LunaLoader-exec.exe" module to make a testing work.
 - Fixed an incorrect logic of a theme loading and switching mechanism
 - Fixed an ignore of locks for item types by an eraser
 - Extended a context menu of level and world map surface
 - Better look of a crash handler dialog
 - Added a level testing integration with the SMBX-38A engine
-- Added an ability to change font size
+- Added an ability to change the font size
 - Added the support for alternative Editor images and animations (config pack entry settings with "editor-" prefix)
 - Added the support for item icons (alternative pictures shown in tilesets and item lists)
 - Added camera grid for a preset grid for visualizing screens worth of a level
 - Added the "select all" item search option
-- Added the "Current section only" and the "Search in selection group" item search criterias
+- Added the "Current section only" and the "Search in selection group" item search criteria
 - Improved the work of an unused resources clean-up tool
 - Fixed the logic of a resource importer that was broken a long time ago
 - New icons by Tails608
 - The background image selection menu has been reworked
 - Added the dark color theme which can be switched in application settings (thanks to Enjl for some contribution)
+- Fixed the wrong alignment of items after redoing of a paste
 Known bugs:
-- Changing of pallete in some cases will not been updated properly. Restart of Editor will be needed to properly apply changes.
-- Changing of pallete into default will not restore the default UI style and Fusion will be used. Restart of Editor will be needed to properly apply changes.
+- Changing the palette in some cases will not be updated properly. A restart of the Editor will be needed to properly apply changes.
+- Changing the palette into default will not restore the default UI style and Fusion will be used. A restart of the Editor will be needed to properly apply changes.
 
 Editor 0.3.1.15
 - Tilesets item box: ComboBox of groups has been replaced with a tab-bar and the right-side menu
