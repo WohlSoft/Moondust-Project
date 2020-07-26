@@ -21,6 +21,7 @@
 #define THEMES_H
 
 #include <QString>
+#include <QStringList>
 #include <QIcon>
 #include <QCursor>
 #include <QMap>
@@ -251,6 +252,8 @@ public:
 
     static QPalette pallete();
     static bool isPalleteDark();
+
+    static QStringList availablePalletes();
 
 private:
     static bool isLoaded;

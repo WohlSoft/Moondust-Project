@@ -708,9 +708,24 @@ const QString &Themes::StyleSheet()
     return styleSheet;
 }
 
+
+QStringList Themes::availablePalletes()
+{
+    QStringList ret;
+    ret << QObject::tr("Default", "Name of pallete");
+    ret << QObject::tr("Dark blue", "Name of pallete");
+    return ret;
+}
+
 void Themes::togglePallete(Themes::Palettes pallete)
 {
     static QPalette s_initialPallete = QApplication::palette();
+
+    /*
+     * NOTE: If you want to add a new pallete, please add it into the list above
+     * (inside of availablePalletes() call) in the same order as Palletes enumeration
+     * describes them.
+     */
 
     switch(pallete)
     {

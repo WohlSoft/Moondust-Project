@@ -86,8 +86,10 @@ AppSettings::AppSettings(QWidget *parent) :
     }
 
     ui->pallete->clear();
-    ui->pallete->addItem(tr("Default", "Name of pallete"), 0);
-    ui->pallete->addItem(tr("Dark blue", "Name of pallete"), 1);
+    auto palletes = Themes::availablePalletes();
+    int pCount = 0;
+    for(auto &p : palletes)
+        ui->pallete->addItem(p, pCount++);
 
     loadSettings();
 }
