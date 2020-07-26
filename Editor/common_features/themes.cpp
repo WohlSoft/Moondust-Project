@@ -16,6 +16,7 @@
  * along with this program.  If not, see <http:/www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
 #include "themes.h"
 
 bool Themes::isLoaded = false;
@@ -709,12 +710,14 @@ const QString &Themes::StyleSheet()
 
 void Themes::togglePallete(Themes::Palettes pallete)
 {
+    static QPalette s_initialPallete = QApplication::palette();
+
     switch(pallete)
     {
     default:
     case Palettes::Default:
     {
-        currentPaletteD = QPalette();
+        currentPaletteD = s_initialPallete;
         currentPaletteIsDark = false;
         break;
     }
