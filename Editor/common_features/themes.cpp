@@ -558,7 +558,11 @@ void Themes::loadIcon(QSettings &s, QString value, Themes::Icons icn)
     {
         QIcon   tmpIcn = QIcon(theme_dir + val);
         if(!tmpIcn.isNull())
+        {
             icons_map[icn] = tmpIcn;
+            if(icons_map_dark.contains(icn))
+                icons_map_dark.remove(icn);
+        }
     }
 
     value += "-dark";
@@ -579,7 +583,11 @@ void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
     {
         QPixmap tmpImg = QPixmap(theme_dir + val);
         if(!tmpImg.isNull())
+        {
             images_map[img] = tmpImg;
+            if(images_map.contains(img))
+                images_map.remove(img);
+        }
     }
 
     value += "-dark";
