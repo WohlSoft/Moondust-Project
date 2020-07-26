@@ -216,7 +216,41 @@ void LvlScene::paste(LevelData &BufferIn, QPoint pos)
         newData.physez.push_back(dumpWater);
     }
 
-    applyGroupGrid(selectedItems(), true);
+    auto s = selectedItems();
+    applyGroupGrid(s, true);
+
+    QString objType;
+    newData.blocks.clear();
+    newData.bgo.clear();
+    newData.npc.clear();
+    newData.physez.clear();
+
+    // Get an actual set of items after grid aligning
+    for(QGraphicsItem *it : s)
+    {
+        if(!it) continue;
+        objType = it->data(ITEM_TYPE).toString();
+        if(objType == "NPC")
+        {
+            ItemNPC *item = dynamic_cast<ItemNPC *>(it);
+            newData.npc.push_back(item->m_data);
+        }
+        else if(objType == "Block")
+        {
+            ItemBlock *item = dynamic_cast<ItemBlock *>(it);
+            newData.blocks.push_back(item->m_data);
+        }
+        else if(objType == "BGO")
+        {
+            ItemBGO *item = dynamic_cast<ItemBGO *>(it);
+            newData.bgo.push_back(item->m_data);
+        }
+        else if(objType == "Water")
+        {
+            ItemPhysEnv *item = dynamic_cast<ItemPhysEnv *>(it);
+            newData.physez.push_back(item->m_data);
+        }
+    }
 
     m_data->meta.modified = true;
     m_history->addPlace(newData);
