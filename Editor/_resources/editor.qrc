@@ -142,6 +142,17 @@
         <file>images/38a.ico</file>
         <file>constributors/Tails608.png</file>
         <file>constributors/FunnyCat.png</file>
+        <file>images/camera_grid_dark.png</file>
+        <file>images/grid_snap_dark.png</file>
+        <file>images/playmusic_dark.png</file>
+        <file>images/show_grid_dark.png</file>
+        <file>images/warp_entrance_dark.png</file>
+        <file>images/warp_exit_dark.png</file>
+        <file>images/wrench_16x16_dark.png</file>
+        <file>images/goto_left_bottom_dark.png</file>
+        <file>images/goto_left_top_dark.png</file>
+        <file>images/goto_right_bottom_dark.png</file>
+        <file>images/goto_top_right_dark.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/00.png</file>
@@ -188,6 +199,28 @@
         <file>sections/20_n.png</file>
         <file>sections/21.png</file>
         <file>sections/21_n.png</file>
+        <file>sections/00_dark.png</file>
+        <file>sections/01_dark.png</file>
+        <file>sections/02_dark.png</file>
+        <file>sections/03_dark.png</file>
+        <file>sections/04_dark.png</file>
+        <file>sections/05_dark.png</file>
+        <file>sections/06_dark.png</file>
+        <file>sections/07_dark.png</file>
+        <file>sections/08_dark.png</file>
+        <file>sections/09_dark.png</file>
+        <file>sections/10_dark.png</file>
+        <file>sections/11_dark.png</file>
+        <file>sections/12_dark.png</file>
+        <file>sections/13_dark.png</file>
+        <file>sections/14_dark.png</file>
+        <file>sections/15_dark.png</file>
+        <file>sections/16_dark.png</file>
+        <file>sections/17_dark.png</file>
+        <file>sections/18_dark.png</file>
+        <file>sections/19_dark.png</file>
+        <file>sections/20_dark.png</file>
+        <file>sections/21_dark.png</file>
     </qresource>
     <qresource prefix="/dummies">
         <file>dummies/dummy-bg.png</file>

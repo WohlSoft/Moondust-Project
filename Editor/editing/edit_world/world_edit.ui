@@ -47,6 +47,9 @@
      <property name="acceptDrops">
       <bool>false</bool>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
      <property name="backgroundBrush">
       <brush brushstyle="SolidPattern">
        <color alpha="255">

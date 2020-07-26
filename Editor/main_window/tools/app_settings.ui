@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>450</width>
-    <height>520</height>
+    <height>561</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -842,12 +842,29 @@ like when choosing an item from the item toolbox or from the tileset item box.</
          <property name="title">
           <string>Theme</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_11">
+         <layout class="QGridLayout" name="gridLayout_11" columnstretch="0,1000">
           <property name="sizeConstraint">
            <enum>QLayout::SetMinimumSize</enum>
           </property>
           <item row="0" column="0">
-           <widget class="QComboBox" name="Theme"/>
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Theme</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="theme"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Palette</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="pallete"/>
           </item>
          </layout>
         </widget>

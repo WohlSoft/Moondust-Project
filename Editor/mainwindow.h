@@ -186,14 +186,21 @@ public:
 
         bool isAppRestartRequested();
 
-        ///
-        /// \brief loadSettings load settings from configuration file
-        ///
+        /**
+         * @brief Partially load settings from a configuration file
+         */
+        void loadBasicSettings();
+
+        /**
+         * @brief Load settings from configuration file
+         */
         void loadSettings();
-        ///
-        /// \brief saveSettings save settings into configuration file
-        ///
+
+        /*!
+         * \brief Save settings into configuration file
+         */
         void saveSettings();
+
 
         void applySetup(bool startup = false);
 

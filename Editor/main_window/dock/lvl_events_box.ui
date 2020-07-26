@@ -183,7 +183,7 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-1142</y>
+       <y>-876</y>
        <width>271</width>
        <height>1721</height>
       </rect>
@@ -841,9 +841,6 @@
                  <property name="toolTip">
                   <string>Top</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
                  <property name="placeholderText">
                   <string>Top</string>
                  </property>
@@ -859,9 +856,6 @@
                  </property>
                  <property name="toolTip">
                   <string>Bottom</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="placeholderText">
                   <string>Bottom</string>
@@ -879,9 +873,6 @@
                  <property name="toolTip">
                   <string>Left</string>
                  </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
                  <property name="placeholderText">
                   <string>Left</string>
                  </property>
@@ -897,9 +888,6 @@
                  </property>
                  <property name="toolTip">
                   <string>Right</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="placeholderText">
                   <string>Right</string>

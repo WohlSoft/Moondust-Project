@@ -17,3 +17,4 @@ luadoc/*			linguist-vendored
 CMakeLists.txt		text eol=lf
 *.cmake				text eol=lf
 *.png				binary
+*.qm				binary

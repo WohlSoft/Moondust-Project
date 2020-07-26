@@ -17,6 +17,7 @@
  */
 
 #include <QtConcurrent>
+#include <QStyleFactory>
 #include <QFutureWatcher>
 #include <QEventLoop>
 #include <utility>
@@ -54,6 +55,10 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     LogDebug(QString("Setting UI Defaults..."));
     setUiDefults(); //Apply default UI settings
+
+    loadBasicSettings();
+
+    applyCurrentTheme();
 
 #ifdef Q_OS_MACX
     foreach(QAction* act, ui->menuBar->actions())

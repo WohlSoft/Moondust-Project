@@ -6,6 +6,7 @@
 #include <QMap>
 
 class QPushButton;
+class QToolButton;
 class QVBoxLayout;
 class QGridLayout;
 class ImageSelector;
@@ -52,7 +53,7 @@ signals:
 class ImageSelector : public QWidget
 {
     Q_OBJECT
-    QPushButton *m_button;
+    QToolButton *m_button;
     QVBoxLayout *m_layout;
     ImageSelectorMenu *m_menuBox;
 

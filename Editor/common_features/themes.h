@@ -21,6 +21,7 @@
 #define THEMES_H
 
 #include <QString>
+#include <QStringList>
 #include <QIcon>
 #include <QCursor>
 #include <QMap>
@@ -28,6 +29,7 @@
 #include <QVector>
 #include <QImage>
 #include <QSettings>
+#include <QPalette>
 
 #include "app_path.h"
 
@@ -228,6 +230,12 @@ public:
         dummy_wlevel
     };
 
+    enum class Palettes
+    {
+        Default = 0,
+        DarkBlue
+    };
+
     static void init();
     static QStringList availableThemes();
     static QString currentTheme();
@@ -240,15 +248,31 @@ public:
 
     static const QString &StyleSheet();
 
+    static void togglePallete(Palettes pallete);
+
+    static QPalette pallete();
+    static bool isPalleteDark();
+
+    static QStringList availablePalletes();
+
 private:
     static bool isLoaded;
     static QString currentThemeDir;
 
     static QString styleSheet;
 
+    static Palettes currentPalette;
+    static QPalette currentPaletteD;
+    static bool currentPaletteIsDark;
+
     static QMap<Icons, QIcon > icons_map;
+    static QMap<Icons, QIcon > icons_map_dark;
+
     static QMap<Images, QPixmap > images_map;
+    static QMap<Images, QPixmap > images_map_dark;
+
     static QMap<Images, int> int_map;
+
     static QMap<Images, QCursor> cursor_map;
 
     static void loadStyleSheet(QSettings &s, QString value);

@@ -60,6 +60,7 @@ bool GlobalSettings::Placing_dontShowPropertiesBox  = false;
 int  GlobalSettings::historyLimit   = 300;
 
 QString GlobalSettings::currentTheme;
+int     GlobalSettings::currentPallete = 0;
 std::unique_ptr<QFont> GlobalSettings::fontDefault;
 std::unique_ptr<QFont> GlobalSettings::font;
 int     GlobalSettings::fontSize = -1;
