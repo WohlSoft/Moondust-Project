@@ -56,6 +56,11 @@ void MainWindow::applyCurrentTheme()
     else
         qApp->setStyle("default");
 
+    if(Themes::isPalleteDark())
+        ui->centralWidget->setBackground(QBrush(QColor(QRgb(0x222222))));
+    else
+        ui->centralWidget->setBackground(QBrush(Qt::darkGray));
+
     qApp->setPalette(Themes::pallete());
 
     LogDebug(QString("Loading theme [%1]...").arg(theme));
