@@ -585,8 +585,8 @@ void Themes::loadImage(QSettings &s, QString value, Themes::Images img)
         if(!tmpImg.isNull())
         {
             images_map[img] = tmpImg;
-            if(images_map.contains(img))
-                images_map.remove(img);
+            if(images_map_dark.contains(img))
+                images_map_dark.remove(img);
         }
     }
 
@@ -692,7 +692,11 @@ QPixmap Themes::Image(Themes::Images img)
     else if(images_map.contains(img))
         return images_map[img];
     else
-        return QPixmap();
+    {
+        QPixmap x(32, 32);
+        x.fill(Qt::gray);
+        return x;
+    }
 }
 
 int Themes::Integer(Themes::Images intval)
