@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation>Il Testing delle mappe non è supportato</translation>
+        <translation>Il testing delle mappe non è supportato</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
