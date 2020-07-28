@@ -255,12 +255,12 @@
     <message>
         <location filename="../calibrationmain.ui" line="182"/>
         <source>Apply duck height to this frame</source>
-        <translation>Appliquer la hauteur par défaut à cette image</translation>
+        <translation type="unfinished">Appliquer la hauteur par défaut à cette image</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="185"/>
         <source>Is duck frame</source>
-        <translation>Position assise</translation>
+        <translation type="unfinished">Position assise</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="139"/>
@@ -290,7 +290,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="172"/>
         <source>Height (duck)</source>
-        <translation>Hauteur (canard)</translation>
+        <translation type="unfinished">Hauteur (accroupi)</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="52"/>
@@ -310,7 +310,7 @@
     <message>
         <location filename="../calibrationmain.ui" line="74"/>
         <source>Duck height of player&apos;s collision box (hitbox)</source>
-        <translation>Hauteur de la boîte de collision du joueur (hitbox) en position assise</translation>
+        <translation type="unfinished">Hauteur de la boîte de collision du joueur (hitbox) en position assise</translation>
     </message>
     <message>
         <location filename="../calibrationmain.ui" line="523"/>
