@@ -231,7 +231,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="50"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Caminho para uma diretoria de episódio para processar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="57"/>
@@ -387,7 +387,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Caminho para uma diretoria de episódio para processar</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
@@ -480,7 +480,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="49"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sem ficheiros para converter</translation>
     </message>
 </context>
 <context>
@@ -549,13 +549,13 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="143"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O que deseja?</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="163"/>
         <location filename="../Graphics/gifs2png.cpp" line="273"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="170"/>
@@ -570,7 +570,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="217"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fechar</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="63"/>
@@ -648,7 +648,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="271"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parar</translation>
     </message>
 </context>
 <context>
@@ -799,13 +799,13 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">O que deseja?</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="139"/>
         <location filename="../Graphics/png2gifs.cpp" line="184"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Iniciar</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="146"/>
@@ -820,7 +820,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="193"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fechar</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="62"/>
@@ -881,7 +881,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="182"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Parar</translation>
     </message>
 </context>
 <context>

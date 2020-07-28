@@ -417,6 +417,10 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Use default</source>
         <translation>Use default</translation>
     </message>
+    <message>
+        <source>Palette</source>
+        <translation>Palette</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -11065,6 +11069,16 @@ Reason: %1
     <message>
         <source>Section extra settings</source>
         <translation>Section extra settings</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Name of pallete</comment>
+        <translation>Default</translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <comment>Name of pallete</comment>
+        <translation>Dark blue</translation>
     </message>
 </context>
 <context>

@@ -239,14 +239,14 @@ configuration packages are not found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="556"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
+        <location filename="../scenes/scene_world.cpp" line="556"/>
         <source>Invalid playable character ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="565"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
+        <location filename="../scenes/scene_world.cpp" line="565"/>
         <source>Invalid playable character state ID</source>
         <translation type="unfinished"></translation>
     </message>

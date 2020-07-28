@@ -417,6 +417,10 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Use default</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -10598,6 +10602,16 @@ El máximo es %2.</translation>
     <message>
         <source>Section extra settings</source>
         <translation>Opciones de sección extra</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Name of pallete</comment>
+        <translation type="unfinished">Predeterminado</translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <comment>Name of pallete</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -366,6 +366,10 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Error</source>
         <translation type="unfinished">Errore</translation>
     </message>
+    <message>
+        <source>Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -8173,6 +8177,16 @@ Il numero massimo di musiche è %2.</translation>
     </message>
     <message>
         <source>Section extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Name of pallete</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <comment>Name of pallete</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

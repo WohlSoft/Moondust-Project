@@ -387,37 +387,42 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Voorwerpen Gereedschapsvenster</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="897"/>
+        <location filename="../main_window/tools/app_settings.ui" line="862"/>
+        <source>Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="914"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="916"/>
+        <location filename="../main_window/tools/app_settings.ui" line="933"/>
         <source>Font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="936"/>
+        <location filename="../main_window/tools/app_settings.ui" line="953"/>
         <source>Use default</source>
         <translation type="unfinished">Standaardinstellingen gebruiken</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="947"/>
+        <location filename="../main_window/tools/app_settings.ui" line="964"/>
         <source>Logging</source>
         <translation>Loggen</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="997"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1014"/>
         <source>Extra</source>
         <translation>Extra</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1006"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1023"/>
         <source>Note: Some of those settings will take change on application restart</source>
         <translation>Opmerking: Sommige wijzigingen zullen pas na het herstarten van het programma geactiveerd worden</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1019"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1036"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
         <translation>Activeer automatische schaalvergroting op hoge-DPI-monitoren</translation>
     </message>
@@ -464,24 +469,25 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="800"/>
         <location filename="../main_window/tools/app_settings.ui" line="826"/>
-        <location filename="../main_window/tools/app_settings.ui" line="867"/>
+        <location filename="../main_window/tools/app_settings.ui" line="884"/>
         <source>Display tabs horizontally</source>
         <translation>Tabbladen horizontaal tonen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="807"/>
         <location filename="../main_window/tools/app_settings.ui" line="833"/>
-        <location filename="../main_window/tools/app_settings.ui" line="874"/>
+        <location filename="../main_window/tools/app_settings.ui" line="891"/>
         <source>Display tabs vertically</source>
         <translation>Tabbladen verticaal tonen</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="858"/>
+        <location filename="../main_window/tools/app_settings.ui" line="875"/>
         <source>Level Item toolbox</source>
         <translation>Niveau Gereedschapskist</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="843"/>
+        <location filename="../main_window/tools/app_settings.ui" line="852"/>
         <source>Theme</source>
         <translation>Thema</translation>
     </message>
@@ -495,42 +501,42 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation type="vanished">Loggen</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="956"/>
+        <location filename="../main_window/tools/app_settings.ui" line="973"/>
         <source>Log level</source>
         <translation>Niveau loggen</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="966"/>
+        <location filename="../main_window/tools/app_settings.ui" line="983"/>
         <source>Browse</source>
         <translation>Bladeren</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="973"/>
+        <location filename="../main_window/tools/app_settings.ui" line="990"/>
         <source>Log file</source>
         <translation>Log bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="211"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="218"/>
         <source>Set log file</source>
         <translation type="unfinished">Logboekbestand instellen</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="212"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="219"/>
         <source>Text files (*.txt *.log)</source>
         <translation type="unfinished">Tekstbestanden (*. txt *. log)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="306"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="315"/>
         <source>Success</source>
         <translation type="unfinished">Succes</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="306"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="315"/>
         <source>All file associations have been set</source>
         <translation type="unfinished">Alle bestandsassociaties zijn ingesteld</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="308"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="317"/>
         <source>Error</source>
         <translation type="unfinished">Fout</translation>
     </message>
@@ -4779,7 +4785,7 @@ Wilt u toch doorgaan?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="724"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="365"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="369"/>
         <source>Section</source>
         <translation>Sectie</translation>
     </message>
@@ -4799,162 +4805,162 @@ Wilt u toch doorgaan?</translation>
         <translation>Grootte en positie instellen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="943"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="979"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1050"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="931"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="967"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1038"/>
         <source>Don&apos;t change</source>
         <translation>Niet veranderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="918"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="906"/>
         <source>Capture...</source>
         <translation>Leg vast...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="950"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="986"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1057"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="938"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="974"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1045"/>
         <source>Reset to default</source>
         <translation>Terug naar standaardinstellingen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="880"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="886"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1293"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="874"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="877"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1275"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="842"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="848"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="845"/>
         <source>Top</source>
         <translation>Boven</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="957"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="945"/>
         <source>Define new:</source>
         <translation>Nieuwe definiëren:</translation>
     </message>
     <message>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="858"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="861"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="867"/>
         <source>Bottom</source>
         <translation>Beneden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="899"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="905"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1307"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="890"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="893"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1289"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="970"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="958"/>
         <source>Set music</source>
         <translation>Muziek veranderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="993"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="981"/>
         <source>Replace music to:</source>
         <translation>Muziek veranderen naar:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1041"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1029"/>
         <source>Set background</source>
         <translation>Achtergrond veranderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1064"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1052"/>
         <source>Replace background to:</source>
         <translation>Achtergrond veranderen naar:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1100"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1082"/>
         <source>Common</source>
         <translation>Algemeen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1167"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1149"/>
         <source>Do end game:</source>
         <translation>Activeer einde van het spel:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1154"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1136"/>
         <source>Play sound:</source>
         <translation>Geluid afspelen:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1227"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1209"/>
         <source>Test</source>
         <translation>Test</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1134"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1116"/>
         <source>Display message:</source>
         <translation>Bericht om weer te geven:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1184"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1166"/>
         <source>Nothing</source>
         <translation>Geen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1189"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1171"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation>Einde spel: &quot;EIndbaas verslagen&quot;</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1244"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1226"/>
         <source>Player Control hold keys</source>
         <translation>Spelbesturing overnemen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1279"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1261"/>
         <source>Run</source>
         <translation>Lopen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1286"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1268"/>
         <source>Down</source>
         <translation>Onder</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1272"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1254"/>
         <source>Up</source>
         <translation>Boven</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1335"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1317"/>
         <source>Drop</source>
         <translation>Droppen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1321"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1303"/>
         <source>Alt-run</source>
         <translation>Alt-lopen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1328"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1310"/>
         <source>Start</source>
         <translation>Starten</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1300"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1282"/>
         <source>Jump</source>
         <translation>Springen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1314"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1296"/>
         <source>Alt-jump</source>
         <translation>Alt-springen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1352"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1334"/>
         <source>Trigger event</source>
         <translation>Event activeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1377"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1359"/>
         <source>Delay</source>
         <translation>Vertraging</translation>
     </message>
@@ -4969,38 +4975,38 @@ Wilt u toch doorgaan?</translation>
         <translation>Maak een kopie van de event</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="274"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="278"/>
         <source>[Silence]</source>
         <translation>[Stilte]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="379"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2235"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="383"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2231"/>
         <source>[none]</source>
         <translation>[geen]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1111"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1105"/>
         <source>New Event %1</source>
         <translation>Nieuwe event %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1163"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1157"/>
         <source>Copyed Event %1</source>
         <translation>Event gekopiëerd %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1904"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1898"/>
         <source>Get section size</source>
         <translation>Sectie grootte ophalen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1905"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1899"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation>U moet zich op sectie %1 bevinden om data te kunnen opnemen voor dit event</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2225"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2221"/>
         <source>Please, enter message
 (Max line length is 27 characters)</source>
         <translation>Geef een bericht op
@@ -5864,49 +5870,49 @@ Fysieke omgevingszones:	%6
     <name>LvlSectionProps</name>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="30"/>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="420"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="393"/>
         <source>Section Settings</source>
         <translation>Sectie Instellingen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="429"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="402"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
         <translation>Bij het verlaten van het scherm, zal de speler aan de andere kant verschijnen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="449"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="422"/>
         <source>Off screen exit</source>
         <translation>Schermgrens uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="401"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="374"/>
         <source>Browse...</source>
         <translation>Bladeren...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="316"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="289"/>
         <source>Edit a custom background config...</source>
         <translation>Een zelfgemaakte achtergrondsconfiguratie aanpassen...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="459"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="432"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
         <translation>Éénrichtingscamera (geen terugkering)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="469"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="442"/>
         <source>Underwater</source>
         <translation>Onderwater</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="432"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="405"/>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
         <translation>Horizontale schermgrens aansluiting</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="442"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="415"/>
         <source>Wrap vertically</source>
         <translation>Verticale schermgrens aansluiting</translation>
     </message>
@@ -5946,81 +5952,81 @@ Fysieke omgevingszones:	%6
         <translation>Doorvoeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="342"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="315"/>
         <source>Music</source>
         <translation>Muziek</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="372"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="345"/>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
         <translation>Eigen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="388"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="361"/>
         <source>Music file:</source>
         <translation>Muziekbestand:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="178"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="180"/>
         <source>Error in the file %1:
 %2</source>
         <translation>Fout in het bestand %1:
 %2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="247"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="248"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="256"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="258"/>
         <source>[No image]</source>
         <translation>[Geen afbeelding]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="249"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="250"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="260"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="261"/>
         <source>[Silence]</source>
         <translation>[Stilte]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="545"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="685"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="509"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="649"/>
         <source>Please, save file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="545"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="509"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation>Gelieve het bestand eerst op te slaan, zodat u uw eigen achtergondsconfiguaratie bestanden kan wijzigen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="553"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="517"/>
         <source>Choose a background first</source>
         <translation>Kies eerst een achtergrond</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="554"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="518"/>
         <source>Please, choose the background image first.</source>
         <translation>Gelieve eerst een achtergrondsafbeelding te kiezen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="581"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="545"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Naam dat in het programma zal verschijnen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="585"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="549"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Achtergrond vulkleur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="590"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="554"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation>Voeg hier lagen toe, bijvoorbeeld:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="685"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="649"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>U moet eerst het bestand opslaan voordat u uw eigen muziekbestanden kan selecteren.</translation>
     </message>
@@ -7653,11 +7659,11 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation>Bij het opnieuw laden van de configuratie worden alle geopende bestanden gesloten en na het opnieuw laden terug geopened. Doorgaan met deze actie?</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>
@@ -7694,9 +7700,9 @@ Als u het nieuwe configuratiepakket wilt gebruiken, moet u het bewerkingsprogram
         <translation>Configuratie gewijzigd</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="278"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
+        <location filename="../main_window/file/file_open.cpp" line="278"/>
         <source>File open error</source>
         <translation>Fout bij openen van bestand</translation>
     </message>
@@ -7764,7 +7770,7 @@ Bestand bestaat niet.</translation>
         <translation>NPC configuratie opnieuw geladen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="217"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="221"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="156"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="162"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="168"/>
@@ -7836,14 +7842,14 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
         <translation>Niveau bestand geladen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="366"/>
         <location filename="../main_window/file/file_reload.cpp" line="285"/>
+        <location filename="../main_window/file/file_open.cpp" line="366"/>
         <source>World map file loaded</source>
         <translation>Wereldkaart bestand geladen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="383"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
+        <location filename="../main_window/file/file_open.cpp" line="383"/>
         <source>Can&apos;t read the file</source>
         <translation>Kan het bestand niet lezen</translation>
     </message>
@@ -8151,8 +8157,8 @@ Wilt u een andere sectie klonen?</translation>
         <translation>Maskers aan het herstellen...</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
         <source>Please wait...</source>
         <translation>Even geduld...</translation>
     </message>
@@ -8169,35 +8175,35 @@ Please reload current file to apply result.</source>
 Laad het huidige bestand opnieuw om de wijzigingen te zien.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="143"/>
-        <location filename="../mainwindow.cpp" line="187"/>
-        <location filename="../mainwindow.cpp" line="202"/>
+        <location filename="../mainwindow.cpp" line="148"/>
+        <location filename="../mainwindow.cpp" line="192"/>
+        <location filename="../mainwindow.cpp" line="207"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="195"/>
         <source>Configuration error</source>
         <translation>Configuratiefout</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="176"/>
+        <location filename="../mainwindow.cpp" line="181"/>
         <source>Loading theme...</source>
         <translation>Thema aan het laden...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="154"/>
         <source>Initializing dock widgets...</source>
         <translation>Dock-widgets aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="166"/>
+        <location filename="../mainwindow.cpp" line="171"/>
         <source>Initalizing plugins...</source>
         <translation>Plugins aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="180"/>
+        <location filename="../mainwindow.cpp" line="185"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="188"/>
+        <location filename="../mainwindow.cpp" line="193"/>
         <source>Configuration can&apos;t be loaded:
 %1.
 See %2 for more information.</source>
@@ -8206,14 +8212,14 @@ See %2 for more information.</source>
 Zie %2 voor meer informatie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="203"/>
+        <location filename="../mainwindow.cpp" line="208"/>
         <source>Configuration can&apos;t be loaded.
 See %1 for more information.</source>
         <translation>Configuratie kan niet worden geladen.
 Zie %1 voor meer informatie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="144"/>
+        <location filename="../mainwindow.cpp" line="149"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="196"/>
         <source>Configuration package is loaded with errors.</source>
         <translation>Configuratiepakket is geladen, maar bevat fouten.</translation>
@@ -8768,7 +8774,7 @@ Foutbeschrijving:
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="308"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="317"/>
         <source>File association failed.</source>
         <translation>Bestandskoppeling is mislukt.</translation>
     </message>
@@ -9462,30 +9468,30 @@ Reden: %1
         <translation>Tegels aan het laden...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="254"/>
+        <location filename="../mainwindow.cpp" line="259"/>
         <source>Bad File</source>
         <translation>Slecht Bestand</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="255"/>
+        <location filename="../mainwindow.cpp" line="260"/>
         <source>Bad file format
 File: %1</source>
         <translation>Slecht bestandsformaat
 Bestand: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="257"/>
+        <location filename="../mainwindow.cpp" line="262"/>
         <source>Line Number: %1</source>
         <translation>Regel Nummer: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="258"/>
+        <location filename="../mainwindow.cpp" line="263"/>
         <source>Line Data: %1</source>
         <translation>Regel Data: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="383"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
+        <location filename="../main_window/file/file_open.cpp" line="383"/>
         <source>File open error</source>
         <translation>Fout bij openen bestand</translation>
     </message>
@@ -9689,6 +9695,18 @@ Het maximum aantal muziekdozen is %2.</translation>
         <location filename="../editing/_components/history/settings/lvl_npc_userdata.hpp" line="45"/>
         <source>NPC user data change</source>
         <translation>NPC gebruikersdata wijziging</translation>
+    </message>
+    <message>
+        <location filename="../common_features/themes.cpp" line="727"/>
+        <source>Default</source>
+        <comment>Name of pallete</comment>
+        <translation type="unfinished">Standaard</translation>
+    </message>
+    <message>
+        <location filename="../common_features/themes.cpp" line="728"/>
+        <source>Dark blue</source>
+        <comment>Name of pallete</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -409,6 +409,10 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Use default</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -10034,6 +10038,16 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Section extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Name of pallete</comment>
+        <translation type="unfinished">Standard</translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <comment>Name of pallete</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>

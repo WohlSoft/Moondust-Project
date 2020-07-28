@@ -405,6 +405,10 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
+    <message>
+        <source>Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -7508,6 +7512,16 @@ Reason: %1
 Motif : %1
 
 </translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Name of pallete</comment>
+        <translation type="unfinished">Par défaut</translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <comment>Name of pallete</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
