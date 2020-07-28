@@ -418,6 +418,10 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Use default</source>
         <translation>По-умолчанию</translation>
     </message>
+    <message>
+        <source>Palette</source>
+        <translation>Палитра</translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -11050,6 +11054,16 @@ Reason: %1
     <message>
         <source>Section extra settings</source>
         <translation>Расширенные настройки секции</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Name of pallete</comment>
+        <translation>По-умолчанию</translation>
+    </message>
+    <message>
+        <source>Dark blue</source>
+        <comment>Name of pallete</comment>
+        <translation>Тёмно-синяя</translation>
     </message>
 </context>
 <context>
