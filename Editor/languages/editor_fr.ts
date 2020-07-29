@@ -407,7 +407,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Palette</translation>
     </message>
 </context>
 <context>
@@ -7516,12 +7516,12 @@ Motif : %1
     <message>
         <source>Default</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished">Par défaut</translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bleu foncé</translation>
     </message>
 </context>
 <context>
