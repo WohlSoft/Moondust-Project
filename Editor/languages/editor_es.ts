@@ -167,7 +167,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Trigger event</source>
-        <translation>Evento seguido</translation>
+        <translation>Ejecutar evento</translation>
     </message>
     <message>
         <source>Hold buttons</source>
