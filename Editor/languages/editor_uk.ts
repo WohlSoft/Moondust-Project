@@ -368,7 +368,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Палітра</translation>
     </message>
 </context>
 <context>
@@ -7211,12 +7211,12 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Default</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished"></translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished"></translation>
+        <translation>Темно-синя</translation>
     </message>
 </context>
 <context>
