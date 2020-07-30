@@ -12,7 +12,7 @@ class HistoryElementAddLayer : public QObject, public IHistoryElement
     Q_INTERFACES(IHistoryElement)
 
 public:
-    explicit HistoryElementAddLayer(int array_id, QString name, QObject *parent = 0);
+    explicit HistoryElementAddLayer(int array_id, QString name, bool visibility, QObject *parent = 0);
     virtual ~HistoryElementAddLayer();
     virtual QString getHistoryName();
     virtual void undo();
@@ -21,6 +21,7 @@ public:
 private:
     int m_array_id;
     QString m_name;
+    bool m_visibility;
 };
 
 #endif // HISTORYELEMENTADDLAYER_H

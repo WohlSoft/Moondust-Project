@@ -654,7 +654,7 @@ void LvlLayersBox::addNewLayer(QString layerName, bool setEdited)
     NewLayer.hidden = (item->checkState() == Qt::Unchecked);
     edit->LvlData.layers_array_id++;
     NewLayer.meta.array_id = edit->LvlData.layers_array_id;
-    edit->scene->m_history->addAddLayer(NewLayer.meta.array_id, NewLayer.name);
+    edit->scene->m_history->addAddLayer(NewLayer.meta.array_id, NewLayer.name, !NewLayer.hidden);
 
     item->setData(Qt::UserRole, QString::number(NewLayer.meta.array_id));
     ui->LvlLayerList->addItem(item);
@@ -741,7 +741,14 @@ void LvlLayersBox::modifyLayerItem(QListWidgetItem *item, QString oldLayerName, 
             }
             else
             {
-                edit->scene->m_history->addRenameLayer(edit->LvlData.layers[i].meta.array_id, oldLayerName, newLayerName);
+                if(oldLayerName != newLayerName)
+                    edit->scene->m_history->addRenameLayer(edit->LvlData.layers[i].meta.array_id,
+                                                           oldLayerName,
+                                                           newLayerName);
+                if(edit->LvlData.layers[i].hidden != !visible)
+                    edit->scene->m_history->addChangedLayerVisibility(edit->LvlData.layers[i].meta.array_id,
+                                                                      oldLayerName,
+                                                                      !edit->LvlData.layers[i].hidden);
                 edit->LvlData.layers[i].name = newLayerName;
                 edit->LvlData.layers[i].hidden = !visible;
                 //Apply layer's name/visibly to all items

@@ -309,11 +309,11 @@ void LvlHistoryManager::addChangedNewLayer(LevelData changedItems, LevelLayer ne
     emit refreshHistoryButtons();
 }
 
-void LvlHistoryManager::addAddLayer(int array_id, QString name)
+void LvlHistoryManager::addAddLayer(int array_id, QString name, bool visibility)
 {
     updateHistoryBuffer();
 
-    HistoryElementAddLayer *modf = new HistoryElementAddLayer(array_id, name);
+    HistoryElementAddLayer *modf = new HistoryElementAddLayer(array_id, name, visibility);
     modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;
@@ -326,6 +326,18 @@ void LvlHistoryManager::addRemoveLayer(LevelData modData)
     updateHistoryBuffer();
 
     HistoryElementRemoveLayer *modf = new HistoryElementRemoveLayer(modData);
+    modf->setScene(m_scene);
+    operationList.push_back(QSharedPointer<IHistoryElement>(modf));
+    historyIndex++;
+
+    emit refreshHistoryButtons();
+}
+
+void LvlHistoryManager::addChangedLayerVisibility(int array_id, QString name, bool visibility)
+{
+    updateHistoryBuffer();
+
+    HistoryElementChangeLayerVisibility *modf = new HistoryElementChangeLayerVisibility(array_id, name, visibility);
     modf->setScene(m_scene);
     operationList.push_back(QSharedPointer<IHistoryElement>(modf));
     historyIndex++;

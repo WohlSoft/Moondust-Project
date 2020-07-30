@@ -27,6 +27,7 @@ public:
     void setLayersBox();
 
     void modifyLayer(QString layerName, QString newLayerName);
+    void modifyLayer(QString layerName, bool visible);
     void setLayerToolsLocked(bool locked);
 
 public slots:
@@ -47,7 +48,6 @@ private:
     void removeCurrentLayer(bool moveToDefault);
     void removeLayerItems(QString layerName);
     void removeLayerFromListAndData(QListWidgetItem * layerItem);
-    void modifyLayer(QString layerName, bool visible);
     void modifyLayer(QString layerName, QString newLayerName, bool visible, int historyRecord = -1);
 
     //Direct List Functions

@@ -46,6 +46,7 @@ Editor 0.3.2-dev
 - Fixed the wrong alignment of items after redoing of a paste
 - Fixed a bug caused by a middle mouse button pressed while placing mode in the process
 - Changed the logic of the eraser tool: it will don't show a selection rectangle, and it will act more friendly and simpler
+- Added the missing layer visibility changing history tracking action
 Known bugs:
 - Changing the palette in some cases will not be updated properly. A restart of the Editor will be needed to properly apply changes.
 - Changing the palette into default will not restore the default UI style and Fusion will be used. A restart of the Editor will be needed to properly apply changes.

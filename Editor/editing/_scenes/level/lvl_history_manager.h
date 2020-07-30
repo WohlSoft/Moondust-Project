@@ -70,9 +70,10 @@ public:
     void addChangeWarpSettings(int array_id, HistorySettings::LevelSettingSubType subtype, QVariant extraData);
 
     void addChangedNewLayer(LevelData changedItems, LevelLayer newLayer);
-    void addAddLayer(int array_id, QString name);
+    void addAddLayer(int array_id, QString name, bool visibility);
     void addRenameLayer(int array_id, QString oldName, QString newName);
     void addRemoveLayer(LevelData modData);
+    void addChangedLayerVisibility(int array_id, QString name, bool visibility);
     void addChangedLayer(LevelData changedItems, QString newLayerName);
 
     void addAddEvent(LevelSMBX64Event ev);
