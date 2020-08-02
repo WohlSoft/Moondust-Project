@@ -199,6 +199,6 @@ void LevelEdit::stopAutoUpdateTimer()
         delete updateTimer;
         updateTimer = nullptr;
     }
-    ui->graphicsView->setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
+    ui->graphicsView->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     renderTime = 0;
 }
