@@ -464,7 +464,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează audio (SoX)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="24"/>
@@ -474,7 +474,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="31"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută...</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="45"/>
@@ -484,12 +484,12 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="52"/>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifică către</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cu ce vă pot ajuta?</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="132"/>
@@ -504,12 +504,12 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="149"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează anumite fişiere</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="202"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu schimba format</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="208"/>
@@ -519,32 +519,32 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="231"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitrate</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="329"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi exportate ca MP3</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="372"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi exportate ca FLAC</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="389"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi exportate ca OGG</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="405"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="484"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi exportate ca WAV</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="505"/>
@@ -562,7 +562,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="22"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="170"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="120"/>
@@ -571,7 +571,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="218"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="233"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare SoX</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="121"/>
@@ -11387,17 +11387,17 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="94"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="101"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută imagini în subfoldere</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="111"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/png2gifs_gui.ui" line="125"/>
