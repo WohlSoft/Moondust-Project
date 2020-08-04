@@ -6,87 +6,87 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează audio (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu schimba format</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="34"/>
         <source>Files will be in same format</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi în acelaşi format</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="57"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitrate</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="155"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi exportate ca MP3</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="198"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi exportate ca FLAC</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="215"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi exportate ca OGG</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="231"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Calitate</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="310"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişierele vor fi exportate ca WAV</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="324"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută...</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cu ce vă pot ajuta?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
         <source>Path to a level file to process</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide nivel către proces</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="386"/>
         <source>Convert all music files of specific episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează fişiere audio de locaţie specifică</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="409"/>
         <source>Convert music of specific level</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează audio de un nivel specific</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="419"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează anumite fişiere</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="429"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation>Direcţia folder-ul jocului pentru procesare</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="455"/>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifică către</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="490"/>
@@ -97,12 +97,13 @@
         <location filename="../Music/audiocvt_sox_gui.ui" line="558"/>
         <source>Convert into new format
 (open necessary tab to choice target format)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează într-un nou fişier 
+(deschide o fereastră către fişier)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="580"/>
         <source>make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează backup</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="587"/>
@@ -118,14 +119,14 @@
         <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="180"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
@@ -158,23 +159,24 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
         <source>Operation cancaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Operaţiune anulată</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="276"/>
         <source>SoX was crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX s-a oprit</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="286"/>
         <source>SoX returned non-zero code: %1
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX a adăugat cod zero %1
+%2</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="316"/>
         <source>All works completed</source>
-        <translation type="unfinished"></translation>
+        <translation>Toate procesele au fost completate</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="317"/>
@@ -183,32 +185,36 @@ Converted files: %1
 Overwritten levels: %2
 Overwritten worlds: %3
 %4</source>
-        <translation type="unfinished"></translation>
+        <translation>Toate fişierele au fost exportate cu succes!
+Fişiere exportate: %1
+Niveluri rescrise: %2
+Mape rescrise: %3
+%4</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="447"/>
         <source>Tasks are not defined. Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nici un proces scris.</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="508"/>
         <source>Open SoX binary path</source>
-        <translation type="unfinished"></translation>
+        <translation>Alege SoX</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="520"/>
         <source>Add file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide fişier pentru exportare</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="558"/>
         <source>Selecting a level file to convert custom music</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschizând un nivel pentru exportare a audio-ului</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="571"/>
         <source>Open episode path to convert entire music set</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide jocul pentru a exporta tot audio-ul</translation>
     </message>
 </context>
 <context>
@@ -216,113 +222,113 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="14"/>
         <source>Case fixer of episode resources</source>
-        <translation type="unfinished"></translation>
+        <translation>Mod reparare a jocului</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="31"/>
         <source>This wizard will help to fix an episode which works incorrectly because resource file names has a case missmatch. This shouldn&apos;t be a problem on the Windows and on the macOS with a case insensitive HFS+ mode. On Linux, xBSD and like systems with Ext4/3 or XFS file systems, and on the macOS with a case-sensitive HFS+ mode this come this comes into a big problem: files getting be missing up. To avoid any possible issues related to the case missmatch, all filenames should have the matched case with the requested filename.</source>
-        <translation type="unfinished"></translation>
+        <translation>Acest program vă va ajuta să reparaţi jocul ce merge incorect fiindcă sistem resource este incorect. Asta nu este o problemă în Windows şi macOS cu un sistem HFS+ resource. În Linux, xBSD şi sisteme cu Ext4/3 sau sisteme XFS, este o problemă: fişierele nu există. Ca să ocoli problema, toate fişierele trebuie să aibă acest lucru.</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="44"/>
         <source>What episode to fix?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce joc să repar?</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="50"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation>Direcţia folder-ul jocului pentru procesare</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="57"/>
         <location filename="../EpisodeCvt/case_fixer.ui" line="120"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="67"/>
         <source>Choose the mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="73"/>
         <source>Match to file system state (don&apos;t rename files if possible)</source>
-        <translation type="unfinished"></translation>
+        <translation>Asociază cu sistemul (nu va edita fişiere dacă posibil)</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="83"/>
         <source>Match to level/world file content (don&apos;t modify levels and worlds)</source>
-        <translation type="unfinished"></translation>
+        <translation>Asociază cu nivelurile/mapele (nu va edita nivelurile/mapele)</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="90"/>
         <source>All to lower if possible</source>
-        <translation type="unfinished"></translation>
+        <translation>Minimează dacă posibil</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="100"/>
         <source>What configuration package to use?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce pachet de configurare va folosi?</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="106"/>
         <source>It&apos;s needed to verify filenames of customized resources</source>
-        <translation type="unfinished"></translation>
+        <translation>Este necesar de a verifica fişierele cu diferite sisteme resource</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="113"/>
         <source>Path to a configuration package</source>
-        <translation type="unfinished"></translation>
+        <translation>Încarcă pachet de configurare</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="153"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Închide</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="173"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="277"/>
         <source>Episode path error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare de joc</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Locaţia jocului nu a fost descrisă. Adaugă joc mai întâi.</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="307"/>
         <source>Worker error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare de program sistemic</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
         <source>Can&apos;t initialize job because %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate iniţializa fiindcă %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
         <source>Work finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Gata</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
         <source>Case sensitive fixing work has been converted!</source>
-        <translation type="unfinished"></translation>
+        <translation>S-a reparat!</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="327"/>
         <source>Error occouped while work process</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare în timpul reparării</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
         <source>Case fixer was aborted with an error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Programul de reparare s-a oprit: %1</translation>
     </message>
 </context>
 <context>
@@ -330,27 +336,27 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="76"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="80"/>
         <source>Initializing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Se iniţializează...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="87"/>
         <source>No files to scan</source>
-        <translation type="unfinished"></translation>
+        <translation>Niciun fişier de scanat</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="146"/>
         <source>Looking for levels and world maps...</source>
-        <translation type="unfinished"></translation>
+        <translation>Se caută niveluri/mape...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="161"/>
         <source>Processing levels and world maps...</source>
-        <translation type="unfinished"></translation>
+        <translation>Se procesează</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="172"/>
@@ -488,12 +494,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="17"/>
         <source>Convert masked GIFs into PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează GIFuri în PNG</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="31"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează fişiere</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="47"/>
@@ -741,7 +747,7 @@ Supported formats:
     <message>
         <location filename="../main_window.cpp" line="16"/>
         <source>This feature is under construction, it doesn&apos;t work properly yet. It may damage some of your stuff you&apos;ll try to process. Therefore please, make a full backup of episode that you would to process by this thing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Această opţiune este experimentală, este recomandat făcând o copie a jocului înainte de a folosi această opţiune.</translation>
     </message>
 </context>
 <context>
@@ -749,12 +755,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="17"/>
         <source>Convert PNG into masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează PNG în GIF</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="31"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează fişiere</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="47"/>
@@ -779,7 +785,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Caută...</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="85"/>
@@ -799,7 +805,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cu ce vă pot ajuta?</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="139"/>
