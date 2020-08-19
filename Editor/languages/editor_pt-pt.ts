@@ -1695,12 +1695,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>Ficheiro de nível PGE</translation>
+        <translation type="unfinished">Ficheiro de nível PGE</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>Mapa de mundo PGE</translation>
+        <translation type="unfinished">Mapa de mundo PGE</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
