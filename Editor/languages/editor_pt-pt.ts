@@ -80,20 +80,20 @@
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation>A música será automaticamente tocada ao abrir algum arquivo</translation>
+        <translation>A música será automaticamente tocada ao abrir algum ficheiro de nível</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>Número máximo de elementos animados na tela. Caso ele seja ultrapassado, as animações serão pausadas enquanto o limite estiver excedido.</translation>
+        <translation>Quantidade máxima de elementos animados no ecrã. Caso ele seja ultrapassado, as animações serão pausadas enquanto o limite estiver excedido.</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation>Arquivos</translation>
+        <translation>Ficheiros</translation>
     </message>
     <message>
         <source>Associate file extensions</source>
-        <translation>Associar extensões de arquivo</translation>
+        <translation>Associar extensões de ficheiros</translation>
     </message>
     <message>
         <source>Editor</source>
@@ -123,11 +123,11 @@
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>A caixa das propriedades não será mostrada automaticamente quando seleciona um item a colocar.</translation>
+        <translation>A caixa das propriedades não será mostrada automaticamente quando seleciona um item a pôr.</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation>Não mostrar a caixa das propriedades quando colocar itens</translation>
+        <translation>Não mostrar a caixa das propriedades quando pôr itens</translation>
     </message>
     <message>
         <source>History</source>
@@ -299,7 +299,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Section settings</source>
-        <translation>Configurações da seção</translation>
+        <translation>Configurações da secção</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -501,7 +501,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
-        <translation>Converter música da seção atual do nível</translation>
+        <translation>Converter música da secção atual do nível</translation>
     </message>
     <message>
         <source>Convert all music files on current level</source>
@@ -523,7 +523,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     </message>
     <message>
         <source>The files&apos; format will not be changed</source>
-        <translation>Arquivos se manterão no mesmo formato</translation>
+        <translation>Ficheiros manterão-se no mesmo formato</translation>
     </message>
     <message>
         <source>Set bitrate</source>
@@ -552,7 +552,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aqui você poderá rapidamente converter seus arquivos de música com problemas no formato.&lt;/p&gt;&lt;p&gt;Esse recurso utiliza o conversor de áudio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Aqui poderá rapidamente converter os seus ficheiros de música com problemas no formato.&lt;/p&gt;&lt;p&gt;Esse recurso utiliza o conversor de áudio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -607,7 +607,7 @@ Por favor, defina primeiro o caminho de SoX</translation>
     <message>
         <source>Remember current screen position on the level map or on the world map
 and store a bookmark.</source>
-        <translation>Marcar a posição atual da tela no nível/mundo.</translation>
+        <translation>Marcar a posição atual do ecrã no nível/mundo.</translation>
     </message>
     <message>
         <source>Add</source>
@@ -617,7 +617,7 @@ and store a bookmark.</source>
         <source>Scroll to the saved position in the selected item.
 You also can double-click an item to scroll to its bookmarked position.</source>
         <translation>Rolar para a posição marcada no marcador selecionado.
-Também pode dar um duplo clique em um item para ter o mesmo efeito.</translation>
+Também pode dar um duplo clique num item para ter o mesmo efeito.</translation>
     </message>
     <message>
         <source>Go To...</source>
@@ -632,7 +632,7 @@ Também pode dar um duplo clique em um item para ter o mesmo efeito.</translatio
     <name>ConfigManager</name>
     <message>
         <source>Configuration Manager</source>
-        <translation>Gerenciar configurações</translation>
+        <translation>Gerir configurações</translation>
     </message>
     <message>
         <source>Please select the game configuration you want to start the Editor with</source>
@@ -816,7 +816,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Default rotation rules (%1)</source>
-        <translation>Regras padrão de rotação (%1)</translation>
+        <translation>Regras predefinidas de rotação (%1)</translation>
     </message>
     <message>
         <source>Level data</source>
@@ -876,7 +876,7 @@ Dados sobre o erro que causou isso:</translation>
     </message>
     <message>
         <source>Exit from application</source>
-        <translation>Sair do aplicativo</translation>
+        <translation>Sair da aplicação</translation>
     </message>
     <message>
         <source>Crash recovery</source>
@@ -1114,7 +1114,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Saves the application settings</source>
-        <translation>Salva as configuraçãoes do aplicativo</translation>
+        <translation>Grava as configuraçãoes do aplicação</translation>
     </message>
     <message>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
@@ -1130,7 +1130,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
-        <translation>Argumento: {Caminho para o arquivo} testa o formato PGE-X</translation>
+        <translation>Argumento: {Caminho para o ficheiro} testa o formato PGE-X</translation>
     </message>
     <message>
         <source>[WIP] Attempt to test the level in the SMBX Level Editor!</source>
@@ -1138,7 +1138,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
-        <translation>Argumentos: {Tipos de música (lvl wld spc), Id da música} Toca música padrão com id específicado</translation>
+        <translation>Argumentos: {Tipos de música (lvl wld spc), Id da música} Toca música predefinida com id específicado</translation>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
@@ -1209,7 +1209,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Export current section to image</source>
-        <translation>Exportar seção atual em imagem</translation>
+        <translation>Exportar secção atual em imagem</translation>
     </message>
     <message>
         <source>Force vertical background tiling</source>
@@ -1431,22 +1431,22 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>Arquivo de nível PGE</translation>
+        <translation>Ficheiro de nível PGE</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>Arquivo de mundo PGE</translation>
+        <translation>Mapa de mundo PGE</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
-        <translation>Arquivo de nível SMBX</translation>
+        <translation>Ficheiro de nível SMBX</translation>
     </message>
     <message>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
-        <translation>Arquivo de mundo SMBX</translation>
+        <translation>Mapa de mundo SMBX</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1485,7 +1485,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Default</source>
-        <translation>Padrão</translation>
+        <translation>Predefinição</translation>
     </message>
     <message>
         <source>Foreground</source>
@@ -1861,7 +1861,7 @@ Apenas 27 caracteres por linha</translation>
     <name>ItemLevel</name>
     <message>
         <source>Open target file: %1</source>
-        <translation>Abrir arquivo desejado: %1</translation>
+        <translation>Abrir ficheiro desejado: %1</translation>
     </message>
     <message>
         <source>Path background</source>
@@ -2472,11 +2472,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation>Por favor, salve o arquivo</translation>
+        <translation>Por favor, grave o ficheiro</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>Salve o arquivo primeiro caso deseje utilizar uma música personalizada.</translation>
+        <translation>Grave o ficheiro para poder utilizar música personalizada.</translation>
     </message>
 </context>
 <context>
@@ -2622,7 +2622,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Pasta de origem, que contém os arquivos GIF do SMBX (*.gif e *m.gif)</translation>
+        <translation>Pasta de origem, que contém os ficheiros GIF do SMBX (*.gif e *m.gif)</translation>
     </message>
     <message>
         <source>Output directory, where the fixed images will be saved.
@@ -2652,7 +2652,7 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Esta é uma ferramenta de console que corrige as máscaras &quot;preguiçosas&quot; feitas no SMBX. Este utilitário irá realizar uma comparação Máscara-Cor correta. As imagens serão substituídas, mas um backup será criado, permitindo restauração dos arquivos anteriores em caso de problemas na nova versão.</translation>
+        <translation>Esta é uma ferramenta de console que corrige as máscaras &quot;preguiçosas&quot; feitas no SMBX. Este utilitário irá realizar uma comparação Máscara-Cor correta. As imagens serão substituídas, mas um backup será criado, permitindo restauração dos ficheiros anteriores em caso de problemas na nova versão.</translation>
     </message>
     <message>
         <source>Output dir, where will be saved fixed images
@@ -2725,7 +2725,7 @@ Por favor, verifique a diretoria da aplicação e certifique-se que está instal
     </message>
     <message>
         <source>Export current section to image</source>
-        <translation>Exportar seção atual em imagem</translation>
+        <translation>Exportar secção atual em imagem</translation>
     </message>
     <message>
         <source>PNG Image (*.png)</source>
@@ -2733,7 +2733,7 @@ Por favor, verifique a diretoria da aplicação e certifique-se que está instal
     </message>
     <message>
         <source>Saving section image...</source>
-        <translation>Salvando imagem da seção...</translation>
+        <translation>Gravando imagem da secção...</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -2793,11 +2793,11 @@ version code must be less or equal specific code)</source>
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation>A extensão do arquivo não foi informado, por favor, insira a extensão!</translation>
+        <translation>A extensão do ficheiro não foi configurada, por favor, insira a extensão!</translation>
     </message>
     <message>
         <source>SMBX file version</source>
-        <translation>Versão de Arquivo SMBX</translation>
+        <translation>Versão de ficheiro SMBX</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 0 to 64)</source>
@@ -2872,22 +2872,22 @@ Por favor, remova os eventos em excesso ou salve no formato LVLX.</translation>
     </message>
     <message>
         <source>File save error</source>
-        <translation>Erro ao salvar arquivo</translation>
+        <translation>Erro ao gravar o ficheiro</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>Não foi possível salvar o arquivo %1:
+        <translation>Não foi possível gravar o ficheiro %1:
 %2.</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Erro ao ler arquivo</translation>
+        <translation>Erro ao ler o ficheiro</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Não foi possível ler o arquivo %1:
+        <translation>Não foi possível ler o ficheiro %1:
 %2.</translation>
     </message>
     <message>
@@ -2916,7 +2916,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; foi modificado.
-Deseja salvar sua mudanças?</translation>
+Deseja gravar as suas mudanças?</translation>
     </message>
     <message>
         <source> not saved</source>
@@ -2956,7 +2956,7 @@ Deseja salvar sua mudanças?</translation>
     <name>LevelFileList</name>
     <message>
         <source>Level files list</source>
-        <translation>Lista de arquivos de nível</translation>
+        <translation>Lista de ficheiros de nível</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3038,7 +3038,7 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Disable player controls</source>
-        <translation>Desabilitar controles do jogador</translation>
+        <translation>Desativar controles do jogador</translation>
     </message>
     <message>
         <source>Drop</source>
@@ -3094,7 +3094,7 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Padrão</translation>
+        <translation>Predefinição</translation>
     </message>
     <message>
         <source>Physics type:</source>
@@ -3666,11 +3666,11 @@ Apenas 27 caracteres por linha</translation>
     <name>LvlCloneSection</name>
     <message>
         <source>Clone section</source>
-        <translation>Clonar seção</translation>
+        <translation>Clonar secção</translation>
     </message>
     <message>
         <source>Please select the source file and the section to clone, as well as the destination file and target section to clone into.</source>
-        <translation>Escolha o arquivo aberto e a seção que irá ser clonada e o arquivo destino e a seção onde quer clonar.</translation>
+        <translation>Escolha o ficheiro aberto e a secção que irá ser clonada e o ficheiro de destino e a secção onde quer clonar.</translation>
     </message>
     <message>
         <source>Source</source>
@@ -3686,7 +3686,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Margin (How far outside of the target section items can be copied, in pixels):</source>
-        <translation>Margem (A distância que os itens fora da área da seção irão se copiados, em pixels):</translation>
+        <translation>Margem (A distância que os itens fora da área da secção irão se copiados, em pixels):</translation>
     </message>
     <message>
         <source>Section</source>
@@ -3770,7 +3770,7 @@ Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deleta
     </message>
     <message>
         <source>Disable smoke effects</source>
-        <translation>Desabilitar efeitos de fumaça</translation>
+        <translation>Desativar efeitos de fumaça</translation>
     </message>
     <message>
         <source>Show</source>
@@ -3814,7 +3814,7 @@ Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deleta
     </message>
     <message>
         <source>Section settings</source>
-        <translation>Configurações da seção</translation>
+        <translation>Configurações da secção</translation>
     </message>
     <message>
         <source>Current section:</source>
@@ -3834,7 +3834,7 @@ Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deleta
     </message>
     <message>
         <source>Reset to default</source>
-        <translation>Resetar para o padrão</translation>
+        <translation>Resetar para a predefinição</translation>
     </message>
     <message>
         <source>Left</source>
@@ -3970,11 +3970,11 @@ Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deleta
     </message>
     <message>
         <source>Get section size</source>
-        <translation>Obter tamanho da seção</translation>
+        <translation>Obter tamanho da secção</translation>
     </message>
     <message>
         <source>Please, set current section to %1 for capture data for this event</source>
-        <translation>Por favor, defina a seção atual para %1 para capturar dados para este evento</translation>
+        <translation>Por favor, defina a secção atual para %1 para capturar dados para este evento</translation>
     </message>
     <message>
         <source>Please, enter message
@@ -3997,11 +3997,11 @@ Apenas 28 caracteres por linha</translation>
     </message>
     <message>
         <source>Place</source>
-        <translation type="unfinished">Colocar</translation>
+        <translation>Posicionar</translation>
     </message>
     <message>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished">Colocar &amp; Substituir</translation>
+        <translation>Posicionar &amp; Substituir</translation>
     </message>
     <message>
         <source>Move</source>
@@ -4112,7 +4112,7 @@ Apenas 28 caracteres por linha</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>Padrão</translation>
+        <translation>Predefinição</translation>
     </message>
     <message>
         <source>Foreground</source>
@@ -4133,8 +4133,8 @@ Apenas 28 caracteres por linha</translation>
     <message>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation>Isto é a prioridade ao organizar. Com esta opção, você pode colocar este objeto decorativo na parte frontal(caso o valor seja -1, a configuração padrão será utilizado).
-Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para isso funcionar, você precisa colocar qualquer objeto decorativo que normalmente fica na parte frontal. Esta opção não fica salva no arquivo LVL; você deve redefinir isso após recarregar o arquivo.</translation>
+        <translation>Isto é a prioridade ao organizar. Com esta opção, pode pôr este objeto decorativo na parte frontal(caso o valor seja -1, a configuração predefinida será utilizada).
+Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para isso funcionar, precisa pôr qualquer objeto decorativo que normalmente fica na parte frontal. Esta opção não fica salva no ficheiro LVL; deve redefinir-lo após recarregar o ficheiro.</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -4400,19 +4400,19 @@ All elements of this layer will be removed too!</source>
     </message>
     <message>
         <source>Search User Backgrounds %1</source>
-        <translation>Procurar planos de fundo do usuário %1</translation>
+        <translation>Procurar planos de fundo do utilizador %1</translation>
     </message>
     <message>
         <source>Search User Blocks %1</source>
-        <translation>Procurar blocos do usuário %1</translation>
+        <translation>Procurar blocos do utilizador %1</translation>
     </message>
     <message>
         <source>Search User BGOs %1</source>
-        <translation>Procurar objetos decorativos do usuário %1</translation>
+        <translation>Procurar objetos decorativos do utilizador %1</translation>
     </message>
     <message>
         <source>Search User NPCs %1</source>
-        <translation>Procurar NPCs do usuário %1</translation>
+        <translation>Procurar NPCs do utilizador %1</translation>
     </message>
     <message>
         <source>Wrong custom images</source>
@@ -4423,7 +4423,7 @@ All elements of this layer will be removed too!</source>
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
         <translation>Este level tem gráficos personalizados defeituosos.
-Você irá ver fantasminhas ou outros gráficos por cima desses gráficos defeitusos. Uma das possíveis causas pode ser o uso do Fake Gif (Formato BMP com extensão GIF).
+Irá ver fantasminhas ou outros gráficos por cima desses gráficos defeitusos. Uma das possíveis causas pode ser o uso do Fake Gif (Formato BMP com extensão GIF).
 Por favor, converta suas imagens para um formato válido e recarregue o nível.</translation>
     </message>
     <message>
@@ -4650,11 +4650,11 @@ las?</translation>
     <name>LvlSectionProps</name>
     <message>
         <source>Section Settings</source>
-        <translation>Configurações da seção</translation>
+        <translation>Configurações da secção</translation>
     </message>
     <message>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
-        <translation>Saindo por um lado da tela, ele entra pelo outro</translation>
+        <translation>Saindo por um lado do ecrã, ele entra pelo outro</translation>
     </message>
     <message>
         <source>Warp section</source>
@@ -4663,13 +4663,13 @@ las?</translation>
     </message>
     <message>
         <source>Off screen exit</source>
-        <translation>Sair pela tela</translation>
+        <translation>Sair pelo ecrã</translation>
     </message>
     <message>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
         <translation>Rolagem em apenas uma direção
-(a tela vai apenas para frente e nunca volta
+(o ecrã vai apenas para frente e nunca volta
 para trás)</translation>
     </message>
     <message>
@@ -4715,7 +4715,7 @@ para trás)</translation>
     </message>
     <message>
         <source>Resize section</source>
-        <translation>Redimensionar seção</translation>
+        <translation>Redimensionar secção</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -4732,7 +4732,7 @@ para trás)</translation>
     </message>
     <message>
         <source>Music file:</source>
-        <translation>Arquivo de música:</translation>
+        <translation>Ficheiro de música:</translation>
     </message>
     <message>
         <source>[No image]</source>
@@ -4744,7 +4744,7 @@ para trás)</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation>Por favor, salve o arquivo</translation>
+        <translation>Por favor, salve o ficheiro</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
@@ -4760,7 +4760,7 @@ para trás)</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>Salve o arquivo primeiro caso deseje utilizar uma música personalizada.</translation>
+        <translation>Grave o ficheiro primeiro caso deseje utilizar uma música personalizada.</translation>
     </message>
     <message>
         <source>Name that will appear in the editor</source>
@@ -5101,33 +5101,33 @@ número</translation>
     </message>
     <message>
         <source>World map files not found</source>
-        <translation>Arquivos de mundo não encontrados</translation>
+        <translation>Ficheiros de mundo não encontrados</translation>
     </message>
     <message>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
-        <translation>Não há arquivos de mundo disponíveis na mesma pasta do nível atual.
-Por favor, coloque este arquivo de nível atual junto de um mundo, ou crie um novo mundo na mesma pasta deste nível.
+        <translation>Não há ficheiros de mapa mundial disponíveis na mesma pasta do nível atual.
+Por favor, ponha este ficheiro de nível atual junto de um mundo, ou crie um novo mundo na mesma pasta deste nível.
 Caminho: %1</translation>
     </message>
     <message>
         <source>Select world map file</source>
-        <translation>Selecionar arquivo de mundo</translation>
+        <translation>Selecionar ficheiro de mundo</translation>
     </message>
     <message>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
-        <translation>Foram encontrados mais um arquivo de mundo.
+        <translation>Foram encontrados mais um ficheiro de mundo.
 Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <source>File open error</source>
-        <translation>Erro ao abrir arquivo</translation>
+        <translation>Erro ao abrir o ficheiro</translation>
     </message>
     <message>
         <source>Can&apos;t open the file!</source>
-        <translation>Não é possível abrir o arquivo!</translation>
+        <translation>Não é possível abrir o ficheiro!</translation>
     </message>
     <message>
         <source>Please save the file</source>
@@ -5142,7 +5142,7 @@ Escolha qual da lista quer utilizar:</translation>
     <name>MainWindow</name>
     <message>
         <source>File</source>
-        <translation>Arquivo</translation>
+        <translation>Ficheiro</translation>
     </message>
     <message>
         <source>New</source>
@@ -5150,7 +5150,7 @@ Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <source>Open Recent</source>
-        <translation>Abrir arquivo recente</translation>
+        <translation>Abrir ficheiro recente</translation>
     </message>
     <message>
         <source>Language</source>
@@ -5214,7 +5214,7 @@ Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <source>Section Settings</source>
-        <translation>Configurações da seção</translation>
+        <translation>Configurações da secção</translation>
     </message>
     <message>
         <source>Warp section</source>
@@ -5288,7 +5288,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Fullscreen</source>
-        <translation>Tela cheia</translation>
+        <translation>Ecrã cheio</translation>
     </message>
     <message>
         <source>Lock Scenery tiles</source>
@@ -5341,7 +5341,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Section modifications</source>
-        <translation>Modificações da seção</translation>
+        <translation>Modificações da secção</translation>
     </message>
     <message>
         <source>Palettes and tilesets</source>
@@ -5736,11 +5736,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Offscreen exit</source>
-        <translation>Sair pela tela</translation>
+        <translation>Sair pelo ecrã</translation>
     </message>
     <message>
         <source>No turn back</source>
-        <translation>Rolagem em uma única direção</translation>
+        <translation>Rolagem numa única direção</translation>
     </message>
     <message>
         <source>Export to image...</source>
@@ -5748,7 +5748,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Export current section to image (F12)</source>
-        <translation>Exportar seção atual em imagem (F12)</translation>
+        <translation>Exportar secção atual em imagem (F12)</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -5756,7 +5756,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Disable world map</source>
-        <translation>Desabilitar mundo</translation>
+        <translation>Desativar mundo</translation>
     </message>
     <message>
         <source>Restart level after fail</source>
@@ -5840,11 +5840,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Reload file data</source>
-        <translation>Recarregar dados do arquivo</translation>
+        <translation>Recarregar dados do ficheiro</translation>
     </message>
     <message>
         <source>Reload current file data</source>
-        <translation>Recarregar dados do arquivo atual</translation>
+        <translation>Recarregar dados do ficheiro atual</translation>
     </message>
     <message>
         <source>Scroll hand</source>
@@ -5908,7 +5908,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>[No opened files]</source>
-        <translation>[Nenhum arquivo aberto]</translation>
+        <translation>[Nenhum ficheiro aberto]</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -5920,7 +5920,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Application settings</source>
-        <translation>Configurações do aplicativo</translation>
+        <translation>Configurações da aplicação</translation>
     </message>
     <message>
         <source>Current configuration status...</source>
@@ -6092,11 +6092,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Export section to image...</source>
-        <translation>Exportar seção em imagem...</translation>
+        <translation>Exportar secção em imagem...</translation>
     </message>
     <message>
         <source>Export whole level section to image</source>
-        <translation>Exportar toda a seção do nível em imagem</translation>
+        <translation>Exportar toda a secção do nível em imagem</translation>
     </message>
     <message>
         <source>Test level (Alpha)</source>
@@ -6184,7 +6184,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Clone section to...</source>
-        <translation>Clonar seção...</translation>
+        <translation>Clonar secção...</translation>
     </message>
     <message>
         <source>Rotate left</source>
@@ -6216,7 +6216,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Delete section</source>
-        <translation>Deletar seção</translation>
+        <translation>Deletar secção</translation>
     </message>
     <message>
         <source>Additional Settings</source>
@@ -6236,7 +6236,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Don&apos;t fill out of section</source>
-        <translation>Não preencher fora da seção</translation>
+        <translation>Não preencher fora da secção</translation>
     </message>
     <message>
         <source>SMBX-like GUI</source>
@@ -6244,7 +6244,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Run testing of saved file</source>
-        <translation>Testar arquivo salvo</translation>
+        <translation>Testar ficheiro salvo</translation>
     </message>
     <message>
         <source>Change log</source>
@@ -6326,7 +6326,7 @@ Para trabalhar com ela, reinicie o aplicativo, por favor.</translation>
     </message>
     <message>
         <source>File open error</source>
-        <translation>Erro ao abrir arquivo</translation>
+        <translation>Erro ao abrir o ficheiro</translation>
     </message>
     <message>
         <source>Can&apos;t open the file!</source>
@@ -6334,33 +6334,33 @@ Para trabalhar com ela, reinicie o aplicativo, por favor.</translation>
     </message>
     <message>
         <source>File not saved</source>
-        <translation>Arquivo não salvo</translation>
+        <translation>Ficheiro não gravado</translation>
     </message>
     <message>
         <source>File doesn&apos;t saved on disk.</source>
-        <translation>Arquivo não salvo no disco.</translation>
+        <translation>Ficheiro não gravado no disco.</translation>
     </message>
     <message>
         <source>Can&apos;t open the file!
 File not exist.</source>
-        <translation>Não foi possível abrir o arquivo.
-Arquivo não existente.</translation>
+        <translation>Não foi possível abrir o ficheiro.
+O ficheiro não existe.</translation>
     </message>
     <message>
         <source>Reload file and custom stuff</source>
-        <translation>Recarregar arquivo e conteúdo personalizado</translation>
+        <translation>Recarregar ficheiro e conteúdo personalizado</translation>
     </message>
     <message>
         <source>Do you want to save before reload stuff?</source>
-        <translation>Gostaria de salvar antes de continuar?</translation>
+        <translation>Gostaria de gravar antes de continuar?</translation>
     </message>
     <message>
         <source>Reloading error</source>
-        <translation>Erro ao recarregar arquivo</translation>
+        <translation>Erro ao recarregar</translation>
     </message>
     <message>
         <source>Level file reloaded</source>
-        <translation>Arquivo de nível recarregado</translation>
+        <translation>Ficheiro de nível recarregado</translation>
     </message>
     <message>
         <source>NPC Config reloaded</source>
@@ -6413,11 +6413,11 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>Level file loaded</source>
-        <translation>Arquivo de nível carregado</translation>
+        <translation>Ficheiro de nível carregado</translation>
     </message>
     <message>
         <source>World map file loaded</source>
-        <translation>Arquivo de mundo carregado</translation>
+        <translation>Ficheiro de mundo carregado</translation>
     </message>
     <message>
         <source>Can&apos;t read the file</source>
@@ -6433,15 +6433,15 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>Bad file</source>
-        <translation>Arquivo rejeitado</translation>
+        <translation>Ficheiro rejeitado</translation>
     </message>
     <message>
         <source>This file have unknown extension</source>
-        <translation>Este arquivo tem um formato/extensão desconhecida</translation>
+        <translation>Este ficheiro tem um formato/extensão desconhecido</translation>
     </message>
     <message>
         <source>Saving of file...</source>
-        <translation>Salvando o arquivo...</translation>
+        <translation>A gravar o ficheiro...</translation>
     </message>
     <message>
         <source>Saving</source>
@@ -6449,15 +6449,15 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>File saved</source>
-        <translation>Arquivo salvo</translation>
+        <translation>Ficheiro gravado</translation>
     </message>
     <message>
         <source>Saving of files...</source>
-        <translation>Salvando arquivos...</translation>
+        <translation>A gravar ficheiros...</translation>
     </message>
     <message>
         <source>Open file</source>
-        <translation>Abrir arquivo</translation>
+        <translation>Abrir ficheiro</translation>
     </message>
     <message>
         <source>Compile To: LunaLua</source>
@@ -6493,7 +6493,7 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>[No files open]</source>
-        <translation>[Nenhum arquivo aberto]</translation>
+        <translation>[Nenhum ficheiro aberto]</translation>
     </message>
     <message>
         <source>Current Language changed to %1</source>
@@ -6547,8 +6547,8 @@ Do you want to save file or you want to run test of copy which is currently save
     <message>
         <source>To run testing of saved file, please save them into disk first!
 You can run testing without saving of file if you will use &quot;Run testing&quot; menu item.</source>
-        <translation>Para o rodar o teste, salve o arquivo primeiro!
-Você pode testar o arquivo sem salvar se utilizar o menu Roda-Teste.</translation>
+        <translation>Para testar o ficheiro, grave-o primeiro!
+Pode testar o ficheiro sem gravar se utilizar o item de menu &quot;Nível de teste (F5)&quot;.</translation>
     </message>
     <message>
         <source>Dummy</source>
@@ -6628,7 +6628,7 @@ Um arquivo temporário será criado. Continuar?</translation>
     </message>
     <message>
         <source>Clonning of section...</source>
-        <translation>Clonando seção...</translation>
+        <translation>Clonando secção...</translation>
     </message>
     <message>
         <source>Section has been clonned</source>
@@ -6645,15 +6645,15 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Remove section</source>
-        <translation>Remover seção</translation>
+        <translation>Remover secção</translation>
     </message>
     <message>
         <source>Do you want to remove all objects of this section?</source>
-        <translation>Quer remover tudo desta seção?</translation>
+        <translation>Quer remover tudo desta secção?</translation>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation>Margem de seção</translation>
+        <translation>Margem de secção</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
@@ -6677,12 +6677,12 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>File is untitled</source>
-        <translation>Arquivo está sem título</translation>
+        <translation>O ficheiro não tem título</translation>
     </message>
     <message>
         <source>File doesn&apos;t use custom graphics.
 </source>
-        <translation>Arquivo não usa gráficos personalizados.
+        <translation>O ficheiro não usa gráficos personalizados.
 </translation>
     </message>
     <message>
@@ -6691,7 +6691,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>This file is not use GIF graphics with transparent masks or haven&apos;t custom graphics.</source>
-        <translation>O arquivo não usa gráficos GIF com máscaras transparentes ou não usa gráficos personalizados.</translation>
+        <translation>O ficheiro não usa gráficos GIF com máscaras transparentes ou não usa gráficos personalizados.</translation>
     </message>
     <message>
         <source>Fixing of masks...</source>
@@ -6709,7 +6709,7 @@ Do you want to clone another section?</source>
         <source>Masks has been fixed!
 Please reload current file to apply result.</source>
         <translation>Máscaras foram corrigidas.
-Recarregue o arquivo para aplicar o resultado.</translation>
+Recarregue o ficheiro para aplicar o resultado.</translation>
     </message>
     <message>
         <source>Already exsist</source>
@@ -6796,7 +6796,7 @@ Abra Ferramentas/Configuração Global/Status da configuração para mais detalh
     </message>
     <message>
         <source>No file loaded!</source>
-        <translation>Nenhum arquivo carregado!</translation>
+        <translation>Nenhum ficheiro foi carregado!</translation>
     </message>
     <message>
         <source>NPC garbage clean-up</source>
@@ -7095,7 +7095,7 @@ de velocidadde</translation>
     </message>
     <message>
         <source>Disable Gravity</source>
-        <translation>Desabilitar gravidade</translation>
+        <translation>Desativar gravidade</translation>
     </message>
     <message>
         <source>Turn on cliff</source>
@@ -7248,12 +7248,12 @@ velocidade de animação</translation>
     </message>
     <message>
         <source>Load file error</source>
-        <translation>Erro ao ler arquivo</translation>
+        <translation>Erro ao ler o ficheiro</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Não foi possível ler o arquivo %1:
+        <translation>Não foi possível ler o ficheiro %1:
 %2.</translation>
     </message>
     <message>
@@ -7266,12 +7266,12 @@ velocidade de animação</translation>
     </message>
     <message>
         <source>File save error</source>
-        <translation>Erro ao salvar arquivo</translation>
+        <translation>Erro ao gravar o ficheiro</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>Não foi possível salvar o arquivo %1:
+        <translation>Não foi possível gravar o ficheiro %1:
 %2.</translation>
     </message>
     <message>
@@ -7282,7 +7282,7 @@ velocidade de animação</translation>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; foi modificado.
-Deseja salvar sua mudanças?</translation>
+Deseja gravar as suas mudanças?</translation>
     </message>
 </context>
 <context>
@@ -7443,7 +7443,7 @@ ao salvar o arquivo</translation>
     <name>QMessageBox</name>
     <message>
         <source>File association failed.</source>
-        <translation>Falha ao associar as extensões de arquivo.</translation>
+        <translation>Falha ao associar as extensões de ficheiro.</translation>
     </message>
 </context>
 <context>
@@ -7686,15 +7686,15 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Section Size</source>
-        <translation>Tamanho da seção</translation>
+        <translation>Tamanho da secção</translation>
     </message>
     <message>
         <source>Section Music</source>
-        <translation>Música da seção</translation>
+        <translation>Música da secção</translation>
     </message>
     <message>
         <source>Section Background</source>
-        <translation>Plano de fundo da seção</translation>
+        <translation>Plano de fundo da secção</translation>
     </message>
     <message>
         <source>Sound</source>
@@ -7762,7 +7762,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Off Screen Exit</source>
-        <translation>Sair pela tela</translation>
+        <translation>Sair pelo ecrã</translation>
     </message>
     <message>
         <source>Underwater</source>
@@ -8537,15 +8537,15 @@ ao salvar o arquivo</translation>
     <name>SmartImporter</name>
     <message>
         <source>File not saved</source>
-        <translation>Arquivo não salvo</translation>
+        <translation>Ficheiro não salvo</translation>
     </message>
     <message>
         <source>You need to save the level, so you can import custom graphics!</source>
-        <translation>Você precisa salvar o nível, e então importar gráficos personalizados!</translation>
+        <translation>O ficheiro precisa gravar o nível e depois importar gráficos personalizados!</translation>
     </message>
     <message>
         <source>You need to save the world, so you can import custom graphics!</source>
-        <translation>Você precisa salvar a fase, e então importar gráficos personalizados!</translation>
+        <translation>Precisa gravar o mundo e depois importar gráficos personalizados!</translation>
     </message>
 </context>
 <context>
@@ -9176,7 +9176,7 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     <message>
         <source>There is already a file called &apos;%1&apos;!
 Import anyway and overwrite?</source>
-        <translation>Já tem um arquivo chamado &apos;%1&apos;!
+        <translation>Já tem um ficheiro chamado &apos;%1&apos;!
 Quer importar do mesmo jeito e sobrescrever?</translation>
     </message>
     <message>
@@ -9205,11 +9205,11 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
-        <translation>Por favor, insira o nome do arquivo!</translation>
+        <translation>Por favor, insira o nome do ficheiro!</translation>
     </message>
     <message>
         <source>Filename:</source>
-        <translation>Nome do arquivo:</translation>
+        <translation>Nome do ficheiro:</translation>
     </message>
     <message>
         <source>Category order weight</source>
@@ -9232,11 +9232,11 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>File not saved</source>
-        <translation>Arquivo não salvo</translation>
+        <translation>Ficheiro não gravado</translation>
     </message>
     <message>
         <source>File doesn&apos;t saved on disk.</source>
-        <translation>Arquivo não salvo no disco.</translation>
+        <translation>Ficheiro não gravado no disco.</translation>
     </message>
     <message>
         <source>Group:</source>
@@ -9329,7 +9329,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>Here you can get bug fixes and new features before new stable will be released</source>
-        <translation>Você pode tentar novas correções de bugs e recursos novos antes da versão estável ser lançada</translation>
+        <translation>Pode tentar novas correções de bugs e recursos novos antes da versão estável ser lançada</translation>
     </message>
     <message>
         <source>Laboratory builds</source>
@@ -9341,7 +9341,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>This is an update checker dialog. Here you can check available updates.</source>
-        <translation>Isto é uma janela onde você pode ver se há alguma atualização disponível.</translation>
+        <translation>Isto é uma janela onde pode ver se há alguma atualização disponível.</translation>
     </message>
     <message>
         <source>Checking...</source>
@@ -9450,7 +9450,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>Level file:</source>
-        <translation>Arquivo do nível:</translation>
+        <translation>Ficheiro do nível:</translation>
     </message>
     <message>
         <source>Level title</source>
@@ -9522,7 +9522,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
-        <translation>3 - Saiu pelo canto da tela</translation>
+        <translation>3 - Saiu pelo canto do ecrã</translation>
     </message>
     <message>
         <source>4 - Secret Exit</source>
@@ -9569,7 +9569,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
-        <translation>Nota: use a roda do mouse para rolar o mapa. Você pode rolar horizontalmente usando CTRL.</translation>
+        <translation>Nota: use a roda do mouse para rolar o mapa. Pode rolar horizontalmente usando CTRL.</translation>
     </message>
     <message>
         <source>Current Point:</source>
@@ -9577,7 +9577,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
-        <translation>Você mudará a posição atual para o última ponto selecionado. Se o ponto não estiver definido, a posição não muda.</translation>
+        <translation>Mudar a posição atual para o última ponto selecionado. Se o ponto não estiver definido, a posição não muda.</translation>
     </message>
     <message>
         <source>Go to point</source>
@@ -9593,7 +9593,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>You will return to the x0-y0 position of the map.</source>
-        <translation>Você volta para a posição (0,0) do mapa.</translation>
+        <translation>Voltar para a posição (0,0) do mapa.</translation>
     </message>
     <message>
         <source>Reset position</source>
@@ -9623,7 +9623,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Loading World map data</source>
-        <translation>Carregando dados do arquivo de mundo</translation>
+        <translation>Carregando dados do mapa do mundo</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -9631,7 +9631,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>1/%1 Loading user data</source>
-        <translation>1/%1 Carregando dados do usuário</translation>
+        <translation>1/%1 Carregando dados do utilizador</translation>
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
@@ -9831,11 +9831,11 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Place</source>
-        <translation type="unfinished">Colocar</translation>
+        <translation>Posicionar</translation>
     </message>
     <message>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished">Colocar &amp; Substituir</translation>
+        <translation>Posicionar &amp; Substituir</translation>
     </message>
     <message>
         <source>Move</source>
@@ -9964,8 +9964,8 @@ Fundo:	%4</translation>
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
         <translation>Este level tem gráficos personalizados defeituosos.
-Você irá ver fantasminhas ou outros gráficos por cima desses gráficos defeitusos. Uma das possíveis causas pode ser o uso do Fake Gif (Formato BMP com extensão GIF).
-Por favor, converta suas imagens para um formato válido e recarregue o nível.</translation>
+Irá ver fantasminhas ou outros gráficos por cima desses gráficos defeitusos. Uma das causas possíveis pode ser o uso do Fake Gif (Formato BMP com extensão GIF).
+Por favor, converta as suas imagens a um formato válido e recarregue o nível.</translation>
     </message>
     <message>
         <source>Undone: %1</source>
@@ -10082,7 +10082,7 @@ Caixas de música:	%5
     </message>
     <message>
         <source>Level file</source>
-        <translation>Arquivo do nível</translation>
+        <translation>Ficheiro do nível</translation>
     </message>
     <message>
         <source>Big Path Background</source>
@@ -10189,7 +10189,7 @@ Caixas de música:	%5
     </message>
     <message>
         <source>1/%1 Loading user data</source>
-        <translation>1/%1 Carregando dados do usuário</translation>
+        <translation>1/%1 Carregando dados do utilizador</translation>
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
@@ -10233,22 +10233,22 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>File save error</source>
-        <translation>Erro ao salvar arquivo</translation>
+        <translation>Erro ao gravar o ficheiro</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation>Não foi possível salvar o arquivo %1:
+        <translation>Não foi possível gravar o ficheiro %1:
 %2.</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation>Erro ao ler arquivo</translation>
+        <translation>Erro ao ler o ficheiro</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation>Não foi possível ler o arquivo %1:
+        <translation>Não foi possível ler o ficheiro %1:
 %2.</translation>
     </message>
     <message>
@@ -10265,7 +10265,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Saving section image...</source>
-        <translation>Salvando imagem da seção...</translation>
+        <translation>Salvando imagem da secção...</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -10293,15 +10293,15 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation>A extensão do arquivo não foi informada, por favor, insira a extensão!</translation>
+        <translation>A extensão do ficheiro não foi informada, por favor, insira a extensão!</translation>
     </message>
     <message>
         <source>SMBX file version</source>
-        <translation>Versão de Arquivo SMBX</translation>
+        <translation>Versão de ficheiro SMBX</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation>Usar qual versão para salvar? (de 0 a 64)</translation>
+        <translation>Usar qual versão para gravar? (de 0 a 64)</translation>
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
@@ -10392,7 +10392,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;%1&apos; foi modificado.
-Deseja salvar sua mudanças?</translation>
+Deseja gravar sua mudanças?</translation>
     </message>
 </context>
 <context>
@@ -10431,11 +10431,11 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation>Por favor, salve o arquivo</translation>
+        <translation>Por favor, grave o ficheiro</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>Salve o arquivo primeiro caso deseje utilizar uma música personalizada.</translation>
+        <translation>Primeiro grave o ficheiro caso deseje utilizar uma música personalizada.</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
@@ -10607,7 +10607,7 @@ Deseja salvar sua mudanças?</translation>
     <message>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Esta é uma ferramenta de console que converterá gráficos do SMBX em GIF com máscara de transparência em um PNG com transparência própria.</translation>
+        <translation>Esta é uma ferramenta de console que converterá gráficos do SMBX em GIF com máscara de transparência num PNG com transparência própria.</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -10637,11 +10637,11 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>Nota: Se você obteu imagens defeituosas depois da conversão, por favor, rode a ferramenta LazyFix e tente de novo</translation>
+        <translation>Nota: Se obteu imagens defeituosas depois da conversão, por favor, rode a ferramenta LazyFix e tente de novo</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Pasta de origem, que contém os arquivos GIF do SMBX (*.gif e *m.gif)</translation>
+        <translation>Pasta de origem, que contém os ficheiros GIF do SMBX (*.gif e *m.gif)</translation>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
@@ -10692,7 +10692,7 @@ Por favor, verifique a pasta do aplicativo.</translation>
     <message>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Esta é uma ferramenta de console que converterá gráficos em um PNG com transparência própria em um gráfico SMBX em GIF com máscara de transparência.</translation>
+        <translation>Esta é uma ferramenta de console que converterá gráficos num PNG com transparência própria num gráfico SMBX em GIF com máscara de transparência.</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -10701,7 +10701,7 @@ Por favor, verifique a pasta do aplicativo.</translation>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Pasta de saída, onde os arquivos GIF do SMBX (*.gif e *m.gif) serão salvos
+        <translation>Pasta de saída, onde os ficheiros GIF do SMBX (*.gif e *m.gif) serão salvos
 (caso não preencha esse campo, as imagens resultantes serão salvas na mesma pasta)</translation>
     </message>
     <message>
@@ -10722,7 +10722,7 @@ Por favor, verifique a pasta do aplicativo.</translation>
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>Pasta de origem, que contém os arquivos PNG com transparência própria</translation>
+        <translation>Pasta de origem, que contém os ficheiros PNG com transparência própria</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
