@@ -1267,6 +1267,13 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
 </context>
 <context>
+    <name>HistoryElementChangeLayerVisibility</name>
+    <message>
+        <source>Toggle the visibility of a layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HistoryElementChangedNewLayer</name>
     <message>
         <source>New Layer</source>
@@ -8648,6 +8655,10 @@ Des données pourraient être corrompues !</translation>
     <message>
         <source>Please save the file before selecting levels.</source>
         <translation>Veuillez enregistrer le fichier avant de sélectionner des niveaux.</translation>
+    </message>
+    <message>
+        <source>9 - Hawk Mouth Exit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

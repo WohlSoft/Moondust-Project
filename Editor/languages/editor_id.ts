@@ -1165,6 +1165,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
 </context>
 <context>
+    <name>HistoryElementChangeLayerVisibility</name>
+    <message>
+        <source>Toggle the visibility of a layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HistoryElementChangedNewLayer</name>
     <message>
         <source>New Layer</source>
@@ -7941,6 +7948,10 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>9 - Hawk Mouth Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

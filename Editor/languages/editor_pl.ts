@@ -1278,6 +1278,13 @@ a także z pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym e
     </message>
 </context>
 <context>
+    <name>HistoryElementChangeLayerVisibility</name>
+    <message>
+        <source>Toggle the visibility of a layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HistoryElementChangedNewLayer</name>
     <message>
         <source>New Layer</source>
@@ -9516,6 +9523,10 @@ Informacje mogą być uszkodzone!</translation>
     <message>
         <source>Please save the file before selecting levels.</source>
         <translation>Proszę zapisz plik przed wybieraniem poziomów.</translation>
+    </message>
+    <message>
+        <source>9 - Hawk Mouth Exit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

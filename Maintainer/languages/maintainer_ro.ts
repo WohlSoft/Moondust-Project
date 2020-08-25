@@ -113,7 +113,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="594"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Închide</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
@@ -393,12 +393,12 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Direcţia folder-ul jocului pentru procesare</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Caută...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
@@ -423,32 +423,32 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="122"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Închide</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="276"/>
         <source>Episode path error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eroare de joc</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="277"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Locaţia jocului nu a fost descrisă. Adaugă joc mai întâi.</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="302"/>
         <source>Worker error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eroare de program sistemic</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="303"/>
         <source>Can&apos;t initialize job because %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nu se poate iniţializa fiindcă %1</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="313"/>
@@ -458,7 +458,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
         <source>Work finished</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Gata</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
@@ -468,7 +468,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Error occouped while work process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Eroare în timpul reparării</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="334"/>
@@ -481,7 +481,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="41"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nu se poate &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="49"/>
@@ -515,7 +515,7 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="64"/>
         <location filename="../Graphics/gifs2png.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Caută...</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="71"/>
@@ -555,13 +555,13 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="143"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cu ce vă pot ajuta?</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="163"/>
         <location filename="../Graphics/gifs2png.cpp" line="273"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="170"/>
@@ -576,7 +576,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="217"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Închide</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="63"/>
@@ -811,7 +811,7 @@ Supported formats:
         <location filename="../Graphics/png2gifs.ui" line="139"/>
         <location filename="../Graphics/png2gifs.cpp" line="184"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="146"/>
@@ -826,7 +826,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="193"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Închide</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="62"/>

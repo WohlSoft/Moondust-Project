@@ -1412,7 +1412,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="285"/>
+        <location filename="../data_configs/data_configs.cpp" line="287"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -1801,7 +1801,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
 <context>
     <name>HistoryElementAddLayer</name>
     <message>
-        <location filename="../editing/_components/history/historyelementaddlayer.cpp" line="18"/>
+        <location filename="../editing/_components/history/historyelementaddlayer.cpp" line="19"/>
         <source>Add Layer</source>
         <translation>Laag Toevoegen</translation>
     </message>
@@ -1812,6 +1812,14 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_components/history/historyelementaddwarp.cpp" line="38"/>
         <source>Add Warp</source>
         <translation>Portaal ingang toevoegen</translation>
+    </message>
+</context>
+<context>
+    <name>HistoryElementChangeLayerVisibility</name>
+    <message>
+        <location filename="../editing/_components/history/historyelementrenamelayer.cpp" line="84"/>
+        <source>Toggle the visibility of a layer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5036,27 +5044,27 @@ Wilt u toch doorgaan?</translation>
         <translation>Verplaatsen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="425"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="437"/>
         <source>Rotate</source>
         <translation>Draaien</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="439"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="451"/>
         <source>Flip</source>
         <translation>Omdraaien</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="453"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="465"/>
         <source>Transform</source>
         <translation>Transformeren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="494"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="506"/>
         <source>Undone: %1</source>
         <translation>Ongedaan gemaakte actie: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="508"/>
+        <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="520"/>
         <source>Redone: %1</source>
         <translation>Herstelde actie: %1</translation>
     </message>
@@ -5451,50 +5459,50 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <translation>Laag met de naam &apos;%1&apos; bestaat al, wilt u de lagen samenvoegen?</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="785"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="792"/>
         <source>New Layer %1</source>
         <translation>Nieuwe Laag %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="859"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="891"/>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="899"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="866"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="898"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="906"/>
         <source>Remove layer</source>
         <translation>Laag verwijderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="860"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="881"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="888"/>
         <source>Remove Layer and keep items</source>
         <translation>Laag verwijderen en voorwerpen behouden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="892"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="899"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen in de laag zullen naar de basislaag verplaatst worden!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="900"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="907"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
         <translation>Bent u zeker dat u deze laag wilt verwijderen?
 Alle voorwerpen zullen verdwijnen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="876"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="883"/>
         <source>Rename layer</source>
         <translation>Laag hernoemen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_layers_box.cpp" line="880"/>
+        <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
         <source>Remove layer with items</source>
         <translation>Laag samen met voorwerpen verwijderen</translation>
     </message>
@@ -8743,30 +8751,30 @@ Foutbeschrijving:
 <context>
     <name>PgeEngine</name>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="244"/>
+        <location filename="../testing/pge_engine.cpp" line="246"/>
         <source>Test level/world</source>
         <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
         <translation>Niveau/wereld testen</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="249"/>
+        <location filename="../testing/pge_engine.cpp" line="251"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in PGE Engine from disk.</comment>
         <translation>Opgeslagen niveau/wereld testen</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="254"/>
+        <location filename="../testing/pge_engine.cpp" line="256"/>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
         <translation>Spel Starten</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="275"/>
+        <location filename="../testing/pge_engine.cpp" line="277"/>
         <source>Unsupported yet</source>
         <translation>Nog niet ondersteund</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="276"/>
+        <location filename="../testing/pge_engine.cpp" line="278"/>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
         <translation>Momenteel is dit nog niet ondersteund voor wereldkaarten. Gebruik de &apos;Opgeslagen niveau/werld testen&apos; optie om een wereldkaart te testen.</translation>
     </message>
@@ -9640,7 +9648,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <translation>Tegelset categoriën aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="549"/>
+        <location filename="../data_configs/data_configs.cpp" line="551"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>
@@ -9712,186 +9720,186 @@ Het maximum aantal muziekdozen is %2.</translation>
 <context>
     <name>SanBaEiRuntimeEngine</name>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="252"/>
+        <location filename="../testing/38a_engine.cpp" line="260"/>
         <source>Test level</source>
         <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
         <translation type="unfinished">Niveau Testen</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="257"/>
+        <location filename="../testing/38a_engine.cpp" line="265"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
         <translation type="unfinished">Niveau in gevechtmodus testen</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="262"/>
+        <location filename="../testing/38a_engine.cpp" line="270"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in SMBX-38A from disk.</comment>
         <translation type="unfinished">Opgeslagen niveau/wereld testen</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="269"/>
+        <location filename="../testing/38a_engine.cpp" line="277"/>
         <source>Reset checkpoints</source>
         <translation type="unfinished">Herstartpunten resetten</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="270"/>
+        <location filename="../testing/38a_engine.cpp" line="278"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation type="unfinished">Alle herstartpunten resetten.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="276"/>
+        <location filename="../testing/38a_engine.cpp" line="284"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation type="unfinished">Magische hand inschakelen</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="278"/>
+        <location filename="../testing/38a_engine.cpp" line="286"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation type="unfinished">Laat real-time bewerking toe: Verplaatsen van, plaatsen van nieuwe en verwijderen van voowerpen.
 Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="284"/>
+        <location filename="../testing/38a_engine.cpp" line="292"/>
         <source>Don&apos;t auto-suspend game</source>
         <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="286"/>
+        <location filename="../testing/38a_engine.cpp" line="294"/>
         <source>Game will always run and it will never suspend while window is unfocused.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="290"/>
+        <location filename="../testing/38a_engine.cpp" line="298"/>
         <source>Change the path to SMBX-38A...</source>
         <comment>Select the path to SMBX-38A executable.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="292"/>
+        <location filename="../testing/38a_engine.cpp" line="300"/>
         <source>Select the path to SMBX-38A executable.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="298"/>
+        <location filename="../testing/38a_engine.cpp" line="306"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="300"/>
+        <location filename="../testing/38a_engine.cpp" line="308"/>
         <source>Select a Wine toolchain for use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="306"/>
+        <location filename="../testing/38a_engine.cpp" line="314"/>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
         <translation type="unfinished">Spel Starten</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="538"/>
+        <location filename="../testing/38a_engine.cpp" line="546"/>
         <source>Checkpoints successfully reseted!</source>
         <translation type="unfinished">Herstartpunten succesvol gereset!</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="550"/>
+        <location filename="../testing/38a_engine.cpp" line="558"/>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="557"/>
+        <location filename="../testing/38a_engine.cpp" line="565"/>
         <source>Please select a path to SMBX-38A executable:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="566"/>
+        <location filename="../testing/38a_engine.cpp" line="574"/>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
         <translation type="unfinished">Standaardinstellingen gebruiken</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="569"/>
+        <location filename="../testing/38a_engine.cpp" line="577"/>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="573"/>
+        <location filename="../testing/38a_engine.cpp" line="581"/>
         <source>Browse...</source>
         <translation type="unfinished">Bladeren...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="597"/>
+        <location filename="../testing/38a_engine.cpp" line="605"/>
         <source>Save</source>
         <translation type="unfinished">Opslaan</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="611"/>
+        <location filename="../testing/38a_engine.cpp" line="619"/>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="637"/>
+        <location filename="../testing/38a_engine.cpp" line="645"/>
         <source>SMBX-38A is still active</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="638"/>
+        <location filename="../testing/38a_engine.cpp" line="646"/>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="787"/>
+        <location filename="../testing/38a_engine.cpp" line="795"/>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="788"/>
+        <location filename="../testing/38a_engine.cpp" line="796"/>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="814"/>
+        <location filename="../testing/38a_engine.cpp" line="822"/>
         <source>Impossible to prepare a temp file for a test run.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="876"/>
+        <location filename="../testing/38a_engine.cpp" line="884"/>
         <source>Impossible to launch a level because of an invalid file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="886"/>
+        <location filename="../testing/38a_engine.cpp" line="894"/>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="895"/>
-        <location filename="../testing/38a_engine.cpp" line="960"/>
+        <location filename="../testing/38a_engine.cpp" line="903"/>
+        <location filename="../testing/38a_engine.cpp" line="968"/>
         <source>Caution</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="896"/>
+        <location filename="../testing/38a_engine.cpp" line="904"/>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="941"/>
+        <location filename="../testing/38a_engine.cpp" line="949"/>
         <source>Impossible to launch an episode because of an invalid file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="951"/>
+        <location filename="../testing/38a_engine.cpp" line="959"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="961"/>
+        <location filename="../testing/38a_engine.cpp" line="969"/>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10161,115 +10169,115 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <translation>Selecteer en pad naar het TheXTech uitvoerbaar bestand</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="486"/>
+        <location filename="../testing/thextech_engine.cpp" line="488"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation>Niveau Testen</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="491"/>
+        <location filename="../testing/thextech_engine.cpp" line="493"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation>Niveau in gevechtmodus testen</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="496"/>
+        <location filename="../testing/thextech_engine.cpp" line="498"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation>Opgeslagen niveau testen</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="502"/>
+        <location filename="../testing/thextech_engine.cpp" line="504"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation>Graphics opties</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="507"/>
+        <location filename="../testing/thextech_engine.cpp" line="509"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation>Standaard</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="512"/>
+        <location filename="../testing/thextech_engine.cpp" line="514"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation>Software rendering</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="517"/>
+        <location filename="../testing/thextech_engine.cpp" line="519"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation>Accelerated (versnelde)</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="522"/>
+        <location filename="../testing/thextech_engine.cpp" line="524"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation>Versneld met V-Sync</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="529"/>
+        <location filename="../testing/thextech_engine.cpp" line="531"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation>Magische hand inschakelen</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="531"/>
+        <location filename="../testing/thextech_engine.cpp" line="533"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation>Laat real-time bewerking toe: Verplaatsen van, plaatsen van nieuwe en verwijderen van voowerpen.
 Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="537"/>
+        <location filename="../testing/thextech_engine.cpp" line="539"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation>Maximum FPS inschakelen</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="539"/>
+        <location filename="../testing/thextech_engine.cpp" line="541"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation>Wanneer het spel wordt gespeeld zonder V-Sync, voer het spel uit op de hoogst mogelijke frame-rate.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="543"/>
+        <location filename="../testing/thextech_engine.cpp" line="545"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation>Alles grijpbaar maken</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="545"/>
+        <location filename="../testing/thextech_engine.cpp" line="547"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation>Laat de speler toe om alle NPC&apos;s in een spel te kunnen grijpen.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="552"/>
+        <location filename="../testing/thextech_engine.cpp" line="554"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
         <translation type="unfinished">Selecteer het TheXTech pad...</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="554"/>
+        <location filename="../testing/thextech_engine.cpp" line="556"/>
         <source>Select the path to TheXTech executable.</source>
         <translation type="unfinished">Gelieve een pad te kiezen naar het TheXTech uitvoerbaar bestand.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="567"/>
+        <location filename="../testing/thextech_engine.cpp" line="569"/>
         <source>Executable not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="568"/>
+        <location filename="../testing/thextech_engine.cpp" line="570"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="577"/>
+        <location filename="../testing/thextech_engine.cpp" line="579"/>
         <source>TheXtech start failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="578"/>
+        <location filename="../testing/thextech_engine.cpp" line="580"/>
         <source>Can&apos;t start TheXTech because of following reason:
 %3.
 
@@ -10287,7 +10295,7 @@ Arguments: %2</source>
         <translation type="vanished">Selecteer het pad naa TheXTech voor gebruik.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="558"/>
+        <location filename="../testing/thextech_engine.cpp" line="560"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation>Spel Starten</translation>
@@ -11025,72 +11033,77 @@ Data zou corrupt kunnen zijn!</translation>
         <translation>Positie: [%1, %2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="169"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="174"/>
         <source>* - Any</source>
         <translation>* - Elke</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="170"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="175"/>
         <source>0 - None</source>
         <translation>0 - Geen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="171"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="176"/>
         <source>1 - Card Roulette Exit</source>
         <translation>1 - Kaartroulette uitgang (SMB3)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="172"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="177"/>
         <source>2 - SMB3 Boss Exit</source>
         <translation>2 - Baas verslagen uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="173"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="178"/>
         <source>3 - Walked Offscreen</source>
         <translation>3 - Buiten Scherm Gelopen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="174"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="179"/>
         <source>4 - Secret Exit</source>
         <translation>4 - Geheime sleutelgat uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="175"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="180"/>
         <source>5 - Crystal Sphare Exit</source>
         <translation>5 - Kristallen Bol uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="176"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="181"/>
         <source>6 - Warp Exit</source>
         <translation>6 - Uitgang via portaal/deur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="177"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="182"/>
         <source>7 - Star Exit</source>
         <translation>7 - Ster opgepakt</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="178"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="183"/>
         <source>8 - Tape Exit</source>
         <translation>8 - Doel Stok uitgang (SMW)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="410"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="186"/>
+        <source>9 - Hawk Mouth Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="418"/>
         <source>Please save the file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="411"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="419"/>
         <source>Please save the file before selecting levels.</source>
         <translation>Gelieve het bestand op te slaan alvorens niveaus te selecteren.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="635"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
         <source>Placement mode</source>
         <translation>Plaatsingsmodus</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_item_props.cpp" line="635"/>
+        <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
         <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
         <translation>Plaats eerst een vorwerp op de map en open het &apos;Eigenschappen&apos; context menu.</translation>
     </message>

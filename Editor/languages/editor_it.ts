@@ -1250,6 +1250,13 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
     </message>
 </context>
 <context>
+    <name>HistoryElementChangeLayerVisibility</name>
+    <message>
+        <source>Toggle the visibility of a layer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HistoryElementChangedNewLayer</name>
     <message>
         <source>New Layer</source>
@@ -9834,6 +9841,10 @@ I dati potrebbero essere corrotti!</translation>
     </message>
     <message>
         <source>Please save the file before selecting levels.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>9 - Hawk Mouth Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
