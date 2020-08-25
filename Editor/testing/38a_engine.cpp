@@ -242,6 +242,12 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
 
     retranslateMenu();
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &SanBaEiRuntimeEngine::retranslateMenu);
+
+    if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_38A)
+    {
+        resetCheckPoints->setShortcut(QStringLiteral("Ctrl+F5"));
+        resetCheckPoints->setShortcutContext(Qt::WindowShortcut);
+    }
 }
 
 void SanBaEiRuntimeEngine::retranslateMenu()
