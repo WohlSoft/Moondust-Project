@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation>Esta Caracteristica no esta implementada</translation>
+        <translation type="unfinished">Esta característica no esta implementada</translation>
     </message>
 </context>
 <context>
