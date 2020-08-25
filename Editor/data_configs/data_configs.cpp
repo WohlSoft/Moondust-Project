@@ -240,6 +240,8 @@ bool DataConfig::loadBasics()
         guiset.readEnum("level-warp-needed-stars-message", editor.supported_features.level_warp_needstars_message, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
+        guiset.readEnum("world-hawkmouth-exit", editor.supported_features.world_hawkmouth_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
     }
     guiset.endGroup();
 

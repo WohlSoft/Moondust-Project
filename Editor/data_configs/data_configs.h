@@ -123,6 +123,11 @@ struct EditorSetup
         State level_warp_needstars_message = F_ENABLED;
         State level_warp_on_enter_event = F_ENABLED;
         State level_warp_cannon_exit = F_ENABLED;
+
+        State level_npc_vertical_dontmove = F_DISABLED;
+        State world_custom_credits = F_DISABLED;
+
+        State world_hawkmouth_exit = F_ENABLED;
     } supported_features;
 };
 

@@ -166,6 +166,11 @@ void WLD_ItemProps::resetExitTypesList()
     QStringList LevelExitType;
     int backup_index;
 
+    DataConfig &c = mw()->configs;
+
+    bool hawkenabled = (c.editor.supported_features.world_hawkmouth_exit == EditorSetup::FeaturesSupport::F_ENABLED);
+    bool hawkhidden = (c.editor.supported_features.world_hawkmouth_exit == EditorSetup::FeaturesSupport::F_HIDDEN);
+
     LevelExitType.push_back(tr("* - Any"));
     LevelExitType.push_back(tr("0 - None"));
     LevelExitType.push_back(tr("1 - Card Roulette Exit"));
@@ -176,6 +181,9 @@ void WLD_ItemProps::resetExitTypesList()
     LevelExitType.push_back(tr("6 - Warp Exit"));
     LevelExitType.push_back(tr("7 - Star Exit"));
     LevelExitType.push_back(tr("8 - Tape Exit"));
+
+    if(hawkenabled && !hawkhidden)
+        LevelExitType.push_back(tr("9 - Hawk Mouth Exit"));
 
     m_lockSettings = true;
 
