@@ -383,7 +383,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Paleta</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1281,7 @@ a także z pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym e
     <name>HistoryElementChangeLayerVisibility</name>
     <message>
         <source>Toggle the visibility of a layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Pokaż widoczność warstwy</translation>
     </message>
 </context>
 <context>
@@ -2623,7 +2623,7 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     </message>
     <message>
         <source>%1 coins</source>
-        <translation type="unfinished">%1 monet</translation>
+        <translation>%1 moneta(y)</translation>
     </message>
 </context>
 <context>
@@ -8130,12 +8130,12 @@ Maksymalny numer bloków muzyki to %2.</translation>
     <message>
         <source>Default</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished">Domyślny</translation>
+        <translation>Domyślny</translation>
     </message>
     <message>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ciemny niebieski</translation>
     </message>
 </context>
 <context>
@@ -9526,7 +9526,7 @@ Informacje mogą być uszkodzone!</translation>
     </message>
     <message>
         <source>9 - Hawk Mouth Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>9 - Wyjście Dziobem Jastrzębia</translation>
     </message>
 </context>
 <context>
@@ -10397,31 +10397,31 @@ Czy chcesz zapisać zmiany?</translation>
     </message>
     <message>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation>Od Wohlstanda</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Edytor, wersja %1</translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation>Rewizja</translation>
     </message>
     <message>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>Data budowy</translation>
     </message>
     <message>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation>Strona naszego projektu</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten program jest rozpowszechniany pod %1</translation>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Architektura: %1</translation>
     </message>
 </context>
 <context>
