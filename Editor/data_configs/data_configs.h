@@ -127,7 +127,7 @@ struct EditorSetup
         State level_npc_vertical_dontmove = F_DISABLED;
         State world_custom_credits = F_DISABLED;
 
-        State world_hawkmouth_exit = F_ENABLED;
+        State world_hawkmouth_exit = F_HIDDEN;
     } supported_features;
 };
 
