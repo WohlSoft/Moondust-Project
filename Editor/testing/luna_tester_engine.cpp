@@ -191,7 +191,9 @@ static pid_t find_pid(const QString &proc_name)
 
 LunaTesterEngine::LunaTesterEngine(QObject *parent) :
     AbstractRuntimeEngine(parent)
-{}
+{
+    std::memset(m_menuItems, 0, sizeof(m_menuItems));
+}
 
 LunaTesterEngine::~LunaTesterEngine()
 {

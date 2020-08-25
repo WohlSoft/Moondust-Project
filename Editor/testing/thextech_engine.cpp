@@ -250,7 +250,9 @@ void TheXTechEngine::startGameAction()
 TheXTechEngine::TheXTechEngine(QObject *parent) :
     AbstractRuntimeEngine(parent),
     m_interface(parent)
-{}
+{
+    std::memset(m_menuItems, 0, sizeof(m_menuItems));
+}
 
 TheXTechEngine::~TheXTechEngine()
 {}

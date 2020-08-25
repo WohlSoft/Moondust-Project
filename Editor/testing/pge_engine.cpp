@@ -143,7 +143,9 @@ static bool findEngine(MainWindow *parent, QString &command)
 PgeEngine::PgeEngine(QObject *parent) :
     AbstractRuntimeEngine(parent),
     m_interface(parent)
-{}
+{
+    std::memset(m_menuItems, 0, sizeof(m_menuItems));
+}
 
 PgeEngine::~PgeEngine()
 {}

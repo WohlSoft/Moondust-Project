@@ -45,7 +45,9 @@
 
 SanBaEiRuntimeEngine::SanBaEiRuntimeEngine(QObject *parent) :
     AbstractRuntimeEngine(parent)
-{}
+{
+    std::memset(m_menuItems, 0, sizeof(m_menuItems));
+}
 
 SanBaEiRuntimeEngine::~SanBaEiRuntimeEngine()
 {
