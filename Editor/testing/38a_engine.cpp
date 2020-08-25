@@ -173,12 +173,12 @@ void SanBaEiRuntimeEngine::initMenu(QMenu *destmenu)
 
     destmenu->addSeparator();
 
-    QAction *ResetCheckPoints = destmenu->addAction("resetCheckpoints");
+    QAction *resetCheckPoints = destmenu->addAction("resetCheckpoints");
     {
-        QObject::connect(ResetCheckPoints,   &QAction::triggered,
+        QObject::connect(resetCheckPoints,   &QAction::triggered,
                     this,               &SanBaEiRuntimeEngine::actionResetCheckPoints,
                     Qt::QueuedConnection);
-        m_menuItems[menuItemId++] = ResetCheckPoints;
+        m_menuItems[menuItemId++] = resetCheckPoints;
     }
 
     destmenu->addSeparator();
@@ -265,9 +265,9 @@ void SanBaEiRuntimeEngine::retranslateMenu()
 
 
     {
-        QAction *ResetCheckPoints = m_menuItems[menuItemId++];
-        ResetCheckPoints->setText(tr("Reset checkpoints"));
-        ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
+        QAction *resetCheckPoints = m_menuItems[menuItemId++];
+        resetCheckPoints->setText(tr("Reset checkpoints"));
+        resetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
     }
 
 

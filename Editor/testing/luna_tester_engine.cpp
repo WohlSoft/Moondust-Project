@@ -286,12 +286,12 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
 
     lunaMenu->addSeparator();
 
-    QAction *ResetCheckPoints = lunaMenu->addAction("resetCheckpoints");
+    QAction *resetCheckPoints = lunaMenu->addAction("resetCheckpoints");
     {
-        QObject::connect(ResetCheckPoints,   &QAction::triggered,
+        QObject::connect(resetCheckPoints,   &QAction::triggered,
                     this,               &LunaTesterEngine::resetCheckPoints,
                     Qt::QueuedConnection);
-        m_menuItems[menuItemId++] = ResetCheckPoints;
+        m_menuItems[menuItemId++] = resetCheckPoints;
     }
     {
         QAction *disableOpenGL = lunaMenu->addAction("Disable OpenGL");
@@ -363,8 +363,8 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
     if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA)
     {
         choosEnginePath->setVisible(false); // Don't show this when LunaTester is a default engine
-        ResetCheckPoints->setShortcut(QStringLiteral("Ctrl+F5"));
-        ResetCheckPoints->setShortcutContext(Qt::WindowShortcut);
+        resetCheckPoints->setShortcut(QStringLiteral("Ctrl+F5"));
+        resetCheckPoints->setShortcutContext(Qt::WindowShortcut);
     }
 }
 
@@ -372,22 +372,22 @@ void LunaTesterEngine::retranslateMenu()
 {
     size_t menuItemId = 0;
     {
-        QAction *RunLunaTest = m_menuItems[menuItemId++];
-        RunLunaTest->setText(tr("Test level",
+        QAction *runLunaTest = m_menuItems[menuItemId++];
+        runLunaTest->setText(tr("Test level",
                                 "Run the LunaTester based level testing."));
-        RunLunaTest->setToolTip(tr("Starts level testing in the legacy engine.\n"
+        runLunaTest->setToolTip(tr("Starts level testing in the legacy engine.\n"
                                    "To have this feature work, latest LunaLUA must be installed.\n"
                                    "Otherwise, it will be very limited."));
     }
     {
-        QAction *RunLunaTest = m_menuItems[menuItemId++];
-        RunLunaTest->setText(tr("Test saved level/world",
+        QAction *runLunaTest = m_menuItems[menuItemId++];
+        runLunaTest->setText(tr("Test saved level/world",
                                 "Run the testing of current file in LunaTester from disk."));
     }
     {
-        QAction *ResetCheckPoints = m_menuItems[menuItemId++];
-        ResetCheckPoints->setText(tr("Reset checkpoints"));
-        ResetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
+        QAction *resetCheckPoints = m_menuItems[menuItemId++];
+        resetCheckPoints->setText(tr("Reset checkpoints"));
+        resetCheckPoints->setToolTip(tr("Reset all checkpoint states to initial state."));
     }
     {
         QAction *disableOpenGL = m_menuItems[menuItemId++];
@@ -405,11 +405,11 @@ void LunaTesterEngine::retranslateMenu()
                                                  "Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing."));
     }
     {
-        QAction *KillBackgroundInstance = m_menuItems[menuItemId++];
-        KillBackgroundInstance->setText(tr("Terminate running process",
+        QAction *killBackgroundInstance = m_menuItems[menuItemId++];
+        killBackgroundInstance->setText(tr("Terminate running process",
                                            "Ends the LunaTester process, regardless of whether it's in \n"
                                            "the background or foreground, so the engine can be loaded from scratch."));
-        KillBackgroundInstance->setToolTip(tr("Ends the LunaTester process so the engine can be loaded from scratch."));
+        killBackgroundInstance->setToolTip(tr("Ends the LunaTester process so the engine can be loaded from scratch."));
     }
     {
         QAction *chooseEnginePath = m_menuItems[menuItemId++];
