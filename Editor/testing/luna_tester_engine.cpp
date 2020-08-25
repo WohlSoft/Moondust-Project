@@ -231,8 +231,6 @@ void LunaTesterEngine::init()
     QObject::connect(this, &LunaTesterEngine::testFinished,
                      m_w, &MainWindow::testingFinished);
 
-    QObject::connect(m_w, &MainWindow::languageSwitched, this, &LunaTesterEngine::retranslateMenu);
-
     loadSetup();
 }
 
