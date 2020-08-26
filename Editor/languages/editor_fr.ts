@@ -1270,7 +1270,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <name>HistoryElementChangeLayerVisibility</name>
     <message>
         <source>Toggle the visibility of a layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher/Masquer la visibilité d&apos;un calque</translation>
     </message>
 </context>
 <context>
@@ -8658,7 +8658,7 @@ Des données pourraient être corrompues !</translation>
     </message>
     <message>
         <source>9 - Hawk Mouth Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>9 - Sortie Hawk Mouth</translation>
     </message>
 </context>
 <context>
