@@ -1234,7 +1234,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementChangeLayerVisibility</name>
     <message>
         <source>Toggle the visibility of a layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Переключення видимості шару</translation>
     </message>
 </context>
 <context>
@@ -8379,7 +8379,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>9 - Hawk Mouth Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>9 - Вихід через дзьоб яструба</translation>
     </message>
 </context>
 <context>
