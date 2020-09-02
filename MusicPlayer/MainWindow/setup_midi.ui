@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
-    <height>729</height>
+    <width>447</width>
+    <height>689</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -291,17 +291,32 @@
         </item>
         <item>
          <property name="text">
-          <string>DMX</string>
+          <string notr="true">DMX</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Apogee</string>
+          <string notr="true">Apogee</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>9X</string>
+          <string notr="true">9X (SB16)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>DMX (Fixed AM)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Apogee (Fixed AM)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">AIL</string>
          </property>
         </item>
        </widget>
