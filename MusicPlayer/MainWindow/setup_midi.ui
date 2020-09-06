@@ -296,7 +296,7 @@
         </item>
         <item>
          <property name="text">
-          <string notr="true">Apogee</string>
+          <string notr="true">Apogee Sound System</string>
          </property>
         </item>
         <item>
@@ -316,7 +316,17 @@
         </item>
         <item>
          <property name="text">
-          <string notr="true">AIL</string>
+          <string notr="true">Audio Interfaces Library</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">9X (Generic FM)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">HMI Sound Operating System</string>
          </property>
         </item>
        </widget>
