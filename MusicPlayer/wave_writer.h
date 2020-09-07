@@ -8,15 +8,19 @@
 extern "C" {
 #endif
 
-int wave_open(long sample_rate, const char *filename);
-void wave_enable_stereo(void);
-void wave_write(short const *in, long count);
-long wave_sample_count(void);
-void wave_close(void);
+#define WAVE_FORMAT_PCM         0x0001
+#define WAVE_FORMAT_IEEE_FLOAT  0x0003
 
-void *ctx_wave_open(long sample_rate, const char *filename);
+void *ctx_wave_open(int chans_count,
+                    long sample_rate,
+                    int sample_size,
+                    int sample_format,
+                    int has_sign,
+                    int is_big_endian,
+                    const char *filename);
+
 void ctx_wave_enable_stereo(void *ctx);
-void ctx_wave_write(void *ctx, short const *in, long count);
+void ctx_wave_write(void *ctx, const unsigned char *in, long count);
 long ctx_wave_sample_count(void *ctx);
 void ctx_wave_close(void *ctx);
 

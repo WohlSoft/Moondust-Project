@@ -34,43 +34,17 @@ struct Context
     long  m_sample_rate;
     long  m_buf_pos;
     int   m_chan_count;
+    int   m_sample_size;
+    int   m_sample_format;
+    int   m_has_sign;
+    int   m_is_big_endian;
 };
-
-static struct Context *g_wwContext = NULL;
 
 static void exit_with_error(const char *str)
 {
     fprintf(stderr, "WAVE Writer Error: %s\n", str);
     fflush(stderr);
 }
-
-int wave_open(long sample_rate, const char *filename)
-{
-    g_wwContext = ctx_wave_open(sample_rate, filename);
-    return g_wwContext ? 0 : -1;
-}
-
-void wave_enable_stereo(void)
-{
-    ctx_wave_enable_stereo(g_wwContext);
-}
-
-void wave_write(short const *in, long remain)
-{
-    ctx_wave_write(g_wwContext, in, remain);
-}
-
-long wave_sample_count(void)
-{
-    return ctx_wave_sample_count(g_wwContext);
-}
-
-void wave_close(void)
-{
-    ctx_wave_close(g_wwContext);
-}
-
-
 
 static void set_le32(void *p, unsigned long n)
 {
@@ -80,7 +54,20 @@ static void set_le32(void *p, unsigned long n)
     ((unsigned char *) p) [3] = (unsigned char)(n >> 24) & (0xFF);
 }
 
-void *ctx_wave_open(long sample_rate, const char *filename)
+static void set_le16(void *p, unsigned long n)
+{
+    ((unsigned char *) p) [0] = (unsigned char) n & (0xFF);
+    ((unsigned char *) p) [1] = (unsigned char)(n >> 8) & (0xFF);
+}
+
+
+void *ctx_wave_open(int chans_count,
+                    long sample_rate,
+                    int sample_size,
+                    int sample_format,
+                    int has_sign,
+                    int is_big_endian,
+                    const char *filename)
 {
     struct Context *ctx = (struct Context*)malloc(sizeof(struct Context));
     if(!ctx)
@@ -89,10 +76,14 @@ void *ctx_wave_open(long sample_rate, const char *filename)
         return NULL;
     }
 
-    ctx->m_sample_count = 0;
-    ctx->m_sample_rate  = sample_rate;
-    ctx->m_buf_pos      = header_size;
-    ctx->m_chan_count   = 1;
+    ctx->m_sample_count  = 0;
+    ctx->m_sample_rate   = sample_rate;
+    ctx->m_buf_pos       = header_size;
+    ctx->m_chan_count    = chans_count;
+    ctx->m_sample_size   = sample_size;
+    ctx->m_sample_format = sample_format;
+    ctx->m_has_sign      = has_sign;
+    ctx->m_is_big_endian = is_big_endian;
 
     ctx->m_buf = (unsigned char *) malloc(buf_size);
     if(!ctx->m_buf)
@@ -135,28 +126,30 @@ static void flush_(struct Context *ctx)
     ctx->m_buf_pos = 0;
 }
 
-void ctx_wave_write(void *ctx, const short *in, long remain)
+void ctx_wave_write(void *ctx, const unsigned char *in, long remain)
 {
     struct Context *wWriter = (struct Context *)ctx;
-    wWriter->m_sample_count += remain;
+    wWriter->m_sample_count += remain / wWriter->m_sample_size;
     while(remain)
     {
         if(wWriter->m_buf_pos >= buf_size)
             flush_(wWriter);
         {
-            unsigned char *p = &wWriter->m_buf [wWriter->m_buf_pos];
-            long n = (buf_size - (unsigned long)wWriter->m_buf_pos) / sizeof(sample_t);
+            unsigned char *p = &wWriter->m_buf[wWriter->m_buf_pos];
+            long n = (buf_size - (unsigned long)wWriter->m_buf_pos);
+
             if(n > remain)
                 n = remain;
             remain -= n;
 
+            /*
+             * TODO: Implement the conversion into valid formats:
+             * - 8-bit into unsigned, 16 and 32 bits into signed
+             * - all records must be little-endian
+             */
             /* convert to LSB first format */
             while(n--)
-            {
-                int s = *in++;
-                *p++ = (unsigned char) s & (0x00FF);
-                *p++ = (unsigned char)(s >> 8) & (0x00FF);
-            }
+                *p++ = (unsigned char)(*in++);
 
             wWriter->m_buf_pos = p - wWriter->m_buf;
             assert(wWriter->m_buf_pos <= buf_size);
@@ -179,7 +172,7 @@ void ctx_wave_close(void *ctx)
     if(wWriter->m_file)
     {
         /* generate header */
-        unsigned char h [header_size] =
+        unsigned char h[header_size] =
         {
             'R', 'I', 'F', 'F',
             0, 0, 0, 0,     /* length of rest of file */
@@ -196,15 +189,17 @@ void ctx_wave_close(void *ctx)
             0, 0, 0, 0,     /* size of sample data */
             /* ... */       /* sample data */
         };
-        long ds = wWriter->m_sample_count * (long)sizeof(sample_t);
-        int frame_size = wWriter->m_chan_count * (long)sizeof(sample_t);
+        long ds = wWriter->m_sample_count * wWriter->m_sample_size;
+        int frame_size = wWriter->m_chan_count * wWriter->m_sample_size;
 
         set_le32(h + 0x04, header_size - 8 + ds);
+        set_le16(h + 0x14, wWriter->m_sample_format);
         h [0x16] = (unsigned char)wWriter->m_chan_count;
         set_le32(h + 0x18, (unsigned long)wWriter->m_sample_rate);
         set_le32(h + 0x1C, (unsigned long)wWriter->m_sample_rate * (unsigned long)frame_size);
         h [0x20] = (unsigned char)frame_size;
         set_le32(h + 0x28, (unsigned long)ds);
+        set_le16(h + 0x22, wWriter->m_sample_size * 8);
 
         flush_(wWriter);
 

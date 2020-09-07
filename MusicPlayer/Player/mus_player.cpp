@@ -301,7 +301,7 @@ namespace PGE_MusicPlayer
     // it expects udata to be a pointer to an int
     static void myMusicPlayer(void *udata, Uint8 *stream, int len)
     {
-        ctx_wave_write(udata, reinterpret_cast<const short *>(stream), len / 2);
+        ctx_wave_write(udata, stream, len);
     }
 
     void startWavRecording(QString target)
@@ -311,8 +311,83 @@ namespace PGE_MusicPlayer
         if(!s_playMus)
             return;
 
-        /* Record 20 seconds to wave file */
-        s_wavCtx = ctx_wave_open(44100, target.toLocal8Bit().data());
+        int format = WAVE_FORMAT_PCM;
+        int sampleSize = 2;
+        int hasSign = 1;
+        int isBigEndian = 0;
+
+        switch(g_sample_format)
+        {
+        case AUDIO_U8:
+            sampleSize = 1;
+            format = WAVE_FORMAT_PCM;
+            hasSign = 0;
+            isBigEndian = 0;
+            break;
+        case AUDIO_S8:
+            sampleSize = 1;
+            format = WAVE_FORMAT_PCM;
+            hasSign = 1;
+            isBigEndian = 0;
+            break;
+        case AUDIO_U16LSB:
+            sampleSize = 2;
+            format = WAVE_FORMAT_PCM;
+            hasSign = 0;
+            isBigEndian = 0;
+            break;
+        default:
+        case AUDIO_S16LSB:
+            sampleSize = 2;
+            format = WAVE_FORMAT_PCM;
+            hasSign = 1;
+            isBigEndian = 0;
+            break;
+        case AUDIO_U16MSB:
+            sampleSize = 2;
+            format = WAVE_FORMAT_PCM;
+            hasSign = 0;
+            isBigEndian = 1;
+            break;
+        case AUDIO_S16MSB:
+            sampleSize = 2;
+            format = WAVE_FORMAT_PCM;
+            hasSign = 1;
+            isBigEndian = 1;
+            break;
+        case AUDIO_S32MSB:
+            sampleSize = 4;
+            format = WAVE_FORMAT_PCM;
+            hasSign = 1;
+            isBigEndian = 1;
+            break;
+        case AUDIO_S32LSB:
+            sampleSize = 4;
+            format = WAVE_FORMAT_PCM;
+            hasSign = 1;
+            isBigEndian = 0;
+            break;
+        case AUDIO_F32MSB:
+            sampleSize = 4;
+            format = WAVE_FORMAT_IEEE_FLOAT;
+            hasSign = 1;
+            isBigEndian = 1;
+            break;
+        case AUDIO_F32LSB:
+            sampleSize = 4;
+            format = WAVE_FORMAT_IEEE_FLOAT;
+            hasSign = 1;
+            isBigEndian = 0;
+            break;
+        }
+
+        s_wavCtx = ctx_wave_open(g_channels,
+                                 g_sample_rate,
+                                 sampleSize,
+                                 format,
+                                 hasSign,
+                                 isBigEndian,
+                                 target.toLocal8Bit().data());
         ctx_wave_enable_stereo(s_wavCtx);
         Mix_SetPostMix(myMusicPlayer, s_wavCtx);
     }
@@ -321,9 +396,9 @@ namespace PGE_MusicPlayer
     {
         if(!s_wavCtx)
             return;
+        Mix_SetPostMix(nullptr, nullptr);
         ctx_wave_close(s_wavCtx);
         s_wavCtx = nullptr;
-        Mix_SetPostMix(nullptr, nullptr);
     }
 
     bool isWavRecordingWorks()
