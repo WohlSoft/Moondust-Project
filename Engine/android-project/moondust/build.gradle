@@ -8,13 +8,13 @@ else {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         if (buildAsApplication) {
             applicationId "ru.wohlsoft.moondust"
         }
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "0.3.2-alpha"
         externalNativeBuild {
@@ -55,12 +55,12 @@ android {
                 path "../../../CMakeLists.txt"
             }
         }
-       
+
     }
     lintOptions {
         abortOnError false
     }
-    
+
     if (buildAsLibrary) {
         libraryVariants.all { variant ->
             variant.outputs.each { output ->
