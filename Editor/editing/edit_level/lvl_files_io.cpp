@@ -123,7 +123,7 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
 
         if(sav->exec() == QDialog::Accepted)
         {
-            LvlData.LevelName = lvlNameBox->text();
+            LvlData.LevelName = lvlNameBox->text().trimmed();
             makeCustomFolder = mkDirCustom->isChecked();
             lvlNameBox->deleteLater();
             mkDirCustom->deleteLater();
@@ -585,7 +585,7 @@ bool LevelEdit::maybeSave()
 
         if(sav->exec() == QDialog::Accepted)
         {
-            LvlData.LevelName = lvlNameBox->text();
+            LvlData.LevelName = lvlNameBox->text().trimmed();
             lvlNameBox->deleteLater();
             sav->deleteLater();
 

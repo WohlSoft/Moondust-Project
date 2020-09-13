@@ -56,7 +56,7 @@ LevelProps::~LevelProps()
 
 void LevelProps::on_LVLPropButtonBox_accepted()
 {
-    m_levelTitle = ui->LVLPropLevelTitle->text().simplified().remove('\"');
+    m_levelTitle = ui->LVLPropLevelTitle->text().trimmed().simplified().remove('\"');
     accept();
 }
 

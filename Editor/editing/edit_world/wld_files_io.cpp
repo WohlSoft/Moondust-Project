@@ -135,7 +135,7 @@ bool WorldEdit::saveAs(bool savOptionsDialog)
 
         if(sav->exec() == QDialog::Accepted)
         {
-            WldData.EpisodeTitle = wldNameBox->text();
+            WldData.EpisodeTitle = wldNameBox->text().trimmed();
             makeCustomFolder = mkDirCustom->isChecked();
             wldNameBox->deleteLater();
             mkDirCustom->deleteLater();
@@ -482,7 +482,7 @@ bool WorldEdit::maybeSave()
 
         if(sav->exec() == QDialog::Accepted)
         {
-            WldData.EpisodeTitle = wldNameBox->text();
+            WldData.EpisodeTitle = wldNameBox->text().trimmed();
             wldNameBox->deleteLater();
             sav->deleteLater();
 
