@@ -34,7 +34,7 @@
 
     <!-- Create a Java class extending SDLActivity and place it in a
          directory under app/src/main/java matching the package, e.g. app/src/main/java/com/gamemaker/game/MyGame.java
- 
+
          then replace "SDLActivity" with the name of your class (e.g. "MyGame")
          in the XML below.
 
@@ -46,6 +46,7 @@
         android:fullBackupContent="false"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
         android:hardwareAccelerated="true"
+        android:requestLegacyExternalStorage="true"
         >
 
         <!-- Example of setting SDL hints from AndroidManifest.xml:
