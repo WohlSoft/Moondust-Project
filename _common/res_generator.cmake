@@ -1,6 +1,14 @@
 # A small resource generator
 
 set(RES_GENERATOR_EXE res_generator)
+set(DEFAULT_HOST_C_COMPILER "gcc")
+set(DEFAULT_HOST_CXX_COMPILER "g++")
+set(DEFAULT_HOST_CMAKE_COMMAND "cmake")
+
+find_program(DEFAULT_HOST_C_COMPILER "gcc")
+find_program(DEFAULT_HOST_CXX_COMPILER "g++")
+find_program(DEFAULT_HOST_CMAKE_COMMAND "cmake")
+
 if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
     set(RES_GENERATOR_EXE res_generator.exe)
 endif()
@@ -12,9 +20,9 @@ if(NOT CMAKE_CROSSCOMPILING AND NOT EMSCRIPTEN)
     set(RES_GENERATOR_PATH $<TARGET_FILE:res_generator>)
 else()
     set(HOST_PATH_ENV "$ENV{PATH}" CACHE STRING "Bypass the host path environment")
-    set(HOST_CMAKE_COMMAND "cmake" CACHE STRING "Bypass the host CMake command")
-    set(HOST_C_COMPILER "gcc" CACHE STRING "Bypass the host C compiler command")
-    set(HOST_CXX_COMPILER "g++" CACHE STRING "Bypass the host C++ compiler command")
+    set(HOST_CMAKE_COMMAND ${DEFAULT_HOST_CMAKE_COMMAND} CACHE STRING "Bypass the host CMake command")
+    set(HOST_C_COMPILER ${DEFAULT_HOST_C_COMPILER} CACHE STRING "Bypass the host C compiler command")
+    set(HOST_CXX_COMPILER ${DEFAULT_HOST_CXX_COMPILER} CACHE STRING "Bypass the host C++ compiler command")
     make_directory(${CMAKE_CURRENT_BINARY_DIR}/res_generator)
     add_custom_command(OUTPUT ${RES_GENERATOR_PATH}
         COMMAND ${HOST_CMAKE_COMMAND} -E env PATH="${HOST_PATH_ENV}" CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
