@@ -22,10 +22,11 @@ else()
     set(HOST_C_COMPILER ${DEFAULT_HOST_C_COMPILER} CACHE STRING "Bypass the host C compiler command")
     set(HOST_CXX_COMPILER ${DEFAULT_HOST_CXX_COMPILER} CACHE STRING "Bypass the host C++ compiler command")
     make_directory(${CMAKE_CURRENT_BINARY_DIR}/res_generator)
+    # PATH="${HOST_PATH_ENV}"
     add_custom_command(OUTPUT ${RES_GENERATOR_PATH}
-        COMMAND ${HOST_CMAKE_COMMAND} -E env PATH="${HOST_PATH_ENV}" CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
+        COMMAND ${HOST_CMAKE_COMMAND} -E env CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
                 ${HOST_CMAKE_COMMAND} ${CMAKE_CURRENT_LIST_DIR}/res_generator
-        COMMAND ${HOST_CMAKE_COMMAND} -E env PATH="${HOST_PATH_ENV}" CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
+        COMMAND ${HOST_CMAKE_COMMAND} -E env CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
                 ${HOST_CMAKE_COMMAND} --build ${CMAKE_CURRENT_BINARY_DIR}/res_generator
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/res_generator"
     )
