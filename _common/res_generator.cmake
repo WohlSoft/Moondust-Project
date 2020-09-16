@@ -1,7 +1,7 @@
 # A small resource generator
 
 set(RES_GENERATOR_EXE res_generator)
-if ("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
+if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
     set(RES_GENERATOR_EXE res_generator.exe)
 endif()
 
