@@ -4,6 +4,7 @@ set(RES_GENERATOR_EXE res_generator)
 
 if("${CMAKE_HOST_SYSTEM_NAME}" STREQUAL "Windows")
     set(RES_GENERATOR_EXE res_generator.exe)
+    set(HOST_CMAKE_GENERATOR "-G \"MinGW Makefiles\"")
 endif()
 
 set(RES_GENERATOR_PATH ${CMAKE_CURRENT_BINARY_DIR}/res_generator/${RES_GENERATOR_EXE})
@@ -25,7 +26,7 @@ else()
     # PATH="${HOST_PATH_ENV}"
     add_custom_command(OUTPUT ${RES_GENERATOR_PATH}
         COMMAND ${HOST_CMAKE_COMMAND} -E env CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
-                ${HOST_CMAKE_COMMAND} ${CMAKE_CURRENT_LIST_DIR}/res_generator
+                ${HOST_CMAKE_COMMAND} ${HOST_CMAKE_GENERATOR} ${CMAKE_CURRENT_LIST_DIR}/res_generator
         COMMAND ${HOST_CMAKE_COMMAND} -E env CC="${HOST_C_COMPILER}" CXX="${HOST_CXX_COMPILER}"
                 ${HOST_CMAKE_COMMAND} --build ${CMAKE_CURRENT_BINARY_DIR}/res_generator
         WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/res_generator"
