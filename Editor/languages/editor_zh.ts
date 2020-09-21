@@ -363,7 +363,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>调色板</translation>
     </message>
 </context>
 <context>
@@ -1230,7 +1230,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementChangeLayerVisibility</name>
     <message>
         <source>Toggle the visibility of a layer</source>
-        <translation type="unfinished"></translation>
+        <translation>切换图层可见性</translation>
     </message>
 </context>
 <context>
@@ -1977,7 +1977,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation>设置为 Boss</translation>
+        <translation>设置为首脑</translation>
     </message>
     <message>
         <source>Transform into</source>
@@ -2464,7 +2464,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>%1 coins</source>
-        <translation type="unfinished">%1 个金币</translation>
+        <translation>%1 个金币</translation>
     </message>
 </context>
 <context>
@@ -3755,7 +3755,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation>游戏通关：“击败库巴”</translation>
+        <translation>游戏通关：“击败最终首脑”</translation>
     </message>
     <message>
         <source>Player Control hold keys</source>
@@ -3819,7 +3819,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>New Event %1</source>
-        <translation></translation>
+        <translation>新事件 %1</translation>
     </message>
     <message>
         <source>Copyed Event %1</source>
@@ -4073,7 +4073,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation>设置为 Boss</translation>
+        <translation>设置为首脑</translation>
     </message>
     <message>
         <source>Block ID: %1, Array ID: %2</source>
@@ -4388,7 +4388,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation>设置为 Boss</translation>
+        <translation>设置为首脑</translation>
     </message>
     <message>
         <source>Contains Msg:</source>
@@ -7643,12 +7643,12 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Default</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished">默认</translation>
+        <translation>默认</translation>
     </message>
     <message>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished"></translation>
+        <translation>深蓝色</translation>
     </message>
 </context>
 <context>
@@ -8959,7 +8959,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Boss 击败后过关</translation>
+        <translation>2 - 问号球过关</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
@@ -9003,7 +9003,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>9 - Hawk Mouth Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>9 - 鹰嘴出口</translation>
     </message>
 </context>
 <context>
@@ -9835,31 +9835,31 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation>Wohlstand 制作</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑器，版本 %1</translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation>修订版本</translation>
     </message>
     <message>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation>发布日期</translation>
     </message>
     <message>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation>我们的计划网站</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation>此程序是在 %1 许可证发布的</translation>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>软件结构</translation>
     </message>
 </context>
 <context>
