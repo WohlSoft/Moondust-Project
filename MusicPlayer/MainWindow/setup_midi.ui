@@ -329,6 +329,11 @@
           <string notr="true">HMI Sound Operating System</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>HMI Sound Operating System (Old)</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="4" column="0" colspan="2">
