@@ -12,7 +12,7 @@ Created by Vitaly Novichkov "Wohlstand" &lt;admin@wohlnet.ru&gt;
 [![Official community](https://img.shields.io/badge/Community-Visit-green.svg)](http://wohlsoft.ru/forum/)
 [![Official documentation](https://img.shields.io/badge/Documentation-Read-green.svg)](http://wohlsoft.ru/pgewiki/)
 [![Contact us by special form](https://img.shields.io/badge/Contact-us-blue.svg)](http://wohlsoft.ru/forum/memberlist.php?mode=contactadmin)
-[![Join to our chat server](https://img.shields.io/badge/Discord-Join%20us-7289DA.svg)](http://discord.gg/zC2PY8q)
+[![Join to our chat server](https://img.shields.io/badge/Discord-Join%20us-7289DA.svg)](https://discord.gg/qPBsvMy)
 
 How to build (Linux, Windows, Mac OS X):
 http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
