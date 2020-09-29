@@ -250,6 +250,16 @@ bool NpcSetup::parse(IniProcessing *setup,
     /***************Calculate the grid offset********************/
 
     /*************Manual redefinition of the grid offset if not set******************/
+    if(merge_with)
+    {
+        grid_offset_x_overriden = setup->hasKey("grid-offset-x");
+        grid_offset_y_overriden = setup->hasKey("grid-offset-y");
+    }
+    else
+    {
+        grid_offset_x_overriden = false;
+        grid_offset_y_overriden = false;
+    }
     setup->read("grid-offset-x", grid_offset_x, pMergeMe(grid_offset_x));
     setup->read("grid-offset-y", grid_offset_y, pMergeMe(grid_offset_y));
     /*************Manual redefinition of the grid offset if not set******************/
@@ -451,17 +461,22 @@ void NpcSetup::applyNPCtxt(const NPCConfigFile *local, const NpcSetup &global, u
     grid =      (local->en_grid) ? local->grid : global.grid;
     NumberLimiter::apply(grid, 1u);
 
-    if(width >= grid)
-        grid_offset_x = -1 * Maths::iRound(static_cast<double>(width % grid) / 2.0);
-    else
-        grid_offset_x = Maths::iRound(static_cast<double>(static_cast<int32_t>(grid) - static_cast<int32_t>(width)) / 2.0);
-
     grid_attach_style = (local->en_gridalign) ? static_cast<uint32_t>(local->gridalign) : global.grid_attach_style;
 
-    if(grid_attach_style == 1)
-        grid_offset_x += (grid / 2);
+    if(!grid_offset_x_overriden) // Don't compute grid if overriden
+    {
+        if(width >= grid)
+            grid_offset_x = -1 * Maths::iRound(static_cast<double>(width % grid) / 2.0);
+        else
+            grid_offset_x = Maths::iRound(static_cast<double>(static_cast<int32_t>(grid) - static_cast<int32_t>(width)) / 2.0);
 
-    grid_offset_y = -static_cast<int>(height) % static_cast<int>(grid);
+        if(grid_attach_style == 1)
+            grid_offset_x += (grid / 2);
+    }
+
+    if(!grid_offset_y_overriden) // Don't compute grid if overriden
+        grid_offset_y = -static_cast<int>(height) % static_cast<int>(grid);
+
     grid_offset_x += (local->en_gridoffsetx) ? local->gridoffsetx : 0;
     grid_offset_y += (local->en_gridoffsety) ? local->gridoffsety : 0;
 

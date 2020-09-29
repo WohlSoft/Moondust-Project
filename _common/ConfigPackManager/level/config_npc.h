@@ -93,8 +93,10 @@ struct NpcSetup
     uint32_t        grid = 32;          //    grid=32
     //! Offset X relative aligned position
     int32_t         grid_offset_x = 0;  //    grid-offset-x=0
+    bool            grid_offset_x_overriden = false;
     //! Offset Y relative aligned position
     int32_t         grid_offset_y = 0;  //    grid-offset-y=0
+    bool            grid_offset_y_overriden = false;
     //! 0 - Align NPCX position relative it's center to center of the grid cell, 1 - to edge of grid cell
     uint32_t        grid_attach_style = 0; //0 - to center, 1 - to edge
 
