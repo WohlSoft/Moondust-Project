@@ -15,12 +15,15 @@ namespace Ui
     class ImageCalibrator;
 }
 
+class CalibrationMain;
+
 class ImageCalibrator : public QDialog
 {
     Q_OBJECT
 
     QList<QVector<CalibrationFrame > > m_imgOffsets;
     Calibration *m_conf = nullptr;
+    CalibrationMain *m_mw = nullptr;
 public:
     explicit ImageCalibrator(Calibration *conf, QWidget *parent = nullptr);
     ~ImageCalibrator();

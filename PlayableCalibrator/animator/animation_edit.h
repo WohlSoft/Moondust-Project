@@ -40,8 +40,9 @@ class AnimationEdit : public QDialog
     Q_OBJECT
 
     Calibration *m_conf = nullptr;
+    CalibrationMain *m_mw = nullptr;
 public:
-    explicit AnimationEdit(Calibration *conf, QWidget *parent = nullptr);
+    explicit AnimationEdit(Calibration *conf, QObject *mw, QWidget *parent = nullptr);
     ~AnimationEdit();
 
     void addFrameL(int x, int y);

@@ -23,7 +23,7 @@
 #include <ui_matrix.h>
 
 
-Matrix::Matrix(Calibration *conf, QWidget *parent) :
+Matrix::Matrix(Calibration *conf, QWidget *mw, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Matrix)
 {
@@ -37,10 +37,10 @@ Matrix::Matrix(Calibration *conf, QWidget *parent) :
     //qApp->processEvents();
     this->show();
 
-    auto *mw = qobject_cast<CalibrationMain*>(this->parent());
-    Q_ASSERT(mw);
+    auto *mmw = qobject_cast<CalibrationMain*>(mw);
+    Q_ASSERT(mmw);
 
-    m_scaledImage = mw->m_xImageSprite.scaled(ui->SpriteMatrix->viewport()->width(),
+    m_scaledImage = mmw->m_xImageSprite.scaled(ui->SpriteMatrix->viewport()->width(),
                                             ui->SpriteMatrix->viewport()->height(),
                                             Qt::KeepAspectRatio);
     drawGrid();

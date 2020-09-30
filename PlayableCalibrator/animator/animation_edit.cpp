@@ -21,10 +21,13 @@
 #include <ui_animation_edit.h>
 #include "frame_matrix/matrix.h"
 
-AnimationEdit::AnimationEdit(Calibration *conf, QWidget *parent) :
+AnimationEdit::AnimationEdit(Calibration *conf, QObject *mw, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AnimationEdit)
 {
+    m_mw = qobject_cast<CalibrationMain*>(mw);
+    Q_ASSERT(m_mw);
+
     m_conf = conf;
     m_frameList = conf->animations;
     m_currentFrame = 0;
@@ -48,7 +51,7 @@ void AnimationEdit::on_AddLeft_clicked()
 {
     int x = -1;
     int y = -1;
-    Matrix dialog(m_conf, this);
+    Matrix dialog(m_conf, m_mw, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 
     if(dialog.exec() == QDialog::Accepted)
@@ -67,7 +70,7 @@ void AnimationEdit::on_SetLeft_clicked()
     int x = -1;
     int y = -1;
     QList<QListWidgetItem *> selected = ui->FramesL->selectedItems();
-    Matrix dialog(m_conf, this);
+    Matrix dialog(m_conf, m_mw, this);
 
     foreach(QListWidgetItem *item, selected)
     {
@@ -100,7 +103,7 @@ void AnimationEdit::on_AddRight_clicked()
 {
     int x = -1;
     int y = -1;
-    Matrix dialog(m_conf, this);
+    Matrix dialog(m_conf, m_mw, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 
     if(dialog.exec() == QDialog::Accepted)
@@ -120,7 +123,7 @@ void AnimationEdit::on_SetRight_clicked()
     int x = -1;
     int y = -1;
     QList<QListWidgetItem *> selected = ui->FramesR->selectedItems();
-    Matrix dialog(m_conf, this);
+    Matrix dialog(m_conf, m_mw, this);
 
     foreach(QListWidgetItem *item, selected)
     {
@@ -230,11 +233,9 @@ void AnimationEdit::on_FramesSets_currentItemChanged(QListWidgetItem *item, QLis
 void AnimationEdit::showFrame(int x, int y)
 {
     qDebug() << x << y;
-    auto *mw = qobject_cast<CalibrationMain*>(parent());
-    Q_ASSERT(mw);
-    int fW = mw->m_xImageSprite.width() / 10;
-    int fH = mw->m_xImageSprite.height() / 10;
-    m_currentFrameImg = mw->m_xImageSprite.copy(x * fW, y * fH, fW, fH);
+    int fW = m_mw->m_xImageSprite.width() / 10;
+    int fH = m_mw->m_xImageSprite.height() / 10;
+    m_currentFrameImg = m_mw->m_xImageSprite.copy(x * fW, y * fH, fW, fH);
     ui->img->setPixmap(m_currentFrameImg);
 }
 

@@ -1,10 +1,12 @@
-#include "image_calibrator.h"
-#include <ui_image_calibrator.h>
-#include "main/graphics.h"
-#include "frame_matrix/matrix.h"
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
+
+#include "image_calibrator.h"
+#include <ui_image_calibrator.h>
+#include "calibration_main.h"
+#include "main/graphics.h"
+#include "frame_matrix/matrix.h"
 
 
 ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
@@ -19,6 +21,8 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
     ui(new Ui::ImageCalibrator),
     m_lockUI(false)
 {
+    m_mw = qobject_cast<CalibrationMain*>(parent);
+    Q_ASSERT(m_mw);
     ui->setupUi(this);
 }
 
@@ -155,7 +159,7 @@ void ImageCalibrator::on_CropH_valueChanged(int arg1)
 
 void ImageCalibrator::on_Matrix_clicked()
 {
-    Matrix dialog(m_conf, this);
+    Matrix dialog(m_conf, m_mw, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.setFrame(m_frmX, m_frmY);
 

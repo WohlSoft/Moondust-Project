@@ -27,7 +27,7 @@
 #include "main/calibration.h"
 
 namespace Ui {
-class Animate;
+class Animator;
 }
 
 class Animator : public QDialog
@@ -60,7 +60,7 @@ private slots:
     void on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
 
 private:
-    Ui::Animate *ui;
+    Ui::Animator *ui;
 };
 
 #endif // ANIMATE_H

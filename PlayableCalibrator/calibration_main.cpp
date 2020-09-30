@@ -385,7 +385,7 @@ void CalibrationMain::on_showGrabItem_clicked(bool checked)
 
 void CalibrationMain::on_Matrix_clicked()
 {
-    Matrix dialog(&m_calibration, this);
+    Matrix dialog(&m_calibration, this, this);
     this->hide();
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.setFrame(m_frmX, m_frmY);

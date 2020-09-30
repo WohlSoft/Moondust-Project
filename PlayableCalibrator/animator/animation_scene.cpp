@@ -17,18 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AnimationScene.h"
+#include "animation_scene.h"
 
-AnimationScene::AnimationScene(Calibration &conf, QObject *parent) :
+AnimationScene::AnimationScene(Calibration &conf, QWidget *mw, QObject *parent) :
     QGraphicsScene(parent)
 {
-    auto *mw = qobject_cast<CalibrationMain*>(this->parent());
-    Q_ASSERT(mw);
+    m_mw = qobject_cast<CalibrationMain*>(mw);
+    Q_ASSERT(m_mw);
 
     m_conf = &conf;
     m_allAnimations = conf.animations;
     m_framesTable = conf.frames;
-    m_spriteImage = mw->m_xImageSprite;
+    m_spriteImage = m_mw->m_xImageSprite;
     m_noAnimate = QPixmap(":/images/NoAni.png");
     draw();
     m_currentImage = m_noAnimate;

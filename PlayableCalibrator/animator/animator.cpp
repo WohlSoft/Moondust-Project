@@ -25,7 +25,7 @@
 
 Animator::Animator(Calibration &conf, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Animate)
+    ui(new Ui::Animator)
 {
     ui->setupUi(this);
 
@@ -33,10 +33,12 @@ Animator::Animator(Calibration &conf, QWidget *parent) :
 
     //Here will be read AniFrames from INI
 
-    m_aniScene = new AnimationScene(conf);
-    m_aniScene->setSceneRect(0, 0, ui->AnimateView->width() - 20, ui->AnimateView->height() - 20);
+    m_aniScene = new AnimationScene(conf, parent);
+    m_aniScene->setSceneRect(0, 0,
+                             ui->AnimatorView->width() - 20,
+                             ui->AnimatorView->height() - 20);
 
-    ui->AnimateView->setScene(m_aniScene);
+    ui->AnimatorView->setScene(m_aniScene);
 
     m_aniStyle = "Idle";
     m_aniDir = 1; //0 - left, 1 - right
@@ -108,7 +110,7 @@ void Animator::aniFindSet()
 
 void Animator::on_EditAnimationBtn_clicked()
 {
-    AnimationEdit dialog(m_conf, this);
+    AnimationEdit dialog(m_conf, this->parent(), this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
     m_conf->animations = dialog.m_frameList;

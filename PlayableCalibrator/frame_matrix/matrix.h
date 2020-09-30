@@ -42,7 +42,7 @@ class Matrix : public QDialog
     QGraphicsScene *m_matrixScene = nullptr;
 
 public:
-    explicit Matrix(Calibration *conf, QWidget *parent = nullptr);
+    explicit Matrix(Calibration *conf, QWidget *mw, QWidget *parent = nullptr);
     ~Matrix();
     Calibration::FramesSet m_frameConfig;
 
