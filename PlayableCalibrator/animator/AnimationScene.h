@@ -1,5 +1,5 @@
 ﻿/*
- * SMBX64 Playble Character Sprite Calibrator, a free tool for playable srite design
+ * Playble Character Calibrator, a free tool for playable character sprite setup tune
  * This is a part of the Platformer Game Engine by Wohlstand, a free platform for game making
  * Copyright (c) 2017-2020 Vitaly Novichkov <admin@wohlnet.ru>
  *
