@@ -19,18 +19,18 @@
 
 #include "matrix.h"
 #include <ui_matrix.h>
-#include "../main/globals.h"
 
-#include "../main/mw.h"
+#include "main/mw.h"
 
 #include <QPainter>
 
 
-Matrix::Matrix(QWidget *parent) :
+Matrix::Matrix(Calibration *conf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Matrix)
 {
     ui->setupUi(this);
+    m_conf = conf;
     frameX = 0;
     frameY = 0;
     MatrixS = new QGraphicsScene;
@@ -45,7 +45,7 @@ Matrix::Matrix(QWidget *parent) :
     image.setPixmap(scaledImage);
     image.setPos(0.0, 0.0);
     MatrixS->addItem(&image);
-    m_frameConfig = g_calibration.frames;
+    m_frameConfig = conf->frames;
     qDebug() << "Building a scene: " << ui->SpriteMatrix->width() << ui->SpriteMatrix->height();
 
 #define CONCAT_(a, b, c) a ## b ## c

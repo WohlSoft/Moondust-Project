@@ -19,16 +19,16 @@
 
 #include "animationedit.h"
 #include <ui_animationedit.h>
-#include "../frame_matrix/matrix.h"
-#include "../main/globals.h"
-#include "../main/mw.h"
+#include "frame_matrix/matrix.h"
+#include "main/mw.h"
 
-AnimationEdit::AnimationEdit(Calibration::AnimationSet &frmConfs, QWidget *parent) :
+AnimationEdit::AnimationEdit(Calibration *conf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AnimationEdit)
 {
-    SrcFrames = g_calibration.frames;
-    frameList = frmConfs;
+    m_conf = conf;
+    SrcFrames = conf->frames;
+    frameList = conf->animations;
     currentFrame = 0;
     direction = 1;
     ui->setupUi(this);
@@ -50,7 +50,7 @@ void AnimationEdit::on_AddLeft_clicked()
 {
     int x = -1;
     int y = -1;
-    Matrix dialog(this);
+    Matrix dialog(m_conf, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 
     if(dialog.exec() == QDialog::Accepted)
@@ -69,7 +69,7 @@ void AnimationEdit::on_SetLeft_clicked()
     int x = -1;
     int y = -1;
     QList<QListWidgetItem *> selected = ui->FramesL->selectedItems();
-    Matrix dialog(this);
+    Matrix dialog(m_conf, this);
 
     foreach(QListWidgetItem *item, selected)
     {
@@ -102,7 +102,7 @@ void AnimationEdit::on_AddRight_clicked()
 {
     int x = -1;
     int y = -1;
-    Matrix dialog(this);
+    Matrix dialog(m_conf, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
 
     if(dialog.exec() == QDialog::Accepted)
@@ -122,7 +122,7 @@ void AnimationEdit::on_SetRight_clicked()
     int x = -1;
     int y = -1;
     QList<QListWidgetItem *> selected = ui->FramesR->selectedItems();
-    Matrix dialog(this);
+    Matrix dialog(m_conf, this);
 
     foreach(QListWidgetItem *item, selected)
     {

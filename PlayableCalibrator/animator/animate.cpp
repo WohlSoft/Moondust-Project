@@ -20,19 +20,20 @@
 #include "animate.h"
 #include <ui_animate.h>
 #include "animationedit.h"
-#include "main/globals.h"
 #include "main/mw.h"
 #include "main/calibration.h"
 
-Animate::Animate(QWidget *parent) :
+Animate::Animate(Calibration &conf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Animate)
 {
     ui->setupUi(this);
 
+    m_conf = &conf;
+
     //Here will be read AniFrames from INI
 
-    m_aniScene = new AnimationScene();
+    m_aniScene = new AnimationScene(conf);
     m_aniScene->setSceneRect(0, 0, ui->AnimateView->width() - 20, ui->AnimateView->height() - 20);
 
     ui->AnimateView->setScene(m_aniScene);
@@ -40,7 +41,7 @@ Animate::Animate(QWidget *parent) :
     aniStyle = "Idle";
     aniDir = 1; //0 - left, 1 - right
 
-    for(AniFrameSet frms : g_calibration.animations)
+    for(AniFrameSet frms : m_conf->animations)
         ui->animationsList->addItem(frms.name);
 
     QList<QListWidgetItem *> items = ui->animationsList->findItems("*", Qt::MatchWildcard);
@@ -54,7 +55,7 @@ Animate::Animate(QWidget *parent) :
         }
     }
 
-    m_aniScene->setAnimation(g_calibration.animations[aniStyle].R);
+    m_aniScene->setAnimation(m_conf->animations[aniStyle].R);
 }
 
 Animate::~Animate()
@@ -90,10 +91,10 @@ void Animate::keyPressEvent(QKeyEvent *e)
 
 void Animate::aniFindSet()
 {
-    if(!g_calibration.animations.contains(aniStyle))
+    if(!m_conf->animations.contains(aniStyle))
         return;
 
-    auto &frms = g_calibration.animations[aniStyle];
+    auto &frms = m_conf->animations[aniStyle];
 
     if(aniDir == 1)
         m_aniScene->setAnimation(frms.R);
@@ -107,10 +108,10 @@ void Animate::aniFindSet()
 
 void Animate::on_EditAnimationBtn_clicked()
 {
-    AnimationEdit dialog(g_calibration.animations, this);
+    AnimationEdit dialog(m_conf, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
-    g_calibration.animations = dialog.frameList;
+    m_conf->animations = dialog.frameList;
     aniFindSet();
 }
 

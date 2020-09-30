@@ -21,7 +21,6 @@
 
 #include "../calibrationmain.h"
 #include "ui_calibrationmain.h"
-#include "globals.h"
 #include "graphics.h"
 #include "app_path.h"
 
@@ -29,12 +28,12 @@ void CalibrationMain::OpenFile(QString fileName)
 {
     QString imgFileM;
     QFileInfo ourFile(fileName);
-    g_currentFile = fileName;
+    m_currentFile = fileName;
 
-    g_lastOpenDir = ourFile.absoluteDir().path() + "/";
+    m_lastOpenDir = ourFile.absoluteDir().path() + "/";
 
     QString errString;
-    if(!Graphics::loadMaskedImage(g_lastOpenDir, ourFile.fileName(), imgFileM, m_xImageSprite, &errString))
+    if(!Graphics::loadMaskedImage(m_lastOpenDir, ourFile.fileName(), imgFileM, m_xImageSprite, &errString))
     {
         m_xImageSprite = QPixmap();
         QMessageBox::warning(this, "Image Loading error",
@@ -42,15 +41,16 @@ void CalibrationMain::OpenFile(QString fileName)
                              .arg(fileName)
                              .arg(errString),
                              QMessageBox::Ok);
-        g_currentFile = "";
+        m_currentFile = "";
         return;
     }
 
     QString ini_default = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QString ini_custom = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
 
-    loadConfig(g_calibrationDefault, ini_default);
-    loadConfig(g_calibration, ini_custom, &g_calibrationDefault);
+    loadConfig(m_calibrationDefault, ini_default);
+    if(QFile::exists(ini_custom))
+        loadConfig(m_calibration, ini_custom, &m_calibrationDefault);
     m_currentConfig = fileName;
 
     initScene();
@@ -76,8 +76,8 @@ void CalibrationMain::on_MakeTemplateB_clicked()
     pa.setPen(QPen(Qt::yellow, 1));
     pa.setBrush(Qt::transparent);
 
-    for(auto it = g_calibration.frames.begin();
-        it != g_calibration.frames.end();
+    for(auto it = m_calibration.frames.begin();
+        it != m_calibration.frames.end();
         ++it)
     {
         auto pos = it.key();
@@ -86,14 +86,14 @@ void CalibrationMain::on_MakeTemplateB_clicked()
         {
             pa.drawRect(frm.offsetX + FRAME_WIDTH * pos.first,
                         frm.offsetY + FRAME_HEIGHT * pos.second,
-                        g_calibration.frameWidth - 1,
-                        (frm.isDuck ? g_calibration.frameHeightDuck : g_calibration.frameHeight) - 1);
+                        m_calibration.frameWidth - 1,
+                        (frm.isDuck ? m_calibration.frameHeightDuck : m_calibration.frameHeight) - 1);
         }
     }
 
     pa.end();
 
-    QFileInfo ourFile(g_currentFile);
+    QFileInfo ourFile(m_currentFile);
     QString targetFilePng =  ourFile.absoluteDir().absolutePath() + "/" + ourFile.baseName()+"_hitboxes.png";
     targetFilePng = QFileDialog::getSaveFileName(this, tr("Save hitbox map as image"), targetFilePng, "PNG Image (*.png)");
     if(targetFilePng.isEmpty())

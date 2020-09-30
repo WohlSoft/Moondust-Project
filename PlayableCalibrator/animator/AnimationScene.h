@@ -29,8 +29,9 @@
 class AnimationScene : public QGraphicsScene
 {
     Q_OBJECT
+    Calibration *m_conf = nullptr;
 public:
-    AnimationScene(QObject *parent = nullptr);
+    AnimationScene(Calibration &conf, QObject *parent = nullptr);
 
     void draw();
     QPoint pos() const;

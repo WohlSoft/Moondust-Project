@@ -27,7 +27,6 @@
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
 #include "animator/animate.h"
-#include "main/globals.h"
 #include "main/app_path.h"
 #include "main/calibration.h"
 

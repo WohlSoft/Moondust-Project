@@ -31,19 +31,6 @@
 
 #include "main/calibration.h"
 
-struct frameOpts
-{
-    unsigned int H;
-    unsigned int W;
-    int offsetX;
-    int offsetY;
-    bool used;
-    bool isDuck;
-    bool isRightDir;
-    bool showGrabItem;
-};
-
-
 namespace Ui {
 class CalibrationMain;
 }
@@ -52,6 +39,13 @@ class CalibrationMain : public QWidget
 {
     Q_OBJECT
 
+    QString m_lastOpenDir;
+    QString m_currentFile;
+    int m_curFrameX = 0, m_curFrameY = 0;
+
+    Calibration m_calibration;
+    Calibration m_calibrationDefault;
+    CalibrationFrame m_clipboard;
 public:
     explicit CalibrationMain(QWidget *parent = nullptr);
     ~CalibrationMain();

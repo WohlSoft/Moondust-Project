@@ -1,11 +1,11 @@
 #include "AnimationScene.h"
-#include "../main/globals.h"
-#include "../main/mw.h"
+#include "main/mw.h"
 
-AnimationScene::AnimationScene(QObject *parent) : QGraphicsScene(parent)
+AnimationScene::AnimationScene(Calibration &conf, QObject *parent) : QGraphicsScene(parent)
 {
-    m_allAnimations = g_calibration.animations;
-    m_framesTable = g_calibration.frames;
+    m_conf = &conf;
+    m_allAnimations = conf.animations;
+    m_framesTable = conf.frames;
     m_spriteImage = MW::p->m_xImageSprite;
     m_noAnimate = QPixmap(":/images/NoAni.png");
     draw();
@@ -65,9 +65,9 @@ void AnimationScene::setFrame(int frame)
     m_pos.setX(m_currentFrameX);
     m_currentFrameY = FRAME_HEIGHT * m_currentAnimation[frame].y;
     m_pos.setY(m_currentFrameY);
-    w = g_calibration.frameWidth;
+    w = m_conf->frameWidth;
     auto &f = m_currentAnimation[frame];
-    h = m_framesTable[{f.x, f.y}].isDuck ? g_calibration.frameHeightDuck : g_calibration.frameHeight;
+    h = m_framesTable[{f.x, f.y}].isDuck ? m_conf->frameHeightDuck : m_conf->frameHeight;
     x = m_framesTable[{f.x, f.y}].offsetX;
     y = m_framesTable[{f.x, f.y}].offsetY;
     draw();

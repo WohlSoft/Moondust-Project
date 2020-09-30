@@ -90,7 +90,6 @@ list(APPEND PGE_CALIBRATOR_SRCS
     animator/animate.cpp
     animator/animationedit.cpp
     main/files_io.cpp
-    main/globals.cpp
     main/graphics.cpp
     main/settings.cpp
     image_calibration/image_calibrator.cpp

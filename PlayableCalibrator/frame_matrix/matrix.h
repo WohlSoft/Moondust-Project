@@ -38,9 +38,9 @@ class Matrix : public QDialog
     Q_OBJECT
 
     QCheckBox *m_enFrame[10][10];
-
+    Calibration *m_conf = nullptr;
 public:
-    explicit Matrix(QWidget *parent = 0);
+    explicit Matrix(Calibration *conf, QWidget *parent = nullptr);
     ~Matrix();
     QGraphicsScene *MatrixS;
     Calibration::FramesSet m_frameConfig;

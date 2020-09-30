@@ -34,8 +34,9 @@ class Animate : public QDialog
 {
     Q_OBJECT
 
+    Calibration *m_conf = nullptr;
 public:
-    explicit Animate(QWidget *parent = 0);
+    explicit Animate(Calibration &conf, QWidget *parent = 0);
     ~Animate();
     AnimationScene *m_aniScene;
 
