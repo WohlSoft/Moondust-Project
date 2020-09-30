@@ -17,8 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "animationedit.h"
-#include <ui_animationedit.h>
+#include "animation_edit.h"
+#include <ui_animation_edit.h>
 #include "frame_matrix/matrix.h"
 
 AnimationEdit::AnimationEdit(Calibration *conf, QWidget *parent) :

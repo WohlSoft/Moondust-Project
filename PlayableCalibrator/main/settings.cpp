@@ -22,11 +22,11 @@
 #include <QSettings>
 #include <QFileDialog>
 
-#include "calibrationmain.h"
-#include "ui_calibrationmain.h"
+#include "calibration_main.h"
+#include "ui_calibration_main.h"
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
-#include "animator/animate.h"
+#include "animator/animator.h"
 #include "main/app_path.h"
 #include "main/calibration.h"
 

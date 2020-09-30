@@ -24,7 +24,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QDialog>
-#include "../calibrationmain.h"
+#include "../calibration_main.h"
 #include "main/calibration.h"
 
 namespace Ui {

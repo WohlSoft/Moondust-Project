@@ -61,10 +61,10 @@ endif()
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 
 qt5_wrap_ui(UIS_HDRS
-    calibrationmain.ui
+    calibration_main.ui
     about/about.ui
-    animator/animate.ui
-    animator/animationedit.ui
+    animator/animator.ui
+    animator/animation_edit.ui
     frame_matrix/matrix.ui
     image_calibration/image_calibrator.ui
 )
@@ -84,12 +84,12 @@ set(PGE_CALIBRATOR_SRCS)
 list(APPEND PGE_CALIBRATOR_SRCS
     ${PGETRANSLATOR_SRCS}
     main.cpp
-    calibrationmain.cpp
+    calibration_main.cpp
     frame_matrix/matrix.cpp
     about/about.cpp
-    animator/animate.cpp
-    animator/animationedit.cpp
-    animator/AnimationScene.cpp
+    animator/animator.cpp
+    animator/animation_edit.cpp
+    animator/animation_scene.cpp
     image_calibration/image_calibrator.cpp
     main/files_io.cpp
     main/graphics.cpp

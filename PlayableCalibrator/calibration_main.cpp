@@ -22,14 +22,14 @@
 #include <QSettings>
 #include <QMenu>
 
-#include "calibrationmain.h"
-#include <ui_calibrationmain.h>
+#include "calibration_main.h"
+#include <ui_calibration_main.h>
 
 #include "main/app_path.h"
 
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
-#include "animator/animate.h"
+#include "animator/animator.h"
 #include "image_calibration/image_calibrator.h"
 
 #include "main/graphics.h"
@@ -409,7 +409,7 @@ void CalibrationMain::on_Matrix_clicked()
 void CalibrationMain::on_AnimatorButton_clicked()
 {
     this->hide();
-    Animate dialog(m_calibration, this);
+    Animator dialog(m_calibration, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
     this->show();

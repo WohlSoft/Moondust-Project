@@ -19,8 +19,8 @@
 
 #include <QFileInfo>
 
-#include "../calibrationmain.h"
-#include "ui_calibrationmain.h"
+#include "../calibration_main.h"
+#include "ui_calibration_main.h"
 #include "graphics.h"
 #include "app_path.h"
 

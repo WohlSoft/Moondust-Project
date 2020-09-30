@@ -23,7 +23,7 @@
 
 #include <QtWidgets/QApplication>
 #include <QDesktopWidget>
-#include "calibrationmain.h"
+#include "calibration_main.h"
 #include <main/app_path.h>
 #include <iostream>
 

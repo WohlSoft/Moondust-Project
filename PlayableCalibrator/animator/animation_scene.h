@@ -23,7 +23,7 @@
 
 #include <QGraphicsScene>
 #include <QtWidgets>
-#include "calibrationmain.h"
+#include "calibration_main.h"
 #include "main/calibration.h"
 
 class AnimationScene : public QGraphicsScene

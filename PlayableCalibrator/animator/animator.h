@@ -22,15 +22,15 @@
 #define ANIMATE_H
 
 #include <QDialog>
-#include "calibrationmain.h"
-#include "AnimationScene.h"
+#include "calibration_main.h"
+#include "animation_scene.h"
 #include "main/calibration.h"
 
 namespace Ui {
 class Animate;
 }
 
-class Animate : public QDialog
+class Animator : public QDialog
 {
     Q_OBJECT
 
@@ -44,8 +44,8 @@ class Animate : public QDialog
     void aniFindSet();
 
 public:
-    explicit Animate(Calibration &conf, QWidget *parent = nullptr);
-    ~Animate();
+    explicit Animator(Calibration &conf, QWidget *parent = nullptr);
+    ~Animator();
 
 protected:
     void keyPressEvent(QKeyEvent *e);

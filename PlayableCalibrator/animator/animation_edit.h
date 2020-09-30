@@ -26,7 +26,7 @@
 #include <QListWidget>
 #include <QTimer>
 
-#include "calibrationmain.h"
+#include "calibration_main.h"
 #include "frame_matrix/matrix.h"
 #include "main/calibration.h"
 

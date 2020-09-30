@@ -17,13 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "animate.h"
-#include <ui_animate.h>
-#include "animationedit.h"
+#include "animator.h"
+#include <ui_animator.h>
+#include "animation_edit.h"
 #include "main/calibration.h"
 
 
-Animate::Animate(Calibration &conf, QWidget *parent) :
+Animator::Animator(Calibration &conf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Animate)
 {
@@ -58,7 +58,7 @@ Animate::Animate(Calibration &conf, QWidget *parent) :
     m_aniScene->setAnimation(m_conf->animations[m_aniStyle].R);
 }
 
-Animate::~Animate()
+Animator::~Animator()
 {
     int j = ui->animationsList->count() - 1;
     for(; j >= 0; j--)
@@ -69,7 +69,7 @@ Animate::~Animate()
     delete ui;
 }
 
-void Animate::keyPressEvent(QKeyEvent *e)
+void Animator::keyPressEvent(QKeyEvent *e)
 {
     switch(e->key())
     {
@@ -89,7 +89,7 @@ void Animate::keyPressEvent(QKeyEvent *e)
 }
 
 
-void Animate::aniFindSet()
+void Animator::aniFindSet()
 {
     if(!m_conf->animations.contains(m_aniStyle))
         return;
@@ -106,7 +106,7 @@ void Animate::aniFindSet()
 
 /////////////////Slots//////////////////////////
 
-void Animate::on_EditAnimationBtn_clicked()
+void Animator::on_EditAnimationBtn_clicked()
 {
     AnimationEdit dialog(m_conf, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
@@ -116,24 +116,24 @@ void Animate::on_EditAnimationBtn_clicked()
 }
 
 //Set Direction
-void Animate::on_directLeft_clicked()
+void Animator::on_directLeft_clicked()
 {
     m_aniDir = 0;
     aniFindSet();
 }
 
-void Animate::on_directRight_clicked()
+void Animator::on_directRight_clicked()
 {
     m_aniDir = 1;
     aniFindSet();
 }
 
-void Animate::on_FrameSpeed_valueChanged(int arg1)
+void Animator::on_FrameSpeed_valueChanged(int arg1)
 {
     m_aniScene->setFrameInterval(arg1);
 }
 
-void Animate::on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
+void Animator::on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
 {
     if(!item)
         return;
