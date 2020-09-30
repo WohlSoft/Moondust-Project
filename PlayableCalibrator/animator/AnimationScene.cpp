@@ -4,8 +4,8 @@
 
 AnimationScene::AnimationScene(QObject *parent) : QGraphicsScene(parent)
 {
-    m_allAnimations = g_aniFrames;
-    m_framesTable = g_framesX;
+    m_allAnimations = g_calibration.animations;
+    m_framesTable = g_calibration.frames;
     m_spriteImage = MW::p->m_xImageSprite;
     m_noAnimate = QPixmap(":/images/NoAni.png");
     draw();
@@ -37,7 +37,7 @@ void AnimationScene::setAnimation(QVector<AniFrame > frameS)
 
 void AnimationScene::draw()
 {
-    m_currentImage =  m_spriteImage.copy(QRect(m_pos.x(), m_pos.y(), 100, 100));
+    m_currentImage =  m_spriteImage.copy(QRect(m_pos.x(), m_pos.y(), FRAME_WIDTH, FRAME_HEIGHT));
     // mPos.x(),mPos.y(), *mSpriteImage, mCurrentFrame, 0, 100,100 );
 }
 
@@ -61,14 +61,15 @@ void AnimationScene::setFrame(int frame)
 
     //following variable keeps track which
     //frame to show from sprite sheet
-    m_currentFrameX = 100 * m_currentAnimation[frame].x;
+    m_currentFrameX = FRAME_WIDTH * m_currentAnimation[frame].x;
     m_pos.setX(m_currentFrameX);
-    m_currentFrameY = 100 * m_currentAnimation[frame].y;
+    m_currentFrameY = FRAME_HEIGHT * m_currentAnimation[frame].y;
     m_pos.setY(m_currentFrameY);
-    w = g_frameWidth;
-    h = m_framesTable[m_currentAnimation[frame].x][m_currentAnimation[frame].y].isDuck ? g_frameHeightDuck : g_frameHeight;
-    x = m_framesTable[m_currentAnimation[frame].x][m_currentAnimation[frame].y].offsetX;
-    y = m_framesTable[m_currentAnimation[frame].x][m_currentAnimation[frame].y].offsetY;
+    w = g_calibration.frameWidth;
+    auto &f = m_currentAnimation[frame];
+    h = m_framesTable[{f.x, f.y}].isDuck ? g_calibration.frameHeightDuck : g_calibration.frameHeight;
+    x = m_framesTable[{f.x, f.y}].offsetX;
+    y = m_framesTable[{f.x, f.y}].offsetY;
     draw();
     m_imageFrame.setPos(this->sceneRect().width() / 2 - w / 2, this->sceneRect().height() / 2 + (100.0 - h));
     m_ground.show();

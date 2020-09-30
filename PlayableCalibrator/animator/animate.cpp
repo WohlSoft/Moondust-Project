@@ -40,13 +40,21 @@ Animate::Animate(QWidget *parent) :
     aniStyle = "Idle";
     aniDir = 1; //0 - left, 1 - right
 
-    foreach(AniFrameSet frms, g_aniFrames.set)
+    for(AniFrameSet frms : g_calibration.animations)
         ui->animationsList->addItem(frms.name);
-    QList<QListWidgetItem *> items = ui->animationsList->findItems("*", Qt::MatchWildcard);
-    if(!items.isEmpty())
-        items.first()->setSelected(true);
 
-    m_aniScene->setAnimation(g_aniFrames.set[0].R);
+    QList<QListWidgetItem *> items = ui->animationsList->findItems("*", Qt::MatchWildcard);
+    for(auto &it : items)
+    {
+        if(it->text() == aniStyle)
+        {
+            it->setSelected(true);
+            ui->animationsList->scrollToItem(it);
+            break;
+        }
+    }
+
+    m_aniScene->setAnimation(g_calibration.animations[aniStyle].R);
 }
 
 Animate::~Animate()
@@ -82,17 +90,15 @@ void Animate::keyPressEvent(QKeyEvent *e)
 
 void Animate::aniFindSet()
 {
-    foreach(AniFrameSet frms, g_aniFrames.set)
-    {
-        if(frms.name == aniStyle)
-        {
-            if(aniDir == 1)
-                m_aniScene->setAnimation(frms.R);
-            else
-                m_aniScene->setAnimation(frms.L);
-            break;
-        }
-    }
+    if(!g_calibration.animations.contains(aniStyle))
+        return;
+
+    auto &frms = g_calibration.animations[aniStyle];
+
+    if(aniDir == 1)
+        m_aniScene->setAnimation(frms.R);
+    else
+        m_aniScene->setAnimation(frms.L);
 }
 
 
@@ -101,10 +107,10 @@ void Animate::aniFindSet()
 
 void Animate::on_EditAnimationBtn_clicked()
 {
-    AnimationEdit dialog(g_aniFrames, this);
+    AnimationEdit dialog(g_calibration.animations, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
-    g_aniFrames = dialog.frameList;
+    g_calibration.animations = dialog.frameList;
     aniFindSet();
 }
 
@@ -128,7 +134,8 @@ void Animate::on_FrameSpeed_valueChanged(int arg1)
 
 void Animate::on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
 {
-    if(!item) return;
+    if(!item)
+        return;
     aniStyle = item->text();
     aniFindSet();
 }

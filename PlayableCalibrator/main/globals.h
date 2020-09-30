@@ -22,28 +22,15 @@
 #define GLOBALS_H
 
 #include <QList>
-#include <QPair>
 #include <QPixmap>
 #include "animator/aniFrames.h"
 #include "animator/AnimationScene.h"
+#include "calibration.h"
 
-class Globals
-{
-public:
-    Globals();
-};
+extern Calibration g_calibration;
+extern CalibrationFrame g_calibrationClipboard;
 
 extern QList<QVector<frameOpts > > g_imgOffsets; //!< Image offsets
-extern QList<QVector<frameOpts > > g_framesX;    //!< Collision boxes settings
-extern int g_frameWidth;
-extern int g_frameHeight;
-extern int g_frameHeightDuck;
-extern int g_frameGrabOffsetX;
-extern int g_frameGrabOffsetY;
-extern bool g_frameOverTopGrab;
-extern FrameSets g_aniFrames;                    //!< Animation settings
-
-extern frameOpts g_buffer;
 
 extern QString g_lastOpenDir;
 extern QString g_currentFile;

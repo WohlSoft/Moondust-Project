@@ -19,20 +19,11 @@
 
 #include "globals.h"
 
-Globals::Globals()
-{}
+Calibration g_calibration;
+CalibrationFrame g_calibrationClipboard;
 
 QList<QVector<frameOpts > > g_imgOffsets;
-QList<QVector<frameOpts > > g_framesX;
-int g_frameWidth = 0;
-int g_frameHeight = 0;
-int g_frameHeightDuck = 0;
-int g_frameGrabOffsetX = 0;
-int g_frameGrabOffsetY = 0;
-bool g_frameOverTopGrab = false;
-FrameSets g_aniFrames;
 
-frameOpts g_buffer;
 QString g_lastOpenDir = ".";
 QString g_currentFile = QString();
 

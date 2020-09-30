@@ -25,6 +25,7 @@
 #include <QtWidgets>
 #include "aniFrames.h"
 #include "calibrationmain.h"
+#include "main/calibration.h"
 
 class AnimationScene : public QGraphicsScene
 {
@@ -44,11 +45,11 @@ private slots:
 
 private:
     //! Full set of animations
-    FrameSets m_allAnimations;
+    Calibration::AnimationSet m_allAnimations;
     //! Currently installed animation
     QVector<AniFrame > m_currentAnimation;
     //! Table of frames
-    QList<QVector<frameOpts > > m_framesTable;
+    Calibration::FramesSet m_framesTable;
     //! Animation timer
     QTimer m_timer;
     //! Full-sprite image

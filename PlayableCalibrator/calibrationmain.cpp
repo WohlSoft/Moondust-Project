@@ -44,13 +44,13 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     ui(new Ui::CalibrationMain)
 {
     MW::p = this;
-    g_buffer.W = 100;
-    g_buffer.H = 100;
-    g_buffer.offsetX = 0;
-    g_buffer.offsetY = 0;
-    g_buffer.used = true;
-    g_buffer.isDuck = true;
-    g_buffer.isRightDir = false;
+    g_calibrationClipboard.W = 100;
+    g_calibrationClipboard.H = 100;
+    g_calibrationClipboard.offsetX = 0;
+    g_calibrationClipboard.offsetY = 0;
+    g_calibrationClipboard.used = true;
+    g_calibrationClipboard.isDuck = true;
+    g_calibrationClipboard.isRightDir = false;
     m_wasCanceled = false;
 
     ui->setupUi(this);
@@ -73,13 +73,13 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
 
         QObject::connect(m_saveMenuQuickSave, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            saveConfig(g_currentFile);
+            saveConfig(g_calibration, g_currentFile);
             m_wasModified = false;
         });
 
         QObject::connect(m_saveMenuSaveAs, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            if(saveConfig(g_currentFile, true))
+            if(saveConfig(g_calibration, g_currentFile, true))
                 m_wasModified = false;
         });
     }
@@ -99,19 +99,20 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     m_lockControls = false;
     settings.endGroup();
 
-    QVector<frameOpts > framesY;
-    frameOpts spriteData;
-    // Write default values
-    for(int i = 0; i < 10; i++)
-    {
-        framesY.clear();
-        for(int j = 0; j < 10; j++)
-        {
-            spriteData = g_buffer;
-            framesY.push_back(spriteData);
-        }
-        g_framesX.push_back(framesY);
-    }
+//    QVector<frameOpts > framesY;
+//    frameOpts spriteData;
+
+//    // Write default values
+//    for(int i = 0; i < 10; i++)
+//    {
+//        framesY.clear();
+//        for(int j = 0; j < 10; j++)
+//        {
+//            spriteData = g_buffer;
+//            framesY.push_back(spriteData);
+//        }
+//        g_framesX.push_back(framesY);
+//    }
 
 
     m_scene = new QGraphicsScene(ui->PreviewGraph);
@@ -129,7 +130,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     m_frameBox_gray.setBrush(Qt::transparent);
     m_frameBox_gray.setZValue(-10);
 
-    m_hitBox_green.setRect(0, 0, g_frameWidth - 1, g_frameHeight - 1);
+    m_hitBox_green.setRect(0, 0, g_calibration.frameWidth - 1, g_calibration.frameHeight - 1);
     m_hitBox_green.setPen(QPen(Qt::green));
     m_hitBox_green.setZValue(3);
 
@@ -221,8 +222,8 @@ void CalibrationMain::on_FrameY_valueChanged(int)
 void CalibrationMain::on_Height_valueChanged(int arg1)
 {
     if(m_lockControls) return;
-    g_framesX[m_frmX][m_frmY].H = static_cast<unsigned>(arg1);
-    g_frameHeight = arg1;
+    g_calibration.frames[{m_frmX, m_frmY}].H = static_cast<unsigned>(arg1);
+    g_calibration.frameHeight = arg1;
     enableFrame();
     updateScene();
 }
@@ -231,7 +232,7 @@ void CalibrationMain::on_Height_valueChanged(int arg1)
 void CalibrationMain::on_Height_duck_valueChanged(int arg1)
 {
     if(m_lockControls) return;
-    g_frameHeightDuck = arg1;
+    g_calibration.frameHeightDuck = arg1;
     enableFrame();
     updateScene();
 }
@@ -240,8 +241,8 @@ void CalibrationMain::on_Height_duck_valueChanged(int arg1)
 void CalibrationMain::on_Width_valueChanged(int arg1)
 {
     if(m_lockControls) return;
-    g_framesX[m_frmX][m_frmY].W = static_cast<unsigned>(arg1);
-    g_frameWidth = arg1;
+    g_calibration.frames[{m_frmX, m_frmY}].W = static_cast<unsigned>(arg1);
+    g_calibration.frameWidth = arg1;
     enableFrame();
     updateScene();
 }
@@ -250,7 +251,7 @@ void CalibrationMain::on_Width_valueChanged(int arg1)
 void CalibrationMain::on_OffsetX_valueChanged(int arg1)
 {
     if(m_lockControls) return;
-    g_framesX[m_frmX][m_frmY].offsetX = arg1;
+    g_calibration.frames[{m_frmX, m_frmY}].offsetX = arg1;
     enableFrame();
     updateScene();
 }
@@ -259,7 +260,7 @@ void CalibrationMain::on_OffsetX_valueChanged(int arg1)
 void CalibrationMain::on_OffsetY_valueChanged(int arg1)
 {
     if(m_lockControls) return;
-    g_framesX[m_frmX][m_frmY].offsetY = arg1;
+    g_calibration.frames[{m_frmX, m_frmY}].offsetY = arg1;
     enableFrame();
     updateScene();
 }
@@ -267,13 +268,13 @@ void CalibrationMain::on_OffsetY_valueChanged(int arg1)
 
 void CalibrationMain::on_CopyButton_clicked()
 {
-    g_buffer = g_framesX[m_frmX][m_frmY];
+    g_calibrationClipboard = g_calibration.frames[{m_frmX, m_frmY}];
 }
 
 
 void CalibrationMain::on_PasteButton_clicked()
 {
-    g_framesX[m_frmX][m_frmY] = g_buffer;
+    g_calibration.frames[{m_frmX, m_frmY}] = g_calibrationClipboard;
 
     updateControls();
     updateScene();
@@ -282,7 +283,7 @@ void CalibrationMain::on_PasteButton_clicked()
 
 void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 {
-    g_framesX[m_frmX][m_frmY].isDuck = checked;
+    g_calibration.frames[{m_frmX, m_frmY}].isDuck = checked;
     enableFrame();
     updateScene();
 }
@@ -332,14 +333,14 @@ void CalibrationMain::on_applyToAll_clicked()
     if(reply != QMessageBox::Yes)
         return;
 
-    g_buffer.H = static_cast<unsigned>(ui->Height->value());
-    g_buffer.W = static_cast<unsigned>(ui->Width->value());
-    g_buffer.offsetX = ui->OffsetX->value();
-    g_buffer.offsetY = ui->OffsetY->value();
+    g_calibrationClipboard.H = static_cast<unsigned>(ui->Height->value());
+    g_calibrationClipboard.W = static_cast<unsigned>(ui->Width->value());
+    g_calibrationClipboard.offsetX = ui->OffsetX->value();
+    g_calibrationClipboard.offsetY = ui->OffsetY->value();
 
-    for(int i = 0; i < 10; i++)
-        for(int j = 0; j < 10; j++)
-            g_framesX[i][j] = g_buffer;
+    for(int x = 0; x < 10; x++)
+        for(int y = 0; y < 10; y++)
+            g_calibration.frames[{x, y}] = g_calibrationClipboard;
     m_wasModified = true;
 }
 
@@ -355,7 +356,7 @@ bool CalibrationMain::trySave()
             return false;
         else if(ret == QMessageBox::Yes)
         {
-            if(!saveConfig(g_currentFile, true))
+            if(!saveConfig(g_calibration, g_currentFile, true))
                 return false;
         }
     }
@@ -366,14 +367,14 @@ bool CalibrationMain::trySave()
 void CalibrationMain::on_EnableFrame_clicked(bool checked)
 {
     if(ui->EnableFrame->hasFocus())
-        g_framesX[m_frmX][m_frmY].used = checked;
+        g_calibration.frames[{m_frmX, m_frmY}].used = checked;
     m_wasModified = true;
 }
 
 void CalibrationMain::on_isRightDirect_clicked(bool checked)
 {
     if(m_lockControls) return;
-    g_framesX[m_frmX][m_frmY].isRightDir = checked;
+    g_calibration.frames[{m_frmX, m_frmY}].isRightDir = checked;
     enableFrame();
     updateScene();
 }
@@ -381,7 +382,7 @@ void CalibrationMain::on_isRightDirect_clicked(bool checked)
 void CalibrationMain::on_showGrabItem_clicked(bool checked)
 {
     if(m_lockControls) return;
-    g_framesX[m_frmX][m_frmY].showGrabItem = checked;
+    g_calibration.frames[{m_frmX, m_frmY}].showGrabItem = checked;
     enableFrame();
     updateScene();
 }
@@ -404,7 +405,7 @@ void CalibrationMain::on_Matrix_clicked()
     this->show();
     this->raise();
 
-    g_framesX = dialog.FrameConfig;
+    g_calibration.frames = dialog.m_frameConfig;
     initScene();
     updateControls();
     updateScene();
@@ -443,7 +444,7 @@ void CalibrationMain::on_grabOffsetX_valueChanged(int arg1)
 {
     if(ui->grabOffsetX->hasFocus())
     {
-        g_frameGrabOffsetX = arg1;
+        g_calibration.frameGrabOffsetX = arg1;
         enableFrame();
         updateScene();
     }
@@ -453,7 +454,7 @@ void CalibrationMain::on_grabOffsetY_valueChanged(int arg1)
 {
     if(ui->grabOffsetY->hasFocus())
     {
-        g_frameGrabOffsetY = arg1;
+        g_calibration.frameGrabOffsetY = arg1;
         enableFrame();
         updateScene();
     }
@@ -462,7 +463,7 @@ void CalibrationMain::on_grabOffsetY_valueChanged(int arg1)
 void CalibrationMain::enableFrame()
 {
     m_wasModified = true;
-    g_framesX[m_frmX][m_frmY].used = true;
+    g_calibration.frames[{m_frmX, m_frmY}].used = true;
     if(!ui->EnableFrame->isChecked())
         ui->EnableFrame->setChecked(true);
 }
@@ -472,24 +473,24 @@ void CalibrationMain::updateControls()
     m_frmX = ui->FrameX->value();
     m_frmY = ui->FrameY->value();
     m_lockControls = true;
-    ui->Height->setValue(g_frameHeight);
-    ui->Height_duck->setValue(g_frameHeightDuck);
-    ui->Width->setValue(g_frameWidth);
-    ui->OffsetX->setValue(g_framesX[m_frmX][m_frmY].offsetX);
-    ui->OffsetY->setValue(g_framesX[m_frmX][m_frmY].offsetY);
+    ui->Height->setValue(g_calibration.frameHeight);
+    ui->Height_duck->setValue(g_calibration.frameHeightDuck);
+    ui->Width->setValue(g_calibration.frameWidth);
+    ui->OffsetX->setValue(g_calibration.frames[{m_frmX, m_frmY}].offsetX);
+    ui->OffsetY->setValue(g_calibration.frames[{m_frmX, m_frmY}].offsetY);
 
-    ui->grabOffsetX->setValue(g_frameGrabOffsetX);
-    ui->grabOffsetY->setValue(g_frameGrabOffsetY);
+    ui->grabOffsetX->setValue(g_calibration.frameGrabOffsetX);
+    ui->grabOffsetY->setValue(g_calibration.frameGrabOffsetY);
 
-    if(g_frameOverTopGrab)
+    if(g_calibration.frameOverTopGrab)
         ui->grabTop->setChecked(true);
     else
         ui->grabSide->setChecked(true);
 
-    ui->EnableFrame->setChecked(g_framesX[m_frmX][m_frmY].used);
-    ui->isDuckFrame->setChecked(g_framesX[m_frmX][m_frmY].isDuck);
-    ui->isRightDirect->setChecked(g_framesX[m_frmX][m_frmY].isRightDir);
-    ui->showGrabItem->setChecked(g_framesX[m_frmX][m_frmY].showGrabItem);
+    ui->EnableFrame->setChecked(g_calibration.frames[{m_frmX, m_frmY}].used);
+    ui->isDuckFrame->setChecked(g_calibration.frames[{m_frmX, m_frmY}].isDuck);
+    ui->isRightDirect->setChecked(g_calibration.frames[{m_frmX, m_frmY}].isRightDir);
+    ui->showGrabItem->setChecked(g_calibration.frames[{m_frmX, m_frmY}].showGrabItem);
     m_lockControls = false;
 }
 
@@ -498,11 +499,11 @@ void CalibrationMain::updateScene()
 {
     int x, y, h, w, relX, relY;
     bool isRight;
-    x = g_framesX[m_frmX][m_frmY].offsetX;
-    y = g_framesX[m_frmX][m_frmY].offsetY;
-    h = g_framesX[m_frmX][m_frmY].isDuck ? g_frameHeightDuck : g_frameHeight;
-    w = g_frameWidth;
-    isRight = g_framesX[m_frmX][m_frmY].isRightDir;
+    x = g_calibration.frames[{m_frmX, m_frmY}].offsetX;
+    y = g_calibration.frames[{m_frmX, m_frmY}].offsetY;
+    h = g_calibration.frames[{m_frmX, m_frmY}].isDuck ? g_calibration.frameHeightDuck : g_calibration.frameHeight;
+    w = g_calibration.frameWidth;
+    isRight = g_calibration.frames[{m_frmX, m_frmY}].isRightDir;
 
     relX = m_frameBox_gray.scenePos().x();
     relY = m_frameBox_gray.scenePos().y();
@@ -514,7 +515,7 @@ void CalibrationMain::updateScene()
     relX = m_hitBox_green.scenePos().x();
     relY = m_hitBox_green.scenePos().y();
 
-    if(g_frameOverTopGrab)
+    if(g_calibration.frameOverTopGrab)
     {
         m_grabLineX.setLine(relX,
                           relY - 1,
@@ -526,25 +527,25 @@ void CalibrationMain::updateScene()
                           relX + w / 2,
                           relY - 21);
 
-        m_grabLineX.setVisible(g_framesX[m_frmX][m_frmY].showGrabItem);
-        m_grabLineY.setVisible(g_framesX[m_frmX][m_frmY].showGrabItem);
+        m_grabLineX.setVisible(g_calibration.frames[{m_frmX, m_frmY}].showGrabItem);
+        m_grabLineY.setVisible(g_calibration.frames[{m_frmX, m_frmY}].showGrabItem);
 
     }
     else
     {
-        m_grabLineX.setLine(relX + (isRight ? 0 : w) + g_frameGrabOffsetX * (isRight ? 1 : -1),
-                          relY + h / 2 + g_frameGrabOffsetY,
-                          relX + (isRight ? 0 : w) + g_frameGrabOffsetX * (isRight ? 1 : -1) + (isRight ? 20 : -20),
-                          relY + h / 2 + g_frameGrabOffsetY);
+        m_grabLineX.setLine(relX + (isRight ? 0 : w) + g_calibration.frameGrabOffsetX * (isRight ? 1 : -1),
+                          relY + h / 2 + g_calibration.frameGrabOffsetY,
+                          relX + (isRight ? 0 : w) + g_calibration.frameGrabOffsetX * (isRight ? 1 : -1) + (isRight ? 20 : -20),
+                          relY + h / 2 + g_calibration.frameGrabOffsetY);
 
-        m_grabLineY.setLine(relX + (isRight ? 0 : w) + g_frameGrabOffsetX * (isRight ? 1 : -1),
-                          relY + h / 2 + g_frameGrabOffsetY,
+        m_grabLineY.setLine(relX + (isRight ? 0 : w) + g_calibration.frameGrabOffsetX * (isRight ? 1 : -1),
+                          relY + h / 2 + g_calibration.frameGrabOffsetY,
 
-                          relX + (isRight ? 0 : w) + g_frameGrabOffsetX * (isRight ? 1 : -1),
-                          relY + h / 2 + g_frameGrabOffsetY - 20);
+                          relX + (isRight ? 0 : w) + g_calibration.frameGrabOffsetX * (isRight ? 1 : -1),
+                          relY + h / 2 + g_calibration.frameGrabOffsetY - 20);
 
-        m_grabLineX.setVisible(g_framesX[m_frmX][m_frmY].showGrabItem);
-        m_grabLineY.setVisible(g_framesX[m_frmX][m_frmY].showGrabItem);
+        m_grabLineX.setVisible(g_calibration.frames[{m_frmX, m_frmY}].showGrabItem);
+        m_grabLineY.setVisible(g_calibration.frames[{m_frmX, m_frmY}].showGrabItem);
     }
 
 }
@@ -567,14 +568,14 @@ void CalibrationMain::initScene()
 
 void CalibrationMain::on_grabTop_clicked()
 {
-    g_frameOverTopGrab = true;
+    g_calibration.frameOverTopGrab = true;
     enableFrame();
     updateScene();
 }
 
 void CalibrationMain::on_grabSide_clicked()
 {
-    g_frameOverTopGrab = false;
+    g_calibration.frameOverTopGrab = false;
     enableFrame();
     updateScene();
 }

@@ -238,6 +238,7 @@ void ImageCalibrator::updateControls()
 
 void ImageCalibrator::updateScene()
 {
+    auto &f = g_calibration.frames[{m_frmX, m_frmY}];
     m_imgFrame->setPixmap(
         getFrame(m_frmX,
                  m_frmY,
@@ -246,11 +247,10 @@ void ImageCalibrator::updateScene()
                  static_cast<int>(g_imgOffsets[m_frmX][m_frmY].W),
                  static_cast<int>(g_imgOffsets[m_frmX][m_frmY].H))
     );
-    m_physics->setRect(g_framesX[m_frmX][m_frmY].offsetX,
-                       g_framesX[m_frmX][m_frmY].offsetY,
-                       g_frameWidth - 1,
-                       (g_framesX[m_frmX][m_frmY].isDuck ?
-                        g_frameHeightDuck : g_frameHeight) - 1);
+    m_physics->setRect(f.offsetX,
+                       f.offsetY,
+                       g_calibration.frameWidth - 1,
+                       (f.isDuck ? g_calibration.frameHeightDuck : g_calibration.frameHeight) - 1);
 }
 
 void ImageCalibrator::saveCalibrates()

@@ -23,11 +23,13 @@
 
 #include <QDialog>
 #include <QListWidget>
-#include "../calibrationmain.h"
-#include "../frame_matrix/matrix.h"
-#include "../animator/aniFrames.h"
-
 #include <QTimer>
+
+#include "calibrationmain.h"
+#include "frame_matrix/matrix.h"
+#include "animator/aniFrames.h"
+#include "main/calibration.h"
+
 
 namespace Ui {
 class AnimationEdit;
@@ -38,16 +40,16 @@ class AnimationEdit : public QDialog
     Q_OBJECT
 
 public:
-    explicit AnimationEdit(FrameSets &frmConfs, QWidget *parent = 0);
+    explicit AnimationEdit(Calibration::AnimationSet &frmConfs, QWidget *parent = nullptr);
     ~AnimationEdit();
-    QList<QVector<frameOpts> > SrcFrames;
+    Calibration::FramesSet SrcFrames;
 
     void addFrameL(int x, int y);
     void addFrameR(int x, int y);
     void applyFrameSet();
 
     AniFrameSet currentFrameSet;
-    FrameSets   frameList;
+    Calibration::AnimationSet frameList;
 
 private slots:
     void on_AddLeft_clicked();

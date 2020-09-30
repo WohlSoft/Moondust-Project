@@ -44,7 +44,7 @@ void CalibrationMain::OpenFile(QString fileName)
         return;
     }
 
-    loadConfig(fileName);
+    loadConfig(g_calibration, fileName);
 
     initScene();
     updateControls();
@@ -61,29 +61,36 @@ void CalibrationMain::on_MakeTemplateB_clicked()
 
     QPainter pa(&output);
     pa.setPen(QPen(Qt::gray, 1));
-    for(int i=1; i<10;i++)
+    for(int i = 1; i < 10; i++)
     {
-        pa.drawLine(0, 100*i, 1000, 100*i );
-        pa.drawLine(100*i, 0, 100*i, 1000 );
+        pa.drawLine(0, 100 * i, 1000, 100 * i);
+        pa.drawLine(100 * i, 0, 100 * i, 1000);
     }
     pa.setPen(QPen(Qt::yellow, 1));
     pa.setBrush(Qt::transparent);
 
-    for(int i=0; i<10; i++)
-        for(int j=0; j<10; j++)
+    for(auto it = g_calibration.frames.begin();
+        it != g_calibration.frames.end();
+        ++it)
+    {
+        auto pos = it.key();
+        auto &frm = it.value();
+        if(frm.used)
         {
-            if(g_framesX[i][j].used)
-            {
-                pa.drawRect(g_framesX[i][j].offsetX + 100*i, g_framesX[i][j].offsetY + 100 * j,
-                            g_frameWidth-1, (g_framesX[i][j].isDuck?g_frameHeightDuck:g_frameHeight)-1);
-            }
+            pa.drawRect(frm.offsetX + FRAME_WIDTH * pos.first,
+                        frm.offsetY + FRAME_HEIGHT * pos.second,
+                        g_calibration.frameWidth - 1,
+                        (frm.isDuck ? g_calibration.frameHeightDuck : g_calibration.frameHeight) - 1);
         }
+    }
+
     pa.end();
 
     QFileInfo ourFile(g_currentFile);
     QString targetFilePng =  ourFile.absoluteDir().absolutePath() + "/" + ourFile.baseName()+"_hitboxes.png";
     targetFilePng = QFileDialog::getSaveFileName(this, tr("Save hitbox map as image"), targetFilePng, "PNG Image (*.png)");
-    if(targetFilePng.isEmpty()) return;
+    if(targetFilePng.isEmpty())
+        return;
 //    QString targetFileGif1    =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + ".gif";
 //    QString targetFileGifMask =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + "m.gif";
 
@@ -99,5 +106,4 @@ void CalibrationMain::on_MakeTemplateB_clicked()
     QApplication::restoreOverrideCursor();
 
     QMessageBox::information(this, tr("Saved"), tr("Hitbox map has been saved!"));
-
 }

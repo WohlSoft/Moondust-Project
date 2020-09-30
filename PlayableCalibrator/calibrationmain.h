@@ -30,6 +30,7 @@
 #include <translator-qt/translator.h>
 
 #include "animator/aniFrames.h"
+#include "main/calibration.h"
 
 struct frameOpts
 {
@@ -62,12 +63,12 @@ public:
     QGraphicsScene *m_scene;
 
     FrameSets m_animationFrames;
-    void getSpriteAniData(QSettings &set, QString name);
-    void setSpriteAniData(QSettings &set);
+    void getSpriteAniData(Calibration &dst, QSettings &set, QString name);
+    void setSpriteAniData(Calibration &src, QSettings &set);
 
     QString m_currentConfig;
-    void loadConfig(QString fileName);
-    bool saveConfig(QString fileName, bool customPath=false);
+    void loadConfig(Calibration &dst, QString fileName, Calibration *merge_with = nullptr);
+    bool saveConfig(Calibration &src, QString fileName, bool customPath = false);
     void OpenFile(QString fileName);
 
     void createDirs();

@@ -23,19 +23,19 @@
 #include "../main/globals.h"
 #include "../main/mw.h"
 
-AnimationEdit::AnimationEdit(FrameSets &frmConfs, QWidget *parent) :
+AnimationEdit::AnimationEdit(Calibration::AnimationSet &frmConfs, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AnimationEdit)
 {
-    SrcFrames = g_framesX;
+    SrcFrames = g_calibration.frames;
     frameList = frmConfs;
     currentFrame = 0;
     direction = 1;
     ui->setupUi(this);
     ui->FramesSets->clear();
 
-    for(int i = 0; i < frameList.set.size(); i++)
-        ui->FramesSets->addItem(frameList.set[i].name);
+    for(auto &l : frameList)
+        ui->FramesSets->addItem(l.name);
 
     ticker.connect(&ticker, SIGNAL(timeout()), this, SLOT(nextFrame()));
     ticker.setInterval(ui->frameSpeed->value());
@@ -171,38 +171,34 @@ void AnimationEdit::addFrameR(int x, int y)
 void  AnimationEdit::applyFrameSet()
 {
     QList<QListWidgetItem *> selected = ui->FramesSets->selectedItems();
-    int i = 0;
     AniFrame frameAdd;
     QList<QListWidgetItem *> items;
 
-    foreach(QListWidgetItem *item, selected)
+    for(auto *item : selected)
     {
-        for(i = 0; i < frameList.set.size(); i++)
+        if(!frameList.contains(item->text()))
+            continue;
+
+        auto &f = frameList[item->text()];
+
+        f.L.clear();
+        items = ui->FramesL->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+
+        for(auto *item : items)
         {
-            if(frameList.set[i].name == item->text())
-            {
-                frameList.set[i].L.clear();
-                items = ui->FramesL->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+            frameAdd.x = item->data(Qt::UserRole).toPoint().x();
+            frameAdd.y = item->data(Qt::UserRole).toPoint().y();
+            f.L.push_back(frameAdd);
+        }
 
-                foreach(QListWidgetItem *item, items)
-                {
-                    frameAdd.x = item->data(Qt::UserRole).toPoint().x();
-                    frameAdd.y = item->data(Qt::UserRole).toPoint().y();
-                    frameList.set[i].L.push_back(frameAdd);
-                }
+        f.R.clear();
+        items = ui->FramesR->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
-                frameList.set[i].R.clear();
-                items = ui->FramesR->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
-
-                foreach(QListWidgetItem *item, items)
-                {
-                    frameAdd.x = item->data(Qt::UserRole).toPoint().x();
-                    frameAdd.y = item->data(Qt::UserRole).toPoint().y();
-                    frameList.set[i].R.push_back(frameAdd);
-                }
-
-                break;
-            }
+        for(auto *item : items)
+        {
+            frameAdd.x = item->data(Qt::UserRole).toPoint().x();
+            frameAdd.y = item->data(Qt::UserRole).toPoint().y();
+            f.R.push_back(frameAdd);
         }
     }
 }
@@ -223,18 +219,13 @@ void AnimationEdit::on_FramesSets_currentItemChanged(QListWidgetItem *item, QLis
     ui->FramesL->clear();
     ui->FramesR->clear();
 
-    foreach(AniFrameSet frames, frameList.set)
+    if(frameList.contains(item->text()))
     {
-        if(frames.name == item->text())
-        {
-            foreach(AniFrame frame, frames.L)
-                addFrameL(frame.x, frame.y);
-
-            foreach(AniFrame frame, frames.R)
-                addFrameR(frame.x, frame.y);
-
-            break;
-        }
+        auto &f = frameList[item->text()];
+        for(auto &frame : f.L)
+            addFrameL(frame.x, frame.y);
+        for(auto &frame : f.R)
+            addFrameR(frame.x, frame.y);
     }
 }
 
@@ -313,19 +304,16 @@ void AnimationEdit::nextFrame()
 
 void AnimationEdit::play()
 {
-    if(!ui->FramesSets->currentItem()) return;
+    if(!ui->FramesSets->currentItem())
+        return;
 
-    foreach(AniFrameSet framesets, frameList.set)
+    if(frameList.contains(ui->FramesSets->currentItem()->text()))
     {
-        if(framesets.name == ui->FramesSets->currentItem()->text())
-        {
-            if(direction < 0)
-                frames = framesets.L;
-            else
-                frames = framesets.R;
-
-            break;
-        }
+        auto &f = frameList[ui->FramesSets->currentItem()->text()];
+        if(direction < 0)
+            frames = f.L;
+        else
+            frames = f.R;
     }
 
     currentFrame = 0;

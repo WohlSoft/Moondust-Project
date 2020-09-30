@@ -45,120 +45,44 @@ Matrix::Matrix(QWidget *parent) :
     image.setPixmap(scaledImage);
     image.setPos(0.0, 0.0);
     MatrixS->addItem(&image);
-    FrameConfig = g_framesX;
+    m_frameConfig = g_calibration.frames;
     qDebug() << "Building a scene: " << ui->SpriteMatrix->width() << ui->SpriteMatrix->height();
 
+#define CONCAT_(a, b, c) a ## b ## c
+#define enFrame(y) \
+    m_enFrame[0][y] = CONCAT_(ui->EnFrame_, y, _0); \
+    m_enFrame[1][y] = CONCAT_(ui->EnFrame_, y, _1); \
+    m_enFrame[2][y] = CONCAT_(ui->EnFrame_, y, _2); \
+    m_enFrame[3][y] = CONCAT_(ui->EnFrame_, y, _3); \
+    m_enFrame[4][y] = CONCAT_(ui->EnFrame_, y, _4); \
+    m_enFrame[5][y] = CONCAT_(ui->EnFrame_, y, _5); \
+    m_enFrame[6][y] = CONCAT_(ui->EnFrame_, y, _6); \
+    m_enFrame[7][y] = CONCAT_(ui->EnFrame_, y, _7); \
+    m_enFrame[8][y] = CONCAT_(ui->EnFrame_, y, _8); \
+    m_enFrame[9][y] = CONCAT_(ui->EnFrame_, y, _9)
+
+    enFrame(0);
+    enFrame(1);
+    enFrame(2);
+    enFrame(3);
+    enFrame(4);
+    enFrame(5);
+    enFrame(6);
+    enFrame(7);
+    enFrame(8);
+    enFrame(9);
+
+#undef CONCAT_
+#undef enFrame
+
     //Set data to matrix:
-    // Set Y = 0
-    ui->EnFrame_0_0->setChecked(g_framesX[0][0].used);
-    ui->EnFrame_0_1->setChecked(g_framesX[1][0].used);
-    ui->EnFrame_0_2->setChecked(g_framesX[2][0].used);
-    ui->EnFrame_0_3->setChecked(g_framesX[3][0].used);
-    ui->EnFrame_0_4->setChecked(g_framesX[4][0].used);
-    ui->EnFrame_0_5->setChecked(g_framesX[5][0].used);
-    ui->EnFrame_0_6->setChecked(g_framesX[6][0].used);
-    ui->EnFrame_0_7->setChecked(g_framesX[7][0].used);
-    ui->EnFrame_0_8->setChecked(g_framesX[8][0].used);
-    ui->EnFrame_0_9->setChecked(g_framesX[9][0].used);
-    // Set Y = 1
-    ui->EnFrame_1_0->setChecked(g_framesX[0][1].used);
-    ui->EnFrame_1_1->setChecked(g_framesX[1][1].used);
-    ui->EnFrame_1_2->setChecked(g_framesX[2][1].used);
-    ui->EnFrame_1_3->setChecked(g_framesX[3][1].used);
-    ui->EnFrame_1_4->setChecked(g_framesX[4][1].used);
-    ui->EnFrame_1_5->setChecked(g_framesX[5][1].used);
-    ui->EnFrame_1_6->setChecked(g_framesX[6][1].used);
-    ui->EnFrame_1_7->setChecked(g_framesX[7][1].used);
-    ui->EnFrame_1_8->setChecked(g_framesX[8][1].used);
-    ui->EnFrame_1_9->setChecked(g_framesX[9][1].used);
-    // Set Y = 2
-    ui->EnFrame_2_0->setChecked(g_framesX[0][2].used);
-    ui->EnFrame_2_1->setChecked(g_framesX[1][2].used);
-    ui->EnFrame_2_2->setChecked(g_framesX[2][2].used);
-    ui->EnFrame_2_3->setChecked(g_framesX[3][2].used);
-    ui->EnFrame_2_4->setChecked(g_framesX[4][2].used);
-    ui->EnFrame_2_5->setChecked(g_framesX[5][2].used);
-    ui->EnFrame_2_6->setChecked(g_framesX[6][2].used);
-    ui->EnFrame_2_7->setChecked(g_framesX[7][2].used);
-    ui->EnFrame_2_8->setChecked(g_framesX[8][2].used);
-    ui->EnFrame_2_9->setChecked(g_framesX[9][2].used);
-    // Set Y = 3
-    ui->EnFrame_3_0->setChecked(g_framesX[0][3].used);
-    ui->EnFrame_3_1->setChecked(g_framesX[1][3].used);
-    ui->EnFrame_3_2->setChecked(g_framesX[2][3].used);
-    ui->EnFrame_3_3->setChecked(g_framesX[3][3].used);
-    ui->EnFrame_3_4->setChecked(g_framesX[4][3].used);
-    ui->EnFrame_3_5->setChecked(g_framesX[5][3].used);
-    ui->EnFrame_3_6->setChecked(g_framesX[6][3].used);
-    ui->EnFrame_3_7->setChecked(g_framesX[7][3].used);
-    ui->EnFrame_3_8->setChecked(g_framesX[8][3].used);
-    ui->EnFrame_3_9->setChecked(g_framesX[9][3].used);
-    // Set Y = 4
-    ui->EnFrame_4_0->setChecked(g_framesX[0][4].used);
-    ui->EnFrame_4_1->setChecked(g_framesX[1][4].used);
-    ui->EnFrame_4_2->setChecked(g_framesX[2][4].used);
-    ui->EnFrame_4_3->setChecked(g_framesX[3][4].used);
-    ui->EnFrame_4_4->setChecked(g_framesX[4][4].used);
-    ui->EnFrame_4_5->setChecked(g_framesX[5][4].used);
-    ui->EnFrame_4_6->setChecked(g_framesX[6][4].used);
-    ui->EnFrame_4_7->setChecked(g_framesX[7][4].used);
-    ui->EnFrame_4_8->setChecked(g_framesX[8][4].used);
-    ui->EnFrame_4_9->setChecked(g_framesX[9][4].used);
-    // Set Y = 5
-    ui->EnFrame_5_0->setChecked(g_framesX[0][5].used);
-    ui->EnFrame_5_1->setChecked(g_framesX[1][5].used);
-    ui->EnFrame_5_2->setChecked(g_framesX[2][5].used);
-    ui->EnFrame_5_3->setChecked(g_framesX[3][5].used);
-    ui->EnFrame_5_4->setChecked(g_framesX[4][5].used);
-    ui->EnFrame_5_5->setChecked(g_framesX[5][5].used);
-    ui->EnFrame_5_6->setChecked(g_framesX[6][5].used);
-    ui->EnFrame_5_7->setChecked(g_framesX[7][5].used);
-    ui->EnFrame_5_8->setChecked(g_framesX[8][5].used);
-    ui->EnFrame_5_9->setChecked(g_framesX[9][5].used);
-    // Set Y = 6
-    ui->EnFrame_6_0->setChecked(g_framesX[0][6].used);
-    ui->EnFrame_6_1->setChecked(g_framesX[1][6].used);
-    ui->EnFrame_6_2->setChecked(g_framesX[2][6].used);
-    ui->EnFrame_6_3->setChecked(g_framesX[3][6].used);
-    ui->EnFrame_6_4->setChecked(g_framesX[4][6].used);
-    ui->EnFrame_6_5->setChecked(g_framesX[5][6].used);
-    ui->EnFrame_6_6->setChecked(g_framesX[6][6].used);
-    ui->EnFrame_6_7->setChecked(g_framesX[7][6].used);
-    ui->EnFrame_6_8->setChecked(g_framesX[8][6].used);
-    ui->EnFrame_6_9->setChecked(g_framesX[9][6].used);
-    // Set Y = 7
-    ui->EnFrame_7_0->setChecked(g_framesX[0][7].used);
-    ui->EnFrame_7_1->setChecked(g_framesX[1][7].used);
-    ui->EnFrame_7_2->setChecked(g_framesX[2][7].used);
-    ui->EnFrame_7_3->setChecked(g_framesX[3][7].used);
-    ui->EnFrame_7_4->setChecked(g_framesX[4][7].used);
-    ui->EnFrame_7_5->setChecked(g_framesX[5][7].used);
-    ui->EnFrame_7_6->setChecked(g_framesX[6][7].used);
-    ui->EnFrame_7_7->setChecked(g_framesX[7][7].used);
-    ui->EnFrame_7_8->setChecked(g_framesX[8][7].used);
-    ui->EnFrame_7_9->setChecked(g_framesX[9][7].used);
-    // Set Y = 8
-    ui->EnFrame_8_0->setChecked(g_framesX[0][8].used);
-    ui->EnFrame_8_1->setChecked(g_framesX[1][8].used);
-    ui->EnFrame_8_2->setChecked(g_framesX[2][8].used);
-    ui->EnFrame_8_3->setChecked(g_framesX[3][8].used);
-    ui->EnFrame_8_4->setChecked(g_framesX[4][8].used);
-    ui->EnFrame_8_5->setChecked(g_framesX[5][8].used);
-    ui->EnFrame_8_6->setChecked(g_framesX[6][8].used);
-    ui->EnFrame_8_7->setChecked(g_framesX[7][8].used);
-    ui->EnFrame_8_8->setChecked(g_framesX[8][8].used);
-    ui->EnFrame_8_9->setChecked(g_framesX[9][8].used);
-    // Set Y = 9
-    ui->EnFrame_9_0->setChecked(g_framesX[0][9].used);
-    ui->EnFrame_9_1->setChecked(g_framesX[1][9].used);
-    ui->EnFrame_9_2->setChecked(g_framesX[2][9].used);
-    ui->EnFrame_9_3->setChecked(g_framesX[3][9].used);
-    ui->EnFrame_9_4->setChecked(g_framesX[4][9].used);
-    ui->EnFrame_9_5->setChecked(g_framesX[5][9].used);
-    ui->EnFrame_9_6->setChecked(g_framesX[6][9].used);
-    ui->EnFrame_9_7->setChecked(g_framesX[7][9].used);
-    ui->EnFrame_9_8->setChecked(g_framesX[8][9].used);
-    ui->EnFrame_9_9->setChecked(g_framesX[9][9].used);
+    for(int y = 0; y < 10; ++y)
+    {
+        for(int x = 0; x < 10; ++x)
+        {
+            m_enFrame[x][y]->setChecked(m_frameConfig[{x, y}].used);
+        }
+    }
 }
 
 Matrix::~Matrix()
@@ -210,61 +134,61 @@ void Matrix::drawGrid()
 void Matrix::on_EnFrame_0_0_clicked(bool checked)
 {
     if(ui->EnFrame_0_0->hasFocus())
-        FrameConfig[0][0].used = checked;
+        m_frameConfig[{0, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_1_clicked(bool checked)
 {
     if(ui->EnFrame_0_1->hasFocus())
-        FrameConfig[1][0].used = checked;
+        m_frameConfig[{1, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_2_clicked(bool checked)
 {
     if(ui->EnFrame_0_2->hasFocus())
-        FrameConfig[2][0].used = checked;
+        m_frameConfig[{2, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_3_clicked(bool checked)
 {
     if(ui->EnFrame_0_3->hasFocus())
-        FrameConfig[3][0].used = checked;
+        m_frameConfig[{3, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_4_clicked(bool checked)
 {
     if(ui->EnFrame_0_4->hasFocus())
-        FrameConfig[4][0].used = checked;
+        m_frameConfig[{4, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_5_clicked(bool checked)
 {
     if(ui->EnFrame_0_5->hasFocus())
-        FrameConfig[5][0].used = checked;
+        m_frameConfig[{5, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_6_clicked(bool checked)
 {
     if(ui->EnFrame_0_6->hasFocus())
-        FrameConfig[6][0].used = checked;
+        m_frameConfig[{6, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_7_clicked(bool checked)
 {
     if(ui->EnFrame_0_7->hasFocus())
-        FrameConfig[7][0].used = checked;
+        m_frameConfig[{7, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_8_clicked(bool checked)
 {
     if(ui->EnFrame_0_8->hasFocus())
-        FrameConfig[8][0].used = checked;
+        m_frameConfig[{8, 0}].used = checked;
 }
 
 void Matrix::on_EnFrame_0_9_clicked(bool checked)
 {
     if(ui->EnFrame_0_9->hasFocus())
-        FrameConfig[9][0].used = checked;
+        m_frameConfig[{9, 0}].used = checked;
 }
 
 
@@ -274,61 +198,61 @@ void Matrix::on_EnFrame_0_9_clicked(bool checked)
 void Matrix::on_EnFrame_1_0_clicked(bool checked)
 {
     if(ui->EnFrame_1_0->hasFocus())
-        FrameConfig[0][1].used = checked;
+        m_frameConfig[{0, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_1_clicked(bool checked)
 {
     if(ui->EnFrame_1_1->hasFocus())
-        FrameConfig[1][1].used = checked;
+        m_frameConfig[{1, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_2_clicked(bool checked)
 {
     if(ui->EnFrame_1_2->hasFocus())
-        FrameConfig[2][1].used = checked;
+        m_frameConfig[{2, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_3_clicked(bool checked)
 {
     if(ui->EnFrame_1_3->hasFocus())
-        FrameConfig[3][1].used = checked;
+        m_frameConfig[{3, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_4_clicked(bool checked)
 {
     if(ui->EnFrame_1_4->hasFocus())
-        FrameConfig[4][1].used = checked;
+        m_frameConfig[{4, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_5_clicked(bool checked)
 {
     if(ui->EnFrame_1_5->hasFocus())
-        FrameConfig[5][1].used = checked;
+        m_frameConfig[{5, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_6_clicked(bool checked)
 {
     if(ui->EnFrame_1_6->hasFocus())
-        FrameConfig[6][1].used = checked;
+        m_frameConfig[{6, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_7_clicked(bool checked)
 {
     if(ui->EnFrame_1_7->hasFocus())
-        FrameConfig[7][1].used = checked;
+        m_frameConfig[{7, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_8_clicked(bool checked)
 {
     if(ui->EnFrame_1_8->hasFocus())
-        FrameConfig[8][1].used = checked;
+        m_frameConfig[{8, 1}].used = checked;
 }
 
 void Matrix::on_EnFrame_1_9_clicked(bool checked)
 {
     if(ui->EnFrame_1_9->hasFocus())
-        FrameConfig[9][1].used = checked;
+        m_frameConfig[{9, 1}].used = checked;
 }
 
 // Y = 2
@@ -336,61 +260,61 @@ void Matrix::on_EnFrame_1_9_clicked(bool checked)
 void Matrix::on_EnFrame_2_0_clicked(bool checked)
 {
     if(ui->EnFrame_2_0->hasFocus())
-        FrameConfig[0][2].used = checked;
+        m_frameConfig[{0, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_1_clicked(bool checked)
 {
     if(ui->EnFrame_2_1->hasFocus())
-        FrameConfig[1][2].used = checked;
+        m_frameConfig[{1, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_2_clicked(bool checked)
 {
     if(ui->EnFrame_2_2->hasFocus())
-        FrameConfig[2][2].used = checked;
+        m_frameConfig[{2, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_3_clicked(bool checked)
 {
     if(ui->EnFrame_2_3->hasFocus())
-        FrameConfig[3][2].used = checked;
+        m_frameConfig[{3, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_4_clicked(bool checked)
 {
     if(ui->EnFrame_2_4->hasFocus())
-        FrameConfig[4][2].used = checked;
+        m_frameConfig[{4, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_5_clicked(bool checked)
 {
     if(ui->EnFrame_2_5->hasFocus())
-        FrameConfig[5][2].used = checked;
+        m_frameConfig[{5, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_6_clicked(bool checked)
 {
     if(ui->EnFrame_2_6->hasFocus())
-        FrameConfig[6][2].used = checked;
+        m_frameConfig[{6, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_7_clicked(bool checked)
 {
     if(ui->EnFrame_2_7->hasFocus())
-        FrameConfig[7][2].used = checked;
+        m_frameConfig[{7, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_8_clicked(bool checked)
 {
     if(ui->EnFrame_2_8->hasFocus())
-        FrameConfig[8][2].used = checked;
+        m_frameConfig[{8, 2}].used = checked;
 }
 
 void Matrix::on_EnFrame_2_9_clicked(bool checked)
 {
     if(ui->EnFrame_2_9->hasFocus())
-        FrameConfig[9][2].used = checked;
+        m_frameConfig[{9, 2}].used = checked;
 }
 
 // Y = 3
@@ -398,61 +322,61 @@ void Matrix::on_EnFrame_2_9_clicked(bool checked)
 void Matrix::on_EnFrame_3_0_clicked(bool checked)
 {
     if(ui->EnFrame_3_0->hasFocus())
-        FrameConfig[0][3].used = checked;
+        m_frameConfig[{0, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_1_clicked(bool checked)
 {
     if(ui->EnFrame_3_1->hasFocus())
-        FrameConfig[1][3].used = checked;
+        m_frameConfig[{1, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_2_clicked(bool checked)
 {
     if(ui->EnFrame_3_2->hasFocus())
-        FrameConfig[2][3].used = checked;
+        m_frameConfig[{2, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_3_clicked(bool checked)
 {
     if(ui->EnFrame_3_3->hasFocus())
-        FrameConfig[3][3].used = checked;
+        m_frameConfig[{3, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_4_clicked(bool checked)
 {
     if(ui->EnFrame_3_4->hasFocus())
-        FrameConfig[4][3].used = checked;
+        m_frameConfig[{4, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_5_clicked(bool checked)
 {
     if(ui->EnFrame_3_5->hasFocus())
-        FrameConfig[5][3].used = checked;
+        m_frameConfig[{5, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_6_clicked(bool checked)
 {
     if(ui->EnFrame_3_6->hasFocus())
-        FrameConfig[6][3].used = checked;
+        m_frameConfig[{6, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_7_clicked(bool checked)
 {
     if(ui->EnFrame_3_7->hasFocus())
-        FrameConfig[7][3].used = checked;
+        m_frameConfig[{7, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_8_clicked(bool checked)
 {
     if(ui->EnFrame_3_8->hasFocus())
-        FrameConfig[8][3].used = checked;
+        m_frameConfig[{8, 3}].used = checked;
 }
 
 void Matrix::on_EnFrame_3_9_clicked(bool checked)
 {
     if(ui->EnFrame_3_9->hasFocus())
-        FrameConfig[9][3].used = checked;
+        m_frameConfig[{9, 3}].used = checked;
 }
 
 
@@ -461,61 +385,61 @@ void Matrix::on_EnFrame_3_9_clicked(bool checked)
 void Matrix::on_EnFrame_4_0_clicked(bool checked)
 {
     if(ui->EnFrame_4_0->hasFocus())
-        FrameConfig[0][4].used = checked;
+        m_frameConfig[{0, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_1_clicked(bool checked)
 {
     if(ui->EnFrame_4_1->hasFocus())
-        FrameConfig[1][4].used = checked;
+        m_frameConfig[{1, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_2_clicked(bool checked)
 {
     if(ui->EnFrame_4_2->hasFocus())
-        FrameConfig[2][4].used = checked;
+        m_frameConfig[{2, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_3_clicked(bool checked)
 {
     if(ui->EnFrame_4_3->hasFocus())
-        FrameConfig[3][4].used = checked;
+        m_frameConfig[{3, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_4_clicked(bool checked)
 {
     if(ui->EnFrame_4_4->hasFocus())
-        FrameConfig[4][4].used = checked;
+        m_frameConfig[{4, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_5_clicked(bool checked)
 {
     if(ui->EnFrame_4_5->hasFocus())
-        FrameConfig[5][4].used = checked;
+        m_frameConfig[{5, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_6_clicked(bool checked)
 {
     if(ui->EnFrame_4_6->hasFocus())
-        FrameConfig[6][4].used = checked;
+        m_frameConfig[{6, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_7_clicked(bool checked)
 {
     if(ui->EnFrame_4_7->hasFocus())
-        FrameConfig[7][4].used = checked;
+        m_frameConfig[{7, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_8_clicked(bool checked)
 {
     if(ui->EnFrame_4_8->hasFocus())
-        FrameConfig[8][4].used = checked;
+        m_frameConfig[{8, 4}].used = checked;
 }
 
 void Matrix::on_EnFrame_4_9_clicked(bool checked)
 {
     if(ui->EnFrame_4_9->hasFocus())
-        FrameConfig[9][4].used = checked;
+        m_frameConfig[{9, 4}].used = checked;
 }
 
 // Y = 5
@@ -523,61 +447,61 @@ void Matrix::on_EnFrame_4_9_clicked(bool checked)
 void Matrix::on_EnFrame_5_0_clicked(bool checked)
 {
     if(ui->EnFrame_5_0->hasFocus())
-        FrameConfig[0][5].used = checked;
+        m_frameConfig[{0, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_1_clicked(bool checked)
 {
     if(ui->EnFrame_5_1->hasFocus())
-        FrameConfig[1][5].used = checked;
+        m_frameConfig[{1, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_2_clicked(bool checked)
 {
     if(ui->EnFrame_5_2->hasFocus())
-        FrameConfig[2][5].used = checked;
+        m_frameConfig[{2, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_3_clicked(bool checked)
 {
     if(ui->EnFrame_5_3->hasFocus())
-        FrameConfig[3][5].used = checked;
+        m_frameConfig[{3, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_4_clicked(bool checked)
 {
     if(ui->EnFrame_5_4->hasFocus())
-        FrameConfig[4][5].used = checked;
+        m_frameConfig[{4, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_5_clicked(bool checked)
 {
     if(ui->EnFrame_5_5->hasFocus())
-        FrameConfig[5][5].used = checked;
+        m_frameConfig[{5, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_6_clicked(bool checked)
 {
     if(ui->EnFrame_5_6->hasFocus())
-        FrameConfig[6][5].used = checked;
+        m_frameConfig[{6, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_7_clicked(bool checked)
 {
     if(ui->EnFrame_5_7->hasFocus())
-        FrameConfig[7][5].used = checked;
+        m_frameConfig[{7, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_8_clicked(bool checked)
 {
     if(ui->EnFrame_5_8->hasFocus())
-        FrameConfig[8][5].used = checked;
+        m_frameConfig[{8, 5}].used = checked;
 }
 
 void Matrix::on_EnFrame_5_9_clicked(bool checked)
 {
     if(ui->EnFrame_5_9->hasFocus())
-        FrameConfig[9][5].used = checked;
+        m_frameConfig[{9, 5}].used = checked;
 }
 
 // Y = 6
@@ -585,61 +509,61 @@ void Matrix::on_EnFrame_5_9_clicked(bool checked)
 void Matrix::on_EnFrame_6_0_clicked(bool checked)
 {
     if(ui->EnFrame_6_0->hasFocus())
-        FrameConfig[0][6].used = checked;
+        m_frameConfig[{0, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_1_clicked(bool checked)
 {
     if(ui->EnFrame_6_1->hasFocus())
-        FrameConfig[1][6].used = checked;
+        m_frameConfig[{1, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_2_clicked(bool checked)
 {
     if(ui->EnFrame_6_2->hasFocus())
-        FrameConfig[2][6].used = checked;
+        m_frameConfig[{2, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_3_clicked(bool checked)
 {
     if(ui->EnFrame_6_3->hasFocus())
-        FrameConfig[3][6].used = checked;
+        m_frameConfig[{3, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_4_clicked(bool checked)
 {
     if(ui->EnFrame_6_4->hasFocus())
-        FrameConfig[4][6].used = checked;
+        m_frameConfig[{4, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_5_clicked(bool checked)
 {
     if(ui->EnFrame_6_5->hasFocus())
-        FrameConfig[5][6].used = checked;
+        m_frameConfig[{5, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_6_clicked(bool checked)
 {
     if(ui->EnFrame_6_6->hasFocus())
-        FrameConfig[6][6].used = checked;
+        m_frameConfig[{6, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_7_clicked(bool checked)
 {
     if(ui->EnFrame_6_7->hasFocus())
-        FrameConfig[7][6].used = checked;
+        m_frameConfig[{7, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_8_clicked(bool checked)
 {
     if(ui->EnFrame_6_8->hasFocus())
-        FrameConfig[8][6].used = checked;
+        m_frameConfig[{8, 6}].used = checked;
 }
 
 void Matrix::on_EnFrame_6_9_clicked(bool checked)
 {
     if(ui->EnFrame_6_9->hasFocus())
-        FrameConfig[9][6].used = checked;
+        m_frameConfig[{9, 6}].used = checked;
 }
 
 // Y = 7
@@ -647,61 +571,61 @@ void Matrix::on_EnFrame_6_9_clicked(bool checked)
 void Matrix::on_EnFrame_7_0_clicked(bool checked)
 {
     if(ui->EnFrame_7_0->hasFocus())
-        FrameConfig[0][7].used = checked;
+        m_frameConfig[{0, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_1_clicked(bool checked)
 {
     if(ui->EnFrame_7_1->hasFocus())
-        FrameConfig[1][7].used = checked;
+        m_frameConfig[{1, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_2_clicked(bool checked)
 {
     if(ui->EnFrame_7_2->hasFocus())
-        FrameConfig[2][7].used = checked;
+        m_frameConfig[{2, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_3_clicked(bool checked)
 {
     if(ui->EnFrame_7_3->hasFocus())
-        FrameConfig[3][7].used = checked;
+        m_frameConfig[{3, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_4_clicked(bool checked)
 {
     if(ui->EnFrame_7_4->hasFocus())
-        FrameConfig[4][7].used = checked;
+        m_frameConfig[{4, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_5_clicked(bool checked)
 {
     if(ui->EnFrame_7_5->hasFocus())
-        FrameConfig[5][7].used = checked;
+        m_frameConfig[{5, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_6_clicked(bool checked)
 {
     if(ui->EnFrame_7_6->hasFocus())
-        FrameConfig[6][7].used = checked;
+        m_frameConfig[{6, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_7_clicked(bool checked)
 {
     if(ui->EnFrame_7_7->hasFocus())
-        FrameConfig[7][7].used = checked;
+        m_frameConfig[{7, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_8_clicked(bool checked)
 {
     if(ui->EnFrame_7_8->hasFocus())
-        FrameConfig[8][7].used = checked;
+        m_frameConfig[{8, 7}].used = checked;
 }
 
 void Matrix::on_EnFrame_7_9_clicked(bool checked)
 {
     if(ui->EnFrame_7_9->hasFocus())
-        FrameConfig[9][7].used = checked;
+        m_frameConfig[{9, 7}].used = checked;
 }
 
 
@@ -711,61 +635,61 @@ void Matrix::on_EnFrame_7_9_clicked(bool checked)
 void Matrix::on_EnFrame_8_0_clicked(bool checked)
 {
     if(ui->EnFrame_8_0->hasFocus())
-        FrameConfig[0][8].used = checked;
+        m_frameConfig[{0, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_1_clicked(bool checked)
 {
     if(ui->EnFrame_8_1->hasFocus())
-        FrameConfig[1][8].used = checked;
+        m_frameConfig[{1, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_2_clicked(bool checked)
 {
     if(ui->EnFrame_8_2->hasFocus())
-        FrameConfig[2][8].used = checked;
+        m_frameConfig[{2, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_3_clicked(bool checked)
 {
     if(ui->EnFrame_8_3->hasFocus())
-        FrameConfig[3][8].used = checked;
+        m_frameConfig[{3, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_4_clicked(bool checked)
 {
     if(ui->EnFrame_8_4->hasFocus())
-        FrameConfig[4][8].used = checked;
+        m_frameConfig[{4, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_5_clicked(bool checked)
 {
     if(ui->EnFrame_8_5->hasFocus())
-        FrameConfig[5][8].used = checked;
+        m_frameConfig[{5, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_6_clicked(bool checked)
 {
     if(ui->EnFrame_8_6->hasFocus())
-        FrameConfig[6][8].used = checked;
+        m_frameConfig[{6, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_7_clicked(bool checked)
 {
     if(ui->EnFrame_8_7->hasFocus())
-        FrameConfig[7][8].used = checked;
+        m_frameConfig[{7, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_8_clicked(bool checked)
 {
     if(ui->EnFrame_8_8->hasFocus())
-        FrameConfig[8][8].used = checked;
+        m_frameConfig[{8, 8}].used = checked;
 }
 
 void Matrix::on_EnFrame_8_9_clicked(bool checked)
 {
     if(ui->EnFrame_8_9->hasFocus())
-        FrameConfig[9][8].used = checked;
+        m_frameConfig[{9, 8}].used = checked;
 }
 
 
@@ -774,61 +698,61 @@ void Matrix::on_EnFrame_8_9_clicked(bool checked)
 void Matrix::on_EnFrame_9_0_clicked(bool checked)
 {
     if(ui->EnFrame_9_0->hasFocus())
-        FrameConfig[0][9].used = checked;
+        m_frameConfig[{0, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_1_clicked(bool checked)
 {
     if(ui->EnFrame_9_1->hasFocus())
-        FrameConfig[1][9].used = checked;
+        m_frameConfig[{1, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_2_clicked(bool checked)
 {
     if(ui->EnFrame_9_2->hasFocus())
-        FrameConfig[2][9].used = checked;
+        m_frameConfig[{2, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_3_clicked(bool checked)
 {
     if(ui->EnFrame_9_3->hasFocus())
-        FrameConfig[3][9].used = checked;
+        m_frameConfig[{3, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_4_clicked(bool checked)
 {
     if(ui->EnFrame_9_4->hasFocus())
-        FrameConfig[4][9].used = checked;
+        m_frameConfig[{4, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_5_clicked(bool checked)
 {
     if(ui->EnFrame_9_5->hasFocus())
-        FrameConfig[5][9].used = checked;
+        m_frameConfig[{5, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_6_clicked(bool checked)
 {
     if(ui->EnFrame_9_6->hasFocus())
-        FrameConfig[6][9].used = checked;
+        m_frameConfig[{6, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_7_clicked(bool checked)
 {
     if(ui->EnFrame_9_7->hasFocus())
-        FrameConfig[7][9].used = checked;
+        m_frameConfig[{7, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_8_clicked(bool checked)
 {
     if(ui->EnFrame_9_8->hasFocus())
-        FrameConfig[8][9].used = checked;
+        m_frameConfig[{8, 9}].used = checked;
 }
 
 void Matrix::on_EnFrame_9_9_clicked(bool checked)
 {
     if(ui->EnFrame_9_9->hasFocus())
-        FrameConfig[9][9].used = checked;
+        m_frameConfig[{9, 9}].used = checked;
 }
 
 

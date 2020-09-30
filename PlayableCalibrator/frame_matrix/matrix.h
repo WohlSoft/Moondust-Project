@@ -25,20 +25,25 @@
 #include <QGraphicsPixmapItem>
 #include <QDialog>
 #include "../calibrationmain.h"
+#include "main/calibration.h"
 
 namespace Ui {
 class Matrix;
 }
 
+class QCheckBox;
+
 class Matrix : public QDialog
 {
     Q_OBJECT
+
+    QCheckBox *m_enFrame[10][10];
 
 public:
     explicit Matrix(QWidget *parent = 0);
     ~Matrix();
     QGraphicsScene *MatrixS;
-    QList<QVector<frameOpts > > FrameConfig;
+    Calibration::FramesSet m_frameConfig;
     int frameX;
     int frameY;
     void setFrame(int x, int y);
