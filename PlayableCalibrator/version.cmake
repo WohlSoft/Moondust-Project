@@ -1,7 +1,7 @@
 # Major
 set(CALIBRATOR_VERSION_1 2)
 # Minor
-set(CALIBRATOR_VERSION_2 2)
+set(CALIBRATOR_VERSION_2 3)
 # Revision
 set(CALIBRATOR_VERSION_3 0)
 # Patch
