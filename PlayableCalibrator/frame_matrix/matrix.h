@@ -39,13 +39,16 @@ class Matrix : public QDialog
 
     QCheckBox *m_enFrame[10][10];
     Calibration *m_conf = nullptr;
+    QGraphicsScene *m_matrixScene = nullptr;
+
 public:
     explicit Matrix(Calibration *conf, QWidget *parent = nullptr);
     ~Matrix();
-    QGraphicsScene *MatrixS;
     Calibration::FramesSet m_frameConfig;
-    int frameX;
-    int frameY;
+
+    int m_frameX = 0;
+    int m_frameY = 0;
+
     void setFrame(int x, int y);
     void drawGrid();
 
@@ -292,8 +295,8 @@ private slots:
 
 
 private:
-    QGraphicsPixmapItem image;
-    QPixmap scaledImage;
+    QGraphicsPixmapItem m_image;
+    QPixmap m_scaledImage;
     Ui::Matrix *ui;
 };
 

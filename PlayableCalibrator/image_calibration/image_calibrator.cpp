@@ -68,8 +68,8 @@ bool ImageCalibrator::init(QString imgPath)
     CalibrationFrame xyCell;
     xyCell.offsetX = 0;
     xyCell.offsetY = 0;
-    xyCell.W = 0;
-    xyCell.H = 0;
+    xyCell.w = 0;
+    xyCell.h = 0;
     xyCell.used = false;
     xyCell.isDuck = false;
     xyCell.isRightDir = false;
@@ -141,7 +141,7 @@ void ImageCalibrator::on_CropW_valueChanged(int arg1)
 {
     if(m_lockUI) return;
 
-    m_imgOffsets[m_frmX][m_frmY].W = static_cast<unsigned int>(arg1);
+    m_imgOffsets[m_frmX][m_frmY].w = static_cast<unsigned int>(arg1);
     updateScene();
 }
 
@@ -149,7 +149,7 @@ void ImageCalibrator::on_CropH_valueChanged(int arg1)
 {
     if(m_lockUI) return;
 
-    m_imgOffsets[m_frmX][m_frmY].H = static_cast<unsigned int>(arg1);
+    m_imgOffsets[m_frmX][m_frmY].h = static_cast<unsigned int>(arg1);
     updateScene();
 }
 
@@ -161,8 +161,8 @@ void ImageCalibrator::on_Matrix_clicked()
 
     if(dialog.exec() == QDialog::Accepted)
     {
-        m_frmX = dialog.frameX;
-        m_frmY = dialog.frameY;
+        m_frmX = dialog.m_frameX;
+        m_frmY = dialog.m_frameY;
         m_lockUI = true;
         ui->FrameX->setValue(m_frmX);
         ui->FrameY->setValue(m_frmY);
@@ -178,8 +178,8 @@ void ImageCalibrator::on_Reset_clicked()
 {
     m_imgOffsets[m_frmX][m_frmY].offsetX = 0;
     m_imgOffsets[m_frmX][m_frmY].offsetY = 0;
-    m_imgOffsets[m_frmX][m_frmY].W = 0;
-    m_imgOffsets[m_frmX][m_frmY].H = 0;
+    m_imgOffsets[m_frmX][m_frmY].w = 0;
+    m_imgOffsets[m_frmX][m_frmY].h = 0;
     updateControls();
     updateScene();
 }
@@ -231,8 +231,8 @@ void ImageCalibrator::updateControls()
     m_lockUI = true;
     ui->OffsetX->setValue(m_imgOffsets[m_frmX][m_frmY].offsetX);
     ui->OffsetY->setValue(m_imgOffsets[m_frmX][m_frmY].offsetY);
-    ui->CropW->setValue(static_cast<int>(m_imgOffsets[m_frmX][m_frmY].W));
-    ui->CropH->setValue(static_cast<int>(m_imgOffsets[m_frmX][m_frmY].H));
+    ui->CropW->setValue(static_cast<int>(m_imgOffsets[m_frmX][m_frmY].w));
+    ui->CropH->setValue(static_cast<int>(m_imgOffsets[m_frmX][m_frmY].h));
     m_lockUI = false;
 }
 
@@ -244,8 +244,8 @@ void ImageCalibrator::updateScene()
                  m_frmY,
                  m_imgOffsets[m_frmX][m_frmY].offsetX,
                  m_imgOffsets[m_frmX][m_frmY].offsetY,
-                 static_cast<int>(m_imgOffsets[m_frmX][m_frmY].W),
-                 static_cast<int>(m_imgOffsets[m_frmX][m_frmY].H))
+                 static_cast<int>(m_imgOffsets[m_frmX][m_frmY].w),
+                 static_cast<int>(m_imgOffsets[m_frmX][m_frmY].h))
     );
     m_physics->setRect(f.offsetX,
                        f.offsetY,
@@ -264,8 +264,8 @@ void ImageCalibrator::saveCalibrates()
             conf.beginGroup(QString::number(i) + "-" + QString::number(j));
             conf.setValue("x", m_imgOffsets[i][j].offsetX);
             conf.setValue("y", m_imgOffsets[i][j].offsetY);
-            conf.setValue("w", m_imgOffsets[i][j].W);
-            conf.setValue("h", m_imgOffsets[i][j].H);
+            conf.setValue("w", m_imgOffsets[i][j].w);
+            conf.setValue("h", m_imgOffsets[i][j].h);
             conf.endGroup();
         }
     }
@@ -282,8 +282,8 @@ void ImageCalibrator::loadCalibrates()
             conf.beginGroup(QString::number(i) + "-" + QString::number(j));
             m_imgOffsets[i][j].offsetX = conf.value("x", 0).toInt();
             m_imgOffsets[i][j].offsetY = conf.value("y", 0).toInt();
-            m_imgOffsets[i][j].W = conf.value("w", 0).toUInt();
-            m_imgOffsets[i][j].H = conf.value("h", 0).toUInt();
+            m_imgOffsets[i][j].w = conf.value("w", 0).toUInt();
+            m_imgOffsets[i][j].h = conf.value("h", 0).toUInt();
             conf.endGroup();
         }
     }
@@ -301,8 +301,8 @@ QPixmap ImageCalibrator::generateTarget()
         {
             x.drawPixmap(i * 100, j * 100, 100, 100,
                          getFrame(i, j, m_imgOffsets[i][j].offsetX, m_imgOffsets[i][j].offsetY,
-                                  static_cast<int>(m_imgOffsets[i][j].W),
-                                  static_cast<int>(m_imgOffsets[i][j].H))
+                                  static_cast<int>(m_imgOffsets[i][j].w),
+                                  static_cast<int>(m_imgOffsets[i][j].h))
                         );
         }
     }

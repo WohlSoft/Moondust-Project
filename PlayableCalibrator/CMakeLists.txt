@@ -89,12 +89,11 @@ list(APPEND PGE_CALIBRATOR_SRCS
     about/about.cpp
     animator/animate.cpp
     animator/animationedit.cpp
+    animator/AnimationScene.cpp
+    image_calibration/image_calibrator.cpp
     main/files_io.cpp
     main/graphics.cpp
     main/settings.cpp
-    image_calibration/image_calibrator.cpp
-    main/mw.cpp
-    animator/AnimationScene.cpp
     main/app_path.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}

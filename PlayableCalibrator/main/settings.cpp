@@ -55,9 +55,9 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
         dst.frameWidth = conf.value("width", pMerge(frameWidth, -1)).toInt();
         dst.frameHeight = conf.value("height", pMerge(frameHeight, -1)).toInt();
         dst.frameHeightDuck = conf.value("height-duck", pMerge(frameHeightDuck, -1)).toInt();
-        dst.frameGrabOffsetX = conf.value("grab-offset-x", pMerge(frameGrabOffsetX, 0)).toInt();
-        dst.frameGrabOffsetY = conf.value("grab-offset-y", pMerge(frameGrabOffsetY, 0)).toInt();
-        dst.frameOverTopGrab = conf.value("over-top-grab", pMerge(frameOverTopGrab, false)).toBool();
+        dst.grabOffsetX = conf.value("grab-offset-x", pMerge(grabOffsetX, 0)).toInt();
+        dst.grabOffsetY = conf.value("grab-offset-y", pMerge(grabOffsetY, 0)).toInt();
+        dst.grabOverTop = conf.value("over-top-grab", pMerge(grabOverTop, false)).toBool();
     }
     conf.endGroup();
 
@@ -93,8 +93,8 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
         conf.beginGroup(q);
         {
             frame.used = !conf.allKeys().isEmpty();
-            frame.H = conf.value("height", 100).toUInt();
-            frame.W = conf.value("width", 100).toUInt();
+            frame.h = conf.value("height", 100).toUInt();
+            frame.w = conf.value("width", 100).toUInt();
             frame.offsetX = conf.value("offsetX", 0).toInt();
             frame.offsetY = conf.value("offsetY", 0).toInt();
             frame.isDuck = conf.value("duck", false).toBool();
@@ -109,17 +109,17 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
         if(dst.frameWidth < 0)
         {
             if(frame.used)
-                dst.frameWidth = static_cast<int>(frame.W);
+                dst.frameWidth = static_cast<int>(frame.w);
         }
         if(dst.frameHeight < 0)
         {
             if(frame.used)
-                dst.frameHeight = static_cast<int>(frame.H);
+                dst.frameHeight = static_cast<int>(frame.h);
         }
         if(dst.frameHeightDuck < 0)
         {
             if(frame.used)
-                dst.frameHeightDuck = static_cast<int>(frame.H);
+                dst.frameHeightDuck = static_cast<int>(frame.h);
         }
         dst.frames.insert({x, y}, frame);
     }
@@ -288,9 +288,9 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         conf.setValue("width", src.frameWidth);
         conf.setValue("height", src.frameHeight);
         conf.setValue("height-duck", src.frameHeightDuck);
-        conf.setValue("grab-offset-x", src.frameGrabOffsetX);
-        conf.setValue("grab-offset-y", src.frameGrabOffsetY);
-        conf.setValue("over-top-grab", src.frameOverTopGrab);
+        conf.setValue("grab-offset-x", src.grabOffsetX);
+        conf.setValue("grab-offset-y", src.grabOffsetY);
+        conf.setValue("over-top-grab", src.grabOverTop);
     }
     conf.endGroup();
 

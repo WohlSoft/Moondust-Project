@@ -17,12 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QPainter>
+
 #include "matrix.h"
 #include <ui_matrix.h>
-
-#include "main/mw.h"
-
-#include <QPainter>
 
 
 Matrix::Matrix(Calibration *conf, QWidget *parent) :
@@ -31,23 +29,28 @@ Matrix::Matrix(Calibration *conf, QWidget *parent) :
 {
     ui->setupUi(this);
     m_conf = conf;
-    frameX = 0;
-    frameY = 0;
-    MatrixS = new QGraphicsScene;
-    ui->SpriteMatrix->setScene(MatrixS);
+    m_frameX = 0;
+    m_frameY = 0;
+    m_matrixScene = new QGraphicsScene;
+    ui->SpriteMatrix->setScene(m_matrixScene);
     this->updateGeometry();
     //qApp->processEvents();
     this->show();
-    scaledImage = QPixmap(MW::sprite()).scaled(ui->SpriteMatrix->viewport()->width(),
-                  ui->SpriteMatrix->viewport()->height(),
-                  Qt::KeepAspectRatio);
+
+    auto *mw = qobject_cast<CalibrationMain*>(this->parent());
+    Q_ASSERT(mw);
+
+    m_scaledImage = mw->m_xImageSprite.scaled(ui->SpriteMatrix->viewport()->width(),
+                                            ui->SpriteMatrix->viewport()->height(),
+                                            Qt::KeepAspectRatio);
     drawGrid();
-    image.setPixmap(scaledImage);
-    image.setPos(0.0, 0.0);
-    MatrixS->addItem(&image);
+    m_image.setPixmap(m_scaledImage);
+    m_image.setPos(0.0, 0.0);
+    m_matrixScene->addItem(&m_image);
     m_frameConfig = conf->frames;
     qDebug() << "Building a scene: " << ui->SpriteMatrix->width() << ui->SpriteMatrix->height();
 
+    // TODO: Replace this mess with a fully dynamically generated form
 #define CONCAT_(a, b, c) a ## b ## c
 #define enFrame(y) \
     m_enFrame[0][y] = CONCAT_(ui->EnFrame_, y, _0); \
@@ -92,9 +95,9 @@ Matrix::~Matrix()
 
 void Matrix::setFrame(int x, int y)
 {
-    frameX = x;
-    frameY = y;
-    QPainter painter(&scaledImage);
+    m_frameX = x;
+    m_frameY = y;
+    QPainter painter(&m_scaledImage);
     QColor color;
     color.setRed(255);
     color.setBlue(0);
@@ -102,21 +105,21 @@ void Matrix::setFrame(int x, int y)
     color.setAlpha(128);
     painter.setBrush(QBrush(color));
     painter.drawEllipse(QPoint(
-                            (scaledImage.width() / 10)*x + (scaledImage.width() / 10) / 2,
-                            (scaledImage.height() / 10)*y + (scaledImage.height() / 10) / 2
+                            (m_scaledImage.width() / 10)*x + (m_scaledImage.width() / 10) / 2,
+                            (m_scaledImage.height() / 10)*y + (m_scaledImage.height() / 10) / 2
                         ), 30, 30);
     painter.end();
-    image.setPixmap(scaledImage);
+    m_image.setPixmap(m_scaledImage);
     accept();
 }
 
 void Matrix::drawGrid()
 {
-    int ws = scaledImage.width() / 10;
-    int hs = scaledImage.height() / 10;
-    int w = scaledImage.width();
-    int h = scaledImage.height();
-    QPainter painter(&scaledImage);
+    int ws = m_scaledImage.width() / 10;
+    int hs = m_scaledImage.height() / 10;
+    int w = m_scaledImage.width();
+    int h = m_scaledImage.height();
+    QPainter painter(&m_scaledImage);
     painter.setPen(QPen(Qt::black, 1));
 
     for(int i = 1; i <= 9; i++)
@@ -126,7 +129,7 @@ void Matrix::drawGrid()
         painter.drawLine(0, hs * i, h, hs * i);
 
     painter.end();
-    image.setPixmap(scaledImage);
+    m_image.setPixmap(m_scaledImage);
 }
 
 

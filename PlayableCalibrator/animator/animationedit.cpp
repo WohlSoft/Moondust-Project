@@ -20,25 +20,23 @@
 #include "animationedit.h"
 #include <ui_animationedit.h>
 #include "frame_matrix/matrix.h"
-#include "main/mw.h"
 
 AnimationEdit::AnimationEdit(Calibration *conf, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AnimationEdit)
 {
     m_conf = conf;
-    SrcFrames = conf->frames;
-    frameList = conf->animations;
-    currentFrame = 0;
-    direction = 1;
+    m_frameList = conf->animations;
+    m_currentFrame = 0;
+    m_direction = 1;
     ui->setupUi(this);
     ui->FramesSets->clear();
 
-    for(auto &l : frameList)
+    for(auto &l : m_frameList)
         ui->FramesSets->addItem(l.name);
 
-    ticker.connect(&ticker, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    ticker.setInterval(ui->frameSpeed->value());
+    m_ticker.connect(&m_ticker, SIGNAL(timeout()), this, SLOT(nextFrame()));
+    m_ticker.setInterval(ui->frameSpeed->value());
 }
 
 AnimationEdit::~AnimationEdit()
@@ -55,8 +53,8 @@ void AnimationEdit::on_AddLeft_clicked()
 
     if(dialog.exec() == QDialog::Accepted)
     {
-        x = dialog.frameX;
-        y = dialog.frameY;
+        x = dialog.m_frameX;
+        y = dialog.m_frameY;
         addFrameL(x, y);
         applyFrameSet();
     }
@@ -78,8 +76,8 @@ void AnimationEdit::on_SetLeft_clicked()
 
         if(dialog.exec() == QDialog::Accepted)
         {
-            x = dialog.frameX;
-            y = dialog.frameY;
+            x = dialog.m_frameX;
+            y = dialog.m_frameY;
             item->setData(Qt::UserRole, QPoint(x, y));
             item->setText(QString("X" + QString::number(x) + "-Y" + QString::number(y)));
             applyFrameSet();
@@ -107,8 +105,8 @@ void AnimationEdit::on_AddRight_clicked()
 
     if(dialog.exec() == QDialog::Accepted)
     {
-        x = dialog.frameX;
-        y = dialog.frameY;
+        x = dialog.m_frameX;
+        y = dialog.m_frameY;
         addFrameR(x, y);
         applyFrameSet();
     }
@@ -131,8 +129,8 @@ void AnimationEdit::on_SetRight_clicked()
 
         if(dialog.exec() == QDialog::Accepted)
         {
-            x = dialog.frameX;
-            y = dialog.frameY;
+            x = dialog.m_frameX;
+            y = dialog.m_frameY;
             item->setData(Qt::UserRole, QPoint(x, y));
             item->setText(QString("X" + QString::number(x) + "-Y" + QString::number(y)));
             applyFrameSet();
@@ -176,10 +174,10 @@ void  AnimationEdit::applyFrameSet()
 
     for(auto *item : selected)
     {
-        if(!frameList.contains(item->text()))
+        if(!m_frameList.contains(item->text()))
             continue;
 
-        auto &f = frameList[item->text()];
+        auto &f = m_frameList[item->text()];
 
         f.L.clear();
         items = ui->FramesL->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
@@ -219,9 +217,9 @@ void AnimationEdit::on_FramesSets_currentItemChanged(QListWidgetItem *item, QLis
     ui->FramesL->clear();
     ui->FramesR->clear();
 
-    if(frameList.contains(item->text()))
+    if(m_frameList.contains(item->text()))
     {
-        auto &f = frameList[item->text()];
+        auto &f = m_frameList[item->text()];
         for(auto &frame : f.L)
             addFrameL(frame.x, frame.y);
         for(auto &frame : f.R)
@@ -232,10 +230,12 @@ void AnimationEdit::on_FramesSets_currentItemChanged(QListWidgetItem *item, QLis
 void AnimationEdit::showFrame(int x, int y)
 {
     qDebug() << x << y;
-    int fW = MW::sprite().width() / 10;
-    int fH = MW::sprite().height() / 10;
-    current_frame = MW::sprite().copy(x * fW, y * fH, fW, fH);
-    ui->img->setPixmap(current_frame);
+    auto *mw = qobject_cast<CalibrationMain*>(parent());
+    Q_ASSERT(mw);
+    int fW = mw->m_xImageSprite.width() / 10;
+    int fH = mw->m_xImageSprite.height() / 10;
+    m_currentFrameImg = mw->m_xImageSprite.copy(x * fW, y * fH, fW, fH);
+    ui->img->setPixmap(m_currentFrameImg);
 }
 
 void AnimationEdit::on_FramesL_itemSelectionChanged()
@@ -282,23 +282,23 @@ void AnimationEdit::on_FramesR_currentItemChanged(QListWidgetItem *item, QListWi
 
 void AnimationEdit::on_FramesL_itemClicked(QListWidgetItem *item)
 {
-    on_FramesL_currentItemChanged(item, NULL);
+    on_FramesL_currentItemChanged(item, nullptr);
 }
 
 void AnimationEdit::on_FramesR_itemClicked(QListWidgetItem *item)
 {
-    on_FramesR_currentItemChanged(item, NULL);
+    on_FramesR_currentItemChanged(item, nullptr);
 }
 
 void AnimationEdit::nextFrame()
 {
-    if(!frames.isEmpty())
+    if(!m_frames.isEmpty())
     {
-        showFrame(frames[currentFrame].x, frames[currentFrame].y);
-        currentFrame++;
+        showFrame(m_frames[m_currentFrame].x, m_frames[m_currentFrame].y);
+        m_currentFrame++;
 
-        if(currentFrame >= frames.size())
-            currentFrame = 0;
+        if(m_currentFrame >= m_frames.size())
+            m_currentFrame = 0;
     }
 }
 
@@ -307,38 +307,38 @@ void AnimationEdit::play()
     if(!ui->FramesSets->currentItem())
         return;
 
-    if(frameList.contains(ui->FramesSets->currentItem()->text()))
+    if(m_frameList.contains(ui->FramesSets->currentItem()->text()))
     {
-        auto &f = frameList[ui->FramesSets->currentItem()->text()];
-        if(direction < 0)
-            frames = f.L;
+        auto &f = m_frameList[ui->FramesSets->currentItem()->text()];
+        if(m_direction < 0)
+            m_frames = f.L;
         else
-            frames = f.R;
+            m_frames = f.R;
     }
 
-    currentFrame = 0;
+    m_currentFrame = 0;
     nextFrame();
-    ticker.start();
+    m_ticker.start();
 }
 
 void AnimationEdit::pause()
 {
-    ticker.stop();
+    m_ticker.stop();
 }
 
 void AnimationEdit::on_playLeft_clicked()
 {
-    direction = -1;
+    m_direction = -1;
     play();
 }
 
 void AnimationEdit::on_playRight_clicked()
 {
-    direction = 1;
+    m_direction = 1;
     play();
 }
 
 void AnimationEdit::on_frameSpeed_valueChanged(int arg1)
 {
-    ticker.setInterval(arg1);
+    m_ticker.setInterval(arg1);
 }

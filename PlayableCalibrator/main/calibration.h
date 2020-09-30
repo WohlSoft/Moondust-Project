@@ -9,8 +9,8 @@
 
 struct CalibrationFrame
 {
-    unsigned int H = 100;
-    unsigned int W = 100;
+    unsigned int h = 100;
+    unsigned int w = 100;
     int offsetX = 0;
     int offsetY = 0;
     bool used = false;
@@ -21,8 +21,8 @@ struct CalibrationFrame
     bool operator==(const CalibrationFrame &o)
     {
         return
-            H == o.H &&
-            W == o.W &&
+            h == o.h &&
+            w == o.w &&
             offsetX == o.offsetX &&
             offsetY == o.offsetY &&
             used == o.used &&
@@ -67,9 +67,9 @@ struct Calibration
     int frameWidth = 0;
     int frameHeight = 0;
     int frameHeightDuck = -1;
-    int frameGrabOffsetX = 0;
-    int frameGrabOffsetY = 0;
-    bool frameOverTopGrab = false;
+    int grabOffsetX = 0;
+    int grabOffsetY = 0;
+    bool grabOverTop = false;
 
     typedef QPair<int /*x*/, int /*y*/> FramePos;
     typedef QMap<FramePos, CalibrationFrame> FramesSet;

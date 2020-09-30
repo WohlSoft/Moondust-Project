@@ -24,7 +24,7 @@
 #include "graphics.h"
 #include "app_path.h"
 
-void CalibrationMain::OpenFile(QString fileName)
+void CalibrationMain::openFile(QString fileName)
 {
     QString imgFileM;
     QFileInfo ourFile(fileName);
@@ -49,6 +49,7 @@ void CalibrationMain::OpenFile(QString fileName)
     QString ini_custom = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
 
     loadConfig(m_calibrationDefault, ini_default);
+    m_calibration = m_calibrationDefault;
     if(QFile::exists(ini_custom))
         loadConfig(m_calibration, ini_custom, &m_calibrationDefault);
     m_currentConfig = fileName;

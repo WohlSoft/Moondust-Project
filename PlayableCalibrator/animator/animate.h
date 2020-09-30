@@ -35,16 +35,21 @@ class Animate : public QDialog
     Q_OBJECT
 
     Calibration *m_conf = nullptr;
-public:
-    explicit Animate(Calibration &conf, QWidget *parent = 0);
-    ~Animate();
-    AnimationScene *m_aniScene;
 
-    QString aniStyle;
-    int aniDir;
+    QString m_aniStyle;
+    int     m_aniDir = 1;
+
+    AnimationScene *m_aniScene = nullptr;
+
     void aniFindSet();
+
+public:
+    explicit Animate(Calibration &conf, QWidget *parent = nullptr);
+    ~Animate();
+
 protected:
     void keyPressEvent(QKeyEvent *e);
+
 private slots:
     void on_EditAnimationBtn_clicked();
 

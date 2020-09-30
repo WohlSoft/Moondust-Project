@@ -20,8 +20,8 @@
 #include "animate.h"
 #include <ui_animate.h>
 #include "animationedit.h"
-#include "main/mw.h"
 #include "main/calibration.h"
+
 
 Animate::Animate(Calibration &conf, QWidget *parent) :
     QDialog(parent),
@@ -38,8 +38,8 @@ Animate::Animate(Calibration &conf, QWidget *parent) :
 
     ui->AnimateView->setScene(m_aniScene);
 
-    aniStyle = "Idle";
-    aniDir = 1; //0 - left, 1 - right
+    m_aniStyle = "Idle";
+    m_aniDir = 1; //0 - left, 1 - right
 
     for(AniFrameSet frms : m_conf->animations)
         ui->animationsList->addItem(frms.name);
@@ -47,7 +47,7 @@ Animate::Animate(Calibration &conf, QWidget *parent) :
     QList<QListWidgetItem *> items = ui->animationsList->findItems("*", Qt::MatchWildcard);
     for(auto &it : items)
     {
-        if(it->text() == aniStyle)
+        if(it->text() == m_aniStyle)
         {
             it->setSelected(true);
             ui->animationsList->scrollToItem(it);
@@ -55,7 +55,7 @@ Animate::Animate(Calibration &conf, QWidget *parent) :
         }
     }
 
-    m_aniScene->setAnimation(m_conf->animations[aniStyle].R);
+    m_aniScene->setAnimation(m_conf->animations[m_aniStyle].R);
 }
 
 Animate::~Animate()
@@ -91,12 +91,12 @@ void Animate::keyPressEvent(QKeyEvent *e)
 
 void Animate::aniFindSet()
 {
-    if(!m_conf->animations.contains(aniStyle))
+    if(!m_conf->animations.contains(m_aniStyle))
         return;
 
-    auto &frms = m_conf->animations[aniStyle];
+    auto &frms = m_conf->animations[m_aniStyle];
 
-    if(aniDir == 1)
+    if(m_aniDir == 1)
         m_aniScene->setAnimation(frms.R);
     else
         m_aniScene->setAnimation(frms.L);
@@ -111,20 +111,20 @@ void Animate::on_EditAnimationBtn_clicked()
     AnimationEdit dialog(m_conf, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
-    m_conf->animations = dialog.frameList;
+    m_conf->animations = dialog.m_frameList;
     aniFindSet();
 }
 
 //Set Direction
 void Animate::on_directLeft_clicked()
 {
-    aniDir = 0;
+    m_aniDir = 0;
     aniFindSet();
 }
 
 void Animate::on_directRight_clicked()
 {
-    aniDir = 1;
+    m_aniDir = 1;
     aniFindSet();
 }
 
@@ -137,6 +137,6 @@ void Animate::on_animationsList_currentItemChanged(QListWidgetItem *item, QListW
 {
     if(!item)
         return;
-    aniStyle = item->text();
+    m_aniStyle = item->text();
     aniFindSet();
 }

@@ -29,7 +29,9 @@
 class AnimationScene : public QGraphicsScene
 {
     Q_OBJECT
+
     Calibration *m_conf = nullptr;
+
 public:
     AnimationScene(Calibration &conf, QObject *parent = nullptr);
 

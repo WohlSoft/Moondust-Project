@@ -22,6 +22,7 @@
 #define ANIMATIONEDIT_H
 
 #include <QDialog>
+#include <QPixmap>
 #include <QListWidget>
 #include <QTimer>
 
@@ -42,14 +43,12 @@ class AnimationEdit : public QDialog
 public:
     explicit AnimationEdit(Calibration *conf, QWidget *parent = nullptr);
     ~AnimationEdit();
-    Calibration::FramesSet SrcFrames;
 
     void addFrameL(int x, int y);
     void addFrameR(int x, int y);
     void applyFrameSet();
 
-    AniFrameSet currentFrameSet;
-    Calibration::AnimationSet frameList;
+    Calibration::AnimationSet m_frameList;
 
 private slots:
     void on_AddLeft_clicked();
@@ -81,11 +80,11 @@ private slots:
 
 private:
     void showFrame(int x, int y);
-    int direction;
-    QVector<AniFrame > frames;
-    int currentFrame;
-    QTimer ticker;
-    QPixmap current_frame;
+    int m_direction = 1;
+    QVector<AniFrame > m_frames;
+    int m_currentFrame;
+    QTimer m_ticker;
+    QPixmap m_currentFrameImg;
     Ui::AnimationEdit *ui;
 };
 

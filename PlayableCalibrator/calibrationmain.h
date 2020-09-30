@@ -62,7 +62,7 @@ public:
     QString m_currentConfig;
     void loadConfig(Calibration &dst, QString fileName, Calibration *merge_with = nullptr);
     bool saveConfig(Calibration &src, QString fileName, bool customPath = false, Calibration *merge_with = nullptr);
-    void OpenFile(QString fileName);
+    void openFile(QString fileName);
 
     void createDirs();
 
@@ -124,7 +124,7 @@ private:
     bool m_lockControls = false;
     bool m_wasModified = false;
 
-    QPoint m_FramePos;
+    QPoint m_framePos;
     QGraphicsPixmapItem m_currentImageItem;
     QPixmap             m_currentPixmap;
     QGraphicsRectItem m_frameBox_gray;

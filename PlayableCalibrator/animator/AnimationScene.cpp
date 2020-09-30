@@ -18,14 +18,17 @@
  */
 
 #include "AnimationScene.h"
-#include "main/mw.h"
 
-AnimationScene::AnimationScene(Calibration &conf, QObject *parent) : QGraphicsScene(parent)
+AnimationScene::AnimationScene(Calibration &conf, QObject *parent) :
+    QGraphicsScene(parent)
 {
+    auto *mw = qobject_cast<CalibrationMain*>(this->parent());
+    Q_ASSERT(mw);
+
     m_conf = &conf;
     m_allAnimations = conf.animations;
     m_framesTable = conf.frames;
-    m_spriteImage = MW::p->m_xImageSprite;
+    m_spriteImage = mw->m_xImageSprite;
     m_noAnimate = QPixmap(":/images/NoAni.png");
     draw();
     m_currentImage = m_noAnimate;
