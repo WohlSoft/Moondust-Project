@@ -30,12 +30,12 @@
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
 #include "animator/animate.h"
-#include "animator/aniFrames.h"
 #include "image_calibration/image_calibrator.h"
 
 #include "main/globals.h"
 #include "main/graphics.h"
 #include "main/app_path.h"
+#include "main/calibration.h"
 
 #include "main/mw.h"
 
@@ -73,13 +73,13 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
 
         QObject::connect(m_saveMenuQuickSave, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            saveConfig(g_calibration, g_currentFile);
+            saveConfig(g_calibration, g_currentFile, false, &g_calibrationDefault);
             m_wasModified = false;
         });
 
         QObject::connect(m_saveMenuSaveAs, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            if(saveConfig(g_calibration, g_currentFile, true))
+            if(saveConfig(g_calibration, g_currentFile, true, &g_calibrationDefault))
                 m_wasModified = false;
         });
     }
@@ -356,7 +356,7 @@ bool CalibrationMain::trySave()
             return false;
         else if(ret == QMessageBox::Yes)
         {
-            if(!saveConfig(g_calibration, g_currentFile, true))
+            if(!saveConfig(g_calibration, g_currentFile, true, &g_calibrationDefault))
                 return false;
         }
     }

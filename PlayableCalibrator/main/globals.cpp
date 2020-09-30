@@ -19,6 +19,7 @@
 
 #include "globals.h"
 
+Calibration g_calibrationDefault;
 Calibration g_calibration;
 CalibrationFrame g_calibrationClipboard;
 

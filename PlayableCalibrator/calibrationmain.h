@@ -29,7 +29,6 @@
 
 #include <translator-qt/translator.h>
 
-#include "animator/aniFrames.h"
 #include "main/calibration.h"
 
 struct frameOpts
@@ -62,13 +61,13 @@ public:
     //! Scene for drawing of playable character preview
     QGraphicsScene *m_scene;
 
-    FrameSets m_animationFrames;
-    void getSpriteAniData(Calibration &dst, QSettings &set, QString name);
-    void setSpriteAniData(Calibration &src, QSettings &set);
+    void fillDefaultAniData(Calibration &dst);
+    void loadSpriteAniEntry(Calibration &dst, QSettings &set, QString name);
+    void saveSpriteAniData(Calibration &src, QSettings &set, Calibration *merge_with);
 
     QString m_currentConfig;
     void loadConfig(Calibration &dst, QString fileName, Calibration *merge_with = nullptr);
-    bool saveConfig(Calibration &src, QString fileName, bool customPath = false);
+    bool saveConfig(Calibration &src, QString fileName, bool customPath = false, Calibration *merge_with = nullptr);
     void OpenFile(QString fileName);
 
     void createDirs();

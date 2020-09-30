@@ -17,6 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFileInfo>
+
 #include "../calibrationmain.h"
 #include "ui_calibrationmain.h"
 #include "globals.h"
@@ -44,7 +46,12 @@ void CalibrationMain::OpenFile(QString fileName)
         return;
     }
 
-    loadConfig(g_calibration, fileName);
+    QString ini_default = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+    QString ini_custom = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
+
+    loadConfig(g_calibrationDefault, ini_default);
+    loadConfig(g_calibration, ini_custom, &g_calibrationDefault);
+    m_currentConfig = fileName;
 
     initScene();
     updateControls();

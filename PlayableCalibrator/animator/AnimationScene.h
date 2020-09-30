@@ -23,7 +23,6 @@
 
 #include <QGraphicsScene>
 #include <QtWidgets>
-#include "aniFrames.h"
 #include "calibrationmain.h"
 #include "main/calibration.h"
 

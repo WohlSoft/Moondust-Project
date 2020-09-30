@@ -27,10 +27,16 @@
 #include "about/about.h"
 #include "frame_matrix/matrix.h"
 #include "animator/animate.h"
-#include "animator/aniFrames.h"
 #include "main/globals.h"
 #include "main/app_path.h"
+#include "main/calibration.h"
 
+
+template <class T>
+inline const T &pgeConstReference(const T &t)
+{
+    return t;
+}
 
 void CalibrationMain::createDirs()
 {
@@ -40,71 +46,83 @@ void CalibrationMain::createDirs()
 
 void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration *merge_with)
 {
+#define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
     createDirs();
-    m_currentConfig = fileName;
-    QFileInfo ourFile(fileName);
-    QString ini_sprite;
-    //Load Customized
-    if(QFileInfo(ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini").exists())
-        //Load Customized
-        ini_sprite = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
-    else
-        //Load Default
-        ini_sprite = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
-    QSettings conf(ini_sprite, QSettings::IniFormat);
+
+    QSettings conf(fileName, QSettings::IniFormat);
 
     conf.beginGroup("common");
     {
-        dst.frameWidth = conf.value("width", -1).toInt();
-        dst.frameHeight = conf.value("height", -1).toInt();
-        dst.frameHeightDuck = conf.value("height-duck", -1).toInt();
-        dst.frameGrabOffsetX = conf.value("grab-offset-x", 0).toInt();
-        dst.frameGrabOffsetY = conf.value("grab-offset-y", 0).toInt();
-        dst.frameOverTopGrab = conf.value("over-top-grab", false).toBool();
+        dst.frameWidth = conf.value("width", pMerge(frameWidth, -1)).toInt();
+        dst.frameHeight = conf.value("height", pMerge(frameHeight, -1)).toInt();
+        dst.frameHeightDuck = conf.value("height-duck", pMerge(frameHeightDuck, -1)).toInt();
+        dst.frameGrabOffsetX = conf.value("grab-offset-x", pMerge(frameGrabOffsetX, 0)).toInt();
+        dst.frameGrabOffsetY = conf.value("grab-offset-y", pMerge(frameGrabOffsetY, 0)).toInt();
+        dst.frameOverTopGrab = conf.value("over-top-grab", pMerge(frameOverTopGrab, false)).toBool();
     }
     conf.endGroup();
 
+    QStringList a = conf.childGroups();
+    QSet<QString> animations;
+    QSet<QPair<int, int > > framesKeys;
+
+    QRegExp aniKey("Animation([A-Za-z]+)_[LR]");
+    QRegExp frameKey("frame-(\\d+)-(\\d+)");
+
+    for(auto &gn : a)
+    {
+        if(aniKey.exactMatch(gn))
+            animations.insert(aniKey.cap(1));
+        else if(frameKey.exactMatch(gn))
+        {
+            framesKeys.insert({frameKey.cap(1).toInt(), frameKey.cap(2).toInt()});
+        }
+    }
+
     int usedCount = 0;
 
-    for(int x = 0; x < 10; x++)
+    if(merge_with)
+        dst.frames = merge_with->frames;
+
+    for(const auto &key : framesKeys)
     {
-        for(int y = 0; y < 10; y++)
+        int x = key.first;
+        int y = key.second;
+        QString q = "frame-" + QString::number(x) + "-" + QString::number(y);
+
+        CalibrationFrame frame;
+        conf.beginGroup(q);
         {
-            QString q = "frame-" + QString::number(x) + "-" + QString::number(y);
-            CalibrationFrame frame;// = g_framesX[i][j];
-            conf.beginGroup(q);
-            {
-                frame.used = !conf.allKeys().isEmpty();
-                frame.H = conf.value("height", 100).toUInt();
-                frame.W = conf.value("width", 100).toUInt();
-                frame.offsetX = conf.value("offsetX", 0).toInt();
-                frame.offsetY = conf.value("offsetY", 0).toInt();
-                frame.isDuck = conf.value("duck", false).toBool();
-                frame.isRightDir = conf.value("isRightDir", false).toBool();
-                frame.showGrabItem = conf.value("showGrabItem", false).toBool();
-            }
-            conf.endGroup();
-
-            if(frame.used)
-                usedCount++;
-
-            if(dst.frameWidth < 0)
-            {
-                if(frame.used)
-                    dst.frameWidth = static_cast<int>(frame.W);
-            }
-            if(dst.frameHeight < 0)
-            {
-                if(frame.used)
-                    dst.frameHeight = static_cast<int>(frame.H);
-            }
-            if(dst.frameHeightDuck < 0)
-            {
-                if(frame.used)
-                    dst.frameHeightDuck = static_cast<int>(frame.H);
-            }
-            dst.frames.insert({x, y}, frame);
+            frame.used = !conf.allKeys().isEmpty();
+            frame.H = conf.value("height", 100).toUInt();
+            frame.W = conf.value("width", 100).toUInt();
+            frame.offsetX = conf.value("offsetX", 0).toInt();
+            frame.offsetY = conf.value("offsetY", 0).toInt();
+            frame.isDuck = conf.value("duck", false).toBool();
+            frame.isRightDir = conf.value("isRightDir", false).toBool();
+            frame.showGrabItem = conf.value("showGrabItem", false).toBool();
         }
+        conf.endGroup();
+
+        if(frame.used)
+            usedCount++;
+
+        if(dst.frameWidth < 0)
+        {
+            if(frame.used)
+                dst.frameWidth = static_cast<int>(frame.W);
+        }
+        if(dst.frameHeight < 0)
+        {
+            if(frame.used)
+                dst.frameHeight = static_cast<int>(frame.H);
+        }
+        if(dst.frameHeightDuck < 0)
+        {
+            if(frame.used)
+                dst.frameHeightDuck = static_cast<int>(frame.H);
+        }
+        dst.frames.insert({x, y}, frame);
     }
 
     if(usedCount == 0) // Default config when nothing was before this
@@ -116,66 +134,73 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
 
     dst.animations.clear();
 
-    QStringList a = conf.childGroups();
-    QSet<QString> animations;
 
-    QRegExp aniKey("Animation([A-Za-z]+)_[LR]");
-
-    for(auto &gn : a)
-    {
-        if(aniKey.exactMatch(gn))
-        {
-            animations.insert(aniKey.cap(1));
-        }
-    }
+    if(!merge_with)
+        fillDefaultAniData(dst);
+    else
+        dst.animations = merge_with->animations;
 
     for(const auto &a : animations)
-        getSpriteAniData(dst, conf, a);
+        loadSpriteAniEntry(dst, conf, a);
 
-    //get Animation frameSets
-//    getSpriteAniData(conf, "Idle");
-//    getSpriteAniData(conf, "Run");
-//    getSpriteAniData(conf, "JumpFloat");
-//    getSpriteAniData(conf, "JumpFall");
-//    getSpriteAniData(conf, "SpinJump");
-//    getSpriteAniData(conf, "Sliding");
-//    getSpriteAniData(conf, "Climbing");
-//    getSpriteAniData(conf, "Fire");
-//    getSpriteAniData(conf, "SitDown");
-//    getSpriteAniData(conf, "Dig");
-//    getSpriteAniData(conf, "GrabIdle");
-//    getSpriteAniData(conf, "GrabRun");
-//    getSpriteAniData(conf, "GrabJump");
-//    getSpriteAniData(conf, "GrabSitDown");
-//    getSpriteAniData(conf, "RacoonRun");
-//    getSpriteAniData(conf, "RacoonFloat");
-//    getSpriteAniData(conf, "RacoonFly");
-//    getSpriteAniData(conf, "RacoonFlyDown");
-//    getSpriteAniData(conf, "RacoonTail");
-//    getSpriteAniData(conf, "Swim");
-//    getSpriteAniData(conf, "SwimUp");
-//    getSpriteAniData(conf, "OnYoshi");
-//    getSpriteAniData(conf, "OnYoshiSit");
-//    getSpriteAniData(conf, "PipeUpDown");
-//    getSpriteAniData(conf, "PipeUpDownRear");
-//    getSpriteAniData(conf, "SlopeSlide");
-//    getSpriteAniData(conf, "TanookiStatue");
-//    getSpriteAniData(conf, "SwordAttak");
-//    getSpriteAniData(conf, "JumpSwordUp");
-//    getSpriteAniData(conf, "JumpSwordDown");
-//    getSpriteAniData(conf, "DownSwordAttak");
-//    getSpriteAniData(conf, "Hurted");
-
+#undef pMerge
 }
 
-void CalibrationMain::getSpriteAniData(Calibration &dst, QSettings &set, QString name)
+void CalibrationMain::fillDefaultAniData(Calibration &dst)
+{
+    QStringList defData =
+    {
+        "Idle",
+        "Run",
+        "JumpFloat",
+        "JumpFall",
+        "SpinJump",
+        "Sliding",
+        "Climbing",
+        "Fire",
+        "SitDown",
+        "Dig",
+        "GrabIdle",
+        "GrabRun",
+        "GrabJump",
+        "GrabSitDown",
+        "RacoonRun",
+        "RacoonFloat",
+        "RacoonFly",
+        "RacoonFlyDown",
+        "RacoonTail",
+        "Swim",
+        "SwimUp",
+        "OnYoshi",
+        "OnYoshiSit",
+        "PipeUpDown",
+        "PipeUpDownRear",
+        "SlopeSlide",
+        "TanookiStatue",
+        "SwordAttak",
+        "JumpSwordUp",
+        "JumpSwordDown",
+        "DownSwordAttak",
+        "Hurted"
+    };
+
+    AniFrameSet frameSet;
+
+    for(const auto &a : defData)
+    {
+        frameSet.name = a;
+        dst.animations.insert(a, frameSet);
+    }
+}
+
+void CalibrationMain::loadSpriteAniEntry(Calibration &dst, QSettings &set, QString name)
 {
     AniFrameSet frameSet;
     AniFrame frameXY;
     int frameTotal, i;
 
     set.beginGroup("Animation" + name + "_L");
-    frameTotal = set.value("frames", "0").toInt();
+    frameTotal = set.value("frames", 0).toInt();
     for(i = 0; i < frameTotal; i++)
     {
         frameXY.x = set.value(QString("frame" + QString::number(i) + "x"), "0").toInt();
@@ -185,7 +210,7 @@ void CalibrationMain::getSpriteAniData(Calibration &dst, QSettings &set, QString
     set.endGroup();
 
     set.beginGroup("Animation" + name + "_R");
-    frameTotal = set.value("frames", "0").toInt();
+    frameTotal = set.value("frames", 0).toInt();
     for(i = 0; i < frameTotal; i++)
     {
         frameXY.x = set.value(QString("frame" + QString::number(i) + "x"), "0").toInt();
@@ -199,12 +224,19 @@ void CalibrationMain::getSpriteAniData(Calibration &dst, QSettings &set, QString
 }
 
 
-void CalibrationMain::setSpriteAniData(Calibration &src, QSettings &set)
+void CalibrationMain::saveSpriteAniData(Calibration &src, QSettings &set, Calibration *merge_with)
 {
     int i;
 
     for(auto &cal : src.animations)
     {
+        if(merge_with)
+        {
+            if(merge_with->animations.contains(cal.name) &&
+               merge_with->animations[cal.name] == cal)
+                continue; // Don't save entry if it does match to the default
+        }
+
         if(cal.L.size() > 0)
         {
             set.beginGroup("Animation" + cal.name + "_L");
@@ -232,9 +264,10 @@ void CalibrationMain::setSpriteAniData(Calibration &src, QSettings &set)
 }
 
 
-bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool customPath)
+bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool customPath, Calibration *merge_with)
 {
     createDirs();
+
     QFileInfo ourFile(fileName);
     QString ini_sprite;
     ini_sprite = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
@@ -267,6 +300,13 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         auto pos = it.key();
         auto &frame = it.value();
 
+        if(merge_with)
+        {
+            if(merge_with->frames.contains(pos) &&
+               merge_with->frames[pos] == frame)
+                continue;
+        }
+
         if(!frame.used)
             continue;
 
@@ -287,7 +327,7 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         conf.endGroup();
     }
 
-    setSpriteAniData(src, conf);
+    saveSpriteAniData(src, conf, merge_with);
 
     QMessageBox::information(this, tr("Saved"), tr("Configuration saved in file") + "\n" + ini_sprite);
 

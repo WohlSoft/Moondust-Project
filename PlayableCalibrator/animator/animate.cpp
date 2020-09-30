@@ -20,9 +20,9 @@
 #include "animate.h"
 #include <ui_animate.h>
 #include "animationedit.h"
-#include "aniFrames.h"
-#include "../main/globals.h"
-#include "../main/mw.h"
+#include "main/globals.h"
+#include "main/mw.h"
+#include "main/calibration.h"
 
 Animate::Animate(QWidget *parent) :
     QDialog(parent),

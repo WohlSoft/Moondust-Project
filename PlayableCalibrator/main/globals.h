@@ -23,10 +23,10 @@
 
 #include <QList>
 #include <QPixmap>
-#include "animator/aniFrames.h"
 #include "animator/AnimationScene.h"
 #include "calibration.h"
 
+extern Calibration g_calibrationDefault;
 extern Calibration g_calibration;
 extern CalibrationFrame g_calibrationClipboard;
 

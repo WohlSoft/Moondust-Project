@@ -24,7 +24,7 @@
 #include <QDialog>
 #include "calibrationmain.h"
 #include "AnimationScene.h"
-#include "aniFrames.h"
+#include "main/calibration.h"
 
 namespace Ui {
 class Animate;
