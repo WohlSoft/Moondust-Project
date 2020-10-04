@@ -250,17 +250,25 @@ struct BlockSetup
     //! Play custom sound on destroy
     uint32_t        destroy_sound_id = 0;
 
-    //Editor defaults
+
+    //====Editor defaults====
+
+    //! [In-Editor] Default value for the slippery flag, raw config values
+    int64_t default_slippery_raw = -1;
     //! [In-Editor] Force default slippery flag for new adding blocks
     bool    default_slippery = false;
     //! [In-Editor] Default value for the slippery flag
     bool    default_slippery_value = false;
 
+    //! [In-Editor] Default value for the invisible flag, raw config value
+    int64_t default_invisible_raw = -1;
     //! [In-Editor] Force default invisible flag for new adding blocks
     bool    default_invisible = false;
     //! [In-Editor] Default value for the invisible flag
     bool    default_invisible_value = false;
 
+    //! [In-Editor] Default value for NPC content, raw config value
+    int64_t default_content_raw = -1;
     //! [In-Editor] Force default NPC content for new adding blocks
     bool    default_content = false;
     //! [In-Editor] Default value for NPC content
