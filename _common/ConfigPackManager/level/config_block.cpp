@@ -257,15 +257,18 @@ bool BlockSetup::parse(IniProcessing *setup,
     setup->read("display-frame", display_frame, 0);
 
     int64_t iTmp;
-    setup->read("default-invisible", iTmp, pMerge(default_invisible, -1));
+    setup->read("default-invisible", default_invisible_raw, pMerge(default_invisible_raw, -1));
+    iTmp = default_invisible_raw;
     default_invisible = (iTmp >= 0);
     default_invisible_value = (iTmp >= 0) ? bool(iTmp) : false;
 
-    setup->read("default-slippery", iTmp, pMerge(default_slippery, -1));
+    setup->read("default-slippery", default_slippery_raw, pMerge(default_slippery_raw, -1));
+    iTmp = default_slippery_raw;
     default_slippery = (iTmp >= 0);
     default_slippery_value  = (iTmp >= 0) ? bool(iTmp) : false;
 
-    setup->read("default-npc-content", iTmp, pMerge(default_content, -1));
+    setup->read("default-npc-content", default_content_raw, pMerge(default_content_raw, -1));
+    iTmp = default_content_raw;
     default_content = (iTmp >= 0);
     default_content_value   = (iTmp >= 0) ? (iTmp < 1000 ? iTmp * -1 : iTmp - 1000) : 0;
 
