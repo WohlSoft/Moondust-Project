@@ -273,14 +273,14 @@ int MatrixAnimator::curFramespeed()
     return m_frameDelay;
 }
 
-bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
+bool MatrixAnimator::installAnimationSet(PlayerCalibration &calibration)
 {
     s_bank_left.clear();
     s_bank_right.clear();
 
-    for(size_t i = 0; i < calibration.AniFrames.set.size(); i++)
+    for(auto &ani : calibration.animations)
     {
-        AniFrameSet &fset = calibration.AniFrames.set[i];
+        AniFrameSet &fset = ani.second;
         MatrixAnimator::MatrixAnimates seq = toEnum(fset.name);
 
         for(size_t j = 0; j < fset.L.size(); j++)
@@ -289,11 +289,11 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
             size_t y = fset.L[j].y;
 
             bool ok = false;
-            const frameOpts &fr = calibration.frame(x, y, &ok);
+            const CalibrationFrame &fr = calibration.frame(x, y, &ok);
             if(!ok)
             {
-                pLogWarning("MatrixAnimator: missing frame %u x %u in left frameset: %u (%s), frame index in sequence: %u",
-                            (unsigned int)x, (unsigned int)y, (unsigned int)i, fset.name.c_str(), (unsigned int)j);
+                pLogWarning("MatrixAnimator: missing frame %u x %u in left frameset: %s, frame index in sequence: %u",
+                            (unsigned int)x, (unsigned int)y, fset.name.c_str(), (unsigned int)j);
                 continue;
             }
             MatrixAnimatorFrame frame = {};
@@ -310,11 +310,11 @@ bool MatrixAnimator::installAnimationSet(obj_player_calibration &calibration)
             size_t y = fset.R[j].y;
 
             bool ok = false;
-            const frameOpts &fr = calibration.frame(x, y, &ok);
+            const CalibrationFrame &fr = calibration.frame(x, y, &ok);
             if(!ok)
             {
-                pLogWarning("MatrixAnimator: missing frame %u x %u in right frameset: %u (%s), frame index in sequence: %u",
-                            (unsigned int)x, (unsigned int)y, (unsigned int)i, fset.name.c_str(), (unsigned int)j);
+                pLogWarning("MatrixAnimator: missing frame %u x %u in right frameset: %s, frame index in sequence: %u",
+                            (unsigned int)x, (unsigned int)y, fset.name.c_str(), (unsigned int)j);
                 continue;
             }
             MatrixAnimatorFrame frame = {};

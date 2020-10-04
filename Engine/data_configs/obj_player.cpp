@@ -284,12 +284,24 @@ bool ConfigManager::loadPlayableCharacters()
                         std::string sprite_settings;
                         setup.read("sprite-settings", sprite_settings, fmt::format_ne("{1}-{0}.ini", i, splayer.sprite_folder));
 
-                        std::string ss_path = Dir_PlayerCalibrations.getCustomFile(sprite_settings);
-                        if(pstate.sprite_setup.load(ss_path))
+                        std::string ss_d_path = Dir_PlayerCalibrations.getDefaultFile(sprite_settings);
+                        if(pstate.sprite_setup.load(ss_d_path))
                         {
                             pstate.width = pstate.sprite_setup.frameWidth;
                             pstate.height = pstate.sprite_setup.frameHeight;
                             pstate.duck_height = pstate.sprite_setup.frameHeightDuck;
+                        }
+
+                        std::string ss_c_path = Dir_PlayerCalibrations.getCustomFile(sprite_settings);
+                        if(!ss_c_path.empty() && ss_d_path != ss_c_path && Files::fileExists(ss_c_path))
+                        {
+                            auto defSetup = pstate.sprite_setup;
+                            if(pstate.sprite_setup.load(ss_c_path, &defSetup))
+                            {
+                                pstate.width = pstate.sprite_setup.frameWidth;
+                                pstate.height = pstate.sprite_setup.frameHeight;
+                                pstate.duck_height = pstate.sprite_setup.frameHeightDuck;
+                            }
                         }
                     }
                     setup.endGroup();

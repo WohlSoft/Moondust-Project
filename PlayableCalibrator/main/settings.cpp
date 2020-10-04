@@ -133,7 +133,6 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
 
     dst.animations.clear();
 
-
     if(!merge_with)
         fillDefaultAniData(dst);
     else

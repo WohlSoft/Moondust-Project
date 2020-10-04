@@ -117,7 +117,7 @@ struct obj_player_state
     PGE_DataArray<obj_player_physics > phys;
     std::string event_script;   //!< LUA-Script with events
 
-    obj_player_calibration  sprite_setup;
+    PlayerCalibration  sprite_setup;
 
     std::string image_n;
     std::string mask_n;

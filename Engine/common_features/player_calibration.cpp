@@ -17,6 +17,9 @@
  * or see <http://www.gnu.org/licenses/>.
  */
 
+#include <regex>
+#include <set>
+
 #include <common_features/fmt_format_ne.h>
 #include <IniProcessor/ini_processing.h>
 #include <Utils/files.h>
@@ -24,18 +27,20 @@
 #include <common_features/logger.h>
 #include "player_calibration.h"
 
-void obj_player_calibration::init(size_t x, size_t y)
+template <class T>
+inline const T &pgeConstReference(const T &t)
 {
-    size_t newSize = x * y;
-    frames.resize(newSize);
-
-    // Write default values
-    for(size_t i = 0; i < newSize; i++)
-        frames[i] = frameOpts();
+    return t;
 }
 
-bool obj_player_calibration::load(std::string fileName)
+void PlayerCalibration::init(size_t, size_t)
 {
+    frames.clear();
+}
+
+bool PlayerCalibration::load(std::string fileName, PlayerCalibration *merge_with)
+{
+#define pMerge(param, def) (merge_with ? pgeConstReference(merge_with->param) : pgeConstReference(def))
     std::string folderPath  = DirMan(Files::dirname(fileName)).absolutePath();
     std::string baseName    = Files::basenameNoSuffix(fileName);
 
@@ -49,117 +54,122 @@ bool obj_player_calibration::load(std::string fileName)
     IniProcessing conf(ini_sprite);
     conf.beginGroup("common");
     {
-        conf.read("matrix-width",  matrixWidth,  10u);
-        conf.read("matrix-height", matrixHeight, 10u);
-        conf.read("width", frameWidth, -1);
-        conf.read("height", frameHeight, -1);
-        conf.read("height-duck", frameHeightDuck, -1);
-        conf.read("grab-offset-x", frameGrabOffsetX, 0);
-        conf.read("grab-offset-y", frameGrabOffsetY, 0);
-        conf.read("over-top-grab", frameOverTopGrab, false);
+        conf.read("matrix-width",  matrixWidth,  pMerge(matrixWidth, 10u));
+        conf.read("matrix-height", matrixHeight, pMerge(matrixHeight, 10u));
+        conf.read("width", frameWidth, pMerge(frameWidth, -1));
+        conf.read("height", frameHeight, pMerge(frameHeight, -1));
+        conf.read("height-duck", frameHeightDuck, pMerge(frameHeightDuck, -1));
+        conf.read("grab-offset-x", grabOffsetX, pMerge(grabOffsetX, 0));
+        conf.read("grab-offset-y", grabOffsetY, pMerge(grabOffsetY, 0));
+        conf.read("over-top-grab", grabOverTop, pMerge(grabOverTop, false));
     }
     conf.endGroup();
-    init(matrixWidth, matrixHeight);
-    size_t x, y;
 
-    for(x = 0; x < matrixWidth; x++)
+    if(!merge_with)
+        init(matrixWidth, matrixHeight);
+
+    std::regex aniKey("Animation([A-Za-z]+)_[LR]");
+    std::regex frameKey("frame-(\\d+)-(\\d+)");
+    std::vector<std::string> a = conf.childGroups();
+    std::set<std::string> animationKeys;
+    std::set<FramePos> framesKeys;
+
+    for(auto &gn : a)
     {
-        for(y = 0; y < matrixHeight; y++)
+        std::smatch res;
+        if(std::regex_search(gn, res, aniKey))
+            animationKeys.insert(res[1]);
+        else if(std::regex_search(gn, res, frameKey))
         {
-            bool ok = false;
-            frameOpts &f = frame(x, y, &ok);
-            if(!ok)
-            {
-                pLogCritical("obj_player_calibration: missing frame %u x %u!", (unsigned int)x, (unsigned int)y);
-                return false;
-            }
-            group = fmt::format_ne("frame-{0}-{1}", x, y);
-            //sprintf(group, "frame-%lu-%lu", (unsigned long)x, (unsigned long)y);
-            conf.beginGroup(group.c_str());
-            {
-                conf.read("height", f.H, 100);
-                conf.read("width", f.W, 100);
-                conf.read("offsetX", f.offsetX, 0);
-                conf.read("offsetY", f.offsetY, 0);
-                conf.read("used", f.used, false);
-                conf.read("duck", f.isDuck, false);
-                conf.read("isRightDir", f.isRightDir, false);
-                conf.read("showGrabItem", f.showGrabItem, false);
-            }
-            conf.endGroup();
-
-            if(frameWidth < 0)
-            {
-                if(f.used)
-                    frameWidth = static_cast<int>(f.W);
-            }
-
-            if(frameHeight < 0)
-            {
-                if(f.used)
-                    frameHeight = static_cast<int>(f.H);
-            }
-
-            if(frameHeightDuck < 0)
-            {
-                if(f.used)
-                    frameHeightDuck = static_cast<int>(f.H);
-            }
+            framesKeys.insert({std::atoi(res[1].str().c_str()), std::atoi(res[2].str().c_str())});
         }
     }
 
-    AniFrames.set.clear();
+    for(const auto &key : framesKeys)
+    {
+        int x = key.first;
+        int y = key.second;
+        bool ok = false;
+
+        CalibrationFrame &f = frame(x, y, &ok);
+        if(!ok)
+        {
+            pLogCritical("obj_player_calibration: missing frame %u x %u!", (unsigned int)x, (unsigned int)y);
+            return false;
+        }
+
+        group = fmt::format_ne("frame-{0}-{1}", x, y);
+        //sprintf(group, "frame-%lu-%lu", (unsigned long)x, (unsigned long)y);
+        conf.beginGroup(group.c_str());
+        {
+            conf.read("height", f.h, 100);
+            conf.read("width", f.w, 100);
+            conf.read("offsetX", f.offsetX, 0);
+            conf.read("offsetY", f.offsetY, 0);
+            conf.read("used", f.used, false);
+            conf.read("duck", f.isDuck, false);
+            conf.read("isRightDir", f.isRightDir, false);
+            conf.read("showGrabItem", f.showGrabItem, false);
+        }
+        conf.endGroup();
+
+        if(frameWidth < 0)
+        {
+            if(f.used)
+                frameWidth = static_cast<int>(f.w);
+        }
+
+        if(frameHeight < 0)
+        {
+            if(f.used)
+                frameHeight = static_cast<int>(f.h);
+        }
+
+        if(frameHeightDuck < 0)
+        {
+            if(f.used)
+                frameHeightDuck = static_cast<int>(f.h);
+        }
+    }
+
+    animations.clear();
+
+    if(!merge_with)
+        fillDefaultAniData();
+    else
+        animations = merge_with->animations;
 
     //get Animation frameSets
-    getSpriteAniData(conf, "Idle");
-    getSpriteAniData(conf, "Run");
-    getSpriteAniData(conf, "JumpFloat");
-    getSpriteAniData(conf, "JumpFall");
-    getSpriteAniData(conf, "SpinJump");
-    getSpriteAniData(conf, "Sliding");
-    getSpriteAniData(conf, "Climbing");
-    getSpriteAniData(conf, "Fire");
-    getSpriteAniData(conf, "SitDown");
-    getSpriteAniData(conf, "Dig");
-    getSpriteAniData(conf, "GrabIdle");
-    getSpriteAniData(conf, "GrabRun");
-    getSpriteAniData(conf, "GrabJump");
-    getSpriteAniData(conf, "GrabSitDown");
-    getSpriteAniData(conf, "RacoonRun");
-    getSpriteAniData(conf, "RacoonFloat");
-    getSpriteAniData(conf, "RacoonFly");
-    getSpriteAniData(conf, "RacoonTail");
-    getSpriteAniData(conf, "Swim");
-    getSpriteAniData(conf, "SwimUp");
-    getSpriteAniData(conf, "OnYoshi");
-    getSpriteAniData(conf, "OnYoshiSit");
-    getSpriteAniData(conf, "PipeUpDown");
-    getSpriteAniData(conf, "PipeUpDownRear");
-    getSpriteAniData(conf, "SlopeSlide");
-    getSpriteAniData(conf, "TanookiStatue");
-    getSpriteAniData(conf, "SwordAttak");
-    getSpriteAniData(conf, "JumpSwordUp");
-    getSpriteAniData(conf, "JumpSwordDown");
-    getSpriteAniData(conf, "DownSwordAttak");
-    getSpriteAniData(conf, "Hurted");
+    for(const auto &a : animationKeys)
+        getSpriteAniData(conf, a);
 
     return true;
+#undef pMerge
 }
 
-frameOpts &obj_player_calibration::frame(size_t x, size_t y, bool *ok)
+CalibrationFrame &PlayerCalibration::frame(size_t x, size_t y, bool *ok)
 {
-    static frameOpts dummy;
-    size_t get = (matrixWidth * y) + x;
+    static CalibrationFrame dummy;
+
     if(ok)
         *ok = false;
-    if(get >= frames.size())
-        return dummy;
+
+    FramePos p(x, y);
+
+    auto fr = frames.find(p);
+    if(fr == frames.end())
+    {
+        frames.insert({p, dummy});
+        fr = frames.find(p);
+    }
+
     if(ok)
         *ok = true;
-    return frames[get];
+
+    return fr->second;
 }
 
-void obj_player_calibration::getSpriteAniData(IniProcessing &set, const char *name)
+void PlayerCalibration::getSpriteAniData(IniProcessing &set, const std::string &name)
 {
     AniFrameSet frameSet;
     AniFrame frameXY;
@@ -187,5 +197,54 @@ void obj_player_calibration::getSpriteAniData(IniProcessing &set, const char *na
     }
 
     frameSet.name = name;
-    AniFrames.set.push_back(frameSet);
+    if(animations.find(name) != animations.end())
+        animations.erase(name);
+    animations.insert({name, frameSet});
+}
+
+void PlayerCalibration::fillDefaultAniData()
+{
+    std::vector<std::string> defData =
+    {
+        "Idle",
+        "Run",
+        "JumpFloat",
+        "JumpFall",
+        "SpinJump",
+        "Sliding",
+        "Climbing",
+        "Fire",
+        "SitDown",
+        "Dig",
+        "GrabIdle",
+        "GrabRun",
+        "GrabJump",
+        "GrabSitDown",
+        "RacoonRun",
+        "RacoonFloat",
+        "RacoonFly",
+        "RacoonFlyDown",
+        "RacoonTail",
+        "Swim",
+        "SwimUp",
+        "OnYoshi",
+        "OnYoshiSit",
+        "PipeUpDown",
+        "PipeUpDownRear",
+        "SlopeSlide",
+        "TanookiStatue",
+        "SwordAttak",
+        "JumpSwordUp",
+        "JumpSwordDown",
+        "DownSwordAttak",
+        "Hurted"
+    };
+
+    AniFrameSet frameSet;
+
+    for(const auto &a : defData)
+    {
+        frameSet.name = a;
+        animations.insert({a, frameSet});
+    }
 }

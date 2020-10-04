@@ -65,6 +65,8 @@ inline bool operator==(const AniFrameSet &o1, const AniFrameSet &o2)
 
 struct Calibration
 {
+    int matrixWidth = 10;
+    int matrixHeight = 10;
     int frameWidth = 0;
     int frameHeight = 0;
     int frameHeightDuck = -1;

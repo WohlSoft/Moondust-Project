@@ -105,7 +105,7 @@ public:
     MatrixAnimates curAnimation();
     int curFramespeed();
 
-    bool installAnimationSet(obj_player_calibration &calibration);
+    bool installAnimationSet(PlayerCalibration &calibration);
     void playOnce(MatrixAnimates aniName, int _direction, int speed = -1, bool fixed_speed = false, bool locked = false, int skipLastFrames = 0);
     void unlock();
     void switchAnimation(MatrixAnimates aniName, int _direction, int speed = -1);

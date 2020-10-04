@@ -23,6 +23,8 @@
 class IniProcessing;
 #include <vector>
 #include <string>
+#include <map>
+#include <utility>
 #include <stdint.h>
 #include <stddef.h>
 
@@ -44,11 +46,11 @@ struct FrameSets
     std::vector<AniFrameSet > set;
 };
 
-struct frameOpts
+struct CalibrationFrame
 {
-    frameOpts():
-        H(0),
-        W(0),
+    CalibrationFrame():
+        h(0),
+        w(0),
         offsetX(0),
         offsetY(0),
         used(false),
@@ -56,8 +58,8 @@ struct frameOpts
         isRightDir(false),
         showGrabItem(false)
     {}
-    unsigned int H;
-    unsigned int W;
+    unsigned int h;
+    unsigned int w;
     int offsetX;
     int offsetY;
     bool used;
@@ -66,25 +68,33 @@ struct frameOpts
     bool showGrabItem;
 };
 
-struct obj_player_calibration
+struct PlayerCalibration
 {
     size_t matrixWidth;
     size_t matrixHeight;
     int frameWidth;
     int frameHeight;
     int frameHeightDuck;
-    int frameGrabOffsetX;
-    int frameGrabOffsetY;
-    int frameOverTopGrab;
+    int grabOffsetX;
+    int grabOffsetY;
+    int grabOverTop;
+
+    typedef std::pair<size_t /*x*/, size_t /*y*/> FramePos;
+    typedef std::map<FramePos, CalibrationFrame> FramesSet;
+    typedef std::map<std::string, AniFrameSet> AnimationSet;
+
     //! Collision boxes settings
-    std::vector<frameOpts> frames;
-    FrameSets AniFrames;               //!< Animation settings
+    FramesSet frames;
+    AnimationSet animations;       //!< Animation settings
+
     //! Grabber which allows take frame by X and Y
-    frameOpts &frame(size_t x, size_t y, bool *ok = nullptr);
+    CalibrationFrame &frame(size_t x, size_t y, bool *ok = nullptr);
     void init(size_t x, size_t y);
-    bool load(std::string fileName);
+    bool load(std::string fileName, PlayerCalibration *merge_with = nullptr);
+
 private:
-    void getSpriteAniData(IniProcessing &set, const char *name);
+    void getSpriteAniData(IniProcessing &set, const std::string &name);
+    void fillDefaultAniData();
 };
 
 #endif // PLAYER_CALIBRATION_H
