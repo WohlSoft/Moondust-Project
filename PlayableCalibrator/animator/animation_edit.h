@@ -79,6 +79,10 @@ private slots:
 
     void on_frameSpeed_valueChanged(int arg1);
 
+    void on_addAni_clicked();
+
+    void on_delAni_clicked();
+
 private:
     void showFrame(int x, int y);
     int m_direction = 1;

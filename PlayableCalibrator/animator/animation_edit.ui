@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>670</width>
-    <height>313</height>
+    <width>710</width>
+    <height>348</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -23,8 +23,8 @@
    <iconset resource="../_resources/images.qrc">
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="0,40,0,0,0,10,0,0" columnstretch="40,0,0,0,0,0,0,10">
-   <item row="1" column="1" rowspan="6" colspan="3">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,40,0,0,0,10,0,0" columnstretch="40,0,0,0,0,0,0,10,0,0">
+   <item row="1" column="3" rowspan="6" colspan="3">
     <widget class="QListWidget" name="FramesL">
      <property name="enabled">
       <bool>false</bool>
@@ -37,23 +37,23 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
-    <widget class="QPushButton" name="AddLeft">
-     <property name="enabled">
-      <bool>false</bool>
+   <item row="6" column="9" rowspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="maximumSize">
+     <property name="sizeType">
+      <enum>QSizePolicy::Maximum</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>50</width>
-       <height>16777215</height>
+       <width>0</width>
+       <height>1000</height>
       </size>
      </property>
-     <property name="text">
-      <string>Add</string>
-     </property>
-    </widget>
+    </spacer>
    </item>
-   <item row="1" column="7">
+   <item row="1" column="9">
     <widget class="QGroupBox" name="groupBox">
      <property name="minimumSize">
       <size>
@@ -82,30 +82,21 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="7">
-    <widget class="QPushButton" name="playLeft">
-     <property name="text">
-      <string>Play Left</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="4">
-    <widget class="QPushButton" name="AddRight">
+   <item row="1" column="6" rowspan="6" colspan="3">
+    <widget class="QListWidget" name="FramesR">
      <property name="enabled">
       <bool>false</bool>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
+    </widget>
+   </item>
+   <item row="4" column="9">
+    <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>Add</string>
+      <string>Frame delay:</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="5">
+   <item row="7" column="7">
     <widget class="QPushButton" name="SetRight">
      <property name="enabled">
       <bool>false</bool>
@@ -121,36 +112,6 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="3">
-    <widget class="QPushButton" name="DelLeft">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Del</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1" colspan="3">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Frames (left)</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4" colspan="3">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Frames (right)</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
@@ -158,54 +119,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0" rowspan="6">
-    <widget class="QListWidget" name="FramesSets">
-     <property name="minimumSize">
-      <size>
-       <width>180</width>
-       <height>0</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="7">
-    <widget class="QPushButton" name="playRight">
-     <property name="text">
-      <string>Play Right</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="7">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Frame delay:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="4" rowspan="6" colspan="3">
-    <widget class="QListWidget" name="FramesR">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="6">
-    <widget class="QPushButton" name="DelRight">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Del</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
+   <item row="7" column="4">
     <widget class="QPushButton" name="SetLeft">
      <property name="enabled">
       <bool>false</bool>
@@ -221,7 +135,7 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="7">
+   <item row="5" column="9">
     <widget class="QSpinBox" name="frameSpeed">
      <property name="minimum">
       <number>32</number>
@@ -234,21 +148,140 @@
      </property>
     </widget>
    </item>
-   <item row="6" column="7" rowspan="2">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
+   <item row="7" column="6">
+    <widget class="QPushButton" name="AddRight">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Maximum</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
+     <property name="maximumSize">
       <size>
-       <width>0</width>
-       <height>1000</height>
+       <width>50</width>
+       <height>16777215</height>
       </size>
      </property>
-    </spacer>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLineEdit" name="aniToAdd">
+     <property name="placeholderText">
+      <string>Animation name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="QPushButton" name="addAni">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3" colspan="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Frames (left)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="5">
+    <widget class="QPushButton" name="DelLeft">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Del</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="8">
+    <widget class="QPushButton" name="DelRight">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Del</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="3">
+    <widget class="QPushButton" name="AddLeft">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="9">
+    <widget class="QPushButton" name="playRight">
+     <property name="text">
+      <string>Play Right</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="9">
+    <widget class="QPushButton" name="playLeft">
+     <property name="text">
+      <string>Play Left</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6" colspan="3">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Frames (right)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QPushButton" name="delAni">
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Del</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" rowspan="6" colspan="3">
+    <widget class="QListWidget" name="FramesSets">
+     <property name="minimumSize">
+      <size>
+       <width>180</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

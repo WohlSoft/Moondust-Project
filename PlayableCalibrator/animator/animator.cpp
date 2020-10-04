@@ -43,21 +43,9 @@ Animator::Animator(Calibration &conf, QWidget *parent) :
     m_aniStyle = "Idle";
     m_aniDir = 1; //0 - left, 1 - right
 
-    for(AniFrameSet frms : m_conf->animations)
-        ui->animationsList->addItem(frms.name);
+    rebuildAnimationsList();
 
-    QList<QListWidgetItem *> items = ui->animationsList->findItems("*", Qt::MatchWildcard);
-    for(auto &it : items)
-    {
-        if(it->text() == m_aniStyle)
-        {
-            it->setSelected(true);
-            ui->animationsList->scrollToItem(it);
-            break;
-        }
-    }
-
-    m_aniScene->setAnimation(m_conf->animations[m_aniStyle].R);
+    aniFindSet();
 }
 
 Animator::~Animator()
@@ -104,6 +92,23 @@ void Animator::aniFindSet()
         m_aniScene->setAnimation(frms.L);
 }
 
+void Animator::rebuildAnimationsList()
+{
+    ui->animationsList->clear();
+    for(AniFrameSet frms : m_conf->animations)
+        ui->animationsList->addItem(frms.name);
+
+    QList<QListWidgetItem *> items = ui->animationsList->findItems("*", Qt::MatchWildcard);
+    for(auto &it : items)
+    {
+        if(it->text() == m_aniStyle)
+        {
+            it->setSelected(true);
+            ui->animationsList->scrollToItem(it);
+            break;
+        }
+    }
+}
 
 
 /////////////////Slots//////////////////////////
@@ -114,6 +119,7 @@ void Animator::on_EditAnimationBtn_clicked()
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
     m_conf->animations = dialog.m_frameList;
+    rebuildAnimationsList();
     aniFindSet();
 }
 

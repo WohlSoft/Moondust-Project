@@ -50,14 +50,15 @@ struct AniFrameSet
     QVector<AniFrame > L;
     QVector<AniFrame > R;
     QString name;
-
-    bool operator==(const AniFrameSet &o)
-    {
-        return name == o.name &&
-               L == o.L &&
-               R == o.R;
-    }
 };
+
+inline bool operator==(const AniFrameSet &o1, const AniFrameSet &o2)
+{
+    return o1.name == o2.name &&
+           o1.L == o2.L &&
+           o1.R == o2.R;
+}
+
 
 #define FRAME_WIDTH 100
 #define FRAME_HEIGHT 100

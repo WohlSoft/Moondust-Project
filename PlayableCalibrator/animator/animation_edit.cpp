@@ -40,6 +40,8 @@ AnimationEdit::AnimationEdit(Calibration *conf, QObject *mw, QWidget *parent) :
 
     m_ticker.connect(&m_ticker, SIGNAL(timeout()), this, SLOT(nextFrame()));
     m_ticker.setInterval(ui->frameSpeed->value());
+
+    ui->aniToAdd->setValidator(new QRegExpValidator(QRegExp("[0-9A-Za-z]*"), ui->aniToAdd));
 }
 
 AnimationEdit::~AnimationEdit()
@@ -72,7 +74,7 @@ void AnimationEdit::on_SetLeft_clicked()
     QList<QListWidgetItem *> selected = ui->FramesL->selectedItems();
     Matrix dialog(m_conf, m_mw, this);
 
-    foreach(QListWidgetItem *item, selected)
+    for(QListWidgetItem *item : selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
         dialog.setFrame(item->data(Qt::UserRole).toPoint().x(), item->data(Qt::UserRole).toPoint().y());
@@ -125,7 +127,7 @@ void AnimationEdit::on_SetRight_clicked()
     QList<QListWidgetItem *> selected = ui->FramesR->selectedItems();
     Matrix dialog(m_conf, m_mw, this);
 
-    foreach(QListWidgetItem *item, selected)
+    for(QListWidgetItem *item : selected)
     {
         dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
         dialog.setFrame(item->data(Qt::UserRole).toPoint().x(), item->data(Qt::UserRole).toPoint().y());
@@ -207,7 +209,8 @@ void  AnimationEdit::applyFrameSet()
 
 void AnimationEdit::on_FramesSets_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
 {
-    if(!item) return;
+    if(!item)
+        return;
 
     ui->FramesL->setEnabled(true);
     ui->FramesR->setEnabled(true);
@@ -342,4 +345,59 @@ void AnimationEdit::on_playRight_clicked()
 void AnimationEdit::on_frameSpeed_valueChanged(int arg1)
 {
     m_ticker.setInterval(arg1);
+}
+
+void AnimationEdit::on_addAni_clicked()
+{
+    QString t = ui->aniToAdd->text();
+
+    if(t.isEmpty())
+    {
+        QMessageBox::information(this,
+                                 tr("Empty animation name"),
+                                 tr("Animation name is empty!"),
+                                 QMessageBox::Ok);
+        return;
+    }
+
+    for(auto &l : m_frameList)
+    {
+        if(t == l.name)
+        {
+            QMessageBox::information(this,
+                                     tr("Animation exist"),
+                                     tr("Animation with '%1' name already exist!").arg(t),
+                                     QMessageBox::Ok);
+            return;
+        }
+    }
+
+    AniFrameSet set;
+    set.name = t;
+    m_frameList.insert(t, set);
+
+    ui->FramesSets->addItem(t);
+}
+
+void AnimationEdit::on_delAni_clicked()
+{
+    QList<QListWidgetItem *> selected = ui->FramesSets->selectedItems();
+    if(!selected.isEmpty())
+    {
+        ui->FramesL->setEnabled(false);
+        ui->FramesR->setEnabled(false);
+        ui->AddLeft->setEnabled(false);
+        ui->AddRight->setEnabled(false);
+        ui->SetLeft->setEnabled(false);
+        ui->SetRight->setEnabled(false);
+        ui->DelLeft->setEnabled(false);
+        ui->DelRight->setEnabled(false);
+        ui->FramesL->clear();
+        ui->FramesR->clear();
+
+        auto *w = selected.first();
+        m_frameList.remove(w->text());
+        ui->FramesSets->removeItemWidget(w);
+        delete w;
+    }
 }

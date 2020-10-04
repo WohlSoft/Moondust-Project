@@ -409,9 +409,12 @@ void CalibrationMain::on_Matrix_clicked()
 void CalibrationMain::on_AnimatorButton_clicked()
 {
     this->hide();
+    auto old = m_calibration.animations;
     Animator dialog(m_calibration, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
+    if(old != m_calibration.animations)
+        m_wasModified = true;
     this->show();
     this->raise();
 }

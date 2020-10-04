@@ -43,6 +43,8 @@ class Animator : public QDialog
 
     void aniFindSet();
 
+    void rebuildAnimationsList();
+
 public:
     explicit Animator(Calibration &conf, QWidget *parent = nullptr);
     ~Animator();
