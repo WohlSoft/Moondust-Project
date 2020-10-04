@@ -7667,11 +7667,11 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation>Bij het opnieuw laden van de configuratie worden alle geopende bestanden gesloten en na het opnieuw laden terug geopened. Doorgaan met deze actie?</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>
@@ -7708,9 +7708,9 @@ Als u het nieuwe configuratiepakket wilt gebruiken, moet u het bewerkingsprogram
         <translation>Configuratie gewijzigd</translation>
     </message>
     <message>
+        <location filename="../main_window/file/file_open.cpp" line="278"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
-        <location filename="../main_window/file/file_open.cpp" line="278"/>
         <source>File open error</source>
         <translation>Fout bij openen van bestand</translation>
     </message>
@@ -7850,14 +7850,14 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
         <translation>Niveau bestand geladen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <location filename="../main_window/file/file_open.cpp" line="366"/>
+        <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation>Wereldkaart bestand geladen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <location filename="../main_window/file/file_open.cpp" line="383"/>
+        <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation>Kan het bestand niet lezen</translation>
     </message>
@@ -8165,8 +8165,8 @@ Wilt u een andere sectie klonen?</translation>
         <translation>Maskers aan het herstellen...</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <source>Please wait...</source>
         <translation>Even geduld...</translation>
     </message>
@@ -9498,8 +9498,8 @@ Bestand: %1</translation>
         <translation>Regel Data: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <location filename="../main_window/file/file_open.cpp" line="383"/>
+        <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation>Fout bij openen bestand</translation>
     </message>

@@ -6973,11 +6973,11 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7061,8 +7061,8 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7222,9 +7222,9 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/file/file_open.cpp" line="278"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
-        <location filename="../main_window/file/file_open.cpp" line="278"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7239,14 +7239,14 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <location filename="../main_window/file/file_open.cpp" line="366"/>
+        <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <location filename="../main_window/file/file_open.cpp" line="383"/>
+        <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8670,8 +8670,8 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <location filename="../main_window/file/file_open.cpp" line="383"/>
+        <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
