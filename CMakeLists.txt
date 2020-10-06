@@ -161,6 +161,9 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
     option(PGE_BUILD_PLAYERCALIBRATOR "Build the Player Calibrator utility component (Qt5 required)" ON)
     if(PGE_BUILD_PLAYERCALIBRATOR)
         add_subdirectory(PlayableCalibrator)
+        # Append changelog file
+        InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.calibrator.txt" RENAME "changelog.calibrator.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+        # Deployment list
         qtDeployAdd(pge_calibrator)
     endif()
 

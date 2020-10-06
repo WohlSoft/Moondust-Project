@@ -331,3 +331,203 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
 
     return true;
 }
+
+static const QStringList s_charNames =
+{
+    "mario",
+    "luigi",
+    "peach",
+    "toad",
+    "link"
+};
+
+static int nameToInt(const QString &n)
+{
+    int ret = s_charNames.indexOf(n.toLower());
+    if(ret < 0)
+        return 0;
+    return ret;
+}
+
+struct SanBaEiLevelFile
+{
+    QStringList lines;
+
+    bool readFile(const QString &fileName)
+    {
+        lines.clear();
+        QFile f(fileName);
+        if(!f.open(QIODevice::ReadOnly|QIODevice::Text))
+            return false; // Can't open file, damn
+
+        QString d = QString::fromUtf8(f.readAll());
+        d.remove('\r');
+        lines = d.split('\n', QString::SkipEmptyParts);
+
+        if(lines.isEmpty())
+            return false;
+
+        if(!lines.first().startsWith("SMBXFile"))
+        {
+            lines.clear();
+            return false;
+        }
+
+        return true;
+    }
+
+    bool writeFile(const QString &fileName)
+    {
+        QFile f(fileName);
+        if(!f.open(QIODevice::WriteOnly))
+            return false; // Can't open file, damn
+
+        for(auto &l : lines)
+        {
+            QByteArray o = l.toUtf8();
+            f.write(o);
+            f.write("\r\n", 2);
+        }
+
+        f.close();
+
+        return true;
+    }
+};
+
+bool CalibrationMain::importFrom38A(Calibration &dst, QString imageName, QString fileName)
+{
+    QRegExp fileNameReg("(\\w+)-(\\d).png");
+    if(!fileNameReg.exactMatch(imageName))
+        return false; // Unknown character
+
+    int charId = nameToInt(fileNameReg.cap(1));
+    int stateId = fileNameReg.cap(2).toInt();
+
+    SanBaEiLevelFile lev;
+
+    if(!lev.readFile(fileName))
+        return false;
+
+    bool hasData = false;
+
+    for(auto &l : lev.lines)
+    {
+        if(!l.startsWith("PX"))
+            continue;
+
+        int character;
+        int state;
+        auto lData = l.split('|');
+        lData.pop_front();
+        if(lData.isEmpty())
+            continue; // Invalid
+        auto idx = lData.first().split(',');
+        if(idx.size() != 2)
+            continue; // invalid
+        lData.pop_front();
+
+        character   = idx[0].toInt();
+        state       = idx[1].toInt();
+
+        if((charId != character) || (state != stateId))
+            continue; // Not for this character!
+
+        for(auto &s : lData)
+        {
+            auto e = s.split(',');
+            if(e.size() < 4)
+                continue; // Invalid block
+
+            CalibrationFrame frame;
+            frame.used = true;
+            int x = e[0].toInt();
+            int y = e[1].toInt();
+            frame.offsetX = -(e[2].toInt() - 64);
+            frame.offsetY = -(e[3].toInt() - 64);
+
+            Calibration::FramePos pos = {x, y};
+
+            if(dst.frames.contains(pos))
+            {
+                auto &f = dst.frames[pos];
+                frame.isDuck = f.isDuck;
+                frame.isRightDir = f.isRightDir;
+                frame.showGrabItem = f.showGrabItem;
+            }
+
+            dst.frames.insert({x, y}, frame);
+            hasData = true;
+        }
+    }
+
+    return hasData;
+}
+
+bool CalibrationMain::exportTo38A(Calibration &src, QString imageName, QString fileName)
+{
+    QRegExp fileNameReg("(\\w+)-(\\d).png");
+    if(!fileNameReg.exactMatch(imageName))
+        return false; // Unknown character
+
+    int charId = nameToInt(fileNameReg.cap(1));
+    int stateId = fileNameReg.cap(2).toInt();
+
+    SanBaEiLevelFile lev;
+
+    if(!lev.readFile(fileName))
+        return false;
+
+    QString outputLine;
+
+    outputLine = QString("PX|%1,%2").arg(charId).arg(stateId);
+
+    for(auto it = src.frames.begin(); it != src.frames.end(); ++it)
+    {
+        auto pos = it.key();
+        auto &frame = it.value();
+        if(!frame.used)
+            continue;
+
+        outputLine += QString("|%1,%2,%3,%4")
+                .arg(pos.first)
+                .arg(pos.second)
+                .arg(-frame.offsetX + 64)
+                .arg(-frame.offsetY + 64);
+
+    }
+
+    bool hasLine = false;
+
+    for(auto &l : lev.lines)
+    {
+        if(!l.startsWith("PX"))
+            continue;
+
+        int character;
+        int state;
+        auto lData = l.split('|');
+        lData.pop_front();
+        if(lData.isEmpty())
+            continue; // Invalid
+        auto idx = lData.first().split(',');
+        if(idx.size() != 2)
+            continue; // invalid
+        lData.pop_front();
+
+        character   = idx[0].toInt();
+        state       = idx[1].toInt();
+
+        if((charId != character) || (state != stateId))
+            continue; // Not for this character!
+
+        l = outputLine;
+
+        hasLine = true;
+    }
+
+    if(!hasLine)
+        lev.lines.push_back(outputLine);
+
+    return lev.writeFile(fileName);
+}

@@ -1,0 +1,6 @@
+2.3
+* Begin the changelog
+* Behavior now is more user-friendly: automation, question boxes, menus, etc.
+* Added the full inheritance support for calibrations: custom calibration INI files since now can have the partial set that can be auto-filled from the default settings
+* Added the support for SMBX-38A calibrations format, embedded into level files
+

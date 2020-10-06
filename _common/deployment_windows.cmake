@@ -115,6 +115,7 @@ if(SevenZipProgram)
         "pge_calibrator.exe"
         "languages/calibrator_*.qm"
         "languages/*.png"
+        "changelog.calibrator.txt"
     )
 
     set(PGE_Gifs2PngFiles

@@ -50,7 +50,7 @@ public:
     explicit CalibrationMain(QWidget *parent = nullptr);
     ~CalibrationMain();
 
-    void translateSaveMenu();
+    void translateMenus();
 
     //! Scene for drawing of playable character preview
     QGraphicsScene *m_scene;
@@ -62,6 +62,8 @@ public:
     QString m_currentConfig;
     void loadConfig(Calibration &dst, QString fileName, Calibration *merge_with = nullptr);
     bool saveConfig(Calibration &src, QString fileName, bool customPath = false, Calibration *merge_with = nullptr);
+    bool importFrom38A(Calibration &dst, QString imageName, QString fileName);
+    bool exportTo38A(Calibration &src, QString imageName, QString fileName);
     void openFile(QString fileName);
 
     void createDirs();
@@ -80,7 +82,7 @@ private slots:
     void on_Matrix_clicked();
     void on_AnimatorButton_clicked();
     void on_calibrateImage_clicked();
-    void on_MakeTemplateB_clicked();
+    void exportHitboxesMap();
 
     void on_EnableFrame_clicked(bool checked);
 
@@ -139,10 +141,14 @@ private:
     QMenu       m_saveMenu;
     QAction    *m_saveMenuQuickSave = nullptr;
     QAction    *m_saveMenuSaveAs = nullptr;
+
+    QMenu       m_toolsMenu;
+    QAction    *m_toolsExportHitboxMap = nullptr;
+    QAction    *m_toolsImport38A = nullptr;
+    QAction    *m_toolsExport38A = nullptr;
+
     QMenu       m_langMenu;
     Translator  m_translator;
 };
-
-
 
 #endif // CALIBRATIONMAIN_H

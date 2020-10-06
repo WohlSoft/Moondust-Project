@@ -59,10 +59,8 @@ void CalibrationMain::openFile(QString fileName)
     updateScene();
 }
 
-
-
 //Made templates for test calibration
-void CalibrationMain::on_MakeTemplateB_clicked()
+void CalibrationMain::exportHitboxesMap()
 {
     QImage output(1000, 1000, QImage::Format_ARGB32);
     output.fill(Qt::transparent);

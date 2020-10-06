@@ -63,7 +63,6 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     {
         m_saveMenuQuickSave = m_saveMenu.addAction("");
         m_saveMenuSaveAs = m_saveMenu.addAction("");
-        translateSaveMenu();
 
         ui->SaveConfigButton->setMenu(&m_saveMenu);
 
@@ -79,6 +78,80 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
                 m_wasModified = false;
         });
     }
+
+    {
+        m_toolsExportHitboxMap = m_toolsMenu.addAction("");
+        m_toolsMenu.addSeparator();
+        m_toolsImport38A = m_toolsMenu.addAction("");
+        m_toolsExport38A = m_toolsMenu.addAction("");
+
+        ui->toolsButton->setMenu(&m_toolsMenu);
+
+        QObject::connect(m_toolsExportHitboxMap, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            exportHitboxesMap();
+        });
+
+        QObject::connect(m_toolsImport38A, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            if(!trySave())
+                return;
+
+            QString fileName_DATA = QFileDialog::getOpenFileName(this,
+                                    tr("Open SMBX-38A level file"),
+                                    (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
+                                    tr("SMBX-38A level files", "Type of file to open") + " (*.lvl);;" +
+                                    tr("All Files", "Type of file to open") + " (*.*)");
+
+            if(fileName_DATA == nullptr)
+                return;
+
+            QFileInfo s(m_currentFile);
+
+            if(!importFrom38A(m_calibration, s.fileName(), fileName_DATA))
+            {
+                QMessageBox::warning(this,
+                                     tr("File opening error"),
+                                     tr("Can't import calibration data from this file: the file doesn't "
+                                        "contain calibration settings, or this file is not a valid SMBX-38A level file."),
+                                     QMessageBox::Ok);
+                return;
+            }
+
+            initScene();
+            updateControls();
+            updateScene();
+
+            m_wasModified = false;
+        });
+
+        QObject::connect(m_toolsExport38A, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            QString san_ba_level = QFileDialog::getOpenFileName(this,
+                                                              tr("Export calibration settings into SMBX-38A level file"),
+                                                              (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
+                                                              "*.lvl");
+            if(san_ba_level.isEmpty())
+                return;
+
+            QFileInfo s(m_currentFile);
+
+            if(!exportTo38A(m_calibration, s.fileName(), san_ba_level))
+            {
+                QMessageBox::warning(this,
+                                     tr("File saving error"),
+                                     tr("Can't export calibration data into this file: this is not a valid SMBX-38A level file."),
+                                     QMessageBox::Ok);
+                return;
+            }
+
+            QMessageBox::information(this,
+                                     tr("Saved"),
+                                     tr("The level file has been patched!") + "\n" + san_ba_level);
+        });
+    }
+
+    translateMenus();
 
     Graphics::init();
 
@@ -185,15 +258,27 @@ void CalibrationMain::closeEvent(QCloseEvent *event)
 void CalibrationMain::languageSwitched()
 {
     ui->retranslateUi(this);
-    translateSaveMenu();
+    translateMenus();
 }
 
-void CalibrationMain::translateSaveMenu()
+void CalibrationMain::translateMenus()
 {
     if(m_saveMenuQuickSave)
         m_saveMenuQuickSave->setText(tr("Save in the same folder with image file"));
     if(m_saveMenuSaveAs)
         m_saveMenuSaveAs->setText(tr("Save into custom place..."));
+
+
+    if(m_toolsExportHitboxMap)
+    {
+        m_toolsExportHitboxMap->setText(tr("Export a map of hitboxes as image..."));
+        m_toolsExportHitboxMap->setToolTip(tr("Useful for tests or sprites creation from the scratch"));
+    }
+    if(m_toolsImport38A)
+        m_toolsImport38A->setText(tr("Import data from SMBX-38A level..."));
+
+    if(m_toolsExport38A)
+        m_toolsExport38A->setText(tr("Export data into SMBX-38A level..."));
 }
 
 

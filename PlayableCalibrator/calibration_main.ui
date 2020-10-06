@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>560</width>
-    <height>696</height>
+    <height>716</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -25,7 +25,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="10,0,0,0,0">
    <property name="sizeConstraint">
-    <enum>QLayout::SetFixedSize</enum>
+    <enum>QLayout::SetMinimumSize</enum>
    </property>
    <item row="20" column="1" colspan="2">
     <widget class="QSpinBox" name="OffsetY">
@@ -90,6 +90,9 @@
       <string>Grab type</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
       <item row="0" column="0">
        <widget class="QRadioButton" name="grabSide">
         <property name="text">
@@ -258,22 +261,6 @@
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Frame X</string>
-     </property>
-    </widget>
-   </item>
-   <item row="28" column="3" colspan="2">
-    <widget class="QPushButton" name="MakeTemplateB">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>23</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Useful for tests or sprites creation from the scratch</string>
-     </property>
-     <property name="text">
-      <string>Export a map of hitboxes as image...</string>
      </property>
     </widget>
    </item>
@@ -600,6 +587,19 @@
      </property>
      <property name="text">
       <string>Hitbox setup:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="28" column="3">
+    <widget class="QPushButton" name="toolsButton">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>Tools</string>
      </property>
     </widget>
    </item>
