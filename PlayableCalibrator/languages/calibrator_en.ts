@@ -351,7 +351,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibration_main.ui" line="415"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
-        <translation>Horisontal offset of hitbox relative to left side of frame</translation>
+        <translation>Horizontal offset of hitbox relative to left side of frame</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="263"/>
@@ -659,7 +659,7 @@ Do you want to continue?</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="235"/>
         <source>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</source>
-        <translation>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</translation>
+        <translation type="unfinished">This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchanged.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="251"/>
