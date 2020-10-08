@@ -659,7 +659,7 @@ Do you want to continue?</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="235"/>
         <source>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</source>
-        <translation type="unfinished">This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchanged.</translation>
+        <translation>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchanged.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="251"/>
