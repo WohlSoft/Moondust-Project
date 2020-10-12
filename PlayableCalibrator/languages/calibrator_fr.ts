@@ -54,7 +54,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="170"/>
         <source>Animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de l&apos;animation</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
@@ -102,22 +102,22 @@
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom d&apos;animation vide</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Animation name is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Le nom de l&apos;animation est vide !</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="368"/>
         <source>Animation exist</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;animation existe déjà</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Une animation avec le nom « %1 » existe déjà !</translation>
     </message>
 </context>
 <context>
@@ -125,37 +125,37 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished">Animateur</translation>
+        <translation>Animateur</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished">Direction</translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished">Gauche</translation>
+        <translation>Gauche</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished">Droite</translation>
+        <translation>Droite</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="82"/>
         <source>Edit animations</source>
-        <translation type="unfinished">Modifier les animations</translation>
+        <translation>Modifier les animations</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="102"/>
         <source>Frame speed:</source>
-        <translation type="unfinished">Images par seconde :</translation>
+        <translation>Images par seconde :</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="119"/>
         <source>Animation</source>
-        <translation type="unfinished">Animation</translation>
+        <translation>Animation</translation>
     </message>
 </context>
 <context>
@@ -268,7 +268,7 @@
     <message>
         <location filename="../calibration_main.ui" line="602"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Outils</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="158"/>
@@ -462,59 +462,59 @@
     <message>
         <location filename="../calibration_main.cpp" line="101"/>
         <source>Open SMBX-38A level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le fichier de niveau SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="103"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fichiers de niveau SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="104"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished">Tous les fichiers</translation>
+        <translation>Tous les fichiers</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="114"/>
         <source>File opening error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur d&apos;ouverture du fichier</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="115"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir les données de calibration à partir de ce fichier : soit le fichier ne contient pas de paramètres de calibration, soir ce fichier n&apos;est pas un fichier de niveau SMBX-38A valide.</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="131"/>
         <source>Export calibration settings into SMBX-38A level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter les paramètres de calibration vers le fichier de niveau SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="142"/>
         <source>File saving error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur d&apos;enregistrement du fichier</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="143"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;exporter les données de calibration vers ce fichier : ce n&apos;est pas un fichier de niveau SMBX-38A valide.</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="150"/>
         <source>The level file has been patched!</source>
-        <translation type="unfinished"></translation>
+        <translation>Le fichier de niveau à été mis à jour !</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="278"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer des données à partir d&apos;un fichier de niveau SMBX-38A…</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="281"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter les données dans un fichier de niveau SMBX-38A…</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="381"/>
