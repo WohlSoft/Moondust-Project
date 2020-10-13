@@ -395,6 +395,7 @@ void ItemDoor::refreshArrows()
         delete m_arrowEnter;
         m_arrowEnter = nullptr;
     }
+
     if(m_arrowExit != nullptr)
     {
         m_grp->removeFromGroup(m_arrowExit);
@@ -408,12 +409,35 @@ void ItemDoor::refreshArrows()
         if((m_pointSide == D_Entrance) || m_data.two_way)
         {
             m_arrowEnter = new QGraphicsPixmapItem;
-            m_arrowEnter->setPixmap(QPixmap(":/npc/proj.png"));
+            QPixmap pix(":/arrows/images/warp_arrow_enter.png");
+            m_arrowEnter->setPixmap(pix);
             m_scene->addItem(m_arrowEnter);
             m_arrowEnter->setOpacity(qreal(0.6));
 
             QPointF offset = QPoint(0, 0);
-            switch(m_data.idirect)
+            int idirect = m_data.idirect;
+
+            if(m_data.two_way && m_pointSide == D_Exit)
+            {
+                switch(m_data.odirect)
+                {
+                case LevelDoor::EXIT_LEFT:
+                    idirect = LevelDoor::ENTRANCE_RIGHT;
+                    break;
+                case LevelDoor::EXIT_DOWN:
+                    idirect = LevelDoor::ENTRANCE_UP;
+                    break;
+                case LevelDoor::EXIT_RIGHT:
+                    idirect = LevelDoor::ENTRANCE_LEFT;
+                    break;
+                case LevelDoor::EXIT_UP:
+                default:
+                    idirect = LevelDoor::ENTRANCE_DOWN;
+                    break;
+                }
+            }
+
+            switch(idirect)
             {
             case LevelDoor::ENTRANCE_LEFT:
                 m_arrowEnter->setRotation(270);
@@ -441,12 +465,36 @@ void ItemDoor::refreshArrows()
         if((m_pointSide == D_Exit) || m_data.two_way)
         {
             m_arrowExit = new QGraphicsPixmapItem;
-            m_arrowExit->setPixmap(QPixmap(":/npc/warp.png"));
+            QPixmap pix(":/arrows/images/warp_arrow_exit.png");
+            m_arrowExit->setPixmap(pix);
             m_scene->addItem(m_arrowExit);
             m_arrowExit->setOpacity(qreal(0.6));
 
             QPointF offset = QPoint(0, 0);
-            switch(m_data.odirect)
+
+            int odirect = m_data.odirect;
+
+            if(m_data.two_way && m_pointSide == D_Entrance)
+            {
+                switch(m_data.idirect)
+                {
+                case LevelDoor::ENTRANCE_LEFT:
+                    odirect = LevelDoor::EXIT_RIGHT;
+                    break;
+                case LevelDoor::ENTRANCE_DOWN:
+                    odirect = LevelDoor::EXIT_UP;
+                    break;
+                case LevelDoor::ENTRANCE_RIGHT:
+                    odirect = LevelDoor::EXIT_LEFT;
+                    break;
+                case LevelDoor::ENTRANCE_UP:
+                default:
+                    odirect = LevelDoor::EXIT_DOWN;
+                    break;
+                }
+            }
+
+            switch(odirect)
             {
             case LevelDoor::EXIT_LEFT:
                 m_arrowExit->setRotation(270);

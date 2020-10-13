@@ -48,6 +48,8 @@ Editor 0.3.2-dev
 - Changed the logic of the eraser tool: it will don't show a selection rectangle, and it will act more friendly and simpler
 - Added the missing layer visibility changing history tracking action
 - Fixed an inability to override the grid offset by custom INI file
+- Fixed an incorrect displaying of a warp point direction arrows for two-way warps
+- Replaced arrow pictures used for a warp point direction arrows with triangles to prevent overlapping by arrow tails
 Known bugs:
 - Changing the palette in some cases will not be updated properly. A restart of the Editor will be needed to properly apply changes.
 - Changing the palette into default will not restore the default UI style and Fusion will be used. A restart of the Editor will be needed to properly apply changes.

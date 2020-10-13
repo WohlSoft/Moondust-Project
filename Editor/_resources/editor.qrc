@@ -247,6 +247,8 @@
         <file>arrows/red_left.png</file>
         <file>arrows/red_right.png</file>
         <file>arrows/red_up.png</file>
+        <file>images/warp_arrow_enter.png</file>
+        <file>images/warp_arrow_exit.png</file>
     </qresource>
     <qresource prefix="/_files">
         <file>_files/pge-project-mimeinfo.xml</file>
