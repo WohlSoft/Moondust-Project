@@ -323,7 +323,7 @@ void LVL_EventEngine::processTimers(double tickTime)
 {
     std::unordered_set<std::string> triggered;
 
-    // const double smbxTimeUnit = 15.6;
+    // const double smbxTimeUnit = 1000.0 / 65;
     for(size_t i = 0; i < workingEvents.size(); i++)
     {
         EventActList *ea = &workingEvents[i];

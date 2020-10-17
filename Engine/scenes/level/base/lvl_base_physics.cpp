@@ -229,7 +229,7 @@ void PGE_Phys_Object::iterateStep(double ticks, bool force)
     if(!m_stand)
         m_momentum.velX = m_momentum.velXsrc;
 
-    double moveStepRatio = ticks / 15.6;
+    double moveStepRatio = ticks / (1000.0 / 65);
 
     double iterateX = m_momentum.velX * moveStepRatio;
     double iterateY = m_momentum.velY * moveStepRatio;

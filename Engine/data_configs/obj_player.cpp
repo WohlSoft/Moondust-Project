@@ -181,7 +181,7 @@ bool ConfigManager::loadPlayableCharacters()
             }
 
             setup.read("sprite-folder", splayer.sprite_folder, fmt::format_ne("player-{0}", i));
-            setup.read("state-type", splayer.state_type, 0);
+            setup.read("state-type",    splayer.state_type, 0);
             setup.read("matrix-width",  splayer.matrix_width, 10);
             setup.read("matrix-height", splayer.matrix_height, 10);
             setup.read("script-file",   splayer.script, "");

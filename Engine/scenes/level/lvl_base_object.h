@@ -258,7 +258,7 @@ class PGE_Phys_Object: public PGE_physBody
             return m_stand;
         }
 
-        static const double m_smbxTickTime;
+        static constexpr double m_smbxTickTime = 1000.0 / 65;
         static double SMBXTicksToTime(double ticks);
 
         PGE_Phys_Object_Phys phys_setup;//!< Settings of physics

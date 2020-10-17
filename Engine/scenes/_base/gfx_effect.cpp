@@ -209,8 +209,7 @@ void Scene::processEffects(double ticks)
 }
 
 
-const double Scene_Effect::timeStep = 15.6;
-//1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
+constexpr double Scene_Effect::timeStep = 1000.0 / 65;
 
 Scene_Effect::Scene_Effect() :
     m_startupDelay(0.0),

@@ -24,11 +24,6 @@
 
 #include "lvl_subtree.h"
 
-const double PGE_Phys_Object::m_smbxTickTime = 15.6; /*15.285f*/
-//const double PGE_Phys_Object::m_smbxTickTime = 1000.0 / 65.0/*15.285f*/;
-//1000.f/65.f; Thanks to Rednaxela for hint, 15.6 is a true frame time in SMBX Engine!
-//BUT, Experimentally was found that in real is approximately is 15.285
-
 double PGE_Phys_Object::SMBXTicksToTime(double ticks)
 {
     return ticks * m_smbxTickTime;

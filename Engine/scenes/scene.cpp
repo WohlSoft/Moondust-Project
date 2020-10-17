@@ -43,17 +43,19 @@ void Scene::construct()
 void Scene::updateTickValue()
 {
     //uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.4875);//Experimentally
-    uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.03125);
+    uTickf = Maths::roundToDown(PGE_Window::frameDelay, 0.480769231);
     Maths::clearPrecision(uTickf);
     //static_cast<double>(PGE_Window::TimeOfFrame);//1000.0f/(float)PGE_Window::TicksPerSecond;
     uTick  = static_cast<uint32_t>(std::ceil(uTickf));
 
-    if(uTickf > 15.6)
+    constexpr double tickDelay = 1000.0 / 65;
+
+    if(uTickf > tickDelay)
     {
         uTick = static_cast<Uint32>(PGE_Window::frameDelay);
-        while(uTickf > 15.6)
+        while(uTickf > tickDelay)
             uTickf /= 2.0;
-        uTickf = Maths::roundToDown(uTickf, 0.03125);
+        uTickf = Maths::roundToDown(uTickf, 0.480769231);
         Maths::clearPrecision(uTickf);
     }
 
