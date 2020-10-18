@@ -334,11 +334,11 @@ void DevConsole::doPlayMusic(const QStringList &args)
         return;
     }
     if(args[0] == "lvl")
-        LvlMusPlay::setMusic(LvlMusPlay::LevelMusic, args[1].toLong(), "");
+        LvlMusPlay::setMusic(MainWinConnect::pMainWin, LvlMusPlay::LevelMusic, args[1].toLong(), "");
     else if(args[0] == "wld")
-        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, args[1].toLong(), "");
+        LvlMusPlay::setMusic(MainWinConnect::pMainWin, LvlMusPlay::WorldMusic, args[1].toLong(), "");
     else if(args[0] == "spc")
-        LvlMusPlay::setMusic(LvlMusPlay::SpecialMusic, args[1].toLong(), "");
+        LvlMusPlay::setMusic(MainWinConnect::pMainWin, LvlMusPlay::SpecialMusic, args[1].toLong(), "");
     else
     {
         log("-> Unknown music type: (types are: lvl wld spc)!", ui->tabWidget->tabText(0));

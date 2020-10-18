@@ -123,8 +123,8 @@ void ItemMusic::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     if(selected == play)
     {
         m_scene->m_subWindow->currentMusic = m_data.id;
-        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic, m_data.id, m_data.music_file);
-        LvlMusPlay::updatePlayerState(true);
+        LvlMusPlay::setMusic(MainWinConnect::pMainWin, LvlMusPlay::WorldMusic, m_data.id, m_data.music_file);
+        LvlMusPlay::updatePlayerState(MainWinConnect::pMainWin, true);
         MainWinConnect::pMainWin->setMusicButton(true);
     }
     else if(selected == copyItemID)

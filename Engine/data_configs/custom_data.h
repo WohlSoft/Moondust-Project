@@ -22,6 +22,7 @@
 
 #include <string>
 #include <vector>
+#include <Utils/dir_list_ci.h>
 
 /*!
  * \brief This is a capturer of custom files from level/world custom directories
@@ -86,6 +87,8 @@ public:
     std::string findFileInExtraDirs(const std::string &fPath);
 
 private:
+    DirListCI m_dirCiEpisode;
+    DirListCI m_dirCiCustom;
     //! Full path to episode directory
     std::string m_dirEpisode;
     //! Full path to file's custom stuff directory

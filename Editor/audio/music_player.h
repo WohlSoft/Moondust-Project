@@ -22,6 +22,8 @@
 
 #include <QString>
 
+class MainWindow;
+
 class LvlMusPlay
 {
 public:
@@ -44,11 +46,11 @@ public:
     static long currentSpcMusicId;
     static int musicType;
 
-    static void setMusic(MusicType mt, unsigned long id, QString cmus);
+    static void setMusic(MainWindow *mw, MusicType mt, unsigned long id, QString cmus);
     static void setNoMusic();
-    static void updateMusic();
-    static void updatePlayerState(bool playing = true);
-    static void stopMusic();
+    static void updateMusic(MainWindow *mw);
+    static void updatePlayerState(MainWindow *mw, bool playing = true);
+    static void stopMusic(MainWindow *mw);
 
 };
 

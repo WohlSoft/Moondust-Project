@@ -21,7 +21,8 @@
 #include <editing/_dialogs/itemselectdialog.h>
 #include <common_features/util.h>
 #include <common_features/logger.h>
-#include <common_features/main_window_ptr.h>
+#include <Utils/dir_list_ci_qt.h>
+#include <mainwindow.h>
 
 #include "item_level.h"
 #include "../wld_history_manager.h"
@@ -63,13 +64,22 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     this->setSelected(1);
     QMenu ItemMenu;
+    DirListCIQt ci;
+    QString lvlDstPath;
+    QString lvlDstName;
+    if(!m_data.lvlfile.isEmpty())
+    {
+        ci.setCurDir(m_scene->m_data->meta.path);
+        lvlDstName = ci.resolveFileCase(m_data.lvlfile);
+        lvlDstPath = m_scene->m_data->meta.path + "/" + lvlDstName;
+    }
 
-    QAction *LvlTitle =         ItemMenu.addAction(QString("[%1]").arg(m_data.title));
-    LvlTitle->setEnabled(false);
-    LvlTitle->setVisible(!m_data.title.isEmpty());
+    QAction *lvlTitle =         ItemMenu.addAction(QString("[%1]").arg(m_data.title));
+    lvlTitle->setEnabled(false);
+    lvlTitle->setVisible(!m_data.title.isEmpty());
 
-    QAction *openLvl =          ItemMenu.addAction(tr("Open target file: %1").arg(m_data.lvlfile));
-    openLvl->setVisible((!m_data.lvlfile.isEmpty()) && (QFile(m_scene->m_data->meta.path + "/" + m_data.lvlfile).exists()));
+    QAction *openLvl =          ItemMenu.addAction(tr("Open target file: %1").arg(lvlDstName));
+    openLvl->setVisible(!lvlDstName.isEmpty() && QFile::exists(lvlDstPath));
     ItemMenu.addSeparator();
 
     QAction *setPathBG =        ItemMenu.addAction(tr("Path background"));
@@ -111,7 +121,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(selected == openLvl)
     {
-        MainWinConnect::pMainWin->OpenFile(m_scene->m_data->meta.path + "/" + m_data.lvlfile);
+        m_scene->m_mw ->OpenFile(lvlDstPath);
         m_scene->m_contextMenuIsOpened = false;
     }
     else if(selected == setPathBG)
@@ -159,13 +169,13 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     else if(selected == cutTile)
     {
         //scene->doCut = true ;
-        MainWinConnect::pMainWin->on_actionCut_triggered();
+        m_scene->m_mw->on_actionCut_triggered();
         m_scene->m_contextMenuIsOpened = false;
     }
     else if(selected == copyTile)
     {
         //scene->doCopy = true ;
-        MainWinConnect::pMainWin->on_actionCopy_triggered();
+        m_scene->m_mw->on_actionCopy_triggered();
         m_scene->m_contextMenuIsOpened = false;
     }
     else if((selected == transform) || (selected == transform_all))
@@ -212,7 +222,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     else if(selected == copyItemID)
     {
         QApplication::clipboard()->setText(QString("%1").arg(m_data.id));
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXY)
     {
@@ -221,7 +231,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x)
             .arg(m_data.y)
         );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosXYWH)
     {
@@ -232,7 +242,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_imageSize.width())
             .arg(m_imageSize.height())
         );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == copyPosLTRB)
     {
@@ -243,7 +253,7 @@ void ItemLevel::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             .arg(m_data.x + m_imageSize.width())
             .arg(m_data.y + m_imageSize.height())
         );
-        MainWinConnect::pMainWin->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
+        m_scene->m_mw->showStatusMsg(tr("Preferences have been copied: %1").arg(QApplication::clipboard()->text()));
     }
     else if(selected == remove)
         m_scene->removeSelectedWldItems();

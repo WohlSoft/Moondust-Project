@@ -52,17 +52,23 @@ std::string CustomDirManager::getCustomFile(const std::string &name, bool *isDef
     }
 
     std::string target;
+    std::string target_e;
+    std::string target_c;
 tryBackup:
+
+    target_e = m_dirEpisode + "/" + m_dirCiEpisode.resolveFileCase(srcName);
+    target_c = m_dirCustom + "/" + m_dirCiCustom.resolveFileCase(srcName);
+
     if((Files::fileExists(m_dirCustom)) &&
-       (Files::fileExists(m_dirCustom + "/" + srcName)))
+       (Files::fileExists(target_c)))
     {
-        target = m_dirCustom + "/" + srcName;
+        target = target_c;
         if(isDefault)
             *isDefault = false;
     }
-    else if(Files::fileExists(m_dirEpisode + "/" + srcName))
+    else if(Files::fileExists(target_e))
     {
-        target = m_dirEpisode + "/" + srcName;
+        target = target_e;
         if(isDefault)
             *isDefault = false;
     }
@@ -109,8 +115,10 @@ std::string CustomDirManager::getMaskFallbackFile(const std::string &name)
 
 void CustomDirManager::setCustomDirs(const std::string &path, const std::string &name, const std::string &stuffPath, const std::vector<std::string> &extraPaths)
 {
-    m_dirCustom = path + "/" + name;
     m_dirEpisode = path;
+    m_dirCiEpisode.setCurDir(m_dirEpisode);
+    m_dirCustom = path + "/" + m_dirCiEpisode.resolveDirCase(name);
+    m_dirCiCustom.setCurDir(m_dirCustom);
     m_mainStuffFullPath = stuffPath;
     m_dirsExtra = extraPaths;
 }

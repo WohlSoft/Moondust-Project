@@ -30,6 +30,7 @@
 #include <main_window/dock/wld_settings_box.h>
 #include <common_features/bool_reseter.h>
 #include <common_features/util.h>
+#include <Utils/dir_list_ci_qt.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
@@ -92,12 +93,15 @@ void MainWindow::on_action_openCustomFolder_triggered()
 {
     QString path;
     bool isUntitled = false;
+    DirListCIQt ci;
+
     if(activeChildWindow() == WND_Level)
     {
         LevelEdit *e = activeLvlEditWin();
         if(e)
         {
-            path = e->LvlData.meta.path + "/" + e->LvlData.meta.filename;
+            ci.setCurDir(e->LvlData.meta.path);
+            path = e->LvlData.meta.path + "/" + ci.resolveDirCase(e->LvlData.meta.filename);
             isUntitled = e->isUntitled();
         }
     }
@@ -110,7 +114,8 @@ void MainWindow::on_action_openCustomFolder_triggered()
         WorldEdit *e = activeWldEditWin();
         if(e)
         {
-            path = e->WldData.meta.path + "/" + e->WldData.meta.filename;
+            ci.setCurDir(e->WldData.meta.path);
+            path = e->WldData.meta.path + "/" + ci.resolveDirCase(e->WldData.meta.filename);
             isUntitled = e->isUntitled();
         }
     }

@@ -26,6 +26,7 @@
 
 #include <PGE_File_Formats/npc_filedata.h>
 #include <data_configs/obj_npc.h>
+#include <Utils/dir_list_ci_qt.h>
 
 struct UserIMGs
 {
@@ -78,6 +79,8 @@ public:
     void import(QStringList &files, bool local = true);
 
 private:
+    DirListCIQt dirCiEpisode;
+    DirListCIQt dirCiCustom;
     QString dirEpisode;
     QString dirCustom;
     QList<QString> dirsExtra;

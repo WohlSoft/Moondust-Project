@@ -5,5 +5,6 @@ set(UTILS_SDL_SRCS)
 
 list(APPEND UTILS_SDL_SRCS
     ${CMAKE_CURRENT_LIST_DIR}/sdl_file.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/dir_list_ci.cpp
 )
 

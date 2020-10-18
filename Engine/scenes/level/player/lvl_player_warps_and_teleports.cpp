@@ -21,6 +21,7 @@
 #include "../../scene_level.h"
 
 #include <audio/pge_audio.h>
+#include <Utils/dir_list_ci.h>
 
 
 void LVL_Player::processWarpChecking()
@@ -648,8 +649,8 @@ void LVL_Player::exitFromLevel(std::string levelFile, unsigned long targetWarp, 
 
     if(!levelFile.empty())
     {
-        m_scene->m_warpToLevelFile =
-            m_scene->levelData()->meta.path + "/" + levelFile;
+        DirListCI ci(m_scene->levelData()->meta.path);
+        m_scene->m_warpToLevelFile = m_scene->levelData()->meta.path + "/" + ci.resolveFileCase(levelFile);
         m_scene->m_warpToArrayID = targetWarp;
     }
     else

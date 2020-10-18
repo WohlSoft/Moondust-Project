@@ -385,7 +385,7 @@ void WorldItemBox::MusicList_itemClicked(const QModelIndex &item)
         //Play selected music
         edit->currentMusic = id;
         edit->currentCustomMusic = customMusicFile;
-        LvlMusPlay::setMusic(LvlMusPlay::WorldMusic,
+        LvlMusPlay::setMusic(mw(), LvlMusPlay::WorldMusic,
                              edit->currentMusic,
                              edit->currentCustomMusic);
         mw()->setMusic();

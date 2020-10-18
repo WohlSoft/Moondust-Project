@@ -70,7 +70,7 @@ void HistoryElementSettingsSection::undo()
     }
 
     MainWinConnect::pMainWin->dock_LvlSectionProps->refreshFileData();
-    LvlMusPlay::updateMusic();
+    LvlMusPlay::updateMusic(MainWinConnect::pMainWin);
     MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
 }
 
@@ -122,7 +122,7 @@ void HistoryElementSettingsSection::redo()
         lvlScene->m_data->sections[sectionID].custom_params = extraData.toList()[1].toString();
     }
     MainWinConnect::pMainWin->dock_LvlSectionProps->refreshFileData();
-    LvlMusPlay::updateMusic();
+    LvlMusPlay::updateMusic(MainWinConnect::pMainWin);
     MainWinConnect::pMainWin->setMusic(LvlMusPlay::musicButtonChecked);
 }
 

@@ -48,6 +48,7 @@ add_definitions(-DINI_PROCESSING_ALLOW_QT_TYPES)
 include(../_common/IniProcessor/IniProcessor.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
+include(../_common/Utils/UtilsQt.cmake)
 include(../_common/Graphics/bitmask2rgba.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
@@ -557,6 +558,7 @@ add_executable(pge_editor
     ${INIPROCESSOR_SRCS}
     ${STACK_WALKER_SRCS}
     ${UTILS_SRCS}
+    ${UTILS_QT_SRCS}
     ${BITMASK2RGBA_SRCS}
 )
 

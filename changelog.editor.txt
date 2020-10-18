@@ -50,6 +50,7 @@ Editor 0.3.2-dev
 - Fixed an inability to override the grid offset by custom INI file
 - Fixed an incorrect displaying of a warp point direction arrows for two-way warps
 - Replaced arrow pictures used for a warp point direction arrows with triangles to prevent overlapping by arrow tails
+- Added ability for the proper detection of custom resources on case sensitive file systems
 Known bugs:
 - Changing the palette in some cases will not be updated properly. A restart of the Editor will be needed to properly apply changes.
 - Changing the palette into default will not restore the default UI style and Fusion will be used. A restart of the Editor will be needed to properly apply changes.

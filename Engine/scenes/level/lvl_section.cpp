@@ -98,6 +98,7 @@ void LVL_Section::setMusicRoot(std::string _path)
     {
         if(m_music_root.back() != '/')
             m_music_root.push_back('/');
+        m_music_root_ci.setCurDir(m_music_root);
     }
 }
 
@@ -105,7 +106,7 @@ void LVL_Section::playMusic()
 {
     std::string musFile = m_curCustomMus;
     std::replace(musFile.begin(), musFile.end(), '\\', '/');
-    musFile = ConfigManager::getLvlMusic(m_curMus, m_music_root + musFile);
+    musFile = ConfigManager::getLvlMusic(m_curMus, m_music_root + m_music_root_ci.resolveFileCase(musFile));
 
     if(!musFile.empty())
     {

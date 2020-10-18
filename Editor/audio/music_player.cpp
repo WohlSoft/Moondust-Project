@@ -23,11 +23,10 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
-#include <common_features/main_window_ptr.h>
-
 #include "sdl_music_player.h"
 #include "music_player.h"
 #include <main_window/dock/lvl_sctc_props.h>
+#include <Utils/dir_list_ci_qt.h>
 
 QString LvlMusPlay::currentCustomMusic;
 
@@ -51,11 +50,11 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
 }
 
 // TODO: Refactor this
-void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cmus)
+void LvlMusPlay::setMusic(MainWindow *mw, LvlMusPlay::MusicType mt, unsigned long id, QString cmus)
 {
     QString root = ".";
-    MainWindow *mw = MainWinConnect::pMainWin;
-    if(!mw) return;
+    if(!mw)
+        return;
 
     if(id == 0)
     {
@@ -74,6 +73,8 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
             root = mw->activeWldEditWin()->WldData.meta.path + "/";
     }
 
+    DirListCIQt ci(root);
+
     //Force correction of Windows paths into UNIX style
     cmus.replace('\\', '/');
 
@@ -83,7 +84,7 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
         if(id == mw->configs.music_custom_id)
         {
             LogDebug(QString("get Custom music path"));
-            currentMusicPath = root + cmus;
+            currentMusicPath = root + ci.resolveFileCase(cmus);
         }
         else
         {
@@ -102,7 +103,7 @@ void LvlMusPlay::setMusic(LvlMusPlay::MusicType mt, unsigned long id, QString cm
         if(id == mw->configs.music_w_custom_id)
         {
             LogDebug(QString("get Custom music path"));
-            currentMusicPath = root + cmus;
+            currentMusicPath = root + ci.resolveFileCase(cmus);
         }
         else
         {
@@ -157,39 +158,39 @@ void LvlMusPlay::setNoMusic()
 }
 
 // TODO: Refactor this
-void LvlMusPlay::updateMusic()
+void LvlMusPlay::updateMusic(MainWindow *mw)
 {
-    int w_id = MainWinConnect::pMainWin->activeChildWindow();
+    Q_ASSERT(mw);
+    int w_id = mw->activeChildWindow();
 
     switch(w_id)
     {
     case MainWindow::WND_NoWindow:
         setNoMusic();
-        updatePlayerState(false);
+        updatePlayerState(mw, false);
         break;
     case MainWindow::WND_Level:
-        MainWinConnect::pMainWin->dock_LvlSectionProps->loadMusic();
+        mw->dock_LvlSectionProps->loadMusic();
         break;
     case MainWindow::WND_NpcTxt:
         setNoMusic();
-        updatePlayerState(false);
+        updatePlayerState(mw, false);
         break;
     case MainWindow::WND_World:
     {
-        WorldEdit *w = MainWinConnect::pMainWin->activeWldEditWin();
+        WorldEdit *w = mw->activeWldEditWin();
         if(!w)
             return;
-        setMusic(LvlMusPlay::WorldMusic, static_cast<unsigned long>(w->currentMusic), w->currentCustomMusic);
-        MainWinConnect::pMainWin->setMusic();
+        setMusic(mw, LvlMusPlay::WorldMusic, static_cast<unsigned long>(w->currentMusic), w->currentCustomMusic);
+        mw->setMusic();
     }
     break;
     default:
         break;
     }
-
 }
 
-void LvlMusPlay::updatePlayerState(bool playing)
+void LvlMusPlay::updatePlayerState(MainWindow *mw, bool playing)
 {
     if(!LvlMusPlay::musicForceReset)
     {
@@ -210,7 +211,7 @@ void LvlMusPlay::updatePlayerState(bool playing)
     {
         PGE_MusPlayer::stop();
         PGE_MusPlayer::openFile(currentMusicPath);
-        PGE_MusPlayer::changeVolume(MainWinConnect::pMainWin->musicVolume());
+        PGE_MusPlayer::changeVolume(mw->musicVolume());
         PGE_MusPlayer::play();
     }
 
@@ -218,10 +219,10 @@ void LvlMusPlay::updatePlayerState(bool playing)
     musicButtonChecked  = playing;
 }
 
-void LvlMusPlay::stopMusic()
+void LvlMusPlay::stopMusic(MainWindow *mw)
 {
     setNoMusic();
-    updatePlayerState(false);
+    updatePlayerState(mw, false);
 }
 
 /*******************************************************************************/
@@ -235,7 +236,7 @@ void MainWindow::setMusic(bool checked)
         return;
     }
 
-    LvlMusPlay::updatePlayerState(checked);
+    LvlMusPlay::updatePlayerState(this, checked);
 }
 
 void MainWindow::setMusicButton(bool checked)

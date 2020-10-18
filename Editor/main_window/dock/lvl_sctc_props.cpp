@@ -578,7 +578,7 @@ void LvlSectionProps::loadMusic()
         if(!edit)
             return;
 
-        LvlMusPlay::setMusic(LvlMusPlay::LevelMusic,
+        LvlMusPlay::setMusic(mw(), LvlMusPlay::LevelMusic,
                              edit->LvlData.sections[edit->LvlData.CurSection].music_id,
                              edit->LvlData.sections[edit->LvlData.CurSection].music_file);
     }

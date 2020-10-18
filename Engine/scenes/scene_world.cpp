@@ -29,6 +29,7 @@
 #include <common_features/pge_delay.h>
 #include <common_features/tr.h>
 #include <Utils/maths.h>
+#include <Utils/dir_list_ci.h>
 #include <controls/controller_keyboard.h>
 #include <controls/controller_joystick.h>
 #include <gui/pge_msgbox.h>
@@ -1154,7 +1155,9 @@ void WorldScene::updateCenter()
 
                 if(!y->data.lvlfile.empty())
                 {
-                    std::string lvlPath = m_data.meta.path + "/" + y->data.lvlfile;
+                    DirListCI ci(m_data.meta.path);
+                    std::string lvlName = ci.resolveFileCase(y->data.lvlfile);
+                    std::string lvlPath = m_data.meta.path + "/" + lvlName;
                     pLogDebug("Trying to check level path %s...", lvlPath.c_str());
                     LevelData head;
 
@@ -1166,8 +1169,8 @@ void WorldScene::updateCenter()
                             m_levelTitle = y->data.title;
                         else if(!head.LevelName.empty())
                             m_levelTitle = head.LevelName;
-                        else if(!y->data.lvlfile.empty())
-                            m_levelTitle = y->data.lvlfile;
+                        else if(!lvlName.empty())
+                            m_levelTitle = lvlName;
 
                         if(m_gameState)
                         {
@@ -1725,7 +1728,15 @@ void WorldScene::stopMusic(bool fade, int fadeLen)
 
 void WorldScene::playMusic(unsigned long musicID, std::string customMusicFile, bool fade, int fadeLen)
 {
-    std::string musPath = ConfigManager::getWldMusic(musicID, m_data.meta.path + "/" + customMusicFile);
+    std::string musPath;
+
+    if(!customMusicFile.empty())
+    {
+        DirListCI m(m_data.meta.path);
+        musPath = ConfigManager::getWldMusic(musicID, m_data.meta.path + "/" + m.resolveFileCase(customMusicFile));
+    }
+    else
+        musPath = ConfigManager::getWldMusic(musicID, std::string());
 
     if(musPath.empty())
         return;

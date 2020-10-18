@@ -22,6 +22,7 @@
 #include <common_features/logger.h>
 #include <common_features/graphics_funcs.h>
 #include <main_window/dock/lvl_warp_props.h>
+#include <Utils/dir_list_ci_qt.h>
 
 #include "../lvl_history_manager.h"
 #include "../newlayerbox.h"
@@ -78,87 +79,97 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     }
 
     this->setSelected(1);
-    QMenu ItemMenu;
+    QMenu itemMenu;
+    DirListCIQt ci;
+    QString dstLevelPath;
+    QString dstLevelName;
 
-    QAction *openLvl = ItemMenu.addAction(tr("Open target level: %1").arg(m_data.lname).replace("&", "&&&"));
-    openLvl->setVisible((!m_data.lname.isEmpty()) && (QFile(m_scene->m_data->meta.path + "/" + m_data.lname).exists()));
+    if(!m_data.lname.isEmpty())
+    {
+        ci.setCurDir(m_scene->m_data->meta.path);
+        dstLevelName = ci.resolveFileCase(m_data.lname);
+        dstLevelPath = m_scene->m_data->meta.path + "/" + dstLevelName;
+    }
+
+    QAction *openLvl = itemMenu.addAction(tr("Open target level: %1").arg(dstLevelName).replace("&", "&&&"));
+    openLvl->setVisible((!dstLevelName.isEmpty()) && QFile::exists(dstLevelPath));
     openLvl->deleteLater();
 
     /*************Layers*******************/
-    QMenu *LayerName =     ItemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&&"));
+    QMenu *layerName =     itemMenu.addMenu(tr("Layer: ") + QString("[%1]").arg(m_data.layer).replace("&", "&&&"));
     QAction *setLayer;
     QList<QAction *> layerItems;
 
-    QAction *newLayer =    LayerName->addAction(tr("Add to new layer..."));
-    LayerName->addSeparator()->deleteLater();
+    QAction *newLayer =    layerName->addAction(tr("Add to new layer..."));
+    layerName->addSeparator()->deleteLater();
     for(LevelLayer &layer : m_scene->m_data->layers)
     {
         //Skip system layers
         if((layer.name == "Destroyed Blocks") || (layer.name == "Spawned NPCs")) continue;
 
-        setLayer = LayerName->addAction(layer.name.replace("&", "&&&") + ((layer.hidden) ? "" + tr("[hidden]") : ""));
+        setLayer = layerName->addAction(layer.name.replace("&", "&&&") + ((layer.hidden) ? "" + tr("[hidden]") : ""));
         setLayer->setData(layer.name);
         setLayer->setCheckable(true);
         setLayer->setEnabled(true);
         setLayer->setChecked(layer.name == m_data.layer);
         layerItems.push_back(setLayer);
     }
-    ItemMenu.addSeparator();
+    itemMenu.addSeparator();
     /*************Layers*end***************/
 
     QAction *jumpTo = nullptr;
     if(this->data(ITEM_TYPE).toString() == "Door_enter")
     {
-        jumpTo =                ItemMenu.addAction(tr("Jump to exit"));
+        jumpTo =                itemMenu.addAction(tr("Jump to exit"));
         jumpTo->setVisible((m_data.isSetIn) && (m_data.isSetOut));
     }
     else if(this->data(ITEM_TYPE).toString() == "Door_exit")
     {
-        jumpTo =                ItemMenu.addAction(tr("Jump to entrance"));
+        jumpTo =                itemMenu.addAction(tr("Jump to entrance"));
         jumpTo->setVisible((m_data.isSetIn) && (m_data.isSetOut));
     }
-    ItemMenu.addSeparator();
-    QAction *NoTransport =     ItemMenu.addAction(tr("No Vehicles"));
+    itemMenu.addSeparator();
+    QAction *NoTransport =     itemMenu.addAction(tr("No Vehicles"));
     NoTransport->setCheckable(true);
     NoTransport->setChecked(m_data.novehicles);
 
-    QAction *AllowNPC =        ItemMenu.addAction(tr("Allow NPC"));
-    AllowNPC->setCheckable(true);
-    AllowNPC->setChecked(m_data.allownpc);
+    QAction *allowNPC =        itemMenu.addAction(tr("Allow NPC"));
+    allowNPC->setCheckable(true);
+    allowNPC->setChecked(m_data.allownpc);
 
-    QAction *Locked =          ItemMenu.addAction(tr("Locked"));
-    Locked->setCheckable(true);
-    Locked->setChecked(m_data.locked);
-    QAction *BombNeed =        ItemMenu.addAction(tr("Need a bomb"));
-    BombNeed->setCheckable(true);
-    BombNeed->setChecked(m_data.need_a_bomb);
-    QAction *SpecialStReq =    ItemMenu.addAction(tr("Required special state"));
-    SpecialStReq->setCheckable(true);
-    SpecialStReq->setChecked(m_data.special_state_required);
+    QAction *locked =          itemMenu.addAction(tr("Locked"));
+    locked->setCheckable(true);
+    locked->setChecked(m_data.locked);
+    QAction *bombNeed =        itemMenu.addAction(tr("Need a bomb"));
+    bombNeed->setCheckable(true);
+    bombNeed->setChecked(m_data.need_a_bomb);
+    QAction *specialStReq =    itemMenu.addAction(tr("Required special state"));
+    specialStReq->setCheckable(true);
+    specialStReq->setChecked(m_data.special_state_required);
 
     /*************Copy Preferences*******************/
-    ItemMenu.addSeparator();
-    QMenu *copyPreferences =   ItemMenu.addMenu(tr("Copy preferences"));
+    itemMenu.addSeparator();
+    QMenu *copyPreferences =   itemMenu.addMenu(tr("Copy preferences"));
     QAction *copyPosXY =        copyPreferences->addAction(tr("Position: X, Y"));
     QAction *copyPosXYWH =      copyPreferences->addAction(tr("Position: X, Y, Width, Height"));
     QAction *copyPosLTRB =      copyPreferences->addAction(tr("Position: Left, Top, Right, Bottom"));
     /*************Copy Preferences*end***************/
 
-    ItemMenu.addSeparator();
-    QAction *remove =           ItemMenu.addAction(tr("Remove"));
+    itemMenu.addSeparator();
+    QAction *remove =           itemMenu.addAction(tr("Remove"));
 
-    ItemMenu.addSeparator();
-    QAction *props =            ItemMenu.addAction(tr("Properties..."));
+    itemMenu.addSeparator();
+    QAction *props =            itemMenu.addAction(tr("Properties..."));
 
     /*****************Waiting for answer************************/
-    QAction *selected = ItemMenu.exec(mouseEvent->screenPos());
+    QAction *selected = itemMenu.exec(mouseEvent->screenPos());
     /***********************************************************/
 
     if(!selected)
         return;
 
     if(selected == openLvl)
-        m_scene->m_mw->OpenFile(m_scene->m_data->meta.path + "/" + m_data.lname);
+        m_scene->m_mw->OpenFile(dstLevelPath);
     else if(selected == jumpTo)
     {
         //scene->doCopy = true ;
@@ -201,7 +212,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_NOVEHICLE, QVariant(NoTransport->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
-    else if(selected == AllowNPC)
+    else if(selected == allowNPC)
     {
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
@@ -222,14 +233,14 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.allownpc = AllowNPC->isChecked();
+                ((ItemDoor *) SelItem)->m_data.allownpc = allowNPC->isChecked();
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_ALLOWNPC, QVariant(AllowNPC->isChecked()));
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_ALLOWNPC, QVariant(allowNPC->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
-    else if(selected == Locked)
+    else if(selected == locked)
     {
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
@@ -250,14 +261,14 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.locked = Locked->isChecked();
+                ((ItemDoor *) SelItem)->m_data.locked = locked->isChecked();
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_LOCKED, QVariant(Locked->isChecked()));
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_LOCKED, QVariant(locked->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
-    else if(selected == BombNeed)
+    else if(selected == bombNeed)
     {
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
@@ -278,14 +289,14 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.need_a_bomb = BombNeed->isChecked();
+                ((ItemDoor *) SelItem)->m_data.need_a_bomb = bombNeed->isChecked();
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_NEED_A_BOMB, QVariant(BombNeed->isChecked()));
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_NEED_A_BOMB, QVariant(bombNeed->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
-    else if(selected == SpecialStReq)
+    else if(selected == specialStReq)
     {
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
@@ -306,11 +317,11 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.special_state_required = SpecialStReq->isChecked();
+                ((ItemDoor *) SelItem)->m_data.special_state_required = specialStReq->isChecked();
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(SpecialStReq->isChecked()));
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(specialStReq->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else if(selected == copyPosXY)

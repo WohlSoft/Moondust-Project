@@ -222,7 +222,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     }
 
     LogDebug("-> Music Player");
-    LvlMusPlay::updateMusic();
+    LvlMusPlay::updateMusic(this);
 
     setTileSetBox();
     UpdateCustomItems();

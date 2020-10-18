@@ -8,6 +8,7 @@
 - Fixed unstable glypth length value in message box with mixed TTF and raster fonts
 - Added French translation by NathanBnm
 - New icons by Tails608
+- Added ability for the proper detection of custom resources on case sensitive file systems
 
 0.3.2
 - Fixed incorrect management of custom config files caused missing of them

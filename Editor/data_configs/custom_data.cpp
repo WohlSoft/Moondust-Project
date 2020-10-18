@@ -56,9 +56,9 @@ QString CustomDirManager::getCustomFile(QString name, bool ignoreDefaultDirector
         if(!dirCustom.isEmpty()) // Don't try to search in custom directory when it wasn't specified
         {
             const QFileInfo dCustom(dirCustom);
-            const QFileInfo dCustomFile(dirCustom + "/" + name);
+            const QFileInfo dCustomFile(dirCustom + "/" + dirCiCustom.resolveFileCase(name));
             const QFileInfo dEpisode(dirEpisode);
-            const QFileInfo dEpisodeFile(dirEpisode + "/" + name);
+            const QFileInfo dEpisodeFile(dirEpisode + "/" + dirCiEpisode.resolveFileCase(name));
 
             if(dCustom.exists() && dCustom.isDir() && dCustomFile.exists())
                 target = dCustomFile.absoluteFilePath();
@@ -71,13 +71,13 @@ QString CustomDirManager::getCustomFile(QString name, bool ignoreDefaultDirector
         if(!ignoreDefaultDirectory && target.isEmpty() && !defaultDirectory.isEmpty())
         {
             const QFileInfo dDefault(defaultDirectory);
-            const QFileInfo dDefaultFile(defaultDirectory + "/" + name);
+            const QFileInfo dDefaultFile(defaultDirectory + "/" + dirCiEpisode.resolveFileCase(name));
 
             if(dDefault.exists() && dDefault.isDir() && dDefaultFile.exists())
                 target = dDefaultFile.absoluteFilePath();
         }
 
-        if((target.isEmpty()) && (!backupName.isEmpty()) && (backupName != name))
+        if((target.isEmpty()) && (!backupName.isEmpty()) && (backupName.compare(name, Qt::CaseInsensitive) != 0))
         {
             name = backupName;
             continue;
@@ -109,8 +109,11 @@ void CustomDirManager::setCustomDirs(QString path, QString name)
         dirEpisode.clear();
         return; // Don't even try to search here if path is blank
     }
-    dirCustom = path + "/" + name;
+
     dirEpisode = path;
+    dirCiEpisode.setCurDir(dirEpisode);
+    dirCustom = path + "/" + dirCiEpisode.resolveDirCase(name);
+    dirCiCustom.setCurDir(dirCustom);
 }
 
 void CustomDirManager::setDefaultDir(QString dPath)
