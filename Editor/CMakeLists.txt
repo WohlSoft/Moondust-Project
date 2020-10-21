@@ -134,6 +134,7 @@ list(APPEND PGE_EDITOR_UI
     main_window/dock/wld_musicbox_itemset.ui
     main_window/dock/wld_search_box.ui
     main_window/dock/wld_settings_box.ui
+    main_window/dock/custom_music_setup.ui
     main_window/file/lvl_export_image.ui
     main_window/file/wld_export_image.ui
     main_window/greeting_dialog/greeting_dialog.ui
@@ -363,6 +364,7 @@ list(APPEND PGE_EDITOR_SRCS
     main_window/dock/wld_musicbox_itemset.cpp
     main_window/dock/wld_search_box.cpp
     main_window/dock/wld_settings_box.cpp
+    main_window/dock/custom_music_setup.cpp
     main_window/edit/edit_clipboard.cpp
     main_window/edit/edit_history.cpp
     main_window/edit/edit_items.cpp
