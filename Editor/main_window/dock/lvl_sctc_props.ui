@@ -318,21 +318,6 @@
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>
-           <item row="0" column="0">
-            <widget class="QComboBox" name="LVLPropsMusicNumber">
-             <property name="focusPolicy">
-              <enum>Qt::WheelFocus</enum>
-             </property>
-             <property name="maxVisibleItems">
-              <number>50</number>
-             </property>
-             <item>
-              <property name="text">
-               <string notr="true">[Silence]</string>
-              </property>
-             </item>
-            </widget>
-           </item>
            <item row="0" column="1" colspan="2">
             <widget class="QCheckBox" name="LVLPropsMusicCustomEn">
              <property name="sizePolicy">
@@ -347,6 +332,21 @@
              <property name="tristate">
               <bool>false</bool>
              </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QComboBox" name="LVLPropsMusicNumber">
+             <property name="focusPolicy">
+              <enum>Qt::WheelFocus</enum>
+             </property>
+             <property name="maxVisibleItems">
+              <number>50</number>
+             </property>
+             <item>
+              <property name="text">
+               <string notr="true">[Silence]</string>
+              </property>
+             </item>
             </widget>
            </item>
            <item row="1" column="0" colspan="3">
@@ -365,17 +365,64 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0" colspan="2">
-            <widget class="QLineEdit" name="LVLPropsMusicCustom"/>
-           </item>
-           <item row="2" column="2">
-            <widget class="QToolButton" name="LVLPropsMusicCustomBrowse">
-             <property name="toolTip">
-              <string>Browse...</string>
+           <item row="2" column="0" colspan="3">
+            <widget class="QFrame" name="frame_2">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
              </property>
-             <property name="text">
-              <string notr="true">...</string>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
              </property>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <property name="sizeConstraint">
+               <enum>QLayout::SetMinimumSize</enum>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="LVLPropsMusicCustom"/>
+              </item>
+              <item row="0" column="3">
+               <widget class="QToolButton" name="LVLPropsMusicCustomBrowse">
+                <property name="toolTip">
+                 <string>Browse...</string>
+                </property>
+                <property name="text">
+                 <string notr="true">...</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QToolButton" name="musicSetup">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="toolTip">
+                 <string>Change the extra format specific settings of a custom music</string>
+                </property>
+                <property name="text">
+                 <string notr="true">Music setup</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../_resources/editor.qrc">
+                  <normaloff>:/images/wrench_16x16.png</normaloff>:/images/wrench_16x16.png</iconset>
+                </property>
+                <property name="popupMode">
+                 <enum>QToolButton::InstantPopup</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
@@ -497,5 +544,22 @@
  <resources>
   <include location="../../_resources/editor.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>LVLPropsMusicCustomEn</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>musicSetup</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>192</x>
+     <y>220</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>26</x>
+     <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -19,13 +19,14 @@
 #ifndef CUSTOM_MUSIC_SETUP_H
 #define CUSTOM_MUSIC_SETUP_H
 
-#include <QDockWidget>
+#include <QDialog>
 
+class MainWindow;
 namespace Ui {
 class CustomMusicSetup;
 }
 
-class CustomMusicSetup : public QDockWidget
+class CustomMusicSetup : public QDialog
 {
     Q_OBJECT
 
@@ -37,11 +38,19 @@ class CustomMusicSetup : public QDockWidget
         ADLMIDI
     };
 
+    int adlDefaultBank = -1;
+    int adlDefaultChips = -1;
+    int adlDefaultVolumeModel = -1;
+    int opnDefaultChips = -1;
+    int opnDefaultVolumeModel = -1;
+
     QString m_music;
+    QString m_musicName;
+    QString m_musicArgs;
     MusicType m_type = Unsupported;
     bool m_settingsNeeded = false;
 
-    MusicType detectType();
+    static MusicType detectType(const QString &music);
 
     void initSetup();
     void parseSettings();
@@ -55,10 +64,13 @@ public:
 
     void setMusicPath(const QString &music);
     bool settingsNeeded();
+    static bool settingsNeeded(const QString &music);
     QString musicPath();
 
 signals:
     void musicSetupChanged(const QString &music);
+    void updateSongPlay();
+    void updateSongTempo(double tempo);
 
 protected:
     void changeEvent(QEvent *e);
@@ -77,11 +89,13 @@ private slots:
 
     void on_midiExAdlBank_currentIndexChanged(int index);
     void on_midiExAdlVolumeModel_currentIndexChanged(int index);
+    void on_midiExAdlChipsEn_clicked();
     void on_midiExAdlChips_valueChanged(int arg1);
     void on_midiExAdlDeepTremolo_clicked(bool checked);
     void on_midiExAdlDeepVibrato_clicked(bool checked);
 
     void on_midiExOpnVolumeModel_currentIndexChanged(int index);
+    void on_midiExOpnChipsEn_clicked();
     void on_midiExOpnChips_valueChanged(int arg1);
 
     void on_gmePrevTrack_clicked();

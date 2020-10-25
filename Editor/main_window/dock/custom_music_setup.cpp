@@ -18,31 +18,35 @@
 
 #include <SDL2/SDL_mixer_ext.h>
 #include <QFileInfo>
+#include <cstdlib>
 
 #include "custom_music_setup.h"
 #include "ui_custom_music_setup.h"
 
 
 
-CustomMusicSetup::MusicType CustomMusicSetup::detectType()
+CustomMusicSetup::MusicType CustomMusicSetup::detectType(const QString &music)
 {
-    const QStringList midiSuffix = {
+    const QStringList midiSuffix =
+    {
         "mid", "midi", "kar", "rmi", "mus", "xmi"
     };
 
-    const QStringList adlSuffix = {
+    const QStringList adlSuffix =
+    {
         "imf", "cmf", "gmf"
     };
 
-    const QStringList gmeSuffix = {
+    const QStringList gmeSuffix =
+    {
         "nsf", "nsfe", "vgm", "vgz", "gbs", "gym", "kss", "hes", "spc", "ay", "sap"
     };
 
     QString fName;
-    if(m_music.contains('|'))
-        fName = m_music.split('|').front();
+    if(music.contains('|'))
+        fName = music.split('|').front();
     else
-        fName = m_music;
+        fName = music;
 
     QFileInfo f(fName);
     QString suffix = f.suffix().toLower();
@@ -70,42 +74,351 @@ void CustomMusicSetup::initSetup()
 
     ui->gmeTrackNumber->setValue(0);
 
-    ui->midiExAdlBank->setCurrentIndex(Mix_ADLMIDI_getBankID());
-    ui->midiExAdlVolumeModel->setCurrentIndex(Mix_ADLMIDI_getVolumeModel());
-    int chips = Mix_ADLMIDI_getChipsCount();
-    if(chips > 0)
-        ui->midiExAdlChips->setValue(chips);
-    ui->midiExAdlChipsEn->setChecked(chips > 0);
+    ui->midiExAdlBank->setCurrentIndex(adlDefaultBank);
+    ui->midiExAdlVolumeModel->setCurrentIndex(adlDefaultVolumeModel);
+    if(adlDefaultChips > 0)
+        ui->midiExAdlChips->setValue(adlDefaultChips);
+    ui->midiExAdlChipsEn->setChecked(adlDefaultChips > 0);
     ui->midiExAdlChips->setEnabled(ui->midiExAdlChipsEn->isChecked());
 
     ui->midiExAdlDeepTremolo->setCheckState(Qt::PartiallyChecked);
     ui->midiExAdlDeepVibrato->setCheckState(Qt::PartiallyChecked);
 
-    ui->midiExOpnVolumeModel->setCurrentIndex(Mix_OPNMIDI_getVolumeModel());
-    chips = Mix_OPNMIDI_getChipsCount();
-    if(chips > 0)
-        ui->midiExOpnChips->setValue(chips);
-    ui->midiExOpnChipsEn->setChecked(chips > 0);
+    ui->midiExOpnVolumeModel->setCurrentIndex(opnDefaultVolumeModel);
+
+    if(opnDefaultChips > 0)
+        ui->midiExOpnChips->setValue(opnDefaultChips);
+    ui->midiExOpnChipsEn->setChecked(opnDefaultChips > 0);
     ui->midiExOpnChips->setEnabled(ui->midiExOpnChipsEn->isChecked());
 
     blockSignals(false);
 }
 
+static Qt::CheckState intToCheckstate(int v)
+{
+    switch(v)
+    {
+    default:
+    case -1:
+        return Qt::PartiallyChecked;
+    case 0:
+        return Qt::Unchecked;
+    case 1:
+        return Qt::Checked;
+    }
+}
+
+static void setCurrentData(QComboBox*b, int d)
+{
+    int c = b->count();
+    for(int i = 0; i < c; ++i)
+    {
+        if(b->itemData(i).toInt() == d)
+        {
+            b->setCurrentIndex(i);
+            break;
+        }
+    }
+}
+
 void CustomMusicSetup::parseSettings()
 {
-    m_type = detectType();
+    m_type = detectType(m_music);
     m_settingsNeeded = m_type != Unsupported;
 
     if(!m_music.contains('|'))
+    {
+        m_musicName = m_music;
+        m_musicArgs.clear();
         return; // No arguments
-    QString name;
-    QString args;
+    }
+    auto s = m_music.split('|');
+    m_musicName = s[0];
+    m_musicArgs = s[1];
 
+#define ARG_BUFFER_SIZE    1024
+    char arg[ARG_BUFFER_SIZE];
+    char type = '-';
+    size_t maxlen = 0;
+    bool keepLoop = true;
+    size_t i, j = 0;
+    /* first value is an integer without prefox sign. So, begin the scan with opened value state */
+    int value_opened = 1;
+    std::string argsStr = m_musicArgs.toStdString();
+    const char *args = argsStr.c_str();
+
+    if(m_musicArgs.isEmpty())
+        return;
+
+    blockSignals(true);
+
+    maxlen = argsStr.size() + 1;
+
+    switch(m_type)
+    {
+    case GME:
+        value_opened = 1;
+
+        for(i = 0; i < maxlen && keepLoop; i++)
+        {
+            char c = args[i];
+            if(value_opened == 1)
+            {
+                if((c == ';') || (c == '\0'))
+                {
+                    int value;
+                    arg[j] = '\0';
+                    value = SDL_atoi(arg);
+                    switch(type)
+                    {
+                    case '-':
+                        ui->gmeTrackNumber->setValue(value);
+                        break;
+                    case 't':
+                        if(arg[0] == '=')
+                        {
+                            double tempo = QString(arg + 1).toDouble();
+                            if(tempo <= 0.0)
+                                tempo = 1.0;
+                            ui->gmeTempoAbs->setValue(tempo);
+                            ui->gmeTempo->setValue(tempo * 100);
+                        }
+                        break;
+                    case 'g':
+                        if(arg[0] == '=')
+                        {
+                            double gain = QString(arg + 1).toDouble();
+                            if(gain <= 0.0)
+                                gain = 1.0;
+                            ui->gmeGainAbs->setValue(gain);
+                            ui->gmeGain->setValue(gain * 100);
+                        }
+                        break;
+                    case '\0':
+                        break;
+                    default:
+                        break;
+                    }
+                    value_opened = 0;
+                }
+                arg[j++] = c;
+            }
+            else
+            {
+                if(c == '\0')
+                {
+                    keepLoop = false;
+                    break;
+                }
+                type = c;
+                value_opened = 1;
+                j = 0;
+            }
+        }
+        break;
+
+    case MIDI:
+    case ADLMIDI:
+
+        value_opened = 0;
+        for(i = 0; i < maxlen && keepLoop; i++)
+        {
+            char c = args[i];
+            if(value_opened == 1)
+            {
+                if((c == ';') || (c == '\0'))
+                {
+                    int value = 0;
+                    arg[j] = '\0';
+                    if(type != 'x')
+                        value = SDL_atoi(arg);
+                    switch(type)
+                    {
+                    case 's':
+                        setCurrentData(ui->midiSynth, value);
+                        break;
+                    case 'c':
+                        if(ui->midiSynth->currentData().toInt() == MIDI_ADLMIDI)
+                        {
+                            ui->midiExAdlChips->setValue(value);
+                            ui->midiExAdlChipsEn->setChecked(true);
+                        }
+                        else if(ui->midiSynth->currentData().toInt() == MIDI_OPNMIDI)
+                        {
+                            ui->midiExOpnChips->setValue(value);
+                            ui->midiExOpnChipsEn->setChecked(true);
+                        }
+                        break;
+                    case 'f':
+                        // setup->four_op_channels = value;
+                        break;
+                    case 'b':
+                        setCurrentData(ui->midiExAdlBank, value);
+                        break;
+                    case 't':
+                        if(arg[0] == '=')
+                        {
+                            double tempo = QString(arg + 1).toDouble();
+                            if(tempo <= 0.0)
+                                tempo = 1.0;
+                            ui->midiTempoAbs->setValue(tempo);
+                            ui->midiTempo->setValue(tempo * 100);
+                        }
+                        else
+                            ui->midiExAdlDeepTremolo->setCheckState(intToCheckstate(value));
+                        break;
+                    case 'g':
+                        if(arg[0] == '=')
+                        {
+                            double gain = QString(arg + 1).toDouble();
+                            if(gain <= 0.0)
+                                gain = 1.0;
+                            ui->midiGainAbs->setValue(gain);
+                            ui->midiGain->setValue(gain * 100);
+                        }
+                        break;
+                    case 'v':
+                        ui->midiExAdlDeepVibrato->setCheckState(intToCheckstate(value));
+                        break;
+                    case 'a':
+                        /* Deprecated and useless */
+                        break;
+                    case 'l':
+                        if(ui->midiSynth->currentData().toInt() == MIDI_ADLMIDI)
+                            setCurrentData(ui->midiExAdlVolumeModel, value);
+                        else if(ui->midiSynth->currentData().toInt() == MIDI_OPNMIDI)
+                            setCurrentData(ui->midiExOpnVolumeModel, value);
+                        break;
+                    case 'r':
+                        // setup->full_brightness_range = value;
+                        break;
+                    case 'p':
+                        // setup->soft_pan = value;
+                        break;
+                    case 'e':
+                        // setup->emulator = value;
+                        break;
+                    case 'x':
+//                        if(arg[0] == '=')
+//                            SDL_strlcpy(setup->custom_bank_path, arg + 1, (ARG_BUFFER_SIZE - 1));
+                        break;
+                    case '\0':
+                        break;
+                    default:
+                        break;
+                    }
+                    value_opened = 0;
+                }
+                arg[j++] = c;
+            }
+            else
+            {
+                if(c == '\0')
+                {
+                    keepLoop = false;
+                    break;
+                }
+                type = c;
+                value_opened = 1;
+                j = 0;
+            }
+        }
+
+        break;
+
+    default:
+        break;
+    }
+#undef ARG_BUFFER_SIZE
+
+    blockSignals(false);
+}
+
+static int checkboxToInt(QCheckBox *c)
+{
+    switch(c->checkState())
+    {
+    case Qt::PartiallyChecked:
+    default:
+        return -1;
+    case Qt::Checked:
+        return 1;
+    case Qt::Unchecked:
+        return 0;
+    }
 }
 
 void CustomMusicSetup::buildSettings()
 {
+    m_musicArgs.clear();
+    if(m_type == MIDI || m_type == ADLMIDI)
+    {
+        int v;
 
+        v = ui->midiSynth->currentData().toInt();
+        m_musicArgs += QString("s%1;").arg(v);
+
+        switch(v)
+        {
+        case MIDI_ADLMIDI:
+            v = ui->midiExAdlBank->currentData().toInt();
+            if(v != adlDefaultBank)
+                m_musicArgs += QString("b%1;").arg(ui->midiExAdlBank->currentData().toInt());
+
+            v = ui->midiExAdlChips->value();
+            if(ui->midiExAdlChipsEn->isChecked())
+                m_musicArgs += QString("c%1;").arg(v);
+
+            v = ui->midiExAdlVolumeModel->currentData().toInt();
+            if(v != adlDefaultVolumeModel)
+                m_musicArgs += QString("l%1;").arg(v);
+
+            v = checkboxToInt(ui->midiExAdlDeepTremolo);
+            if(v >= 0)
+                m_musicArgs += QString("t%1;").arg(v);
+
+            v = checkboxToInt(ui->midiExAdlDeepVibrato);
+            if(v >= 0)
+                m_musicArgs += QString("v%1;").arg(v);
+            break;
+
+        case MIDI_OPNMIDI:
+            v = ui->midiExOpnVolumeModel->currentData().toInt();
+            if(v != opnDefaultVolumeModel)
+                m_musicArgs += QString("l%1;").arg(v);
+
+            v = ui->midiExOpnChips->value();
+            if(ui->midiExOpnChipsEn->isChecked())
+                m_musicArgs += QString("c%1;").arg(v);
+
+            break;
+        }
+
+        if(int(ui->midiTempoAbs->value() * 100) != 100)
+            m_musicArgs += QString("t=%1;").arg(ui->midiTempoAbs->value());
+
+        if(int(ui->midiGainAbs->value() * 100) != 200)
+            m_musicArgs += QString("g=%1;").arg(ui->midiGainAbs->value());
+
+        m_music = m_musicName + (m_musicArgs.isEmpty() ? QString() : "|" + m_musicArgs);
+    }
+    else if(m_type == GME)
+    {
+        if(int(ui->gmeTempoAbs->value() * 100) != 100)
+            m_musicArgs += ";t=" + QString::number(ui->gmeTempoAbs->value());
+
+        if(int(ui->gmeGainAbs->value() * 100) != 100)
+            m_musicArgs += ";g=" + QString::number(ui->gmeGainAbs->value());
+
+        if(ui->gmeTrackNumber->value() != 0 || !m_musicArgs.isEmpty())
+            m_musicArgs.insert(0, QString::number(ui->gmeTrackNumber->value()));
+
+        m_music = m_musicName + (m_musicArgs.isEmpty() ? QString() : "|" + m_musicArgs);
+    }
+    else
+        m_music = m_musicName;
+
+    emit musicSetupChanged(m_music);
 }
 
 void CustomMusicSetup::updateVisibiltiy()
@@ -142,7 +455,7 @@ void CustomMusicSetup::updateVisibiltiy()
 }
 
 CustomMusicSetup::CustomMusicSetup(QWidget *parent) :
-    QDockWidget(parent),
+    QDialog(parent),
     ui(new Ui::CustomMusicSetup)
 {
     ui->setupUi(this);
@@ -180,7 +493,7 @@ CustomMusicSetup::CustomMusicSetup(QWidget *parent) :
         ui->midiTempoAbs->blockSignals(true);
         ui->midiTempoAbs->setValue(double(v) / 100.0);
         ui->midiTempoAbs->blockSignals(false);
-        on_midiTempoAbs_valueChanged(ui->midiGainAbs->value());
+        on_midiTempoAbs_valueChanged(ui->midiTempoAbs->value());
     });
 
 
@@ -216,7 +529,7 @@ CustomMusicSetup::CustomMusicSetup(QWidget *parent) :
         ui->gmeTempoAbs->blockSignals(true);
         ui->gmeTempoAbs->setValue(double(v) / 100.0);
         ui->gmeTempoAbs->blockSignals(false);
-        on_gmeTempoAbs_valueChanged(ui->midiGainAbs->value());
+        on_gmeTempoAbs_valueChanged(ui->gmeTempoAbs->value());
     });
 }
 
@@ -230,23 +543,28 @@ void CustomMusicSetup::initLists()
     blockSignals(true);
 
     int totalBanks = Mix_ADLMIDI_getTotalBanks();
-    const char *const* banks = Mix_ADLMIDI_getBankNames();
+    const char *const *banks = Mix_ADLMIDI_getBankNames();
     ui->midiExAdlBank->clear();
 
     for(int i = 0; i < totalBanks; ++i)
-    {
         ui->midiExAdlBank->addItem(banks[i], i);
-    }
 
     blockSignals(false);
+
+    adlDefaultBank = Mix_ADLMIDI_getBankID();
+    adlDefaultChips = Mix_ADLMIDI_getChipsCount();
+    adlDefaultVolumeModel = Mix_ADLMIDI_getVolumeModel();
+
+    opnDefaultChips = Mix_OPNMIDI_getChipsCount();
+    opnDefaultVolumeModel = Mix_OPNMIDI_getVolumeModel();
 
     retranslateLists();
 }
 
 void CustomMusicSetup::setMusicPath(const QString &music)
 {
-    m_music = music;
     initSetup();
+    m_music = music;
     parseSettings();
     updateVisibiltiy();
 }
@@ -256,6 +574,11 @@ bool CustomMusicSetup::settingsNeeded()
     return m_settingsNeeded;
 }
 
+bool CustomMusicSetup::settingsNeeded(const QString &music)
+{
+    return detectType(music) != Unsupported;
+}
+
 QString CustomMusicSetup::musicPath()
 {
     return m_music;
@@ -263,8 +586,8 @@ QString CustomMusicSetup::musicPath()
 
 void CustomMusicSetup::changeEvent(QEvent *e)
 {
-    QDockWidget::changeEvent(e);
-    switch (e->type())
+    QDialog::changeEvent(e);
+    switch(e->type())
     {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
@@ -318,82 +641,110 @@ void CustomMusicSetup::retranslateLists()
     blockSignals(false);
 }
 
-void CustomMusicSetup::on_midiSynth_currentIndexChanged(int index)
+void CustomMusicSetup::on_midiSynth_currentIndexChanged(int)
 {
     updateVisibiltiy();
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_midiGain_valueChanged(int value)
+void CustomMusicSetup::on_midiGain_valueChanged(int)
+{}
+
+void CustomMusicSetup::on_midiGainAbs_valueChanged(double)
 {
-
-}
-
-void CustomMusicSetup::on_midiGainAbs_valueChanged(double arg1)
-{
-
+    buildSettings();
+    emit updateSongPlay();
 }
 
 void CustomMusicSetup::on_midiGainReset_clicked()
 {
     ui->midiGain->setValue(200);
     ui->midiGainAbs->setValue(2.0);
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_midiTempo_valueChanged(int value)
-{
-
-}
+void CustomMusicSetup::on_midiTempo_valueChanged(int)
+{}
 
 void CustomMusicSetup::on_midiTempoAbs_valueChanged(double arg1)
 {
-
+    buildSettings();
+    emit updateSongTempo(arg1);
 }
 
 void CustomMusicSetup::on_midiTempoReset_clicked()
 {
     ui->midiTempo->setValue(100);
     ui->midiTempoAbs->setValue(1.0);
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongTempo(ui->midiTempoAbs->value());
 }
 
-void CustomMusicSetup::on_midiExAdlBank_currentIndexChanged(int index)
+void CustomMusicSetup::on_midiExAdlBank_currentIndexChanged(int)
 {
-
+    buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_midiExAdlVolumeModel_currentIndexChanged(int index)
+void CustomMusicSetup::on_midiExAdlVolumeModel_currentIndexChanged(int)
 {
-
+    buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_midiExAdlChips_valueChanged(int arg1)
+void CustomMusicSetup::on_midiExAdlChipsEn_clicked()
 {
-
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_midiExAdlDeepTremolo_clicked(bool checked)
+void CustomMusicSetup::on_midiExAdlChips_valueChanged(int)
 {
-
+    buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_midiExAdlDeepVibrato_clicked(bool checked)
+void CustomMusicSetup::on_midiExAdlDeepTremolo_clicked(bool)
 {
-
+    buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_midiExOpnVolumeModel_currentIndexChanged(int index)
+void CustomMusicSetup::on_midiExAdlDeepVibrato_clicked(bool)
 {
-
+    buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_midiExOpnChips_valueChanged(int arg1)
+void CustomMusicSetup::on_midiExOpnVolumeModel_currentIndexChanged(int)
 {
+    buildSettings();
+    emit updateSongPlay();
+}
 
+void CustomMusicSetup::on_midiExOpnChipsEn_clicked()
+{
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExOpnChips_valueChanged(int)
+{
+    buildSettings();
+    emit updateSongPlay();
 }
 
 void CustomMusicSetup::on_gmePrevTrack_clicked()
 {
     int val = ui->gmeTrackNumber->value();
-    if(val <= 0)
+    if(val > 0)
         ui->gmeTrackNumber->setValue(val - 1);
     else
         ui->gmeTrackNumber->setValue(0);
@@ -405,9 +756,10 @@ void CustomMusicSetup::on_gmeNextTrack_clicked()
     ui->gmeTrackNumber->setValue(val + 1);
 }
 
-void CustomMusicSetup::on_gmeTrackNumber_valueChanged(int arg1)
+void CustomMusicSetup::on_gmeTrackNumber_valueChanged(int)
 {
-
+    buildSettings();
+    emit updateSongPlay();
 }
 
 void CustomMusicSetup::on_gmeGoToFirst_clicked()
@@ -415,34 +767,38 @@ void CustomMusicSetup::on_gmeGoToFirst_clicked()
     ui->gmeTrackNumber->setValue(0);
 }
 
-void CustomMusicSetup::on_gmeGain_valueChanged(int value)
+void CustomMusicSetup::on_gmeGain_valueChanged(int)
+{}
+
+void CustomMusicSetup::on_gmeGainAbs_valueChanged(double)
 {
-
-}
-
-void CustomMusicSetup::on_gmeGainAbs_valueChanged(double arg1)
-{
-
+    buildSettings();
+    emit updateSongPlay();
 }
 
 void CustomMusicSetup::on_gmeGainReset_clicked()
 {
-    ui->gmeGain->setValue(200);
-    ui->gmeGainAbs->setValue(2.0);
+    ui->gmeGain->setValue(100);
+    ui->gmeGainAbs->setValue(1.0);
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongPlay();
 }
 
-void CustomMusicSetup::on_gmeTempo_valueChanged(int value)
-{
-
-}
+void CustomMusicSetup::on_gmeTempo_valueChanged(int)
+{}
 
 void CustomMusicSetup::on_gmeTempoAbs_valueChanged(double arg1)
 {
-
+    buildSettings();
+    emit updateSongTempo(arg1);
 }
 
 void CustomMusicSetup::on_gmeTempoReset_clicked()
 {
     ui->gmeTempo->setValue(100);
     ui->gmeTempoAbs->setValue(1.0);
+    if(!signalsBlocked())
+        buildSettings();
+    emit updateSongTempo(ui->gmeTempoAbs->value());
 }

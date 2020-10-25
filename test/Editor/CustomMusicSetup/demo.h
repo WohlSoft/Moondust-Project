@@ -20,8 +20,9 @@ public:
 
 private slots:
     void on_musSetup_clicked();
-
     void on_music_editingFinished();
+
+    void musicChanged(const QString &music);
 
 private:
     Ui::Demo *ui;

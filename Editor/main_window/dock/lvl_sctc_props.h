@@ -59,7 +59,7 @@ private slots:
     void on_LVLPropsMusicNumber_currentIndexChanged(int index);
     void on_LVLPropsMusicCustomEn_toggled(bool checked);
     void on_LVLPropsMusicCustomBrowse_clicked();
-
+    void on_musicSetup_clicked();
 
 protected:
     virtual void focusInEvent(QFocusEvent * ev);

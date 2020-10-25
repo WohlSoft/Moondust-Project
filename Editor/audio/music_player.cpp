@@ -157,6 +157,11 @@ void LvlMusPlay::setNoMusic()
     currentMusicPath.clear();
 }
 
+void LvlMusPlay::setTempo(double tempo)
+{
+    PGE_MusPlayer::setTempo(tempo);
+}
+
 // TODO: Refactor this
 void LvlMusPlay::updateMusic(MainWindow *mw)
 {

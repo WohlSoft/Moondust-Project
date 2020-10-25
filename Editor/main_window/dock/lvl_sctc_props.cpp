@@ -30,6 +30,7 @@
 #include <QMutexLocker>
 #include <QListView>
 
+#include "custom_music_setup.h"
 #include "lvl_sctc_props.h"
 #include "ui_lvl_sctc_props.h"
 
@@ -88,9 +89,10 @@ LvlSectionProps::LvlSectionProps(QWidget *parent) :
 
     QObject::connect(ui->imageSelector, &ImageSelector::currentItemChanged, this, &LvlSectionProps::backgroundImageChanged);
 
+    ui->musicSetup->setVisible(false); // Hide music setup button by default
+
     m_lastVisibilityState = isVisible();
-    mw()->docks_level.
-    addState(this, &m_lastVisibilityState);
+    mw()->docks_level.addState(this, &m_lastVisibilityState);
 }
 
 
@@ -353,8 +355,10 @@ void LvlSectionProps::refreshFileData()
         ui->LVLPropsNoTBack->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].lock_left_scroll);
         ui->LVLPropsUnderWater->setChecked(edit->LvlData.sections[edit->LvlData.CurSection].underwater);
 
-        ui->LVLPropsMusicCustom->setText(edit->LvlData.sections[edit->LvlData.CurSection].music_file);
+        QString musFile = edit->LvlData.sections[edit->LvlData.CurSection].music_file;
+        ui->LVLPropsMusicCustom->setText(musFile);
         ui->LVLPropsMusicCustomEn->setChecked((edit->LvlData.sections[edit->LvlData.CurSection].music_id == mw()->configs.music_custom_id));
+        ui->musicSetup->setVisible(CustomMusicSetup::settingsNeeded(musFile));
 
         updateExtraSettingsWidget();
 
@@ -666,6 +670,8 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
     if(!ui->LVLPropsMusicCustom->isModified()) return;
     ui->LVLPropsMusicCustom->setModified(false);
 
+    ui->musicSetup->setVisible(CustomMusicSetup::settingsNeeded(ui->LVLPropsMusicCustom->text()));
+
     if(mw()->activeChildWindow() == MainWindow::WND_Level)
     {
         LevelEdit *edit = mw()->activeLvlEditWin();
@@ -680,4 +686,56 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
     }
 
     loadMusic();
+}
+
+void LvlSectionProps::on_musicSetup_clicked()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    if(!edit)
+        return;
+
+    CustomMusicSetup set(this);
+    set.initLists();
+
+    QString musicPath = ui->LVLPropsMusicCustom->text();
+    set.setMusicPath(musicPath);
+
+    QObject::connect(&set, &CustomMusicSetup::musicSetupChanged, [&musicPath](const QString &music)->void
+    {
+        musicPath = music;
+    });
+
+    QObject::connect(&set, &CustomMusicSetup::updateSongPlay, [this,edit, &musicPath]()->void
+    {
+        LvlMusPlay::setMusic(mw(), LvlMusPlay::LevelMusic,
+                             edit->LvlData.sections[edit->LvlData.CurSection].music_id,
+                             musicPath);
+        mw()->setMusic();
+    });
+
+    QObject::connect(&set, &CustomMusicSetup::updateSongTempo, [](double tempo)->void
+    {
+        LvlMusPlay::setTempo(tempo);
+    });
+
+    int ret = set.exec();
+
+    if(ret == QDialog::Accepted)
+    {
+        // Apply the new music state if changed
+        if(ui->LVLPropsMusicCustom->text() != musicPath)
+        {
+            ui->LVLPropsMusicCustom->setText(musicPath);
+            ui->LVLPropsMusicCustom->setModified(true);
+            on_LVLPropsMusicCustom_editingFinished();
+        }
+    }
+    else
+    {
+        // Restore current music state
+        loadMusic();
+    }
 }

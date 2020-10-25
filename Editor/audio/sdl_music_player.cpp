@@ -156,6 +156,14 @@ void PGE_MusPlayer::play()
     }
 }
 
+void PGE_MusPlayer::setTempo(double tempo)
+{
+    if(play_mus)
+    {
+        Mix_SetMusicTempo(play_mus, tempo);
+    }
+}
+
 
 // //////////////////////// Sound Player //////////////////////////////////////
 

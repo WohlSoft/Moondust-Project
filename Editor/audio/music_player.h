@@ -48,6 +48,7 @@ public:
 
     static void setMusic(MainWindow *mw, MusicType mt, unsigned long id, QString cmus);
     static void setNoMusic();
+    static void setTempo(double tempo);
     static void updateMusic(MainWindow *mw);
     static void updatePlayerState(MainWindow *mw, bool playing = true);
     static void stopMusic(MainWindow *mw);
