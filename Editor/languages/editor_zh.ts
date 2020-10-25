@@ -10169,7 +10169,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>其中包含了PNG图像（ * 。PNG ）输入目录</translation>
+        <translation>其中包含了PNG图像（ * .PNG ）输入目录</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
