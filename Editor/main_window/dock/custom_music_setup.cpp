@@ -552,7 +552,7 @@ void CustomMusicSetup::initLists()
     ui->midiExAdlBank->clear();
 
     for(int i = 0; i < totalBanks; ++i)
-        ui->midiExAdlBank->addItem(banks[i], i);
+        ui->midiExAdlBank->addItem(QString("%1: %2").arg(i).arg(banks[i]), i);
 
     blockSignals(false);
 
