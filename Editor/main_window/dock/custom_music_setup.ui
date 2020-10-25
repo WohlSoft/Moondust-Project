@@ -21,17 +21,24 @@
    <bool>true</bool>
   </property>
   <layout class="QGridLayout" name="kokokoko">
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_12">
-     <property name="text">
-      <string>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</string>
+   <item row="2" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
-     <property name="wordWrap">
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="playMusicProxy">
+     <property name="text">
+      <string>Play music</string>
+     </property>
+     <property name="checkable">
       <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="setupZone">
      <property name="currentIndex">
       <number>0</number>
@@ -552,10 +559,13 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+   <item row="1" column="0" colspan="2">
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

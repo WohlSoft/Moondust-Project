@@ -63,6 +63,7 @@ public:
     void initLists();
 
     void setMusicPath(const QString &music);
+    void setMusicPlayState(bool checked);
     bool settingsNeeded();
     static bool settingsNeeded(const QString &music);
     QString musicPath();
@@ -71,6 +72,7 @@ signals:
     void musicSetupChanged(const QString &music);
     void updateSongPlay();
     void updateSongTempo(double tempo);
+    void musicButtonClicked(bool checked);
 
 protected:
     void changeEvent(QEvent *e);
@@ -110,6 +112,8 @@ private slots:
     void on_gmeTempo_valueChanged(int value);
     void on_gmeTempoAbs_valueChanged(double arg1);
     void on_gmeTempoReset_clicked();
+
+    void on_playMusicProxy_clicked(bool checked);
 
 private:
     Ui::CustomMusicSetup *ui;

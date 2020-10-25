@@ -454,6 +454,11 @@ void CustomMusicSetup::updateVisibiltiy()
     update();
 }
 
+void CustomMusicSetup::setMusicPlayState(bool checked)
+{
+    ui->playMusicProxy->setChecked(checked);
+}
+
 CustomMusicSetup::CustomMusicSetup(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CustomMusicSetup)
@@ -801,4 +806,9 @@ void CustomMusicSetup::on_gmeTempoReset_clicked()
     if(!signalsBlocked())
         buildSettings();
     emit updateSongTempo(ui->gmeTempoAbs->value());
+}
+
+void CustomMusicSetup::on_playMusicProxy_clicked(bool checked)
+{
+    emit musicButtonClicked(checked);
 }

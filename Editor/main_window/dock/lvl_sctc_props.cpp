@@ -702,6 +702,7 @@ void LvlSectionProps::on_musicSetup_clicked()
 
     QString musicPath = ui->LVLPropsMusicCustom->text();
     set.setMusicPath(musicPath);
+    set.setMusicPlayState(mw()->ui->actionPlayMusic->isChecked());
 
     QObject::connect(&set, &CustomMusicSetup::musicSetupChanged, [&musicPath](const QString &music)->void
     {
@@ -720,6 +721,12 @@ void LvlSectionProps::on_musicSetup_clicked()
     {
         LvlMusPlay::setTempo(tempo);
     });
+
+    QObject::connect(&set, &CustomMusicSetup::musicButtonClicked, [this](bool)->void
+    {
+        mw()->ui->actionPlayMusic->trigger();
+    });
+
 
     int ret = set.exec();
 
