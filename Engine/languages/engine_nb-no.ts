@@ -248,13 +248,13 @@ og prøv å kjøre nylige handlinger igjen for å innhente mer info.</translatio
         <translation>Start nivå på ny</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="556"/>
+        <location filename="../scenes/scene_world.cpp" line="557"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <source>Invalid playable character ID</source>
         <translation>Ugyldig spillbar karakter-ID</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="565"/>
+        <location filename="../scenes/scene_world.cpp" line="566"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <source>Invalid playable character state ID</source>
         <translation>Ugyldig spillbar karaktertilstands-ID</translation>
@@ -267,34 +267,34 @@ Did you placed player start point (or entrance warp point) too far off of the se
 Plasserte du spillerens startpunkt (eller inngangsoverføringspunkt) for langt ut i delen(e)?</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
-        <location filename="../scenes/scene_world.cpp" line="617"/>
-        <location filename="../scenes/scene_world.cpp" line="644"/>
+        <location filename="../scenes/scene_world.cpp" line="618"/>
+        <location filename="../scenes/scene_world.cpp" line="645"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUE">
-        <location filename="../scenes/scene_world.cpp" line="625"/>
-        <location filename="../scenes/scene_world.cpp" line="652"/>
+        <location filename="../scenes/scene_world.cpp" line="626"/>
+        <location filename="../scenes/scene_world.cpp" line="653"/>
         <source>Continue</source>
         <translation>Fortsett</translation>
     </message>
     <message id="WLD_MENU_PAUSE_CONTINUESAVE">
-        <location filename="../scenes/scene_world.cpp" line="627"/>
+        <location filename="../scenes/scene_world.cpp" line="628"/>
         <source>Save and continue</source>
         <translation>Lagre og fortsett</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITSAVE">
-        <location filename="../scenes/scene_world.cpp" line="629"/>
+        <location filename="../scenes/scene_world.cpp" line="630"/>
         <source>Save and quit</source>
         <translation>Lagre og avslutt</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXITNOSAVE">
-        <location filename="../scenes/scene_world.cpp" line="631"/>
+        <location filename="../scenes/scene_world.cpp" line="632"/>
         <source>Exit without saving</source>
         <translation>Avslutt uten å lagre</translation>
     </message>
     <message id="WLD_MENU_PAUSE_EXIT">
-        <location filename="../scenes/scene_world.cpp" line="654"/>
+        <location filename="../scenes/scene_world.cpp" line="655"/>
         <source>Quit</source>
         <translation>Avslutt</translation>
     </message>

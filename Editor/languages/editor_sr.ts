@@ -1098,6 +1098,183 @@ Please save them before doing anything else.</source>
     </message>
 </context>
 <context>
+    <name>CustomMusicSetup</name>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="14"/>
+        <source>Music setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="34"/>
+        <source>Play music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="54"/>
+        <source>Synthesizer type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="64"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="473"/>
+        <source>Gain:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="106"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="164"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="404"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="440"/>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="113"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="447"/>
+        <source>Tempo:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="171"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="299"/>
+        <source>Extra settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="183"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="364"/>
+        <source>Custom bank:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="190"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="354"/>
+        <source>Volume model:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="197"/>
+        <source>Deep vibrato</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="210"/>
+        <source>Bank:</source>
+        <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="217"/>
+        <source>Deep tremolo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="243"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="311"/>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="250"/>
+        <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="260"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="318"/>
+        <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="273"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="338"/>
+        <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="289"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="371"/>
+        <source>Chips number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="395"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="434"/>
+        <source>Chiptune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="508"/>
+        <source>Track number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="517"/>
+        <source>To begin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="531"/>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="538"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="565"/>
+        <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="432"/>
+        <source>MIDI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="614"/>
+        <source>libADLMIDI (OPL3 Synth emulation)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="615"/>
+        <source>libOPNMIDI (YM2612 Synth emulation)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="616"/>
+        <source>Timidity (needed a bank)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="617"/>
+        <source>Native MIDI (Not recommended, buggy)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="622"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="638"/>
+        <source>[Auto]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="623"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="639"/>
+        <source>Generic</source>
+        <comment>Volume model for libADLMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="624"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="640"/>
+        <source>Native OPL3</source>
+        <comment>Volume model for libADLMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataConfig</name>
     <message>
         <location filename="../data_configs/data_configs.cpp" line="287"/>
@@ -2025,94 +2202,94 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemDoor</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="83"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="94"/>
         <source>Open target level: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="88"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="99"/>
         <source>Layer: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="92"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="103"/>
         <source>Add to new layer...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="99"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="110"/>
         <source>[hidden]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="112"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="123"/>
         <source>Jump to exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="117"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="128"/>
         <source>Jump to entrance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="121"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="132"/>
         <source>No Vehicles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="125"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="136"/>
         <source>Allow NPC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="129"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="140"/>
         <source>Locked</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="143"/>
         <source>Need a bomb</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="135"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="146"/>
         <source>Required special state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="141"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="152"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="153"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="143"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="154"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="144"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="155"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="148"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="159"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="151"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="162"/>
         <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="323"/>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="334"/>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="345"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="356"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2120,90 +2297,90 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemLevel</name>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="71"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="81"/>
         <source>Open target file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="75"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="85"/>
         <source>Path background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="79"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="89"/>
         <source>Big Path background</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="83"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="93"/>
         <source>Always Visible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="88"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="98"/>
         <source>Copy preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="90"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="100"/>
         <source>Level-ID: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="91"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="101"/>
         <source>Position: X, Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="92"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
         <source>Position: X, Y, Width, Height</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="93"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="103"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="95"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="105"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="96"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="106"/>
         <source>Cut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="98"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="108"/>
         <source>Transform into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="99"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="109"/>
         <source>Transform all %1 into</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="101"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="111"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="112"/>
         <source>Remove all %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="104"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="114"/>
         <source>Properties...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="215"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="224"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="235"/>
-        <location filename="../editing/_scenes/world/items/item_level.cpp" line="246"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="225"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="234"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="245"/>
+        <location filename="../editing/_scenes/world/items/item_level.cpp" line="256"/>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5080,7 +5257,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <name>LvlSectionProps</name>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="30"/>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="393"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="440"/>
         <source>Section Settings</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5090,7 +5267,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="345"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="330"/>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
         <translation type="unfinished"></translation>
@@ -5101,7 +5278,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="374"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="398"/>
         <source>Browse...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5131,34 +5308,39 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="432"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="411"/>
+        <source>Change the extra format specific settings of a custom music</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="479"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="422"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="469"/>
         <source>Off screen exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="442"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="489"/>
         <source>Underwater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="402"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="449"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="405"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="452"/>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.ui" line="415"/>
+        <location filename="../main_window/dock/lvl_sctc_props.ui" line="462"/>
         <source>Wrap vertically</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5178,64 +5360,64 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="180"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="182"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="256"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="258"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="260"/>
         <source>[No image]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="260"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="261"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="262"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="263"/>
         <source>[Silence]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="509"/>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="649"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="513"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="653"/>
         <source>Please, save file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="509"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="513"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="517"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="521"/>
         <source>Choose a background first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="518"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="522"/>
         <source>Please, choose the background image first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="545"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="549"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="549"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="553"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="554"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="558"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="649"/>
+        <location filename="../main_window/dock/lvl_sctc_props.cpp" line="653"/>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7136,8 +7318,8 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="140"/>
-        <location filename="../main_window/file/file_open.cpp" line="258"/>
+        <location filename="../main_window/file/file_open.cpp" line="145"/>
+        <location filename="../main_window/file/file_open.cpp" line="263"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7165,35 +7347,35 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="81"/>
-        <location filename="../main_window/file/file_open.cpp" line="120"/>
+        <location filename="../main_window/file/file_open.cpp" line="82"/>
+        <location filename="../main_window/file/file_open.cpp" line="125"/>
         <source>Untitled file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="81"/>
-        <location filename="../main_window/file/file_open.cpp" line="120"/>
+        <location filename="../main_window/file/file_open.cpp" line="82"/>
+        <location filename="../main_window/file/file_open.cpp" line="125"/>
         <source>Please save file to the disk first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="141"/>
+        <location filename="../main_window/file/file_open.cpp" line="146"/>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="148"/>
+        <location filename="../main_window/file/file_open.cpp" line="153"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="202"/>
+        <location filename="../main_window/file/file_open.cpp" line="207"/>
         <source>Level is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="203"/>
+        <location filename="../main_window/file/file_open.cpp" line="208"/>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7202,12 +7384,12 @@ Expected config pack ID: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="228"/>
+        <location filename="../main_window/file/file_open.cpp" line="233"/>
         <source>World map is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="229"/>
+        <location filename="../main_window/file/file_open.cpp" line="234"/>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7216,57 +7398,57 @@ Expected config pack ID: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="259"/>
+        <location filename="../main_window/file/file_open.cpp" line="264"/>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="278"/>
+        <location filename="../main_window/file/file_open.cpp" line="283"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="279"/>
+        <location filename="../main_window/file/file_open.cpp" line="284"/>
         <source>Can&apos;t open the file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="316"/>
+        <location filename="../main_window/file/file_open.cpp" line="321"/>
         <source>Level file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="366"/>
+        <location filename="../main_window/file/file_open.cpp" line="371"/>
         <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="383"/>
+        <location filename="../main_window/file/file_open.cpp" line="388"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="401"/>
+        <location filename="../main_window/file/file_open.cpp" line="406"/>
         <source>NPC Config loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="497"/>
+        <location filename="../main_window/file/file_open.cpp" line="502"/>
         <source>Game save statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="504"/>
+        <location filename="../main_window/file/file_open.cpp" line="509"/>
         <source>Bad file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="505"/>
+        <location filename="../main_window/file/file_open.cpp" line="510"/>
         <source>This file have unknown extension</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8670,18 +8852,18 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="383"/>
+        <location filename="../main_window/file/file_open.cpp" line="388"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="390"/>
+        <location filename="../main_window/file/file_open.cpp" line="395"/>
         <source>Unknown values are presented</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="391"/>
+        <location filename="../main_window/file/file_open.cpp" line="396"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation type="unfinished"></translation>

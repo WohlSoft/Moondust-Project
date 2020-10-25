@@ -1146,6 +1146,136 @@ Please save them before doing anything else.</translation>
     </message>
 </context>
 <context>
+    <name>CustomMusicSetup</name>
+    <message>
+        <source>Music setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play music</source>
+        <translation type="unfinished">Play music</translation>
+    </message>
+    <message>
+        <source>Synthesizer type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Gain:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished">Reset</translation>
+    </message>
+    <message>
+        <source>Tempo:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extra settings</source>
+        <translation type="unfinished">Extra settings</translation>
+    </message>
+    <message>
+        <source>Custom bank:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume model:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deep vibrato</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bank:</source>
+        <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deep tremolo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation type="unfinished">Browse...</translation>
+    </message>
+    <message>
+        <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chips number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chiptune</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Track number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To begin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MIDI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>libADLMIDI (OPL3 Synth emulation)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>libOPNMIDI (YM2612 Synth emulation)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timidity (needed a bank)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Native MIDI (Not recommended, buggy)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Auto]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generic</source>
+        <comment>Volume model for libADLMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Native OPL3</source>
+        <comment>Volume model for libADLMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DataConfig</name>
     <message>
         <source>You have a legacy configuration package.
@@ -6056,6 +6186,10 @@ Physical env. zones:	 %6
 %2</source>
         <translation>Error in the file %1:
 %2</translation>
+    </message>
+    <message>
+        <source>Change the extra format specific settings of a custom music</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
