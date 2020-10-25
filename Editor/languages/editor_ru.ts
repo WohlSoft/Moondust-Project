@@ -1103,130 +1103,130 @@ Please save them first before doing anything else.</source>
     <name>CustomMusicSetup</name>
     <message>
         <source>Music setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройка музыки</translation>
     </message>
     <message>
         <source>Play music</source>
-        <translation type="unfinished">Играть музыку</translation>
+        <translation>Играть музыку</translation>
     </message>
     <message>
         <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип синтезатора:</translation>
     </message>
     <message>
         <source>Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation>Усиление:</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished">Сбросить</translation>
+        <translation>Сбросить</translation>
     </message>
     <message>
         <source>Tempo:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тэмп:</translation>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation type="unfinished">Расш. настройки</translation>
+        <translation>Расш. настройки</translation>
     </message>
     <message>
         <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
+        <translation>Свой банк:</translation>
     </message>
     <message>
         <source>Volume model:</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель громкости:</translation>
     </message>
     <message>
         <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
+        <translation>Усиленное вибрато</translation>
     </message>
     <message>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Банк:</translation>
     </message>
     <message>
         <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
+        <translation>Усиленное тремоло</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Тэмбровый банк определяет звучание MIDI-музыки. Используйте разные банки, чтобы сравнить разницу звучания.</translation>
     </message>
     <message>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель громкости определяет, как громкости музыки, сила нот и выражение будут маштабироваться.</translation>
     </message>
     <message>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество эмулированных чипов OPL3. Увеличьте количество чипов, чтобы расширить полифонию (18 двух-операторных голосов, или 6 четырёх-операторных голосов на чип), или уменьшите в случае, если музыка начинает глючить, кашлять и играть нестабильно.</translation>
     </message>
     <message>
         <source>Chips number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество чипов:</translation>
     </message>
     <message>
         <source>Chiptune</source>
-        <translation type="unfinished"></translation>
+        <translation>Чиптюн</translation>
     </message>
     <message>
         <source>Track number</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер дорожки</translation>
     </message>
     <message>
         <source>To begin</source>
-        <translation type="unfinished"></translation>
+        <translation>В начало</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Предыдущая</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Следующая</translation>
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
+        <translation>Совет: чтобы прослушать результат изменения настроек, включите проигрывание музыки. (Обратите внимание на значок ноты &quot;Сыграть/Остановить&quot; на панели инструментов главного окна).</translation>
     </message>
     <message>
         <source>MIDI</source>
-        <translation type="unfinished"></translation>
+        <translation>MIDI</translation>
     </message>
     <message>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libADLMIDI (Эмуляция OPL3-синтеза)</translation>
     </message>
     <message>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libOPNMIDI (Эмуляция YM2612-синтеза)</translation>
     </message>
     <message>
         <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>Timidity (Нужен банк)</translation>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
+        <translation>Native MIDI (Не рекомендуется, забаговано)</translation>
     </message>
     <message>
         <source>[Auto]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Авто]</translation>
     </message>
     <message>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Общая</translation>
     </message>
     <message>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Встроенная OPL3</translation>
     </message>
 </context>
 <context>
@@ -6140,7 +6140,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Change the extra format specific settings of a custom music</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить дополнительные настройки музыки, специфичные для определённых форматов</translation>
     </message>
 </context>
 <context>
