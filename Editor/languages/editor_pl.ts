@@ -1073,7 +1073,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Timidity (needed a bank)</source>
-        <translation>Nieśmiałość (potrzeba banku)</translation>
+        <translation>Timidity (potrzeba banku)</translation>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
