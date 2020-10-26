@@ -1232,7 +1232,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>Masz starą paczkę konfigruracyjną.
+        <translation type="unfinished">Masz starą paczkę konfigruracyjną.
 &lt;br&gt;Edytor uruchomi się, ale możesz mieć problemy z obiektami lub ustawieniami..
 &lt;br&gt;
 &lt;br&gt;Proszę pobierz najnowszą wersję paczki:
