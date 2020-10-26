@@ -91,9 +91,12 @@ bool DataConfig::openSection(IniProcessing *config, const std::string &section, 
         if(tryGeneral && config->beginGroup("General"))
             return true;//Allow section-less custom config files
 
-        addError(QString("ERROR LOADING %1: [%2] section is missed!")
-                 .arg(StdToPGEString(config->fileName()))
-                 .arg(StdToPGEString(section)), PGE_LogLevel::Critical);
+        if(!tryGeneral) // Don't warn about blank custom files
+        {
+            addError(QString("ERROR LOADING %1: [%2] section is missed!")
+                     .arg(StdToPGEString(config->fileName()))
+                     .arg(StdToPGEString(section)), PGE_LogLevel::Critical);
+        }
         return false;
     }
     return true;
