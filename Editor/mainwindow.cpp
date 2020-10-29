@@ -16,10 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#if defined(_WIN32) && !defined(_WIN64)
+#include <windows.h>
+#define WIN_CHECK_FOR_64BIT_CPU
+#endif
+
 #include <QtConcurrent>
 #include <QStyleFactory>
 #include <QFutureWatcher>
 #include <QEventLoop>
+#include <QSysInfo>
 #include <utility>
 #include <stdexcept>
 
@@ -74,12 +80,72 @@ bool MainWindow::isAppRestartRequested()
     return m_isAppRestartRequested;
 }
 
+#ifdef WIN_CHECK_FOR_64BIT_CPU
+typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+
+static BOOL s_isWow64()
+{
+    BOOL bIsWow64 = FALSE;
+
+    auto h = GetModuleHandleW(L"kernel32");
+    LPFN_ISWOW64PROCESS fnIsWow64Process = (LPFN_ISWOW64PROCESS)GetProcAddress(h, "IsWow64Process");
+
+    if(NULL != fnIsWow64Process)
+    {
+        if(!fnIsWow64Process(GetCurrentProcess(), &bIsWow64))
+            qWarning() << "Error has occurred while calling the IsWow64Process() function";
+    }
+
+    return bIsWow64;
+}
+#endif
 
 bool MainWindow::initEverything(const QString &configDir, const QString &themePack)
 {
     currentConfigDir = configDir;
 
     configs.setConfigPath( configDir );
+
+#ifdef WIN_CHECK_FOR_64BIT_CPU
+    // Notify users of 32-bit application when they use it on 64-bit operating system
+    // (Do check on Windows 7 and newer as they do support for 64-bit version of Editor)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_WINDOWS7 && s_isWow64())
+    {
+        QSettings cCounters(AppPathManager::settingsFile(), QSettings::IniFormat);
+        cCounters.setIniCodec("UTF-8");
+        cCounters.beginGroup("message-boxes");
+        bool showNotice = cCounters.value("cpu-architecture-warning", true).toBool();
+
+        if(showNotice)
+        {
+            QMessageBox msg(this);
+
+            msg.setWindowTitle(tr("Running the 32-bit Editor a 64-bit processor"));
+            msg.setWindowIcon(this->windowIcon());
+
+            QCheckBox box;
+            box.setText(MainWindow::tr("Don't show this message again."));
+            msg.setCheckBox(&box);
+
+            msg.setText(
+                tr("You are using the 32-bit version of the Editor on a 64-bit processor. "
+                   "This Editor version targeted to legacy architectures and Windows XP compatibility. "
+                   "We highly recommend getting the 64-bit version of the Editor to have better "
+                   "compatibility with modern architectures and to extend a limit of memory usage. "
+                   "For 32-bit applications, there is a 2 GB memory limit.")
+            );
+            msg.setIcon(QMessageBox::Information);
+            msg.setStandardButtons(QMessageBox::Ok);
+            msg.setWindowModality(Qt::WindowModal);
+            msg.exec();
+
+            showNotice = !box.isChecked();
+        }
+        if(!showNotice)
+            cCounters.setValue("cpu-architecture-warning", showNotice);
+        cCounters.endGroup();
+    }
+#endif
 
     try
     {

@@ -1,4 +1,4 @@
-Editor 0.3.2-dev
+﻿Editor 0.3.2-dev
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings
 - Config pack can specify the default file format
 - When SMBX64 formats are default, the strict mode is turned on in untitled files
@@ -52,6 +52,7 @@ Editor 0.3.2-dev
 - Replaced arrow pictures used for a warp point direction arrows with triangles to prevent overlapping by arrow tails
 - Added ability for the proper detection of custom resources on case sensitive file systems
 - Added the Music Setup dialog for easier configure of MIDI and chiptune music
+- Notify when a 32-bit Editor is running on a 64-bit Windows operating system
 Known bugs:
 - Changing the palette in some cases will not be updated properly. A restart of the Editor will be needed to properly apply changes.
 - Changing the palette into default will not restore the default UI style and Fusion will be used. A restart of the Editor will be needed to properly apply changes.
