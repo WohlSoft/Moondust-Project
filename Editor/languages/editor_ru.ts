@@ -9834,6 +9834,14 @@ Expected config pack ID: %4</source>
 ID конфиг-пакета карты мира: %3
 Ожидаемый ID конфиг-пакета: %4</translation>
     </message>
+    <message>
+        <source>Running the 32-bit Editor a 64-bit processor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>

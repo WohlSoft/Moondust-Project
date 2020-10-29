@@ -263,14 +263,14 @@ Point d&apos;entrée N° : %2</translation>
 %1</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/scene_world.cpp" line="557"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
+        <location filename="../scenes/scene_world.cpp" line="557"/>
         <source>Invalid playable character ID</source>
         <translation>ID de personnage jouable invalide</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/scene_world.cpp" line="566"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
+        <location filename="../scenes/scene_world.cpp" line="566"/>
         <source>Invalid playable character state ID</source>
         <translation>ID de personnage jouable invalide</translation>
     </message>

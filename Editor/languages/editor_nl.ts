@@ -1589,7 +1589,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="287"/>
+        <location filename="../data_configs/data_configs.cpp" line="290"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -2876,172 +2876,172 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
 <context>
     <name>ItemNPC</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="104"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="118"/>
         <source>Layer: </source>
         <translation>Laag: </translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="107"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="121"/>
         <source>Add to new layer...</source>
         <translation>Toevoegen op nieuwe laag...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="115"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="129"/>
         <source>[hidden]</source>
         <translation>[Verborgen]</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="130"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="144"/>
         <source>Edit NPC-Configuration</source>
         <translation>WIjzig NPC-instellingen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="146"/>
         <source>New NPC-Configuration</source>
         <translation>Nieuwe NPC-instelling</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
         <source>Set %1</source>
         <translation>%1 bepalen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="137"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
         <source>Direction</source>
         <translation>Richting</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="138"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
         <source>Left</source>
         <translation>Links</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="142"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="156"/>
         <source>Random</source>
         <translation>Willekeurig</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="147"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="161"/>
         <source>Right</source>
         <translation>Rechts</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="153"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
         <source>Friendly</source>
         <translation>Vriendelijk</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="157"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
         <source>Doesn&apos;t move</source>
         <translation>Beweegt niet</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="161"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="175"/>
         <source>Set message...</source>
         <translation>Voeg dialoog toe...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="164"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="178"/>
         <source>Set as Boss</source>
         <translation>Instellen als Baas</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="169"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
         <source>Transform into</source>
         <translation>Verander naar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="170"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
         <source>Transform all %1 in this section into</source>
         <translation>Verander alle %1 in deze sectie naar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
         <source>Transform all %1 into</source>
         <translation>Verander alle %1 naar</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="177"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="191"/>
         <source>Change included NPC...</source>
         <translation>Inhoud wijzigen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="182"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
         <source>Copy preferences</source>
         <translation>Instellingen kopiëren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
         <source>NPC-ID: %1</source>
         <translation>NPC-ID: %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
         <source>Position: X, Y</source>
         <translation>Positie: X, Y</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>Positie X, Y, Breedte, Hoogte</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="186"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>Positie: Links, Boven, Rechts, Onder</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="189"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
         <source>Copy</source>
         <translation>Kopiëren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="190"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
         <source>Cut</source>
         <translation>Knippen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="192"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
         <source>Remove</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="193"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
         <source>Remove all %1 in this section</source>
         <translation>Verwijder alle %1 in deze sectie</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="194"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
         <source>Remove all %1</source>
         <translation>Verwijder alle %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>Edit raw user data...</source>
         <translation>Ruwe gebruikersdata wijzigen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="214"/>
         <source>Properties...</source>
         <translation>Instelllingen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="240"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="468"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="482"/>
         <source>Margin of section</source>
         <translation>Sectiemarge</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="241"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="469"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="483"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>Gelieve aan te geven hoe ver buiten de speelgrens (in pixels) voorwerpen verwijderd moeten worden.</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="304"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="313"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="324"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="335"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="318"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="327"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="338"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="349"/>
         <source>Preferences have been copied: %1</source>
         <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
@@ -3707,8 +3707,8 @@ Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd i
         <translation>Sectie-afbeelding aan het opslagen...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="510"/>
+        <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>
@@ -7849,11 +7849,11 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation>Bij het opnieuw laden van de configuratie worden alle geopende bestanden gesloten en na het opnieuw laden terug geopened. Doorgaan met deze actie?</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>
@@ -7897,22 +7897,22 @@ Als u het nieuwe configuratiepakket wilt gebruiken, moet u het bewerkingsprogram
         <translation>Fout bij openen van bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="43"/>
-        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="80"/>
         <location filename="../main_window/file/file_reload.cpp" line="55"/>
         <location filename="../main_window/file/file_reload.cpp" line="164"/>
         <location filename="../main_window/file/file_reload.cpp" line="222"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="80"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="43"/>
         <source>File not saved</source>
         <translation>Bestand niet opgeslagen</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
-        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="81"/>
         <location filename="../main_window/file/file_reload.cpp" line="56"/>
         <location filename="../main_window/file/file_reload.cpp" line="165"/>
         <location filename="../main_window/file/file_reload.cpp" line="223"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="81"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
         <source>File doesn&apos;t saved on disk.</source>
         <translation>Bestand niet opgeslagen op schijf.</translation>
     </message>
@@ -8161,8 +8161,8 @@ Het configuratiepakket bevat fouten.</translation>
         <translation>Nieuw NPC-configuratiebestand aanmaken</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
+        <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <source>[all]</source>
         <translation>[Alle]</translation>
     </message>
@@ -8254,6 +8254,7 @@ U kan testen zonder op te slaan met behulp van het menu-item &quot;Niveau Testen
         <translation>PGE Programma testen</translation>
     </message>
     <message>
+        <location filename="../mainwindow.cpp" line="127"/>
         <location filename="../testing/pge_engine.cpp" line="70"/>
         <source>Don&apos;t show this message again.</source>
         <translation>Dit bericht niet meer weergeven.</translation>
@@ -8347,8 +8348,8 @@ Wilt u een andere sectie klonen?</translation>
         <translation>Maskers aan het herstellen...</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
         <source>Please wait...</source>
         <translation>Even geduld...</translation>
     </message>
@@ -8365,35 +8366,45 @@ Please reload current file to apply result.</source>
 Laad het huidige bestand opnieuw om de wijzigingen te zien.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="148"/>
-        <location filename="../mainwindow.cpp" line="192"/>
-        <location filename="../mainwindow.cpp" line="207"/>
+        <location filename="../mainwindow.cpp" line="214"/>
+        <location filename="../mainwindow.cpp" line="258"/>
+        <location filename="../mainwindow.cpp" line="273"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="195"/>
         <source>Configuration error</source>
         <translation>Configuratiefout</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="181"/>
+        <location filename="../mainwindow.cpp" line="247"/>
         <source>Loading theme...</source>
         <translation>Thema aan het laden...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="154"/>
+        <location filename="../mainwindow.cpp" line="220"/>
         <source>Initializing dock widgets...</source>
         <translation>Dock-widgets aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="171"/>
+        <location filename="../mainwindow.cpp" line="123"/>
+        <source>Running the 32-bit Editor a 64-bit processor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="131"/>
+        <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.cpp" line="237"/>
         <source>Initalizing plugins...</source>
         <translation>Plugins aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="185"/>
+        <location filename="../mainwindow.cpp" line="251"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="193"/>
+        <location filename="../mainwindow.cpp" line="259"/>
         <source>Configuration can&apos;t be loaded:
 %1.
 See %2 for more information.</source>
@@ -8402,14 +8413,14 @@ See %2 for more information.</source>
 Zie %2 voor meer informatie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="208"/>
+        <location filename="../mainwindow.cpp" line="274"/>
         <source>Configuration can&apos;t be loaded.
 See %1 for more information.</source>
         <translation>Configuratie kan niet worden geladen.
 Zie %1 voor meer informatie.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="149"/>
+        <location filename="../mainwindow.cpp" line="215"/>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="196"/>
         <source>Configuration package is loaded with errors.</source>
         <translation>Configuratiepakket is geladen, maar bevat fouten.</translation>
@@ -9658,24 +9669,24 @@ Reden: %1
         <translation>Tegels aan het laden...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="259"/>
+        <location filename="../mainwindow.cpp" line="325"/>
         <source>Bad File</source>
         <translation>Slecht Bestand</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="260"/>
+        <location filename="../mainwindow.cpp" line="326"/>
         <source>Bad file format
 File: %1</source>
         <translation>Slecht bestandsformaat
 Bestand: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="262"/>
+        <location filename="../mainwindow.cpp" line="328"/>
         <source>Line Number: %1</source>
         <translation>Regel Nummer: %1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="263"/>
+        <location filename="../mainwindow.cpp" line="329"/>
         <source>Line Data: %1</source>
         <translation>Regel Data: %1</translation>
     </message>
@@ -9830,7 +9841,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <translation>Tegelset categoriën aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="551"/>
+        <location filename="../data_configs/data_configs.cpp" line="554"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>
@@ -12211,8 +12222,8 @@ LunaLua installeren kan deze limieten deels verhogen.</translation>
         <translation>Wereldkaart data aan het laden</translation>
     </message>
     <message>
-        <location filename="../main_window/file/wld_export_image.cpp" line="123"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="414"/>
+        <location filename="../main_window/file/wld_export_image.cpp" line="123"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>

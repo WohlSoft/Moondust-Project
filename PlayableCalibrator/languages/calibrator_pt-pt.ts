@@ -412,9 +412,9 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="330"/>
-        <location filename="../main/files_io.cpp" line="114"/>
         <location filename="../calibration_main.cpp" line="149"/>
+        <location filename="../main/files_io.cpp" line="114"/>
+        <location filename="../main/settings.cpp" line="330"/>
         <source>Saved</source>
         <translation type="unfinished"></translation>
     </message>
