@@ -1,6 +1,7 @@
 #include "spash_screen.h"
 #include <QApplication>
 #include <QImage>
+#include <QPainterPath>
 #include <QCloseEvent>
 #include <Utils/maths.h>
 #ifdef Q_OS_ANDROID
