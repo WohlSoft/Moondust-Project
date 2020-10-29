@@ -9836,11 +9836,11 @@ ID конфиг-пакета карты мира: %3
     </message>
     <message>
         <source>Running the 32-bit Editor a 64-bit processor</source>
-        <translation type="unfinished"></translation>
+        <translation>32-битный Редактор работает на 64-битном процессоре</translation>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы используете 32-битную версию Редактора на 64-битном процессоре. Данная версия Редактора предназначена для устаревших архитектур и для совместимости с Windows XP. Мы настоятельно рекомендуем Вам загрузить 64-битную версию Редактора, чтобы добиться максимальной совместимости с современными архитектурами, а также расширить максимальный предел использования оперативной памяти. Для 32-битных приложений имеется системное ограничение в 2 ГБ памяти.</translation>
     </message>
 </context>
 <context>
