@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation>此功能尚未生效</translation>
+        <translation>此功能尚未实现</translation>
     </message>
 </context>
 <context>
@@ -389,7 +389,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>SoX executable path:</source>
-        <translation>SoX 路径：</translation>
+        <translation>SoX 目录：</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -414,14 +414,14 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation>未设置 SoX 路径。
-请先设置 SoX 路径</translation>
+        <translation>未设置 SoX 目录。
+请先设置 SoX 目录</translation>
     </message>
     <message>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation>SoX 路径错误。
-请检查 SoX 路径是否正确</translation>
+        <translation>SoX 目录错误。
+请检查 SoX 目录是否正确</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
@@ -465,7 +465,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Open SoX executable path</source>
-        <translation>打开 SoX 路径</translation>
+        <translation>打开 SoX 目录</translation>
     </message>
     <message>
         <source>Select file to convert</source>
@@ -655,7 +655,7 @@ Do you want to configure it?</source>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>配置工具发生错误： %1 于第 %2 行。
-文件路径： %3</translation>
+文件目录： %3</translation>
     </message>
     <message>
         <source>No configuration needed</source>
@@ -686,7 +686,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Configuration path:</source>
-        <translation>配置路径：</translation>
+        <translation>配置目录：</translation>
     </message>
     <message>
         <source>Directories</source>
@@ -929,130 +929,130 @@ Please save them before doing anything else.</source>
     <name>CustomMusicSetup</name>
     <message>
         <source>Music setup</source>
-        <translation type="unfinished"></translation>
+        <translation>音乐设置</translation>
     </message>
     <message>
         <source>Play music</source>
-        <translation type="unfinished">播放音乐</translation>
+        <translation>播放音乐</translation>
     </message>
     <message>
         <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
+        <translation>合成器类型：</translation>
     </message>
     <message>
         <source>Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation>增益：</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished">重置</translation>
+        <translation>重置</translation>
     </message>
     <message>
         <source>Tempo:</source>
-        <translation type="unfinished"></translation>
+        <translation>速度：</translation>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation type="unfinished">附加设置</translation>
+        <translation>附加设置</translation>
     </message>
     <message>
         <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义音色库文件：</translation>
     </message>
     <message>
         <source>Volume model:</source>
-        <translation type="unfinished"></translation>
+        <translation>音量模型：</translation>
     </message>
     <message>
         <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
+        <translation>强颤音</translation>
     </message>
     <message>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
+        <translation>音色库：</translation>
     </message>
     <message>
         <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
+        <translation>强震音</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">浏览……</translation>
+        <translation>浏览……</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
+        <translation>MIDI 音乐中所使用的音色库，可使用不同的库对比音色差异。</translation>
     </message>
     <message>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation>音量模型取决于音量、音符力度和表情控制器的拉伸。</translation>
     </message>
     <message>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation type="unfinished"></translation>
+        <translation>所使用的模拟 OPL3 芯片数量，增加数量可增加最大复音数（18 个 2-op 音色或 6 个 4-op 音色每芯片），若播放不流畅，可减少数量。</translation>
     </message>
     <message>
         <source>Chips number:</source>
-        <translation type="unfinished"></translation>
+        <translation>芯片数：</translation>
     </message>
     <message>
         <source>Chiptune</source>
-        <translation type="unfinished"></translation>
+        <translation>芯片音乐</translation>
     </message>
     <message>
         <source>Track number</source>
-        <translation type="unfinished"></translation>
+        <translation>轨道编号</translation>
     </message>
     <message>
         <source>To begin</source>
-        <translation type="unfinished"></translation>
+        <translation>回到开始</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>上一个</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>下一个</translation>
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
+        <translation>提示：请开启音乐播放以预览效果（见主工具栏中播放/停止图标）。</translation>
     </message>
     <message>
         <source>MIDI</source>
-        <translation type="unfinished"></translation>
+        <translation>MIDI</translation>
     </message>
     <message>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libADLMIDI (OPL3 合成器模拟)</translation>
     </message>
     <message>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libOPNMIDI (YM2612 合成器模拟)</translation>
     </message>
     <message>
         <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>Timidity (需要音色库)</translation>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
+        <translation>本地 MIDI (有 Bug，不推荐)</translation>
     </message>
     <message>
         <source>[Auto]</source>
-        <translation type="unfinished"></translation>
+        <translation>[自动]</translation>
     </message>
     <message>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>普通</translation>
     </message>
     <message>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>本地 OPL3</translation>
     </message>
 </context>
 <context>
@@ -3360,7 +3360,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation>请选择 LunaTester 路径：</translation>
+        <translation>请选择 LunaTester 目录：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -3501,7 +3501,7 @@ To use LunaTester you should have right Integration configuration package!</sour
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation>更改 LunaTester 路径……</translation>
+        <translation>更改 LunaTester 目录……</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
@@ -3514,7 +3514,7 @@ To use LunaTester you should have right Integration configuration package!</sour
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation>LunaTester 路径</translation>
+        <translation>LunaTester 目录</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
@@ -4740,7 +4740,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Change the extra format specific settings of a custom music</source>
-        <translation type="unfinished"></translation>
+        <translation>更改自定义音乐中参数</translation>
     </message>
 </context>
 <context>
@@ -5077,7 +5077,7 @@ Please, put this level file with a world map, or create new world map in the sam
 File path: %1</source>
         <translation>你还未在当前文件夹中放置大地图文件，
 请在当前关卡所在文件夹中创建大地图文件。
-文件路径：%1</translation>
+文件目录：%1</translation>
     </message>
     <message>
         <source>Select world map file</source>
@@ -6693,11 +6693,11 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Running the 32-bit Editor a 64-bit processor</source>
-        <translation type="unfinished"></translation>
+        <translation>在 64 位操作系统中运行 32 位编辑器</translation>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
-        <translation type="unfinished"></translation>
+        <translation>您正在使用 64 位操作系统中使用 32 位的版本的编辑器，此版本的编辑器专为老旧的电脑和 Windows XP 系统兼容打造，我们强烈推荐使用 64 位版本的编辑器以获得最佳兼容性和内存扩展，32 位应用中内存限制为 2GB。</translation>
     </message>
 </context>
 <context>
@@ -8224,7 +8224,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
-        <translation>请选择 TheXTech 路径：</translation>
+        <translation>请选择 TheXTech 目录：</translation>
     </message>
     <message>
         <source>Use default</source>
@@ -8239,7 +8239,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
-        <translation>选择 TheXTech 路径</translation>
+        <translation>选择 TheXTech 目录</translation>
     </message>
     <message>
         <source>Test level in battle mode</source>
@@ -8301,16 +8301,16 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation>TheXTech 路径</translation>
+        <translation>TheXTech 目录</translation>
     </message>
     <message>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation>更改 TheXTech 路径……</translation>
+        <translation>更改 TheXTech 目录……</translation>
     </message>
     <message>
         <source>Select the path to TheXTech executable.</source>
-        <translation>选择 TheXTech 路径。</translation>
+        <translation>选择 TheXTech 目录。</translation>
     </message>
     <message>
         <source>Executable not found</source>
@@ -8318,7 +8318,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation>由于未找到 &quot;%1&quot;，因此无法启动 TheXTech。TheXTech 路径可能设置错误，请检查 TheXTech 路径。</translation>
+        <translation>由于未找到 &quot;%1&quot;，因此无法启动 TheXTech。TheXTech 目录可能设置错误，请检查 TheXTech 目录。</translation>
     </message>
     <message>
         <source>TheXtech start failed</source>
