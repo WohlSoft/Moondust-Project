@@ -118,30 +118,30 @@
         <file>images/goto_right_bottom.png</file>
         <file>images/goto_top_right.png</file>
         <file>lunalua.ico</file>
-        <file>constributors/Bossedit8.png</file>
-        <file>constributors/DarkoniusMavakar.png</file>
-        <file>constributors/h2643.png</file>
-        <file>constributors/HorikawaOtane.png</file>
-        <file>constributors/Kevsoft.png</file>
-        <file>constributors/Marina.png</file>
-        <file>constributors/SquishyRex.png</file>
-        <file>constributors/Valtteri.png</file>
-        <file>constributors/Wohlstand.png</file>
-        <file>constributors/Enjl.png</file>
+        <file>contributors/Bossedit8.png</file>
+        <file>contributors/DarkoniusMavakar.png</file>
+        <file>contributors/h2643.png</file>
+        <file>contributors/HorikawaOtane.png</file>
+        <file>contributors/Kevsoft.png</file>
+        <file>contributors/Marina.png</file>
+        <file>contributors/SquishyRex.png</file>
+        <file>contributors/Valtteri.png</file>
+        <file>contributors/Wohlstand.png</file>
+        <file>contributors/Enjl.png</file>
         <file>lunalua/templates/lunadll.lua</file>
         <file>lunalua/templates/lunaoverworld.lua</file>
         <file>lunalua/templates/lunaworld.lua</file>
         <file>pge_newui.png</file>
         <file>pge_oldui.png</file>
         <file>lunalua/lunalua_16.png</file>
-        <file>constributors/AndrewPixel.png</file>
+        <file>contributors/AndrewPixel.png</file>
         <file>images/wrench_16x16.png</file>
         <file>images/item_browser_level.png</file>
         <file>images/item_browser_world.png</file>
         <file>images/musicboxes.png</file>
         <file>images/38a.ico</file>
-        <file>constributors/Tails608.png</file>
-        <file>constributors/FunnyCat.png</file>
+        <file>contributors/Tails608.png</file>
+        <file>contributors/FunnyCat.png</file>
         <file>images/camera_grid_dark.png</file>
         <file>images/grid_snap_dark.png</file>
         <file>images/playmusic_dark.png</file>
