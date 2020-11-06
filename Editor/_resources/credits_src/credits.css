@@ -1,0 +1,52 @@
+a.email
+{
+    text-decoration: underline;
+    color:#0000ff;
+}
+
+p
+{
+    margin: 0;
+    padding: 0;
+    white-space: pre-wrap;
+    -qt-block-indent: 0;
+    text-indent: 0;
+}
+
+span.title1
+{
+    font-size: 16px;
+    font-weight:600;
+    text-decoration: underline;
+}
+
+span.title2
+{
+    text-decoration: underline;
+}
+
+span.who
+{
+    font-style:italic;
+}
+
+div.wholist
+{
+    display: block;
+    margin-left: 20px;
+}
+
+img.leftPos
+{
+    border-width: 0;
+}
+
+img.rightPos
+{
+    border-width: 0;
+}
+
+img
+{
+    display: inline-block;
+}
