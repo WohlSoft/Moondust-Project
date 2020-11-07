@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from typing import NamedTuple
 import json
 
 tpl_category = '<p><span class="title1">%s</span></p><br>'
@@ -9,7 +10,7 @@ img_root_qt = 'qrc://contributors/'
 img_root_local = 'contributors/'
 
 
-class Person:
+class Person(object):
     def __init__(self):
         self.nickname = None
         self.nicknames = []
@@ -21,17 +22,63 @@ class Person:
         self.home_pages = []
         self.avatar = None
 
+    def set_data(self, data):
+        for key in data:
+            setattr(self, key, data[key])
 
-class Group:
+    def asdict(self):
+        out = {}
+
+        if self.nickname:
+            out['nickname'] = self.nickname
+        if len(self.nicknames) > 0:
+            out['nicknames'] = self.nicknames
+        if self.description:
+            out['description'] = self.description
+        if self.email:
+            out['email'] = self.email
+        if self.real_name:
+            out['real_name'] = self.real_name
+        if len(self.real_name_alt) > 0:
+            out['real_name_alt'] = self.real_name_alt
+        if self.home_page:
+            out['home_page'] = self.home_page
+        if len(self.home_pages) > 0:
+            out['home_pages'] = self.home_pages
+        if self.avatar:
+            out['avatar'] = self.avatar
+
+        return out
+
+
+class Group(object):
     def __init__(self):
-        self.name = "<unknown>"
+        self.name = '<unknown>'
         self.people = []
 
+    def asdict(self):
+        people_dict = []
+        for pers in self.people:
+            people_dict.append(pers.asdict())
+        return {
+            'name': self.name,
+            'people': people_dict
+        }
 
-class Category:
+
+class Category(object):
     def __init__(self):
         self.name = "<unknown>"
         self.groups = []
+
+    def asdict(self):
+        group_dict = []
+        for group in self.groups:
+            group_dict.append(group.asdict())
+        return {
+            'name': self.name,
+            'groups': group_dict
+        }
 
 
 def build_people(people, do_local):
@@ -130,334 +177,21 @@ def build_page(cats, do_local):
 
 categories = []
 
-# TODO:
-# with open('contributors.json') as json_file:
-#     categories = json.load(json_file)
-
-md = Category()
-md.name = 'Main developers'
-
-grp = Group()
-grp.name = 'Engine, Editor, Configs, Research, Graphics, Documents, Logo'
-
-p = Person()
-p.nickname = "Wohlstand"
-p.real_name = "Vitaly Novichkov"
-p.real_name_alt = ["Виталий Новичков", "ノヴィチコーフ・ヴィターリ"]
-p.email = "admin@wohlnet.ru"
-p.avatar = "Wohlstand.png"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-grp = Group()
-grp.name = 'Editor and Engine (Co-Developer); Configs, Research'
-
-p = Person()
-p.nickname = "Kevsoft"
-p.real_name = "Kevin Waldock"
-p.email = "kevin.waldock@gmail.com"
-p.avatar = "Kevsoft.png"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-categories.append(md)
-
-
-md = Category()
-md.name = 'Retired developers'
-
-grp = Group()
-grp.name = 'Early Mac OS X Builds, Debugging, Proofreading'
-p = Person()
-p.nickname = "CaptainSwag101"
-p.real_name = "James Pelster"
-p.email = "jpmac26@gmail.com"
-grp.people.append(p)
-md.groups.append(grp)
-
-grp = Group()
-grp.name = 'Graphics, Documents, Proofreading'
-p = Person()
-p.nickname = "Veudekato"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-categories.append(md)
-
-
-md = Category()
-md.name = 'Graphics Designers'
-
-grp = Group()
-grp.name = 'Icons for applications and tools, July 2020'
-p = Person()
-p.nickname = "Tails608"
-p.avatar = "Tails608.png"
-grp.people.append(p)
-md.groups.append(grp)
-
-grp = Group()
-grp.name = 'Icons for applications and tools, September 2015'
-p = Person()
-p.nickname = "Orakel"
-grp.people.append(p)
-md.groups.append(grp)
-
-grp = Group()
-grp.name = 'Icons for applications and tools, November 2014'
-p = Person()
-p.nickname = "Valtteri"
-p.avatar = "Valtteri.png"
-grp.people.append(p)
-md.groups.append(grp)
-
-grp = Group()
-grp.name = 'Icons for applications and tools, August 2014'
-p = Person()
-p.real_name = "Aristo Lauderdale"
-p.email = "gluigix@gmx.de"
-p.avatar = "Marina.png"
-grp.people.append(p)
-md.groups.append(grp)
-
-categories.append(md)
-
-
-md = Category()
-md.name = 'Translations'
-
-grp = Group()
-grp.name = 'English'
-
-p = Person()
-p.nickname = "CaptainSwag101"
-p.real_name = "James Pelster"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Wohlstand"
-p.real_name = "Vitaly Novichkov"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'French'
-
-p = Person()
-p.nickname = "NathanBnm"
-p.real_name = "Nathan Bonnemains"
-p.home_page = 'https://github.com/NathanBnm'
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'Russian'
-
-p = Person()
-p.nickname = "Wohlstand"
-p.real_name = "Vitaly Novichkov"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'German'
-
-p = Person()
-p.nickname = "Kevsoft"
-p.real_name = "Kevin Waldock"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'Spanish'
-
-p = Person()
-p.nickname = "hacheipe399"
-p.real_name = "Paredes Fernando"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'Italian'
-
-p = Person()
-p.nickname = "AndrewPixel"
-p.email = "andrewpixelgamer@gmail.com"
-p.avatar = "AndrewPixel.png"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Darkonius Mavakar"
-p.real_name = "Gian Marco Pagano"
-p.avatar = "DarkoniusMavakar.png"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "ImperatoreXx"
-p.real_name = "Giuseppe Virdone"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'Portuguese (Brazilian)'
-
-p = Person()
-p.nickname = "tb1024"
-p.real_name = "Carlos Eduardo"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'Polish'
-
-p = Person()
-p.nickname = "P4VLOWSKEY"
-p.real_name = "Karol Pawłowski"
-p.email = "karolpaw99@outlook.com"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Mario_and_Luigi_55"
-p.real_name = "Jakub Kowalski"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'Chinese'
-
-p = Person()
-p.nickname = "快乐爱的小精灵"
-p.email = "lovebodhi@yandex.com"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'Dutch'
-
-p = Person()
-p.nickname = "Gameinsky"
-p.real_name = "Olivier Bloch"
-p.email = "blochjunior@gmail.com"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-grp = Group()
-grp.name = 'Ukrainian'
-
-p = Person()
-p.nickname = "h2643"
-p.home_page = "https://youtube.com/c/h2643"
-p.real_name = "Denis Savonchuk"
-p.real_name_alt = ["Денис Савончук"]
-p.email = "denis192851@meta.ua"
-p.avatar = "h2643.png"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-categories.append(md)
-
-
-md = Category()
-md.name = 'Big thanks to'
-
-
-grp = Group()
-grp.name = 'For the general support'
-
-p = Person()
-p.nickname = "5438A38A"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Horikawa Otane"
-p.description = 'Help with early builds before automatic laboratory was been created to ' \
-                'produce night builds of PGE applications'
-p.avatar = "HorikawaOtane.png"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Rednaxela"
-p.description = 'Help with LunaTester sub-module'
-grp.people.append(p)
-
-p = Person()
-p.nickname = "bossedit8"
-p.description = 'Help with detail Alpha/Beta-testing, improvement suggestions, ' \
-                'and with a videos'
-p.avatar = "Bossedit8.png"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Enjl"
-p.nicknames = ["Emral"]
-p.description = 'Help with suggestions to improve the classic events toolbox design ' \
-                'to make it more convenient and other features'
-p.avatar = "Enjl.png"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "FanofSMBX"
-p.description = "Contributing materials for the research help"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Axiom"
-p.description = "Testing and for a initial help to produce of Linux builds"
-p.nicknames = ["Luigifan2010"]
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Natsu"
-p.description = "Help with old logo"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "h2643"
-p.description = "PGE Forums admin (2014-2016)"
-p.avatar = "h2643.png"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Squishy Rex"
-p.description = "Themes creator and some graphics help"
-p.avatar = "SquishyRex.png"
-grp.people.append(p)
-
-p = Person()
-p.nickname = "Valtteri"
-p.description = "Some graphics help"
-p.avatar = "Valtteri.png"
-grp.people.append(p)
-
-md.groups.append(grp)
-
-
-categories.append(md)
+with open('contributors.json') as json_file:
+    categories_dict = json.load(json_file)
+    for e in categories_dict:
+        cat = Category()
+        cat.name = e['name']
+        print(cat.name)
+        for g in e["groups"]:
+            grp = Group()
+            grp.name = g['name']
+            for p in g["people"]:
+                pers = Person()
+                pers.set_data(p)
+                grp.people.append(pers)
+            cat.groups.append(grp)
+        categories.append(cat)
 
 
 def clean_string(text):
@@ -478,6 +212,14 @@ handle.close()
 
 style = style.replace('\n', '\n        ')
 template = template.replace('/*STYLESHEET*/', style)
+
+# categories_dicts = []
+# for cat in categories:
+#     print(cat.name)
+#     categories_dicts.append(cat.asdict())
+#
+# with open("data_file.json", "w") as write_file:
+#     json.dump(categories_dicts, write_file, indent=4, ensure_ascii=False)
 
 handle = open("local_test.html", "w")
 handle.write(clean_string(template.replace('<!--PEOPLE-->', build_page(categories, True))))

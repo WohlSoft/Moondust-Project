@@ -1,11 +1,295 @@
 [
     {
-        "name" : "Main developers",
-        "groups" : [
+        "name": "Main developers",
+        "groups": [
             {
-                "name" : "Engine, Editor, Configs, Research, Graphics, Documents, Logo",
-                "people" : [
+                "name": "Engine, Editor, Configs, Research, Graphics, Documents, Logo",
+                "people": [
+                    {
+                        "nickname": "Wohlstand",
+                        "email": "admin@wohlnet.ru",
+                        "real_name": "Vitaly Novichkov",
+                        "real_name_alt": [
+                            "Виталий Новичков",
+                            "ノヴィチコーフ・ヴィターリ"
+                        ],
+                        "avatar": "Wohlstand.png"
+                    }
+                ]
+            },
+            {
+                "name": "Editor and Engine (Co-Developer); Configs, Research",
+                "people": [
+                    {
+                        "nickname": "Kevsoft",
+                        "email": "kevin.waldock@gmail.com",
+                        "real_name": "Kevin Waldock",
+                        "avatar": "Kevsoft.png"
+                    }
+                ]
+            }
+        ]
+    },
 
+    {
+        "name": "Retired developers",
+        "groups": [
+            {
+                "name": "Early Mac OS X Builds, Debugging, Proofreading",
+                "people": [
+                    {
+                        "nickname": "CaptainSwag101",
+                        "email": "jpmac26@gmail.com",
+                        "real_name": "James Pelster"
+                    }
+                ]
+            },
+            {
+                "name": "Graphics, Documents, Proofreading",
+                "people": [
+                    {
+                        "nickname": "Veudekato"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        "name": "Graphics Designers",
+        "groups": [
+            {
+                "name": "Icons for applications and tools, July 2020",
+                "people": [
+                    {
+                        "nickname": "Tails608",
+                        "avatar": "Tails608.png"
+                    }
+                ]
+            },
+            {
+                "name": "Icons for applications and tools, September 2015",
+                "people": [
+                    {
+                        "nickname": "Orakel"
+                    }
+                ]
+            },
+            {
+                "name": "Icons for applications and tools, November 2014",
+                "people": [
+                    {
+                        "nickname": "Valtteri",
+                        "avatar": "Valtteri.png"
+                    }
+                ]
+            },
+            {
+                "name": "Icons for applications and tools, August 2014",
+                "people": [
+                    {
+                        "email": "gluigix@gmx.de",
+                        "real_name": "Aristo Lauderdale",
+                        "avatar": "Marina.png"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        "name": "Translations",
+        "groups": [
+            {
+                "name": "English",
+                "people": [
+                    {
+                        "nickname": "CaptainSwag101",
+                        "real_name": "James Pelster"
+                    },
+                    {
+                        "nickname": "Wohlstand",
+                        "real_name": "Vitaly Novichkov"
+                    }
+                ]
+            },
+            {
+                "name": "French",
+                "people": [
+                    {
+                        "nickname": "NathanBnm",
+                        "real_name": "Nathan Bonnemains",
+                        "home_page": "https://github.com/NathanBnm"
+                    }
+                ]
+            },
+            {
+                "name": "Russian",
+                "people": [
+                    {
+                        "nickname": "Wohlstand",
+                        "real_name": "Vitaly Novichkov"
+                    }
+                ]
+            },
+            {
+                "name": "German",
+                "people": [
+                    {
+                        "nickname": "Kevsoft",
+                        "real_name": "Kevin Waldock"
+                    }
+                ]
+            },
+            {
+                "name": "Spanish",
+                "people": [
+                    {
+                        "nickname": "hacheipe399",
+                        "real_name": "Paredes Fernando"
+                    }
+                ]
+            },
+            {
+                "name": "Italian",
+                "people": [
+                    {
+                        "nickname": "AndrewPixel",
+                        "email": "andrewpixelgamer@gmail.com",
+                        "avatar": "AndrewPixel.png"
+                    },
+                    {
+                        "nickname": "Darkonius Mavakar",
+                        "real_name": "Gian Marco Pagano",
+                        "avatar": "DarkoniusMavakar.png"
+                    },
+                    {
+                        "nickname": "ImperatoreXx",
+                        "real_name": "Giuseppe Virdone"
+                    }
+                ]
+            },
+            {
+                "name": "Portuguese (Brazilian)",
+                "people": [
+                    {
+                        "nickname": "tb1024",
+                        "real_name": "Carlos Eduardo"
+                    }
+                ]
+            },
+            {
+                "name": "Polish",
+                "people": [
+                    {
+                        "nickname": "P4VLOWSKEY",
+                        "email": "karolpaw99@outlook.com",
+                        "real_name": "Karol Pawłowski"
+                    },
+                    {
+                        "nickname": "Mario_and_Luigi_55",
+                        "real_name": "Jakub Kowalski"
+                    }
+                ]
+            },
+            {
+                "name": "Chinese",
+                "people": [
+                    {
+                        "nickname": "快乐爱的小精灵",
+                        "email": "lovebodhi@yandex.com"
+                    }
+                ]
+            },
+            {
+                "name": "Dutch",
+                "people": [
+                    {
+                        "nickname": "Gameinsky",
+                        "email": "blochjunior@gmail.com",
+                        "real_name": "Olivier Bloch"
+                    }
+                ]
+            },
+            {
+                "name": "Ukrainian",
+                "people": [
+                    {
+                        "nickname": "h2643",
+                        "email": "denis192851@meta.ua",
+                        "real_name": "Denis Savonchuk",
+                        "real_name_alt": [
+                            "Денис Савончук"
+                        ],
+                        "home_page": "https://youtube.com/c/h2643",
+                        "avatar": "h2643.png"
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        "name": "Big thanks to",
+        "groups": [
+            {
+                "name": "For the general support",
+                "people": [
+                    {
+                        "nickname": "5438A38A"
+                    },
+                    {
+                        "nickname": "Horikawa Otane",
+                        "description": "Help with early builds before the Laboratory with CI was built",
+                        "avatar": "HorikawaOtane.png"
+                    },
+                    {
+                        "nickname": "Rednaxela",
+                        "description": "Help with LunaTester sub-module"
+                    },
+                    {
+                        "nickname": "bossedit8",
+                        "description": "Help with detail Alpha/Beta-testing, improvement suggestions, and with a videos",
+                        "avatar": "Bossedit8.png"
+                    },
+                    {
+                        "nickname": "Enjl",
+                        "nicknames": [
+                            "Emral"
+                        ],
+                        "description": "Help with suggestions to improve the classic events toolbox design to make it more convenient and other features",
+                        "avatar": "Enjl.png"
+                    },
+                    {
+                        "nickname": "FanofSMBX",
+                        "description": "Contributing materials for the research help"
+                    },
+                    {
+                        "nickname": "Axiom",
+                        "nicknames": [
+                            "Luigifan2010"
+                        ],
+                        "description": "Testing and for a initial help to produce of Linux builds"
+                    },
+                    {
+                        "nickname": "Natsu",
+                        "description": "Help with old logo"
+                    },
+                    {
+                        "nickname": "h2643",
+                        "description": "PGE Forums admin (2014-2016)",
+                        "avatar": "h2643.png"
+                    },
+                    {
+                        "nickname": "Squishy Rex",
+                        "description": "Themes creator and some graphics help",
+                        "avatar": "SquishyRex.png"
+                    },
+                    {
+                        "nickname": "Valtteri",
+                        "description": "Some graphics help",
+                        "avatar": "Valtteri.png"
+                    }
                 ]
             }
         ]
