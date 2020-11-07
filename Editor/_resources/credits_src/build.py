@@ -142,8 +142,6 @@ def build_people(people, do_local):
                     (img_root_local if do_local else img_root_qt, person.avatar)
 
         text += '</p>\n'
-        # if person.avatar or person.description:
-        #     text += '<br>\n<br>\n'
 
     return text
 
@@ -158,8 +156,11 @@ def build_group(group, do_local):
                 '</tr>\n' % \
                 (img_root_local if do_local else img_root_qt)
         text += "<tr>\n"
-        text += '<td class="title2">%s</td>\n' % g.name
-        text += '<td class="people">'
+        if g.name:
+            text += '<td class="title2">%s</td>\n' % g.name
+            text += '<td class="people">'
+        else:
+            text += '<td colspan="2" class="people">'
         text += build_people(g.people, do_local)
         text += '</td>\n'
         text += "</tr>\n"
@@ -201,7 +202,10 @@ with open('contributors.json') as json_file:
         print(cat.name)
         for g in e["groups"]:
             grp = Group()
-            grp.name = g['name']
+            if "name" in g:
+                grp.name = g['name']
+            else:
+                grp.name = None
             for p in g["people"]:
                 pers = Person()
                 pers.set_data(p)

@@ -3,7 +3,7 @@
         "name": "Main developers",
         "groups": [
             {
-                "name": "Engine, Editor, Configs, Research, Graphics, Documents, Logo",
+                "name": "Development",
                 "people": [
                     {
                         "nickname": "Wohlstand",
@@ -13,17 +13,14 @@
                             "Виталий Новичков",
                             "ノヴィチコーフ・ヴィターリ"
                         ],
+                        "description": "Engine, Editor, Configs, Research, Graphics, Documents, Logo",
                         "avatar": "Wohlstand.png"
-                    }
-                ]
-            },
-            {
-                "name": "Editor and Engine (Co-Developer); Configs, Research",
-                "people": [
+                    },
                     {
                         "nickname": "Kevsoft",
                         "email": "kevin.waldock@gmail.com",
                         "real_name": "Kevin Waldock",
+                        "description": "Editor and Engine (Co-Developer); Configs, Research",
                         "avatar": "Kevsoft.png"
                     }
                 ]
@@ -35,20 +32,22 @@
         "name": "Retired developers",
         "groups": [
             {
-                "name": "Early Mac OS X Builds, Debugging, Proofreading",
+                "name": "Development",
                 "people": [
                     {
                         "nickname": "CaptainSwag101",
+                        "description": "Early Mac OS X Builds, Debugging, Proofreading",
                         "email": "jpmac26@gmail.com",
                         "real_name": "James Pelster"
                     }
                 ]
             },
             {
-                "name": "Graphics, Documents, Proofreading",
+                "name": "Misc.",
                 "people": [
                     {
-                        "nickname": "Veudekato"
+                        "nickname": "Veudekato",
+                        "description": "Graphics, Documents, Proofreading"
                     }
                 ]
             }
@@ -59,36 +58,25 @@
         "name": "Graphics Designers",
         "groups": [
             {
-                "name": "Icons for applications and tools, July 2020",
+                "name": "Icons for applications and tools",
                 "people": [
                     {
                         "nickname": "Tails608",
+                        "description": "Icons for applications and tools, July 2020",
                         "avatar": "Tails608.png"
-                    }
-                ]
-            },
-            {
-                "name": "Icons for applications and tools, September 2015",
-                "people": [
+                    },
                     {
-                        "nickname": "Orakel"
-                    }
-                ]
-            },
-            {
-                "name": "Icons for applications and tools, November 2014",
-                "people": [
+                        "nickname": "Orakel",
+                        "description": "Tuned icon for Editor, September 2015"
+                    },
                     {
                         "nickname": "Valtteri",
+                        "description": "Icons for applications and tools, November 2014",
                         "avatar": "Valtteri.png"
-                    }
-                ]
-            },
-            {
-                "name": "Icons for applications and tools, August 2014",
-                "people": [
+                    },
                     {
                         "email": "gluigix@gmx.de",
+                        "description": "First set of icons for applications and tools, August 2014",
                         "real_name": "Aristo Lauderdale",
                         "avatar": "Marina.png"
                     }
@@ -233,7 +221,6 @@
         "name": "Big thanks to",
         "groups": [
             {
-                "name": "For the general support",
                 "people": [
                     {
                         "nickname": "5438A38A"
