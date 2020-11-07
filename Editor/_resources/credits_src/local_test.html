@@ -11,25 +11,50 @@
             color:#0000ff;
         }
 
-        p
+        td
         {
-            margin: 0;
-            padding: 0;
-            white-space: pre-wrap;
-            -qt-block-indent: 0;
+            border: none;
+        }
+
+        table
+        {
+            max-width: 50em;
+            border: none;
+        }
+
+        tr.blackLine
+        {
+            height: 1px;
+            max-height: 1px;
+        }
+
+        td.title1
+        {
+            text-align: center;
+            font-size: 16pt;
+            font-weight:600;
+            text-decoration: underline;
+            padding-top: 0.2em;
+            padding-bottom: 0.5em;
+            /*-qt-block-indent:0;*/
             text-indent: 0;
         }
 
-        span.title1
+        td.title2
         {
-            font-size: 16px;
-            font-weight:600;
-            text-decoration: underline;
+            padding-top: 0.1em;
+            vertical-align: top;
+            text-align: left;
+            font-weight: bold;
+            /*-qt-block-indent:0;*/
         }
 
-        span.title2
+        td.people
         {
-            text-decoration: underline;
+            padding-top: 0.1em;
+            padding-bottom: 1.5em;
+            text-align: center;
+            /*-qt-block-indent:0;*/
         }
 
         span.who
@@ -58,171 +83,305 @@
             display: inline-block;
         }
 
+        .hr-dashed
+        {
+            text-align: center;
+            margin: 20px auto;
+            width: 70%;
+            padding: 0;
+            height: 0.1em;
+            border: none;
+            border-top: 2px dashed #ddd;
+        }
     </style>
 </head>
 
 <body style="text-align: center; font-weight :400; font-style:normal;">
-<p><span class="title1">Main developers:</span></p>
-<br>
-
-<p><span class="title2">Engine, Editor, Configs, Research, Graphics, Documents, Logo:</span></p>
-<p><span class="who">"Wohlstand" - Vitaly Novichkov</span> &lt;<a class="email" href="mailto:admin@wohlnet.ru">admin@wohlnet.ru</a>&gt;<br>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td class="title1" colspan="2">Main developers</td></tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Engine, Editor, Configs, Research, Graphics, Documents, Logo</td>
+<td class="people"><p><span class="who">&quot;Wohlstand&quot; - Vitaly Novichkov</span> &lt;<a class="email" href="mailto:admin@wohlnet.ru">admin@wohlnet.ru</a>&gt;<br>
 (Виталий Новичков / ノヴィチコーフ・ヴィターリ)<br>
-<img class="leftPos" alt="avatar" src="contributors/Wohlstand.png"></p>
 <br>
-<br>
-<p><span class="title2">Editor and Engine (Co-Developer); Configs, Research:</span></p>
-<p><span class="who">"Kevsoft" - Kevin Waldock</span> &lt;<a class="email" href="mailto:kevin.waldock@gmail.com">kevin.waldock@gmail.com</a>&gt;<br>
-<img class="leftPos" alt="avatar" src="contributors/Kevsoft.png"></p>
-<br>
-<br>
-<br>
-<br>
-<p><span class="title1">Retired developers:</span></p>
-<br>
-
-<p><span class="title2">Early Mac OS X Builds, Debugging, Proofreading:</span></p>
-<p><span class="who">"CaptainSwag101" - James Pelster</span> &lt;<a class="email" href="mailto:jpmac26@gmail.com">jpmac26@gmail.com</a>&gt;<br>
+<img class="leftPos" alt="avatar" src="contributors/Wohlstand.png">
 </p>
-<p><span class="title2">Graphics, Documents, Proofreading:</span></p>
-<p><span class="who">"Veudekato"</span><br>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Editor and Engine (Co-Developer); Configs, Research</td>
+<td class="people"><p><span class="who">&quot;Kevsoft&quot; - Kevin Waldock</span> &lt;<a class="email" href="mailto:kevin.waldock@gmail.com">kevin.waldock@gmail.com</a>&gt;<br>
+<br>
+<img class="leftPos" alt="avatar" src="contributors/Kevsoft.png">
+</p>
+</td>
+</tr>
+<tr><td class="title1" colspan="2">Retired developers</td></tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Early Mac OS X Builds, Debugging, Proofreading</td>
+<td class="people"><p><span class="who">&quot;CaptainSwag101&quot; - James Pelster</span> &lt;<a class="email" href="mailto:jpmac26@gmail.com">jpmac26@gmail.com</a>&gt;<br>
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Graphics, Documents, Proofreading</td>
+<td class="people"><p><span class="who">&quot;Veudekato&quot;</span><br>
+</p>
+</td>
+</tr>
+<tr><td class="title1" colspan="2">Graphics Designers</td></tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Icons for applications and tools, July 2020</td>
+<td class="people"><p><span class="who">&quot;Tails608&quot;</span><br>
+<br>
+<img class="leftPos" alt="avatar" src="contributors/Tails608.png">
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Icons for applications and tools, September 2015</td>
+<td class="people"><p><span class="who">&quot;Orakel&quot;</span><br>
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Icons for applications and tools, November 2014</td>
+<td class="people"><p><span class="who">&quot;Valtteri&quot;</span><br>
+<br>
+<img class="leftPos" alt="avatar" src="contributors/Valtteri.png">
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Icons for applications and tools, August 2014</td>
+<td class="people"><p><span class="who">Aristo Lauderdale</span> &lt;<a class="email" href="mailto:gluigix@gmx.de">gluigix@gmx.de</a>&gt;<br>
+<br>
+<img class="leftPos" alt="avatar" src="contributors/Marina.png">
+</p>
+</td>
+</tr>
+<tr><td class="title1" colspan="2">Translations</td></tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">English</td>
+<td class="people"><p><span class="who">&quot;CaptainSwag101&quot; - James Pelster</span><br>
 </p>
 <br>
-<br>
-<p><span class="title1">Graphics Designers:</span></p>
-<br>
-
-<p><span class="title2">Icons for applications and tools, July 2020:</span></p>
-<p><span class="who">"Tails608"</span><br>
-<img class="leftPos" alt="avatar" src="contributors/Tails608.png"></p>
-<br>
-<br>
-<p><span class="title2">Icons for applications and tools, September 2015:</span></p>
-<p><span class="who">"Orakel"</span><br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Wohlstand&quot; - Vitaly Novichkov</span><br>
 </p>
-<p><span class="title2">Icons for applications and tools, November 2014:</span></p>
-<p><span class="who">"Valtteri"</span><br>
-<img class="leftPos" alt="avatar" src="contributors/Valtteri.png"></p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">French</td>
+<td class="people"><p><span class="who"><a href="https://github.com/NathanBnm">&quot;NathanBnm&quot; - Nathan Bonnemains</a></span><br>
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Russian</td>
+<td class="people"><p><span class="who">&quot;Wohlstand&quot; - Vitaly Novichkov</span><br>
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">German</td>
+<td class="people"><p><span class="who">&quot;Kevsoft&quot; - Kevin Waldock</span><br>
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Spanish</td>
+<td class="people"><p><span class="who">&quot;hacheipe399&quot; - Paredes Fernando</span><br>
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Italian</td>
+<td class="people"><p><span class="who">&quot;AndrewPixel&quot;</span> &lt;<a class="email" href="mailto:andrewpixelgamer@gmail.com">andrewpixelgamer@gmail.com</a>&gt;<br>
 <br>
+<img class="leftPos" alt="avatar" src="contributors/AndrewPixel.png">
+</p>
 <br>
-<p><span class="title2">Icons for applications and tools, August 2014:</span></p>
-<p><span class="who">Aristo Lauderdale</span> &lt;<a class="email" href="mailto:gluigix@gmx.de">gluigix@gmx.de</a>&gt;<br>
-<img class="leftPos" alt="avatar" src="contributors/Marina.png"></p>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Darkonius Mavakar&quot; - Gian Marco Pagano</span><br>
 <br>
+<img class="leftPos" alt="avatar" src="contributors/DarkoniusMavakar.png">
+</p>
 <br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;ImperatoreXx&quot; - Giuseppe Virdone</span><br>
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Portuguese (Brazilian)</td>
+<td class="people"><p><span class="who">&quot;tb1024&quot; - Carlos Eduardo</span><br>
+</p>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Polish</td>
+<td class="people"><p><span class="who">&quot;P4VLOWSKEY&quot; - Karol Pawłowski</span> &lt;<a class="email" href="mailto:karolpaw99@outlook.com">karolpaw99@outlook.com</a>&gt;<br>
+</p>
 <br>
-<br>
-<p><span class="title1">Translations:</span></p>
-<br>
-
-<p><span class="title2">English:</span></p>
-<p><span class="who">"CaptainSwag101" - James Pelster</span><br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Mario_and_Luigi_55&quot; - Jakub Kowalski</span><br>
 </p>
-<p><span class="who">"Wohlstand" - Vitaly Novichkov</span><br>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Chinese</td>
+<td class="people"><p><span class="who">&quot;快乐爱的小精灵&quot;</span> &lt;<a class="email" href="mailto:lovebodhi@yandex.com">lovebodhi@yandex.com</a>&gt;<br>
 </p>
-<p><span class="title2">French:</span></p>
-<p><span class="who"><a href="https://github.com/NathanBnm">"NathanBnm" - Nathan Bonnemains</a></span><br>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Dutch</td>
+<td class="people"><p><span class="who">&quot;Gameinsky&quot; - Olivier Bloch</span> &lt;<a class="email" href="mailto:blochjunior@gmail.com">blochjunior@gmail.com</a>&gt;<br>
 </p>
-<p><span class="title2">Russian:</span></p>
-<p><span class="who">"Wohlstand" - Vitaly Novichkov</span><br>
-</p>
-<p><span class="title2">German:</span></p>
-<p><span class="who">"Kevsoft" - Kevin Waldock</span><br>
-</p>
-<p><span class="title2">Spanish:</span></p>
-<p><span class="who">"hacheipe399" - Paredes Fernando</span><br>
-</p>
-<p><span class="title2">Italian:</span></p>
-<p><span class="who">"AndrewPixel"</span> &lt;<a class="email" href="mailto:andrewpixelgamer@gmail.com">andrewpixelgamer@gmail.com</a>&gt;<br>
-<img class="leftPos" alt="avatar" src="contributors/AndrewPixel.png"></p>
-<br>
-<br>
-<p><span class="who">"Darkonius Mavakar" - Gian Marco Pagano</span><br>
-<img class="leftPos" alt="avatar" src="contributors/DarkoniusMavakar.png"></p>
-<br>
-<br>
-<p><span class="who">"ImperatoreXx" - Giuseppe Virdone</span><br>
-</p>
-<p><span class="title2">Portuguese (Brazilian):</span></p>
-<p><span class="who">"tb1024" - Carlos Eduardo</span><br>
-</p>
-<p><span class="title2">Polish:</span></p>
-<p><span class="who">"P4VLOWSKEY" - Karol Pawłowski</span> &lt;<a class="email" href="mailto:karolpaw99@outlook.com">karolpaw99@outlook.com</a>&gt;<br>
-</p>
-<p><span class="who">"Mario_and_Luigi_55" - Jakub Kowalski</span><br>
-</p>
-<p><span class="title2">Chinese:</span></p>
-<p><span class="who">"快乐爱的小精灵"</span> &lt;<a class="email" href="mailto:lovebodhi@yandex.com">lovebodhi@yandex.com</a>&gt;<br>
-</p>
-<p><span class="title2">Dutch:</span></p>
-<p><span class="who">"Gameinsky" - Olivier Bloch</span> &lt;<a class="email" href="mailto:blochjunior@gmail.com">blochjunior@gmail.com</a>&gt;<br>
-</p>
-<p><span class="title2">Ukrainian:</span></p>
-<p><span class="who"><a href="https://youtube.com/c/h2643">"h2643" - Denis Savonchuk</a></span> &lt;<a class="email" href="mailto:denis192851@meta.ua">denis192851@meta.ua</a>&gt;<br>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">Ukrainian</td>
+<td class="people"><p><span class="who"><a href="https://youtube.com/c/h2643">&quot;h2643&quot; - Denis Savonchuk</a></span> &lt;<a class="email" href="mailto:denis192851@meta.ua">denis192851@meta.ua</a>&gt;<br>
 (Денис Савончук)<br>
-<img class="leftPos" alt="avatar" src="contributors/h2643.png"></p>
 <br>
-<br>
-<br>
-<br>
-<p><span class="title1">Big thanks to:</span></p>
-<br>
-
-<p><span class="title2">For the general support:</span></p>
-<p><span class="who">"5438A38A"</span><br>
+<img class="leftPos" alt="avatar" src="contributors/h2643.png">
 </p>
-<p><span class="who">"Horikawa Otane"</span><br>
-<small>Help with early builds before the Laboratory with CI was built</small><br>
-<img class="leftPos" alt="avatar" src="contributors/HorikawaOtane.png"></p>
-<br>
-<br>
-<p><span class="who">"Rednaxela"</span><br>
-<small>Help with LunaTester sub-module</small><br>
+</td>
+</tr>
+<tr><td class="title1" colspan="2">Big thanks to</td></tr>
+<tr>
+<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+</tr>
+<tr>
+<td class="title2">For the general support</td>
+<td class="people"><p><span class="who">&quot;5438A38A&quot;</span><br>
 </p>
 <br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Horikawa Otane&quot;</span><br>
+<small>Help with early builds before the Laboratory with CI was built</small>
 <br>
-<p><span class="who">"bossedit8"</span><br>
-<small>Help with detail Alpha/Beta-testing, improvement suggestions, and with a videos</small><br>
-<img class="leftPos" alt="avatar" src="contributors/Bossedit8.png"></p>
+<img class="leftPos" alt="avatar" src="contributors/HorikawaOtane.png">
+</p>
 <br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Rednaxela&quot;</span><br>
+<small>Help with LunaTester sub-module</small>
+</p>
 <br>
-<p><span class="who">"Enjl" (a.k.a. Emral)
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;bossedit8&quot;</span><br>
+<small>Help with detail Alpha/Beta-testing, improvement suggestions, and with a videos</small>
+<br>
+<img class="leftPos" alt="avatar" src="contributors/Bossedit8.png">
+</p>
+<br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Enjl&quot; (a.k.a. Emral)
 </span><br>
-<small>Help with suggestions to improve the classic events toolbox design to make it more convenient and other features</small><br>
-<img class="leftPos" alt="avatar" src="contributors/Enjl.png"></p>
+<small>Help with suggestions to improve the classic events toolbox design to make it more convenient and other features</small>
 <br>
-<br>
-<p><span class="who">"FanofSMBX"</span><br>
-<small>Contributing materials for the research help</small><br>
+<img class="leftPos" alt="avatar" src="contributors/Enjl.png">
 </p>
 <br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;FanofSMBX&quot;</span><br>
+<small>Contributing materials for the research help</small>
+</p>
 <br>
-<p><span class="who">"Axiom" (a.k.a. Luigifan2010)
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Axiom&quot; (a.k.a. Luigifan2010)
 </span><br>
-<small>Testing and for a initial help to produce of Linux builds</small><br>
+<small>Testing and for a initial help to produce of Linux builds</small>
 </p>
 <br>
-<br>
-<p><span class="who">"Natsu"</span><br>
-<small>Help with old logo</small><br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Natsu&quot;</span><br>
+<small>Help with old logo</small>
 </p>
 <br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;h2643&quot;</span><br>
+<small>PGE Forums admin (2014-2016)</small>
 <br>
-<p><span class="who">"h2643"</span><br>
-<small>PGE Forums admin (2014-2016)</small><br>
-<img class="leftPos" alt="avatar" src="contributors/h2643.png"></p>
+<img class="leftPos" alt="avatar" src="contributors/h2643.png">
+</p>
 <br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Squishy Rex&quot;</span><br>
+<small>Themes creator and some graphics help</small>
 <br>
-<p><span class="who">"Squishy Rex"</span><br>
-<small>Themes creator and some graphics help</small><br>
-<img class="leftPos" alt="avatar" src="contributors/SquishyRex.png"></p>
+<img class="leftPos" alt="avatar" src="contributors/SquishyRex.png">
+</p>
 <br>
+<img class="leftPos" alt="separator" src="contributors/_separator.png">
+<p><span class="who">&quot;Valtteri&quot;</span><br>
+<small>Some graphics help</small>
 <br>
-<p><span class="who">"Valtteri"</span><br>
-<small>Some graphics help</small><br>
-<img class="leftPos" alt="avatar" src="contributors/Valtteri.png"></p>
-<br>
-<br>
+<img class="leftPos" alt="avatar" src="contributors/Valtteri.png">
+</p>
+</td>
+</tr>
+</table>
 <br>
 <br>
 <br>

@@ -153,6 +153,8 @@
         <file>images/goto_left_top_dark.png</file>
         <file>images/goto_right_bottom_dark.png</file>
         <file>images/goto_top_right_dark.png</file>
+        <file>contributors/_separator.png</file>
+        <file>contributors/_pix.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/00.png</file>

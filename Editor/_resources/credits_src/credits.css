@@ -4,25 +4,50 @@ a.email
     color:#0000ff;
 }
 
-p
+td
 {
-    margin: 0;
-    padding: 0;
-    white-space: pre-wrap;
-    -qt-block-indent: 0;
+    border: none;
+}
+
+table
+{
+    max-width: 50em;
+    border: none;
+}
+
+tr.blackLine
+{
+    height: 1px;
+    max-height: 1px;
+}
+
+td.title1
+{
+    text-align: center;
+    font-size: 16pt;
+    font-weight:600;
+    text-decoration: underline;
+    padding-top: 0.2em;
+    padding-bottom: 0.5em;
+    /*-qt-block-indent:0;*/
     text-indent: 0;
 }
 
-span.title1
+td.title2
 {
-    font-size: 16px;
-    font-weight:600;
-    text-decoration: underline;
+    padding-top: 0.1em;
+    vertical-align: top;
+    text-align: left;
+    font-weight: bold;
+    /*-qt-block-indent:0;*/
 }
 
-span.title2
+td.people
 {
-    text-decoration: underline;
+    padding-top: 0.1em;
+    padding-bottom: 1.5em;
+    text-align: center;
+    /*-qt-block-indent:0;*/
 }
 
 span.who
@@ -49,4 +74,15 @@ img.rightPos
 img
 {
     display: inline-block;
+}
+
+.hr-dashed
+{
+    text-align: center;
+    margin: 20px auto;
+    width: 70%;
+    padding: 0;
+    height: 0.1em;
+    border: none;
+    border-top: 2px dashed #ddd;
 }

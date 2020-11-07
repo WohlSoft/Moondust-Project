@@ -84,14 +84,21 @@ class Category(object):
 def build_people(people, do_local):
     text = ""
 
+    is_first_person = True
     for person in people:
-        text += '<p>'
+        if is_first_person:
+            is_first_person = False
+        else:
+            text += '<br>\n' \
+                    '<img class="leftPos" alt="separator" src="%s_separator.png">\n' % \
+                    (img_root_local if do_local else img_root_qt)
 
+        text += '<p>'
         text += '<span class="who">'
         if person.home_page:
             text += '<a href="%s">' % person.home_page
         if person.nickname:
-            text += '"%s"' % person.nickname
+            text += '&quot;%s&quot;' % person.nickname
         if person.nickname and person.real_name:
             text += ' - %s' % person.real_name
         elif person.real_name:
@@ -127,25 +134,35 @@ def build_people(people, do_local):
             text += ')<br>\n'
 
         if person.description:
-            text += '<small>%s</small><br>\n' % person.description
+            text += '<small>%s</small>\n' % person.description
 
         if person.avatar:
-            text += '<img class="leftPos" alt="avatar" src="%s%s">' % \
+            text += '<br>\n' \
+                    '<img class="leftPos" alt="avatar" src="%s%s">\n' % \
                     (img_root_local if do_local else img_root_qt, person.avatar)
 
         text += '</p>\n'
-        if person.avatar or person.description:
-            text += '<br>\n<br>\n'
+        # if person.avatar or person.description:
+        #     text += '<br>\n<br>\n'
 
     return text
 
 
 def build_group(group, do_local):
     text = ""
-
     for g in group:
-        text += '<p><span class="title2">%s:</span></p>\n' % g.name
+        text += '<tr>\n' \
+                '<td colspan="2" style="text-align: center;">' \
+                '<img class="leftPos" alt="separator" src="%s_pix.png">' \
+                '</td>\n' \
+                '</tr>\n' % \
+                (img_root_local if do_local else img_root_qt)
+        text += "<tr>\n"
+        text += '<td class="title2">%s</td>\n' % g.name
+        text += '<td class="people">'
         text += build_people(g.people, do_local)
+        text += '</td>\n'
+        text += "</tr>\n"
 
     return text
 
@@ -153,14 +170,13 @@ def build_group(group, do_local):
 def build_page(cats, do_local):
     text = ""
 
-    is_first = True
+    text += '<table border="0" cellspacing="2" cellpadding="0">\n'
     for c in cats:
-        if is_first:
-            is_first = False
-        else:
-            text += '<br>\n<br>\n'
-        text += '<p><span class="title1">%s:</span></p>\n<br>\n\n' % c.name
+        text += '<tr>' \
+                '<td class="title1" colspan="2">%s</td>' \
+                '</tr>\n' % c.name
         text += build_group(c.groups, do_local)
+    text += "</table>\n"
 
     # Easter egg
     text += '<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n'
