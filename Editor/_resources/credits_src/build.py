@@ -181,12 +181,13 @@ def build_page(cats, do_local):
 
     # Easter egg
     text += '<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n<br>\n'
+    root = img_root_local if do_local else img_root_qt
     text += '<p>\n' \
-            '<img class="rightPos" alt="hele" src="%s/FunnyCat.png"><br>\n' \
-            '<span style="font-size: 16pt;">喝了</span>\n' \
+            '<img class="rightPos" alt="hele" src="%sFunnyCat.png"><br>\n' \
+            '<img class="rightPos" alt="hele" src="%s_hele.png">\n' \
             '</p>\n' \
             '<br>\n' % \
-            (img_root_local if do_local else img_root_qt)
+            (root, root)
     # Easter egg END
 
     return text

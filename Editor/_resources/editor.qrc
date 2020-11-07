@@ -155,6 +155,7 @@
         <file>images/goto_top_right_dark.png</file>
         <file>contributors/_separator.png</file>
         <file>contributors/_pix.png</file>
+        <file>contributors/_hele.png</file>
     </qresource>
     <qresource prefix="/sections">
         <file>sections/00.png</file>
