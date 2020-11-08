@@ -14,13 +14,13 @@ table
     border: none;
 }
 
-tr.blackLine
+.blackLine
 {
     height: 1px;
     max-height: 1px;
 }
 
-td.title1
+.title1
 {
     text-align: center;
     font-size: 16pt;
@@ -28,31 +28,38 @@ td.title1
     text-decoration: underline;
     padding-top: 0.2em;
     padding-bottom: 0.5em;
-    /*-qt-block-indent:0;*/
     text-indent: 0;
 }
 
-td.title2
+.floatTitle
 {
-    width: 8em;
+    position: relative;
+}
+
+.title2
+{
+    color: lightsteelblue;
+    font-size: large;
+    width: 10em;
+    font-style: italic;
     padding-top: 0.1em;
     vertical-align: top;
     text-align: left;
     font-weight: bold;
-    /*-qt-block-indent:0;*/
+    text-decoration: underline;
 }
 
-td.people
+.people
 {
-    padding-top: 0.1em;
+    padding-top: 1.2em;
     padding-bottom: 1.5em;
     text-align: center;
-    /*-qt-block-indent:0;*/
 }
 
 span.who
 {
     font-style:italic;
+    font-weight: bold;
 }
 
 div.wholist

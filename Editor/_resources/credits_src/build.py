@@ -150,17 +150,17 @@ def build_group(group, do_local):
     text = ""
     for g in group:
         text += '<tr>\n' \
-                '<td colspan="2" style="text-align: center;">' \
+                '<td style="text-align: center;">' \
                 '<img class="leftPos" alt="separator" src="%s_pix.png">' \
                 '</td>\n' \
                 '</tr>\n' % \
                 (img_root_local if do_local else img_root_qt)
         text += "<tr>\n"
+        text += '<td class="people">'
+
         if g.name:
-            text += '<td class="title2">%s</td>\n' % g.name
-            text += '<td class="people">'
-        else:
-            text += '<td colspan="2" class="people">'
+            text += '<div class="title2 floatTitle">%s</div>\n' % g.name
+
         text += build_people(g.people, do_local)
         text += '</td>\n'
         text += "</tr>\n"
@@ -174,7 +174,7 @@ def build_page(cats, do_local):
     text += '<table border="0" cellspacing="2" cellpadding="0">\n'
     for c in cats:
         text += '<tr>' \
-                '<td class="title1" colspan="2">%s</td>' \
+                '<td class="title1">%s</td>' \
                 '</tr>\n' % c.name
         text += build_group(c.groups, do_local)
     text += "</table>\n"

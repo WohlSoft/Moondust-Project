@@ -21,13 +21,13 @@
             border: none;
         }
 
-        tr.blackLine
+        .blackLine
         {
             height: 1px;
             max-height: 1px;
         }
 
-        td.title1
+        .title1
         {
             text-align: center;
             font-size: 16pt;
@@ -35,31 +35,38 @@
             text-decoration: underline;
             padding-top: 0.2em;
             padding-bottom: 0.5em;
-            /*-qt-block-indent:0;*/
             text-indent: 0;
         }
 
-        td.title2
+        .floatTitle
         {
-            width: 8em;
+            position: relative;
+        }
+
+        .title2
+        {
+            color: lightsteelblue;
+            font-size: large;
+            width: 10em;
+            font-style: italic;
             padding-top: 0.1em;
             vertical-align: top;
             text-align: left;
             font-weight: bold;
-            /*-qt-block-indent:0;*/
+            text-decoration: underline;
         }
 
-        td.people
+        .people
         {
-            padding-top: 0.1em;
+            padding-top: 1.2em;
             padding-bottom: 1.5em;
             text-align: center;
-            /*-qt-block-indent:0;*/
         }
 
         span.who
         {
             font-style:italic;
+            font-weight: bold;
         }
 
         div.wholist
@@ -98,13 +105,13 @@
 
 <body style="text-align: center; font-style: normal;">
 <table border="0" cellspacing="2" cellpadding="0">
-<tr><td class="title1" colspan="2">Main developers</td></tr>
+<tr><td class="title1">Main developers</td></tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Development</td>
-<td class="people"><p><span class="who">&quot;Wohlstand&quot; - Vitaly Novichkov</span> &lt;<a class="email" href="mailto:admin@wohlnet.ru">admin@wohlnet.ru</a>&gt;<br>
+<td class="people"><div class="title2 floatTitle">Development</div>
+<p><span class="who">&quot;Wohlstand&quot; - Vitaly Novichkov</span> &lt;<a class="email" href="mailto:admin@wohlnet.ru">admin@wohlnet.ru</a>&gt;<br>
 (Виталий Новичков / ノヴィチコーフ・ヴィターリ)<br>
 <small>Engine, Editor, Configs, Research, Graphics, Documents, Logo</small>
 <br>
@@ -112,41 +119,41 @@
 </p>
 <br>
 <img class="leftPos" alt="separator" src="contributors/_separator.png">
-<p><span class="who">&quot;Kevsoft&quot; - Kevin Waldock</span> &lt;<a class="email" href="mailto:kevin.waldock@gmail.com">kevin.waldock@gmail.com</a>&gt;<br>
+<p><span class="who"><a href="https://kevsoft.io">&quot;Kevsoft&quot; - Kevin Waldock</a></span> &lt;<a class="email" href="mailto:kevin.waldock@gmail.com">kevin.waldock@gmail.com</a>&gt;<br>
 <small>Editor and Engine (Co-Developer); Configs, Research</small>
 <br>
 <img class="leftPos" alt="avatar" src="contributors/Kevsoft.png">
 </p>
 </td>
 </tr>
-<tr><td class="title1" colspan="2">Retired developers</td></tr>
+<tr><td class="title1">Retired developers</td></tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Development</td>
-<td class="people"><p><span class="who">&quot;CaptainSwag101&quot; - James Pelster</span> &lt;<a class="email" href="mailto:jpmac26@gmail.com">jpmac26@gmail.com</a>&gt;<br>
+<td class="people"><div class="title2 floatTitle">Development</div>
+<p><span class="who">&quot;CaptainSwag101&quot; - James Pelster</span> &lt;<a class="email" href="mailto:jpmac26@gmail.com">jpmac26@gmail.com</a>&gt;<br>
 <small>Early Mac OS X Builds, Debugging, Proofreading</small>
 </p>
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Misc.</td>
-<td class="people"><p><span class="who">&quot;Veudekato&quot;</span><br>
+<td class="people"><div class="title2 floatTitle">Misc.</div>
+<p><span class="who">&quot;Veudekato&quot;</span><br>
 <small>Graphics, Documents, Proofreading</small>
 </p>
 </td>
 </tr>
-<tr><td class="title1" colspan="2">Graphics Designers</td></tr>
+<tr><td class="title1">Graphics Designers</td></tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Icons for applications and tools</td>
-<td class="people"><p><span class="who">&quot;Tails608&quot;</span><br>
+<td class="people"><div class="title2 floatTitle">Icons for applications and tools</div>
+<p><span class="who">&quot;Tails608&quot;</span><br>
 <small>Icons for applications and tools, July 2020</small>
 <br>
 <img class="leftPos" alt="avatar" src="contributors/Tails608.png">
@@ -172,13 +179,13 @@
 </p>
 </td>
 </tr>
-<tr><td class="title1" colspan="2">Translations</td></tr>
+<tr><td class="title1">Translations</td></tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">English</td>
-<td class="people"><p><span class="who">&quot;CaptainSwag101&quot; - James Pelster</span><br>
+<td class="people"><div class="title2 floatTitle">English</div>
+<p><span class="who">&quot;CaptainSwag101&quot; - James Pelster</span><br>
 </p>
 <br>
 <img class="leftPos" alt="separator" src="contributors/_separator.png">
@@ -187,47 +194,47 @@
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">French</td>
-<td class="people"><p><span class="who"><a href="https://github.com/NathanBnm">&quot;NathanBnm&quot; - Nathan Bonnemains</a></span><br>
+<td class="people"><div class="title2 floatTitle">French</div>
+<p><span class="who"><a href="https://github.com/NathanBnm">&quot;NathanBnm&quot; - Nathan Bonnemains</a></span><br>
 </p>
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Russian</td>
-<td class="people"><p><span class="who">&quot;Wohlstand&quot; - Vitaly Novichkov</span><br>
+<td class="people"><div class="title2 floatTitle">Russian</div>
+<p><span class="who">&quot;Wohlstand&quot; - Vitaly Novichkov</span><br>
 </p>
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">German</td>
-<td class="people"><p><span class="who">&quot;Kevsoft&quot; - Kevin Waldock</span><br>
+<td class="people"><div class="title2 floatTitle">German</div>
+<p><span class="who">&quot;Kevsoft&quot; - Kevin Waldock</span><br>
 </p>
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Spanish</td>
-<td class="people"><p><span class="who">&quot;hacheipe399&quot; - Paredes Fernando</span><br>
+<td class="people"><div class="title2 floatTitle">Spanish</div>
+<p><span class="who">&quot;hacheipe399&quot; - Paredes Fernando</span><br>
 </p>
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Italian</td>
-<td class="people"><p><span class="who">&quot;AndrewPixel&quot;</span> &lt;<a class="email" href="mailto:andrewpixelgamer@gmail.com">andrewpixelgamer@gmail.com</a>&gt;<br>
+<td class="people"><div class="title2 floatTitle">Italian</div>
+<p><span class="who">&quot;AndrewPixel&quot;</span> &lt;<a class="email" href="mailto:andrewpixelgamer@gmail.com">andrewpixelgamer@gmail.com</a>&gt;<br>
 <br>
 <img class="leftPos" alt="avatar" src="contributors/AndrewPixel.png">
 </p>
@@ -244,20 +251,20 @@
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Portuguese (Brazilian)</td>
-<td class="people"><p><span class="who">&quot;tb1024&quot; - Carlos Eduardo</span><br>
+<td class="people"><div class="title2 floatTitle">Portuguese (Brazilian)</div>
+<p><span class="who">&quot;tb1024&quot; - Carlos Eduardo</span><br>
 </p>
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Polish</td>
-<td class="people"><p><span class="who">&quot;P4VLOWSKEY&quot; - Karol Pawłowski</span> &lt;<a class="email" href="mailto:karolpaw99@outlook.com">karolpaw99@outlook.com</a>&gt;<br>
+<td class="people"><div class="title2 floatTitle">Polish</div>
+<p><span class="who">&quot;P4VLOWSKEY&quot; - Karol Pawłowski</span> &lt;<a class="email" href="mailto:karolpaw99@outlook.com">karolpaw99@outlook.com</a>&gt;<br>
 </p>
 <br>
 <img class="leftPos" alt="separator" src="contributors/_separator.png">
@@ -266,41 +273,41 @@
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Chinese</td>
-<td class="people"><p><span class="who">&quot;快乐爱的小精灵&quot;</span> &lt;<a class="email" href="mailto:lovebodhi@yandex.com">lovebodhi@yandex.com</a>&gt;<br>
+<td class="people"><div class="title2 floatTitle">Chinese</div>
+<p><span class="who">&quot;快乐爱的小精灵&quot;</span> &lt;<a class="email" href="mailto:lovebodhi@yandex.com">lovebodhi@yandex.com</a>&gt;<br>
 </p>
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Dutch</td>
-<td class="people"><p><span class="who">&quot;Gameinsky&quot; - Olivier Bloch</span> &lt;<a class="email" href="mailto:blochjunior@gmail.com">blochjunior@gmail.com</a>&gt;<br>
+<td class="people"><div class="title2 floatTitle">Dutch</div>
+<p><span class="who">&quot;Gameinsky&quot; - Olivier Bloch</span> &lt;<a class="email" href="mailto:blochjunior@gmail.com">blochjunior@gmail.com</a>&gt;<br>
 </p>
 </td>
 </tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td class="title2">Ukrainian</td>
-<td class="people"><p><span class="who"><a href="https://youtube.com/c/h2643">&quot;h2643&quot; - Denis Savonchuk</a></span> &lt;<a class="email" href="mailto:denis192851@meta.ua">denis192851@meta.ua</a>&gt;<br>
+<td class="people"><div class="title2 floatTitle">Ukrainian</div>
+<p><span class="who"><a href="https://youtube.com/c/h2643">&quot;h2643&quot; - Denis Savonchuk</a></span> &lt;<a class="email" href="mailto:denis192851@meta.ua">denis192851@meta.ua</a>&gt;<br>
 (Денис Савончук)<br>
 <br>
 <img class="leftPos" alt="avatar" src="contributors/h2643.png">
 </p>
 </td>
 </tr>
-<tr><td class="title1" colspan="2">Big thanks to</td></tr>
+<tr><td class="title1">Big thanks to</td></tr>
 <tr>
-<td colspan="2" style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
+<td style="text-align: center;"><img class="leftPos" alt="separator" src="contributors/_pix.png"></td>
 </tr>
 <tr>
-<td colspan="2" class="people"><p><span class="who">&quot;5438A38A&quot;</span><br>
+<td class="people"><p><span class="who">&quot;5438A38A&quot;</span><br>
 </p>
 <br>
 <img class="leftPos" alt="separator" src="contributors/_separator.png">
