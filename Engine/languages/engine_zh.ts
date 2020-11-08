@@ -248,14 +248,14 @@ and retry your recent actions to get more detailed information.</source>
         <translation>重新开始关卡</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <location filename="../scenes/scene_world.cpp" line="557"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <source>Invalid playable character ID</source>
         <translation>错误的人物编号</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
-        <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <location filename="../scenes/scene_world.cpp" line="566"/>
+        <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <source>Invalid playable character state ID</source>
         <translation>错误的人物形态编号</translation>
     </message>

@@ -3317,8 +3317,8 @@ Please, check the application directory and make sure it is installed properly.<
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="510"/>
         <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="510"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7110,11 +7110,11 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
+        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
-        <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7145,22 +7145,22 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="43"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="80"/>
         <location filename="../main_window/file/file_reload.cpp" line="55"/>
         <location filename="../main_window/file/file_reload.cpp" line="164"/>
         <location filename="../main_window/file/file_reload.cpp" line="222"/>
-        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="80"/>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="33"/>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="43"/>
         <source>File not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
+        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
+        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="81"/>
         <location filename="../main_window/file/file_reload.cpp" line="56"/>
         <location filename="../main_window/file/file_reload.cpp" line="165"/>
         <location filename="../main_window/file/file_reload.cpp" line="223"/>
-        <location filename="../main_window/tools/main_tool_cdata_cleaner.cpp" line="81"/>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="34"/>
-        <location filename="../main_window/tools/main_tool_cdata_import.cpp" line="44"/>
         <source>File doesn&apos;t saved on disk.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7198,8 +7198,8 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7215,8 +7215,8 @@ Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
+        <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
         <source>[all]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7264,8 +7264,8 @@ Please reload current file to apply result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../mainwindow.cpp" line="127"/>
         <location filename="../testing/pge_engine.cpp" line="70"/>
+        <location filename="../mainwindow.cpp" line="127"/>
         <source>Don&apos;t show this message again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11098,8 +11098,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="414"/>
         <location filename="../main_window/file/wld_export_image.cpp" line="123"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="414"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11427,7 +11427,7 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.ui" line="130"/>
+        <location filename="../main_window/about_dialog/aboutdialog.ui" line="88"/>
         <source>Close</source>
         <translation type="unfinished"></translation>
     </message>

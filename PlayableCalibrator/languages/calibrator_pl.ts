@@ -416,9 +416,9 @@
         <translation>Zapisz mapę hitboxa jako obraz</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="149"/>
-        <location filename="../main/files_io.cpp" line="114"/>
         <location filename="../main/settings.cpp" line="330"/>
+        <location filename="../main/files_io.cpp" line="114"/>
+        <location filename="../calibration_main.cpp" line="149"/>
         <source>Saved</source>
         <translation>Zapisano</translation>
     </message>
