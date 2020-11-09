@@ -6,12 +6,12 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>오디오 변환 (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>형식을 변경하지 마십시오</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="34"/>
@@ -21,42 +21,42 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="57"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>전송률 설정</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="155"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>파일이 MP3로 변환된다</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="198"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>파일이 FLAC로 변환된다</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="215"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>파일은 OGG로 변환됩니다</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="231"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>품질 설정</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="310"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>파일이 WAV로 변환된다</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="324"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>검색...</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>무엇을 원하십니까?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
@@ -76,7 +76,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="419"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>지정된 파일 변환</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="429"/>
@@ -86,7 +86,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="455"/>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>리샘플링</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="490"/>
@@ -118,14 +118,14 @@
         <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="180"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>시작</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX 에러</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
@@ -148,12 +148,12 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>변환 할 파일이 없습니다</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="156"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>중지</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
