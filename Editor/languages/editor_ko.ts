@@ -6,17 +6,17 @@
     <message>
         <location filename="../testing/abstract_engine.cpp" line="87"/>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>IPC를 통한 세계지도 테스트는 지원되지 않습니다</translation>
     </message>
     <message>
         <location filename="../testing/abstract_engine.cpp" line="94"/>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 테스트는 지원되지 않습니다</translation>
     </message>
     <message>
         <location filename="../testing/abstract_engine.cpp" line="100"/>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>이 기능은 구현되지 않았습니다</translation>
     </message>
 </context>
 <context>
@@ -24,421 +24,421 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="20"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>설정</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="71"/>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>메인(주요한)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="105"/>
         <source>Window layout</source>
-        <translation type="unfinished"></translation>
+        <translation>화면 레이아웃</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="120"/>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>별도의 하위 창 (클래식 스타일)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="133"/>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>탭이있는 하위 창 (모던 스타일)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="149"/>
         <source>Music player</source>
-        <translation type="unfinished"></translation>
+        <translation>음악플레이어</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="164"/>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>레벨 파일을 열면 음악이 자동으로 재생됩니다</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="167"/>
         <source>Autoplay music after opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 연 후 음악 자동 재생</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="183"/>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation>실행</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="198"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>애니메이션</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="211"/>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>주어진 시간에 애니메이션 할 수있는 최대 요소 수입니다. 이 제한을 초과하면 제한을 높이거나 초과 요소를 제거 할 때까지 애니메이션이 일시 중지됩니다.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="230"/>
         <source>Animation items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>애니메이션 항목 제한</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="246"/>
         <source>Collision detection</source>
-        <translation type="unfinished"></translation>
+        <translation>충돌 감지</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="262"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>파일</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="277"/>
         <source>Associate file extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 확장자 연결</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="326"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>편집자</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="335"/>
         <source>Middle mouse button actions</source>
-        <translation type="unfinished"></translation>
+        <translation>마우스 가운데 버튼 동작</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="341"/>
         <source>Copy selected items to cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>선택한 항목을 커서 위치로 복사</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="348"/>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>선택한 항목의 배치 모드 변경</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="355"/>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>선택 항목이 비어있는 동안 드래그하여 스크롤 전환</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="365"/>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation>배치 모드</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="371"/>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation type="unfinished"></translation>
+        <translation>AppSettings 팝업 힌트 속성 상자는 항목 도구 상자 또는 타일셋 항목 상자에서 항목을 선택할 때와 같이 배치 할 항목을 선택할 표시되지 않습니다.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="375"/>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation type="unfinished"></translation>
+        <translation>항목을 배치 할 때 속성 상자를 표시하지 않음</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="398"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>기록</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="407"/>
         <source>Max history entries:</source>
-        <translation type="unfinished"></translation>
+        <translation>최대 기록 항목 :</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="414"/>
         <source>Maximum number of remembered history actions.</source>
-        <translation type="unfinished"></translation>
+        <translation>히스토리 큐의 최대 크기.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="433"/>
         <source>Screen capture default size</source>
-        <translation type="unfinished"></translation>
+        <translation>화면 캡처 기본 크기</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="439"/>
         <source>Use custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자 정의 사용 :</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="449"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>폭:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="475"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>높이:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="498"/>
         <source>Fit to window size</source>
-        <translation type="unfinished"></translation>
+        <translation>창 크기에 맞추기</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="511"/>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>환경</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="517"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 확대 / 축소 :</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="524"/>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 열기 또는 파일 생성시 설치되는 기본 확대 / 축소.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="547"/>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation>기본값</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="556"/>
         <source>Classic Events tabs to auto-expand</source>
-        <translation type="unfinished"></translation>
+        <translation>자동 확장 할 클래식 이벤트 탭</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="562"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished"></translation>
+        <translation>자동 스크롤 섹션</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="569"/>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>공통 이벤트 명령</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="576"/>
         <source>Layer visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 가시성</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="583"/>
         <source>Layer movement</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 이동</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="590"/>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation>트리거 이벤트(명령 실행)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="597"/>
         <source>Hold buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>보류(홀드) 버튼</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="604"/>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 설정</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="627"/>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 설정</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="636"/>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>생성 프로그램</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="658"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>유형:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="666"/>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>경사</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="671"/>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation>발사체</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="679"/>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation>지연 (초) :</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="702"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="714"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="721"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>무작위</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="728"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="741"/>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation>워프 및 문</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="747"/>
         <source>Warp type:</source>
-        <translation type="unfinished"></translation>
+        <translation>워프 유형:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="755"/>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation>0-즉시</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="760"/>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation>1-파이프</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="765"/>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation>2-문</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="770"/>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation>3-포털</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="782"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>전망</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="791"/>
         <source>Tileset Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>타일셋 항목 도구 상자</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="800"/>
         <location filename="../main_window/tools/app_settings.ui" line="826"/>
         <location filename="../main_window/tools/app_settings.ui" line="884"/>
         <source>Display tabs horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>가로로 탭 표시</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="807"/>
         <location filename="../main_window/tools/app_settings.ui" line="833"/>
         <location filename="../main_window/tools/app_settings.ui" line="891"/>
         <source>Display tabs vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>탭을 세로로 표시</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="817"/>
         <source>World Map Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 아이템 도구 상자</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="843"/>
         <location filename="../main_window/tools/app_settings.ui" line="852"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>테마</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="862"/>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation>팔레트</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="875"/>
         <source>Level Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 항목 도구 상자</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="914"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>폰트</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="933"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>폰트 크기</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="953"/>
         <source>Use default</source>
-        <translation type="unfinished"></translation>
+        <translation>기본값 사용</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="964"/>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>벌채 반출</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="973"/>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>로그 수준</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="983"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>검색</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="990"/>
         <source>Log file</source>
-        <translation type="unfinished"></translation>
+        <translation>로그 파일</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1014"/>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation>추가의</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1023"/>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>참고 : 일부 설정은 편집기를 다시 시작한 후에 만 변경 사항을 적용합니다</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1036"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished"></translation>
+        <translation>높은 DPI 모니터에서 자동 확장 활성화</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="218"/>
         <source>Set log file</source>
-        <translation type="unfinished"></translation>
+        <translation>로그 파일 설정</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="219"/>
         <source>Text files (*.txt *.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>텍스트 파일 (* .txt * .log)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="315"/>
         <source>Success</source>
-        <translation type="unfinished"></translation>
+        <translation>성공</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="315"/>
         <source>All file associations have been set</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 파일 연결이 설정되었습니다</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="317"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>에러</translation>
     </message>
 </context>
 <context>
@@ -446,17 +446,17 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 대신 허브 수준을 사용할 수 있으므로 &quot;배치 된 수준&quot;에서 &quot;접근 가능한 수준&quot;으로 변경되었습니다</translation>
     </message>
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>중단</translation>
     </message>
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="46"/>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation>별 세는 중…</translation>
     </message>
 </context>
 <context>
@@ -464,105 +464,107 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>오디오 변환 (SoX)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="24"/>
         <source>SoX executable path:</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX 실행 경로 :</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="31"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>검색...</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="45"/>
         <source>Make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>백업만들기</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="52"/>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>리샘플링</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>무엇을 원하십니까?</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="132"/>
         <source>Convert music of current level section</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 레벨 섹션의 음악 변환</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert all music files on current level</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 수준의 모든 음악 파일 변환</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="149"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>지정된 파일 변환</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="202"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>형식을 변경하지 마십시오</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="208"/>
         <source>The files&apos; format will not be changed</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 형식은 변경되지 않습니다</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="231"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>전송률 설정</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="329"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>파일이 MP3로 변환된다</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="372"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>파일이 FLAC로 변환된다</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="389"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>파일은 OGG로 변환됩니다</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="405"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>품질 설정</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="484"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>파일이 WAV로 변환된다</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="505"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt; &lt;head /&gt; &lt;body&gt; &lt;p&gt; 여기에서 잘못 포맷 된 음악 또는 SFX 파일을 &lt;br&gt; 신속하게 변환 할 수 있습니다 (잘못된 샘플 속도, 잘못된 코덱 등). &lt;/ p&gt;
+&lt;p&gt;이 기능은 &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt; &lt;span style = &quot;text-decoration : underline; color : # 0000ff;&quot;&gt; SoX &lt;/ span&gt; &lt;/ a를 사용합니다. &gt; 오디오 변환기. &lt;/ p&gt; &lt;/ body&gt; &lt;/ html&gt;</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="538"/>
         <source>Convert into new format
 (select a tab to choose target format)</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운 형식으로 변환
+(대상 형식을 선택하려면 탭 선택)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="22"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="170"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>시작</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="120"/>
@@ -571,77 +573,81 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="218"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="233"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX 에러</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="121"/>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX 실행 경로가 정의되지 않았습니다.
+먼저 SoX 경로를 설정하십시오</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="129"/>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX 실행 경로가 잘못되었습니다.
+먼저 SoX 경로를 설정하십시오</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="152"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="418"/>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>처리할 파일이 없습니다.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="153"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>변환 할 파일이 없습니다</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="157"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>중지</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="206"/>
         <source>Operation canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>작업이 취소되었습니다</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="219"/>
         <source>Sorry, SoX has crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>죄송합니다. SoX가 다운되었습니다</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="234"/>
         <source>SoX returned a non-zero exit code: %1
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX가 0이 아닌 종료 코드를 반환했습니다 : % 1
+% 2</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="293"/>
         <source>Operation complete</source>
-        <translation type="unfinished"></translation>
+        <translation>작업 완료</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="294"/>
         <source>All files successfully converted!
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 파일이 성공적으로 변환되었습니다!
+%1</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="419"/>
         <source>No tasks defined. Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>정의 된 작업이 없습니다. 할 것이 없다.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="455"/>
         <source>Open SoX executable path</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX 실행 경로 열기</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="468"/>
         <source>Select file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>변환 할 파일 선택</translation>
     </message>
 </context>
 <context>
@@ -649,37 +655,37 @@ Please set SoX path first</source>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="14"/>
         <source>Blocks per second calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>초당 블록 계산기</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="34"/>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation>초당 블록 대화 상자 이동 시간 :</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="41"/>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>초당 블록 대화 상자 거리 :</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="61"/>
         <source> blocks</source>
-        <translation type="unfinished"></translation>
+        <translation> 블록</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="80"/>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation>초당 블록 대화 상자 한 개의 크기:</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="97"/>
         <source>per </source>
-        <translation type="unfinished"></translation>
+        <translation>초당 블록 대화 상자 </translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="100"/>
         <source> second</source>
-        <translation type="unfinished"></translation>
+        <translation> 초당 블록 대화 상자 (초)</translation>
     </message>
 </context>
 <context>
@@ -687,44 +693,46 @@ Please set SoX path first</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="29"/>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>책갈피 상자 위치</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="60"/>
         <source>Remove selected bookmark from list</source>
-        <translation type="unfinished"></translation>
+        <translation>목록에서 선택한 책갈피 제거</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="63"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>북마크 상자 제거</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="76"/>
         <source>Remember current screen position on the level map or on the world map
 and store a bookmark.</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 또는 세계지도에서 현재 화면 위치 기억
+북마크를 저장합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="80"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>추가</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="93"/>
         <source>Scroll to the saved position in the selected item.
 You also can double-click an item to scroll to its bookmarked position.</source>
-        <translation type="unfinished"></translation>
+        <translation>선택한 항목에서 저장된 위치로 스크롤합니다.
+항목을 두 번 클릭하여 책갈피 위치로 스크롤 할 수도 있습니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="97"/>
         <source>Go To...</source>
-        <translation type="unfinished"></translation>
+        <translation>BookmarksBox 이동 …</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.cpp" line="247"/>
         <source>Rename Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>북마크 이름 변경</translation>
     </message>
 </context>
 <context>
@@ -732,22 +740,22 @@ You also can double-click an item to scroll to its bookmarked position.</source>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="14"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>구성 관리자</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="82"/>
         <source>Please select the game configuration you want to start the Editor with</source>
-        <translation type="unfinished"></translation>
+        <translation>에디터를 시작할 게임 구성을 선택하십시오</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="111"/>
         <source>Ask every startup</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 스타트 업에게 물어보세요</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="355"/>
         <source>No config packs were found</source>
-        <translation type="unfinished"></translation>
+        <translation>구성 팩을 찾을 수 없습니다</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="361"/>
@@ -757,39 +765,44 @@ Please download and install them into this directory&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
-        <translation type="unfinished"></translation>
+        <translation>ConfigManager 구성 패키지를 찾을 수 없습니다! &lt;br&gt;이 디렉토리에 다운로드하여 설치하십시오. &lt;br&gt;
+ &lt;br&gt; 
+% 1 &lt;br&gt;
+ &lt;br&gt; 여기에서 구성 패키지를 사용할 수 있습니다. &lt;br&gt; % 2</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="494"/>
         <source>Configuration package is not configured!</source>
-        <translation type="unfinished"></translation>
+        <translation>구성 패키지가 구성되지 않았습니다!</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="495"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;% 1&quot;구성 패키지가 아직 구성되지 않았습니다.
+구성 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="542"/>
         <source>Configuration script failed</source>
-        <translation type="unfinished"></translation>
+        <translation>구성 스크립트 실패</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="543"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>구성 도구에서 오류가 발생했습니다 : % 2 줄에 % 1.
+파일 경로 : % 3</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="555"/>
         <source>No configuration needed</source>
-        <translation type="unfinished"></translation>
+        <translation>구성이 필요하지 않습니다</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="556"/>
         <source>This config pack has no configuring tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 구성 팩에는 구성 도구가 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -797,12 +810,12 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="20"/>
         <source>Current configuration status</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 구성 상태</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="37"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>상태</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="49"/>
