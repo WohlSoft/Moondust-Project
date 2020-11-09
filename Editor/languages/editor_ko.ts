@@ -1012,7 +1012,7 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>어-오, PGE 편집기가 충돌했습니다 :( &lt;br&gt; 자세한 충돌 정보 :</translation>
+        <translation type="unfinished">어-오, PGE 편집기가 충돌했습니다 :( &lt;br&gt; 자세한 충돌 정보 :</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="57"/>
@@ -1037,12 +1037,12 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>PGE 포럼 (wohlsoft.ru/forum/)에 보고서 게시</translation>
+        <translation type="unfinished">PGE 포럼 (wohlsoft.ru/forum/)에 보고서 게시</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>GitHub 저장소 (WohlSoft / PGE-Project)에서 문제 제기</translation>
+        <translation type="unfinished">GitHub 저장소 (WohlSoft / PGE-Project)에서 문제 제기</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="94"/>
@@ -1631,7 +1631,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="294"/>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Args : {engine commands} 실행중인 경우 PGE 엔진에 명령이나 메시지를 보냅니다</translation>
+        <translation type="unfinished">Args : {engine commands} 실행중인 경우 PGE 엔진에 명령이나 메시지를 보냅니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="295"/>
@@ -1772,7 +1772,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
         <source>Welcome to PGE Editor!</source>
-        <translation>PGE 편집기에 오신 것을 환영합니다!</translation>
+        <translation type="unfinished">PGE 편집기에 오신 것을 환영합니다!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
@@ -1960,13 +1960,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../common_features/installer.cpp" line="256"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>PGE 레벨 파일</translation>
+        <translation type="unfinished">PGE 레벨 파일</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="261"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>PGE 세계지도</translation>
+        <translation type="unfinished">PGE 세계지도</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="266"/>
@@ -7297,7 +7297,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../testing/pge_engine.cpp" line="69"/>
         <source>PGE Engine testing</source>
-        <translation>PGE 엔진 테스트</translation>
+        <translation type="unfinished">PGE 엔진 테스트</translation>
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="72"/>
@@ -7309,7 +7309,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <location filename="../testing/pge_engine.cpp" line="74"/>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>여보세요! PGE 엔진에서 레벨을 테스트하려고합니다.
+        <translation type="unfinished">여보세요! PGE 엔진에서 레벨을 테스트하려고합니다.
 PGE 엔진은 아직 개발 초기 단계에 있으며 누락되거나 올바르게 작동하지 않는 몇 가지 기능이 있습니다. 기존 SMBX 엔진 용 레벨이나 에피소드를 만들고 있고 완전한 기능 세트로 테스트하고 싶다면 SMBX에서 직접 테스트하십시오. PGE 엔진 자체를 테스트하거나 PGE 관련 기능으로 레벨을 테스트하려는 경우에 PGE 테스트를 사용하십시오.</translation>
     </message>
     <message>
@@ -8527,7 +8527,7 @@ Error description:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>죄송합니다. PGE Editor가 다운되었습니다.
+        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
 이유 : 메모리 부족!
 
 이를 방지하려면 다른 불필요한 프로그램을 닫아 더 많은 메모리를 확보하십시오.</translation>
@@ -8540,7 +8540,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>죄송합니다. PGE Editor가 다운되었습니다.
+        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
 이유 : 처리되지 않은 예외
 
 이 문제를 해결할 수 있도록 포럼 직원에게 알려주십시오. 감사합니다.
@@ -8598,7 +8598,7 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation>죄송합니다. PGE Editor가 다운되었습니다.
+        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
 이유 : % 1
 
 </translation>
