@@ -609,7 +609,7 @@ Please set SoX path first</source>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="219"/>
         <source>Sorry, SoX has crashed</source>
-        <translation>SoX har kræsjet</translation>
+        <translation>SoX har krasjet</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="234"/>
@@ -960,7 +960,7 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="14"/>
         <source>Crash</source>
-        <translation>Kræsj</translation>
+        <translation>Krasj</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="40"/>
