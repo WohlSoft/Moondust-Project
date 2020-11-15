@@ -106,7 +106,7 @@ derfor kan du benytte samme lenke til å hente en oppdatert versjon.</translatio
     <message id="CRASH_UNHEXC_MSG">
         <location filename="../common_features/crash_handler.cpp" line="373"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
-        <translation>Motoren har kræsjet som følge av et uhåndtert unntak.</translation>
+        <translation>Motoren har krasjet som følge av et uhåndtert unntak.</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="385"/>
@@ -116,7 +116,7 @@ derfor kan du benytte samme lenke til å hente en oppdatert versjon.</translatio
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="387"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>Motoren har kræsjet som følge av å ha sluppet opp for minne. Prøv å lukke andre programmer og start spillet på ny.</translation>
+        <translation>Motoren har krasjet som følge av å ha sluppet opp for minne. Prøv å lukke andre programmer og start spillet på ny.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="423"/>
@@ -136,7 +136,7 @@ derfor kan du benytte samme lenke til å hente en oppdatert versjon.</translatio
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="472"/>
         <source>Engine has crashed because a physical memory address error</source>
-        <translation>Motoren har kræsjet som følge av feil ved adressering av fysisk minne</translation>
+        <translation>Motoren har krasjet som følge av feil ved adressering av fysisk minne</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="489"/>
@@ -146,7 +146,7 @@ derfor kan du benytte samme lenke til å hente en oppdatert versjon.</translatio
     <message id="CRASH_ILL_MSG">
         <location filename="../common_features/crash_handler.cpp" line="491"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
-        <translation>Motoren har kræsjet som følge av feil prosessorinstruks</translation>
+        <translation>Motoren har krasjet som følge av feil prosessorinstruks</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="546"/>
@@ -156,7 +156,7 @@ derfor kan du benytte samme lenke til å hente en oppdatert versjon.</translatio
     <message id="CRASH_FPE_MSG">
         <location filename="../common_features/crash_handler.cpp" line="548"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
-        <translation>Motoren har kræsjet som følge av feil aritmetisk operasjon.</translation>
+        <translation>Motoren har krasjet som følge av feil aritmetisk operasjon.</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="560"/>
@@ -178,7 +178,7 @@ derfor kan du benytte samme lenke til å hente en oppdatert versjon.</translatio
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
-        <translation>Motoren har kræsjet som følge av en minnesegmenteringsfeil.
+        <translation>Motoren har krasjet som følge av en minnesegmenteringsfeil.
 Kjør avlusing med et innebygd feilrettingsprogram
 og prøv å kjøre nylige handlinger igjen for å innhente mer info.</translation>
     </message>
