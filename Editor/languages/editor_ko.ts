@@ -820,152 +820,152 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="49"/>
         <source>Objects defined:</source>
-        <translation type="unfinished"></translation>
+        <translation>정의 된 개체 :</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="76"/>
         <source>Configuration name:</source>
-        <translation type="unfinished"></translation>
+        <translation>구성 이름 :</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="89"/>
         <source>Configuration path:</source>
-        <translation type="unfinished"></translation>
+        <translation>구성 경로 :</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="128"/>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>디렉토리</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="140"/>
         <source>Configuration directories:</source>
-        <translation type="unfinished"></translation>
+        <translation>구성 디렉토리 :</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="196"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>이름</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="201"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>통로</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="210"/>
         <source>Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>오류</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="223"/>
         <source>Configuration Loading Errors:</source>
-        <translation type="unfinished"></translation>
+        <translation>구성로드 오류 :</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="108"/>
         <source>Level: Blocks (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 : 블록 (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="110"/>
         <source>Level: Background objects (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>수준 : 배경 개체 (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="112"/>
         <source>Level: Background images (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 : 배경 이미지 (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="114"/>
         <source>Level: NPCs (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 : NPC (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="116"/>
         <source>Music (level) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>음악 (레벨) (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="117"/>
         <source>Music (world map) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>음악 (세계지도) (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="118"/>
         <source>Music (special) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>음악 (특수) (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="120"/>
         <source>Sounds (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>소리 (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="122"/>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 : 지형 타일 (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="124"/>
         <source>World map: Scenery (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 : 풍경 (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="126"/>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 : 경로 타일 (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="128"/>
         <source>World map: Level entrance tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 : 레벨 입구 타일 (% 1 / % 2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="130"/>
         <source>Default rotation rules (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 순환 규칙 (% 1)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="134"/>
         <source>Level data</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 데이터</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="135"/>
         <source>World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 데이터</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="136"/>
         <source>Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>캐릭터</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="137"/>
         <source>Game worlds</source>
-        <translation type="unfinished"></translation>
+        <translation>게임 세계</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="138"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>음악</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="139"/>
         <source>Sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>소리</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="140"/>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 데이터</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="148"/>
         <source>[Error list is empty, congratulations!]</source>
-        <translation type="unfinished"></translation>
+        <translation>[오류 목록이 비어 있습니다. 축하합니다!]</translation>
     </message>
 </context>
 <context>
@@ -973,37 +973,37 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="14"/>
         <source>Crash</source>
-        <translation type="unfinished"></translation>
+        <translation>크래시</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>어-오, PGE 편집기가 충돌했습니다 :( &lt;br&gt; 자세한 충돌 정보 :</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="40"/>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished"></translation>
+        <translation>이 데이터를 개발자에게보고 할 수 있습니다:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="47"/>
         <source>Copy report into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>보고서를 클립 보드로 복사</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="54"/>
         <source>Exit from application</source>
-        <translation type="unfinished"></translation>
+        <translation>응용 프로그램 종료</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="74"/>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>PGE 포럼 (wohlsoft.ru/forum/)에 보고서 게시</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="81"/>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation>GitHub 저장소 (WohlSoft / PGE-Project)에서 문제 제기</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="104"/>
@@ -1011,24 +1011,28 @@ File path: %3</source>
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation type="unfinished"></translation>
+        <translation>신고하는 동안 충돌 오류를 발생시키기 위해 무엇을했는지 설명해주세요.
+-충돌을 유발하기 위해 수행 한 작업 목록을 제공하십시오.
+-특정 파일 수정시 충돌이 발생한 경우 보고서에 첨부 해 주시기 바랍니다.
+-사용중인 운영 체제는 무엇입니까?</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="438"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished"></translation>
+        <translation>충돌 복구</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="439"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
-        <translation type="unfinished"></translation>
+        <translation>마지막 충돌 이후 편집기는 일부 파일을 복구했습니다.
+다른 작업을 수행하기 전에 저장하십시오.</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="473"/>
         <source>Copied!</source>
-        <translation type="unfinished"></translation>
+        <translation>복사되었습니다!</translation>
     </message>
 </context>
 <context>
@@ -1036,78 +1040,78 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="20"/>
         <source>Custom Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 카운터</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
         <source>Please add the Item IDs which will be in this custom group:</source>
-        <translation type="unfinished"></translation>
+        <translation>이 사용자 지정 그룹에 포함될 항목 ID를 추가하십시오:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="71"/>
         <source>Item type:</source>
-        <translation type="unfinished"></translation>
+        <translation>항목 형식:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="91"/>
         <source>Counter name:</source>
-        <translation type="unfinished"></translation>
+        <translation>카운터 이름 :</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>더하다</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="129"/>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="254"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>풀다</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="50"/>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>블록</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="51"/>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>비지오</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="52"/>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>엔피시</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="58"/>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>지형 타일</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="59"/>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>풍경</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="60"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>통로</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="61"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>수평</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="62"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>음악</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="253"/>
         <source>Change item...</source>
-        <translation type="unfinished"></translation>
+        <translation>항목 변경 ...</translation>
     </message>
 </context>
 <context>
@@ -1115,23 +1119,23 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="14"/>
         <source>Music setup</source>
-        <translation type="unfinished"></translation>
+        <translation>음악 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="34"/>
         <source>Play music</source>
-        <translation type="unfinished"></translation>
+        <translation>음악을 재생</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="54"/>
         <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
+        <translation>신디사이저 유형 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="64"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="473"/>
         <source>Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation>이득:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="106"/>
@@ -1139,152 +1143,152 @@ Please save them before doing anything else.</source>
         <location filename="../main_window/dock/custom_music_setup.ui" line="404"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="440"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>초기화</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="113"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="447"/>
         <source>Tempo:</source>
-        <translation type="unfinished"></translation>
+        <translation>속도:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="171"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="299"/>
         <source>Extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>추가 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="183"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="364"/>
         <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
+        <translation>맞춤 은행 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="190"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="354"/>
         <source>Volume model:</source>
-        <translation type="unfinished"></translation>
+        <translation>볼륨 모델 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="197"/>
         <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
+        <translation>깊은 비브라토</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="210"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
+        <translation>은행:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="217"/>
         <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
+        <translation>깊은 트레몰로</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="243"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="311"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>검색...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="250"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
+        <translation>팀버 뱅크는 MIDI 음악의 소리를 선언합니다. 다른 뱅크를 사용하여 소리의 차이를 비교하십시오.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="260"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="318"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation>볼륨 모델은 음악 볼륨, 음표 속도 및 표현이 어떻게 조정되는지 선언합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="273"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="338"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation type="unfinished"></translation>
+        <translation>에뮬레이트 된 OPL3 칩 수입니다. 더 넓은 동시 발음 수 (칩당 2 개 연산자 음성 중 18 개 또는 칩당 4 개 연산자 음성 6 개)를 얻으려면 칩 수를 늘리거나 음악 재생이 고르지 않으면 줄입니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="289"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="371"/>
         <source>Chips number:</source>
-        <translation type="unfinished"></translation>
+        <translation>칩 번호 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="395"/>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="434"/>
         <source>Chiptune</source>
-        <translation type="unfinished"></translation>
+        <translation>칩툰</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="508"/>
         <source>Track number</source>
-        <translation type="unfinished"></translation>
+        <translation>트랙 번호</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="517"/>
         <source>To begin</source>
-        <translation type="unfinished"></translation>
+        <translation>시작하려면</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="531"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>이전</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="538"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>다음</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="565"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
+        <translation>팁 : 설정 결과를 미리 보려면 음악 재생을 활성화하십시오. (메인 창 도구 모음에서 노트 재생 / 중지 아이콘을 찾으십시오).</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="432"/>
         <source>MIDI</source>
-        <translation type="unfinished"></translation>
+        <translation>엠아이디아이</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="614"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libADLMIDI (OPL3 합성 에뮬레이션)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="615"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libOPNMIDI (YM2612 합성 에뮬레이션)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="616"/>
         <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>소심함 (은행 필요)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="617"/>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
+        <translation>네이티브 MIDI (권장되지 않음, 버그가 있음)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="622"/>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="638"/>
         <source>[Auto]</source>
-        <translation type="unfinished"></translation>
+        <translation>[자동]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="623"/>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="639"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>일반적인</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="624"/>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="640"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>네이티브 OPL3</translation>
     </message>
 </context>
 <context>
@@ -1299,7 +1303,14 @@ Please save them before doing anything else.</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished"></translation>
+        <translation>레거시 구성 패키지가 있습니다.
+&lt;br&gt; Editor가 시작되지만, 항목 또는 설정에 문제가 발생할 수 있습니다.
+&lt;br&gt;
+&lt;br&gt; 최신 버전의 구성 패키지를 다운로드하여 설치하십시오:
+&lt;br&gt;
+&lt;br&gt; 다운로드 : % 1
+&lt;br&gt; 참고 : 대부분의 구성 팩은 PGE와 함께 업데이트됩니다,
+&lt;br&gt; 그러므로 동일한 링크를 사용하여 업데이트 된 버전을 얻을 수 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -1307,52 +1318,52 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="33"/>
         <source>Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>디버거</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="61"/>
         <source>Mouse coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>마우스 좌표</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="119"/>
         <source>Go to point:</source>
-        <translation type="unfinished"></translation>
+        <translation>요점으로 이동 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="168"/>
         <source>Go!</source>
-        <translation type="unfinished"></translation>
+        <translation>가다!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="184"/>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>내용</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="258"/>
         <source>Custom counters</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 카운터</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="295"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>새롭게 하다</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="319"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>더하다</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="484"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>편집하다</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>풀다</translation>
     </message>
 </context>
 <context>
@@ -1360,117 +1371,117 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../dev_console/devconsole.ui" line="14"/>
         <source>Developer Console</source>
-        <translation type="unfinished"></translation>
+        <translation>개발자 콘솔</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="47"/>
         <source>Type commands here...</source>
-        <translation type="unfinished"></translation>
+        <translation>여기에 명령 입력 ...</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="59"/>
         <source>Send Command</source>
-        <translation type="unfinished"></translation>
+        <translation>명령 보내기</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="78"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>체계</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="153"/>
         <source>Clear All Logs</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 로그 지우기</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="176"/>
         <source>Clear System Log</source>
-        <translation type="unfinished"></translation>
+        <translation>시스템 로그 지우기</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="199"/>
         <source>Clear %1 Log</source>
-        <translation type="unfinished"></translation>
+        <translation>% 1 로그 지우기</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="277"/>
         <source>Prints this help text</source>
-        <translation type="unfinished"></translation>
+        <translation>이 도움말 텍스트를 인쇄합니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="278"/>
         <source>Prints a test command</source>
-        <translation type="unfinished"></translation>
+        <translation>테스트 명령을 인쇄합니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="279"/>
         <source>Prints the editor version</source>
-        <translation type="unfinished"></translation>
+        <translation>편집기 버전을 인쇄합니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="280"/>
         <source>Quits the program</source>
-        <translation type="unfinished"></translation>
+        <translation>프로그램을 종료합니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="281"/>
         <source>Saves the application settings</source>
-        <translation type="unfinished"></translation>
+        <translation>응용 프로그램 설정을 저장합니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="282"/>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
-        <translation type="unfinished"></translation>
+        <translation>Args : {SomeString} 문자열의 MD5 해시를 계산합니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="283"/>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation type="unfinished"></translation>
+        <translation>Args : {SomeString}의 MD5 해시를 계산합니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="286"/>
         <source>Simulates crash signal</source>
-        <translation type="unfinished"></translation>
+        <translation>충돌 신호 시뮬레이션</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="287"/>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
-        <translation type="unfinished"></translation>
+        <translation>인수 : {[Number] MB} | 선택한 양의 데이터로 메모리를 가득 채 웁니다 (조심하세요!)</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="288"/>
         <source>Throws an unhandled exception to crash the editor</source>
-        <translation type="unfinished"></translation>
+        <translation>처리되지 않은 예외가 발생하여 편집기가 중단됩니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="289"/>
         <source>Does a segmentation violation</source>
-        <translation type="unfinished"></translation>
+        <translation>크래시 테스트 목적으로 세분화 오류 발생</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="290"/>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation>메모리 누수 분석을위한 ItemSelectDialog 생성 및 삭제</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="292"/>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
-        <translation type="unfinished"></translation>
+        <translation>Arg : {Path to file}은 파일이 PGE-X 파일 형식인지 테스트합니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="293"/>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
-        <translation type="unfinished"></translation>
+        <translation>Args : {음악 유형 (lvl wld spc), 음악 ID} 특정 ID로 기본 음악 재생</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="294"/>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation type="unfinished"></translation>
+        <translation>Args : {engine commands} 실행중인 경우 PGE 엔진에 명령이나 메시지를 보냅니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="295"/>
         <source>Shows various important paths!</source>
-        <translation type="unfinished"></translation>
+        <translation>다양한 중요한 경로를 보여줍니다!</translation>
     </message>
 </context>
 <context>
@@ -1478,78 +1489,78 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="19"/>
         <source>Export to image</source>
-        <translation type="unfinished"></translation>
+        <translation>이미지로 내보내기</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="39"/>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>편집기 전용 메타 사인 사진 숨기기</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="46"/>
         <source>Force vertical background tiling</source>
-        <translation type="unfinished"></translation>
+        <translation>수직 배경 타일링 강제</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="53"/>
         <source>Hide grid (if it is shown)</source>
-        <translation type="unfinished"></translation>
+        <translation>그리드 숨기기 (표시된 경우)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="65"/>
         <source>Please, select target image size:</source>
-        <translation type="unfinished"></translation>
+        <translation>대상 이미지 크기를 선택하십시오 :</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="88"/>
         <source>Export current section to image</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 섹션을 이미지로 내보내기</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="98"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>신장</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="122"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>폭</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="129"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이것이&lt;span style=&quot; font-weight:600;&quot;&gt;폭&lt;/span&gt;대상 이미지의. 대상 이미지는이 너비로 조정됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="132"/>
         <location filename="../main_window/file/lvl_export_image.ui" line="152"/>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> 피엑스</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="142"/>
         <source>Hide warps and water markers (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>워프 및 워터 마커 숨기기 (권장)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="149"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이것이&lt;span style=&quot; font-weight:600;&quot;&gt;신장&lt;/span&gt;대상 이미지의. 대상 이미지는이 높이로 조정됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="169"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;선택하면 반대 치수 (높이 또는 너비)의 크기를 계산하여 올바른 비율로 대상 이미지를 만듭니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="172"/>
         <source>Keep original aspect ratio</source>
-        <translation type="unfinished"></translation>
+        <translation>원래 종횡비 유지</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="179"/>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation>보이지 않는 블록 및 메타 개체 숨기기</translation>
     </message>
 </context>
 <context>
@@ -1557,18 +1568,18 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../editing/_dialogs/file_list_browser.ui" line="20"/>
         <source>Files list</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 목록</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/file_list_browser.ui" line="30"/>
         <location filename="../editing/_dialogs/file_list_browser.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이것은 현재 파일과 같은 폴더에있는 레벨 파일 목록입니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/file_list_browser.ui" line="33"/>
         <source>Please select a file from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation>목록에서 파일을 선택하십시오 :</translation>
     </message>
 </context>
 <context>
@@ -1576,37 +1587,37 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="14"/>
         <source>Welcome!</source>
-        <translation type="unfinished"></translation>
+        <translation>어서 오십시오!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="39"/>
         <source>Choose the workspace layout you want to use:</source>
-        <translation type="unfinished"></translation>
+        <translation>사용할 작업 공간 레이아웃을 선택하십시오:</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="72"/>
         <source>Modern</source>
-        <translation type="unfinished"></translation>
+        <translation>현대</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="94"/>
         <source>Classic</source>
-        <translation type="unfinished"></translation>
+        <translation>권위 있는</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="110"/>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
-        <translation type="unfinished"></translation>
+        <translation>편의를 위해 설계된 최신 UI는 다양한 크기의 화면에서 잘 작동합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="136"/>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX 레거시 편집기의 오랜 사용자에게 익숙한 클래식 인터페이스입니다.</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished"></translation>
+        <translation>PGE 편집기에 오신 것을 환영합니다!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
@@ -1617,7 +1628,12 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;&lt;b&gt;팁 1:&lt;/b&gt; 언제든지 레이아웃을 변경할 수 있습니다 &lt;u&gt;도움&lt;/u&gt; 메뉴, 도구 상자 &lt;u&gt;전망&lt;/u&gt; 메뉴 및 창 레이아웃 확인란 &lt;u&gt;윈도우&lt;/u&gt; 메뉴.&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;팁 2:&lt;/b&gt; 레거시 편집기와 달리 많은 기능은 컨텍스트 메뉴 (오른쪽 클릭으로 열림)에서 빠르게 액세스 할 수 있습니다.
+도구 모음과 메뉴의 도구 상자도 있습니다. 이 편집기를 사용하면 한 번에 여러 개체를 선택할 수도 있습니다!&lt;br/&gt;
+&lt;br/&gt;
+&lt;b&gt;팁 3:&lt;/b&gt; 마우스 가운데 버튼을 사용하여 선택한 오브젝트 배치 또는 그룹 복사 사이를 전환하십시오!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1625,7 +1641,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementaddlayer.cpp" line="19"/>
         <source>Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 추가</translation>
     </message>
 </context>
 <context>
@@ -1633,7 +1649,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementaddwarp.cpp" line="38"/>
         <source>Add Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>워프 항목 추가</translation>
     </message>
 </context>
 <context>
@@ -1641,7 +1657,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementrenamelayer.cpp" line="84"/>
         <source>Toggle the visibility of a layer</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 가시성 전환</translation>
     </message>
 </context>
 <context>
@@ -1649,7 +1665,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementchangednewlayer.cpp" line="28"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>새 레이어</translation>
     </message>
 </context>
 <context>
@@ -1657,7 +1673,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementlayerchanged.cpp" line="26"/>
         <source>Change Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 변경</translation>
     </message>
 </context>
 <context>
@@ -1665,7 +1681,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementmergelayer.cpp" line="26"/>
         <source>Merge Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 병합</translation>
     </message>
 </context>
 <context>
@@ -1673,7 +1689,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementmodification.cpp" line="34"/>
         <source>Simple Modification History</source>
-        <translation type="unfinished"></translation>
+        <translation>간단한 수정 내역</translation>
     </message>
 </context>
 <context>
@@ -1681,12 +1697,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementmodifyevent.cpp" line="39"/>
         <source>Remove Event</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트 제거</translation>
     </message>
     <message>
         <location filename="../editing/_components/history/historyelementmodifyevent.cpp" line="41"/>
         <source>Add Event</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트 추가</translation>
     </message>
 </context>
 <context>
@@ -1694,7 +1710,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementnewlayer.cpp" line="15"/>
         <source>New Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>새 레이어</translation>
     </message>
 </context>
 <context>
@@ -1702,7 +1718,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementplacedoor.cpp" line="22"/>
         <source>Place Door</source>
-        <translation type="unfinished"></translation>
+        <translation>문점 배치</translation>
     </message>
 </context>
 <context>
@@ -1710,7 +1726,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementremovelayer.cpp" line="24"/>
         <source>Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 제거</translation>
     </message>
 </context>
 <context>
@@ -1718,7 +1734,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementremovelayerandsave.cpp" line="26"/>
         <source>Remove Layer and keep items</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 제거 및 항목 유지</translation>
     </message>
 </context>
 <context>
@@ -1726,7 +1742,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementremovewarp.cpp" line="37"/>
         <source>Remove Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>워프 항목 제거</translation>
     </message>
 </context>
 <context>
@@ -1734,7 +1750,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementrenameevent.cpp" line="19"/>
         <source>Rename Event</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트 이름 변경</translation>
     </message>
 </context>
 <context>
@@ -1742,7 +1758,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementrenamelayer.cpp" line="19"/>
         <source>Rename Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 이름 변경</translation>
     </message>
 </context>
 <context>
@@ -1750,7 +1766,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementreplaceplayerpoint.cpp" line="18"/>
         <source>Place Player Point</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어 포인트 배치</translation>
     </message>
 </context>
 <context>
@@ -1758,7 +1774,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizeblock.cpp" line="18"/>
         <source>Resize Block</source>
-        <translation type="unfinished"></translation>
+        <translation>블록 크기 조정</translation>
     </message>
 </context>
 <context>
@@ -1766,7 +1782,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizesection.cpp" line="17"/>
         <source>Resize Section</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 크기 조정</translation>
     </message>
 </context>
 <context>
@@ -1774,7 +1790,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizewater.cpp" line="18"/>
         <source>Resize Water</source>
-        <translation type="unfinished"></translation>
+        <translation>물 영역 크기 조정</translation>
     </message>
 </context>
 <context>
@@ -1783,31 +1799,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../common_features/installer.cpp" line="165"/>
         <location filename="../common_features/installer.cpp" line="166"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>잠시만 기다려주세요 ...</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="256"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>PGE 레벨 파일</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="261"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>PGE 세계지도</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="266"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX 레벨 파일</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="271"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX 세계지도</translation>
     </message>
 </context>
 <context>
@@ -1815,150 +1831,150 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="81"/>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>층: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="84"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>새 레이어에 추가 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="92"/>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[숨겨진]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="104"/>
         <source>Change Z-Offset...</source>
-        <translation type="unfinished"></translation>
+        <translation>Z 오프셋 변경 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="106"/>
         <source>Z-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Z 레이어</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="109"/>
         <source>Background-2</source>
-        <translation type="unfinished"></translation>
+        <translation>배경 -2</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="112"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>배경</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="115"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>기본</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="118"/>
         <source>Foreground</source>
-        <translation type="unfinished"></translation>
+        <translation>전경</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="121"/>
         <source>Foreground-2</source>
-        <translation type="unfinished"></translation>
+        <translation>전경 -2</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="126"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="127"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>변신</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="128"/>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>이 섹션의 모든 % 1을</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="129"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1을 (를)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="133"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>복사 환경 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="134"/>
         <source>BGO-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>비지오-ID : % 1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="135"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="136"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y, 너비, 높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="137"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : 왼쪽, 위쪽, 오른쪽, 아래쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="140"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>부</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="141"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>절단</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="144"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>풀다</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="145"/>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>이 섹션의 모든 % 1 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="146"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="149"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>원시 사용자 데이터 편집 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="152"/>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>속성 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="180"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="331"/>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 여백</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="181"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="332"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>항목을 제거하려면 섹션 경계에서 얼마나 멀리 떨어져 있는지 (픽셀 단위) 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="277"/>
         <source>Z-Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Z 오프셋</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="278"/>
         <source>Please enter the Z-value offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Z 오프셋 값을 입력하십시오 :</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="402"/>
@@ -1966,7 +1982,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="422"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="433"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 설정이 복사되었습니다 : % 1</translation>
     </message>
 </context>
 <context>
@@ -1974,118 +1990,118 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="91"/>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>층: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="94"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>새 레이어에 추가 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="102"/>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[숨겨진]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="112"/>
         <source>Invisible</source>
-        <translation type="unfinished"></translation>
+        <translation>보이지 않음</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="116"/>
         <source>Slippery</source>
-        <translation type="unfinished"></translation>
+        <translation>미끄러운</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="120"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>크기 조정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="124"/>
         <source>Change included NPC...</source>
-        <translation type="unfinished"></translation>
+        <translation>포함 된 NPC 변경 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="126"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="127"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>변신</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="128"/>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>이 섹션의 모든 % 1을</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="129"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1을 (를)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="130"/>
         <source>Make message box...</source>
-        <translation type="unfinished"></translation>
+        <translation>메시지 상자 만들기 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="134"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>복사 환경 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="135"/>
         <source>Block-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>블록 ID : % 1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="136"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="137"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y, 너비, 높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="138"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : 왼쪽, 위쪽, 오른쪽, 아래쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="141"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>부</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="142"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>절단</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="145"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>풀다</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>이 섹션의 모든 % 1 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="147"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="150"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>원시 사용자 데이터 편집 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="153"/>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>속성 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="166"/>
@@ -2093,60 +2109,61 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="186"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="197"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 설정이 복사되었습니다 : % 1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="238"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="442"/>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 여백</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="239"/>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="443"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>항목을 제거하려면 섹션 경계에서 얼마나 멀리 떨어져 있는지 (픽셀 단위) 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="314"/>
         <source>Event name</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트 이름</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="315"/>
         <source>Please enter the name of event:</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트 이름을 입력하세요 :</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="322"/>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>표시 될 메시지를 입력하세요.
+(최대 줄 길이는 27 자입니다.)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="323"/>
         <source>Hit message text</source>
-        <translation type="unfinished"></translation>
+        <translation>히트 메시지 텍스트</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="353"/>
         <source>Event created</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트 생성</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="354"/>
         <source>Message event created!</source>
-        <translation type="unfinished"></translation>
+        <translation>메시지 이벤트가 생성되었습니다!</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="359"/>
         <source>&apos;Hit&apos; event slot is used</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;히트&apos;이벤트 슬롯이 사용됩니다</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="360"/>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
-        <translation type="unfinished"></translation>
+        <translation>죄송합니다. &apos;% 1&apos;이벤트에서 이미 사용중인 &apos;Hit&apos;이벤트 슬롯입니다.</translation>
     </message>
 </context>
 <context>
@@ -2155,61 +2172,61 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/dock/itembox_list_model.cpp" line="30"/>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>이름으로 검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="34"/>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>아이디로 검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="37"/>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation>ID로 검색 (포함)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="41"/>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation>정렬 기준</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="43"/>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation>이름</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="47"/>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished"></translation>
+        <translation>아이디</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="51"/>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation>내림차순</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="58"/>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation type="unfinished"></translation>
+        <translation>균일 한 항목 크기보기</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="62"/>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>맞춤 요소 표시</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="65"/>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation>표준 요소 표시</translation>
     </message>
 </context>
 <context>
@@ -2217,94 +2234,94 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="94"/>
         <source>Open target level: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>오픈 타겟 레벨 : % 1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="99"/>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>층: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="103"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>새 레이어에 추가 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="110"/>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[숨겨진]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="123"/>
         <source>Jump to exit</source>
-        <translation type="unfinished"></translation>
+        <translation>종료하려면 이동</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="128"/>
         <source>Jump to entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>입구로 이동</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="132"/>
         <source>No Vehicles</source>
-        <translation type="unfinished"></translation>
+        <translation>마운트 없음</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="136"/>
         <source>Allow NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>항목 허용</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="140"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>잠김</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="143"/>
         <source>Need a bomb</source>
-        <translation type="unfinished"></translation>
+        <translation>폭탄이 필요해</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="146"/>
         <source>Required special state</source>
-        <translation type="unfinished"></translation>
+        <translation>필수 특수 상태</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="152"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>복사 환경 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="153"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="154"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y, 너비, 높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="155"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : 왼쪽, 위쪽, 오른쪽, 아래쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="159"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>풀다</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="162"/>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>속성 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="334"/>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="345"/>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="356"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 설정이 복사되었습니다 : % 1</translation>
     </message>
 </context>
 <context>
@@ -2312,82 +2329,82 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="81"/>
         <source>Open target file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>대상 파일 열기 : % 1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="85"/>
         <source>Path background</source>
-        <translation type="unfinished"></translation>
+        <translation>배경 경로</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="89"/>
         <source>Big Path background</source>
-        <translation type="unfinished"></translation>
+        <translation>큰 배경 경로</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="93"/>
         <source>Always Visible</source>
-        <translation type="unfinished"></translation>
+        <translation>항상 표시</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="98"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>복사 환경 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="100"/>
         <source>Level-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 ID : % 1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="101"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="102"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y, 너비, 높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="103"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : 왼쪽, 위쪽, 오른쪽, 아래쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="105"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>부</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="106"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>절단</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="108"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>변신</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="109"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1을 (를)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="111"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>풀다</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="112"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="114"/>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>속성 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="225"/>
@@ -2395,7 +2412,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="245"/>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="256"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 설정이 복사되었습니다 : % 1</translation>
     </message>
 </context>
 <context>
@@ -2403,24 +2420,25 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="14"/>
         <source>Set message box</source>
-        <translation type="unfinished"></translation>
+        <translation>메시지 텍스트 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="27"/>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="44"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;플레이어가이 NPC와 대화 할 때 표시되는 메시지입니다.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;노트 :&lt;/span&gt; 모든 따옴표와 개행 문자가 제거됩니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="30"/>
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC의 대화 메시지 입력 :
+(라인 당 최대 길이는 27 자입니다.)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="90"/>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
-        <translation type="unfinished"></translation>
+        <translation>우호적 (우호적이지 않은 NPC와 대화 할 수 없음)</translation>
     </message>
 </context>
 <context>
@@ -2428,67 +2446,67 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="85"/>
         <source>&lt;Silence&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;없음&gt;</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="88"/>
         <source>Play this</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="91"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>복사 환경 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="93"/>
         <source>World-Music-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>세계-음악-아이디 :%1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="95"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="97"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y, 너비, 높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="99"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : 왼쪽, 위쪽, 오른쪽, 아래쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="102"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>부</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="103"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>절단</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="105"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>변신</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="106"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1을 (를)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>풀다</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="111"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="133"/>
@@ -2496,7 +2514,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="153"/>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="164"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 설정이 복사되었습니다 : % 1</translation>
     </message>
 </context>
 <context>
@@ -2504,164 +2522,164 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="118"/>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>층: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="121"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>새 레이어에 추가 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="129"/>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[숨겨진]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="144"/>
         <source>Edit NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 구성 편집</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="146"/>
         <source>New NPC-Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운 NPC 구성</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
         <source>Set %1</source>
-        <translation type="unfinished"></translation>
+        <translation>% 1 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>방향</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="156"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="161"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>권리</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
         <source>Friendly</source>
-        <translation type="unfinished"></translation>
+        <translation>친한</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="171"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>움직이지 않는다</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="175"/>
         <source>Set message...</source>
-        <translation type="unfinished"></translation>
+        <translation>메시지 설정 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="178"/>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>보스로 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="183"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>변신</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="184"/>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>이 섹션의 모든 % 1을</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="185"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1을 (를)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="191"/>
         <source>Change included NPC...</source>
-        <translation type="unfinished"></translation>
+        <translation>포함 된 NPC 변경 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="196"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>복사 환경 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="197"/>
         <source>NPC-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>엔피시-ID: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="198"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="199"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : X, Y, 너비, 높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="200"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치 : 왼쪽, 위쪽, 오른쪽, 아래쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="203"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>부</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="204"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>절단</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>풀다</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>이 섹션의 모든 % 1 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="208"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 % 1 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="210"/>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>원시 사용자 데이터 편집 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="214"/>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>속성 ...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="482"/>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 여백</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="483"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>항목을 제거하려면 섹션 경계에서 얼마나 멀리 떨어져 있는지 (픽셀 단위) 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="318"/>
@@ -2669,7 +2687,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="338"/>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="349"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>기본 설정이 복사되었습니다 : % 1</translation>
     </message>
 </context>
 <context>
@@ -2677,7 +2695,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="68"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>복사 환경 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="69"/>
