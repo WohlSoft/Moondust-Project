@@ -2682,52 +2682,52 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="69"/>
         <source>Path-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>경로-ID:%1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="70"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:X,Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="71"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:X,Y,너비,높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="72"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:왼쪽,위,오른쪽,아래</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="74"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>복사</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="75"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>자르기</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="77"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>~로 변환</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="78"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 %1를 ~로 변환</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="80"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 %1을 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="90"/>
@@ -2735,7 +2735,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="110"/>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="121"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>환경설정이 복사되었습니다:%1</translation>
     </message>
 </context>
 <context>
@@ -2743,143 +2743,143 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="91"/>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>층: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="94"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운 층에 추가...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="102"/>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[숨겨짐]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="112"/>
         <source>Environment type</source>
-        <translation type="unfinished"></translation>
+        <translation>환경 유형</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="128"/>
         <source>Water</source>
-        <translation type="unfinished"></translation>
+        <translation>물</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="129"/>
         <source>Quicksand</source>
-        <translation type="unfinished"></translation>
+        <translation>유사</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="130"/>
         <source>Custom liquid</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 액체</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="131"/>
         <source>Gravity Field</source>
-        <translation type="unfinished"></translation>
+        <translation>중력장</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="132"/>
         <source>Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>터치 이벤트(한번)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="133"/>
         <source>Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>터치 이벤트(모든 프레임)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="134"/>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC/플레이어 터치 이벤트(한번)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="135"/>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC/플레이어 터치 이벤트(모든 프레임)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="136"/>
         <source>Mouse click Event</source>
-        <translation type="unfinished"></translation>
+        <translation>마우스 클릭 이벤트</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="137"/>
         <source>Collision script</source>
-        <translation type="unfinished"></translation>
+        <translation>충돌 스크립트</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="138"/>
         <source>Mouse click Script</source>
-        <translation type="unfinished"></translation>
+        <translation>마우스 클릭 스크립트</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="139"/>
         <source>Collision Event</source>
-        <translation type="unfinished"></translation>
+        <translation>충돌 이벤트</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="140"/>
         <source>Air chamber</source>
-        <translation type="unfinished"></translation>
+        <translation>공기실</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="141"/>
         <source>NPC Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 터치 이벤트(한번)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="142"/>
         <source>NPC Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 터치 이벤트(모든 프레임)</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="143"/>
         <source>NPC Hurting Field</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 허트 영역</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="149"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>환경설정 복사</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="150"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:X,Y,너비,높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="151"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:왼쪽,위,오른쪽,아래</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="154"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>리사이즈</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="158"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>복사</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="159"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>자르기</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="184"/>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="195"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>환경설정이 복사되었습니다:%1</translation>
     </message>
 </context>
 <context>
@@ -2887,7 +2887,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
         <source>Set %1</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 설정</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
