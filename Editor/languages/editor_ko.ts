@@ -3065,7 +3065,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="91"/>
@@ -5821,7 +5821,7 @@ when you exit from a level through this warp.</source>
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>워프 유형을 정의합니다.
+        <translation type="unfinished">워프 유형을 정의합니다.
 0-즉시, 플레이어가 즉시 순간 이동되고 이동 속도가 0으로 재설정됩니다.
 1-파이프, 방향 경사 입구 및 출구.
 2-출입문, 플레이어는 위쪽 키로 입장 할 수 있습니다.
