@@ -2915,17 +2915,17 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="91"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="95"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="101"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>제거</translation>
     </message>
 </context>
 <context>
@@ -2933,57 +2933,57 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="76"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>환경설정 복사</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="78"/>
         <source>Scenery-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>배경-ID:%1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="80"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:X,Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="82"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:X,Y,너비,높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="84"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:왼쪽,위,오른쪽,아래</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="87"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>복사</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="88"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>자르기</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="90"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>~로 변환</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="91"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 %1을 ~로 변환</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="93"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="94"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 %1을 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="109"/>
@@ -2991,7 +2991,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="129"/>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="140"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>환경설정이 복사되었습니다:%1</translation>
     </message>
 </context>
 <context>
@@ -2999,12 +2999,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="14"/>
         <source>Select Item</source>
-        <translation type="unfinished"></translation>
+        <translation>아이템 선택</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="30"/>
         <source>Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>블록</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="51"/>
@@ -3016,7 +3016,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="773"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="913"/>
         <source>Filter:</source>
-        <translation type="unfinished"></translation>
+        <translation>필터:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="58"/>
@@ -3028,7 +3028,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="751"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="891"/>
         <source>Category:</source>
-        <translation type="unfinished"></translation>
+        <translation>카테고리:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="68"/>
@@ -3040,7 +3040,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="729"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="869"/>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation>그룹:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="79"/>
@@ -3060,72 +3060,72 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="883"/>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="905"/>
         <source>[all]</source>
-        <translation type="unfinished"></translation>
+        <translation>[전부]</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="123"/>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="216"/>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="309"/>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>지형 타일</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="437"/>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>풍경</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="577"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>경로</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="708"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="848"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>음악</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="956"/>
         <source>Extra Data:</source>
-        <translation type="unfinished"></translation>
+        <translation>추가 데이터:</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="175"/>
         <source>[Empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[공백]</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="246"/>
         <source>NPC from List</source>
-        <translation type="unfinished"></translation>
+        <translation>목록의 NPC</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="247"/>
         <source>Coins</source>
-        <translation type="unfinished"></translation>
+        <translation>코인</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="920"/>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 저장해주세요</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="920"/>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 음악을 사용하기 위해서는 파일을 저장해주세요.</translation>
     </message>
 </context>
 <context>
@@ -3133,57 +3133,57 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="68"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>환경설정 복사</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="69"/>
         <source>Tile-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>타일-ID:%1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="70"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:X,Y</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="71"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:X,Y,너비,높이</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="72"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:왼쪽,위,오른쪽,아래</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="74"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>복사</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="75"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>자르기</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="77"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>~로 변환</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="78"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 %1을 ~로 변환</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="80"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="81"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 %1을 제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="90"/>
@@ -3191,7 +3191,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="110"/>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="121"/>
         <source>Preferences have been copied: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>환경설정이 복사되었습니다:%1</translation>
     </message>
 </context>
 <context>
@@ -3199,12 +3199,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="964"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>탐색</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="973"/>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="1080"/>
@@ -3216,12 +3216,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../common_features/json_settings_widget.cpp" line="1094"/>
         <location filename="../common_features/json_settings_widget.cpp" line="1096"/>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[공백]</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="1083"/>
         <source>%1 coins</source>
-        <translation type="unfinished"></translation>
+        <translation>%1코인</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="1312"/>
@@ -3230,7 +3230,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../common_features/json_settings_widget.cpp" line="1690"/>
         <source>W</source>
         <comment>Width, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation>W</translation>
     </message>
     <message>
         <location filename="../common_features/json_settings_widget.cpp" line="1324"/>
@@ -3239,7 +3239,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../common_features/json_settings_widget.cpp" line="1701"/>
         <source>H</source>
         <comment>Height, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation>H</translation>
     </message>
 </context>
 <context>
@@ -3247,87 +3247,90 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="26"/>
         <source>LazyFix tool</source>
-        <translation type="unfinished"></translation>
+        <translation>레이지픽스 도구</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="39"/>
         <source>Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="unfinished"></translation>
+        <translation>고친 이미지가 저장될 출력 디렉토리.
+(이 필드를 비우면, 새로운 이미지는 백업으로 원래 이미지가 저장된 폴더에 저장됩니다)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="80"/>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX GIF파일(*.gif와 *m.gif)를 포함하는 입력 디렉토리</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="90"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>닫기</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="97"/>
         <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>하위디렉토리에서 이미지 검색</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="104"/>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="165"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>탐색</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="118"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>플래그</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="148"/>
         <source>Don&apos;t create back-up</source>
-        <translation type="unfinished"></translation>
+        <translation>백업을 생성하지 않음</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="155"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>시작</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="172"/>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
+        <translation>이것은 SMBX 이미지 / 스프라이트에서 느리게 만들어진 마스크를 수정하는 도구입니다. 이 유틸리티는 색상 비교를 통해 마스크를 수정합니다. 원본 이미지를 덮어 쓰지만 백업이 새 디렉토리에 생성되므로 문제가 발생하면 원본을 복원 할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="44"/>
         <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>오픈소스 디렉토리</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="55"/>
         <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>타겟 디렉토리 열기</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="68"/>
         <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>소스 디렉토리가 설정되지 않음</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="68"/>
         <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
+        <translation>소스 디렉토리를 설정해주세요</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="85"/>
         <source>Tool not found</source>
-        <translation type="unfinished"></translation>
+        <translation>툴이 발견되지 않음</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="85"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>응용 프로그램을 실행할 수 없음:
+%1
+응용 프로그램 디렉토리를 확인하고 올바르게 설치되었는지 확인하십시오.</translation>
     </message>
 </context>
 <context>
@@ -3335,64 +3338,64 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="133"/>
         <source>Export current section to image</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 섹션을 이미지로 내보내기</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="138"/>
         <source>PNG Image (*.png)</source>
-        <translation type="unfinished"></translation>
+        <translation>PNG 이미지(*.png)</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <source>Saving section image...</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 이미지를 저장...</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="146"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="510"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>중단</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="147"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>기다려주세요...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="42"/>
         <source>Untitled %1</source>
-        <translation type="unfinished"></translation>
+        <translation>제목없음 %1</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="112"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos;을 위한 레벨 제목을 입력해주세요!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="113"/>
         <source>Saving</source>
-        <translation type="unfinished"></translation>
+        <translation>저장</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="117"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="580"/>
         <source>Level title: </source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 타이틀: </translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="118"/>
         <source>Make custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 폴더 만들기</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="179"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
+        <translation>~로 저장</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="189"/>
         <source>SMBX file version</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX 파일 버전</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="190"/>
@@ -3401,26 +3404,30 @@ List of known SMBX versions and format codes:
 %1
 (To allow level file work in specific SMBX version,
 version code must be less or equal specific code)</source>
-        <translation type="unfinished"></translation>
+        <translation>어떤 버전으로 저장 하시겠습니까? (0부터 64)
+알려진 SMBX 버전 및 형식 코드 목록 :
+%1
+(레벨 파일이 특정 SMBX 버전에서 작동하도록하려면
+파일 버전은 해당 SMBX 버전 코드보다 작거나 같아야합니다.)</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="246"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="273"/>
         <source>Extension is not set</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 확장자가 설정되지 않음</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="247"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="274"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 확장자가 설정되지 않았습니다, 유효한 확장자를 입력해주십시오!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="344"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="366"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="434"/>
         <source>File save error</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 저장 에러</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="345"/>
@@ -3428,13 +3435,14 @@ version code must be less or equal specific code)</source>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="435"/>
         <source>Cannot save file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 저장할 수 없음 %1:
+%2.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="398"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="413"/>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 한도가 초과됨</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="414"/>
@@ -3442,83 +3450,90 @@ version code must be less or equal specific code)</source>
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation type="unfinished"></translation>
+        <translation>계속해서 파일을 저장하시겠습니까?
+SMBX64 한도를 초과하면 &apos;Subscript out of range&apos;오류와 함께 SMBX가 충돌 할 수 있습니다.
+
+LunaLUA를 설치하면 이러한 한도가 부분적으로 확장됩니다.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="463"/>
         <source>File read error</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 읽기 에러</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="464"/>
         <source>Cannot read file %1:
 %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 읽을 수 없음 %1:
+%2.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="510"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="511"/>
         <source>Loading level data</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 데이터 불러오기</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="554"/>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation>옳지않은 커스텀 configs</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="555"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>이 레벨에는로드 할 수없는 잘못된 구성 파일이 있습니다. 다음 번에 이 메시지 상자를 피하려면, 현재 및 사용자 정의 폴더에있는 구성 파일에서 다음 오류를 수정하십시오:
+
+%1</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="576"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
+변경 사항을 저장 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="578"/>
         <source> not saved</source>
-        <translation type="unfinished"></translation>
+        <translation> 저장되지 않았습니다</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="38"/>
         <source>1/%1 Loading user data...</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 커스텀 데이터 불러오기...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="46"/>
         <source>1/%1 Loading Backgrounds...</source>
-        <translation type="unfinished"></translation>
+        <translation>1/%1 배경 불러오기...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="55"/>
         <source>2/%1 Loading BGOs...</source>
-        <translation type="unfinished"></translation>
+        <translation>2/%1 BGO 불러오기...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="64"/>
         <source>3/%1 Loading Blocks...</source>
-        <translation type="unfinished"></translation>
+        <translation>3/%1 블록 불러오기...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="73"/>
         <source>4/%1 Loading NPCs...</source>
-        <translation type="unfinished"></translation>
+        <translation>4/%1 NPC 불러오기...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="83"/>
         <source>5/%1 Loading PhysEZ...</source>
         <comment>PhysEZ - Physical Environment Zone.</comment>
-        <translation type="unfinished"></translation>
+        <translation>5/%1 PhysEZ 불러오기...</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_draw.cpp" line="92"/>
         <source>6/%1 Loading Doors...</source>
-        <translation type="unfinished"></translation>
+        <translation>6/%1 문 불러오기...</translation>
     </message>
 </context>
 <context>
@@ -3526,12 +3541,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/_dialogs/levelfilelist.cpp" line="26"/>
         <source>Level files list</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 파일 목록</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/levelfilelist.cpp" line="27"/>
         <source>Please, select level file from list for use them:</source>
-        <translation type="unfinished"></translation>
+        <translation>목록에서 사용할 레벨 파일을 선택하십시오:</translation>
     </message>
 </context>
 <context>
@@ -3539,64 +3554,64 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="21"/>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation>브라우저 탐색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="38"/>
         <source>Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>블록</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="59"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="222"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="382"/>
         <source>Category:</source>
-        <translation type="unfinished"></translation>
+        <translation>카테고리:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="66"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="229"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="401"/>
         <source>Group:</source>
-        <translation type="unfinished"></translation>
+        <translation>그룹:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="167"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="330"/>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="490"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="201"/>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.ui" line="361"/>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="310"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="361"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="412"/>
         <source>&lt;Save file first&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;먼저 파일을 저장&gt;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="316"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="367"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="418"/>
         <source>Copy graphic to custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation>그래픽을 커스텀 폴더로 복사</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="317"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="368"/>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="419"/>
         <source>Copy graphic to episode folder</source>
-        <translation type="unfinished"></translation>
+        <translation>그래픽을 에피소드 폴더로 복사</translation>
     </message>
 </context>
 <context>
@@ -3604,143 +3619,144 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="32"/>
         <source>Level Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 속성</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="75"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="96"/>
         <source>No settings available</source>
-        <translation type="unfinished"></translation>
+        <translation>사용 가능한 설정이 없음</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="130"/>
         <source>Physics</source>
-        <translation type="unfinished"></translation>
+        <translation>물리</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="137"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>기본</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="145"/>
         <source>Physics type:</source>
-        <translation type="unfinished"></translation>
+        <translation>물리 유형:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="158"/>
         <source>Disable player controls</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어 컨트롤 비활성화</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="164"/>
         <source>Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>드롭</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="171"/>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>점프</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="178"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="185"/>
         <source>Alt-Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-점프</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="192"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="199"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>시작</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="206"/>
         <source>Alt-Run</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-달리기</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="213"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>달리기</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="220"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>위</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="227"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>아래</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="240"/>
         <source>Timer</source>
-        <translation type="unfinished"></translation>
+        <translation>타이머</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="246"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>활성화</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="253"/>
         <source> sec.</source>
-        <translation type="unfinished"></translation>
+        <translation> 초.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="264"/>
         <source>Kill all players</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 플레이어 킬</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="269"/>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation>트리거 이벤트</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="277"/>
         <source>Time limit:</source>
-        <translation type="unfinished"></translation>
+        <translation>시간 제한:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="284"/>
         <source>Timer type:</source>
-        <translation type="unfinished"></translation>
+        <translation>타이머 동작:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="291"/>
         <source>Event:</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="308"/>
         <source>Title</source>
-        <translation type="unfinished"></translation>
+        <translation>제목</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="314"/>
         <source>Level name:</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 이름:</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.cpp" line="94"/>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>파일에 오류가 있습니다 %1:
+% 2</translation>
     </message>
 </context>
 <context>
@@ -3749,243 +3765,246 @@ Do you want to save your changes?</source>
         <location filename="../testing/luna_tester_engine.cpp" line="378"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation type="unfinished"></translation>
+        <translation>테스트 레벨</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="380"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX 엔진에서 레벨 테스트를 시작합니다.
+이 기능을 사용하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="386"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in LunaTester from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation>저장된 레벨 / 세계 테스트</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="391"/>
         <source>Reset checkpoints</source>
-        <translation type="unfinished"></translation>
+        <translation>체크포인트 초기화</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="392"/>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished"></translation>
+        <translation>모든 체크포인트 초기화.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="396"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="unfinished"></translation>
+        <translation>OpenGL 비활성화</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="397"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="unfinished"></translation>
+        <translation>OpenGL 렌더링 엔진을 비활성화하고 대신 GDI를 사용하십시오. 비디오 카드가 OpenGL을 지원하지 않거나 사용하려고 할 때 LunaLua가 충돌하는 경우 유용합니다. 이로 인해 기능이 크게 감소합니다.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="403"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>백그라운드에서 계속 실행</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="405"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 테스트를 처음 실행 한 후 빠르게 시작할 수 있습니다.
+강력한 컴퓨터가 필요합니다. 그렇지 않으면 다음 테스트 실행시 엔진이 멈출 수 있습니다.
+느린 시스템에서 또는 레벨 테스트를 시도하는 동안 문제가 발생하는 경우이 기능을 비활성화하는 것이 좋습니다.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="411"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation>실행중인 프로세스 종료</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="414"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 프로세스를 종료하여 엔진을 처음부터로드 할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="418"/>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation type="unfinished"></translation>
+        <translation>LunaTest로 경로를 변경...</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="420"/>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 위치 선택.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="425"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wine 설정 ...</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="427"/>
         <source>Select a Wine toolchain for use.</source>
-        <translation type="unfinished"></translation>
+        <translation>사용할 Wine 툴모음을 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="432"/>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
-        <translation type="unfinished"></translation>
+        <translation>게임 시작</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="434"/>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester를 일반 게임으로 실행.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="441"/>
         <location filename="../testing/luna_tester_engine.cpp" line="484"/>
         <location filename="../testing/luna_tester_engine.cpp" line="1182"/>
         <source>LunaTester error</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 에러</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="446"/>
         <source>Failed to start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>시작 실패:%1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="449"/>
         <source>Crashed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>충돌:%1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="452"/>
         <source>Timed out: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>시간 초과:%1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="455"/>
         <source>Write error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>쓰기 에러:%1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="458"/>
         <source>Read error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>읽기 에러:%1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="462"/>
         <source>Unknown error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>알려지지 않은 에러:%1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="485"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLUA-SMBX로 레벨을 보내지 못했습니다!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="638"/>
         <source>Error has occured: (Error %1) %2</source>
-        <translation type="unfinished"></translation>
+        <translation>에러가 발생했습니다:(에러%1)%2</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="708"/>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished"></translation>
+        <translation>체크 포인트가 성공적으로 재설정되었습니다!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1056"/>
         <source>LunaLUA tester is not started!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLua 테스터가 시작되지 않았습니다!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1069"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester를 종료 하시겠습니까? 레벨을 테스트하는 중이라면, 즉시 종료됩니다!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1077"/>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester가 성공적으로 종료되었습니다.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1085"/>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester가 실행되고 있지 않습니다.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1095"/>
         <location filename="../testing/luna_tester_engine.cpp" line="1195"/>
         <source>LunaTester is still active</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester는 여전히 활성 상태입니다</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1096"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester의 경로를 변경하려면 현재 실행중인 게임을 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1105"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 경로</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1112"/>
         <source>Please select a path to LunaTester:</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester의 경로를 선택하십시오 :</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1121"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation>기본값 사용</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1124"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
-        <translation type="unfinished"></translation>
+        <translation>커스텀</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1128"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>검색...</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1152"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>저장</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1165"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 위치 선택</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1183"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
-        <translation type="unfinished"></translation>
+        <translation>선택한 LunaLua 경로의 기능을 인식하지 못하여, 게임이 작동하지 않을 수 있습니다. 다른 경로를 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1196"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Wine 설정을 변경하려면 현재 작동중인 LunaTester를 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1394"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 디렉터리 체크 실패</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1396"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 LunaTester를 시작할 수 없습니다! 다음 이유 중 하나로 인해 발생할 수 있습니다:</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1400"/>
@@ -3993,51 +4012,56 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>-LunaTester (또는 SMBX2 데이터 루트)의 잘못된 위치가 지정되었습니다. LunaTester 위치 설정을 확인하십시오.
+-바이러스 백신에 의한 파일 제거 가능성 (가양 성 또는 파일 감염), 바이러스 백신 격리 또는 최근 제거 된 위협 보고서를 확인하십시오.
+-잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1407"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation>-바이러스 백신에 의한 파일 제거 가능성 (가양 성 또는 파일 감염), 바이러스 백신 격리 또는 최근 제거 된 위협 보고서를 확인하십시오.
+-잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1444"/>
         <source>Vanilla SMBX detected!</source>
-        <translation type="unfinished"></translation>
+        <translation>바닐라 SMBX가 감지되었습니다!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1445"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;% 1&quot;을 (를) 찾을 수 없습니다!
+바닐라 SMBX가 있습니다!
+즉, LunaTester로 레벨 테스트를 시작할 수 없습니다. SMBX Engine으로 레벨 테스트를 실행하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1458"/>
         <source>Incompatible LunaDll found</source>
-        <translation type="unfinished"></translation>
+        <translation>호환되지 않는 LunaDll 발견</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1459"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>경로에서 발견 된 호환되지 않는 LunaDll.dll 모듈로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1468"/>
         <source>Incompatible LunaLua</source>
-        <translation type="unfinished"></translation>
+        <translation>호환되지 않는 LunaLua</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1469"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>경로에 호환되지 않는 LunaLua로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1538"/>
         <source>SMBX64 limits are exceeded!</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 한도 초과!</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1539"/>
@@ -4046,22 +4070,26 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Do you want to continue the process?</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX64 표준 위반이 발견되었습니다!
+%1
+, 레거시 엔진이 충돌 할 수 있습니다!
+모든 초과 요소를 제거하는 것이 좋습니다.
+프로세스를 계속 하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1671"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation type="unfinished"></translation>
+        <translation>잘못된 월드 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1680"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
-        <translation type="unfinished"></translation>
+        <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1715"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaTester 월드 루트에서 에피소드를 시작할 수 없습니다.</translation>
     </message>
 </context>
 <context>
@@ -4069,85 +4097,87 @@ Do you want to continue the process?</source>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="20"/>
         <source>Clone section</source>
-        <translation type="unfinished"></translation>
+        <translation>복제 섹션</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="30"/>
         <source>Margin (How far outside of the target section items can be copied, in pixels):</source>
-        <translation type="unfinished"></translation>
+        <translation>여백 (대상 섹션 항목을 복사해야하는 거리 ,픽셀) :</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="43"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; 포맷은 21개를 넘는 섹션을 지원하지 않습니다.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats do not support more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="50"/>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>소스</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="57"/>
         <source>Please select the source file and the section to clone, as well as the destination file and target section to clone into.</source>
-        <translation type="unfinished"></translation>
+        <translation>복제 할 소스 파일과 섹션, 복제 할 대상 파일 및 대상 섹션을 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.ui" line="93"/>
         <source>Destiation</source>
-        <translation type="unfinished"></translation>
+        <translation>목적지</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="75"/>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="102"/>
         <source>Section</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="81"/>
         <source>[Uninitialized]</source>
-        <translation type="unfinished"></translation>
+        <translation>[초기화되지 않음]</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="106"/>
         <source>[Used]</source>
-        <translation type="unfinished"></translation>
+        <translation>[사용된]</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="117"/>
         <source>Initialize new section</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운 섹션 선언</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="133"/>
         <source>Sections aren&apos;t selected</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션이 선택되지 않았습니다</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="134"/>
         <source>Source and Destination sections should be selected!</source>
-        <translation type="unfinished"></translation>
+        <translation>소스 및 대상 섹션을 선택해야합니다!</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="165"/>
         <source>Empty section</source>
-        <translation type="unfinished"></translation>
+        <translation>빈 섹션</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="166"/>
         <source>Source section is empty!
 Please select another section, or clear.</source>
-        <translation type="unfinished"></translation>
+        <translation>소스 섹션이 비어 있습니다!
+다른 섹션을 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="197"/>
         <source>Section is used</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션이 이미 사용 중입니다</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_clone_section.cpp" line="198"/>
         <source>Destination section is in use, therefore it will be overridden with removing of all it&apos;s objects.
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>목적지 섹션이 사용 중입니다. 이 섹션으로 복제하면 이미 존재하는 모든 개체가 제거됩니다.
+계속 하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -4155,69 +4185,69 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="23"/>
         <source>Classic Events</source>
-        <translation type="unfinished"></translation>
+        <translation>클래식 이벤트</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="61"/>
         <source>Events list</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트 목록</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="80"/>
         <source>Create copy of event</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트 복사본 생성</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="135"/>
         <source>Autostart event</source>
-        <translation type="unfinished"></translation>
+        <translation>자동시작 이벤트</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="210"/>
         <source>Layer visibly</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 가시성</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="235"/>
         <source>Disable smoke effects</source>
-        <translation type="unfinished"></translation>
+        <translation>스모크 전환 비활성화</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="261"/>
         <source>Hide</source>
-        <translation type="unfinished"></translation>
+        <translation>숨김</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="320"/>
         <source>Show</source>
-        <translation type="unfinished"></translation>
+        <translation>보여주기</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="333"/>
         <source>Toggle</source>
-        <translation type="unfinished"></translation>
+        <translation>토글</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="492"/>
         <source>Layers movement</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 이동</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="520"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="682"/>
         <source>Horisontal speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>수평 속도 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="546"/>
         <source>Set moving layer</source>
-        <translation type="unfinished"></translation>
+        <translation>움직이는 레이어 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="585"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="675"/>
         <source>Vertical speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>수직 속도:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="598"/>
@@ -4225,230 +4255,231 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="731"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="738"/>
         <source>bps</source>
-        <translation type="unfinished"></translation>
+        <translation>bps</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="628"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished"></translation>
+        <translation>자동 스크롤 섹션</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="724"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="369"/>
         <source>Section</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="755"/>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="783"/>
         <source>Current section:</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 설정 변경:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="800"/>
         <source>Set size and position</source>
-        <translation type="unfinished"></translation>
+        <translation>크기 및 위치 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="842"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="845"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>위</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="858"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="861"/>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>아래</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="874"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="877"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1275"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="890"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="893"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1289"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="906"/>
         <source>Capture...</source>
-        <translation type="unfinished"></translation>
+        <translation>캡처...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="931"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="967"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1038"/>
         <source>Don&apos;t change</source>
-        <translation type="unfinished"></translation>
+        <translation>변경하지 않음</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="938"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="974"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1045"/>
         <source>Reset to default</source>
-        <translation type="unfinished"></translation>
+        <translation>기본값으로 재설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="945"/>
         <source>Define new:</source>
-        <translation type="unfinished"></translation>
+        <translation>새로 정의:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="958"/>
         <source>Set music</source>
-        <translation type="unfinished"></translation>
+        <translation>음악 변경</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="981"/>
         <source>Replace music to:</source>
-        <translation type="unfinished"></translation>
+        <translation>다음으로 음악 변경:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1029"/>
         <source>Set background</source>
-        <translation type="unfinished"></translation>
+        <translation>배경 변경</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1052"/>
         <source>Replace background to:</source>
-        <translation type="unfinished"></translation>
+        <translation>다음으로 배경 변경:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1082"/>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>공통</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1116"/>
         <source>Display message:</source>
-        <translation type="unfinished"></translation>
+        <translation>메시지 출력:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1136"/>
         <source>Play sound:</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이 사운드:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1149"/>
         <source>Do end game:</source>
-        <translation type="unfinished"></translation>
+        <translation>게임 종료 트리거:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1166"/>
         <source>Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>No</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1171"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>게임 종료:&quot;최종 보스 제거&quot;</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1209"/>
         <source>Test</source>
-        <translation type="unfinished"></translation>
+        <translation>테스트</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1226"/>
         <source>Player Control hold keys</source>
-        <translation type="unfinished"></translation>
+        <translation>자동-고정 플레이어 컨트롤</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1254"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>위</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1261"/>
         <source>Run</source>
-        <translation type="unfinished"></translation>
+        <translation>달리기</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1268"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>아래</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1282"/>
         <source>Jump</source>
-        <translation type="unfinished"></translation>
+        <translation>점프</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1296"/>
         <source>Alt-jump</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-점프</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1303"/>
         <source>Alt-run</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt-달리기</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1310"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>시작</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1317"/>
         <source>Drop</source>
-        <translation type="unfinished"></translation>
+        <translation>드롭</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1334"/>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation>트리거 이벤트</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1359"/>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>지연</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="278"/>
         <source>[Silence]</source>
-        <translation type="unfinished"></translation>
+        <translation>[음소거]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="383"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="2231"/>
         <source>[none]</source>
-        <translation type="unfinished"></translation>
+        <translation>[없음]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1105"/>
         <source>New Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>새 이벤트%1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1157"/>
         <source>Copyed Event %1</source>
-        <translation type="unfinished"></translation>
+        <translation>복사된 이벤트%1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1898"/>
         <source>Get section size</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 사이즈 가져오기</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1899"/>
         <source>Please, set current section to %1 for capture data for this event</source>
-        <translation type="unfinished"></translation>
+        <translation>이 이벤트에 대한 데이터를 캡처하려면 현재 섹션을 % 1 (으)로 전환하십시오</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="2221"/>
         <source>Please, enter message
 (Max line length is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation>메시지를 입력하세요
+(최대 줄 길이는 27 자입니다.)</translation>
     </message>
 </context>
 <context>
@@ -4456,47 +4487,47 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="69"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>제거</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="83"/>
         <source>Place</source>
-        <translation type="unfinished"></translation>
+        <translation>장소</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="98"/>
         <source>Place &amp; Overwrite</source>
-        <translation type="unfinished"></translation>
+        <translation>장소&amp;덮어쓰기</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="126"/>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation>이동</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="437"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>로테이트</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="451"/>
         <source>Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>플립</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="465"/>
         <source>Transform</source>
-        <translation type="unfinished"></translation>
+        <translation>변환</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="506"/>
         <source>Undone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>실행 취소 된 작업 : % 1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="520"/>
         <source>Redone: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>작업 다시 실행: % 1</translation>
     </message>
 </context>
 <context>
@@ -4504,70 +4535,70 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="26"/>
         <source>Item Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>아이템 속성</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="84"/>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>블록</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="111"/>
         <source>Invisible</source>
-        <translation type="unfinished"></translation>
+        <translation>볼 수 없음</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="131"/>
         <source>Hited:</source>
-        <translation type="unfinished"></translation>
+        <translation>히트:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="168"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="565"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="765"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 레이어:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="223"/>
         <source>Destroyed: </source>
-        <translation type="unfinished"></translation>
+        <translation>파괴됨: </translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="230"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="822"/>
         <source>Layer empty:</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어가 비었음:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="265"/>
         <source>Slippery</source>
-        <translation type="unfinished"></translation>
+        <translation>미끄러운</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="278"/>
         <source>Resize</source>
-        <translation type="unfinished"></translation>
+        <translation>리사이즈</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="297"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>너비:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="317"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>높이:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="346"/>
         <source>Block contents:</source>
-        <translation type="unfinished"></translation>
+        <translation>블록 컨텐츠:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="359"/>
         <source>Events</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="375"/>
@@ -4578,240 +4609,241 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1186"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1210"/>
         <source>Don&apos;t reset event to &apos;none&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>이벤트를 &apos;없음&apos;으로 재설정하지 마십시오</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="471"/>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="499"/>
         <source>SMBX64 defines:</source>
-        <translation type="unfinished"></translation>
+        <translation>SMBX 포맷:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="511"/>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>정렬 배열 우선 순위를 설정합니다. 이 옵션을 사용하면 BGO가 포 그라운드에 표시되도록 할 수 있습니다. (글로벌 BGO 구성의 기본값을 사용하려면이 값을 -1로 설정하십시오).
+이것은 SMBX의 버그가있는 BGO 렌더링을 활용합니다. 이 작업을 수행하려면 전경 BGO 중 하나를 맵에 배치하기 만하면됩니다 (예 : 공기 나사). 이 옵션은 LVL 파일에 저장되지 않으므로이 레벨을 열 때마다이 옵션을 설정해야합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="535"/>
         <source>Sort priority:</source>
-        <translation type="unfinished"></translation>
+        <translation>우선순위 정렬:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="579"/>
         <source>Z-Position</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-좌표</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="585"/>
         <source>Z-Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-오프셋:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="592"/>
         <source>Z-Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-레이어:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="603"/>
         <source>Background-2</source>
-        <translation type="unfinished"></translation>
+        <translation>배경-2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="608"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>배경</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="613"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>기본값</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="618"/>
         <source>Foreground</source>
-        <translation type="unfinished"></translation>
+        <translation>포어그라운드</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="623"/>
         <source>Foreground-2</source>
-        <translation type="unfinished"></translation>
+        <translation>포어그라운드-2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="662"/>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="700"/>
         <source>Activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>활성화:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="722"/>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>보스로 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="729"/>
         <source>Talk:</source>
-        <translation type="unfinished"></translation>
+        <translation>대화:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="778"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="899"/>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>발생기</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="800"/>
         <source>Contains of current NPC-Container</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 컨테이너의 내용</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="879"/>
         <source>Attach to:</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어에 연결 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="886"/>
         <source>Death:</source>
-        <translation type="unfinished"></translation>
+        <translation>사망:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="917"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>유형:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="924"/>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation>딜레이(초):</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="935"/>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>워프</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="940"/>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation>발사체</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="961"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1033"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="568"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>방향</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1013"/>
         <source>Talk message:</source>
-        <translation type="unfinished"></translation>
+        <translation>대화 메시지:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1020"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>움직이지 않음</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1045"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="569"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1052"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="571"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>랜덤</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1059"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="572"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1101"/>
         <source>Friendly</source>
-        <translation type="unfinished"></translation>
+        <translation>친한</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1108"/>
         <source>Auto-increment</source>
-        <translation type="unfinished"></translation>
+        <translation>자동 증가</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="150"/>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="151"/>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="152"/>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>위</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="153"/>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>아래</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="154"/>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽-위</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="155"/>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽-위</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="156"/>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>아래-왼쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="157"/>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation>아래-오른쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="272"/>
         <source>Block ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>블록 ID:%1, 배열 ID:%2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="318"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="429"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="567"/>
         <source>Position: [%1, %2]</source>
-        <translation type="unfinished"></translation>
+        <translation>위치:[%1,%2]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="332"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1303"/>
         <source>%1 coins</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 코인</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="333"/>
@@ -4820,30 +4852,31 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1727"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="2091"/>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[공백]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="415"/>
         <source>BGO ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO ID:%1,배열 ID:%2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="497"/>
         <source>NPC ID: %1, Array ID: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC ID:%1,배열 ID:%2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="601"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="1982"/>
         <source>[none]</source>
-        <translation type="unfinished"></translation>
+        <translation>[없음]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="891"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="944"/>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>파일에 오류가 있음%1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -4851,77 +4884,80 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="35"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="63"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>제거</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="73"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>추가</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="83"/>
         <source>Lock</source>
-        <translation type="unfinished"></translation>
+        <translation>잠금</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="708"/>
         <source>Layers merge</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 병합</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="709"/>
         <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;%1&apos;이름의 레이어는 이미 존재합니다, 레이어를 병합하시겠습니까?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="792"/>
         <source>New Layer %1</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운 레이어%1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="866"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="898"/>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="906"/>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 제거</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="867"/>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 레이어를 제거 하시겠습니까?
+이 레이어의 모든 개체는 &apos;기본&apos;레이어로 이동합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="883"/>
         <source>Rename layer</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 이름 변경</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="887"/>
         <source>Remove layer with items</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 및 항목 제거</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="888"/>
         <source>Remove Layer and keep items</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어 제거 및 항목 유지</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="899"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
-        <translation type="unfinished"></translation>
+        <translation>이 레이어를 제거 하시겠습니까?
+이 레이어의 모든 개체는 &apos;기본&apos;레이어로 이동합니다!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.cpp" line="907"/>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
-        <translation type="unfinished"></translation>
+        <translation>이 레이어를 제거 하시겠습니까?
+이 레이어의 모든 개체가 삭제됩니다!</translation>
     </message>
 </context>
 <context>
@@ -4930,13 +4966,13 @@ All elements of this layer will be removed too!</source>
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="235"/>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
-        <translation type="unfinished"></translation>
+        <translation>섹션 특성...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="240"/>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
-        <translation type="unfinished"></translation>
+        <translation>레벨 특성...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_control.cpp" line="273"/>
@@ -4947,39 +4983,47 @@ Non-playable characters&apos;s:	%4
 Warp entries:		%5
 Physical env. zones:	%6
 </source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어 시작 지점 : % 1
+블록 : % 2
+배경 개체 : % 3
+플레이할 수 없는 캐릭터 : % 4
+워프 항목 : % 5
+물리적 환경 영역 : % 6
+</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="113"/>
         <source>Search User Backgrounds %1</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자 정의 배경 % 1 검색</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="198"/>
         <source>Search User Blocks %1</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자 정의 블록 % 1 검색</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="258"/>
         <source>Search User BGOs %1</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자 정의 BGO % 1 검색</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="320"/>
         <source>Search User NPCs %1</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자 정의 NPC % 1 검색</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="436"/>
         <source>Wrong custom images</source>
-        <translation type="unfinished"></translation>
+        <translation>잘못된 커스텀 이미지 파일</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="437"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 레벨에는 잘못된 커스텀 그래픽 파일이 있습니다.
+사용자 정의 그래픽 대신 &apos;유령&apos;또는 기타 더미 이미지가 표시됩니다. 이것은 아마도 BMP에서 GIF 로의 변환과 같은 잘못된 변환 때문일 수 있습니다.
+이미지를 유효한 형식으로 다시 변환하고이 수준을 다시로드 해보세요.</translation>
     </message>
 </context>
 <context>
@@ -4987,27 +5031,27 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="21"/>
         <source>Search of items on the level</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨의 아이템 검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="44"/>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>블록</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="63"/>
         <source>Ev. Destroyed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt.파괴됨:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="70"/>
         <source>Invisible:</source>
-        <translation type="unfinished"></translation>
+        <translation>볼 수 없는:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="84"/>
         <source>Ev. Hited</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt.히트:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="91"/>
@@ -5016,19 +5060,19 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_search_box.cpp" line="391"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="501"/>
         <source>Search Block</source>
-        <translation type="unfinished"></translation>
+        <translation>블록 검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="112"/>
         <source>Ev. Layer Empty:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt. 빈 레이어 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="122"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="383"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="492"/>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>데이터</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="132"/>
@@ -5042,42 +5086,42 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_search_box.cpp" line="512"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="532"/>
         <source>[empty]</source>
-        <translation type="unfinished"></translation>
+        <translation>[비어있는]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="146"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="314"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="843"/>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation>선택 그룹에서 검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="190"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="335"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="511"/>
         <source>Search in current section</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 섹션에서 검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="197"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="290"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="685"/>
         <source>Search?</source>
-        <translation type="unfinished"></translation>
+        <translation>검색?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="204"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="342"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="608"/>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>전부 선택</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="218"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="369"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="462"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="228"/>
@@ -5096,29 +5140,29 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_search_box.cpp" line="520"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="546"/>
         <source>Reset Search Fields</source>
-        <translation type="unfinished"></translation>
+        <translation>검색 필드 재설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="235"/>
         <source>Slippery:</source>
-        <translation type="unfinished"></translation>
+        <translation>미끄러운:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="252"/>
         <source>Contains NPC:</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 포함 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="259"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="307"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="636"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>유형:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="277"/>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="349"/>
@@ -5127,17 +5171,17 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_search_box.cpp" line="408"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="521"/>
         <source>Search BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>배경 개체 검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="390"/>
         <source>Sort priority:</source>
-        <translation type="unfinished"></translation>
+        <translation>우선순위 정렬:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="431"/>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="451"/>
@@ -5147,17 +5191,17 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_search_box.ui" line="579"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="835"/>
         <source>[None]</source>
-        <translation type="unfinished"></translation>
+        <translation>[없음]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="472"/>
         <source>Case Sensitive?</source>
-        <translation type="unfinished"></translation>
+        <translation>대소문자 구분?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="518"/>
         <source>Set as Boss</source>
-        <translation type="unfinished"></translation>
+        <translation>보스로 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="544"/>
@@ -5166,79 +5210,79 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_search_box.cpp" line="425"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="547"/>
         <source>Search NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 검색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="558"/>
         <source>Evt death:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt.사망:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="594"/>
         <source>Evt talk:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt.대화:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="615"/>
         <source>Friendly</source>
-        <translation type="unfinished"></translation>
+        <translation>친한</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="656"/>
         <source>Evt empty layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt.빈 레이어:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="692"/>
         <source>Evt activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>Evt.활성화:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="706"/>
         <source>Contains Msg:</source>
-        <translation type="unfinished"></translation>
+        <translation>메시지 포함:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="746"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>방향</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="770"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="780"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>랜덤</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="790"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="800"/>
         <source>Attached layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>부착 된 레이어 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="810"/>
         <source>Doesn&apos;t move</source>
-        <translation type="unfinished"></translation>
+        <translation>움직이지 않음</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="261"/>
         <source>Next Block</source>
-        <translation type="unfinished"></translation>
+        <translation>다음 블록</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="262"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="306"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="349"/>
         <source>Stop Search</source>
-        <translation type="unfinished"></translation>
+        <translation>검색 중단</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="270"/>
@@ -5248,40 +5292,40 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_search_box.cpp" line="356"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="374"/>
         <source>Search Complete</source>
-        <translation type="unfinished"></translation>
+        <translation>검색 완료</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="270"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="288"/>
         <source>Block search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>블록 검색 완료!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="305"/>
         <source>Next BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>다음 BGO</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="313"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="331"/>
         <source>BGO search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO 검색 완료!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="348"/>
         <source>Next NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>다음 NPC</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="356"/>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="374"/>
         <source>NPC search completed!</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 검색 완료!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="803"/>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 발견 요소가 선택되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -5290,167 +5334,168 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="30"/>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="440"/>
         <source>Section Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="121"/>
         <source>Current Section</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 섹션</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="155"/>
         <source>Section:</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="215"/>
         <source>Resize section</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 크기 재정의</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="231"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>적용</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="238"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>취소</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="260"/>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation>스타일</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="272"/>
         <source>Background image</source>
-        <translation type="unfinished"></translation>
+        <translation>배경 이미지</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="289"/>
         <source>Edit a custom background config...</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 백그라운드 구성 편집 ...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="315"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>음악</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="330"/>
         <source>Custom</source>
         <comment>Flag of custom music on the level</comment>
-        <translation type="unfinished"></translation>
+        <translation>커스텀</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="361"/>
         <source>Music file:</source>
-        <translation type="unfinished"></translation>
+        <translation>음악 파일:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="398"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>검색...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="411"/>
         <source>Change the extra format specific settings of a custom music</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 음악의 추가 형식 별 설정 변경</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="449"/>
         <source>Leaving for the screen, the player enters the screen on the other side</source>
-        <translation type="unfinished"></translation>
+        <translation>화면에서 나갈 때, 플레이어는 반대편에 다시 나타납니다</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="452"/>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>가로로 감싸기</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="462"/>
         <source>Wrap vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>세로로 감싸기</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="469"/>
         <source>Off screen exit</source>
-        <translation type="unfinished"></translation>
+        <translation>화면닫기 종료</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="479"/>
         <source>No turn back (disable moving to left)</source>
         <comment>Please, translate as &quot;One way scrolling&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>단방향 스크롤 (되돌리기 없음)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="489"/>
         <source>Underwater</source>
-        <translation type="unfinished"></translation>
+        <translation>수중</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="182"/>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 % 1에 오류가 있습니다 :
+% 2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="258"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="260"/>
         <source>[No image]</source>
-        <translation type="unfinished"></translation>
+        <translation>[이미지 없음]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="262"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="263"/>
         <source>[Silence]</source>
-        <translation type="unfinished"></translation>
+        <translation>[음소거]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="513"/>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="653"/>
         <source>Please, save file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 저장해주십시오</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="513"/>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation type="unfinished"></translation>
+        <translation>사용자 정의 백그라운드 구성 파일을 관리하려면 먼저 파일을 저장하십시오.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="521"/>
         <source>Choose a background first</source>
-        <translation type="unfinished"></translation>
+        <translation>먼저 배경 선택</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="522"/>
         <source>Please, choose the background image first.</source>
-        <translation type="unfinished"></translation>
+        <translation>먼저 배경 이미지를 선택하십시오.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="549"/>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>편집기에 표시 될 이름</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="553"/>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>배경 채우기 색상</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="558"/>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation>여기 레이어 추가, 예시:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.cpp" line="653"/>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="unfinished"></translation>
+        <translation>커스텀 음악 파일을 선택하려면 먼저 파일을 저장하십시오.</translation>
     </message>
 </context>
 <context>
@@ -5458,7 +5503,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="39"/>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation>워프와 문</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="109"/>
@@ -5554,28 +5599,28 @@ when you exit from a level through this warp.</source>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="435"/>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>메인</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="483"/>
         <source>Place exit point or quickly jump to existing warp</source>
-        <translation type="unfinished"></translation>
+        <translation>출구 지점을 배치하거나 기존 출구 지점으로 빠르게 이동</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="486"/>
         <source>Set Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>출구 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="496"/>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="710"/>
         <source>Point already placed</source>
-        <translation type="unfinished"></translation>
+        <translation>이미 배치 된 포인트</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="536"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="589"/>
@@ -5584,54 +5629,60 @@ when you exit from a level through this warp.</source>
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation type="unfinished"></translation>
+        <translation>워프 유형을 정의합니다.
+0-즉시, 플레이어가 즉시 순간 이동되고 이동 속도가 0으로 재설정됩니다.
+1-파이프, 방향 경사 입구 및 출구.
+2-출입문, 플레이어는 위쪽 키로 입장 할 수 있습니다.
+3-포탈, 플레이어가 순간 이동되지만 이동 속도는 유지됩니다 (PGE 엔진 만 해당).</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="606"/>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation>0-즉시</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="611"/>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation>1-파이프</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="616"/>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation>2-문</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="621"/>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation>3-포탈</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="629"/>
         <source>Message which will be shown if the player
 does not have the required number of stars</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어의 별 수가 부족하다면
+출력될 메시지</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="637"/>
         <source>Need stars message</source>
-        <translation type="unfinished"></translation>
+        <translation>별 필요 메시지</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="644"/>
         <source>Need stars</source>
-        <translation type="unfinished"></translation>
+        <translation>별이 필요함</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="651"/>
         <source>Required number of stars
 to enter this warp</source>
-        <translation type="unfinished"></translation>
+        <translation>워프에 들어가기 위해
+필요한 별의 개수</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="662"/>
         <source>Warp type</source>
-        <translation type="unfinished"></translation>
+        <translation>워프 유형</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="669"/>
@@ -5676,7 +5727,7 @@ finishes the level or lose a life.</source>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="794"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>마운트 없음</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="801"/>
@@ -5687,7 +5738,7 @@ finishes the level or lose a life.</source>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="804"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation>아이템 허용</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="811"/>
@@ -5697,7 +5748,7 @@ finishes the level or lose a life.</source>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="814"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>잠김</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="821"/>
