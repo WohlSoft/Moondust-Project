@@ -81,7 +81,7 @@ void ImageSelectorMenu::addItem(const QPixmap &picture, const QString &title, in
 {
     QListWidgetItem *q = new QListWidgetItem(m_list);
     q->setIcon(picture);
-    q->setText(title);
+    q->setText(QString("%1: %2").arg(key).arg(title));
     q->setToolTip(QString("%1: %2").arg(key).arg(title));
     q->setData(Qt::UserRole, key);
     q->setFlags(Qt::ItemIsEnabled|Qt::ItemIsSelectable);
