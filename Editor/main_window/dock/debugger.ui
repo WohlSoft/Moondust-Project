@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>280</width>
-    <height>464</height>
+    <width>293</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -36,18 +36,6 @@
    <layout class="QGridLayout" name="gridLayout_29" rowstretch="0,0,0,80,0">
     <property name="sizeConstraint">
      <enum>QLayout::SetMinimumSize</enum>
-    </property>
-    <property name="leftMargin">
-     <number>2</number>
-    </property>
-    <property name="topMargin">
-     <number>2</number>
-    </property>
-    <property name="rightMargin">
-     <number>2</number>
-    </property>
-    <property name="bottomMargin">
-     <number>2</number>
     </property>
     <item row="0" column="0">
      <widget class="QGroupBox" name="DEBUG_MousePoint">
