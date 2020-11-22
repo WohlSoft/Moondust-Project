@@ -5508,93 +5508,98 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="109"/>
         <source>Choose a warp entry to edit</source>
-        <translation type="unfinished"></translation>
+        <translation>편집 할 워프 항목 선택</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="134"/>
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>새 워프 항목을 만듭니다.
+모든 워프 포인트 쌍에는 워프 입구가 필요합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="157"/>
         <source>Remove current warp entry with all placed points.</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 워프 삭제.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="176"/>
         <source>Pipe direction</source>
-        <translation type="unfinished"></translation>
+        <translation>파이프 방향</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="200"/>
         <source>Entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>입구</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="246"/>
         <source>Exit</source>
-        <translation type="unfinished"></translation>
+        <translation>출구</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="311"/>
         <source>Level door</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 문</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="335"/>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 워프를 들어가면 현재 레벨이 종료됩니다.
+이 플래그가 활성화되면, 워프 입구 만 배치 할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="339"/>
         <source>To other level</source>
-        <translation type="unfinished"></translation>
+        <translation>다른 레벨로</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="346"/>
         <source>Prevents any in-level warp to exit at this warp.
 Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 내 출구로 사용하는 것을 방지합니다.
+다른 레벨에서 워프를 만드는 데 사용됩니다.
+이 플래그가 활성화되면 워프 출구만 배치 할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="351"/>
         <source>From other level</source>
-        <translation type="unfinished"></translation>
+        <translation>다른 레벨에서</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="383"/>
         <source>Warp to World map</source>
-        <translation type="unfinished"></translation>
+        <translation>월드맵 위치로 이동</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="392"/>
         <source>X:</source>
-        <translation type="unfinished"></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="399"/>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="414"/>
         <source>Target coordinates of player on the world map
 when you exit from a level through this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 워프를 통해 레벨에서 나갈 때
+월드맵에서 플레이어의 목표 좌표.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="407"/>
         <source>Y:</source>
-        <translation type="unfinished"></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="422"/>
         <source>Browse the world map to set an exit point</source>
-        <translation type="unfinished"></translation>
+        <translation>출구 포인트를 설정하기 위해 월드맵 탐색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="425"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="435"/>
@@ -5688,32 +5693,33 @@ to enter this warp</source>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="669"/>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 설정이 활성화되면이 워프가 다른 레벨로 연결 되더라도
+레벨에있는 기존 및 수집 된 별의 수는 표시되지 않습니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="673"/>
         <source>Don&apos;t show level completion amount</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 완료 수량 표시 안함</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="690"/>
         <source>Place entrance point or quickly jump to already placed</source>
-        <translation type="unfinished"></translation>
+        <translation>입구 지점을 배치하거나 기존 입구로 빠르게 점프</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="693"/>
         <source>Set Entrance</source>
-        <translation type="unfinished"></translation>
+        <translation>입구 설정</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="744"/>
         <source>On-Enter event:</source>
-        <translation type="unfinished"></translation>
+        <translation>입구 이벤트:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="751"/>
         <source>Trigger event when he player enters this warp</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어가 이 워프에 들어갈 때 이벤트를 발생합니다</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="788"/>
@@ -5721,7 +5727,10 @@ number of existing and collected stars in the level will not be shown.</source>
 when player passes through this warp.
 They will be given back when player
 finishes the level or lose a life.</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어가이 워프를 통과 할 때
+장착 된 모든 탈 것이 제거됩니다.
+플레이어가 레벨을 끝내거나 라이프를 잃는 경우
+다시 주어집니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="794"/>
@@ -5732,7 +5741,7 @@ finishes the level or lose a life.</source>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="801"/>
         <source>Player can carry items and NPCs through this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어는이 워프를 통해 아이템과 NPC를 운반 할 수 있습니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="804"/>
@@ -5743,7 +5752,7 @@ finishes the level or lose a life.</source>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="811"/>
         <source>Entrance closed with a lock. Need a key to open it.</source>
-        <translation type="unfinished"></translation>
+        <translation>자물쇠로 입구가 닫혔습니다. 열려면 열쇠가 필요합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="814"/>
@@ -5753,180 +5762,188 @@ finishes the level or lose a life.</source>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="821"/>
         <source>Entrance closed with a lock. Need to blow up the lock to open it.</source>
-        <translation type="unfinished"></translation>
+        <translation>자물쇠로 입구가 닫혔습니다. 그것을 열려면 자물쇠를 날려야합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="824"/>
         <source>Bomb needed</source>
-        <translation type="unfinished"></translation>
+        <translation>폭파 필요</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="831"/>
         <source>The player can only enter this warp under a special state.
 The special state is defined by the active configuration pack.</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어는 특별한 상태에서만이 워프에 들어갈 수 있습니다.
+특수 상태는 활성화된 구성 팩에 의해 정의됩니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="835"/>
         <source>Sp. State only</source>
-        <translation type="unfinished"></translation>
+        <translation>Sp.상태만</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="861"/>
         <source>Allow entering from both sides of this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 워프의 양쪽에서 들어가도록 허용합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="864"/>
         <source>Two-way warp</source>
-        <translation type="unfinished"></translation>
+        <translation>양방향 워프</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="880"/>
         <source>Warp to other level</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨로 워프</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="889"/>
         <source>If this field is not empty, player will travel from the current level to the specified one.</source>
-        <translation type="unfinished"></translation>
+        <translation>이 필드가 비어 있지 않으면 플레이어는 현재 레벨에서 지정된 레벨로 이동합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="896"/>
         <source>Level file:</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 파일:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="903"/>
         <source>Determines the warp through which the player will enter the target level.
 If set to zero, the player will start at the pre-defined level start point.</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어가 목표 레벨에 들어가는 워프를 결정합니다.
+0으로 설정하면 플레이어는 미리 정의 된 레벨 시작 지점에서 시작합니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="927"/>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
+        <translation>로딩 화면 대신 빈 화면을 표시합니다.
+그렇지 않으면 Legacy Engine 레벨 로딩 화면에서,
+현재 플레이 가능한 캐릭터와 생명 수를 보여줍니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="932"/>
         <source>Hide level enter screen</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 입구 스크린 숨김</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="939"/>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation># 워프로 입장</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="949"/>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어의 보유 아이템을 이 워프의 목표 레벨로 가져옵니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="952"/>
         <source>Allow inter-level NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 간 NPC 허용</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="959"/>
         <source>Browse for another level file</source>
-        <translation type="unfinished"></translation>
+        <translation>다른 레벨 파일 탐색</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="972"/>
         <source>Cannon shoot exit</source>
-        <translation type="unfinished"></translation>
+        <translation>대포 발사 출구</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="981"/>
         <source>Projectile speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>발사체 속도 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="988"/>
         <source>The speed at which the player will exit the warp.
 Measured in pixels per 1/65 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어가 워프를 종료하는 속도입니다.
+1/65 초당 픽셀로 측정됩니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1005"/>
         <source>The direction in which the player will exit the warp.</source>
-        <translation type="unfinished"></translation>
+        <translation>플레이어가 워프에서 나가는 방향입니다.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1008"/>
         <source>Cannon exit</source>
-        <translation type="unfinished"></translation>
+        <translation>캐논 출구</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="119"/>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>오른쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="120"/>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="126"/>
         <source>Down</source>
-        <translation type="unfinished"></translation>
+        <translation>아래</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="125"/>
         <source>Up</source>
-        <translation type="unfinished"></translation>
+        <translation>위</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="979"/>
         <source>World map files not found</source>
-        <translation type="unfinished"></translation>
+        <translation>월드맵 파일 탐색 실패</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="980"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>이 레벨 파일로 세계맵 파일을 배치하지 않았습니다.
+이 레벨 파일을 월드 맵과 함께 넣거나 이 레벨 파일과 같은 폴더에 새 월드 맵을 만드십시오.
+파일 경로 : % 1</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="993"/>
         <source>Select world map file</source>
-        <translation type="unfinished"></translation>
+        <translation>월드맵 파일 선택</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="994"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
-        <translation type="unfinished"></translation>
+        <translation>둘 이상의 세계지도 파일을 찾았습니다.
+사용할지도를 선택하세요 :</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1011"/>
         <source>File open error</source>
-        <translation type="unfinished"></translation>
+        <translation>파일 열기 오류</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1012"/>
         <source>Can&apos;t open the file!</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 열 수 없습니다!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1195"/>
         <source>Please save the file</source>
-        <translation type="unfinished"></translation>
+        <translation>파일을 저장해주십시오</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="1196"/>
         <source>Please save the file before selecting levels.</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨을 선택하기 전에 파일을 저장하십시오.</translation>
     </message>
 </context>
 <context>
@@ -5939,37 +5956,37 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="105"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>파일</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="109"/>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>새로운</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="121"/>
         <source>Open Recent</source>
-        <translation type="unfinished"></translation>
+        <translation>최근 항목 열기</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="153"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>도움</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="157"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>언어</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="180"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="187"/>
         <source>Current section</source>
-        <translation type="unfinished"></translation>
+        <translation>현재 섹션</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="217"/>
@@ -5979,22 +5996,22 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="244"/>
         <source>World</source>
-        <translation type="unfinished"></translation>
+        <translation>월드</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="253"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>화면</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="284"/>
         <source>Window</source>
-        <translation type="unfinished"></translation>
+        <translation>윈도우</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="290"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>도구</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="294"/>
@@ -6014,12 +6031,12 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="334"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>편집</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="338"/>
         <source>Set align grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>그리드 사이즈 정렬</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="372"/>
@@ -6034,37 +6051,37 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="391"/>
         <source>LunaLUA scripts</source>
-        <translation type="unfinished"></translation>
+        <translation>LunaLua 스크립트</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="409"/>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>구성</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="419"/>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation>플러그인</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="449"/>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>일반</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="477"/>
         <source>CommonEdit Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>편집</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="506"/>
         <source>EditingTools</source>
-        <translation type="unfinished"></translation>
+        <translation>편집 도구</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="541"/>
         <source>LevelObj Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="575"/>
@@ -6074,49 +6091,49 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="608"/>
         <source>Level Sections Switch</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨 섹션 교체</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="656"/>
         <source>Placing</source>
-        <translation type="unfinished"></translation>
+        <translation>놓기</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="680"/>
         <source>Resizing</source>
-        <translation type="unfinished"></translation>
+        <translation>크기 재설정</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="706"/>
         <source>Open...</source>
-        <translation type="unfinished"></translation>
+        <translation>열기...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="709"/>
         <source>Open (Ctrl+O)</source>
-        <translation type="unfinished"></translation>
+        <translation>열기(Ctrl+O)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="723"/>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <extracomment>Exit from the editor</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>에디터 닫기</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="738"/>
         <source>Level...</source>
-        <translation type="unfinished"></translation>
+        <translation>레벨...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="750"/>
         <source>World map...</source>
-        <translation type="unfinished"></translation>
+        <translation>월드 맵...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="762"/>
         <source>NPC config...</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC 구성...</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="777"/>
@@ -6313,7 +6330,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="1381"/>
         <source>Underwater</source>
-        <translation type="unfinished"></translation>
+        <translation>수중</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1392"/>
@@ -6380,7 +6397,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="1529"/>
         <source>Section Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>섹션 설정</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1543"/>
@@ -6565,7 +6582,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2000"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>레이어</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2011"/>
@@ -6660,7 +6677,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2226"/>
         <source>Lock Scenery tiles</source>
-        <translation type="unfinished"></translation>
+        <translation>풍경 타일 잠금</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2239"/>
@@ -6680,12 +6697,12 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2277"/>
         <source>Rectangular fill</source>
-        <translation type="unfinished"></translation>
+        <translation>직사각형 채우기</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2280"/>
         <source>Rectangular Fill (Shift+S)</source>
-        <translation type="unfinished"></translation>
+        <translation>직사각형 도구 (Shift + S)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2295"/>
@@ -6695,7 +6712,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2304"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>적용</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2307"/>
@@ -6705,7 +6722,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2319"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>취소</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2322"/>
@@ -6756,12 +6773,12 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2416"/>
         <source>Tileset Item Box</source>
-        <translation type="unfinished"></translation>
+        <translation>타일모음 아이템 박스</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2428"/>
         <source>Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>디버거</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2433"/>
@@ -6832,7 +6849,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2549"/>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>북마크 위치설정</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2552"/>
@@ -7356,7 +7373,7 @@ Please reload current file to apply result.</source>
         <location filename="../main_window/dock/lvl_item_toolbox.cpp" line="116"/>
         <location filename="../editing/_dialogs/itemselectdialog.cpp" line="72"/>
         <source>[all]</source>
-        <translation type="unfinished"></translation>
+        <translation>[모든]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="221"/>
