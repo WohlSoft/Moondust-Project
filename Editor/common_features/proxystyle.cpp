@@ -95,7 +95,7 @@ int PGE_ProxyStyle::styleHint(QStyle::StyleHint hint, const QStyleOption *option
                         width = qMax(width, textWidth + iconSize);
                 }
 
-                view->setFixedWidth(width);
+                view->setMinimumWidth(width);
             }
         } /*fallthrough*/
         //Combobox fix end
