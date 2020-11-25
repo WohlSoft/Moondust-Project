@@ -934,130 +934,130 @@ Please save them before doing anything else.</source>
     <name>CustomMusicSetup</name>
     <message>
         <source>Music setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування музики</translation>
     </message>
     <message>
         <source>Play music</source>
-        <translation type="unfinished">Грати музику</translation>
+        <translation>Програти музику</translation>
     </message>
     <message>
         <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Тип синтезатору:</translation>
     </message>
     <message>
         <source>Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation>Посилення:</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished">Скинути</translation>
+        <translation>Скинути</translation>
     </message>
     <message>
         <source>Tempo:</source>
-        <translation type="unfinished"></translation>
+        <translation>Темп:</translation>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation type="unfinished">Додаткові налаштування</translation>
+        <translation>Додаткові налаштування</translation>
     </message>
     <message>
         <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
+        <translation>Свій банк:</translation>
     </message>
     <message>
         <source>Volume model:</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель гучності:</translation>
     </message>
     <message>
         <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
+        <translation>Посилене вібрато</translation>
     </message>
     <message>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Банк:</translation>
     </message>
     <message>
         <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
+        <translation>Посилене тремоло</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished">Огляд...</translation>
+        <translation>Огляд...</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
+        <translation>Тембровий банк визначає звучання MIDI-музики. Використовуйте різні банки, щоб порівняти різницю звучання.</translation>
     </message>
     <message>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation>Модель гучності визначає, як будуть масштабуватися гучність музики, сили нот та вираження.</translation>
     </message>
     <message>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість емульованих чипів OPL3. Збільшіть кількість чипів, щоб розширити поліфонію (18 двох-операторних голосів, або 6 чотирьох-операторних голосів на чип), або зменшіть у випадку, якщо музика починає глючити, кашляти та нестабільно грати.</translation>
     </message>
     <message>
         <source>Chips number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість чипів:</translation>
     </message>
     <message>
         <source>Chiptune</source>
-        <translation type="unfinished"></translation>
+        <translation>Чиптюн</translation>
     </message>
     <message>
         <source>Track number</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер доріжки</translation>
     </message>
     <message>
         <source>To begin</source>
-        <translation type="unfinished"></translation>
+        <translation>В початок</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Попередня</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Наступна</translation>
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
+        <translation>Порада: щоб прослухати результат змін налаштувань, увімкніть програвання музики. (Знайдіть значок ноти &quot;Зіграти/Зупинити&quot; на панелі інструментів головного вікна).</translation>
     </message>
     <message>
         <source>MIDI</source>
-        <translation type="unfinished"></translation>
+        <translation>MIDI</translation>
     </message>
     <message>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libADLMIDI (Емуляція OPL3-синтезу)</translation>
     </message>
     <message>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libOPNMIDI (Емуляція YM2612-синтезу)</translation>
     </message>
     <message>
         <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>Timidity (потрібен банк)</translation>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
+        <translation>Native MIDI (Не рекомендується, забаговано)</translation>
     </message>
     <message>
         <source>[Auto]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Авто]</translation>
     </message>
     <message>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Загальний</translation>
     </message>
     <message>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вбудований OPL3</translation>
     </message>
 </context>
 <context>
@@ -4447,7 +4447,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Change the extra format specific settings of a custom music</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити додаткові налаштування музики, специфічні для деяких форматів</translation>
     </message>
 </context>
 <context>
@@ -6284,11 +6284,11 @@ ID конфіг-пакету карти світу: %3
     </message>
     <message>
         <source>Running the 32-bit Editor a 64-bit processor</source>
-        <translation type="unfinished"></translation>
+        <translation>32-бітний Редагувач працює на 64-бітному процесорі</translation>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви використовуєте 32-бітну версію Редагувача на 64-бітному процесорі. Дана версія Редагувача призначена для застарілих архітектур та для сумісності з Windows XP. Ми наполегливо рекомендуємо Вам завантажити 64-бітну версію Редагувача, щоб здобути максимальну сумісність з сучасними архітектурами, а також розширити максимальну межу використання оперативної пам&apos;яті. Для 32-бітних додатків йде системне обмеження у 2 ГБ пам&apos;яті.</translation>
     </message>
 </context>
 <context>
