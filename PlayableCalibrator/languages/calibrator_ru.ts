@@ -102,7 +102,7 @@
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation>Пустое название аниации</translation>
+        <translation>Пустое название анимации</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
@@ -659,7 +659,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="235"/>
         <source>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</source>
-        <translation>Это - калибровщик изображения. Если менять значения смещений, кадр будет физически сдвинут в самом изображении. Настройки хитбоксов при этом останутся прежними.</translation>
+        <translation>Это - калибровщик изображений. Если менять значения смещений, кадр будет физически сдвинут в самом изображении. Настройки хитбоксов при этом останутся прежними.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="251"/>
