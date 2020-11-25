@@ -54,7 +54,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="170"/>
         <source>Animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва анімації</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
@@ -102,22 +102,22 @@
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Порожня назва анімації</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Animation name is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва анімації порожня!</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="368"/>
         <source>Animation exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Анімація існує</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Анимація з назвою &quot;%1&quot; вже існує!</translation>
     </message>
 </context>
 <context>
@@ -125,37 +125,37 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished">Аніматор</translation>
+        <translation>Аніматор</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished">Напрям</translation>
+        <translation>Напрям</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished">Вліво</translation>
+        <translation>Вліво</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished">Вправо</translation>
+        <translation>Вправо</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="82"/>
         <source>Edit animations</source>
-        <translation type="unfinished">Редагувати анімації</translation>
+        <translation>Редагувати анімації</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="102"/>
         <source>Frame speed:</source>
-        <translation type="unfinished">Швидкість анімації:</translation>
+        <translation>Швидкість анімації:</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="119"/>
         <source>Animation</source>
-        <translation type="unfinished">Анімація</translation>
+        <translation>Анімація</translation>
     </message>
 </context>
 <context>
@@ -268,7 +268,7 @@
     <message>
         <location filename="../calibration_main.ui" line="602"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Інструменти</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="158"/>
@@ -338,7 +338,7 @@
     <message>
         <location filename="../calibration_main.ui" line="415"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
-        <translation>Горизонтальне зміщення хітбоксу, відносно лівої сторони кадру</translation>
+        <translation>Горизонтальне зміщення хітбоксу відносно лівої сторони кадру</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="263"/>
@@ -462,59 +462,59 @@
     <message>
         <location filename="../calibration_main.cpp" line="101"/>
         <source>Open SMBX-38A level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити файл рівня SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="103"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Файли рівнів SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="104"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished">Всі файли</translation>
+        <translation>Всі файли</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="114"/>
         <source>File opening error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка відкриття файлу</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="115"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка імпорту калібрування з даного файлу: файл не має налаштування калібрувань, або даний файл не є коректним файлом рівня SMBX-38A.</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="131"/>
         <source>Export calibration settings into SMBX-38A level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт калібрування у файл рівня SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="142"/>
         <source>File saving error</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка збереження файлу</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="143"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помилка експорту калібрування у даний файл: файл не є коректним файлом рівня SMBX-38A.</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="150"/>
         <source>The level file has been patched!</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл рівня пропатчено!</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="278"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпорт даних із рівня SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="281"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт даних в рівень SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="381"/>
@@ -630,7 +630,7 @@
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="235"/>
         <source>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</source>
-        <translation>Ця програма є калібрувальником зображення. Якщо змінювати значення зміщень, кадр буде фізично зміщеним у зображенні. Налаштування хітбоксів при цьому залишаться колишніми.</translation>
+        <translation>Ця програма є калібрувальником зображень. Якщо змінювати значення зміщень, кадр буде фізично зміщеним у зображенні. Налаштування хітбоксів при цьому залишаться колишніми.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="251"/>
