@@ -1293,7 +1293,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most config packs are updated togeter with PGE,
-&lt;br&gt;therefore you can use the same link to get an updated version</translation>
+&lt;br&gt;therefore you can use the same link to get an updated version.</translation>
     </message>
 </context>
 <context>
