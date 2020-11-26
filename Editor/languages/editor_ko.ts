@@ -1458,7 +1458,7 @@ Please save them before doing anything else.</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>레거시 구성 패키지가 있습니다.
+        <translation type="unfinished">레거시 구성 패키지가 있습니다.
 &lt;br&gt; Editor가 시작되지만, 항목 또는 설정에 문제가 발생할 수 있습니다.
 &lt;br&gt;
 &lt;br&gt; 최신 버전의 구성 패키지를 다운로드하여 설치하십시오:
