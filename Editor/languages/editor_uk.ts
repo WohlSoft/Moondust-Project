@@ -1078,7 +1078,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;
 &lt;br&gt;Завантажити: %1
 &lt;br&gt;Примітка: більшість конфіг-пакетів оновлюються разом з комплектом PGE,&lt;br&gt;
-тому ви можете використовувати те ж саме посилання, щоб отримати оновлену версію</translation>
+тому ви можете використовувати те ж саме посилання, щоб отримати оновлену версію.</translation>
     </message>
 </context>
 <context>
