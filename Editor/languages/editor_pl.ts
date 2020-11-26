@@ -1112,7 +1112,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;
 &lt;br&gt;Pobierz: %1
 &lt;br&gt;Notatka: większość paczek jest aktualizowana razem z PGE,&lt;br&gt;
-dlatego możesz użyć tego samego linku, aby pobrać najnowszą wersję</translation>
+dlatego możesz użyć tego samego linku, aby pobrać najnowszą wersję.</translation>
     </message>
 </context>
 <context>
