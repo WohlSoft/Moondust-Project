@@ -1073,7 +1073,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;
 &lt;br&gt;下载: %1
 &lt;br&gt;注：部分配置包和PGE同步更新，
-&lt;br&gt;确保可以在同一链接里下载到新版本</translation>
+&lt;br&gt;确保可以在同一链接里下载到新版本。</translation>
     </message>
 </context>
 <context>
