@@ -1247,7 +1247,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;
 &lt;br&gt;Загрузить: %1
 &lt;br&gt;Примечание: большинство конфиг-пакетов обновляются вместе с комплектом PGE,&lt;br&gt;
-поэтому вы можете использовать ту же самую ссылку чтобы получить обновлённую версию</translation>
+поэтому вы можете использовать ту же самую ссылку чтобы получить обновлённую версию.</translation>
     </message>
 </context>
 <context>
