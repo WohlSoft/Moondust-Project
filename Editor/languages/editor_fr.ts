@@ -1117,7 +1117,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;
 &lt;br&gt;Télécharger : %1
 &lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec PGE,
-&lt;br&gt;cependant vous pouvez utiliser le même lien pour obtenir une version plus récente</translation>
+&lt;br&gt;cependant vous pouvez utiliser le même lien pour obtenir une version plus récente.</translation>
     </message>
 </context>
 <context>
