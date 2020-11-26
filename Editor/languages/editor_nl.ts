@@ -1598,14 +1598,14 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished">U heeft een verouderd configuratiepakket.
+        <translation>U heeft een verouderd configuratiepakket.
 &lt;br&gt; Bewerkignsprogramma zal gestart worden, maar u kunt problemen ondervinden met voorwerpen of instellingen.
 &lt;br&gt;
 &lt;br&gt; Download en installeer de nieuwste versie van uw configuratiepakket:
 &lt;br&gt;
 &lt;br&gt; Download: %1
 &lt;br&gt; Opmerking: de meeste configuratiepakketten worden samen bijgewerkt met PGE,
-&lt;br&gt; daarom kunt u dezelfde link gebruiken om een bijgewerkte versie te krijgen van PGE</translation>
+&lt;br&gt; daarom kunt u dezelfde link gebruiken om een bijgewerkte versie te krijgen van PGE.</translation>
     </message>
 </context>
 <context>
