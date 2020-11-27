@@ -5,15 +5,15 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>IPCによるワールドマップのテストはサポートされていません</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>ワールドマップテストはサポートされていません</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>この機能は未実装です</translation>
     </message>
 </context>
 <context>
@@ -24,48 +24,48 @@
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>メイン</translation>
     </message>
     <message>
         <source>Music player</source>
-        <translation type="unfinished"></translation>
+        <translation>ミュージックプレイヤー</translation>
     </message>
     <message>
         <source>Autoplay music after opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>曲をファイルを開いたときに自動的に再生する</translation>
     </message>
     <message>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation>パフォーマンス</translation>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>アニメーション</translation>
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>アニメーションアイテムリミット</translation>
     </message>
     <message>
         <source>Collision detection</source>
-        <translation type="unfinished"></translation>
+        <translation>衝突判定</translation>
     </message>
     <message>
         <source>Window layout</source>
-        <translation type="unfinished"></translation>
+        <translation>画面レイアウト</translation>
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>サブウィンドウを分離する (クラシックスタイル)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>タブ化サブウィンドウ (モダンスタイル)</translation>
     </message>
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>レベルファイルが開かれたときにミュージックを自動再生する</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
@@ -74,19 +74,19 @@
     </message>
     <message>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイル</translation>
     </message>
     <message>
         <source>Associate file extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルの関連付け</translation>
     </message>
     <message>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>エディタ</translation>
     </message>
     <message>
         <source>Middle mouse button actions</source>
-        <translation type="unfinished"></translation>
+        <translation>マウス中クリックのアクション</translation>
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
