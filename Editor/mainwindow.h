@@ -103,7 +103,7 @@ public:
  * - Sub-windows
  * -- Latest Active Window (See sub_windows.cpp for comments)
  * - Toolbars
- * - Dock widgwets
+ * - Dock widgets
  * - Editing features
  * - Clipboard
  * - EditMode switch
