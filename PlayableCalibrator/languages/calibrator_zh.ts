@@ -6,87 +6,87 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="20"/>
         <source>Animation editor</source>
-        <translation type="unfinished"></translation>
+        <translation>动画编辑器</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="163"/>
         <location filename="../animator/animation_edit.ui" line="183"/>
         <location filename="../animator/animation_edit.ui" line="238"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>增加</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="65"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>预览</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="170"/>
         <source>Animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>动画名称</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
         <source>Play Left</source>
-        <translation type="unfinished"></translation>
+        <translation>播放左方向</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="111"/>
         <location filename="../animator/animation_edit.ui" line="134"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="206"/>
         <location filename="../animator/animation_edit.ui" line="222"/>
         <location filename="../animator/animation_edit.ui" line="272"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="190"/>
         <source>Frames (left)</source>
-        <translation type="unfinished"></translation>
+        <translation>动画（左方向）</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="259"/>
         <source>Frames (right)</source>
-        <translation type="unfinished"></translation>
+        <translation>动画（右方向）</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="118"/>
         <source>Framesets</source>
-        <translation type="unfinished"></translation>
+        <translation>动画类型</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="245"/>
         <source>Play Right</source>
-        <translation type="unfinished"></translation>
+        <translation>播放右方向</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="95"/>
         <source>Frame delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>动画延迟：</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>动画名称为空</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Animation name is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>动画名称为空！</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="368"/>
         <source>Animation exist</source>
-        <translation type="unfinished"></translation>
+        <translation>动画已存在</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>动画名称 &apos;%1&apos; 已存在！</translation>
     </message>
 </context>
 <context>
@@ -94,37 +94,37 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation>动画编辑器</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>方向</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>左</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>右</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="82"/>
         <source>Edit animations</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑动画</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="102"/>
         <source>Frame speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>动画速度：</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="119"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>动画</translation>
     </message>
 </context>
 <context>
@@ -132,32 +132,32 @@
     <message>
         <location filename="../calibration_main.ui" line="20"/>
         <source>Playable Character Sprite Calibrator</source>
-        <translation type="unfinished"></translation>
+        <translation>人物校准工具</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="195"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>高</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="247"/>
         <source>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</source>
-        <translation type="unfinished"></translation>
+        <translation>玩家后部物品的偏移量（不要忘记在方向源中设置左方向或右方向）</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="326"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>宽</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="399"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>玩家判定宽度</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="202"/>
         <source>Grab offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>搬运物品纵向偏移</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="237"/>
@@ -192,7 +192,7 @@
     <message>
         <location filename="../calibration_main.ui" line="346"/>
         <source>Grab offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>搬运物品横向偏移</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="353"/>
