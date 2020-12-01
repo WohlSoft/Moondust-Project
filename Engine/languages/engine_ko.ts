@@ -186,6 +186,7 @@ Fail to start world map
 %1</source>
         <translation>오류:
 세계지도를 시작하지 못했습니다
+
 %1</translation>
     </message>
     <message id="WARNING_INCOMPATIBLE_WORLDMAP">
