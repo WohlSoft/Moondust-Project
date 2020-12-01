@@ -768,7 +768,8 @@ You can use any configuration package here:&lt;br&gt;%2</source>
         <translation>ConfigManager 구성 패키지를 찾을 수 없습니다! &lt;br&gt;이 디렉토리에 다운로드하여 설치하십시오. &lt;br&gt;
  &lt;br&gt; 
 % 1 &lt;br&gt;
- &lt;br&gt; 여기에서 구성 패키지를 사용할 수 있습니다. &lt;br&gt; % 2</translation>
+ &lt;br&gt;
+ 여기에서 구성 패키지를 사용할 수 있습니다. &lt;br&gt; % 2</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="494"/>
