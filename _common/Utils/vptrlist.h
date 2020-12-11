@@ -31,7 +31,7 @@ DEALINGS IN THE SOFTWARE.
 #include <assert.h>
 #include <stddef.h>
 
-#if defined(__EMSCRIPTEN__)
+#if defined(__EMSCRIPTEN__) || !defined(_WIN32)
 #include <sys/types.h>
 #endif
 
