@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 #include <vector>
 #include <memory>
 #include <assert.h>
+#include <stddef.h>
 
 #if defined(__EMSCRIPTEN__)
 #include <sys/types.h>
