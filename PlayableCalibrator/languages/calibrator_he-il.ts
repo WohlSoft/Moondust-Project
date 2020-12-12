@@ -6,7 +6,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="20"/>
         <source>Animation editor</source>
-        <translation type="unfinished"></translation>
+        <translation>עורך אנימציה</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="163"/>
