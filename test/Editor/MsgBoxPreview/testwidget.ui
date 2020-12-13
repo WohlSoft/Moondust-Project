@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TestWidget</class>
+ <widget class="QMainWindow" name="TestWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>597</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>TestWidget</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QPlainTextEdit" name="demoText">
+      <property name="plainText">
+       <string>ネコ（猫）は、狭義には食肉目ネコ科ネコ属に分 類されるリビアヤマネコ（ヨーロッパヤマネコ） が家畜化されたイエネコ（家猫、Felis silvestris catus） に対する通称である。イヌ（犬） と並ぶ代表的なペットとして日本を 含め世界中で広く飼われている。 
+wrhrwhhrw wrhwr wrh rwh wr hwrh wrh 
+wr hrwhrwh rwh wrh rwh</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="vanillaMode">
+      <property name="text">
+       <string>Vanilla mode (SMBX accurate)</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="MsgBoxPreview" name="widget" native="true"/>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MsgBoxPreview</class>
+   <extends>QWidget</extends>
+   <header>msg_box_preview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

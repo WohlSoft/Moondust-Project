@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>PressStart2P.ttf</file>
+    </qresource>
+</RCC>
