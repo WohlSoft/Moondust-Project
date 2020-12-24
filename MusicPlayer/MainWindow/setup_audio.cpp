@@ -21,10 +21,23 @@ SetupAudio::SetupAudio(QWidget *parent) :
     ui->sampleFormat->addItem("F32MSB", AUDIO_F32MSB);
     ui->sampleFormat->addItem("F32LSB", AUDIO_F32LSB);
 
+#ifdef _WIN32
+    ui->output->clear();
+    ui->output->addItem("Default", QString());
+    ui->output->addItem("WASAPI", "wasapi");
+    ui->output->addItem("DirectSound", "directsound");
+    ui->output->addItem("WinMM", "winmm");
+#else
+    ui->output_label->setVisible(false);
+    ui->output->setVisible(false);
+#endif
+
     ui->sampleRate->setValue(PGE_MusicPlayer::getSampleRate());
     int i = ui->sampleFormat->findData(PGE_MusicPlayer::getSampleFormat());
     ui->sampleFormat->setCurrentIndex(i);
     ui->channels->setValue(PGE_MusicPlayer::getChannels());
+    i = ui->output->findData(PGE_MusicPlayer::getOutputType());
+    ui->output->setCurrentIndex(i);
 }
 
 SetupAudio::~SetupAudio()
@@ -38,10 +51,11 @@ void SetupAudio::on_confirm_accepted()
     int rate = ui->sampleRate->value();
     Uint16 format = static_cast<Uint16>(ui->sampleFormat->currentData().toUInt());
     int channels = ui->channels->value();
+    QString output = ui->output->currentData().toString();
 
     PGE_MusicPlayer::closeAudio();
 
-    if(!PGE_MusicPlayer::openAudioWithSpec(error, rate, format, channels))
+    if(!PGE_MusicPlayer::openAudioWithSpec(error, rate, format, channels, output))
     {
         QMessageBox::warning(this, tr("Audio loading error"), tr("Failed to load audio: %1").arg(error));
         if(!PGE_MusicPlayer::openAudio(error))
@@ -49,7 +63,7 @@ void SetupAudio::on_confirm_accepted()
         return;
     }
 
-    PGE_MusicPlayer::setSpec(rate, format, channels);
+    PGE_MusicPlayer::setSpec(rate, format, channels, output);
     PGE_MusicPlayer::saveAudioSettings();
     accept();
 }
@@ -60,4 +74,5 @@ void SetupAudio::on_restoreDefaults_clicked()
     ui->channels->setValue(MIX_DEFAULT_CHANNELS);
     int i = ui->sampleFormat->findData(MIX_DEFAULT_FORMAT);
     ui->sampleFormat->setCurrentIndex(i);
+    ui->output->setCurrentIndex(0);
 }

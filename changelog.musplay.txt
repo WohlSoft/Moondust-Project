@@ -8,6 +8,7 @@
 * Added Audio Settings to change sample rate, format and a count of channels
 * Added an ability to change Timidity config path on the fly
 * Added an ability to change FluidSynth SF2 path on the fly
+* Added an ability to change the audio output on Windows
 
 1.4.1
 * Removed "AdLib percussion" flag since it have lost a sense with rework on libADLMIDI side
@@ -23,4 +24,3 @@
 * MIDI settings now can be changed without requirement of a MIDI file open
 * Added ability to setup the chip emulator for ADLMIDI and OPNMIDI
 * Added printing of arguments in the bottom of MIDI settings
-

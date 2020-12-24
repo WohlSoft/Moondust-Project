@@ -7,48 +7,21 @@
     <x>0</x>
     <y>0</y>
     <width>184</width>
-    <height>192</height>
+    <height>199</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Audio setup</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="1">
-    <widget class="QSpinBox" name="channels">
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>10</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_2">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Channels:</string>
+      <string>Sample rate:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Sample format</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Audio output settings</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" colspan="2">
+   <item row="6" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="confirm">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -71,22 +44,59 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Sample rate:</string>
+      <string>Channels:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QSpinBox" name="channels">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>10</number>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Sample format</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Audio output settings</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>
    <item row="3" column="1">
     <widget class="QComboBox" name="sampleFormat"/>
    </item>
-   <item row="4" column="0" colspan="2">
+   <item row="5" column="0" colspan="2">
     <widget class="QPushButton" name="restoreDefaults">
      <property name="text">
       <string>Restore defaults</string>
      </property>
     </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="output_label">
+     <property name="text">
+      <string>Output type:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QComboBox" name="output"/>
    </item>
   </layout>
  </widget>

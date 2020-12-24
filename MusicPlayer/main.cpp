@@ -60,12 +60,6 @@ int main(int argc, char *argv[])
     a.setStyle("GTK");
 #endif
 
-    if(SDL_Init(SDL_INIT_AUDIO) == -1)
-        error(QString("Failed to initialize audio: ") + SDL_GetError());
-
-    if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MOD | MIX_INIT_MID ) == -1)
-        error(QString("Failed to initialize mixer: ") + Mix_GetError());
-
 #if defined(SDL_MIXER_GE21)
     QString timidityPath(a.applicationDirPath() + "/timidity/");
     if(QDir(timidityPath).exists())
@@ -111,5 +105,6 @@ int main(int argc, char *argv[])
     PGE_MusicPlayer::closeAudio();
 
     SDL_Quit();
+
     return result;
 }

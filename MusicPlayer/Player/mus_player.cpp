@@ -22,6 +22,7 @@ namespace PGE_MusicPlayer
     static bool g_hooksDisabled = false;
 
     static int      g_sample_rate = MIX_DEFAULT_FREQUENCY;
+    static QString  g_output_type;
     static Uint16   g_sample_format = MIX_DEFAULT_FORMAT;
     static int      g_channels = MIX_DEFAULT_CHANNELS;
 
@@ -62,6 +63,7 @@ namespace PGE_MusicPlayer
         g_sample_rate = setup.value("Audio-SampleRate", 44100).toInt();
         g_sample_format = static_cast<Uint16>(setup.value("Audio-SampleFormat", AUDIO_S16).toUInt());
         g_channels = setup.value("Audio-Channels", 2).toInt();
+        g_output_type = setup.value("Audio-Output", QString()).toString();
     }
 
     void saveAudioSettings()
@@ -70,6 +72,7 @@ namespace PGE_MusicPlayer
         setup.setValue("Audio-SampleRate", g_sample_rate);
         setup.setValue("Audio-SampleFormat", g_sample_format);
         setup.setValue("Audio-Channels", g_channels);
+        setup.setValue("Audio-Output", g_output_type);
         setup.sync();
     }
 
@@ -88,20 +91,45 @@ namespace PGE_MusicPlayer
         return g_channels;
     }
 
-    void setSpec(int rate, Uint16 format, int channels)
+    QString getOutputType()
+    {
+        return g_output_type;
+    }
+
+    void setSpec(int rate, Uint16 format, int channels, const QString &outputType)
     {
         g_sample_rate = rate;
         g_sample_format = format;
         g_channels = channels;
+        g_output_type = outputType;
     }
 
     bool openAudio(QString &error)
     {
-        return openAudioWithSpec(error, g_sample_rate, g_sample_format, g_channels);
+        return openAudioWithSpec(error, g_sample_rate, g_sample_format, g_channels, g_output_type);
     }
 
-    bool openAudioWithSpec(QString &error, int rate, Uint16 format, int channels)
+    bool openAudioWithSpec(QString &error, int rate, Uint16 format, int channels, const QString &output)
     {
+#ifdef _WIN32 // FIXME: make sound output type menu on other platforms. Until, just rely on environment
+        if(!output.isEmpty())
+            SDL_setenv("SDL_AUDIODRIVER", output.toUtf8(), 1);
+        else
+            SDL_setenv("SDL_AUDIODRIVER", "", 1);
+#endif
+
+        if(SDL_InitSubSystem(SDL_INIT_AUDIO) == -1)
+        {
+            error = QString("Failed to initialize audio: ") + SDL_GetError();
+            return false;
+        }
+
+        if(Mix_Init(MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG | MIX_INIT_MOD | MIX_INIT_MID ) == -1)
+        {
+            error = QString("Failed to initialize mixer: ") + Mix_GetError();
+            return false;
+        }
+
         if(Mix_OpenAudio(rate, format, channels, 4096) == -1)
         {
             error = QString("Failed to open audio stream: %1\n\n"
@@ -124,6 +152,7 @@ namespace PGE_MusicPlayer
         if(mw)
             QMetaObject::invokeMethod(mw, "musicStopped", Qt::QueuedConnection);
         Mix_CloseAudio();
+        SDL_QuitSubSystem(SDL_INIT_AUDIO);
     }
 
     bool reloadAudio(QString &error)

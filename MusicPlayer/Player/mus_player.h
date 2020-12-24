@@ -69,11 +69,12 @@ namespace PGE_MusicPlayer
     extern int      getSampleRate();
     extern Uint16   getSampleFormat();
     extern int      getChannels();
+    extern QString  getOutputType();
 
-    extern void setSpec(int rate, Uint16 format, int channels);
+    extern void setSpec(int rate, Uint16 format, int channels, const QString &outputType);
 
     extern bool openAudio(QString &error);
-    extern bool openAudioWithSpec(QString &error, int rate, Uint16 format, int channels);
+    extern bool openAudioWithSpec(QString &error, int rate, Uint16 format, int channels, const QString &output);
     extern void closeAudio();
 
     extern bool reloadAudio(QString &error);
