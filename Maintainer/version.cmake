@@ -7,7 +7,7 @@ set(MAINTAINER_VERSION_3 0)
 # Patch
 set(MAINTAINER_VERSION_4 0)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
-set(MAINTAINER_VERSION_REL "-alpha")
+set(MAINTAINER_VERSION_REL "-beta")
 
 add_definitions(-DMAINTAINER_VERSION_1=${MAINTAINER_VERSION_1})
 add_definitions(-DMAINTAINER_VERSION_2=${MAINTAINER_VERSION_2})
