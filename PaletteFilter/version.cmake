@@ -7,7 +7,7 @@ set(PALETTEFILTER_VERSION_3 0)
 # Patch
 set(PALETTEFILTER_VERSION_4 0)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
-set(PALETTEFILTER_VERSION_REL "-beta")
+set(PALETTEFILTER_VERSION_REL "")
 
 add_definitions(-DPALETTEFILTER_VERSION_1=${PALETTEFILTER_VERSION_1})
 add_definitions(-DPALETTEFILTER_VERSION_2=${PALETTEFILTER_VERSION_2})
