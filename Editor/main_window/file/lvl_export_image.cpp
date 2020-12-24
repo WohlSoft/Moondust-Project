@@ -34,6 +34,9 @@
 #include <editing/_scenes/level/items/item_npc.h>
 #include <ui_leveledit.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 //Export whole section
 void LevelEdit::ExportToImage_fn()
 {
@@ -135,7 +138,7 @@ void LevelEdit::ExportingReady() //slot
                        QString("%1_Section_%2%3.png").arg(QFileInfo(curFile).baseName())
                        .arg(LvlData.CurSection + 1)
                        .arg(scene->m_captureFullSection ? "" : ("_" + QString::number(qrand()))),
-                       tr("PNG Image (*.png)"));
+                       tr("PNG Image (*.png)"), nullptr, c_fileDialogOptions);
     if(fileName.isEmpty())
         return;
 

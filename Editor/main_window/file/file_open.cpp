@@ -35,6 +35,9 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 void MainWindow::openFilesByArgs(QStringList args, int startAt)
 {
     qDebug() << "Attempt to open files by arguments:" << args;
@@ -161,7 +164,7 @@ void MainWindow::on_OpenFile_triggered()
                                         "PGE World (*.wldx);;"
                                         "SMBX NPC Config (npc-*.txt);;"
                                         "SMBX Game Save file (*.sav);;"
-                                        "All Files (*.*)"), 0);
+                                        "All Files (*.*)"), 0, c_fileDialogOptions);
 
     if(fileName_DATA.isEmpty())
         return;

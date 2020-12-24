@@ -29,6 +29,9 @@
 
 #include <QtDebug>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 #ifdef __APPLE__
 static const QStringList g_wineSearchPaths =
 {
@@ -370,7 +373,7 @@ void WineSetup::on_wineRootPathBrowse_clicked()
 {
     auto path = QFileDialog::getExistingDirectory(this,
         tr("Select a Wine install prefix path"),
-        ui->wineRootPath->text());
+        ui->wineRootPath->text(), c_dirDialogOptions);
     if(path.isEmpty())
         return;
     ui->wineRootPath->setText(path);
@@ -380,7 +383,7 @@ void WineSetup::on_winePrefixBrowse_clicked()
 {
     auto path = QFileDialog::getExistingDirectory(this,
         tr("Select a Wine home prefix path"),
-        ui->winePrefixPath->text());
+        ui->winePrefixPath->text(), c_dirDialogOptions);
     if(path.isEmpty())
         return;
     ui->winePrefixPath->setText(path);

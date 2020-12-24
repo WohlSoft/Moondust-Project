@@ -33,6 +33,8 @@
 #include <main_window/global_settings.h>
 #include <dev_console/devconsole.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
 
 #ifdef _WIN32
 #define PGE_ENGINE_EXE "pge_engine.exe"
@@ -131,7 +133,7 @@ static bool findEngine(MainWindow *parent, QString &command)
                                                MainWindow::tr("Choose the Engine application"),
                                                GlobalSettings::testing.enginePath,
                                                QString("PGE Engine executable (%1);;All files(*.*)")
-                                               .arg(PGE_ENGINE_BUNLDE_MASK));
+                                               .arg(PGE_ENGINE_BUNLDE_MASK), nullptr, c_fileDialogOptions);
         if(command.isEmpty())
             return false;
         GlobalSettings::testing.enginePath = command;

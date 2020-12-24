@@ -2,7 +2,6 @@
 #define SETUP_MIDI_H
 
 #include <QDialog>
-#include <QFileDialog>
 
 namespace Ui {
 class SetupMidi;

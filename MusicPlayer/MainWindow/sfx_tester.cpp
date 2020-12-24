@@ -84,7 +84,9 @@ void SfxTester::closeEvent(QCloseEvent *)
 void SfxTester::on_sfx_open_clicked()
 {
     QString file = QFileDialog::getOpenFileName(this, tr("Open SFX file"),
-                   (m_testSfxDir.isEmpty() ? QApplication::applicationDirPath() : m_testSfxDir), "All (*.*)");
+                   (m_testSfxDir.isEmpty() ? QApplication::applicationDirPath() : m_testSfxDir), "All (*.*)",
+                                                nullptr,
+                                                QFileDialog::DontUseNativeDialog);
 
     if(file.isEmpty())
         return;

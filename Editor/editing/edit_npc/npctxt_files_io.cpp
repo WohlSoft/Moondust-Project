@@ -25,6 +25,9 @@
 #include "npcedit.h"
 #include <ui_npcedit.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 static int FileName_to_npcID(QString filename)
 {
     QStringList tmp = filename.split(QChar('-'));
@@ -104,7 +107,8 @@ bool NpcEdit::saveAs(bool savOptionsDialog)
 {
     Q_UNUSED(savOptionsDialog);
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-                       (m_isUntitled) ? GlobalSettings::savePath_npctxt + QString("/") + curFile : curFile, tr("SMBX custom NPC config file (npc-*.txt)"));
+                       (m_isUntitled) ? GlobalSettings::savePath_npctxt + QString("/") + curFile : curFile, tr("SMBX custom NPC config file (npc-*.txt)"),
+                                                    nullptr, c_fileDialogOptions);
     if(fileName.isEmpty())
         return false;
 

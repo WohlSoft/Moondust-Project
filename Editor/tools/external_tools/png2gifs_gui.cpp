@@ -25,6 +25,9 @@
 #include "png2gifs_gui.h"
 #include <ui_png2gifs_gui.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 png2gifs_gui::png2gifs_gui(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::png2gifs_gui)
@@ -43,7 +46,7 @@ void png2gifs_gui::on_BrowseInput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Source Directory"),
                                                  (ui->inputDir->text().isEmpty() ? ApplicationPath : ui->inputDir->text()),
-                                                 QFileDialog::ShowDirsOnly
+                                                 c_dirDialogOptions
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
 
@@ -55,7 +58,7 @@ void png2gifs_gui::on_BrowseOutput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Target Directory"),
                                                  (ui->outputDir->text().isEmpty() ? ApplicationPath:ui->outputDir->text() ),
-                                                 QFileDialog::ShowDirsOnly
+                                                 c_dirDialogOptions
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
 

@@ -38,6 +38,10 @@
 #include "app_settings.h"
 #include <ui_app_settings.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
+
 AppSettings::AppSettings(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AppSettings)
@@ -216,7 +220,7 @@ void AppSettings::loadSettings()
 void AppSettings::on_setLogFile_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this, tr("Set log file"),
-                       ui->logFileName->text(), tr("Text files (*.txt *.log)"));
+                       ui->logFileName->text(), tr("Text files (*.txt *.log)"), nullptr, c_fileDialogOptions);
     if(fileName.isEmpty())
         return;
     ui->logFileName->setText(fileName);

@@ -32,6 +32,10 @@
 #include "wld_export_image.h"
 #include <ui_wld_export_image.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
+
 void WorldEdit::ExportToImage_fn()
 {
     if(!sceneCreated) return;
@@ -111,7 +115,7 @@ void WorldEdit::ExportingReady() //slot
             latest_export_path + "/" +
             QString("%1_x%2_y%3.png").arg( (WldData.EpisodeTitle.isEmpty())? QFileInfo(curFile).baseName() : util::filePath(WldData.EpisodeTitle.replace(QChar(' '), QChar('_'))) )
                                         .arg(scene->captutedSize.x())
-                                        .arg(scene->captutedSize.y()), tr("PNG Image (*.png)"));
+                                        .arg(scene->captutedSize.y()), tr("PNG Image (*.png)"), nullptr, c_fileDialogOptions);
 
         LogDebug("ImageExport -> Check file dialog...");
         if (fileName.isEmpty())

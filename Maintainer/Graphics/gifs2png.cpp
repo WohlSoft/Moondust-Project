@@ -10,6 +10,9 @@
 #include <signal.h>
 #include <common_features/app_path.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 GIFs2PNG::GIFs2PNG(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::GIFs2PNG)
@@ -152,7 +155,8 @@ void GIFs2PNG::on_configPackPathBrowse_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this,
                                                     tr("Select a config pack directory"),
-                                                    ui->configPackPath->text());
+                                                    ui->configPackPath->text(),
+                                                    c_dirDialogOptions);
     if(dir.isEmpty())
         return;
     ui->configPackPath->setText(dir);
@@ -170,7 +174,8 @@ void GIFs2PNG::on_inPathBrowse_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this,
                                                     tr("Select an input directory"),
-                                                    ui->inPath->text());
+                                                    ui->inPath->text(),
+                                                    c_dirDialogOptions);
     if(dir.isEmpty())
         return;
     ui->inPath->setText(dir);

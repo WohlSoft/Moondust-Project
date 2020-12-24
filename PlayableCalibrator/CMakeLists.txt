@@ -42,6 +42,10 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 
+if(NOT USE_SYSTEM_LIBPNG) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
+    add_definitions(-DQT_DONT_USE_NATIVE_FILE_DIALOG)
+endif()
+
 # =============== Translations ===============
 set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
 set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")

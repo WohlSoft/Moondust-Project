@@ -11,6 +11,9 @@
 
 #include <QDebug>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 EpisodeConverterWorker::EpisodeConverterWorker(QObject *parent) :
     QObject(parent),
     m_doBackup(true),
@@ -311,8 +314,8 @@ void EpisodeConverter::on_DoMadJob_clicked()
 void EpisodeConverter::on_browse_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open target episode path"),
-                                               (ui->episodePath->text().isEmpty() ? ApplicationPath : ui->episodePath->text())
-                                                    );
+                                                    (ui->episodePath->text().isEmpty() ? ApplicationPath : ui->episodePath->text()),
+                                                    c_dirDialogOptions);
     if(dir.isEmpty())
         return;
 

@@ -36,6 +36,10 @@
 #include "main/app_path.h"
 #include "main/calibration.h"
 
+#include "qfile_dialogs_default_options.hpp"
+
+
+
 CalibrationMain::CalibrationMain(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::CalibrationMain)
@@ -101,7 +105,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
                                     tr("Open SMBX-38A level file"),
                                     (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
                                     tr("SMBX-38A level files", "Type of file to open") + " (*.lvl);;" +
-                                    tr("All Files", "Type of file to open") + " (*.*)");
+                                    tr("All Files", "Type of file to open") + " (*.*)", nullptr, c_fileDialogOptions);
 
             if(fileName_DATA == nullptr)
                 return;
@@ -130,7 +134,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
             QString san_ba_level = QFileDialog::getOpenFileName(this,
                                                               tr("Export calibration settings into SMBX-38A level file"),
                                                               (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
-                                                              "*.lvl");
+                                                              "*.lvl", nullptr, c_fileDialogOptions);
             if(san_ba_level.isEmpty())
                 return;
 
@@ -382,7 +386,7 @@ bool CalibrationMain::on_OpenSprite_clicked()
                             tr("GIF images", "Type of image file to open") + " (*.gif);;" +
                             tr("PNG images", "Type of image file to open") + " (*.png);;" +
                             tr("SMBX playble sprite", "Type of image file to open") + " (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;" +
-                            tr("All Files", "Type of image file to open") + " (*.*)");
+                            tr("All Files", "Type of image file to open") + " (*.*)", nullptr, c_fileDialogOptions);
 
     if(fileName_DATA == nullptr)
         return false;

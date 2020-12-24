@@ -28,6 +28,8 @@
 #include <mainwindow.h>
 #include <common_features/app_path.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
 
 #ifdef _WIN32
 #define THEXTECH_EXE "thextech.exe"
@@ -209,7 +211,8 @@ void TheXTechEngine::chooseEnginePath()
     QObject::connect(br, &QPushButton::clicked,
                      [&d, c](bool)->void
     {
-        QString p = QFileDialog::getOpenFileName(&d, tr("Select a path to TheXTech executable", "File dialog title"), c->text());
+        QString p = QFileDialog::getOpenFileName(&d, tr("Select a path to TheXTech executable", "File dialog title"),
+                                                 c->text(), QString(), nullptr, c_fileDialogOptions);
         if(!p.isEmpty())
             c->setText(p);
     });

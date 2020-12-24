@@ -25,6 +25,9 @@
 #include "lazyfixtool_gui.h"
 #include <ui_lazyfixtool_gui.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 LazyFixTool_gui::LazyFixTool_gui(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::LazyFixTool_gui)
@@ -43,7 +46,7 @@ void LazyFixTool_gui::on_BrowseInput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Source Directory"),
                                                  (ui->inputDir->text().isEmpty() ? ApplicationPath : ui->inputDir->text()),
-                                                 QFileDialog::ShowDirsOnly
+                                                 c_dirDialogOptions
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
 
@@ -54,7 +57,7 @@ void LazyFixTool_gui::on_BrowseOutput_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open Target Directory"),
                                                  (ui->outputDir->text().isEmpty() ? ApplicationPath : ui->outputDir->text()),
-                                                 QFileDialog::ShowDirsOnly
+                                                 c_dirDialogOptions
                                                  | QFileDialog::DontResolveSymlinks);
     if(dir.isEmpty()) return;
 

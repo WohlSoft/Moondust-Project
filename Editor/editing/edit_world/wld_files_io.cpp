@@ -38,6 +38,9 @@
 #include "world_edit.h"
 #include <ui_world_edit.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 bool WorldEdit::newFile(DataConfig &configs, EditingSettings options)
 {
     static int sequenceNumber = 1;
@@ -188,7 +191,7 @@ RetrySave:
 
     while(isNotDone)
     {
-        fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter);
+        fileName = QFileDialog::getSaveFileName(this, tr("Save As"), fileName, filter, &selectedFilter, c_fileDialogOptions);
 
         if(fileName.isEmpty())
             return false;

@@ -10,6 +10,8 @@
 
 #include <QtDebug>
 
+#include "qfile_dialogs_default_options.hpp"
+
 
 void memclear(QListWidget *wid)
 {
@@ -507,7 +509,7 @@ void AudioCvt_Sox_gui::on_browse_clicked()
 
     QString dir = QFileDialog::getOpenFileName(this, tr("Open SoX binary path"),
                   (ui->sox_bin_path->text().isEmpty() ? ApplicationPath : ui->sox_bin_path->text()),
-                  filter);
+                  filter, nullptr, c_fileDialogOptions);
     if(dir.isEmpty()) return;
 
     ui->sox_bin_path->setText(dir);
@@ -519,7 +521,7 @@ void AudioCvt_Sox_gui::on_add_clicked()
     filter = "Audio files (*.wav *.ogg *.flac *.mp3)";
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Add file to convert"),
                         (ui->sox_bin_path->text().isEmpty() ? ApplicationPath : ui->sox_bin_path->text()),
-                        filter);
+                        filter, nullptr, c_fileDialogOptions);
     if(files.isEmpty()) return;
     ui->musics_list->addItems(files);
 }
@@ -557,7 +559,7 @@ void AudioCvt_Sox_gui::on_cvt_lvlfile_browse_clicked()
     filter = "SMBX/PGE Level and world files with music (*.lvl *.lvlx *.wldx)";
     QString file = QFileDialog::getOpenFileName(this, tr("Selecting a level file to convert custom music"),
                    (ui->cvt_lvlfile->text().isEmpty() ? ApplicationPath : ui->cvt_lvlfile->text()),
-                   filter);
+                   filter, nullptr, c_fileDialogOptions);
     if(file.isEmpty()) return;
 
     ui->cvt_lvlfile->setText(file);
@@ -569,7 +571,7 @@ void AudioCvt_Sox_gui::on_cvt_episode_browse_clicked()
     filter = "SoX binary (sox)";
 
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open episode path to convert entire music set"),
-                  (ui->cvt_episode->text().isEmpty() ? ApplicationPath : ui->cvt_episode->text()));
+                  (ui->cvt_episode->text().isEmpty() ? ApplicationPath : ui->cvt_episode->text()), c_dirDialogOptions);
     if(dir.isEmpty()) return;
 
     ui->cvt_episode->setText(dir);

@@ -24,6 +24,9 @@
 #include "graphics.h"
 #include "app_path.h"
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 void CalibrationMain::openFile(QString fileName)
 {
     QString imgFileM;
@@ -94,7 +97,8 @@ void CalibrationMain::exportHitboxesMap()
 
     QFileInfo ourFile(m_currentFile);
     QString targetFilePng =  ourFile.absoluteDir().absolutePath() + "/" + ourFile.baseName()+"_hitboxes.png";
-    targetFilePng = QFileDialog::getSaveFileName(this, tr("Save hitbox map as image"), targetFilePng, "PNG Image (*.png)");
+    targetFilePng = QFileDialog::getSaveFileName(this, tr("Save hitbox map as image"), targetFilePng, "PNG Image (*.png)",
+                                                 nullptr, c_fileDialogOptions);
     if(targetFilePng.isEmpty())
         return;
 //    QString targetFileGif1    =  AppPathManager::userAppDir() + "/calibrator/templates/" + ourFile.baseName() + ".gif";

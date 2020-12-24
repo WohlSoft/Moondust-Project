@@ -40,7 +40,10 @@
 #include <common_features/app_path.h>
 #include <dev_console/devconsole.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
 #define SMBX38A_EXE "smbx.exe"
+
 
 
 SanBaEiRuntimeEngine::SanBaEiRuntimeEngine(QObject *parent) :
@@ -620,7 +623,7 @@ void SanBaEiRuntimeEngine::actionChooseEnginePath()
                                                     "File dialog title"), c->text(),
                                                     "SMBX-38A executable (smbx.exe);;"
                                                     "All Windows executables (*.exe);;"
-                                                    "All files(*.*)");
+                                                    "All files(*.*)", nullptr, c_fileDialogOptions);
         if(!p.isEmpty())
             c->setText(p);
     });

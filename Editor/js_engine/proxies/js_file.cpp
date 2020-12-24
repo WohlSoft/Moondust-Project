@@ -24,6 +24,9 @@
 #include <common_features/app_path.h>
 #include <mainwindow.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 PGE_JS_File::PGE_JS_File(QObject *parent)
     : QObject(parent)
 {}
@@ -53,12 +56,12 @@ QString PGE_JS_File::appPath()
 
 QString PGE_JS_File::getOpenFilePath(QString caption, QString dir, QString filter)
 {
-    return QFileDialog::getOpenFileName(getWidgetParentOrNullptr(this), caption, dir, filter);
+    return QFileDialog::getOpenFileName(getWidgetParentOrNullptr(this), caption, dir, filter, nullptr, c_fileDialogOptions);
 }
 
 QString PGE_JS_File::getOpenDirPath(QString caption, QString dir)
 {
-    return QFileDialog::getExistingDirectory(getWidgetParentOrNullptr(this), caption, dir, QFileDialog::ShowDirsOnly);
+    return QFileDialog::getExistingDirectory(getWidgetParentOrNullptr(this), caption, dir, c_dirDialogOptions);
 }
 
 bool PGE_JS_File::isFileExists(QString filePath)

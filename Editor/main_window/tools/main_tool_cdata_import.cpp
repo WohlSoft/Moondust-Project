@@ -22,6 +22,9 @@
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 void MainWindow::on_actionCDATA_Import_triggered()
 {
     QString sourceDir = AppPathManager::userAppDir();
@@ -52,7 +55,7 @@ void MainWindow::on_actionCDATA_Import_triggered()
     //QMessageBox::information(this, "Dummy", "This feature comming soon!", QMessageBox::Ok);
     QString fileName = QFileDialog::getExistingDirectory(this, tr("Select directory with custom data to import."),
                        sourceDir,
-                       QFileDialog::DontResolveSymlinks);
+                       c_dirDialogOptions | QFileDialog::DontResolveSymlinks);
 
     qDebug() << "File path: " << fileName;
 

@@ -278,7 +278,8 @@ void MusPlayer_Qt::on_open_clicked()
                                                 (m_currentMusic.isEmpty() ?
                                                 QApplication::applicationDirPath() :
                                                 m_currentMusic),
-                                                "All (*.*)");
+                                                "All (*.*)", nullptr,
+                                                QFileDialog::DontUseNativeDialog);
 
     if(file.isEmpty())
         return;

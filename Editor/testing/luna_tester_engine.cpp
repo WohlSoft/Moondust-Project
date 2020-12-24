@@ -64,6 +64,8 @@
 #include <dev_console/devconsole.h>
 #include <main_window/global_settings.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
 
 #ifdef _WIN32
 static BOOL  checkProc(DWORD procId, const wchar_t *proc_name_wanted);
@@ -1162,7 +1164,7 @@ void LunaTesterEngine::chooseEnginePath()
     QObject::connect(br, &QPushButton::clicked,
                      [&d, c](bool)->void
     {
-        QString p = QFileDialog::getExistingDirectory(&d, tr("Select a location of LunaTester", "Directory select dialog title"), c->text());
+        QString p = QFileDialog::getExistingDirectory(&d, tr("Select a location of LunaTester", "Directory select dialog title"), c->text(), c_dirDialogOptions);
         if(!p.isEmpty())
             c->setText(p);
     });

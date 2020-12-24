@@ -29,6 +29,9 @@
 #include "tilesetgroupeditor.h"
 #include <ui_tilesetgroupeditor.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 QString TilesetGroupEditor::lastFileName = "";
 
 TilesetGroupEditor::TilesetGroupEditor(QGraphicsScene *scene, QWidget *parent) :
@@ -140,7 +143,7 @@ void TilesetGroupEditor::on_Close_clicked()
 
 void TilesetGroupEditor::on_addTileset_clicked()
 {
-    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset"), m_configs->config_dir + "tilesets/", QString("PGE Tileset (*.ini)"));
+    QString f = QFileDialog::getOpenFileName(this, tr("Select Tileset"), m_configs->config_dir + "tilesets/", QString("PGE Tileset (*.ini)"), nullptr, c_fileDialogOptions);
     if(f.isEmpty())
         return;
 
@@ -193,7 +196,7 @@ void TilesetGroupEditor::on_Open_clicked()
     QString f = QFileDialog::getOpenFileName(this,
                 tr("Select Tileset Group"),
                 m_configs->config_dir + "group_tilesets/",
-                QString("PGE Tileset Group (*.tsgrp.ini)"));
+                QString("PGE Tileset Group (*.tsgrp.ini)"), nullptr, c_fileDialogOptions);
     if(f.isEmpty())
         return;
 

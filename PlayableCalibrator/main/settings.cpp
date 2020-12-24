@@ -30,6 +30,8 @@
 #include "main/app_path.h"
 #include "main/calibration.h"
 
+#include "qfile_dialogs_default_options.hpp"
+
 
 template <class T>
 inline const T &pgeConstReference(const T &t)
@@ -272,7 +274,7 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
 
     if(customPath)
     {
-        ini_sprite = QFileDialog::getSaveFileName(this, "Save calibration settings", ini_sprite, "*.ini");
+        ini_sprite = QFileDialog::getSaveFileName(this, "Save calibration settings", ini_sprite, "*.ini", nullptr, c_fileDialogOptions);
         if(ini_sprite.isEmpty())
             return false;
     }

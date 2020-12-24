@@ -29,6 +29,9 @@
 #include "tileset_editor.h"
 #include <ui_tileset_editor.h>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 TilesetEditor::TilesetEditor(DataConfig *conf, QGraphicsScene *scene, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TilesetEditor)
@@ -564,7 +567,7 @@ void TilesetEditor::on_OpenTileset_clicked()
     }
 
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Tileset"),
-                       openPath, QString("PGE Tileset (*.tileset.ini)"));
+                       openPath, QString("PGE Tileset (*.tileset.ini)"), nullptr, c_fileDialogOptions);
     if(fileName.isEmpty())
         return;
 

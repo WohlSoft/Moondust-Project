@@ -12,6 +12,9 @@
 
 #include <QtDebug>
 
+#include "qfile_dialogs_default_options.hpp"
+
+
 AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AudioCvt_Sox_gui)
@@ -454,7 +457,7 @@ void AudioCvt_Sox_gui::on_browse_clicked()
 #endif
     QString dir = QFileDialog::getOpenFileName(this, tr("Open SoX executable path"),
                   (ui->sox_bin_path->text().isEmpty() ? ApplicationPath : ui->sox_bin_path->text()),
-                  filter);
+                  filter, nullptr, c_fileDialogOptions);
 
     if(dir.isEmpty()) return;
 
@@ -467,7 +470,7 @@ void AudioCvt_Sox_gui::on_add_clicked()
     filter = "Audio files (*.wav *.ogg *.flac *.mp3)";
     QStringList files = QFileDialog::getOpenFileNames(this, tr("Select file to convert"),
                         (ui->sox_bin_path->text().isEmpty() ? ApplicationPath : ui->sox_bin_path->text()),
-                        filter);
+                        filter, nullptr, c_fileDialogOptions);
 
     if(files.isEmpty()) return;
 
