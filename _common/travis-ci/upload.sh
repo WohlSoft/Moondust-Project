@@ -43,7 +43,7 @@ then
         fi
 
         if [[ "${UPLOAD_TARGET}" == "" ]]; then
-            UPLOAD_TARGET=ubuntu-14-04
+            UPLOAD_TARGET=ubuntu-18-04
             UPLOAD_VERSION_SUFFIX=linux
         fi
 
@@ -62,7 +62,7 @@ then
         fi
 
     else
-        echo "Travis CI-built packages doesn't needs for uploads..."
+        echo "CoverityScan based Travis CI-built packages doesn't needs for uploads, skipping..."
     fi
 
 elif [[ "${TRAVIS_OS_NAME}" == "osx" ]];
