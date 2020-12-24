@@ -137,7 +137,7 @@ xcopy /Y /E /I .\translations\*.* ".\languages"
 xcopy /Y /E /I .\languages\*.* "%DeployDir%\%PgePrjSD%\languages"
 xcopy /Y /E /I .\themes\*.* "%DeployDir%\%PgePrjSD%\themes"
 if not exist "%DeployDir%\%PgePrjSD%\help\*.*" md "%DeployDir%\%PgePrjSD%\help"
-echo ^<html^>^<head^>^<meta http-equiv="refresh" content="0; url=http://pgehelp.wohlsoft.ru/manual_editor.html"/^>^</head^>^<body^>^</body^>^</html^> > "%DeployDir%\%PgePrjSD%\help\manual_editor.html"
+echo ^<html^>^<head^>^<meta http-equiv="refresh" content="0; url=https://wohlsoft.ru/editorhelp/manual_editor.html"/^>^</head^>^<body^>^</body^>^</html^> > "%DeployDir%\%PgePrjSD%\help\manual_editor.html"
 
 xcopy /Y /E /I .\calibrator "%DeployDir%\%PgePrjSD%\calibrator"
 del /Q "%DeployDir%\%PgePrjSD%\calibrator\templates\*.*"

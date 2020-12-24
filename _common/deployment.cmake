@@ -134,7 +134,7 @@ endfunction()
 
 # ====== Deploy of standalone manual ======
 set(PGE_FILE_STANDALONE_EDITOR_MANUAL
-    "<html><head><meta http-equiv=\\\"refresh\\\" content=\\\"0; url=http://pgehelp.wohlsoft.ru/manual_editor.html\\\"/></head><body></body></html>")
+    "<html><head><meta http-equiv=\\\"refresh\\\" content=\\\"0; url=https://wohlsoft.ru/editorhelp/manual_editor.html\\\"/></head><body></body></html>")
 file(WRITE "${CMAKE_BINARY_DIR}/install_online_help.cmake" "
 file(WRITE
         \"${CMAKE_INSTALL_PREFIX_ORIG}/${PGE_INSTALL_DIRECTORY}/help/manual_editor.htm\"
