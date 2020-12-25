@@ -67,6 +67,7 @@ CaseFixerWorker::~CaseFixerWorker()
 
 bool CaseFixerWorker::initJob(QString configPack, QString episodePath, bool recursive, int targetMode)
 {
+    Q_UNUSED(configPack)
     m_filesToConvert.clear();
     m_errorString.clear();
     m_episode.setPath(episodePath);
