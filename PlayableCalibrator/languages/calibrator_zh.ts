@@ -162,12 +162,12 @@
     <message>
         <location filename="../calibration_main.ui" line="237"/>
         <source>Select current frame (10x10):</source>
-        <translation type="unfinished"></translation>
+        <translation>选择当前帧（10x10）：</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="122"/>
         <source>GFX offsets of frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>帧偏差：</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="132"/>
@@ -197,7 +197,7 @@
     <message>
         <location filename="../calibration_main.ui" line="353"/>
         <source>Global:</source>
-        <translation type="unfinished"></translation>
+        <translation>全局：</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="383"/>
@@ -207,17 +207,17 @@
     <message>
         <location filename="../calibration_main.ui" line="434"/>
         <source>Save config</source>
-        <translation type="unfinished"></translation>
+        <translation>保存设置</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="494"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="542"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>关于</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="555"/>
@@ -227,7 +227,7 @@
     <message>
         <location filename="../calibration_main.ui" line="565"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="589"/>
@@ -237,7 +237,7 @@
     <message>
         <location filename="../calibration_main.ui" line="602"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>工具</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="158"/>
@@ -247,17 +247,17 @@
     <message>
         <location filename="../calibration_main.ui" line="161"/>
         <source>Enable this frame</source>
-        <translation type="unfinished"></translation>
+        <translation>启用此帧</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="135"/>
         <source>Right direction</source>
-        <translation type="unfinished"></translation>
+        <translation>右方向</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="287"/>
         <source>Frame Y</source>
-        <translation type="unfinished"></translation>
+        <translation>帧 Y</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="276"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../calibration_main.ui" line="142"/>
         <source>Offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>偏差 X</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="36"/>
@@ -312,12 +312,12 @@
     <message>
         <location filename="../calibration_main.ui" line="263"/>
         <source>Frame X</source>
-        <translation type="unfinished"></translation>
+        <translation>帧 X</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="373"/>
         <source>Offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>偏差 Y</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="175"/>
