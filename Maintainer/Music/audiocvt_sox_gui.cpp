@@ -7,6 +7,7 @@
 #include <PGE_File_Formats/file_formats.h>
 #include <QDirIterator>
 #include <QtConcurrent>
+#include <QStandardPaths>
 
 #include <QtDebug>
 
@@ -44,7 +45,15 @@ AudioCvt_Sox_gui::AudioCvt_Sox_gui(QWidget *parent) :
 #ifdef Q_OS_WIN
     ui->sox_bin_path->setText(ApplicationPath + "/tools/sox/sox.exe");
 #else
-    ui->sox_bin_path->setText("/usr/bin/sox");
+    QString soxBin = QStandardPaths::findExecutable("sox");
+    ui->sox_bin_path->setText(soxBin);
+#endif
+
+#ifdef Q_OS_WIN
+    ui->ffmpeg_bin_path->setText(ApplicationPath + "/tools/ffmpeg/ffmpeg.exe");
+#else
+    QString ffmpegBin = QStandardPaths::findExecutable("ffmpeg");
+    ui->ffmpeg_bin_path->setText(ffmpegBin);
 #endif
 
     connect(&converter, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(nextStep(int, QProcess::ExitStatus)));
@@ -72,6 +81,13 @@ bool AudioCvt_Sox_gui::isFileTypeSupported(QString file)
     if(file.endsWith(".ogg", Qt::CaseInsensitive))  valid = true;
     if(file.endsWith(".wav", Qt::CaseInsensitive))  valid = true;
     if(file.endsWith(".flac", Qt::CaseInsensitive)) valid = true;
+
+    if(file.endsWith(".wma", Qt::CaseInsensitive)) // Supported by FFMPEG only. If not presented, don't convert WMA
+    {
+        if(!ui->ffmpeg_bin_path->text().isEmpty() && QFile::exists(ui->ffmpeg_bin_path->text()))
+            valid = true;
+    }
+
     return valid;
 }
 
@@ -88,6 +104,7 @@ void AudioCvt_Sox_gui::resetStat()
 void AudioCvt_Sox_gui::setEnableControls(bool en)
 {
     ui->sox_bin_path->setEnabled(en);
+    ui->ffmpeg_bin_path->setEnabled(en);
     ui->browse->setEnabled(en);
     ui->doconv_level->setEnabled(en);
     ui->doconv_episode->setEnabled(en);
@@ -222,7 +239,9 @@ void AudioCvt_Sox_gui::CollectEpisodeData()
     filters //MPEG 1 Layer III (LibMAD)
             << "*.mp3"
             //OGG Vorbis and FLAC (LibOGG, LibVorbis, LibFLAC)
-            << "*.ogg" << "*.flac";
+            << "*.ogg" << "*.flac"
+            //Windows Media Audio, FFMPEG only, and Decode only
+            << "*.wma";
             //Uncompressed audio data
             //<< "*.wav";
     musicDir.setSorting(QDir::Name);
@@ -305,6 +324,8 @@ void AudioCvt_Sox_gui::nextStep(int retStatus, QProcess::ExitStatus exitStatus)
     QStringList args;
     bool hasWork = false;
     bool renameToBak = false;
+    bool ffmpeg = false;
+    QString program;
 
 retry_queue:
     if(filesToConvert.isEmpty())
@@ -336,13 +357,27 @@ retry_queue:
     renameToBak = false;
     isBackUp = false;
 
-    converter.setProgram(ui->sox_bin_path->text());
-
     current_musFileNew = filesToConvert.dequeue();
     current_musFileOld.clear();
 
+    ffmpeg = current_musFileNew.endsWith(".wma", Qt::CaseInsensitive);
+
+    if(ffmpeg)
+        program = ui->ffmpeg_bin_path->text();
+    else
+        program = ui->sox_bin_path->text();
+
+    converter.setProgram(program);
+
     if(ui->convertoTo->currentWidget() == ui->dont_change)
     {
+        if(ffmpeg)
+        {
+            qWarning() << "Can't process next file:" << current_musFileNew << "WMA is not supported for processing: only converting into another format";
+            if(!filesToConvert.isEmpty())
+                goto retry_queue;
+        }
+
         QFileInfo original(current_musFileNew);
         current_musFileOld = original.canonicalPath() + "/" + original.baseName() + "-backup";
         if(!original.completeSuffix().isEmpty())
@@ -401,17 +436,21 @@ retry_queue:
 
     ui->status->setText(QString("Converting %1...").arg(strTail(current_musFileOld, 50)));
 
-    args << "-S";//Show progress
+    if(!ffmpeg)
+        args << "-S";//Show progress
+
+    if(ffmpeg)
+        args << "-i";
 
     args << current_musFileOld;
-    if(ui->box_resample->isChecked())
+    if(ui->box_resample->isChecked() && !ffmpeg)
     {
         hasWork = true;
         args << "-r";
         args << ui->rate->text();
     }
 
-    if(ui->convertoTo->currentWidget() == ui->to_mp3)
+    if(ui->convertoTo->currentWidget() == ui->to_mp3 && !ffmpeg)
     {
         hasWork = true;
         if(ui->mp3_set_birtate->isChecked())
@@ -421,7 +460,7 @@ retry_queue:
         }
     }
 
-    if(ui->convertoTo->currentWidget() == ui->to_ogg)
+    if(ui->convertoTo->currentWidget() == ui->to_ogg && !ffmpeg)
     {
         hasWork = true;
         if(ui->ogg_set_quality->isChecked())
@@ -451,7 +490,7 @@ retry_queue:
         return;
     }
 
-    qDebug() << ui->sox_bin_path->text() << args;
+    qDebug() << program << args;
     madeJob++;
     converter.start();
     stat_converted_files++;
@@ -514,6 +553,24 @@ void AudioCvt_Sox_gui::on_browse_clicked()
 
     ui->sox_bin_path->setText(dir);
 }
+
+void AudioCvt_Sox_gui::on_browseFFMPEG_clicked()
+{
+    QString filter;
+#ifdef Q_OS_WIN
+    filter = "FFMPEG binary (ffmpeg.exe)";
+#else
+    filter = "FFMPEG binary (sox)";
+#endif
+
+    QString dir = QFileDialog::getOpenFileName(this, tr("Open FFMPEG binary path"),
+                  (ui->ffmpeg_bin_path->text().isEmpty() ? ApplicationPath : ui->ffmpeg_bin_path->text()),
+                  filter, nullptr, c_fileDialogOptions);
+    if(dir.isEmpty()) return;
+
+    ui->ffmpeg_bin_path->setText(dir);
+}
+
 
 void AudioCvt_Sox_gui::on_add_clicked()
 {

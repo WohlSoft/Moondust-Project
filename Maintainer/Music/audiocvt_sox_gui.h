@@ -38,6 +38,8 @@ private slots:
     void on_cvt_lvlfile_browse_clicked();
     void on_cvt_episode_browse_clicked();
 
+    void on_browseFFMPEG_clicked();
+
 protected:
     void closeEvent( QCloseEvent * e );
 
