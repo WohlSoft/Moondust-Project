@@ -42,7 +42,7 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 
-if(NOT USE_SYSTEM_LIBPNG) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
+if(QT_DISABLE_NATIVE_FILE_DIALOG) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
     add_definitions(-DQT_DONT_USE_NATIVE_FILE_DIALOG)
 endif()
 

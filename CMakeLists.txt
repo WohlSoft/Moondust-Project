@@ -84,6 +84,9 @@ if(NOT USE_SYSTEM_LIBPNG)
     add_dependencies(libpng_Local AudioCodecs_Local) #Zlib is needed to libPNG
     add_dependencies(FREETYPE_Local libpng_Local) #libPNG is needed to FreeType
     add_dependencies(FreeImage_Local libpng_Local libJPEG_Local) #libPNG and libJPEG are needed to FreeImage
+    if(UNIX AND NOT APPLE AND NOT HAIKU) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
+        set(QT_DISABLE_NATIVE_FILE_DIALOG TRUE)
+    endif()
 endif()
 
 if(NOT USE_SYSTEM_LIBPNG AND NOT USE_SYSTEM_LIBFREETYPE)
