@@ -124,15 +124,19 @@ void PGE_MusPlayer::openFile(QString musFile)
 
 void PGE_MusPlayer::closeFile()
 {
-    Mix_HaltMusicStream(play_mus);
-    Mix_FreeMusic(play_mus);
-    play_mus = nullptr;
+    if(play_mus)
+    {
+        Mix_HaltMusicStream(play_mus);
+        Mix_FreeMusic(play_mus);
+        play_mus = nullptr;
+    }
 }
 
 
 void PGE_MusPlayer::stop()
 {
-    Mix_HaltMusicStream(play_mus);
+    if(play_mus)
+        Mix_HaltMusicStream(play_mus);
 }
 
 void PGE_MusPlayer::play()
@@ -159,9 +163,7 @@ void PGE_MusPlayer::play()
 void PGE_MusPlayer::setTempo(double tempo)
 {
     if(play_mus)
-    {
         Mix_SetMusicTempo(play_mus, tempo);
-    }
 }
 
 

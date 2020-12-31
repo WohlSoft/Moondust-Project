@@ -116,6 +116,8 @@ namespace PGE_MusicPlayer
             SDL_setenv("SDL_AUDIODRIVER", output.toUtf8(), 1);
         else
             SDL_setenv("SDL_AUDIODRIVER", "", 1);
+#else
+        Q_UNUSED(output)
 #endif
 
         if(SDL_InitSubSystem(SDL_INIT_AUDIO) == -1)

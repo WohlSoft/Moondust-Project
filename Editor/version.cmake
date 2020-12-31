@@ -5,7 +5,7 @@ set(EDITOR_VERSION_2 3)
 # Revision
 set(EDITOR_VERSION_3 2)
 # Patch
-set(EDITOR_VERSION_4 0)
+set(EDITOR_VERSION_4 1)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
 set(EDITOR_VERSION_REL "")
 

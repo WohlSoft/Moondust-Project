@@ -210,8 +210,11 @@ void LvlMusPlay::updatePlayerState(MainWindow *mw, bool playing)
     else
         musicForceReset = false;
 
-    if((playing == false) || (currentMusicPath.isNull()))
+    if(!playing || (currentMusicPath.isNull()))
+    {
         PGE_MusPlayer::stop();
+        PGE_MusPlayer::closeFile();
+    }
     else
     {
         PGE_MusPlayer::stop();

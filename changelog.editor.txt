@@ -1,4 +1,8 @@
-﻿Editor 0.3.2-dev
+﻿Editor 0.3.2.1
+- Fixed the inproper file dialog on Windows
+- Fixed the unwanted music file locking on Windows
+
+﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings
 - Config pack can specify the default file format
 - When SMBX64 formats are default, the strict mode is turned on in untitled files
