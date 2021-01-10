@@ -63,7 +63,7 @@ int PGE_Audio::init(Uint32 sampleRate,
     if(p_audioState.isLoaded)
         Mix_CloseAudio();
 
-    ret = Mix_OpenAudio(p_audioState.sRate, AUDIO_S16, 2, int(bufferSize));
+    ret = Mix_OpenAudio(p_audioState.sRate, AUDIO_F32, 2, int(bufferSize));
 
     if(ret == -1)
         return ret;

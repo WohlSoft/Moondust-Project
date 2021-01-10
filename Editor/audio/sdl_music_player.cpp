@@ -43,7 +43,7 @@ void MixerX::initAudio(int frequency, Uint16 format, int channels, int chunksize
     qDebug() << "Set sample rate to:" << frequency;
     PGE_MusPlayer::sRate = frequency;
 
-    if(Mix_OpenAudio(g_audioSpec.freq, AUDIO_S16, g_audioSpec.channels, static_cast<int>(g_audioSpec.size)) < 0)
+    if(Mix_OpenAudio(g_audioSpec.freq, g_audioSpec.format, g_audioSpec.channels, static_cast<int>(g_audioSpec.size)) < 0)
         LogWarning(QString("Can't open audio: %1").arg(Mix_GetError()));
 
     if(Mix_AllocateChannels(16) < 0)

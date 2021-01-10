@@ -282,7 +282,7 @@ bool PGEEngineApp::initAudio(bool useAudio)
         return true;
 
     pLogDebug("Initialization of Audio subsystem...");
-    ret = (PGE_Audio::init(44100, 32, 4096) == -1);
+    ret = (PGE_Audio::init(44100, 32, 512) == -1);
 
     if(!ret)
         enable(AUDIO_ENGINE);

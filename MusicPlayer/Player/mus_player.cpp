@@ -61,7 +61,7 @@ namespace PGE_MusicPlayer
     {
         QSettings setup;
         g_sample_rate = setup.value("Audio-SampleRate", 44100).toInt();
-        g_sample_format = static_cast<Uint16>(setup.value("Audio-SampleFormat", AUDIO_S16).toUInt());
+        g_sample_format = static_cast<Uint16>(setup.value("Audio-SampleFormat", AUDIO_F32).toUInt());
         g_channels = setup.value("Audio-Channels", 2).toInt();
         g_output_type = setup.value("Audio-Output", QString()).toString();
     }
@@ -132,7 +132,7 @@ namespace PGE_MusicPlayer
             return false;
         }
 
-        if(Mix_OpenAudio(rate, format, channels, 4096) == -1)
+        if(Mix_OpenAudio(rate, format, channels, 512) == -1)
         {
             error = QString("Failed to open audio stream: %1\n\n"
                             "Given spec:\n"

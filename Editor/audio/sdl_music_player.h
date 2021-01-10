@@ -28,7 +28,7 @@
 
 namespace MixerX
 {
-extern void initAudio(int frequency, Uint16 format = AUDIO_S16, int channels = 2, int chunksize = 4096);
+extern void initAudio(int frequency, Uint16 format = AUDIO_F32, int channels = 2, int chunksize = 512);
 extern int  sampleRate();
 extern void closeAudio();
 }
