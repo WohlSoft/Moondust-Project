@@ -370,156 +370,156 @@
         <translation>도구</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="330"/>
-        <location filename="../main/files_io.cpp" line="114"/>
-        <location filename="../calibration_main.cpp" line="149"/>
+        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/files_io.cpp" line="118"/>
+        <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation>저장된</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="330"/>
+        <location filename="../main/settings.cpp" line="332"/>
         <source>Configuration saved in file</source>
         <translation>파일에 저장된 구성</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="97"/>
+        <location filename="../main/files_io.cpp" line="100"/>
         <source>Save hitbox map as image</source>
         <translation>히트박스 맵을 이미지로 저장</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="114"/>
+        <location filename="../main/files_io.cpp" line="118"/>
         <source>Hitbox map has been saved!</source>
         <translation>히트박스 맵이 저장되었습니다!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="101"/>
+        <location filename="../calibration_main.cpp" line="105"/>
         <source>Open SMBX-38A level file</source>
         <translation>SMBX-38A 레벨 파일 열기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="103"/>
+        <location filename="../calibration_main.cpp" line="107"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
         <translation>SMBX-38A 레벨 파일</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="104"/>
+        <location filename="../calibration_main.cpp" line="108"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
         <translation>모든 파일</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="114"/>
+        <location filename="../calibration_main.cpp" line="118"/>
         <source>File opening error</source>
         <translation>파일 열기 에러</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="115"/>
+        <location filename="../calibration_main.cpp" line="119"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
         <translation>이 파일로부터 보정 값을 불러올 수 없습니다: 파일은 보정 설정을 포함하지 않거나, 이 파일은 유효한 SMBX-38A 레벨의 파일이 아닙니다.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="131"/>
+        <location filename="../calibration_main.cpp" line="135"/>
         <source>Export calibration settings into SMBX-38A level file</source>
         <translation>SMBX-38A 레벨 파일로 보정 설정 내보내기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="142"/>
+        <location filename="../calibration_main.cpp" line="146"/>
         <source>File saving error</source>
         <translation>파일 저장 에러</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="143"/>
+        <location filename="../calibration_main.cpp" line="147"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
         <translation>이 파일로 보정 값을 내보낼 수 없습니다 : 유효한 SMBX-38A 레벨 파일이 아닙니다.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="150"/>
+        <location filename="../calibration_main.cpp" line="154"/>
         <source>The level file has been patched!</source>
         <translation>레벨 파일이 패치되었습니다!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="267"/>
+        <location filename="../calibration_main.cpp" line="271"/>
         <source>Save in the same folder with image file</source>
         <translation>이미지 파일과 같은 폴더에 저장</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="269"/>
+        <location filename="../calibration_main.cpp" line="273"/>
         <source>Save into custom place...</source>
         <translation>지정한 장소에 저장…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="274"/>
+        <location filename="../calibration_main.cpp" line="278"/>
         <source>Export a map of hitboxes as image...</source>
         <translation>히트박스를 이미지로 내보내기…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="275"/>
+        <location filename="../calibration_main.cpp" line="279"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation>시작단계에서 테스트하거나 스프라이트하는 것에 유용함</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="278"/>
+        <location filename="../calibration_main.cpp" line="282"/>
         <source>Import data from SMBX-38A level...</source>
         <translation>SMBX-38A 레벨로부터 데이터 불러오기...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="281"/>
+        <location filename="../calibration_main.cpp" line="285"/>
         <source>Export data into SMBX-38A level...</source>
         <translation>SBMX-38A 레벨로 데이터 내보내기...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="380"/>
+        <location filename="../calibration_main.cpp" line="384"/>
         <source>Open sprite file</source>
         <translation>스프라이트 파일 열기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="381"/>
+        <location filename="../calibration_main.cpp" line="385"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>열 이미지 파일의 유형</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="382"/>
+        <location filename="../calibration_main.cpp" line="386"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation>GIF 이미지</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="383"/>
+        <location filename="../calibration_main.cpp" line="387"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>PNG 이미지</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="384"/>
+        <location filename="../calibration_main.cpp" line="388"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation>SMBX 플레이 가능한 스프라이트</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="385"/>
+        <location filename="../calibration_main.cpp" line="389"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>모든 파일</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="409"/>
+        <location filename="../calibration_main.cpp" line="413"/>
         <source>Warning</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="410"/>
+        <location filename="../calibration_main.cpp" line="414"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>이 작업은 현재 히트 박스의 설정을 다른 모든 프레임에 복사합니다. 다른 모든 프레임의 설정은 현재 프레임의 설정으로 덮어집니다. 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="431"/>
+        <location filename="../calibration_main.cpp" line="435"/>
         <source>Calibration is not saved!</source>
         <translation>보정이 저장되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="432"/>
+        <location filename="../calibration_main.cpp" line="436"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation>구성이 수정된 후 저장되지 않았습니다. 저장하시겠습니까?</translation>
     </message>

@@ -175,12 +175,12 @@
         <translation type="unfinished">Si esta bandera está habilitada, el elemento capturado se desplazará en relación con el lado izquierdo del hitbox. Los demás elementos capturados se compensarán con respecto al lado derecho del cuadro de impacto.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="275"/>
+        <location filename="../calibration_main.cpp" line="279"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation type="unfinished">Util para pruebas de creacion de sprites desde scratch</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="274"/>
+        <location filename="../calibration_main.cpp" line="278"/>
         <source>Export a map of hitboxes as image...</source>
         <translation type="unfinished">Exporta un mapa de hitboxes a imagen…</translation>
     </message>
@@ -380,146 +380,146 @@
         <translation type="unfinished">Cima</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="97"/>
+        <location filename="../main/files_io.cpp" line="100"/>
         <source>Save hitbox map as image</source>
         <translation type="unfinished">Guardar mapa de hitbox a imagen</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="330"/>
-        <location filename="../main/files_io.cpp" line="114"/>
-        <location filename="../calibration_main.cpp" line="149"/>
+        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/files_io.cpp" line="118"/>
+        <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation type="unfinished">Guardado</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="330"/>
+        <location filename="../main/settings.cpp" line="332"/>
         <source>Configuration saved in file</source>
         <translation type="unfinished">Configuración guardada en el archivo</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="114"/>
+        <location filename="../main/files_io.cpp" line="118"/>
         <source>Hitbox map has been saved!</source>
         <translation type="unfinished">Mapa de hitbox guardado!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="267"/>
+        <location filename="../calibration_main.cpp" line="271"/>
         <source>Save in the same folder with image file</source>
         <translation type="unfinished">Guardar en la misma carpeta de la imagen del archivo</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="269"/>
+        <location filename="../calibration_main.cpp" line="273"/>
         <source>Save into custom place...</source>
         <translation type="unfinished">Guardar en un lugar personalizado…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="380"/>
+        <location filename="../calibration_main.cpp" line="384"/>
         <source>Open sprite file</source>
         <translation type="unfinished">Abrir archivo del sprite</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="384"/>
+        <location filename="../calibration_main.cpp" line="388"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation type="unfinished">Sprite de playable (SMBX)</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="382"/>
+        <location filename="../calibration_main.cpp" line="386"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation type="unfinished">Imagenes GIF</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="101"/>
+        <location filename="../calibration_main.cpp" line="105"/>
         <source>Open SMBX-38A level file</source>
         <translation type="unfinished">Abrir archivo de nivel de SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="103"/>
+        <location filename="../calibration_main.cpp" line="107"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
         <translation>Archivos de nivel SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="104"/>
+        <location filename="../calibration_main.cpp" line="108"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
         <translation>Todos los archivos</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="114"/>
+        <location filename="../calibration_main.cpp" line="118"/>
         <source>File opening error</source>
         <translation>Error de apertura del archivo</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="115"/>
+        <location filename="../calibration_main.cpp" line="119"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
         <translation type="unfinished">No se puede importar datos de calibración de este archivo: El archivo no contiene configuración de calibración, o este archivo no es un nivel valido de SMBX-38A.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="131"/>
+        <location filename="../calibration_main.cpp" line="135"/>
         <source>Export calibration settings into SMBX-38A level file</source>
         <translation>Exportar opciones de calibración a un archivo de nivel de SMBX-38A</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="142"/>
+        <location filename="../calibration_main.cpp" line="146"/>
         <source>File saving error</source>
         <translation>Error de guardado en el archivo</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="143"/>
+        <location filename="../calibration_main.cpp" line="147"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
         <translation>No se puede exportar datos de calibración a este archivo: Este no es un archivo de nivel de SMBX-38A valido.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="150"/>
+        <location filename="../calibration_main.cpp" line="154"/>
         <source>The level file has been patched!</source>
         <translation>El nivel ha sido parcheado!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="278"/>
+        <location filename="../calibration_main.cpp" line="282"/>
         <source>Import data from SMBX-38A level...</source>
         <translation>Importar datos de un nivel de SMBX-38A...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="281"/>
+        <location filename="../calibration_main.cpp" line="285"/>
         <source>Export data into SMBX-38A level...</source>
         <translation>Exportar datos a un nivel de SMBX-38A...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="381"/>
+        <location filename="../calibration_main.cpp" line="385"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>Tipo de imagen a abrir</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="383"/>
+        <location filename="../calibration_main.cpp" line="387"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>Imágenes PNG</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="385"/>
+        <location filename="../calibration_main.cpp" line="389"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>Todos los archivos</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="409"/>
+        <location filename="../calibration_main.cpp" line="413"/>
         <source>Warning</source>
         <translation>Advertencia</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="410"/>
+        <location filename="../calibration_main.cpp" line="414"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation type="unfinished">Esta acción copiara las opciones de la hitbox actual a todos los otros cuadros. Las opciones de los otros cuadros será sobrescrita a las opciones del cuadro actual, deseas continuar?</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="431"/>
+        <location filename="../calibration_main.cpp" line="435"/>
         <source>Calibration is not saved!</source>
         <translation type="unfinished">La calibracion no esta guardada!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="432"/>
+        <location filename="../calibration_main.cpp" line="436"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation type="unfinished">La configuración ha sido modificada y no ha sido guardada. Deseas guardarla?</translation>
     </message>

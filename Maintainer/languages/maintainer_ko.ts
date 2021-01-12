@@ -9,179 +9,185 @@
         <translation>오디오 변환 (SoX)</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
         <source>Don&apos;t change format</source>
         <translation>형식을 변경하지 마십시오</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="34"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
         <source>Files will be in same format</source>
         <translation>파일 형식이 동일합니다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="57"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
         <source>Set bitrate</source>
         <translation>전송률 설정</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="155"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
         <source>Files will be converted into MP3</source>
         <translation>파일이 MP3로 변환된다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="198"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
         <source>Files will be converted into FLAC</source>
         <translation>파일이 FLAC로 변환된다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="215"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="488"/>
         <source>Files will be converted into OGG</source>
         <translation>파일은 OGG로 변환됩니다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="231"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="504"/>
         <source>Set quality</source>
         <translation>품질 설정</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="310"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="583"/>
         <source>Files will be converted into WAV</source>
         <translation>파일이 WAV로 변환된다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="324"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
+        <source>FFMPEG binary path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="630"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
         <source>What do you want?</source>
         <translation>무엇을 원하십니까?</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
         <source>Path to a level file to process</source>
         <translation>처리 할 레벨 파일의 경로</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="386"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="205"/>
         <source>Convert all music files of specific episode</source>
         <translation>특정 에피소드의 모든 음악 파일 변환</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="409"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="228"/>
         <source>Convert music of specific level</source>
         <translation>특정 수준의 음악 변환</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="419"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="238"/>
         <source>Convert specified files</source>
         <translation>지정된 파일 변환</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="429"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="248"/>
         <source>Path to an episode directory to process</source>
         <translation>처리할 에피소드 디렉터리의 경로</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="455"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="24"/>
         <source>Resample to</source>
         <translation>리샘플링</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="490"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="115"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;여기에서 선호도가 잘못된 음악 또는 SFX 파일을 빠르게 변환 할 수 있습니다.&lt;/p&gt;&lt;p&gt;이 기능은&lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;오디오 변환기.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="558"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert into new format
 (open necessary tab to choice target format)</source>
         <translation>새로운 형식으로 변환
 (선택 대상 형식에 필요한 탭을 엽니다)</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="580"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="108"/>
         <source>make backup</source>
         <translation>백업하기</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="587"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
         <source>Sox binary path:</source>
         <translation>Sox 바이너리 경로 :</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="594"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="180"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="44"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="199"/>
         <source>Start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>SoX error</source>
         <translation>SoX 에러</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
         <translation>SoX 바이너리 경로가 정의되지 않았습니다.
 먼저 SoX 경로를 설정하십시오</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
         <translation>SoX 바이너리 경로가 잘못되었습니다.
 먼저 SoX 경로를 설정하십시오</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="447"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
         <source>Nothing to do</source>
         <translation>할 것이 없다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
         <source>No files to convert</source>
         <translation>변환 할 파일이 없습니다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="156"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="175"/>
         <source>Stop</source>
         <translation>중지</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>Operation cancaled</source>
         <translation>작업이 취소되었습니다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="276"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="297"/>
         <source>SoX was crashed</source>
         <translation>SoX가 추락했습니다</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="286"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="307"/>
         <source>SoX returned non-zero code: %1
 %2</source>
         <translation>SoX가 0이 아닌 코드를 반환했습니다 : % 1
 % 2</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="316"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="339"/>
         <source>All works completed</source>
         <translation>모든 작업 완료</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="317"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="340"/>
         <source>All files successfully converted!
 Converted files: %1
 Overwritten levels: %2
@@ -194,27 +200,32 @@ Overwritten worlds: %3
 % 4</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="447"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
         <source>Tasks are not defined. Nothing to do.</source>
         <translation>작업이 정의되지 않았습니다. 할 것이 없다.</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="508"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="549"/>
         <source>Open SoX binary path</source>
         <translation>SoX 바이너리 경로 열기</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="520"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
+        <source>Open FFMPEG binary path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
         <source>Add file to convert</source>
         <translation>변환 할 파일 추가</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="558"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="617"/>
         <source>Selecting a level file to convert custom music</source>
         <translation>사용자 지정 음악을 변환 할 레벨 파일 선택</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="571"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="630"/>
         <source>Open episode path to convert entire music set</source>
         <translation>전체 음악 세트를 변환하는 열린 에피소드 경로</translation>
     </message>
@@ -293,42 +304,42 @@ Overwritten worlds: %3
         <translation>스타트</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="277"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
         <source>Episode path error</source>
         <translation>에피소드 경로 오류</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="279"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation>에피소드 경로가 선언되지 않았습니다. 먼저 대상 에피소드 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="307"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
         <source>Worker error</source>
         <translation>작업자 오류</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="309"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>1% 때문에 작업을 초기화 할수 없습니다</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
         <source>Work finished</source>
         <translation>작업 완료</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
         <source>Case sensitive fixing work has been converted!</source>
         <translation>대소 문자 구분 수정 작업이 완료되었습니다!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="327"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
         <source>Error occouped while work process</source>
         <translation>작업 프로세스 중 오류 발생</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="329"/>
         <source>Case fixer was aborted with an error: %1</source>
         <translation>케이스 픽서가 오류와 함께 중단되었습니다 : % 1</translation>
     </message>
@@ -336,37 +347,37 @@ Overwritten worlds: %3
 <context>
     <name>CaseFixerWorker</name>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="76"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="77"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation>경로 &quot;% 1&quot;을 (를) 확인할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="80"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="81"/>
         <source>Initializing...</source>
         <translation>초기화 중 ...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="87"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="88"/>
         <source>No files to scan</source>
         <translation>스캔 할 파일이 없습니다</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="146"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="147"/>
         <source>Looking for levels and world maps...</source>
         <translation>레벨과 세계지도를 찾는 중 ...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="161"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="162"/>
         <source>Processing levels and world maps...</source>
         <translation>레벨 및 세계지도 처리 중 ...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="172"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="173"/>
         <source>Looking for resources...</source>
         <translation>리소스를 찾는 중 ...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="192"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="193"/>
         <source>Processing resources...</source>
         <translation>리소스 처리 중 ...</translation>
     </message>
@@ -437,47 +448,47 @@ Supported formats:
         <translation>스타트</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="276"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
         <source>Episode path error</source>
         <translation>에피소드 경로 오류</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="277"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="280"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation>에피소드 경로가 선언되지 않았습니다. 먼저 대상 에피소드 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="302"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="305"/>
         <source>Worker error</source>
         <translation>작업자 오류</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="303"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="306"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>% 1 때문에 작업을 초기화 할수 없습니다</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="313"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="316"/>
         <source>Open target episode path</source>
         <translation>대상 에피소드 경로 열기</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Work finished</source>
         <translation>작업 완료</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Episode has been converted!</source>
         <translation>에피소드가 변환되었습니다!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="336"/>
         <source>Error occouped while work process</source>
         <translation>작업 프로세스 중 오류 발생</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="334"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="337"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation>오류로 인해 에피소드 변환이 중단되었습니다 : % 1</translation>
     </message>
@@ -485,12 +496,12 @@ Supported formats:
 <context>
     <name>EpisodeConverterWorker</name>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="41"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation>경로 &quot;% 1&quot;을 (를) 확인할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="49"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
         <source>No files to convert</source>
         <translation>변환 할 파일이 없습니다</translation>
     </message>
@@ -565,7 +576,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="163"/>
-        <location filename="../Graphics/gifs2png.cpp" line="273"/>
+        <location filename="../Graphics/gifs2png.cpp" line="278"/>
         <source>Start</source>
         <translation>스타트</translation>
     </message>
@@ -585,80 +596,80 @@ Supported formats:
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="63"/>
+        <location filename="../Graphics/gifs2png.cpp" line="66"/>
         <source>Process is busy</source>
         <translation>프로세스가 바쁘다</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="64"/>
+        <location filename="../Graphics/gifs2png.cpp" line="67"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
         <translation>이미 변환을 실행하는 동안에는 이러한 파일을 변환 할 수 없습니다!</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="104"/>
-        <location filename="../Graphics/gifs2png.cpp" line="112"/>
-        <location filename="../Graphics/gifs2png.cpp" line="123"/>
-        <location filename="../Graphics/gifs2png.cpp" line="132"/>
+        <location filename="../Graphics/gifs2png.cpp" line="107"/>
+        <location filename="../Graphics/gifs2png.cpp" line="115"/>
+        <location filename="../Graphics/gifs2png.cpp" line="126"/>
+        <location filename="../Graphics/gifs2png.cpp" line="135"/>
         <source>Incorrect input</source>
         <translation>잘못된 입력</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="105"/>
+        <location filename="../Graphics/gifs2png.cpp" line="108"/>
         <source>Given config pack directory doesn&apos;t exist.</source>
         <translation>주어진 구성 팩 디렉토리가 존재하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="113"/>
+        <location filename="../Graphics/gifs2png.cpp" line="116"/>
         <source>Given config pack directory path is not a config pack.</source>
         <translation>주어진 구성 팩 디렉토리 경로가 구성 팩이 아닙니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="124"/>
+        <location filename="../Graphics/gifs2png.cpp" line="127"/>
         <source>You should give an input directory to start the conversion.</source>
         <translation>변환을 시작하려면 입력 디렉토리를 제공해야합니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="133"/>
+        <location filename="../Graphics/gifs2png.cpp" line="136"/>
         <source>Given input directory path doesn&apos;t exist.</source>
         <translation>주어진 입력 디렉토리 경로가 존재하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="154"/>
+        <location filename="../Graphics/gifs2png.cpp" line="157"/>
         <source>Select a config pack directory</source>
         <translation>구성 팩 디렉토리 선택</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="172"/>
+        <location filename="../Graphics/gifs2png.cpp" line="176"/>
         <source>Select an input directory</source>
         <translation>입력 디렉토리 선택</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="194"/>
+        <location filename="../Graphics/gifs2png.cpp" line="199"/>
         <source>Process was exited with a code %1.</source>
         <translation>프로세스가 코드 % 1로 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="204"/>
+        <location filename="../Graphics/gifs2png.cpp" line="209"/>
         <source>Process was terminated</source>
         <translation>프로세스가 종료되었습니다</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="205"/>
+        <location filename="../Graphics/gifs2png.cpp" line="210"/>
         <source>Conversion has been termiated.</source>
         <translation>변환이 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="210"/>
+        <location filename="../Graphics/gifs2png.cpp" line="215"/>
         <source>Unsuccess exit</source>
         <translation>실패한 종료</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="211"/>
+        <location filename="../Graphics/gifs2png.cpp" line="216"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation>변환이 완료되었지만 오류가 있습니다. 자세한 정보는 출력 로그를 참조하십시오.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="271"/>
+        <location filename="../Graphics/gifs2png.cpp" line="276"/>
         <source>Stop</source>
         <translation>중지</translation>
     </message>
@@ -815,7 +826,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="139"/>
-        <location filename="../Graphics/png2gifs.cpp" line="184"/>
+        <location filename="../Graphics/png2gifs.cpp" line="187"/>
         <source>Start</source>
         <translation>스타트</translation>
     </message>
@@ -835,63 +846,63 @@ Supported formats:
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="62"/>
+        <location filename="../Graphics/png2gifs.cpp" line="65"/>
         <source>Process is busy</source>
         <translation>프로세스가 바쁘다</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="63"/>
+        <location filename="../Graphics/png2gifs.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
         <translation>이미 변환을 실행하는 동안에는 이러한 파일을 변환 할 수 없습니다!</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="99"/>
-        <location filename="../Graphics/png2gifs.cpp" line="108"/>
+        <location filename="../Graphics/png2gifs.cpp" line="102"/>
+        <location filename="../Graphics/png2gifs.cpp" line="111"/>
         <source>Incorrect input</source>
         <translation>잘못된 입력</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="100"/>
+        <location filename="../Graphics/png2gifs.cpp" line="103"/>
         <source>You should give an input directory to start the conversion.</source>
         <translation>변환을 시작하려면 입력 디렉토리를 제공해야합니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="109"/>
+        <location filename="../Graphics/png2gifs.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
         <translation>주어진 입력 디렉토리 경로가 존재하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="130"/>
+        <location filename="../Graphics/png2gifs.cpp" line="133"/>
         <source>Select an input directory</source>
         <translation>입력 디렉토리 선택</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="152"/>
+        <location filename="../Graphics/png2gifs.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
         <translation>프로세스가 코드 % 1로 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="162"/>
+        <location filename="../Graphics/png2gifs.cpp" line="165"/>
         <source>Process was terminated</source>
         <translation>프로세스가 종료되었습니다</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="163"/>
+        <location filename="../Graphics/png2gifs.cpp" line="166"/>
         <source>Conversion has been termiated.</source>
         <translation>변환이 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="168"/>
+        <location filename="../Graphics/png2gifs.cpp" line="171"/>
         <source>Unsuccess exit</source>
         <translation>실패한 종료</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="169"/>
+        <location filename="../Graphics/png2gifs.cpp" line="172"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation>변환이 완료되었지만 오류가 있습니다. 자세한 정보는 출력 로그를 참조하십시오.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="182"/>
+        <location filename="../Graphics/png2gifs.cpp" line="185"/>
         <source>Stop</source>
         <translation>중지</translation>
     </message>

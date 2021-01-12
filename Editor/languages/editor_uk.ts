@@ -4947,7 +4947,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>Редагувач - Platformer Game Engine</translation>
+        <translation type="vanished">Редагувач - Platformer Game Engine</translation>
     </message>
     <message>
         <source>Section modifications</source>
@@ -6289,6 +6289,10 @@ ID конфіг-пакету карти світу: %3
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
         <translation>Ви використовуєте 32-бітну версію Редагувача на 64-бітному процесорі. Дана версія Редагувача призначена для застарілих архітектур та для сумісності з Windows XP. Ми наполегливо рекомендуємо Вам завантажити 64-бітну версію Редагувача, щоб здобути максимальну сумісність з сучасними архітектурами, а також розширити максимальну межу використання оперативної пам&apos;яті. Для 32-бітних додатків йде системне обмеження у 2 ГБ пам&apos;яті.</translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation type="unfinished">Редагувач, версія %1</translation>
     </message>
 </context>
 <context>

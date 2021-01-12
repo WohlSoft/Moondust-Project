@@ -573,7 +573,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ici vous pouvez rapidement convertir vos musiques ou fichiers SFX qui &lt;br&gt;n&apos;ont pas été formatés correctement (mauvais taux d&apos;échantillonnage, mauvais codec, etc.).&lt;/p&gt;
-&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color :#0000ff ;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration&#x202f;: underline&#x202f;; color&#x202f;:#0000ff&#x202f;;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -727,7 +727,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Configuration name:</source>
-        <translation>Nom de la configuration :</translation>
+        <translation>Nom de la configuration&#x202f;:</translation>
     </message>
     <message>
         <source>Configuration path:</source>
@@ -1239,7 +1239,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation>Affiche divers chemins importants !</translation>
+        <translation>Affiche divers chemins importants&#x202f;!</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
@@ -2173,7 +2173,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation>Position : X, Y</translation>
+        <translation>Position&#x202f;: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
@@ -3698,7 +3698,7 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque&#x202f;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -5212,7 +5212,7 @@ affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</transla
     </message>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>Éditeur - Platformer Game Engine</translation>
+        <translation type="vanished">Éditeur - Platformer Game Engine</translation>
     </message>
     <message>
         <source>Section modifications</source>
@@ -6582,6 +6582,10 @@ Identifiant de paquet de configuration attendu : %4</translation>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
         <translation>Vous utilisez la version 32 bits de l&apos;éditeur sur un processeur 64 bits. Cette version de l&apos;éditeur est conçue pour les anciennes architectures et pour la compatibilité avec Windows XP. Nous vous recommandons fortement d&apos;obtenir la version 64 bits de l&apos;éditeur pour une meilleure compatibilité avec les architectures modernes et étendre la limite d&apos;utilisation de la mémoire. Pour les applications 32 bits, il existe une limitation de la mémoire à 2 Go.</translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation>Éditeur, version %1</translation>
     </message>
 </context>
 <context>

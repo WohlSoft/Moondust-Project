@@ -9,179 +9,185 @@
         <translation>Преобразовать аудио (SoX)</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
         <source>Don&apos;t change format</source>
         <translation>Не менять формат</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="34"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
         <source>Files will be in same format</source>
         <translation>Файлы будут в том же формате</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="57"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
         <source>Set bitrate</source>
         <translation>Установить битрейт</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="155"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
         <source>Files will be converted into MP3</source>
         <translation>Файлы будут преобразованы в MP3</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="198"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
         <source>Files will be converted into FLAC</source>
         <translation>Файлы будут преобразованы в FLAC</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="215"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="488"/>
         <source>Files will be converted into OGG</source>
         <translation>Файлы будут преобразованы в OGG</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="231"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="504"/>
         <source>Set quality</source>
         <translation>Установить качество</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="310"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="583"/>
         <source>Files will be converted into WAV</source>
         <translation>Файлы будут преобразованы в WAV</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="324"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
+        <source>FFMPEG binary path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="630"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
         <source>What do you want?</source>
         <translation>Что вы хотите?</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
         <source>Path to a level file to process</source>
         <translation>Путь к уровню для обработки</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="386"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="205"/>
         <source>Convert all music files of specific episode</source>
         <translation>Преобразовать всю музыку в указанном эпизоде</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="409"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="228"/>
         <source>Convert music of specific level</source>
         <translation>Преобразовать музыку выбранного уровня</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="419"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="238"/>
         <source>Convert specified files</source>
         <translation>Преобразовать выбранные файлы</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="429"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="248"/>
         <source>Path to an episode directory to process</source>
         <translation>Путь к директории эпизода для обработки</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="455"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="24"/>
         <source>Resample to</source>
         <translation>Пересэмплировать в</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="490"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="115"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Тут возможно быстро преобразовать музыку или звуковые эффекты, имеющих некорректные свойства.&lt;/p&gt;&lt;p&gt;Эта функция использует утилиту &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; для преобразования аудио.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="558"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert into new format
 (open necessary tab to choice target format)</source>
         <translation>Преобразовать в новый формат
 (откройте нужную вкладку, чтобы выбрать формат)</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="580"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="108"/>
         <source>make backup</source>
         <translation>Резервная копия</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="587"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
         <source>Sox binary path:</source>
         <translation>Исполняемый файл SoX:</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="594"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="180"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="44"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="199"/>
         <source>Start</source>
         <translation>Запустить</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>SoX error</source>
         <translation>Ошибка SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
         <translation>Путь к исполняемому файлу SoX не уканан
 Пожалуйста, укажите путь к SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
         <translation>Неверный путь к исполняемому файлу SoX.
 Пожалуйста, укажите путь к SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="447"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
         <source>Nothing to do</source>
         <translation>Нечего делать</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
         <source>No files to convert</source>
         <translation>Нету файлов для преобразования</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="156"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="175"/>
         <source>Stop</source>
         <translation>Остановить</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>Operation cancaled</source>
         <translation>Операция отменена</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="276"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="297"/>
         <source>SoX was crashed</source>
         <translation>SoX сломался</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="286"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="307"/>
         <source>SoX returned non-zero code: %1
 %2</source>
         <translation>SoX завершился с ненулевым кодом: %1
 %2</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="316"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="339"/>
         <source>All works completed</source>
         <translation>Вся работа выполнена</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="317"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="340"/>
         <source>All files successfully converted!
 Converted files: %1
 Overwritten levels: %2
@@ -194,27 +200,32 @@ Overwritten worlds: %3
 %4</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="447"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
         <source>Tasks are not defined. Nothing to do.</source>
         <translation>Задачи не указаны, делать нечего.</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="508"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="549"/>
         <source>Open SoX binary path</source>
         <translation>Выбрать путь к исполняемому файлу SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="520"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
+        <source>Open FFMPEG binary path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
         <source>Add file to convert</source>
         <translation>Добавить файл для преобразования</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="558"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="617"/>
         <source>Selecting a level file to convert custom music</source>
         <translation>Выбор уровня для преобразования своей музыки</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="571"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="630"/>
         <source>Open episode path to convert entire music set</source>
         <translation>Открыть эпизод, чтобы преобразовать всю музыку</translation>
     </message>
@@ -293,42 +304,42 @@ Overwritten worlds: %3
         <translation>Запустить</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="277"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
         <source>Episode path error</source>
         <translation>Ошибка пути к эпизоду</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="279"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation>Путь к эпизоду не указан. Пожалуйста, выберите целевой эпизод.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="307"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
         <source>Worker error</source>
         <translation>Ошибка обработчика</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="309"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Невозможно инициализировать задачу, потому что %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
         <source>Work finished</source>
         <translation>Работа выполнена</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
         <source>Case sensitive fixing work has been converted!</source>
         <translation>Работа по исправлению регистровой зависимости завершена!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="327"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
         <source>Error occouped while work process</source>
         <translation>Во время работы произошла ошибка</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="329"/>
         <source>Case fixer was aborted with an error: %1</source>
         <translation>Работа была завершена с ошибкой: %1</translation>
     </message>
@@ -336,37 +347,37 @@ Overwritten worlds: %3
 <context>
     <name>CaseFixerWorker</name>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="76"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="77"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation>Невозможно найти путь &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="80"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="81"/>
         <source>Initializing...</source>
         <translation>Инициализация...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="87"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="88"/>
         <source>No files to scan</source>
         <translation>Нету файлов для сканирования</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="146"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="147"/>
         <source>Looking for levels and world maps...</source>
         <translation>Поиск уровней и карт мира...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="161"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="162"/>
         <source>Processing levels and world maps...</source>
         <translation>Обработка уровней и карт мира...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="172"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="173"/>
         <source>Looking for resources...</source>
         <translation>Поиск ресурсов...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="192"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="193"/>
         <source>Processing resources...</source>
         <translation>Обработка ресурсов...</translation>
     </message>
@@ -437,47 +448,47 @@ Supported formats:
         <translation>Запустить</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="276"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
         <source>Episode path error</source>
         <translation>Ошибка пути к эпизоду</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="277"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="280"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation>Путь к эпизоду не указан. Пожалуйста, выберите целевой эпизод.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="302"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="305"/>
         <source>Worker error</source>
         <translation>Ошибка обработчика</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="303"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="306"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Невозможно инициализировать задачу, потому что %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="313"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="316"/>
         <source>Open target episode path</source>
         <translation>Указать путь к целевому эпизоду</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Work finished</source>
         <translation>Работа выполнена</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Episode has been converted!</source>
         <translation>Эпизод преобразован!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="336"/>
         <source>Error occouped while work process</source>
         <translation>Во время работы произошла ошибка</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="334"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="337"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation>Преобразование эпизода было прервано с ошибкой: %1</translation>
     </message>
@@ -485,12 +496,12 @@ Supported formats:
 <context>
     <name>EpisodeConverterWorker</name>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="41"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation>Невозможно найти путь &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="49"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
         <source>No files to convert</source>
         <translation>Нету файлов для преобразования</translation>
     </message>
@@ -565,7 +576,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="163"/>
-        <location filename="../Graphics/gifs2png.cpp" line="273"/>
+        <location filename="../Graphics/gifs2png.cpp" line="278"/>
         <source>Start</source>
         <translation>Запустить</translation>
     </message>
@@ -585,80 +596,80 @@ Supported formats:
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="63"/>
+        <location filename="../Graphics/gifs2png.cpp" line="66"/>
         <source>Process is busy</source>
         <translation>Процесс занят</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="64"/>
+        <location filename="../Graphics/gifs2png.cpp" line="67"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
         <translation>Невозможно преобразовать эти файлы, пока предыдущая работа ещё не завершилась!</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="104"/>
-        <location filename="../Graphics/gifs2png.cpp" line="112"/>
-        <location filename="../Graphics/gifs2png.cpp" line="123"/>
-        <location filename="../Graphics/gifs2png.cpp" line="132"/>
+        <location filename="../Graphics/gifs2png.cpp" line="107"/>
+        <location filename="../Graphics/gifs2png.cpp" line="115"/>
+        <location filename="../Graphics/gifs2png.cpp" line="126"/>
+        <location filename="../Graphics/gifs2png.cpp" line="135"/>
         <source>Incorrect input</source>
         <translation>Неправильный входной путь</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="105"/>
+        <location filename="../Graphics/gifs2png.cpp" line="108"/>
         <source>Given config pack directory doesn&apos;t exist.</source>
         <translation>Указанный путь к конфирурационному пакету не существует.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="113"/>
+        <location filename="../Graphics/gifs2png.cpp" line="116"/>
         <source>Given config pack directory path is not a config pack.</source>
         <translation>Указанный путь не является конфигурационным пакетом.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="124"/>
+        <location filename="../Graphics/gifs2png.cpp" line="127"/>
         <source>You should give an input directory to start the conversion.</source>
         <translation>Чтобы начать преобразование, нужно указать путь ко входной директории.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="133"/>
+        <location filename="../Graphics/gifs2png.cpp" line="136"/>
         <source>Given input directory path doesn&apos;t exist.</source>
         <translation>Указанный путь ко входной директрии не сщуествует.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="154"/>
+        <location filename="../Graphics/gifs2png.cpp" line="157"/>
         <source>Select a config pack directory</source>
         <translation>Указать директорию с конфигурационным пакетом</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="172"/>
+        <location filename="../Graphics/gifs2png.cpp" line="176"/>
         <source>Select an input directory</source>
         <translation>Указать входную директорию</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="194"/>
+        <location filename="../Graphics/gifs2png.cpp" line="199"/>
         <source>Process was exited with a code %1.</source>
         <translation>Процесс завершился с кодом %1.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="204"/>
+        <location filename="../Graphics/gifs2png.cpp" line="209"/>
         <source>Process was terminated</source>
         <translation>Процесс прерван</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="205"/>
+        <location filename="../Graphics/gifs2png.cpp" line="210"/>
         <source>Conversion has been termiated.</source>
         <translation>Преобразование было прервано.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="210"/>
+        <location filename="../Graphics/gifs2png.cpp" line="215"/>
         <source>Unsuccess exit</source>
         <translation>Безуспешное завершение</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="211"/>
+        <location filename="../Graphics/gifs2png.cpp" line="216"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation>Преобразование завершилось с ошибками. В выходном отчёте можно посмотреть все подробности.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="271"/>
+        <location filename="../Graphics/gifs2png.cpp" line="276"/>
         <source>Stop</source>
         <translation>Остановить</translation>
     </message>
@@ -815,7 +826,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="139"/>
-        <location filename="../Graphics/png2gifs.cpp" line="184"/>
+        <location filename="../Graphics/png2gifs.cpp" line="187"/>
         <source>Start</source>
         <translation>Запустить</translation>
     </message>
@@ -835,63 +846,63 @@ Supported formats:
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="62"/>
+        <location filename="../Graphics/png2gifs.cpp" line="65"/>
         <source>Process is busy</source>
         <translation>Процесс занят</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="63"/>
+        <location filename="../Graphics/png2gifs.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
         <translation>Невозможно преобразовать эти файлы, пока предыдущая работа ещё не завершилась!</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="99"/>
-        <location filename="../Graphics/png2gifs.cpp" line="108"/>
+        <location filename="../Graphics/png2gifs.cpp" line="102"/>
+        <location filename="../Graphics/png2gifs.cpp" line="111"/>
         <source>Incorrect input</source>
         <translation>Неправильный входной путь</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="100"/>
+        <location filename="../Graphics/png2gifs.cpp" line="103"/>
         <source>You should give an input directory to start the conversion.</source>
         <translation>Чтобы начать преобразование, нужно указать путь ко входной директории.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="109"/>
+        <location filename="../Graphics/png2gifs.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
         <translation>Указанный путь ко входной директрии не сщуествует.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="130"/>
+        <location filename="../Graphics/png2gifs.cpp" line="133"/>
         <source>Select an input directory</source>
         <translation>Указать входную директорию</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="152"/>
+        <location filename="../Graphics/png2gifs.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
         <translation>Процесс завершился с кодом %1.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="162"/>
+        <location filename="../Graphics/png2gifs.cpp" line="165"/>
         <source>Process was terminated</source>
         <translation>Процесс прерван</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="163"/>
+        <location filename="../Graphics/png2gifs.cpp" line="166"/>
         <source>Conversion has been termiated.</source>
         <translation>Преобразование было прервано.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="168"/>
+        <location filename="../Graphics/png2gifs.cpp" line="171"/>
         <source>Unsuccess exit</source>
         <translation>Безуспешное завершение</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="169"/>
+        <location filename="../Graphics/png2gifs.cpp" line="172"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation>Преобразование завершилось с ошибками. В выходном отчёте можно посмотреть все подробности.</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="182"/>
+        <location filename="../Graphics/png2gifs.cpp" line="185"/>
         <source>Stop</source>
         <translation>Остановить</translation>
     </message>

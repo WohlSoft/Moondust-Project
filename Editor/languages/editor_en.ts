@@ -8187,7 +8187,7 @@ This takes advantage of SMBX&apos;s buggy BGO rendering. To make this work, simp
     </message>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>Editor - Platformer Game Engine</translation>
+        <translation type="vanished">Editor - Platformer Game Engine</translation>
     </message>
     <message>
         <source>Section modifications</source>
@@ -9852,6 +9852,10 @@ Expected config pack ID: %4</translation>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
         <translation>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation>Editor, version %1</translation>
     </message>
 </context>
 <context>

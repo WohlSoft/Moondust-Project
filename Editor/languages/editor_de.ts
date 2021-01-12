@@ -7571,7 +7571,7 @@ Bei diesem System wird ein Bug von SMBX benutzt, womit man bestimmte BGOs in den
     </message>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>Editor - Platformer Game Engine</translation>
+        <translation type="vanished">Editor - Platformer Game Engine</translation>
     </message>
     <message>
         <source>Section modifications</source>
@@ -8917,6 +8917,10 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

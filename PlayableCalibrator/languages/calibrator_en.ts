@@ -206,12 +206,12 @@
         <translation>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="275"/>
+        <location filename="../calibration_main.cpp" line="279"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation>Useful for tests or sprites creation from the scratch</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="274"/>
+        <location filename="../calibration_main.cpp" line="278"/>
         <source>Export a map of hitboxes as image...</source>
         <translation>Export a map of hitboxes as image…</translation>
     </message>
@@ -428,73 +428,73 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Top</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="97"/>
+        <location filename="../main/files_io.cpp" line="100"/>
         <source>Save hitbox map as image</source>
         <translation>Save hitbox map as image</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="330"/>
-        <location filename="../main/files_io.cpp" line="114"/>
-        <location filename="../calibration_main.cpp" line="149"/>
+        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/files_io.cpp" line="118"/>
+        <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation>Saved</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="330"/>
+        <location filename="../main/settings.cpp" line="332"/>
         <source>Configuration saved in file</source>
         <translation>Configuration saved in file</translation>
     </message>
     <message>
-        <location filename="../main/files_io.cpp" line="114"/>
+        <location filename="../main/files_io.cpp" line="118"/>
         <source>Hitbox map has been saved!</source>
         <translation>Hitbox map has been saved!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="267"/>
+        <location filename="../calibration_main.cpp" line="271"/>
         <source>Save in the same folder with image file</source>
         <translation>Save in the same folder with image file</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="269"/>
+        <location filename="../calibration_main.cpp" line="273"/>
         <source>Save into custom place...</source>
         <translation>Save into custom place…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="380"/>
+        <location filename="../calibration_main.cpp" line="384"/>
         <source>Open sprite file</source>
         <translation>Open sprite file</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="384"/>
+        <location filename="../calibration_main.cpp" line="388"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation>SMBX playable sprite</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="382"/>
+        <location filename="../calibration_main.cpp" line="386"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation>GIF images</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="101"/>
+        <location filename="../calibration_main.cpp" line="105"/>
         <source>Open SMBX-38A level file</source>
         <translation>Open SMBX-38A level file</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="103"/>
+        <location filename="../calibration_main.cpp" line="107"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
         <translation>SMBX-38A level files</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="104"/>
+        <location filename="../calibration_main.cpp" line="108"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
         <translation>All Files</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="114"/>
+        <location filename="../calibration_main.cpp" line="118"/>
         <source>File opening error</source>
         <translation>File opening error</translation>
     </message>
@@ -503,75 +503,75 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Can&apos;t import calibration data from this file.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="115"/>
+        <location filename="../calibration_main.cpp" line="119"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
         <translation>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="131"/>
+        <location filename="../calibration_main.cpp" line="135"/>
         <source>Export calibration settings into SMBX-38A level file</source>
         <translation>Export calibration settings into SMBX-38A level file</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="142"/>
+        <location filename="../calibration_main.cpp" line="146"/>
         <source>File saving error</source>
         <translation>File saving error</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="143"/>
+        <location filename="../calibration_main.cpp" line="147"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
         <translation>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="150"/>
+        <location filename="../calibration_main.cpp" line="154"/>
         <source>The level file has been patched!</source>
         <translation>The level file has been patched!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="278"/>
+        <location filename="../calibration_main.cpp" line="282"/>
         <source>Import data from SMBX-38A level...</source>
         <translation>Import data from SMBX-38A level...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="281"/>
+        <location filename="../calibration_main.cpp" line="285"/>
         <source>Export data into SMBX-38A level...</source>
         <translation>Export data into SMBX-38A level...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="381"/>
+        <location filename="../calibration_main.cpp" line="385"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>Type of image file to open</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="383"/>
+        <location filename="../calibration_main.cpp" line="387"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>PNG images</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="385"/>
+        <location filename="../calibration_main.cpp" line="389"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>All Files</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="409"/>
+        <location filename="../calibration_main.cpp" line="413"/>
         <source>Warning</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="410"/>
+        <location filename="../calibration_main.cpp" line="414"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with the current frame&apos;s settings. Do you want to continue?</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="431"/>
+        <location filename="../calibration_main.cpp" line="435"/>
         <source>Calibration is not saved!</source>
         <translation>Calibration is not saved!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="432"/>
+        <location filename="../calibration_main.cpp" line="436"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation>Configuration was modified and not saved. Do you want to save it?</translation>
     </message>

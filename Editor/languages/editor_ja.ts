@@ -4210,7 +4210,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">メイン</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -4707,10 +4707,6 @@ Please, select necessary world map in a list:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Editor - Platformer Game Engine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Section modifications</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5046,7 +5042,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">アニメーション</translation>
     </message>
     <message>
         <source>&lt;empty&gt;</source>
@@ -5957,6 +5953,10 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8125,7 +8125,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">アニメーション</translation>
     </message>
     <message>
         <source>You will return to the x0-y0 position of the map.</source>

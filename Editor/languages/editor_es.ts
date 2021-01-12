@@ -7087,7 +7087,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>Editor - Motor de juego de plataformas</translation>
+        <translation type="vanished">Editor - Motor de juego de plataformas</translation>
     </message>
     <message>
         <source>Help</source>
@@ -9445,6 +9445,10 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

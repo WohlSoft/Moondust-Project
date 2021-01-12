@@ -9,177 +9,183 @@
         <translation>Exportează audio (SoX)</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="28"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
         <source>Don&apos;t change format</source>
         <translation>Nu schimba format</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="34"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
         <source>Files will be in same format</source>
         <translation>Fişierele vor fi în acelaşi format</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="57"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
         <source>Set bitrate</source>
         <translation>Bitrate</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="155"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
         <source>Files will be converted into MP3</source>
         <translation>Fişierele vor fi exportate ca MP3</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="198"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
         <source>Files will be converted into FLAC</source>
         <translation>Fişierele vor fi exportate ca FLAC</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="215"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="488"/>
         <source>Files will be converted into OGG</source>
         <translation>Fişierele vor fi exportate ca OGG</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="231"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="504"/>
         <source>Set quality</source>
         <translation>Calitate</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="310"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="583"/>
         <source>Files will be converted into WAV</source>
         <translation>Fişierele vor fi exportate ca WAV</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="324"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
+        <source>FFMPEG binary path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="630"/>
         <source>Browse...</source>
         <translation>Caută...</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="331"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
         <source>What do you want?</source>
         <translation>Cu ce vă pot ajuta?</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="372"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
         <source>Path to a level file to process</source>
         <translation>Deschide nivel către proces</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="386"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="205"/>
         <source>Convert all music files of specific episode</source>
         <translation>Exportează fişiere audio de locaţie specifică</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="409"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="228"/>
         <source>Convert music of specific level</source>
         <translation>Exportează audio de un nivel specific</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="419"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="238"/>
         <source>Convert specified files</source>
         <translation>Exportează anumite fişiere</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="429"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="248"/>
         <source>Path to an episode directory to process</source>
         <translation>Direcţia folder-ul jocului pentru procesare</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="455"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="24"/>
         <source>Resample to</source>
         <translation>Modifică către</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="490"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="115"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="558"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert into new format
 (open necessary tab to choice target format)</source>
         <translation>Exportează într-un nou fişier 
 (deschide o fereastră către fişier)</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="580"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="108"/>
         <source>make backup</source>
         <translation>Salvează backup</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="587"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
         <source>Sox binary path:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="594"/>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
         <source>Close</source>
         <translation type="unfinished">Închide</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="41"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="180"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="44"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="199"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>SoX error</source>
         <translation>Eroare SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="112"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
         <source>SoX binary path is not defined.
 Please set SoX path first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="118"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
         <source>SoX binary path is wrong.
 Please set SoX path first</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="447"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
         <source>Nothing to do</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="152"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
         <source>No files to convert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="156"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="175"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="211"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>Operation cancaled</source>
         <translation>Operaţiune anulată</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="276"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="297"/>
         <source>SoX was crashed</source>
         <translation>SoX s-a oprit</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="286"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="307"/>
         <source>SoX returned non-zero code: %1
 %2</source>
         <translation>SoX a adăugat cod zero %1
 %2</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="316"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="339"/>
         <source>All works completed</source>
         <translation>Toate procesele au fost completate</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="317"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="340"/>
         <source>All files successfully converted!
 Converted files: %1
 Overwritten levels: %2
@@ -192,27 +198,32 @@ Mape rescrise: %3
 %4</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="447"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
         <source>Tasks are not defined. Nothing to do.</source>
         <translation>Nici un proces scris.</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="508"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="549"/>
         <source>Open SoX binary path</source>
         <translation>Alege SoX</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="520"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
+        <source>Open FFMPEG binary path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
         <source>Add file to convert</source>
         <translation>Deschide fişier pentru exportare</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="558"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="617"/>
         <source>Selecting a level file to convert custom music</source>
         <translation>Deschizând un nivel pentru exportare a audio-ului</translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.cpp" line="571"/>
+        <location filename="../Music/audiocvt_sox_gui.cpp" line="630"/>
         <source>Open episode path to convert entire music set</source>
         <translation>Deschide jocul pentru a exporta tot audio-ul</translation>
     </message>
@@ -291,42 +302,42 @@ Mape rescrise: %3
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="277"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
         <source>Episode path error</source>
         <translation>Eroare de joc</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="279"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation>Locaţia jocului nu a fost descrisă. Adaugă joc mai întâi.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="307"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
         <source>Worker error</source>
         <translation>Eroare de program sistemic</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="309"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation>Nu se poate iniţializa fiindcă %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
         <source>Work finished</source>
         <translation>Gata</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="324"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
         <source>Case sensitive fixing work has been converted!</source>
         <translation>S-a reparat!</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="327"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
         <source>Error occouped while work process</source>
         <translation>Eroare în timpul reparării</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="329"/>
         <source>Case fixer was aborted with an error: %1</source>
         <translation>Programul de reparare s-a oprit: %1</translation>
     </message>
@@ -334,37 +345,37 @@ Mape rescrise: %3
 <context>
     <name>CaseFixerWorker</name>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="76"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="77"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation>Nu se poate &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="80"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="81"/>
         <source>Initializing...</source>
         <translation>Se iniţializează...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="87"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="88"/>
         <source>No files to scan</source>
         <translation>Niciun fişier de scanat</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="146"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="147"/>
         <source>Looking for levels and world maps...</source>
         <translation>Se caută niveluri/mape...</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="161"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="162"/>
         <source>Processing levels and world maps...</source>
         <translation>Se procesează</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="172"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="173"/>
         <source>Looking for resources...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/case_fixer.cpp" line="192"/>
+        <location filename="../EpisodeCvt/case_fixer.cpp" line="193"/>
         <source>Processing resources...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -431,47 +442,47 @@ Supported formats:
         <translation type="unfinished">Start</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="276"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
         <source>Episode path error</source>
         <translation type="unfinished">Eroare de joc</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="277"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="280"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
         <translation type="unfinished">Locaţia jocului nu a fost descrisă. Adaugă joc mai întâi.</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="302"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="305"/>
         <source>Worker error</source>
         <translation type="unfinished">Eroare de program sistemic</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="303"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="306"/>
         <source>Can&apos;t initialize job because %1</source>
         <translation type="unfinished">Nu se poate iniţializa fiindcă %1</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="313"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="316"/>
         <source>Open target episode path</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Work finished</source>
         <translation type="unfinished">Gata</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="330"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Episode has been converted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="336"/>
         <source>Error occouped while work process</source>
         <translation type="unfinished">Eroare în timpul reparării</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="334"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="337"/>
         <source>Episode conversion aborted with error: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -479,12 +490,12 @@ Supported formats:
 <context>
     <name>EpisodeConverterWorker</name>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="41"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
         <translation type="unfinished">Nu se poate &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../EpisodeCvt/episode_converter.cpp" line="49"/>
+        <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
         <source>No files to convert</source>
         <translation type="unfinished"></translation>
     </message>
@@ -559,7 +570,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="163"/>
-        <location filename="../Graphics/gifs2png.cpp" line="273"/>
+        <location filename="../Graphics/gifs2png.cpp" line="278"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
@@ -579,80 +590,80 @@ Supported formats:
         <translation type="unfinished">Închide</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="63"/>
+        <location filename="../Graphics/gifs2png.cpp" line="66"/>
         <source>Process is busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="64"/>
+        <location filename="../Graphics/gifs2png.cpp" line="67"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="104"/>
-        <location filename="../Graphics/gifs2png.cpp" line="112"/>
-        <location filename="../Graphics/gifs2png.cpp" line="123"/>
-        <location filename="../Graphics/gifs2png.cpp" line="132"/>
+        <location filename="../Graphics/gifs2png.cpp" line="107"/>
+        <location filename="../Graphics/gifs2png.cpp" line="115"/>
+        <location filename="../Graphics/gifs2png.cpp" line="126"/>
+        <location filename="../Graphics/gifs2png.cpp" line="135"/>
         <source>Incorrect input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="105"/>
+        <location filename="../Graphics/gifs2png.cpp" line="108"/>
         <source>Given config pack directory doesn&apos;t exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="113"/>
+        <location filename="../Graphics/gifs2png.cpp" line="116"/>
         <source>Given config pack directory path is not a config pack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="124"/>
+        <location filename="../Graphics/gifs2png.cpp" line="127"/>
         <source>You should give an input directory to start the conversion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="133"/>
+        <location filename="../Graphics/gifs2png.cpp" line="136"/>
         <source>Given input directory path doesn&apos;t exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="154"/>
+        <location filename="../Graphics/gifs2png.cpp" line="157"/>
         <source>Select a config pack directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="172"/>
+        <location filename="../Graphics/gifs2png.cpp" line="176"/>
         <source>Select an input directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="194"/>
+        <location filename="../Graphics/gifs2png.cpp" line="199"/>
         <source>Process was exited with a code %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="204"/>
+        <location filename="../Graphics/gifs2png.cpp" line="209"/>
         <source>Process was terminated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="205"/>
+        <location filename="../Graphics/gifs2png.cpp" line="210"/>
         <source>Conversion has been termiated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="210"/>
+        <location filename="../Graphics/gifs2png.cpp" line="215"/>
         <source>Unsuccess exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="211"/>
+        <location filename="../Graphics/gifs2png.cpp" line="216"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="271"/>
+        <location filename="../Graphics/gifs2png.cpp" line="276"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -809,7 +820,7 @@ Supported formats:
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="139"/>
-        <location filename="../Graphics/png2gifs.cpp" line="184"/>
+        <location filename="../Graphics/png2gifs.cpp" line="187"/>
         <source>Start</source>
         <translation type="unfinished">Start</translation>
     </message>
@@ -829,63 +840,63 @@ Supported formats:
         <translation type="unfinished">Închide</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="62"/>
+        <location filename="../Graphics/png2gifs.cpp" line="65"/>
         <source>Process is busy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="63"/>
+        <location filename="../Graphics/png2gifs.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="99"/>
-        <location filename="../Graphics/png2gifs.cpp" line="108"/>
+        <location filename="../Graphics/png2gifs.cpp" line="102"/>
+        <location filename="../Graphics/png2gifs.cpp" line="111"/>
         <source>Incorrect input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="100"/>
+        <location filename="../Graphics/png2gifs.cpp" line="103"/>
         <source>You should give an input directory to start the conversion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="109"/>
+        <location filename="../Graphics/png2gifs.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="130"/>
+        <location filename="../Graphics/png2gifs.cpp" line="133"/>
         <source>Select an input directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="152"/>
+        <location filename="../Graphics/png2gifs.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="162"/>
+        <location filename="../Graphics/png2gifs.cpp" line="165"/>
         <source>Process was terminated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="163"/>
+        <location filename="../Graphics/png2gifs.cpp" line="166"/>
         <source>Conversion has been termiated.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="168"/>
+        <location filename="../Graphics/png2gifs.cpp" line="171"/>
         <source>Unsuccess exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="169"/>
+        <location filename="../Graphics/png2gifs.cpp" line="172"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.cpp" line="182"/>
+        <location filename="../Graphics/png2gifs.cpp" line="185"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>

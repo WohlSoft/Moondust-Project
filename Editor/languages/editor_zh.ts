@@ -5110,7 +5110,7 @@ Please, select necessary world map in a list:</source>
     <name>MainWindow</name>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>编辑器 - 平台游戏引擎</translation>
+        <translation type="vanished">编辑器 - 平台游戏引擎</translation>
     </message>
     <message>
         <source>File</source>
@@ -6698,6 +6698,10 @@ Expected config pack ID: %4</source>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
         <translation>您正在使用 64 位操作系统中使用 32 位的版本的编辑器，此版本的编辑器专为老旧的电脑和 Windows XP 系统兼容打造，我们强烈推荐使用 64 位版本的编辑器以获得最佳兼容性和内存扩展，32 位应用中内存限制为 2GB。</translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation>编辑器，版本 %1</translation>
     </message>
 </context>
 <context>

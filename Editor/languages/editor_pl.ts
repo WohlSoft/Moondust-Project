@@ -5289,7 +5289,7 @@ Proszę, wybierz jeden plik z listy:</translation>
     <name>MainWindow</name>
     <message>
         <source>Editor - Platformer Game Engine</source>
-        <translation>Edytor - Platformer Game Engine</translation>
+        <translation type="vanished">Edytor - Platformer Game Engine</translation>
     </message>
     <message>
         <source>File</source>
@@ -7171,6 +7171,10 @@ Oczekiwany Indetyfikator pakietu konfiguracji: %4</translation>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
         <translation>Używasz 32-bitowej wersji Edytora na 64-bitowym procesorze. Ten edytor obiera za cel starsze urządzenia oraz kompatybilność z Windowsem XP. Wysoce rekomendujemy użycie 64-bitowej wersji Edytora, aby mieć lepszą kompatybilność z nowszymi urządzeniami oraz rozszerzenia limitu zużycia pamięci. Dla aplikacji 32-bitowych limit to 2 GB pamięci.</translation>
+    </message>
+    <message>
+        <source>Editor, version %1</source>
+        <translation type="unfinished">Edytor, wersja %1</translation>
     </message>
 </context>
 <context>
