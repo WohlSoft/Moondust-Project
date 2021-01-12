@@ -65,23 +65,23 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     WorldEdit *wldWin = activeWldEditWin(LastActiveSubWindow);
 
 
-    int WinType = activeChildWindow(LastActiveSubWindow); // 1 lvledit, 2 npcedit, 3 wldedit
-    bool hasSWindow = (WinType != WND_NoWindow);
+    int winType = activeChildWindow(LastActiveSubWindow); // 1 lvledit, 2 npcedit, 3 wldedit
+    bool hasSWindow = (winType != WND_NoWindow);
 
-    emit windowActiveLevel( WinType == WND_Level );
-    emit windowActiveLevelWorld( (WinType == WND_Level) || (WinType==WND_World) );
-    emit windowActiveWorld( WinType == WND_World );
-    emit windowActiveNPC( WinType == WND_NpcTxt );
+    emit windowActiveLevel( winType == WND_Level );
+    emit windowActiveLevelWorld( (winType == WND_Level) || (winType==WND_World) );
+    emit windowActiveWorld( winType == WND_World );
+    emit windowActiveNPC( winType == WND_NpcTxt );
 
     if(m_testEngine)
     {
-        ui->action_doTest->setEnabled(WinType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
-        ui->action_doSafeTest->setEnabled(WinType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
+        ui->action_doTest->setEnabled(winType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_IPC));
+        ui->action_doSafeTest->setEnabled(winType == WND_Level && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_LEVEL_FILE));
         if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA)
             ui->action_doSafeTest->setVisible(false);
 
-        ui->action_doTestWld->setEnabled(WinType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
-        ui->action_doSafeTestWld->setEnabled(WinType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+        ui->action_doTestWld->setEnabled(winType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
+        ui->action_doSafeTestWld->setEnabled(winType == WND_World && m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
     }
 
     ui->PlacingToolbar->setVisible(false);
@@ -92,32 +92,32 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
     ui->actionSave_all->setEnabled(hasSWindow);
     ui->actionClose->setEnabled(hasSWindow);
 
-    ui->action_openEpisodeFolder->setEnabled( WinType != 0 );
-    ui->action_openCustomFolder->setEnabled( (WinType==WND_Level) || (WinType==WND_World) );
+    ui->action_openEpisodeFolder->setEnabled( winType != 0 );
+    ui->action_openCustomFolder->setEnabled( (winType==WND_Level) || (winType==WND_World) );
 
-    ui->actionReload->setEnabled( (WinType==WND_Level) || (WinType == WND_NpcTxt) || (WinType == WND_World));
+    ui->actionReload->setEnabled( (winType==WND_Level) || (winType == WND_NpcTxt) || (winType == WND_World));
 
     dock_LvlItemProps->setVisible(false);
     dock_WldItemProps->setVisible(false);
 
     //Change visibility of toolboxes
     /***************Level specific toolboxes****************/
-    if((!(WinType==WND_Level))&& (GlobalSettings::lastWinType == WND_Level) )   { docks_level.hideAll(); }
-    if((GlobalSettings::lastWinType !=1) && (WinType==WND_Level))       { docks_level.showAll(); }
+    if((!(winType==WND_Level))&& (GlobalSettings::lastWinType == WND_Level) )   { docks_level.hideAll(); }
+    if((GlobalSettings::lastWinType !=1) && (winType==WND_Level))       { docks_level.showAll(); }
 
     /***************World specific toolboxes****************/
-    if((!(WinType==WND_World))&& (GlobalSettings::lastWinType == WND_World) )   { docks_world.hideAll(); }
-    if((GlobalSettings::lastWinType !=3) && (WinType==WND_World))       { docks_world.showAll(); }
+    if((!(winType==WND_World))&& (GlobalSettings::lastWinType == WND_World) )   { docks_world.hideAll(); }
+    if((GlobalSettings::lastWinType !=3) && (winType==WND_World))       { docks_world.showAll(); }
 
     /***************World and Level specific toolboxes****************/
-    if( (!(WinType==WND_Level))&&(!(WinType==WND_World)) && (GlobalSettings::lastWinType == WND_Level || GlobalSettings::lastWinType == WND_World) )
+    if( (!(winType==WND_Level))&&(!(winType==WND_World)) && (GlobalSettings::lastWinType == WND_Level || GlobalSettings::lastWinType == WND_World) )
     { docks_level_and_world.hideAll(); }
-    if( (!(GlobalSettings::lastWinType==WND_Level))&&(!(GlobalSettings::lastWinType==WND_World)) && (WinType == WND_Level || WinType == WND_World) )
+    if( (!(GlobalSettings::lastWinType==WND_Level))&&(!(GlobalSettings::lastWinType==WND_World)) && (winType == WND_Level || winType == WND_World) )
     { docks_level_and_world.showAll(); }
 
-    GlobalSettings::lastWinType =   WinType;
+    GlobalSettings::lastWinType =   winType;
 
-    if(WinType == WND_Level)
+    if(winType == WND_Level)
     {
         emit setSMBX64Strict(lvlWin->LvlData.meta.smbx64strict);
 
@@ -176,7 +176,7 @@ void MainWindow::updateMenus(QMdiSubWindow* subWindow, bool force)
         ui->actionCollisions->setChecked( GlobalSettings::LvlOpts.collisionsEnabled );
     }
     else
-    if(WinType==WND_World)
+    if(winType==WND_World)
     {
         emit setSMBX64Strict(wldWin->WldData.meta.smbx64strict);
 
