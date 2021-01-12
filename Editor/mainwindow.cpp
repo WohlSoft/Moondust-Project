@@ -39,6 +39,9 @@
 #include <ui_mainwindow.h>
 #include "mainwindow.h"
 
+#include "version.h"
+
+
 MainWindow::MainWindow(QMdiArea *parent) :
     QMainWindow(parent),
     m_messageBoxer(this),
@@ -55,6 +58,13 @@ MainWindow::MainWindow(QMdiArea *parent) :
 
     LogDebug(QString("Set UI..."));
     ui->setupUi(this);
+
+    setWindowTitle(QString("Moondust - %1 %2-%3, %4")
+       .arg(tr("Editor, version %1").arg(V_FILE_VERSION V_FILE_RELEASE))
+       .arg(V_BUILD_VER)
+       .arg(V_BUILD_BRANCH)
+       .arg(FILE_CPU)
+    );
 
     LogDebug(QString("Setting Lang..."));
     setDefLang();

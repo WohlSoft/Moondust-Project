@@ -2,6 +2,7 @@
 - Fixed the inproper file dialog on Windows
 - Fixed the unwanted music file locking on Windows
 - Default audio output format has been changed into float32 to improve the quality and prevent any possible clipping distortions
+- Changed the title of the main window
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

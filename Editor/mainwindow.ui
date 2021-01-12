@@ -35,7 +35,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Editor - Platformer Game Engine</string>
+   <string notr="true">喝了这</string>
   </property>
   <property name="windowIcon">
    <iconset resource="_resources/editor.qrc">
@@ -91,7 +91,7 @@
      <x>0</x>
      <y>0</y>
      <width>1675</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -275,7 +275,7 @@
     <addaction name="actionSwitch_to_Fullscreen"/>
     <addaction name="separator"/>
     <addaction name="actionShowGrid"/>
-	<addaction name="actionShowCameraGrid"/>
+    <addaction name="actionShowCameraGrid"/>
     <addaction name="actionAnimation"/>
     <addaction name="actionSemi_transparent_paths"/>
    </widget>
