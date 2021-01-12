@@ -51,7 +51,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
         <source>FFMPEG binary path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Исполняемый файл FFMPEG:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
@@ -212,7 +212,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
         <source>Open FFMPEG binary path</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать путь к исполняемому файлу FFMPEG</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
