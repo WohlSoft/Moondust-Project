@@ -1,3 +1,6 @@
+1.4.3
+- Default audio output format has been changed into float32 to improve the quality and prevent any possible clipping distortions
+
 1.4.2
 * Added tempo change slider (will work for some formats only)
 * Added tooltip to display current volume value while sliding volume by mouse
