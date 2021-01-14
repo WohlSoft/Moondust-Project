@@ -4,7 +4,7 @@ forked from SDL Mixer 2.0 by Sam Lantinga <slouken@libsdl.org>
 ========================================================================
 
 SDL_mixer_ext:  An extended audio mixer library, forked from SDL_mixer
-Copyright (C) 2014-2020 Vitaly Novichkov <admin@wohlnet.ru>
+Copyright (C) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
 
 SDL_mixer:  An audio mixer library based on the SDL library
 Copyright (C) 1997-2016 Sam Lantinga <slouken@libsdl.org>
@@ -39,7 +39,7 @@ Statically linked libraries:
 libADLMIDI: is a free MIDI to WAV conversion library with OPL3 emulation
 
 Original ADLMIDI code: Copyright (c) 2010-2014 Joel Yliluoma <bisqwit@iki.fi>
-ADLMIDI Library API:   Copyright (c) 2015-2020 Vitaly Novichkov <admin@wohlnet.ru>
+ADLMIDI Library API:   Copyright (c) 2015-2021 Vitaly Novichkov <admin@wohlnet.ru>
 
 Library is based on the ADLMIDI, a MIDI player for Linux and Windows
 with OPL3 emulation:
