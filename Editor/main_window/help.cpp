@@ -44,7 +44,7 @@ void MainWindow::showWelcomeDialog()
     QSettings setup(AppPathManager::settingsFile(), QSettings::IniFormat);
     setup.setIniCodec("UTF-8");
     setup.beginGroup("message-boxes");
-    bool showNotice = setup.value("uidesign-editor-greeting", true).toBool();
+    bool showNotice = setup.value("uidesign-editor-greeting", configs.editor.enable_first_launch_greeting).toBool();
     setup.endGroup();
     if(showNotice)
     {

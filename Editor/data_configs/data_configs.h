@@ -78,6 +78,9 @@ struct EditorSetup
         bool variables_box = false;
     };
 
+    //! Show greeting message at first launch
+    bool enable_first_launch_greeting = true;
+
     //! Inital visibiltiy of toolboxes
     WidgetVisiblity default_visibility;
     //! Enforce default toolbox visibility and ignore last state

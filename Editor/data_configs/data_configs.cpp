@@ -206,6 +206,12 @@ bool DataConfig::loadBasics()
     }
     guiset.endGroup();
 
+    guiset.beginGroup("editor-defaults");
+    {
+        guiset.read("enable-first-launch-greeting", editor.enable_first_launch_greeting, true);
+    }
+    guiset.endGroup();
+
     guiset.beginGroup("supported-features");
     {
         const IniProcessing::StrEnumMap formatEnum =
