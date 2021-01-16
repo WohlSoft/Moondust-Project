@@ -249,6 +249,7 @@ bool DataConfig::loadBasics()
     guiset.beginGroup("editor-defaults");
     {
         guiset.read("enable-first-launch-greeting", editor.enable_first_launch_greeting, true);
+        guiset.read("enable-tip-of-the-day", editor.enable_tip_of_the_day, true);
     }
     guiset.endGroup();
 

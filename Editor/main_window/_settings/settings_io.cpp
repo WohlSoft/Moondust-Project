@@ -133,7 +133,7 @@ void MainWindow::loadSettings()
         GlobalSettings::currentPallete = settings.value("current-pallete", "").toInt();
         GlobalSettings::fontSize = settings.value("font-size", -1).toInt();
 
-        GlobalSettings::ShowTipOfDay = settings.value("show-tip-of-a-day", true).toBool();
+        GlobalSettings::ShowTipOfDay = settings.value("show-tip-of-a-day", configs.editor.enable_tip_of_the_day).toBool();
 
         MixerX::initAudio(settings.value("sdl-sample-rate", MixerX::sampleRate()).toInt());
 

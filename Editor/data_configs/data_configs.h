@@ -80,6 +80,8 @@ struct EditorSetup
 
     //! Show greeting message at first launch
     bool enable_first_launch_greeting = true;
+    //! Show tip of day on a launching
+    bool enable_tip_of_the_day = true;
 
     //! Inital visibiltiy of toolboxes
     WidgetVisiblity default_visibility;
