@@ -115,6 +115,22 @@ void DataConfig::setConfigPath(QString p)
         config_dir.append('/');
 }
 
+static void s_readWidgetDefaults(IniProcessing &s, QString name, EditorSetup::DefaultToolboxPositions::State &target, const EditorSetup::DefaultToolboxPositions::State &defaults)
+{
+    const IniProcessing::StrEnumMap stateEnum =
+    {
+        {"floating", EditorSetup::DefaultToolboxPositions::State::F_FLOATING},
+        {"docked-left", EditorSetup::DefaultToolboxPositions::State::F_DOCKED_LEFT},
+        {"docked-right", EditorSetup::DefaultToolboxPositions::State::F_DOCKED_RIGHT},
+        {"docked-bottom", EditorSetup::DefaultToolboxPositions::State::F_DOCKED_BOTTOM},
+    };
+    s.readEnum(QString("%1-dock").arg(name).toUtf8(), target.dock, defaults.dock, stateEnum);
+    s.read(QString("%1-x").arg(name).toUtf8(), target.x, defaults.x);
+    s.read(QString("%1-y").arg(name).toUtf8(), target.y, defaults.y);
+    s.read(QString("%1-width").arg(name).toUtf8(), target.width, defaults.width);
+    s.read(QString("%1-height").arg(name).toUtf8(), target.height, defaults.height);
+}
+
 bool DataConfig::loadBasics()
 {
     errorsList[ERR_GLOBAL].clear();
@@ -150,6 +166,30 @@ bool DataConfig::loadBasics()
             ConfStatus::defaultTheme = "Breeze";
 #endif
         guiset.read("animations", Animations, 0);
+    }
+    guiset.endGroup();
+
+    guiset.beginGroup("widgets-default-state");
+    {
+        typedef EditorSetup::DefaultToolboxPositions::State S;
+        s_readWidgetDefaults(guiset, "level-item-browser", editor.default_widget_state.level_item_browser, S(S::F_DOCKED_LEFT));
+        s_readWidgetDefaults(guiset, "level-warps-box", editor.default_widget_state.level_warps_box, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "level-item-properties", editor.default_widget_state.level_item_properties, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "level-search-box", editor.default_widget_state.level_search_box, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "level-classic-events-box", editor.default_widget_state.level_classic_events_box, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "level-layers-box", editor.default_widget_state.level_layers_box, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "level-section-properties", editor.default_widget_state.level_section_properties, S(S::F_FLOATING));
+
+        s_readWidgetDefaults(guiset, "world-item-browser", editor.default_widget_state.world_item_browser, S(S::F_DOCKED_LEFT));
+        s_readWidgetDefaults(guiset, "world-music-boxes", editor.default_widget_state.world_music_boxes, S(S::F_DOCKED_LEFT));
+        s_readWidgetDefaults(guiset, "world-item-properties", editor.default_widget_state.world_item_properties, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "world-settings-box", editor.default_widget_state.world_settings_box, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "world-search-box", editor.default_widget_state.world_search_box, S(S::F_FLOATING));
+
+        s_readWidgetDefaults(guiset, "bookmarks-box", editor.default_widget_state.bookmarks_box, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "debugger-box", editor.default_widget_state.debugger_box, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "variables-box", editor.default_widget_state.variables_box, S(S::F_FLOATING));
+        s_readWidgetDefaults(guiset, "tilesets-item-box", editor.default_widget_state.tilesets_item_box, S(S::F_FLOATING));
     }
     guiset.endGroup();
 

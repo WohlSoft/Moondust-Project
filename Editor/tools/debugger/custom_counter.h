@@ -31,6 +31,7 @@ public:
     CustomCounter();
     CustomCounter(const CustomCounter &c);
     ~CustomCounter();
+    CustomCounter &operator=(const CustomCounter &) = default;
     ItemTypes::itemTypes type;
     QVector<long > items;
     QString name;

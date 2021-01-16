@@ -98,6 +98,53 @@ struct EditorSetup
         Format world = SMBX64;
     } default_file_formats;
 
+    struct DefaultToolboxPositions
+    {
+        struct State
+        {
+            enum Dock
+            {
+                F_FLOATING = 0,
+                F_DOCKED_LEFT = Qt::LeftDockWidgetArea,
+                F_DOCKED_RIGHT = Qt::RightDockWidgetArea,
+                F_DOCKED_BOTTOM = Qt::BottomDockWidgetArea
+            } dock;
+
+            State(const Dock &d = F_FLOATING)
+            {
+                dock = d;
+            }
+            State(const State &) = default;
+            State &operator=(const State &) = default;
+
+            int x = 0;
+            int y = 0;
+            int width = -1;
+            int height = -1;
+        };
+
+        State level_item_browser        = State(State::F_DOCKED_LEFT);
+        State level_warps_box           = State(State::F_FLOATING);
+        State level_item_properties     = State(State::F_FLOATING);
+        State level_search_box          = State(State::F_FLOATING);
+        State level_classic_events_box  = State(State::F_FLOATING);
+        State level_layers_box          = State(State::F_FLOATING);
+        State level_section_properties  = State(State::F_FLOATING);
+
+        State world_item_browser        = State(State::F_DOCKED_LEFT);
+        State world_music_boxes         = State(State::F_DOCKED_LEFT);
+        State world_item_properties     = State(State::F_FLOATING);
+        State world_settings_box        = State(State::F_FLOATING);
+        State world_search_box          = State(State::F_FLOATING);
+
+        State bookmarks_box             = State(State::F_FLOATING);
+        State debugger_box              = State(State::F_FLOATING);
+
+        State variables_box             = State(State::F_FLOATING);
+
+        State tilesets_item_box         = State(State::F_FLOATING);
+    } default_widget_state;
+
     struct FeaturesSupport
     {
         enum State

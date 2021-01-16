@@ -566,6 +566,103 @@ void MainWindow::setUiDefults()
     connect(this, &MainWindow::windowActiveLevel,   ui->actionSectionMore, &QAction::setEnabled);
 }
 
+
+static int s_mw_setDockWidgetState(MainWindow *mw, QDockWidget *w, const EditorSetup::DefaultToolboxPositions::State &p)
+{
+    QRect g = w->geometry();
+    int ret = 0;
+
+    // Set the initial floating state:
+
+    if(p.dock == EditorSetup::DefaultToolboxPositions::State::F_FLOATING)
+    {
+        w->setFloating(true);
+        ret = 0;
+    }
+    else
+    {
+        w->setFloating(false);
+        mw->addDockWidget(static_cast<Qt::DockWidgetArea>(p.dock), w);
+        ret = (int)p.dock;
+    }
+
+    // Set the initial geometry:
+
+    if(p.width > 0)
+        g.setWidth(p.width);
+
+    if(p.height > 0)
+        g.setHeight(p.height);
+
+    QRect mwg = mw->geometry();
+    const int GOffset = 10;
+
+    if(p.x != 0)
+    {
+        if(p.x < 0)
+            g.setX(mwg.right() - g.width() + p.x - GOffset);
+        else
+            g.setX(mwg.left() + p.x + GOffset);
+    }
+
+    if(p.y != 0)
+    {
+        if(p.y < 0)
+            g.setY(mwg.bottom() - g.height() + p.y - GOffset);
+        else
+            g.setY(mwg.top() + p.y + GOffset);
+    }
+
+    w->setGeometry(g);
+
+    if(ret != 0)
+    {
+        if(ret == Qt::LeftDockWidgetArea || ret == Qt::RightDockWidgetArea)
+            mw->resizeDocks({w}, {g.width()}, Qt::Horizontal);
+        else if(ret == Qt::LeftDockWidgetArea || ret == Qt::RightDockWidgetArea)
+            mw->resizeDocks({w}, {g.height()}, Qt::Vertical);
+    }
+
+    return ret;
+}
+
+typedef QVector<QDockWidget*> TabifyList;
+
+static void s_mw_addWidget(MainWindow *mw, QDockWidget *w,
+                           EditorSetup::DefaultToolboxPositions::State p,
+                           TabifyList &l, TabifyList &b, TabifyList &r)
+{
+    int ret = s_mw_setDockWidgetState(mw, w, p);
+    switch(ret)
+    {
+    default:
+    case 0:
+        break;
+    case Qt::LeftDockWidgetArea:
+        l.push_back(w);
+        break;
+    case Qt::BottomDockWidgetArea:
+        b.push_back(w);
+        break;
+    case Qt::RightDockWidgetArea:
+        r.push_back(w);
+        break;
+    }
+}
+
+static void s_tabifyWidgets(MainWindow *w, TabifyList &l)
+{
+    if(l.size() < 2)
+        return;
+
+    for(int i = 1; i < l.size(); ++i)
+    {
+        auto *i1 = l[i - 1];
+        auto *i2 = l[i];
+        w->tabifyDockWidget(i1, i2);
+    }
+}
+
 void MainWindow::setUiDefultsConfigPack()
 {
     // 21+ More sections
@@ -576,5 +673,29 @@ void MainWindow::setUiDefultsConfigPack()
     else
         QObject::connect(this, &MainWindow::setSMBX64Strict, ui->actionSectionMore, &QAction::setDisabled);
 
-    // TODO: Maoe more options of tune, for example, a default visibility and location of toolboxes, showing of default dialogs, etc.
+    TabifyList l, r, b;
+
+    // These entries ordered in sequence to be tabified when docked at the same area
+    s_mw_addWidget(this, dock_LvlSearchBox, configs.editor.default_widget_state.level_search_box, l, b, r);
+    s_mw_addWidget(this, dock_LvlEvents, configs.editor.default_widget_state.level_classic_events_box, l, b, r);
+    s_mw_addWidget(this, dock_LvlLayers, configs.editor.default_widget_state.level_layers_box, l, b, r);
+    s_mw_addWidget(this, dock_LvlWarpProps, configs.editor.default_widget_state.level_warps_box, l, b, r);
+    s_mw_addWidget(this, dock_WldMusicBoxes, configs.editor.default_widget_state.world_music_boxes, l, b, r);
+    s_mw_addWidget(this, dock_WldItemProps, configs.editor.default_widget_state.world_item_properties, l, b, r);
+    s_mw_addWidget(this, dock_WldSettingsBox, configs.editor.default_widget_state.world_settings_box, l, b, r);
+    s_mw_addWidget(this, dock_WldSearchBox, configs.editor.default_widget_state.world_search_box, l, b, r);
+    s_mw_addWidget(this, dock_BookmarksBox, configs.editor.default_widget_state.bookmarks_box, l, b, r);
+    s_mw_addWidget(this, dock_DebuggerBox, configs.editor.default_widget_state.debugger_box, l, b, r);
+#ifdef DEBUG_BUILD
+    s_mw_addWidget(this, dock_VariablesBox, configs.editor.default_widget_state.variables_box, l, b, r);
+#endif
+    s_mw_addWidget(this, dock_LvlSectionProps, configs.editor.default_widget_state.level_section_properties, l, b, r);
+    s_mw_addWidget(this, dock_LvlItemBox, configs.editor.default_widget_state.level_item_browser, l, b, r);
+    s_mw_addWidget(this, dock_TilesetBox, configs.editor.default_widget_state.tilesets_item_box, l, b, r);
+    s_mw_addWidget(this, dock_WldItemBox, configs.editor.default_widget_state.world_item_browser, l, b, r);
+    s_mw_addWidget(this, dock_LvlItemProps, configs.editor.default_widget_state.level_item_properties, l, b, r);
+
+    s_tabifyWidgets(this, l);
+    s_tabifyWidgets(this, b);
+    s_tabifyWidgets(this, r);
 }
