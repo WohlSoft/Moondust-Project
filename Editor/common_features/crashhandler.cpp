@@ -480,10 +480,16 @@ void CrashHandler::on_pgeRepoButton_clicked()
 
 void CrashHandler::on_pgeForumButton_clicked()
 {
-    QDesktopServices::openUrl(QUrl("http://wohlsoft.ru/forum/"));
+    QDesktopServices::openUrl(QUrl("https://wohlsoft.ru/forum/"));
+}
+
+void CrashHandler::on_pgeDiscordButton_clicked()
+{
+    QDesktopServices::openUrl(QUrl("http://wohlsoft.ru/chat/"));
 }
 
 void CrashHandler::on_exitButton_clicked()
 {
     this->close();
 }
+

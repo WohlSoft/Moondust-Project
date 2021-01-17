@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>790</width>
-    <height>613</height>
+    <width>806</width>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,10 +18,27 @@
     <normaloff>:/images/bug.png</normaloff>:/images/bug.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout" columnstretch="0,1000,0" columnminimumwidth="160,0,0">
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="notifyLabel">
+   <item row="7" column="1">
+    <widget class="QPushButton" name="pgeForumButton">
      <property name="text">
-      <string>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</string>
+      <string>Post a report at PGE Forum (wohlsoft.ru/forum/)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2" rowspan="7">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../_resources/editor.qrc">:/images/cat_beaten/cat_beaten_128.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="pgeRepoButton">
+     <property name="text">
+      <string>Make an issue at GitHub repository (WohlSoft/PGE-Project)</string>
      </property>
     </widget>
    </item>
@@ -41,6 +58,16 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="notifyLabel">
+     <property name="text">
+      <string>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QPlainTextEdit" name="crashData"/>
+   </item>
    <item row="5" column="0">
     <widget class="QPushButton" name="copyReport">
      <property name="text">
@@ -48,14 +75,7 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="2">
-    <widget class="QPushButton" name="exitButton">
-     <property name="text">
-      <string>Exit from application</string>
-     </property>
-    </widget>
-   </item>
-   <item row="10" column="0" colspan="2">
+   <item row="12" column="0" colspan="2">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -68,17 +88,23 @@
      </property>
     </spacer>
    </item>
-   <item row="6" column="1">
-    <widget class="QPushButton" name="pgeForumButton">
+   <item row="11" column="0" colspan="2">
+    <widget class="QLabel" name="reportTips">
      <property name="text">
-      <string>Post a report at PGE Forum (wohlsoft.ru/forum/)</string>
+      <string>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="pgeRepoButton">
+   <item row="12" column="2">
+    <widget class="QPushButton" name="exitButton">
      <property name="text">
-      <string>Make an issue at GitHub repository (WohlSoft/PGE-Project)</string>
+      <string>Exit from application</string>
      </property>
     </widget>
    </item>
@@ -95,34 +121,23 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QPlainTextEdit" name="crashData"/>
-   </item>
-   <item row="9" column="0" colspan="2">
-    <widget class="QLabel" name="reportTips">
+   <item row="6" column="1">
+    <widget class="QPushButton" name="pgeDiscordButton">
      <property name="text">
-      <string>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash. 
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2" rowspan="5">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap resource="../_resources/editor.qrc">:/images/cat_beaten/cat_beaten_128.png</pixmap>
+      <string>Join official Moondust Discord server and submit the report</string>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>crashData</tabstop>
+  <tabstop>copyReport</tabstop>
+  <tabstop>pgeRepoButton</tabstop>
+  <tabstop>pgeDiscordButton</tabstop>
+  <tabstop>pgeForumButton</tabstop>
+  <tabstop>exitButton</tabstop>
+ </tabstops>
  <resources>
   <include location="../_resources/editor.qrc"/>
  </resources>

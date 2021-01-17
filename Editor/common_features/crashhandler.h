@@ -52,9 +52,13 @@ public:
 
 private slots:
     void on_copyReport_clicked();
+
     void on_pgeForumButton_clicked();
     void on_pgeRepoButton_clicked();
+    void on_pgeDiscordButton_clicked();
+
     void on_exitButton_clicked();
+
 
 private:
     Ui::CrashHandler *ui = nullptr;
