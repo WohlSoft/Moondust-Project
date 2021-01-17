@@ -124,7 +124,7 @@
    <item row="6" column="1">
     <widget class="QPushButton" name="pgeDiscordButton">
      <property name="text">
-      <string>Join official Moondust Discord server and submit the report</string>
+      <string>Join the official Moondust Discord server to submit the report</string>
      </property>
     </widget>
    </item>
