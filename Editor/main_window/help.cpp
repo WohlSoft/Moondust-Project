@@ -36,7 +36,7 @@
 
 void MainWindow::on_actionContents_triggered()
 {
-    QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/help/manual_editor.html" ) );
+    QDesktopServices::openUrl(QUrl("https://wohlsoft.ru/editorhelp/manual_editor.html"));
 }
 
 void MainWindow::showWelcomeDialog()
@@ -119,7 +119,7 @@ void MainWindow::on_actionModern_GUI_triggered()
 
 void MainWindow::on_actionChange_log_triggered()
 {
-    QDesktopServices::openUrl( QUrl::fromLocalFile( ApplicationPath + "/changelog.editor.txt" ) );
+    QDesktopServices::openUrl(QUrl::fromLocalFile(ApplicationPath + "/changelog.editor.txt"));
 }
 
 
