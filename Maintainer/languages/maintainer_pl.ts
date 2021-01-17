@@ -51,7 +51,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
         <source>FFMPEG binary path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ścieżka binarna FFMPEG:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
@@ -212,7 +212,7 @@ Nadpisane światy: %3
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
         <source>Open FFMPEG binary path</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz ścieżkę binarną FFMPEG</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
