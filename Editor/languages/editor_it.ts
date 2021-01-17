@@ -877,6 +877,10 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
         <source>Copied!</source>
         <translation>Copiato!</translation>
     </message>
+    <message>
+        <source>Join official Moondust Discord server and submit the report</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>

@@ -1242,27 +1242,32 @@ Bestandspad:%3</translation>
         <translation>Crash</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="40"/>
+        <location filename="../common_features/crashhandler.ui" line="57"/>
         <source>You might want to report this data to developers:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="47"/>
+        <location filename="../common_features/crashhandler.ui" line="74"/>
         <source>Copy report into clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="74"/>
+        <location filename="../common_features/crashhandler.ui" line="127"/>
+        <source>Join official Moondust Discord server and submit the report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="81"/>
+        <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="104"/>
+        <location filename="../common_features/crashhandler.ui" line="94"/>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
@@ -1274,7 +1279,7 @@ Bestandspad:%3</translation>
         <translation type="vanished">U zou best deze data naar de ontwikkelaars rapporteren of hier posten:</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="24"/>
+        <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation>Oh nee, het PGE bewerkingsprogramma is gecrasht :(&lt;br&gt;Gedetailleerde crashrapport:</translation>
     </message>
@@ -1283,7 +1288,7 @@ Bestandspad:%3</translation>
         <translation type="vanished">PGE Forum (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="54"/>
+        <location filename="../common_features/crashhandler.ui" line="107"/>
         <source>Exit from application</source>
         <translation>Applicatie sluiten</translation>
     </message>
@@ -1589,7 +1594,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="290"/>
+        <location filename="../data_configs/data_configs.cpp" line="337"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -9845,7 +9850,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <translation>Tegelset categoriën aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="554"/>
+        <location filename="../data_configs/data_configs.cpp" line="601"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>

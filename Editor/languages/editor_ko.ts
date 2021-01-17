@@ -977,37 +977,42 @@ File path: %3</source>
         <translation>크래시</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="24"/>
+        <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation>어-오, PGE 편집기가 충돌했습니다 :( &lt;br&gt; 자세한 충돌 정보 :</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="40"/>
+        <location filename="../common_features/crashhandler.ui" line="57"/>
         <source>You might want to report this data to developers:</source>
         <translation>이 데이터를 개발자에게보고 할 수 있습니다:</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="47"/>
+        <location filename="../common_features/crashhandler.ui" line="74"/>
         <source>Copy report into clipboard</source>
         <translation>보고서를 클립 보드로 복사</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="54"/>
+        <location filename="../common_features/crashhandler.ui" line="107"/>
         <source>Exit from application</source>
         <translation>응용 프로그램 종료</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="74"/>
+        <location filename="../common_features/crashhandler.ui" line="127"/>
+        <source>Join official Moondust Discord server and submit the report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
         <translation>PGE 포럼 (wohlsoft.ru/forum/)에 보고서 게시</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="81"/>
+        <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
         <translation>GitHub 저장소 (WohlSoft / PGE-Project)에서 문제 제기</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="104"/>
+        <location filename="../common_features/crashhandler.ui" line="94"/>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
@@ -1295,7 +1300,7 @@ Please save them before doing anything else.</source>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="290"/>
+        <location filename="../data_configs/data_configs.cpp" line="337"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -8961,7 +8966,7 @@ Reason: %1
         <translation>타일로드 중 ...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="554"/>
+        <location filename="../data_configs/data_configs.cpp" line="601"/>
         <source>Finishing loading...</source>
         <translation>로드 완료 중 ...</translation>
     </message>

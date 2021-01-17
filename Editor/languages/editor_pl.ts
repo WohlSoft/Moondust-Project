@@ -900,6 +900,10 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
         <source>Copied!</source>
         <translation>Skopiowano!</translation>
     </message>
+    <message>
+        <source>Join official Moondust Discord server and submit the report</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>

@@ -1077,6 +1077,10 @@ Please save them before doing anything else.</translation>
         <source>Copied!</source>
         <translation>Copied!</translation>
     </message>
+    <message>
+        <source>Join official Moondust Discord server and submit the report</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>

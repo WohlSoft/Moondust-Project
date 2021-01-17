@@ -905,6 +905,10 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
         <source>Copied!</source>
         <translation>Copié !</translation>
     </message>
+    <message>
+        <source>Join official Moondust Discord server and submit the report</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>
