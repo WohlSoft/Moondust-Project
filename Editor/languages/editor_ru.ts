@@ -1029,7 +1029,7 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation>Зайти на официальный Discord-сервер, чтобы отправить отчёт</translation>
     </message>
 </context>
 <context>
