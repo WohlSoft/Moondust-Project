@@ -902,7 +902,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation>Dołącz do oficjalnego serweru Moondust na Discordzie, aby wysłać zgłoszenie</translation>
     </message>
 </context>
 <context>
@@ -7178,7 +7178,7 @@ Oczekiwany Indetyfikator pakietu konfiguracji: %4</translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished">Edytor, wersja %1</translation>
+        <translation>Edytor, wersja %1</translation>
     </message>
 </context>
 <context>
