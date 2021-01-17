@@ -974,7 +974,7 @@ File path: %3</source>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="127"/>
-        <source>Join official Moondust Discord server and submit the report</source>
+        <source>Join the official Moondust Discord server to submit the report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

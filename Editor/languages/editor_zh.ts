@@ -861,7 +861,7 @@ Please save them before doing anything else.</source>
         <translation>已复制！</translation>
     </message>
     <message>
-        <source>Join official Moondust Discord server and submit the report</source>
+        <source>Join the official Moondust Discord server to submit the report</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
