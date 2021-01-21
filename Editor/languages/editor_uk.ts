@@ -868,7 +868,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation>Приєднуйся до офіційного Discord-серверу, щоб відправити звіт</translation>
     </message>
 </context>
 <context>
@@ -4426,7 +4426,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation>Будь ласка, збережіть файл спочатку, якщо ви хочете вибрати користувацьку музику.</translation>
+        <translation>Будь ласка, збережіть файл спочатку, якщо ви бажаєте вибрати користувацьку музику.</translation>
     </message>
     <message>
         <source>Name that will appear in the editor</source>
@@ -6296,7 +6296,7 @@ ID конфіг-пакету карти світу: %3
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished">Редагувач, версія %1</translation>
+        <translation>Редагувач, версія %1</translation>
     </message>
 </context>
 <context>
