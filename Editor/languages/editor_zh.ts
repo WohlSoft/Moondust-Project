@@ -862,7 +862,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation>加入 Moondust Discord 服务器以提交报告（仅限海外用户）</translation>
     </message>
 </context>
 <context>
