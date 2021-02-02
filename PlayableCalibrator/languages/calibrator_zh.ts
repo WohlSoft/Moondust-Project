@@ -172,27 +172,27 @@
     <message>
         <location filename="../calibration_main.ui" line="132"/>
         <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
-        <translation type="unfinished"></translation>
+        <translation>若启用此选项，则搬运物品时图像位置为左偏差位置，反之为右偏差位置。</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="279"/>
         <source>Useful for tests or sprites creation from the scratch</source>
-        <translation type="unfinished"></translation>
+        <translation>适用于测试或从头创作素材</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="278"/>
         <source>Export a map of hitboxes as image...</source>
-        <translation type="unfinished"></translation>
+        <translation>导出分配表至图片……</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="303"/>
         <source>Select frame on a sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>选择帧</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="346"/>
         <source>Grab offset X</source>
-        <translation>搬运物品横向偏移</translation>
+        <translation>搬运物品横向偏差</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="353"/>
@@ -202,7 +202,7 @@
     <message>
         <location filename="../calibration_main.ui" line="383"/>
         <source>Normal height of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>玩家的判定高度</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="434"/>
@@ -222,7 +222,7 @@
     <message>
         <location filename="../calibration_main.ui" line="555"/>
         <source>Calibrating frames relative to exists physics (useful for old SMBX where you can&apos;t edit physics)</source>
-        <translation type="unfinished"></translation>
+        <translation>物理状态关联的帧数校正（适用于无法编辑物理状态的旧 SMBX）</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="565"/>
@@ -232,7 +232,7 @@
     <message>
         <location filename="../calibration_main.ui" line="589"/>
         <source>Hitbox setup:</source>
-        <translation type="unfinished"></translation>
+        <translation>判定设置：</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="602"/>
@@ -242,7 +242,7 @@
     <message>
         <location filename="../calibration_main.ui" line="158"/>
         <source>Enabling this frame. If this frame disabled, it will not be saved into your config file.</source>
-        <translation type="unfinished"></translation>
+        <translation>启用此帧，禁用后，在配置文件将中不保存。</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="161"/>
@@ -262,37 +262,37 @@
     <message>
         <location filename="../calibration_main.ui" line="276"/>
         <source>Open sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>打开图像</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="558"/>
         <source>Image frames calibration</source>
-        <translation type="unfinished"></translation>
+        <translation>图像帧校正</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="300"/>
         <source>Interactive selection of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>帧数交互选择</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="363"/>
         <source>Enable displaying of grabbed item corner</source>
-        <translation type="unfinished"></translation>
+        <translation>使用一个角显示要搬运的物品</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="366"/>
         <source>Show carried item</source>
-        <translation type="unfinished"></translation>
+        <translation>显示搬运的物品</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="185"/>
         <source>Apply duck height to this frame</source>
-        <translation type="unfinished"></translation>
+        <translation>在此帧中应用蹲下时的高度</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="188"/>
         <source>Is duck frame</source>
-        <translation type="unfinished"></translation>
+        <translation>蹲下时高度</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="142"/>
@@ -302,12 +302,12 @@
     <message>
         <location filename="../calibration_main.ui" line="36"/>
         <source>Vertical offset of hitbox relative to top side of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>判定与图像的纵向偏差</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="415"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>判定与图像的横向偏差</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="263"/>
@@ -322,42 +322,42 @@
     <message>
         <location filename="../calibration_main.ui" line="175"/>
         <source>Height (duck)</source>
-        <translation type="unfinished"></translation>
+        <translation>高度（蹲下时）</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="52"/>
         <source>Offset relative to middle of player&apos;s height</source>
-        <translation type="unfinished"></translation>
+        <translation>从中间部分确定玩家高度偏差</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="491"/>
         <source>Copy this frame into internal clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>复制到剪贴板</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="475"/>
         <source>Apply to all</source>
-        <translation type="unfinished"></translation>
+        <translation>应用到所有</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="74"/>
         <source>Duck height of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>蹲下时玩家的判定高度</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="510"/>
         <source>Paste from internal clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>从剪贴板粘贴</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="513"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>粘贴</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="526"/>
         <source>Edit animations set</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑动画组</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="529"/>
@@ -367,146 +367,146 @@
     <message>
         <location filename="../calibration_main.ui" line="90"/>
         <source>Grab type</source>
-        <translation type="unfinished"></translation>
+        <translation>拿起类型</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="99"/>
         <source>Side</source>
-        <translation type="unfinished"></translation>
+        <translation>两侧</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="106"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>向上</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="100"/>
         <source>Save hitbox map as image</source>
-        <translation type="unfinished"></translation>
+        <translation>将判定地图保存为图片</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="332"/>
         <location filename="../main/files_io.cpp" line="118"/>
         <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
-        <translation type="unfinished"></translation>
+        <translation>已保存</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="332"/>
         <source>Configuration saved in file</source>
-        <translation type="unfinished"></translation>
+        <translation>设置已保存到文件</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="118"/>
         <source>Hitbox map has been saved!</source>
-        <translation type="unfinished"></translation>
+        <translation>判定地图已保存！</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="271"/>
         <source>Save in the same folder with image file</source>
-        <translation type="unfinished"></translation>
+        <translation>在同一目录下与图片文件保存</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="273"/>
         <source>Save into custom place...</source>
-        <translation type="unfinished"></translation>
+        <translation>另存为……</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="384"/>
         <source>Open sprite file</source>
-        <translation type="unfinished"></translation>
+        <translation>打开图像文件</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="388"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX 玩家图像</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="386"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>GIF 图像</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="105"/>
         <source>Open SMBX-38A level file</source>
-        <translation type="unfinished"></translation>
+        <translation>打开 SMBX-38A 关卡文件</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="107"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX-38A 关卡文件</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="108"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>所有文件</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="118"/>
         <source>File opening error</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件失败</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="119"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
-        <translation type="unfinished"></translation>
+        <translation>打开文件失败：该文件未包含校正设置，或者该文件不是有效的 SMBX-38A 关卡文件。</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="135"/>
         <source>Export calibration settings into SMBX-38A level file</source>
-        <translation type="unfinished"></translation>
+        <translation>将设置导出到 SMBX-38A 关卡文件</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="146"/>
         <source>File saving error</source>
-        <translation type="unfinished"></translation>
+        <translation>保存文件失败</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="147"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
-        <translation type="unfinished"></translation>
+        <translation>保存文件失败：不是有效的 SMBX-38A 关卡文件。</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="154"/>
         <source>The level file has been patched!</source>
-        <translation type="unfinished"></translation>
+        <translation>补丁已打入关卡文件！</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="282"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
+        <translation>从 SMBX-38A 关卡文件中导入数据……</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="285"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
+        <translation>从 SMBX-38A 关卡文件中导出数据……</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="385"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>支持的类型</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="387"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>PNG 图像</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="389"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>所有文件</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="413"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="414"/>
@@ -516,12 +516,12 @@
     <message>
         <location filename="../calibration_main.cpp" line="435"/>
         <source>Calibration is not saved!</source>
-        <translation type="unfinished"></translation>
+        <translation>更改未保存！</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="436"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
-        <translation type="unfinished"></translation>
+        <translation>设置已更改，但未保存，您要保存更改吗？</translation>
     </message>
 </context>
 <context>
@@ -529,7 +529,7 @@
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="20"/>
         <source>Image Calibrating</source>
-        <translation type="unfinished"></translation>
+        <translation>图像校正</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="30"/>
@@ -549,12 +549,12 @@
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="66"/>
         <source>Image calibration:</source>
-        <translation type="unfinished"></translation>
+        <translation>图像校正：</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="123"/>
         <source>Current frame (10x10):</source>
-        <translation type="unfinished"></translation>
+        <translation>当前帧（10 x 10）：</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="150"/>
@@ -618,13 +618,14 @@
         <location filename="../frame_matrix/matrix.ui" line="20"/>
         <source>Select a frame on the sprite</source>
         <comment>A title of the frame selection on the sprite dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>在图像中选择帧</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.ui" line="1379"/>
         <source>Empty and unused frames must be unchecked.
 To choose a frame for edit, push to the button over a necessary frame.</source>
-        <translation type="unfinished"></translation>
+        <translation>空白帧和未使用帧必须取消勾选。
+要选择编辑的帧，请在需要的帧按下按钮。</translation>
     </message>
 </context>
 <context>
@@ -633,7 +634,7 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation>从左到右</translation>
     </message>
 </context>
 <context>
@@ -641,12 +642,12 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
     <message>
         <location filename="../about/about.ui" line="17"/>
         <source>About Playable Calibration tool</source>
-        <translation type="unfinished"></translation>
+        <translation>关于玩家校正工具</translation>
     </message>
     <message>
         <location filename="../about/about.ui" line="63"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
 </context>
 </TS>
