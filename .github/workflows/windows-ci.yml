@@ -23,11 +23,12 @@ jobs:
             PLATFORM: x64,
             WINXX_ARCH: win64,
             extra_path: "/c/MinGW-w64/mingw64/bin:/c/Qt/5.14.2-x64/bin",
-            extra_options: "-DCMAKE_PREFIX_PATH=C:/MinGW-w64/mingw64 -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x64.cmake",
+            extra_options: "-DCMAKE_PREFIX_PATH=C:/Qt/5.14.2-x64 -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x64.cmake",
             build_type: "Release",
             upload_directory: "www/win32/moondust-win64/",
             mingw_download: "https://wohlsoft.ru/docs/Software/MinGW/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z", mingw_install_dir: "C:/MinGW-w64/",
             qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.14.2-x64-mingw-w64-8.1.0-shared-release.7z", qt_install_dir: "C:/Qt/",
+            qt_dir: "C:/Qt/5.14.2-x64/bin",
             ninja_download: "https://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip", ninja_install_dir: "C:/MinGW-w64/mingw64/bin",
             lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw64/"
           }
@@ -37,27 +38,21 @@ jobs:
             PLATFORM: Win32,
             WINXX_ARCH: win32,
             extra_path: "/c/MinGW-w64/mingw32/bin:/c/Qt/5.6.3-i686/bin",
-            extra_options: "-DCMAKE_PREFIX_PATH=C:/MinGW-w64/mingw32 -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x32.cmake",
+            extra_options: "-DCMAKE_PREFIX_PATH=C:/Qt/5.6.3-i686 -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x32.cmake",
             build_type: "Release",
             upload_directory: "www/win32/moondust-win32/",
             mingw_download: "https://wohlsoft.ru/docs/Software/MinGW/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z", mingw_install_dir: "C:/MinGW-w64/",
             qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z", qt_install_dir: "C:/Qt/",
+            qt_dir: "C:/Qt/5.6.3-i686/bin",
             ninja_download: "https://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip", ninja_install_dir: "C:/MinGW-w64/mingw32/bin",
             lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw32/"
           }
 
     steps:
-    - uses: actions/checkout@v1
-
-    - name: Install Dependencies
-      shell: bash
-      run: |
-        if [[ ! -z "${{ matrix.config.deps_cmdline }}" ]]; then
-          eval ${{ matrix.config.deps_cmdline }}
-        fi
-        # Pull submodules
-        git submodule init
-        git submodule update
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 3
+        submodules: recursive
 
     - name: Download MinGW
       if: matrix.config.mingw_download
@@ -116,6 +111,8 @@ jobs:
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
           export PATH=${{ matrix.config.extra_path }}:${PATH}
+          export QT_DIR=${{ matrix.config.qt_dir }}
+          export QtDir=${{ matrix.config.qt_dir }}
           echo "PATH environment: ${PATH}"
         fi
         echo "" > _paths.sh
@@ -126,6 +123,8 @@ jobs:
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
           export PATH=${{ matrix.config.extra_path }}:${PATH}
+          export QT_DIR=${{ matrix.config.qt_dir }}
+          export QtDir=${{ matrix.config.qt_dir }}
         fi
         export MAKEFLAGS=--keep-going
         cmake --build build --target all --config ${{ matrix.config.build_type }} --parallel 3
@@ -135,6 +134,8 @@ jobs:
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
           export PATH=${{ matrix.config.extra_path }}:${PATH}
+          export QT_DIR=${{ matrix.config.qt_dir }}
+          export QtDir=${{ matrix.config.qt_dir }}
         fi
         export MAKEFLAGS=--keep-going
         cmake --build build --target install --config ${{ matrix.config.build_type }}
@@ -144,6 +145,8 @@ jobs:
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
           export PATH=${{ matrix.config.extra_path }}:${PATH}
+          export QT_DIR=${{ matrix.config.qt_dir }}
+          export QtDir=${{ matrix.config.qt_dir }}
         fi
         export MAKEFLAGS=--keep-going
         cmake --build build --target windeploy --config ${{ matrix.config.build_type }}
