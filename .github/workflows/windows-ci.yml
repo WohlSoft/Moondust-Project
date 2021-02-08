@@ -22,7 +22,7 @@ jobs:
             os: windows-latest,
             PLATFORM: x64,
             WINXX_ARCH: win64,
-            extra_path: "/c/MinGW-w64/mingw64/bin:/c/Qt/5.14.2-x64/bin",
+            extra_path: "/c/Qt/5.14.2-x64/bin:/c/MinGW-w64/mingw64/bin",
             extra_options: "-DCMAKE_PREFIX_PATH=C:/Qt/5.14.2-x64 -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x64.cmake",
             build_type: "Release",
             upload_directory: "www/win32/moondust-win64/",
@@ -37,7 +37,7 @@ jobs:
             os: windows-latest,
             PLATFORM: Win32,
             WINXX_ARCH: win32,
-            extra_path: "/c/MinGW-w64/mingw32/bin:/c/Qt/5.6.3-i686/bin",
+            extra_path: "/c/Qt/5.6.3-i686/bin:/c/MinGW-w64/mingw32/bin",
             extra_options: "-DCMAKE_PREFIX_PATH=C:/Qt/5.6.3-i686 -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x32.cmake",
             build_type: "Release",
             upload_directory: "www/win32/moondust-win32/",
@@ -111,11 +111,14 @@ jobs:
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
           export PATH=${{ matrix.config.extra_path }}:${PATH}
-          export QT_DIR=${{ matrix.config.qt_dir }}
-          export QtDir=${{ matrix.config.qt_dir }}
+          export QT_DIR="${{ matrix.config.qt_dir }}"
+          export QtDir"=${{ matrix.config.qt_dir }}"
           echo "PATH environment: ${PATH}"
         fi
-        echo "" > _paths.sh
+        qmake --version
+        gcc --version
+        git --version
+        cmake --version
         cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_INSTALL_PREFIX="`pwd`/bin-cmake-release" -DPGE_INSTALL_DIRECTORY="PGE_Project" ${{ matrix.config.extra_options }} .
 
     - name: Build
@@ -123,8 +126,8 @@ jobs:
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
           export PATH=${{ matrix.config.extra_path }}:${PATH}
-          export QT_DIR=${{ matrix.config.qt_dir }}
-          export QtDir=${{ matrix.config.qt_dir }}
+          export QT_DIR="${{ matrix.config.qt_dir }}"
+          export QtDir"=${{ matrix.config.qt_dir }}"
         fi
         export MAKEFLAGS=--keep-going
         cmake --build build --target all --config ${{ matrix.config.build_type }} --parallel 3
@@ -134,8 +137,8 @@ jobs:
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
           export PATH=${{ matrix.config.extra_path }}:${PATH}
-          export QT_DIR=${{ matrix.config.qt_dir }}
-          export QtDir=${{ matrix.config.qt_dir }}
+          export QT_DIR="${{ matrix.config.qt_dir }}"
+          export QtDir"=${{ matrix.config.qt_dir }}"
         fi
         export MAKEFLAGS=--keep-going
         cmake --build build --target install --config ${{ matrix.config.build_type }}
@@ -145,8 +148,8 @@ jobs:
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
           export PATH=${{ matrix.config.extra_path }}:${PATH}
-          export QT_DIR=${{ matrix.config.qt_dir }}
-          export QtDir=${{ matrix.config.qt_dir }}
+          export QT_DIR="${{ matrix.config.qt_dir }}"
+          export QtDir"=${{ matrix.config.qt_dir }}"
         fi
         export MAKEFLAGS=--keep-going
         cmake --build build --target windeploy --config ${{ matrix.config.build_type }}
