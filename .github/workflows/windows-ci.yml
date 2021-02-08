@@ -1,0 +1,175 @@
+name: Windows CI
+
+on:
+  push:
+    branches:
+      - master
+      - stable
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }} | ${{ matrix.config.build_type }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "64-bit",
+            os: windows-latest,
+            PLATFORM: x64,
+            WINXX_ARCH: win64,
+            extra_path: "/c/MinGW-w64/mingw64/bin:/c/Qt/5.14.2-x64/bin",
+            extra_options: "-DCMAKE_PREFIX_PATH=C:/MinGW-w64/mingw64 -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x64.cmake",
+            build_type: "Release",
+            upload_directory: "www/win32/moondust-win64/",
+            mingw_download: "https://wohlsoft.ru/docs/Software/MinGW/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z", mingw_install_dir: "C:/MinGW-w64/",
+            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.14.2-x64-mingw-w64-8.1.0-shared-release.7z", qt_install_dir: "C:/Qt/",
+            ninja_download: "https://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip", ninja_install_dir: "C:/MinGW-w64/mingw64/bin",
+            lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw64/"
+          }
+        - {
+            name: "32-bit",
+            os: windows-latest,
+            PLATFORM: Win32,
+            WINXX_ARCH: win32,
+            extra_path: "/c/MinGW-w64/mingw32/bin:/c/Qt/5.6.3-i686/bin",
+            extra_options: "-DCMAKE_PREFIX_PATH=C:/MinGW-w64/mingw32 -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x32.cmake",
+            build_type: "Release",
+            upload_directory: "www/win32/moondust-win32/",
+            mingw_download: "https://wohlsoft.ru/docs/Software/MinGW/i686-8.1.0-release-posix-dwarf-rt_v6-rev0.7z", mingw_install_dir: "C:/MinGW-w64/",
+            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/Qt-5.6.3-i686-mingw-w64-8.1.0-shared-release.7z", qt_install_dir: "C:/Qt/",
+            ninja_download: "https://wohlsoft.ru/docs/Software/Ninja-Build/ninja-win.zip", ninja_install_dir: "C:/MinGW-w64/mingw32/bin",
+            lftp_download: "https://wohlsoft.ru/docs/Software/lftp-4.4.15.win64-openssl-1.0.1g.7z", lftp_install_dir: "C:/MinGW-w64/mingw32/"
+          }
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install Dependencies
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.deps_cmdline }}" ]]; then
+          eval ${{ matrix.config.deps_cmdline }}
+        fi
+        # Pull submodules
+        git submodule init
+        git submodule update
+
+    - name: Download MinGW
+      if: matrix.config.mingw_download
+      uses: carlosperate/download-file-action@v1.0.3
+      with:
+        file-url: "${{ matrix.config.mingw_download }}"
+        file-name: mingw.7z
+
+    - name: Extract MinGW
+      if: matrix.config.mingw_install_dir
+      shell: bash
+      run: |
+        7z x mingw.7z -o"${{ matrix.config.mingw_install_dir }}"
+
+    - name: Download Qt
+      if: matrix.config.qt_download
+      uses: carlosperate/download-file-action@v1.0.3
+      with:
+        file-url: "${{ matrix.config.qt_download }}"
+        file-name: qt.7z
+
+    - name: Extract Qt
+      if: matrix.config.qt_install_dir
+      shell: bash
+      run: |
+        7z x qt.7z -o"${{ matrix.config.qt_install_dir }}"
+
+    - name: Download Ninja
+      if: matrix.config.ninja_download
+      uses: carlosperate/download-file-action@v1.0.3
+      with:
+        file-url: "${{ matrix.config.ninja_download }}"
+        file-name: ninja.zip
+
+    - name: Extract Ninja
+      if: matrix.config.ninja_install_dir
+      shell: bash
+      run: |
+        7z x ninja.zip -o"${{ matrix.config.ninja_install_dir }}"
+
+    - name: Download LFTP
+      if: matrix.config.lftp_download
+      uses: carlosperate/download-file-action@v1.0.3
+      with:
+        file-url: "${{ matrix.config.lftp_download }}"
+        file-name: lftp.7z
+
+    - name: Extract LFTP
+      if: matrix.config.lftp_install_dir
+      shell: bash
+      run: |
+        7z x lftp.7z bin etc -o"${{ matrix.config.lftp_install_dir }}"
+
+    - name: Configure
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+          echo "PATH environment: ${PATH}"
+        fi
+        echo "" > _paths.sh
+        cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.config.build_type }} -DCMAKE_INSTALL_PREFIX="`pwd`/bin-cmake-release" -DPGE_INSTALL_DIRECTORY="PGE_Project" ${{ matrix.config.extra_options }} .
+
+    - name: Build
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+        export MAKEFLAGS=--keep-going
+        cmake --build build --target all --config ${{ matrix.config.build_type }} --parallel 3
+
+    - name: Install
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+        export MAKEFLAGS=--keep-going
+        cmake --build build --target install --config ${{ matrix.config.build_type }}
+
+    - name: Deploy
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+        export MAKEFLAGS=--keep-going
+        cmake --build build --target windeploy --config ${{ matrix.config.build_type }}
+        cmake --build build --target enable_portable
+        cmake --build build --target put_online_help
+        cmake --build build --target create_zip
+        cmake --build build --target create_zip_tools
+        cmake --build build --target create_zip_install
+        mkdir _packed
+        mv bin-cmake-release/_packed/*.zip _packed
+
+    - name: Deploy to builds.wohlsoft.ru
+      if: always()
+#      if: runner.os == 'macOS' || runner.os == 'Linux'
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+        UPLOAD_LIST="set ssl:verify-certificate no;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} ./_packed/*.zip;"
+        lftp -e "${UPLOAD_LIST} exit" -u ${{ secrets.builds_login }},${{ secrets.builds_password }} ${{ secrets.builds_host }}
+
+    - name: List Build Directory
+      if: always()
+      shell: bash
+      run: |
+        git status
+        ls -lR build
