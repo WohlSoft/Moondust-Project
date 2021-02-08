@@ -1,5 +1,6 @@
 0.3.4-dev
 - Default audio output format has been changed into float32 to improve the quality and prevent any possible clipping distortions
+- Find episodes and single-levels in both user-side and application-side worlds directory
 
 0.3.3-dev
 - Fixed crash on missing player animation sequence
