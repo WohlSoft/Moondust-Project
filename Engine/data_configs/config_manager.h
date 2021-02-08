@@ -53,7 +53,8 @@
 
 struct DataFolders
 {
-    std::string worlds;
+    std::string worldsProgram;
+    std::string worldsUser;
 
     std::string music;
     std::string sounds;

@@ -198,13 +198,20 @@ bool ConfigManager::loadBasics()
             Utils::openUrl(url);
         }
 
-        if(appDir)
-            dirs.worlds = customAppPath + "/" + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
-        else
-            dirs.worlds = AppPathManager::userAppDirSTD() + "/" + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
-
-        if(!DirMan::exists(dirs.worlds))
-            DirMan::mkAbsPath(dirs.worlds);
+        dirs.worldsProgram = customAppPath + "/" + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
+#if !defined(__APPLE__)
+        if(AppPathManager::isPortable())
+        {
+            if(!DirMan::exists(dirs.worldsProgram)) // Portable program directory is writeable
+                DirMan::mkAbsPath(dirs.worldsProgram);
+        }
+        else // Non-portable directory is read-only
+#endif
+        {
+            dirs.worldsUser = AppPathManager::userAppDirSTD() + "/" + mainset.value("worlds", config_idSTD + "_worlds").toString() + "/";
+            if(!DirMan::exists(dirs.worldsUser))
+                DirMan::mkAbsPath(dirs.worldsUser);
+        }
 
         dirs.music = data_dirSTD + mainset.value("music", "data/music").toString() + "/";
         dirs.sounds = data_dirSTD + mainset.value("sound", "data/sound").toString() + "/";

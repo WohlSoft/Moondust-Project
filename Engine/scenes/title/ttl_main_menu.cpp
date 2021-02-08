@@ -544,7 +544,12 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
         //% "Please wait..."
         m_menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         m_filefind_finished = false;
-        m_filefind_folder = ConfigManager::dirs.worlds;
+        m_filefind_folders.clear();
+#if !defined(__APPLE__)
+        m_filefind_folders.push_back(ConfigManager::dirs.worldsProgram);
+#endif
+        if(!ConfigManager::dirs.worldsUser.empty())
+            m_filefind_folders.push_back(ConfigManager::dirs.worldsUser);
 #ifndef PGE_NO_THREADING
         m_filefind_thread = SDL_CreateThread(findEpisodes, "EpisodeFinderThread", nullptr);
 #else
@@ -574,7 +579,12 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
         //% "Please wait..."
         m_menu.addMenuItem("waitinginprocess", qtTrId("MSG_PLEASEWAIT"));
         m_filefind_finished = false;
-        m_filefind_folder = ConfigManager::dirs.worlds;
+        m_filefind_folders.clear();
+#if !defined(__APPLE__)
+        m_filefind_folders.push_back(ConfigManager::dirs.worldsProgram);
+#endif
+        if(!ConfigManager::dirs.worldsUser.empty())
+            m_filefind_folders.push_back(ConfigManager::dirs.worldsUser);
 #ifndef PGE_NO_THREADING
         m_filefind_thread = SDL_CreateThread(findLevels, "LevelFinderThread", nullptr);
 #else
@@ -614,46 +624,51 @@ void TitleScene::setMenu(TitleScene::CurrentMenu targetMenu)
 int TitleScene::findEpisodes(void *)
 {
     m_filefind_found_files.clear();
-    DirMan worldDir(m_filefind_folder);
-    std::vector<std::string> files;
-    std::vector<std::string> folders;
-    worldDir.getListOfFolders(folders);
-
-    for(std::string &folder : folders)
-    {
-        std::string path = m_filefind_folder + folder;
-        DirMan episodeDir(path);
-        std::vector<std::string> worlds;
-        episodeDir.getListOfFiles(worlds, {".wld", ".wldx"});
-        for(std::string &world : worlds)
-            files.push_back(m_filefind_folder + folder + "/" + world);
-    }
-
     bool has_files_added = false;
-    if(!files.empty())
+
+    for(const auto &dir : m_filefind_folders)
     {
-        WorldData world;
-        for(std::string &filename : files)
+        DirMan worldDir(dir);
+        std::vector<std::string> files;
+        std::vector<std::string> folders;
+        worldDir.getListOfFolders(folders);
+
+        for(std::string &folder : folders)
         {
-            if(FileFormats::OpenWorldFileHeader(filename, world))
+            std::string path = dir + folder;
+            DirMan episodeDir(path);
+            std::vector<std::string> worlds;
+            episodeDir.getListOfFiles(worlds, {".wld", ".wldx"});
+            for(std::string &world : worlds)
+                files.push_back(dir + folder + "/" + world);
+        }
+
+        if(!files.empty())
+        {
+            WorldData world;
+            for(std::string &filename : files)
             {
-                std::string title = world.EpisodeTitle;
-                std::pair<std::string, std::string > file;
-                file.first = filename;
-                file.second = (title.empty() ? Files::basename(filename) : title);
-                m_filefind_found_files.push_back(file);
-                has_files_added = true;
-            }
-            else
-            {
-                pLogWarning("Failed to parse world map header %s while listing available levels with error [%s] at line %d with line data [%s]",
-                            filename.c_str(),
-                            world.meta.ERROR_info.c_str(),
-                            world.meta.ERROR_linenum,
-                            world.meta.ERROR_linedata.c_str());
+                if(FileFormats::OpenWorldFileHeader(filename, world))
+                {
+                    std::string title = world.EpisodeTitle;
+                    std::pair<std::string, std::string > file;
+                    file.first = filename;
+                    file.second = (title.empty() ? Files::basename(filename) : title);
+                    m_filefind_found_files.push_back(file);
+                    has_files_added = true;
+                }
+                else
+                {
+                    pLogWarning("Failed to parse world map header %s while listing available levels with error [%s] at line %d with line data [%s]",
+                                filename.c_str(),
+                                world.meta.ERROR_info.c_str(),
+                                world.meta.ERROR_linenum,
+                                world.meta.ERROR_linedata.c_str());
+                }
             }
         }
     }
+
     if(!has_files_added)
     {
         std::pair<std::string, std::string > file;
@@ -669,38 +684,40 @@ int TitleScene::findEpisodes(void *)
 
 int TitleScene::findLevels(void *)
 {
-    //Build list of casual levels
-    DirMan levelDir(m_filefind_folder);
-
-    std::vector<std::string> files;
-    levelDir.getListOfFiles(files, {".lvl", ".lvlx"});
-
     m_filefind_found_files.clear();//Clean up old stuff
-
     bool has_files_added = false;
-    if(!files.empty())
+
+    //Build list of casual levels
+    for(const auto &dir : m_filefind_folders)
     {
-        m_filefind_folder.push_back('/');
-        LevelData level;
-        for(std::string &file : files)
+        DirMan levelDir(dir);
+
+        std::vector<std::string> files;
+        levelDir.getListOfFiles(files, {".lvl", ".lvlx"});
+
+        if(!files.empty())
         {
-            if(FileFormats::OpenLevelFileHeader(m_filefind_folder + file, level))
+            LevelData level;
+            for(std::string &file : files)
             {
-                std::string title = level.LevelName;
-                std::pair<std::string, std::string > fileX;
-                fileX.first = m_filefind_folder + file;
-                fileX.second = (title.empty() ? file : title);
-                m_filefind_found_files.push_back(fileX);
-                has_files_added = true;
-            }
-            else
-            {
-                pLogWarning("Failed to parse level header %s%s while listing available levels with error [%s] at line %d with line data [%s]",
-                            m_filefind_folder.c_str(),
-                            file.c_str(),
-                            level.meta.ERROR_info.c_str(),
-                            level.meta.ERROR_linenum,
-                            level.meta.ERROR_linedata.c_str());
+                if(FileFormats::OpenLevelFileHeader(dir + file, level))
+                {
+                    std::string title = level.LevelName;
+                    std::pair<std::string, std::string > fileX;
+                    fileX.first = dir + file;
+                    fileX.second = (title.empty() ? file : title);
+                    m_filefind_found_files.push_back(fileX);
+                    has_files_added = true;
+                }
+                else
+                {
+                    pLogWarning("Failed to parse level header %s%s while listing available levels with error [%s] at line %d with line data [%s]",
+                                dir.c_str(),
+                                file.c_str(),
+                                level.meta.ERROR_info.c_str(),
+                                level.meta.ERROR_linenum,
+                                level.meta.ERROR_linedata.c_str());
+                }
             }
         }
     }

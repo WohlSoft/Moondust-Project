@@ -121,7 +121,7 @@ public:
     static int findEpisodes(void *);
     static int findLevels(void *);
     static SDL_Thread                                          *m_filefind_thread;
-    static std::string                                          m_filefind_folder;
+    static std::vector<std::string>                             m_filefind_folders;
     static std::vector<std::pair<std::string, std::string > >   m_filefind_found_files;
     static std::atomic_bool                                     m_filefind_finished;
     /**********************file_finder************************/
