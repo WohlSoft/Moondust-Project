@@ -93,8 +93,11 @@ void AppPathManager::initAppPath(const char *argv0)
     {
         QDir appDir(path + UserDirName);
         if(!appDir.exists())
-            if(!appDir.mkpath(path + UserDirName))
+        {
+            appDir.mkpath(path + UserDirName);
+            if(!appDir.exists()) // Re-check the existance
                 goto defaultSettingsPath;
+        }
 #ifdef __APPLE__
         if(!QDir(ApplicationPath + "/Data directory").exists())
             symlink((path + UserDirName).toUtf8().data(), (ApplicationPath + "/Data directory").toUtf8().data());

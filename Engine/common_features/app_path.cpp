@@ -195,8 +195,12 @@ void AppPathManager::initAppPath()
     if(!userDirPath.empty())
     {
         DirMan appDir(userDirPath);
-        if(!appDir.exists() && !appDir.mkpath(userDirPath))
-            goto defaultSettingsPath;
+        if(!appDir.exists())
+        {
+            appDir.mkpath(userDirPath);
+            if(!appDir.exists()) // Re-check the existance
+                goto defaultSettingsPath;
+        }
 #ifdef __APPLE__
         if(!DirMan::exists(ApplicationPathSTD + "/Data directory"))
             symlink((userDirPath).c_str(), (ApplicationPathSTD + "/Data directory").c_str());
