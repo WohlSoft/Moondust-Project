@@ -37,6 +37,8 @@ namespace Ui
     class LevelEdit;
 }
 
+class DataConfig;
+
 class LevelEdit : public EditBase
 {
     Q_OBJECT
@@ -51,6 +53,7 @@ public slots:
 
 public:
     LevelData LvlData;
+    DataConfig *m_configPack = nullptr;
     //QGraphicsScene LvlScene;
 
     void prepareLevelFile(LevelData &data);

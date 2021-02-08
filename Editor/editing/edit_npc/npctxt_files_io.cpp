@@ -38,8 +38,9 @@ static int FileName_to_npcID(QString filename)
     return 0;
 }
 
-void NpcEdit::newFile(unsigned long npcID)
+void NpcEdit::newFile(unsigned long npcID, const QString &savePath)
 {
+    customSavePath = savePath;
     m_currentNpcId = npcID;
     static int sequenceNumber = 1;
     ui->CurrentNPCID->setText(QString::number(npcID));
@@ -67,6 +68,7 @@ bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
 {
     QFile file(fileName);
     NpcData = FileData;
+
     if(!file.open(QFile::ReadOnly | QFile::Text))
     {
         QMessageBox::warning(this, tr("Load file error"),
@@ -79,6 +81,7 @@ bool NpcEdit::loadFile(const QString &fileName, NPCConfigFile FileData)
     QFileInfo fileI(fileName);
 
     //Get NPC-ID from FileName
+    customSavePath.clear();
     m_currentNpcId = FileName_to_npcID(fileI.baseName());
     setDefaultData(m_currentNpcId);
     ui->CurrentNPCID->setText(QString::number(m_currentNpcId));
@@ -106,9 +109,27 @@ bool NpcEdit::save(bool savOptionsDialog)
 bool NpcEdit::saveAs(bool savOptionsDialog)
 {
     Q_UNUSED(savOptionsDialog);
+
+    auto savePath = customSavePath.isEmpty() ?
+                    (GlobalSettings::savePath_npctxt.isEmpty() ?
+                    m_configPack->dirs.worlds :
+                    GlobalSettings::savePath_npctxt) :
+                    customSavePath;
+
+    if(!customSavePath.isEmpty())
+    {
+        QDir cp(customSavePath);
+        if(!cp.exists())
+            cp.mkpath(".");
+    }
+
     QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-                       (m_isUntitled) ? GlobalSettings::savePath_npctxt + QString("/") + curFile : curFile, tr("SMBX custom NPC config file (npc-*.txt)"),
-                                                    nullptr, c_fileDialogOptions);
+                                m_isUntitled ?
+                                savePath + QString("/") + curFile :
+                                curFile,
+                                tr("SMBX custom NPC config file (npc-*.txt)"),
+                                nullptr, c_fileDialogOptions);
+
     if(fileName.isEmpty())
         return false;
 
@@ -144,6 +165,7 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 
     QFileInfo fileI(fileName);
     unsigned long old_npc_id = m_currentNpcId;
+    customSavePath.clear();
     m_currentNpcId = static_cast<unsigned long>(FileName_to_npcID(fileI.baseName()));
     setDefaultData(m_currentNpcId);
     ui->CurrentNPCID->setText(QString::number(m_currentNpcId));

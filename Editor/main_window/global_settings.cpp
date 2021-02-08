@@ -33,9 +33,9 @@ EditingSettings::EditingSettings()
 
 QString GlobalSettings::locale          = "";
 long GlobalSettings::animatorItemsLimit = 25000;
-QString GlobalSettings::openPath        = ".";
-QString GlobalSettings::savePath        = ".";
-QString GlobalSettings::savePath_npctxt = ".";
+QString GlobalSettings::openPath        = QString();
+QString GlobalSettings::savePath        = QString();
+QString GlobalSettings::savePath_npctxt = QString();
 
 QString GlobalSettings::tools_sox_bin_path  = "/tools/sox/";
 

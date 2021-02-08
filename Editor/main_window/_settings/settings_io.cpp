@@ -137,9 +137,9 @@ void MainWindow::loadSettings()
 
         MixerX::initAudio(settings.value("sdl-sample-rate", MixerX::sampleRate()).toInt());
 
-        GlobalSettings::openPath = settings.value("lastpath", AppPathManager::userAppDir()).toString();
-        GlobalSettings::savePath = settings.value("lastsavepath", AppPathManager::userAppDir()).toString();
-        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", AppPathManager::userAppDir()).toString();
+        GlobalSettings::openPath = settings.value("lastpath", QString()).toString();
+        GlobalSettings::savePath = settings.value("lastsavepath", QString()).toString();
+        GlobalSettings::savePath_npctxt = settings.value("lastsavepath-npctxt", QString()).toString();
 
         GlobalSettings::animatorItemsLimit = settings.value("animation-item-limit", "30000").toInt();
 

@@ -359,7 +359,8 @@ cancelTransform:
         else
         {
             NpcEdit *child = m_scene->m_mw->createNPCChild();
-            child->newFile(m_data.id);
+            child->newFile(m_data.id,
+                           m_scene->m_data->meta.path + "/" + m_scene->m_data->meta.filename);
             child->show();
         }
     }

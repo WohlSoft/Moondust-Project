@@ -152,9 +152,13 @@ void MainWindow::on_OpenFile_triggered()
         return;
     }
 
+    auto openPath = GlobalSettings::openPath.isEmpty() ?
+                    configs.dirs.worlds :
+                    GlobalSettings::openPath;
+
     QStringList fileName_DATA = QFileDialog::getOpenFileNames(this,
                                 tr("Open file"),
-                                GlobalSettings::openPath,
+                                openPath,
                                 QString("All supported formats (*.lvlx *.wldx *.lvl *.wld npc-*.txt *.sav);;"
                                         "All SMBX files (*.lvl *.wld npc-*.txt);;"
                                         "All PGE files (*.lvlx *.wldx npc-*.txt);;"

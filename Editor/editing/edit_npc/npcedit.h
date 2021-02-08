@@ -52,7 +52,7 @@ public slots:
     void reTranslate();
 
 public:
-    void newFile(unsigned long npcID);
+    void newFile(unsigned long npcID, const QString &savePath = QString());
     bool loadFile(const QString &fileName, NPCConfigFile FileData);
     NPCConfigFile NpcData;
     unsigned long m_currentNpcId = 0;
@@ -79,6 +79,8 @@ public:
     void markForForceClose();
 
     QString curFile;
+
+    QString customSavePath;
 
     bool m_isModified = false;
     bool m_isUntitled = true;

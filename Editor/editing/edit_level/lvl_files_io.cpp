@@ -40,6 +40,7 @@
 
 bool LevelEdit::newFile(DataConfig &configs, EditingSettings options)
 {
+    m_configPack = &configs;
     static int sequenceNumber = 1;
     m_isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
@@ -141,7 +142,10 @@ bool LevelEdit::saveAs(bool savOptionsDialog)
 
     bool isNotDone = true;
     bool isSMBX64limit = false;
-    QString fileName = (m_isUntitled) ? GlobalSettings::savePath + QString("/") +
+    auto savePath = GlobalSettings::savePath.isEmpty() ?
+                    m_configPack->dirs.worlds :
+                    GlobalSettings::savePath;
+    QString fileName = (m_isUntitled) ? savePath + QString("/") +
                        (LvlData.LevelName.isEmpty() ? curFile : util::filePath(LvlData.LevelName)) : curFile;
     QString fileSMBX64  = "SMBX64 (1.3) Level file (*.lvl)";
     QString fileSMBXany = "SMBX0...64 Level file [choose version] (*.lvl)";
@@ -453,6 +457,7 @@ bool LevelEdit::saveSMBX64LVL(QString fileName, bool silent, bool *out_WarningIs
 
 bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, DataConfig &configs, EditingSettings options)
 {
+    m_configPack = &configs;
     QFile file(fileName);
     LvlData = FileData;
     bool modifystate = false;
