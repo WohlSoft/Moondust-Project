@@ -33,7 +33,7 @@ http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
 ## CI Build status
 Linux | Mac OS X | Windows
 ------------ | ------------- | -------------
-[![Build Status](https://semaphoreci.com/api/v1/wohlstand/pge-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project) | [![Build status](https://ci.appveyor.com/api/projects/status/5vpdgj57m3oheqc3?svg=true)](https://ci.appveyor.com/project/Wohlstand/pge-project)
+[![Build Status](https://semaphoreci.com/api/v1/wohlstand/pge-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project) | [![Windows CI](https://github.com/WohlSoft/PGE-Project/workflows/Windows%20CI/badge.svg?branch=master&event=push)](https://github.com/WohlSoft/PGE-Project/actions?query=workflow%3A%22Windows+CI%22)
 
 # Components
 A list of components are included with PGE Project
@@ -107,4 +107,3 @@ This small utility converts and fixes music files and levels.
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
