@@ -8,12 +8,12 @@ LatestSDL=""
 
 cleanUp()
 {
-    rm -Rf SDL-default/VisualC
-    rm -Rf SDL-default/VisualC-WinRT
-    rm -Rf SDL-default/visualtest
-    rm -Rf SDL-default/test
-    rm -Rf SDL-default/Xcode
-    rm -Rf SDL-default/Xcode-iOS
+    rm -Rf SDL-main/VisualC
+    rm -Rf SDL-main/VisualC-WinRT
+    rm -Rf SDL-main/visualtest
+    rm -Rf SDL-main/test
+    rm -Rf SDL-main/Xcode
+    rm -Rf SDL-main/Xcode-iOS
 }
 
 freshLatestSDL()
@@ -24,27 +24,26 @@ freshLatestSDL()
 freshLatestSDL
 echo "Previous version was $LatestSDL"
 
-wget --content-disposition https://hg.libsdl.org/SDL/archive/release-2.0.14.tar.gz -O SDL-2.0.14-new.tar.gz
-# http://hg.libsdl.org/SDL/archive/tip.tar.gz
+wget --content-disposition https://github.com/libsdl-org/SDL/archive/release-2.0.14.tar.gz -O SDL-2.0.14-new.tar.gz
 
 tar -xf SDL-2.0.14-new.tar.gz
 rm -f SDL-2.0.14-new.tar.gz
-mv SDL-release-2.0.14 SDL-default
+mv SDL-release-2.0.14 SDL-main
 cleanUp
-tar -czf SDL-default-new.tar.gz SDL-default
-rm -Rf SDL-default
+tar -czf SDL-main-new.tar.gz SDL-main
+rm -Rf SDL-main
 
-wget --content-disposition https://hg.libsdl.org/SDL/archive/release-2.0.14.zip -O SDL-2.0.14-new.zip
-# http://hg.libsdl.org/SDL/archive/tip.zip
+wget --content-disposition https://github.com/libsdl-org/SDL/archive/release-2.0.14.zip -O SDL-2.0.14-new.zip
+
 7z x SDL-2.0.14-new.zip
 # Remove unnecessary folders from a Windows-used archive
 rm -f SDL-2.0.14-new.zip
-mv SDL-release-2.0.14 SDL-default
+mv SDL-release-2.0.14 SDL-main
 cleanUp
-rm -Rf SDL-default/android-project
-rm -Rf SDL-default/android-project-ant
-7z a SDL-default-new.zip SDL-default
-rm -Rf SDL-default
+rm -Rf SDL-main/android-project
+rm -Rf SDL-main/android-project-ant
+7z a SDL-main-new.zip SDL-main
+rm -Rf SDL-main
 
 if [ $? -eq 0 ];
 then
@@ -55,8 +54,8 @@ then
         rm $OldSDL'.tar.gz'
         rm $OldSDL'.zip'
     fi
-    mv SDL-default-new.tar.gz SDL-default.tar.gz
-    mv SDL-default-new.zip SDL-default.zip
+    mv SDL-main-new.tar.gz SDL-main.tar.gz
+    mv SDL-main-new.zip SDL-main.zip
 
     echo "Fresh now is $LatestSDL"
 else

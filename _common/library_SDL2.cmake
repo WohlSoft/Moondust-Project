@@ -23,9 +23,9 @@ if(USE_SYSTEM_SDL2)
 endif()
 
 if(WIN32)
-    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.zip")
+    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-main.zip")
 else()
-    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-default.tar.gz")
+    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-main.tar.gz")
 endif()
 
 file(SHA256 ${SDL2_SOURCE_TARBALL} SDL2_SOURCE_TARBALL_HASH)
