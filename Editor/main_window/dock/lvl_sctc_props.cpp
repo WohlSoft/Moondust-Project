@@ -666,8 +666,9 @@ void LvlSectionProps::on_LVLPropsMusicCustomBrowse_clicked()
 
 void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(const QString &arg1)
 {
-    if(m_externalLock) return;
-    if(!ui->LVLPropsMusicCustom->isModified()) return;
+    if(m_externalLock || !ui->LVLPropsMusicCustom->isModified())
+        return;
+
     ui->LVLPropsMusicCustom->setModified(false);
 
     ui->musicSetup->setVisible(CustomMusicSetup::settingsNeeded(ui->LVLPropsMusicCustom->text()));
@@ -683,6 +684,7 @@ void LvlSectionProps::on_LVLPropsMusicCustom_editingFinished()//_textChanged(con
         cusMusicData.push_back(arg1.simplified().remove('\"'));
         edit->scene->m_history->addChangeSectionSettings(edit->LvlData.CurSection, HistorySettings::SETTING_SECCUSTOMMUSIC, QVariant(cusMusicData));
         edit->LvlData.sections[edit->LvlData.CurSection].music_file = arg1.simplified().remove('\"');
+        edit->LvlData.meta.modified = true;
     }
 
     loadMusic();

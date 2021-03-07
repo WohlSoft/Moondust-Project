@@ -6,6 +6,7 @@
 - Fixed the unexpected width limitation when warps and debugger toolboxes docked into the same area
 - Added an ability to define the initial geometry and dock area of toolboxes by the config pack side
 - Fixed the logic of initial open/save paths while opening any file dialogs
+- Fixed the missing "modified" level file flag when the custom music path was changed
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings
