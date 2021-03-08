@@ -172,7 +172,7 @@
     <message>
         <location filename="../calibration_main.ui" line="132"/>
         <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
-        <translation>若启用此选项，则搬运物品时图像位置为左偏差位置，反之为右偏差位置。</translation>
+        <translation>若启用此选项，则搬运物品时图像判定位置为左偏差位置，反之为右偏差位置。</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="279"/>
@@ -232,7 +232,7 @@
     <message>
         <location filename="../calibration_main.ui" line="589"/>
         <source>Hitbox setup:</source>
-        <translation>判定设置：</translation>
+        <translation>判定范围设置：</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="602"/>
@@ -307,7 +307,7 @@
     <message>
         <location filename="../calibration_main.ui" line="415"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
-        <translation>判定与图像的横向偏差</translation>
+        <translation>判定范围与图像的横向偏差</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="263"/>
@@ -362,7 +362,7 @@
     <message>
         <location filename="../calibration_main.ui" line="529"/>
         <source>Animator</source>
-        <translation type="unfinished">动画编辑器</translation>
+        <translation>动画编辑器</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="90"/>
@@ -382,7 +382,7 @@
     <message>
         <location filename="../main/files_io.cpp" line="100"/>
         <source>Save hitbox map as image</source>
-        <translation>将判定地图保存为图片</translation>
+        <translation>将判定范围地图保存为图片</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="332"/>
@@ -399,7 +399,7 @@
     <message>
         <location filename="../main/files_io.cpp" line="118"/>
         <source>Hitbox map has been saved!</source>
-        <translation>判定地图已保存！</translation>
+        <translation>判定范围地图已保存！</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="271"/>
@@ -511,7 +511,7 @@
     <message>
         <location filename="../calibration_main.cpp" line="414"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>此操作将复制所有判定范围到其他帧，其他帧的设置将被当前设置覆盖，您要继续吗？</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="435"/>
@@ -534,17 +534,17 @@
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="30"/>
         <source>Frame X</source>
-        <translation type="unfinished">帧 X</translation>
+        <translation>帧 X</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="37"/>
         <source>Crop width</source>
-        <translation type="unfinished"></translation>
+        <translation>裁剪宽度</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="51"/>
         <source>Offset Y</source>
-        <translation type="unfinished">偏差 Y</translation>
+        <translation>偏移 Y</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="66"/>
@@ -559,57 +559,57 @@
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="150"/>
         <source>Offset X</source>
-        <translation type="unfinished">偏差 X</translation>
+        <translation>偏移 X</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="160"/>
         <source>Frame Y</source>
-        <translation type="unfinished">帧 Y</translation>
+        <translation>帧 Y</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="167"/>
         <source>Crop height</source>
-        <translation type="unfinished"></translation>
+        <translation>裁剪高度</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="193"/>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>保存图片</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="199"/>
         <source>Write PNG+GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>同时保存为 PNG 和带影子文件的 GIF</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="206"/>
         <source>Write PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>保存为 PNG</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="213"/>
         <source>Write masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>保存为带影子文件的 GIF</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="229"/>
         <source>Hint</source>
-        <translation type="unfinished"></translation>
+        <translation>提示</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="235"/>
         <source>This is an image calibrator. When you will change offset values, you will physically move the frame on the image. Hitboxes settings will be left unchalged.</source>
-        <translation type="unfinished"></translation>
+        <translation>这是图片校正工具，当您改变偏差时，您的图像位置将在图片的帧中移动，但不会改变判定设置。</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="251"/>
         <source>Select frame on a sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>从图片中选择帧</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="258"/>
         <source>Reset calibration</source>
-        <translation type="unfinished"></translation>
+        <translation>校正重置</translation>
     </message>
 </context>
 <context>
