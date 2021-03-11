@@ -451,7 +451,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Operation complete</source>
-        <translation>操作完成</translation>
+        <translation>操作完毕</translation>
     </message>
     <message>
         <source>All files successfully converted!
@@ -2631,7 +2631,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Flags</source>
-        <translation>附加设置</translation>
+        <translation>其他选项</translation>
     </message>
     <message>
         <source>Don&apos;t create back-up</source>
@@ -10095,7 +10095,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Flags</source>
-        <translation>附加选项</translation>
+        <translation>其他选项</translation>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
@@ -10181,7 +10181,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Flags</source>
-        <translation>附加选项</translation>
+        <translation>其他选项</translation>
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
