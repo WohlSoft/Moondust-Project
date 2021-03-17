@@ -247,32 +247,34 @@ QPainterPath ItemPhysEnv::shape() const
 {
     QPainterPath path;
     QPolygonF lineBoarder;
-    QVector<qreal> points = {0.0,
-                             0.0,
-                             this->data(ITEM_WIDTH).toReal(),
-                             this->data(ITEM_HEIGHT).toReal()
-                            };
-#define PLEFT   0
-#define PTOP    1
-#define PRIGHT  2
-#define PBOTTOM 3
+    qreal points[] =
+    {
+        0.0,
+        0.0,
+        this->data(ITEM_WIDTH).toReal(),
+        this->data(ITEM_HEIGHT).toReal()
+    };
+
+    const int BORDERWIDTH = 12;
+    const int PLEFT = 0;
+    const int PTOP = 1;
+    const int PRIGHT = 2;
+    const int PBOTTOM = 3;
+
     lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP]));
     lineBoarder.push_back(QPointF(points[PRIGHT],    points[PTOP]));
     lineBoarder.push_back(QPointF(points[PRIGHT],    points[PBOTTOM]));
     lineBoarder.push_back(QPointF(points[PLEFT],     points[PBOTTOM]));
     lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP]));
 
-    lineBoarder.push_back(QPointF(points[PLEFT] + 4, points[PTOP]));
-    lineBoarder.push_back(QPointF(points[PLEFT] + 4, points[PBOTTOM] - 4));
-    lineBoarder.push_back(QPointF(points[PRIGHT] - 4, points[PBOTTOM] - 4));
-    lineBoarder.push_back(QPointF(points[PRIGHT] - 4, points[PTOP] + 4));
-    lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP] + 4));
-#undef PLEFT
-#undef PTOP
-#undef PRIGHT
-#undef PBOTTOM
+    lineBoarder.push_back(QPointF(points[PLEFT] + BORDERWIDTH, points[PTOP]));
+    lineBoarder.push_back(QPointF(points[PLEFT] + BORDERWIDTH, points[PBOTTOM] - BORDERWIDTH));
+    lineBoarder.push_back(QPointF(points[PRIGHT] - BORDERWIDTH, points[PBOTTOM] - BORDERWIDTH));
+    lineBoarder.push_back(QPointF(points[PRIGHT] - BORDERWIDTH, points[PTOP] + BORDERWIDTH));
+    lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP] + BORDERWIDTH));
 
     path.addPolygon(lineBoarder);
+
     return path;
 }
 
