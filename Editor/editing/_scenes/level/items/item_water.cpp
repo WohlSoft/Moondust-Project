@@ -267,11 +267,11 @@ QPainterPath ItemPhysEnv::shape() const
     lineBoarder.push_back(QPointF(points[PLEFT],     points[PBOTTOM]));
     lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP]));
 
-    lineBoarder.push_back(QPointF(points[PLEFT] + BORDERWIDTH, points[PTOP]));
-    lineBoarder.push_back(QPointF(points[PLEFT] + BORDERWIDTH, points[PBOTTOM] - BORDERWIDTH));
-    lineBoarder.push_back(QPointF(points[PRIGHT] - BORDERWIDTH, points[PBOTTOM] - BORDERWIDTH));
+    lineBoarder.push_back(QPointF(points[PLEFT] + BORDERWIDTH,  points[PTOP] + BORDERWIDTH));
     lineBoarder.push_back(QPointF(points[PRIGHT] - BORDERWIDTH, points[PTOP] + BORDERWIDTH));
-    lineBoarder.push_back(QPointF(points[PLEFT],     points[PTOP] + BORDERWIDTH));
+    lineBoarder.push_back(QPointF(points[PRIGHT] - BORDERWIDTH, points[PBOTTOM] - BORDERWIDTH));
+    lineBoarder.push_back(QPointF(points[PLEFT] + BORDERWIDTH, points[PBOTTOM] - BORDERWIDTH));
+    lineBoarder.push_back(QPointF(points[PLEFT] + BORDERWIDTH,  points[PTOP] + BORDERWIDTH));
 
     path.addPolygon(lineBoarder);
 
@@ -438,6 +438,8 @@ void ItemPhysEnv::updateColor()
     QColor c(m_color);
     c.setAlpha(25);
     m_brush = QBrush(c);
+    c.setAlpha(50);
+    m_brushSubBorder = QBrush(c);
 }
 
 bool ItemPhysEnv::itemTypeIsLocked()
@@ -511,9 +513,15 @@ void ItemPhysEnv::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWi
     long h, w;
     w = m_data.w - m_penWidth;
     h = m_data.h - m_penWidth;
+
+    painter->setBrush(m_brushSubBorder);
+    painter->setPen(Qt::NoPen);
+    painter->drawPath(shape());
+
     painter->setBrush(m_brush);
     painter->setPen(m_pen);
     painter->drawRect(1, 1, (int)w, (int)h);
+
     if(this->isSelected())
     {
         painter->setBrush(Qt::NoBrush);

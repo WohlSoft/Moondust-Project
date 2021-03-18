@@ -69,6 +69,7 @@ private:
     QPen        m_pen;
     QColor      m_color;
     QBrush      m_brush;
+    QBrush      m_brushSubBorder;
 };
 
 #endif // ITEM_WATER_H
