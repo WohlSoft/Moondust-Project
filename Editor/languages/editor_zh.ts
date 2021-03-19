@@ -1195,7 +1195,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Args: {engine commands} 当执行时发送指令或信息到 PGE 引擎</translation>
+        <translation>参数：{引擎指令} 当执行时发送指令或信息到 PGE 引擎</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1341,7 +1341,8 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translatorcomment>不知道怎么翻译……</translatorcomment>
         <translation>&lt;p&gt;&lt;b&gt;提示1：&lt;/b&gt; 您可以从&lt;u&gt;帮助&lt;/u&gt; 菜单、&lt;u&gt;查看&lt;/u&gt;菜单中的工具箱和&lt;u&gt;窗口&lt;/u&gt;菜单中的下拉菜单项随时更换界面样式。&lt;br/&gt;
 &lt;br/&gt;
-&lt;b&gt;提示2:&lt;/b&gt; 此编辑器不像原版 SMBX1.3 那样，许多功能可以在鼠标右击时弹出菜单后打开，也可以从工具栏和菜单里打开，使用此编辑器还可以一次选择多个对象！&lt;br/&gt;
+&lt;b&gt;提示2:&lt;/b&gt; 此编辑器不像原版 SMBX1.3 那样，许多功能可以在鼠标右击时弹出菜单后打开，
+也可以从工具栏和菜单里打开，使用此编辑器还可以一次选择多个对象！&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;提示3:&lt;/b&gt; 使用鼠标中键可以在放置物品和复制物品之间切换！&lt;/p&gt;</translation>
     </message>
@@ -3293,7 +3294,7 @@ Otherwise, it will be very limited.</source>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation>如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，此时改用 GDI 渲染。</translation>
+        <translation>如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，将改用 GDI 渲染。</translation>
     </message>
     <message>
         <source>Keep running in background</source>
@@ -3635,7 +3636,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
-        <translation>由于无法识别所选的 LunaLua 目录，故游戏无法运行，请选择其他目录。</translation>
+        <translation>无法识别所选的 LunaLua 目录，因此游戏无法运行，请选择其他目录。</translation>
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
@@ -4401,9 +4402,9 @@ NPC 数量：	 %4
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation>本关卡中有错误的自定义素材文件。
-你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行了错误的转换造成的，例如将扩展名从 BMP 重命名为 GIF。
-请重新转换为有效格式，然后重新加载此关卡。</translation>
+        <translation>本关卡中含有错误的自定义素材文件。
+你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行错误的转换所造成的问题，例如将扩展名从 BMP 重命名为 GIF。
+请重新转换为支持的格式并重新加载此关卡。</translation>
     </message>
 </context>
 <context>
@@ -4797,7 +4798,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 0 - 瞬移：玩家将会瞬移且移动速度为 0.
 1 - 水管：各个方向的水管的入口和出口。
 2 - 门：玩家可按上键进入。
-3 - 传送门（仅限 PGE 引擎）：玩家将会瞬移，但不改变移动速度。</translation>
+3 - 传送门（仅限 PGE 和 TheXTech 引擎）：玩家将会瞬移，但不改变移动速度。</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -5036,7 +5037,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
-        <translation>仅限 PGE 引擎，加载关卡时显示空白屏。
+        <translation>加载关卡时显示空白屏。
 如果此选项未选中，在加载关卡时你将会
 看到当前人物和剩余生命数。</translation>
     </message>
@@ -9525,9 +9526,9 @@ Music boxes:		%5
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation>本关卡中有错误的自定义素材文件。
-你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行了错误的转换造成的，例如将扩展名从 BMP 重命名为 GIF。
-请重新转换为有效格式，然后重新加载此关卡。</translation>
+        <translation>本大地图中含有错误的自定义素材文件。
+你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行错误的转换所造成的问题，例如将扩展名从 BMP 重命名为 GIF。
+请重新转换为支持的格式并重新加载此关卡。</translation>
     </message>
 </context>
 <context>
