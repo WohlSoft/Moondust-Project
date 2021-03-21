@@ -1,7 +1,7 @@
 set(CMAKE_MAJOR_VERSION 0)
 set(CMAKE_MINOR_VERSION 4)
-set(CMAKE_PATCH_VERSION 2)
-set(CMAKE_TWEAK_VERSION 0)
+set(CMAKE_PATCH_VERSION 3)
+set(CMAKE_TWEAK_VERSION 1)
 
 # Major
 add_definitions(-DPGE_TOOLCHAIN_VERSION_1=${CMAKE_MAJOR_VERSION})
@@ -17,4 +17,3 @@ add_definitions(-DPGE_CONFIG_PACK_API_VERSION=41)
 
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
 add_definitions(-DPGE_TOOLCHAIN_VERSION_REL="")
-
