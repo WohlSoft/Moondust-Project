@@ -94,6 +94,8 @@ private slots:
     void documentWasModified();
     void documentNotModified();
 
+    void updateTitle();
+
     void on_en_GFXOffsetX_clicked(bool checked);
     void on_en_GFXOffsetY_clicked(bool checked);
     void on_En_GFXw_clicked(bool checked);

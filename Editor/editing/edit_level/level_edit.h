@@ -147,6 +147,7 @@ private slots:
 
 private:
     void documentWasModified();
+    void updateTitle();
     Ui::LevelEdit *ui = nullptr;
 
     LevelData StartLvlData;

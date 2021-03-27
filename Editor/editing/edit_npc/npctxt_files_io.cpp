@@ -220,7 +220,8 @@ void NpcEdit::documentWasModified()
     QFont font;
     font.setWeight(QFont::Bold);
     m_isModified = true;
-    setWindowTitle(userFriendlyCurrentFile() + "[*]");
+    updateTitle();
+    setWindowModified(true);
     ui->isModyfiedL->setText("Yes");
     ui->isModyfiedL->setFont(font);
 }
@@ -231,9 +232,15 @@ void NpcEdit::documentNotModified()
     font.setWeight(QFont::Normal);
 
     m_isModified = false;
-    setWindowTitle(userFriendlyCurrentFile());
+    updateTitle();
+    setWindowModified(false);
     ui->isModyfiedL->setText("No");
     ui->isModyfiedL->setFont(font);
+}
+
+void NpcEdit::updateTitle()
+{
+    setWindowTitle(QString("%1").arg(m_isModified ? "* " : "") + userFriendlyCurrentFile());
 }
 
 void NpcEdit::setCurrentFile(const QString &fileName)
@@ -243,7 +250,7 @@ void NpcEdit::setCurrentFile(const QString &fileName)
     //document()->setModified(false);
     setWindowModified(false);
     documentWasModified();
-    setWindowTitle(userFriendlyCurrentFile() + "[*]");
+    updateTitle();
 }
 
 

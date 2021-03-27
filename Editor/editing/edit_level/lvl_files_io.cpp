@@ -44,7 +44,7 @@ bool LevelEdit::newFile(DataConfig &configs, EditingSettings options)
     static int sequenceNumber = 1;
     m_isUntitled = true;
     curFile = tr("Untitled %1").arg(sequenceNumber++);
-    setWindowTitle(QString(curFile).replace("&", "&&&"));
+    updateTitle();
     FileFormats::CreateLevelData(LvlData);
     LvlData.meta.untitled = true;
 
@@ -524,7 +524,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, DataConfi
     progress.setMinimumDuration(0);
     progress.setAutoClose(false);
 
-    if(! DrawObjects(progress))
+    if(!DrawObjects(progress))
     {
         LvlData.meta.modified = false;
         this->close();
@@ -546,6 +546,7 @@ bool LevelEdit::loadFile(const QString &fileName, LevelData &FileData, DataConfi
     setCurrentFile(curFName);
     LvlData.meta.modified = modifystate;
     LvlData.meta.untitled = untitledstate;
+    updateTitle();
     progress.deleteLater();
 
     return true;
@@ -574,6 +575,27 @@ void LevelEdit::showCustomStuffWarnings()
 void LevelEdit::documentWasModified()
 {
     //LvlData.modified = true;
+}
+
+void LevelEdit::updateTitle()
+{
+    QString title;
+
+    if(LvlData.meta.modified || LvlData.meta.untitled)
+        title += "* ";
+
+    if(LvlData.meta.untitled)
+    {
+        title += curFile;
+    }
+    else if(LvlData.LevelName.isEmpty())
+        title += userFriendlyCurrentFile();
+    else
+        title += LvlData.LevelName;
+
+    title.replace("&", "&&&");
+
+    setWindowTitle(title.replace("&", "&&&"));
 }
 
 bool LevelEdit::maybeSave()
@@ -663,7 +685,7 @@ clearScene:
         LogDebug("!<-Cleared->!");
         LogDebug("!<-Delete animators->!");
 
-        while(! scene->m_animatorsBGO.isEmpty())
+        while(!scene->m_animatorsBGO.isEmpty())
         {
             SimpleAnimator *tmp = scene->m_animatorsBGO.first();
             scene->m_animatorsBGO.pop_front();
@@ -671,7 +693,7 @@ clearScene:
             if(tmp != nullptr) delete tmp;
         }
 
-        while(! scene->m_animatorsBlocks.isEmpty())
+        while(!scene->m_animatorsBlocks.isEmpty())
         {
             SimpleAnimator *tmp = scene->m_animatorsBlocks.first();
             scene->m_animatorsBlocks.pop_front();
@@ -679,7 +701,7 @@ clearScene:
             if(tmp != nullptr) delete tmp;
         }
 
-        while(! scene->m_animatorsNPC.isEmpty())
+        while(!scene->m_animatorsNPC.isEmpty())
         {
             AdvNpcAnimator *tmp = scene->m_animatorsNPC.first();
             scene->m_animatorsNPC.pop_front();
@@ -714,7 +736,7 @@ void LevelEdit::setCurrentFile(const QString &fileName)
     LvlData.meta.untitled = false;
     //document()->setModified(false);
     setWindowModified(false);
-    setWindowTitle(QString(LvlData.LevelName == "" ? userFriendlyCurrentFile() : LvlData.LevelName).replace("&", "&&&"));
+    updateTitle();
 }
 
 QString LevelEdit::strippedName(const QString &fullFileName)
