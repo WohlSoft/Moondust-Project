@@ -1081,7 +1081,7 @@ int GlRenderer::makeShot_action(void *_pixels)
     {
         delete []shoot->pixels;
         shoot->pixels = nullptr;
-        delete []shoot;
+        delete shoot;
         return 0;
     }
 
@@ -1093,7 +1093,7 @@ int GlRenderer::makeShot_action(void *_pixels)
         FreeImage_Unload(shotImg);
         delete []shoot->pixels;
         shoot->pixels = nullptr;
-        delete []shoot;
+        delete shoot;
         return 0;
     }
 
@@ -1110,7 +1110,7 @@ int GlRenderer::makeShot_action(void *_pixels)
             FreeImage_Unload(shotImg);
             delete []shoot->pixels;
             shoot->pixels = nullptr;
-            delete []shoot;
+            delete shoot;
             return 0;
         }
 
@@ -1132,7 +1132,7 @@ int GlRenderer::makeShot_action(void *_pixels)
     FreeImage_Unload(shotImg);
     delete []shoot->pixels;
     shoot->pixels = nullptr;
-    delete []shoot;
+    delete shoot;
     return 0;
 }
 
