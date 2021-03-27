@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation type="unfinished">Esta característica no esta implementada</translation>
+        <translation>Esta característica no esta implementada</translation>
     </message>
 </context>
 <context>
@@ -407,19 +407,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuente de letra</translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de letra</translation>
     </message>
     <message>
         <source>Use default</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar predeterminado</translation>
     </message>
     <message>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paleta de color</translation>
     </message>
 </context>
 <context>
@@ -672,15 +672,15 @@ Por favor defínala primero</translation>
     </message>
     <message>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de movimiento</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Distancia</translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de un bloque</translation>
     </message>
 </context>
 <context>
@@ -1052,19 +1052,19 @@ Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tal vez quieras reportar esta información a los desarrolladores</translation>
     </message>
     <message>
         <source>Copy report into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar reporte al portapapeles</translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Publicar un reporte en el Foro de PGE (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Señalar un problema en el repositorio de GitHub (WohlSoft/PGE-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
