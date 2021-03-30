@@ -42,6 +42,7 @@ LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
     ui->LVLPropLevelTitle->setText(m_currentData->LevelName);
 #ifndef DEBUG_BUILD
     ui->wipTab->setVisible(false);
+    ui->settingsTabs->removeTab(1);
 #endif
     m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
     initAdvancedSettings();
