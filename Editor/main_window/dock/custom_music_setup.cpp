@@ -615,6 +615,7 @@ void CustomMusicSetup::retranslateLists()
     ui->midiSynth->addItem(tr("libOPNMIDI (YM2612 Synth emulation)"), MIDI_OPNMIDI);
     ui->midiSynth->addItem(tr("Timidity (needed a bank)"), MIDI_Timidity);
     ui->midiSynth->addItem(tr("Native MIDI (Not recommended, buggy)"), MIDI_Native);
+    ui->midiSynth->addItem(tr("FluidSynth (needed an SF2-bank)"), MIDI_Fluidsynth);
     ui->midiSynth->setCurrentIndex(cache);
 
     cache = ui->midiExAdlVolumeModel->currentIndex();
