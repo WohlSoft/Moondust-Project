@@ -70,7 +70,7 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="settingsTab1">
+     <widget class="QWidget" name="generalTab">
       <attribute name="title">
        <string>General</string>
       </attribute>
@@ -116,7 +116,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="settingsTab2">
+     <widget class="QWidget" name="wipTab">
       <attribute name="title">
        <string notr="true">[WIP]</string>
       </attribute>

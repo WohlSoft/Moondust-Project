@@ -40,6 +40,9 @@ LevelProps::LevelProps(LevelData &FileData, QWidget *parent) :
     m_currentData = &FileData;
     ui->setupUi(this);
     ui->LVLPropLevelTitle->setText(m_currentData->LevelName);
+#ifndef DEBUG_BUILD
+    ui->wipTab->setVisible(false);
+#endif
     m_extraSettingsSpacer.reset(new QSpacerItem(100, 999999, QSizePolicy::Minimum, QSizePolicy::Expanding));
     initAdvancedSettings();
 }
