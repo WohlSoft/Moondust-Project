@@ -52,7 +52,8 @@ void MainWindow::on_actionPlayMusic_triggered(bool checked)
 // TODO: Refactor this
 void LvlMusPlay::setMusic(MainWindow *mw, LvlMusPlay::MusicType mt, unsigned long id, QString cmus)
 {
-    QString root = ".";
+    QString root = "./";
+    QString data;
     if(!mw)
         return;
 
@@ -64,13 +65,21 @@ void LvlMusPlay::setMusic(MainWindow *mw, LvlMusPlay::MusicType mt, unsigned lon
 
     if(mw->activeChildWindow() == MainWindow::WND_Level)
     {
-        if(mw->activeLvlEditWin() != nullptr)
-            root = mw->activeLvlEditWin()->LvlData.meta.path + "/";
+        auto *w = mw->activeLvlEditWin();
+        if(w != nullptr)
+        {
+            root = w->LvlData.meta.path + "/";
+            data = w->LvlData.meta.filename + "/";
+        }
     }
     else if(mw->activeChildWindow() == MainWindow::WND_World)
     {
-        if(mw->activeWldEditWin() != nullptr)
-            root = mw->activeWldEditWin()->WldData.meta.path + "/";
+        auto *w = mw->activeWldEditWin();
+        if(w != nullptr)
+        {
+            root = w->WldData.meta.path + "/";
+            data = w->WldData.meta.filename + "/";
+        }
     }
 
     DirListCIQt ci(root);
@@ -135,20 +144,26 @@ void LvlMusPlay::setMusic(MainWindow *mw, LvlMusPlay::MusicType mt, unsigned lon
 
     LogDebug(QString("path is %1").arg(currentMusicPath));
 
-    QString trackNum;
+    QString pathArguments;
     if(currentMusicPath.contains('|'))
     {
         QStringList x = currentMusicPath.split("|");
         currentMusicPath = x[0];
-        trackNum = x[1];
+        pathArguments = x[1];
+        // Replace macros with the absoulte paths:
+        pathArguments.replace("{e}", root); // Episode root
+        pathArguments.replace("{d}", root + data); // Level/World data directory
+        pathArguments.replace("{r}", mw->configs.dirs.music); // Config pack music root
     }
+
     QFileInfo mus(currentMusicPath);
+
     if((!mus.exists()) || (!mus.isFile()))
         currentMusicPath.clear();
     else
     {
-        if(!trackNum.isEmpty())
-            currentMusicPath = currentMusicPath + "|" + trackNum;
+        if(!pathArguments.isEmpty())
+            currentMusicPath = currentMusicPath + "|" + pathArguments;
     }
 }
 
