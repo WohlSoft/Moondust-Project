@@ -34,7 +34,7 @@ CustomMusicSetup::MusicType CustomMusicSetup::detectType(const QString &music)
 
     const QStringList adlSuffix =
     {
-        "imf", "cmf", "gmf"
+        "imf", "cmf", "gmf", "wlf"
     };
 
     const QStringList gmeSuffix =

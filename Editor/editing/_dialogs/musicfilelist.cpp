@@ -55,7 +55,7 @@ MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *
                 // MIDI
                 << "*.mid" << "*.midi" << "*.rmi" << "*.mus" << "*.kar" << "*.xmi" << "*.cmf"
                 // Id Music File (OPL2 raw) / Imago Orpheus (Tracker music)
-                << "*.imf"
+                << "*.imf" << "*.wlf"
                 // Modules (Tracker music)
                 << "*.mod" << "*.it" << "*.s3m" << "*.669" << "*.med" << "*.xm" << "*.amf"
                 << "*.apun" << "*.dsm" << "*.far" << "*.gdm" << "*.mtm"
