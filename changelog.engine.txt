@@ -1,6 +1,9 @@
 0.3.4-dev
 - Default audio output format has been changed into float32 to improve the quality and prevent any possible clipping distortions
 - Find episodes and single-levels in both user-side and application-side worlds directory
+- Added the support for custom WOPL bank files at libADLMIDI synthesizer
+- Added the support for custom WOPN bank files at libOPNMIDI synthesizer
+- Added the support for the FluidSynth at MixerX library
 
 0.3.3-dev
 - Fixed crash on missing player animation sequence

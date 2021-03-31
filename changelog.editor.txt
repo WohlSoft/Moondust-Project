@@ -8,6 +8,9 @@
 - Fixed the logic of initial open/save paths while opening any file dialogs
 - Fixed the missing "modified" level file flag when the custom music path was changed
 - Physical environment zones now have the taller hit-border to make the box is selected by the mouse easier
+- Added the support for custom WOPL bank files at libADLMIDI synthesizer
+- Added the support for custom WOPN bank files at libOPNMIDI synthesizer
+- Added the support for the FluidSynth at MixerX library
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

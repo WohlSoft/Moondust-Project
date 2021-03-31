@@ -1,5 +1,9 @@
 0.4.3.1
 - Fixed GIFs2PNG algorithm that may produce dirt or improper transparency when mask image is smaller than front
+- Added the support for custom WOPL bank files at libADLMIDI synthesizer
+- Added the support for custom WOPN bank files at libOPNMIDI synthesizer
+- Added the support for the FluidSynth at MixerX library
+- Added the support for macros at the music path arguments
 
 0.4.3
 - Native support for MSYS2 build environment via build.sh script
