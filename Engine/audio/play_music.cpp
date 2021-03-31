@@ -22,6 +22,8 @@
 
 #include <gui/pge_msgbox.h>
 #include <common_features/fmt_format_ne.h>
+#include <data_configs/config_manager.h>
+#include <Utils/strings.h>
 
 /***********************************PGE_MusPlayer********************************************/
 static Mix_Music *p_playingMus = nullptr;
@@ -54,6 +56,20 @@ std::string PGE_MusPlayer::getTitle()
     if(p_playingMus)
         return Mix_GetMusicTitle(p_playingMus);
     return std::string();
+}
+
+void PGE_MusPlayer::processPathArgs(std::string &path,
+                                    const std::string &episodeRoot,
+                                    const std::string &dataDirName)
+{
+    if(path.find('|') == std::string::npos)
+        return; // Nothing to do
+    Strings::List p;
+    Strings::split(p, path, '|');
+    Strings::replaceInAll(p[1], "{e}", episodeRoot);
+    Strings::replaceInAll(p[1], "{d}", episodeRoot + dataDirName);
+    Strings::replaceInAll(p[1], "{r}", ConfigManager::dirs.music);
+    path = p[0] + "|" + p[1];
 }
 
 void  PGE_MusPlayer::fadeIn(int ms)

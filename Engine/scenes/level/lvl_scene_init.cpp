@@ -387,7 +387,7 @@ bool LevelScene::init_items()
         m_sections.push_back(sct);
         m_sections.back().setScene(this);
         m_sections.back().setData(m_data.sections[i]);
-        m_sections.back().setMusicRoot(m_data.meta.path);
+        m_sections.back().setMusicRoot(m_data.meta.path, m_data.meta.filename);
     }
 
     D_pLogDebugNA("Create cameras");

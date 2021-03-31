@@ -91,15 +91,20 @@ void LVL_Section::resetLimits()
     m_limitBox = m_sectionBox;
 }
 
-void LVL_Section::setMusicRoot(std::string _path)
+void LVL_Section::setMusicRoot(std::string rootPath, std::string dataDirName)
 {
-    m_music_root = _path;
+    m_music_root = rootPath;
+    m_music_dataDirName = dataDirName;
+
     if(!m_music_root.empty())
     {
         if(m_music_root.back() != '/')
             m_music_root.push_back('/');
         m_music_root_ci.setCurDir(m_music_root);
     }
+
+    if(!m_music_dataDirName.empty() && m_music_dataDirName.back() != '/')
+        m_music_dataDirName.push_back('/');
 }
 
 void LVL_Section::playMusic()
@@ -110,6 +115,7 @@ void LVL_Section::playMusic()
 
     if(!musFile.empty())
     {
+        PGE_MusPlayer::processPathArgs(musFile, m_music_root, m_music_dataDirName);
         PGE_MusPlayer::openFile(musFile);
         PGE_MusPlayer::play();
     }
@@ -162,6 +168,7 @@ void LVL_Section::setBG(uint64_t bgID)
 {
     if(m_background.isInit() && (bgID == m_background.curBgId()))
         return;
+
     if((bgID > 0) && ConfigManager::lvl_bg_indexes.contains(bgID))
         m_background.setBg(ConfigManager::lvl_bg_indexes[bgID], m_scene);
     else

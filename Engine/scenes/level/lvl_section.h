@@ -64,7 +64,7 @@ public:
     void resetLimits();
 
     void initBG();
-    void setMusicRoot(std::string _path);
+    void setMusicRoot(std::string rootPath, std::string dataDirName);
     unsigned long getBgId();
 
     void playMusic();
@@ -103,6 +103,7 @@ private:
 
     DirListCI       m_music_root_ci;
     std::string     m_music_root;
+    std::string     m_music_dataDirName;
     uint64_t        m_curMus = 0l;
     std::string     m_curCustomMus;
     uint64_t        m_curBgID = 0l;

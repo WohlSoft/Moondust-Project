@@ -27,6 +27,10 @@ class PGE_MusPlayer
 public:
     static std::string getTitle();
 
+    static void processPathArgs(std::string &path,
+                                const std::string &episodeRoot,
+                                const std::string &dataDirName = std::string());
+
     static void play();
     static void fadeIn(int ms);
     static void pause();

@@ -1741,6 +1741,7 @@ void WorldScene::playMusic(unsigned long musicID, std::string customMusicFile, b
     if(musPath.empty())
         return;
 
+    PGE_MusPlayer::processPathArgs(musPath, m_data.meta.path + "/", m_data.meta.filename + "/");
     PGE_MusPlayer::openFile(musPath);
 
     if(fade)
