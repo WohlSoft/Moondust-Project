@@ -593,27 +593,27 @@ Please set SoX path first</source>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать файл банка WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите файл банка инструментов WOPL, чтобы использовать его</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать файл банка WOPN</translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите файл банка инструментов WOPN, чтобы использовать его</translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите файл банка SoundFont</translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите файл банка SoundFont, чтобы добавить его</translation>
     </message>
 </context>
 <context>
@@ -1261,99 +1261,99 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Удалить</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation type="unfinished">Основное</translation>
+        <translation>Основное</translation>
     </message>
     <message>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Макс. полифония</translation>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Список банков SoundFont (можно отсортировать перетаскиванием)</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Добавить</translation>
+        <translation>Добавить</translation>
     </message>
     <message>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Реверберация</translation>
     </message>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Размер комнаты</translation>
     </message>
     <message>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Гашение</translation>
     </message>
     <message>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Ширина</translation>
+        <translation>Ширина</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Уровень</translation>
+        <translation>Уровень</translation>
     </message>
     <message>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Хор</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished">Уровень</translation>
+        <translation>Уровень</translation>
     </message>
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Скорость</translation>
     </message>
     <message>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Грубина (мс)</translation>
     </message>
     <message>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Кол-во голосов (N)</translation>
     </message>
     <message>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>FluidSynth (требуется SoundFont-банк)</translation>
     </message>
     <message>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Встроенная OPN2</translation>
     </message>
     <message>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синусоидная волна</translation>
     </message>
     <message>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation>Треугольная волна</translation>
     </message>
 </context>
 <context>
