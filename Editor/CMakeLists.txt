@@ -251,6 +251,7 @@ list(APPEND PGE_EDITOR_SRCS
     editing/_dialogs/file_list_browser.cpp
     editing/_dialogs/levelfilelist.cpp
     editing/_dialogs/musicfilelist.cpp
+    editing/_dialogs/bankfilelist.cpp
     editing/_dialogs/savingnotificationdialog.cpp
     editing/_dialogs/user_data_edit.cpp
     editing/_dialogs/wld_setpoint.cpp
