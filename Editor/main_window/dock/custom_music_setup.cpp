@@ -20,6 +20,8 @@
 #include <QFileInfo>
 #include <cstdlib>
 
+#include <editing/_dialogs/bankfilelist.h>
+
 #include "custom_music_setup.h"
 #include "ui_custom_music_setup.h"
 
@@ -75,21 +77,37 @@ void CustomMusicSetup::initSetup()
     ui->gmeTrackNumber->setValue(0);
 
     ui->midiExAdlBank->setCurrentIndex(adlDefaultBank);
+    ui->midiExAdlCustomBank->clear();
     ui->midiExAdlVolumeModel->setCurrentIndex(adlDefaultVolumeModel);
     if(adlDefaultChips > 0)
         ui->midiExAdlChips->setValue(adlDefaultChips);
     ui->midiExAdlChipsEn->setChecked(adlDefaultChips > 0);
     ui->midiExAdlChips->setEnabled(ui->midiExAdlChipsEn->isChecked());
-
     ui->midiExAdlDeepTremolo->setCheckState(Qt::PartiallyChecked);
     ui->midiExAdlDeepVibrato->setCheckState(Qt::PartiallyChecked);
 
+    ui->midiExOpnCustomBank->clear();
     ui->midiExOpnVolumeModel->setCurrentIndex(opnDefaultVolumeModel);
-
     if(opnDefaultChips > 0)
         ui->midiExOpnChips->setValue(opnDefaultChips);
     ui->midiExOpnChipsEn->setChecked(opnDefaultChips > 0);
     ui->midiExOpnChips->setEnabled(ui->midiExOpnChipsEn->isChecked());
+
+    ui->midiExFluidSFList->clear();
+
+    ui->midiExFluidPolyphony->setValue(fluidDefaultPolyphony);
+    ui->midiExFluidReverb->setChecked(fluidDefaultReverb != 0);
+    ui->midiExFluidRR->setValue(fluidDefaultReverbRoom);
+    ui->midiExFluidRD->setValue(fluidDefaultReverbDamp);
+    ui->midiExFluidRW->setValue(fluidDefaultReverbWidth);
+    ui->midiExFluidRL->setValue(fluidDefaultReverbLevel);
+
+    ui->midiExFluidChorus->setChecked(fluidDefaultChorus != 0);
+    ui->midiExFluidCN->setValue(fluidDefaultChorusN);
+    ui->midiExFluidCL->setValue(fluidDefaultChorusLevel);
+    ui->midiExFluidCS->setValue(fluidDefaultChorusSpeed);
+    ui->midiExFluidCD->setValue(fluidDefaultChorusDepth);
+    ui->midiExFluidCT->setCurrentIndex(fluidDefaultChorusType);
 
     blockSignals(false);
 }
@@ -136,7 +154,7 @@ void CustomMusicSetup::parseSettings()
     m_musicName = s[0];
     m_musicArgs = s[1];
 
-#define ARG_BUFFER_SIZE    1024
+    const size_t ARG_BUFFER_SIZE = 4096;
     char arg[ARG_BUFFER_SIZE];
     char type = '-';
     size_t maxlen = 0;
@@ -248,6 +266,27 @@ void CustomMusicSetup::parseSettings()
                             ui->midiExOpnChips->setValue(value);
                             ui->midiExOpnChipsEn->setChecked(true);
                         }
+                        else if(ui->midiSynth->currentData().toInt() == MIDI_Fluidsynth) // Chorus
+                        {
+                            switch(arg[0])
+                            {
+                            case 'n':
+                                ui->midiExFluidCN->setValue(QString(arg + 1).toInt());
+                                break;
+                            case 'l':
+                                ui->midiExFluidCL->setValue(QString(arg + 1).toDouble());
+                                break;
+                            case 's':
+                                ui->midiExFluidCS->setValue(QString(arg + 1).toDouble());
+                                break;
+                            case 'd':
+                                ui->midiExFluidCD->setValue(QString(arg + 1).toDouble());
+                                break;
+                            case 't':
+                                setCurrentData(ui->midiExFluidCT, QString(arg + 1).toInt());
+                                break;
+                            }
+                        }
                         break;
                     case 'f':
                         // setup->four_op_channels = value;
@@ -291,16 +330,50 @@ void CustomMusicSetup::parseSettings()
                         break;
                     case 'r':
                         // setup->full_brightness_range = value;
+                        if(ui->midiSynth->currentData().toInt() == MIDI_Fluidsynth) // Reverb
+                        {
+                            switch(arg[0])
+                            {
+                            case 'r':
+                                ui->midiExFluidRR->setValue(QString(arg + 1).toDouble());
+                                break;
+                            case 'd':
+                                ui->midiExFluidRD->setValue(QString(arg + 1).toDouble());
+                                break;
+                            case 'w':
+                                ui->midiExFluidRW->setValue(QString(arg + 1).toDouble());
+                                break;
+                            case 'l':
+                                ui->midiExFluidRL->setValue(QString(arg + 1).toDouble());
+                                break;
+                            }
+                        }
                         break;
                     case 'p':
                         // setup->soft_pan = value;
+                        if(ui->midiSynth->currentData().toInt() == MIDI_Fluidsynth) // Polyphony
+                            ui->midiExFluidPolyphony->setValue(value);
                         break;
                     case 'e':
                         // setup->emulator = value;
                         break;
                     case 'x':
-//                        if(arg[0] == '=')
-//                            SDL_strlcpy(setup->custom_bank_path, arg + 1, (ARG_BUFFER_SIZE - 1));
+                        if(arg[0] == '=')
+                        {
+                            QString p = QString(arg + 1);
+                            p.remove("{e}"); // Remove the "{e}" macro
+                            if(ui->midiSynth->currentData().toInt() == MIDI_ADLMIDI)
+                                ui->midiExAdlCustomBank->setText(p); // WOPL bank
+                            else if(ui->midiSynth->currentData().toInt() == MIDI_OPNMIDI)
+                                ui->midiExOpnCustomBank->setText(p); // WOPN bank
+                            else if(ui->midiSynth->currentData().toInt() == MIDI_Fluidsynth) // Ordered list of custom sound fonts
+                            {
+                                ui->midiExFluidSFList->clear();
+                                auto l = p.split("&");
+                                for(auto &q : l)
+                                    ui->midiExFluidSFList->addItem(q);
+                            }
+                        }
                         break;
                     case '\0':
                         break;
@@ -329,7 +402,6 @@ void CustomMusicSetup::parseSettings()
     default:
         break;
     }
-#undef ARG_BUFFER_SIZE
 
     blockSignals(false);
 }
@@ -348,12 +420,18 @@ static int checkboxToInt(QCheckBox *c)
     }
 }
 
+static int checkboxToInt(QGroupBox *c)
+{
+    return c->isChecked() ? 1 : 0;
+}
+
 void CustomMusicSetup::buildSettings()
 {
     m_musicArgs.clear();
     if(m_type == MIDI || m_type == ADLMIDI)
     {
         int v;
+        QString b;
 
         v = ui->midiSynth->currentData().toInt();
         m_musicArgs += QString("s%1;").arg(v);
@@ -361,9 +439,15 @@ void CustomMusicSetup::buildSettings()
         switch(v)
         {
         case MIDI_ADLMIDI:
-            v = ui->midiExAdlBank->currentData().toInt();
-            if(v != adlDefaultBank)
-                m_musicArgs += QString("b%1;").arg(ui->midiExAdlBank->currentData().toInt());
+            b = ui->midiExAdlCustomBank->text();
+            if(!b.isEmpty())
+                m_musicArgs += QString("x={e}%1;").arg(b);
+            else
+            {
+                v = ui->midiExAdlBank->currentData().toInt();
+                if(v != adlDefaultBank)
+                    m_musicArgs += QString("b%1;").arg(ui->midiExAdlBank->currentData().toInt());
+            }
 
             v = ui->midiExAdlChips->value();
             if(ui->midiExAdlChipsEn->isChecked())
@@ -380,6 +464,7 @@ void CustomMusicSetup::buildSettings()
             v = checkboxToInt(ui->midiExAdlDeepVibrato);
             if(v >= 0)
                 m_musicArgs += QString("v%1;").arg(v);
+
             break;
 
         case MIDI_OPNMIDI:
@@ -390,6 +475,70 @@ void CustomMusicSetup::buildSettings()
             v = ui->midiExOpnChips->value();
             if(ui->midiExOpnChipsEn->isChecked())
                 m_musicArgs += QString("c%1;").arg(v);
+
+            b = ui->midiExOpnCustomBank->text();
+            if(!b.isEmpty())
+                m_musicArgs += QString("x={e}%1;").arg(b);
+
+            break;
+
+        case MIDI_Fluidsynth:
+            v = ui->midiExFluidSFList->count();
+            if(v > 0)
+            {
+                QString s;
+                for(int i = 0; i < v; i++)
+                {
+                    auto *q = ui->midiExFluidSFList->item(i);
+                    if(!q)
+                        continue;
+                    if(!s.isEmpty())
+                        s += "&";
+                    s += "{e}" + q->text();
+                }
+                m_musicArgs += QString("x=%1;").arg(s);
+            }
+
+            v = checkboxToInt(ui->midiExFluidChorus);
+            if(v >= 0)
+                m_musicArgs += QString("c%1;").arg(v);
+
+            v = ui->midiExFluidCN->value();
+            if(v != fluidDefaultChorusN)
+                m_musicArgs += QString("cn%1;").arg(v);
+
+            if(int(ui->midiExFluidCL->value() * 10000) != int(fluidDefaultChorusLevel * 10000))
+                m_musicArgs += QString("cl%1;").arg(ui->midiExFluidCL->value());
+
+            if(int(ui->midiExFluidCS->value() * 10000) != int(fluidDefaultChorusSpeed * 10000))
+                m_musicArgs += QString("cs%1;").arg(ui->midiExFluidCS->value());
+
+            if(int(ui->midiExFluidCD->value() * 10000) != int(fluidDefaultChorusDepth * 10000))
+                m_musicArgs += QString("cd%1;").arg(ui->midiExFluidCD->value());
+
+            v = ui->midiExFluidCT->currentData().toInt();
+            if(v != fluidDefaultChorusType)
+                m_musicArgs += QString("ct%1;").arg(v);
+
+            v = checkboxToInt(ui->midiExFluidReverb);
+            if(v >= 0)
+                m_musicArgs += QString("r%1;").arg(v);
+
+            if(int(ui->midiExFluidRR->value() * 10000) != int(fluidDefaultReverbRoom * 10000))
+                m_musicArgs += QString("rr%1;").arg(ui->midiExFluidRR->value());
+
+            if(int(ui->midiExFluidRD->value() * 10000) != int(fluidDefaultReverbDamp * 10000))
+                m_musicArgs += QString("rd%1;").arg(ui->midiExFluidRD->value());
+
+            if(int(ui->midiExFluidRW->value() * 10000) != int(fluidDefaultReverbWidth * 10000))
+                m_musicArgs += QString("rw%1;").arg(ui->midiExFluidRW->value());
+
+            if(int(ui->midiExFluidRL->value() * 10000) != int(fluidDefaultReverbLevel * 10000))
+                m_musicArgs += QString("rl%1;").arg(ui->midiExFluidRL->value());
+
+            v = ui->midiExFluidPolyphony->value();
+            if(v != fluidDefaultPolyphony)
+                m_musicArgs += QString("p%1;").arg(v);
 
             break;
         }
@@ -437,20 +586,22 @@ void CustomMusicSetup::updateVisibiltiy()
                                  m_type == ADLMIDI);
     ui->midiExAdlBank->setEnabled(m_type == MIDI);
     ui->midiSetupOPN->setVisible(m_type == MIDI && synType == MIDI_OPNMIDI);
+    ui->midiSetupFluid->setVisible(m_type == MIDI && synType == MIDI_Fluidsynth);
 
-    bool hasTempo = synType == MIDI_ADLMIDI || synType == MIDI_OPNMIDI;
+    bool hasTempo = synType == MIDI_ADLMIDI || synType == MIDI_OPNMIDI || synType == MIDI_Fluidsynth || synType == MIDI_Native;
 
     ui->midiTempoLabel->setVisible(hasTempo);
     ui->midiTempo->setVisible(hasTempo);
     ui->midiTempoAbs->setVisible(hasTempo);
     ui->midiTempoReset->setVisible(hasTempo);
 
-    bool hasGain = hasTempo;
+    bool hasGain = synType == MIDI_ADLMIDI || synType == MIDI_OPNMIDI || synType == MIDI_Fluidsynth;
     ui->midiGainLabel->setVisible(hasGain);
     ui->midiGain->setVisible(hasGain);
     ui->midiGainAbs->setVisible(hasGain);
     ui->midiGainReset->setVisible(hasGain);
 
+    adjustSize();
     update();
 }
 
@@ -465,6 +616,9 @@ CustomMusicSetup::CustomMusicSetup(QWidget *parent) :
 {
     ui->setupUi(this);
     retranslateLists();
+
+    QObject::connect(ui->midiExFluidSFList->model(), &QAbstractItemModel::rowsMoved,
+                     this, &CustomMusicSetup::on_midiExFluidMDragDropped);
 
     QObject::connect(ui->midiGainAbs, static_cast<void(QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
                      [this](double v)->void
@@ -563,7 +717,28 @@ void CustomMusicSetup::initLists()
     opnDefaultChips = Mix_OPNMIDI_getChipsCount();
     opnDefaultVolumeModel = Mix_OPNMIDI_getVolumeModel();
 
+    fluidDefaultPolyphony = 256;
+
+    fluidDefaultChorus = -1;
+    fluidDefaultChorusN = 3;
+    fluidDefaultChorusLevel = 2.0;
+    fluidDefaultChorusSpeed = 0.3;
+    fluidDefaultChorusDepth = 8.0;
+    fluidDefaultChorusType = 0;
+
+    fluidDefaultReverb = -1;
+    fluidDefaultReverbRoom = 0.2;
+    fluidDefaultReverbDamp = 0.0;
+    fluidDefaultReverbWidth = 0.5;
+    fluidDefaultReverbLevel = 0.9;
+
     retranslateLists();
+}
+
+void CustomMusicSetup::setDirectory(const QString &root, const QString &data)
+{
+    m_directoryRoot = root;
+    m_directoryData = data;
 }
 
 void CustomMusicSetup::setMusicPath(const QString &music)
@@ -638,11 +813,17 @@ void CustomMusicSetup::retranslateLists()
     ui->midiExOpnVolumeModel->clear();
     ui->midiExOpnVolumeModel->addItem(tr("[Auto]"), 0);
     ui->midiExOpnVolumeModel->addItem(tr("Generic", "Volume model for libADLMIDI"), 1);
-    ui->midiExOpnVolumeModel->addItem(tr("Native OPL3", "Volume model for libADLMIDI"), 2);
+    ui->midiExOpnVolumeModel->addItem(tr("Native OPN2", "Volume model for libOPNMIDI"), 2);
     ui->midiExOpnVolumeModel->addItem("DMX", 3);
     ui->midiExOpnVolumeModel->addItem("Apogee", 4);
     ui->midiExOpnVolumeModel->addItem("Win9x", 5);
     ui->midiExOpnVolumeModel->setCurrentIndex(cache);
+
+    cache = ui->midiExFluidCT->currentIndex();
+    ui->midiExFluidCT->clear();
+    ui->midiExFluidCT->addItem(tr("Sine wave", "FluidSynth Chorus type value"), 0);
+    ui->midiExFluidCT->addItem(tr("Triangle wave", "FluidSynth Chorus type value"), 1);
+    ui->midiExFluidCT->setCurrentIndex(cache);
 
     blockSignals(false);
 }
@@ -666,10 +847,22 @@ void CustomMusicSetup::on_midiGainAbs_valueChanged(double)
 
 void CustomMusicSetup::on_midiGainReset_clicked()
 {
-    ui->midiGain->setValue(200);
-    ui->midiGainAbs->setValue(2.0);
+    int synType = ui->midiSynth->currentData().toInt();
+
+    if(m_type == MIDI && synType == MIDI_Fluidsynth)
+    {
+        ui->midiGain->setValue(100);
+        ui->midiGainAbs->setValue(1.0);
+    }
+    else
+    {
+        ui->midiGain->setValue(200);
+        ui->midiGainAbs->setValue(2.0);
+    }
+
     if(!signalsBlocked())
         buildSettings();
+
     emit updateSongPlay();
 }
 
@@ -689,6 +882,23 @@ void CustomMusicSetup::on_midiTempoReset_clicked()
     if(!signalsBlocked())
         buildSettings();
     emit updateSongTempo(ui->midiTempoAbs->value());
+}
+
+
+void CustomMusicSetup::on_midiExAdlBrowsebank_clicked()
+{
+    BankFileList musicList(m_directoryRoot, ui->midiExAdlCustomBank->text(), this, BankFileList::Type_WOPL);
+    if(musicList.exec() == QDialog::Accepted)
+    {
+        ui->midiExAdlCustomBank->setText(musicList.currentFile());
+        on_midiExAdlCustomBank_editingFinished();
+    }
+}
+
+void CustomMusicSetup::on_midiExAdlCustomBank_editingFinished()
+{
+    buildSettings();
+    emit updateSongPlay();
 }
 
 void CustomMusicSetup::on_midiExAdlBank_currentIndexChanged(int)
@@ -723,6 +933,22 @@ void CustomMusicSetup::on_midiExAdlDeepTremolo_clicked(bool)
 }
 
 void CustomMusicSetup::on_midiExAdlDeepVibrato_clicked(bool)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExOpnBrowsebank_clicked()
+{
+    BankFileList musicList(m_directoryRoot, ui->midiExOpnCustomBank->text(), this, BankFileList::Type_WOPN);
+    if(musicList.exec() == QDialog::Accepted)
+    {
+        ui->midiExOpnCustomBank->setText(musicList.currentFile());
+        on_midiExOpnCustomBank_editingFinished();
+    }
+}
+
+void CustomMusicSetup::on_midiExOpnCustomBank_editingFinished()
 {
     buildSettings();
     emit updateSongPlay();
@@ -812,4 +1038,111 @@ void CustomMusicSetup::on_gmeTempoReset_clicked()
 void CustomMusicSetup::on_playMusicProxy_clicked(bool checked)
 {
     emit musicButtonClicked(checked);
+}
+
+void CustomMusicSetup::on_midiExFluidMDragDropped(QModelIndex,
+                                                  int,
+                                                  int,
+                                                  QModelIndex,
+                                                  int)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidSFAdd_clicked()
+{
+    BankFileList musicList(m_directoryRoot, ui->midiExOpnCustomBank->text(), this, BankFileList::Type_SoundFont);
+    if(musicList.exec() == QDialog::Accepted)
+    {
+        ui->midiExFluidSFList->addItem(musicList.currentFile());
+        buildSettings();
+        emit updateSongPlay();
+    }
+}
+
+void CustomMusicSetup::on_midiExFluidSFRemove_clicked()
+{
+    auto k = ui->midiExFluidSFList->selectedItems();
+    if(k.empty() || !k.first())
+        return;
+
+    auto *s = k.first();
+    ui->midiExFluidSFList->removeItemWidget(s);
+    delete s;
+
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidPolyphony_valueChanged(int)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidReverb_clicked(bool)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidRR_valueChanged(double)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidRD_valueChanged(double)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidRW_valueChanged(double)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidRL_valueChanged(double)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidChorus_clicked(bool)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidCN_valueChanged(int)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidCL_valueChanged(double)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidCS_valueChanged(double)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidCD_valueChanged(double)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExFluidCT_currentIndexChanged(int)
+{
+    buildSettings();
+    emit updateSongPlay();
 }

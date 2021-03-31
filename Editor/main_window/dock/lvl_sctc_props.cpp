@@ -704,6 +704,7 @@ void LvlSectionProps::on_musicSetup_clicked()
 
     QString musicPath = ui->LVLPropsMusicCustom->text();
     set.setMusicPath(musicPath);
+    set.setDirectory(edit->LvlData.meta.path, edit->LvlData.meta.filename);
     set.setMusicPlayState(mw()->ui->actionPlayMusic->isChecked());
 
     QObject::connect(&set, &CustomMusicSetup::musicSetupChanged, [&musicPath](const QString &music)->void
@@ -729,7 +730,8 @@ void LvlSectionProps::on_musicSetup_clicked()
         mw()->ui->actionPlayMusic->trigger();
     });
 
-
+    set.show();
+    set.adjustSize();
     int ret = set.exec();
 
     if(ret == QDialog::Accepted)

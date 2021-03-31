@@ -73,7 +73,7 @@
           <item row="1" column="0">
            <widget class="QLabel" name="label_9">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Custom bank:</string>
@@ -123,17 +123,14 @@
           <item row="1" column="1">
            <widget class="QLineEdit" name="midiExAdlCustomBank">
             <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string notr="true">&lt;WIP&gt;</string>
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="1" column="2">
            <widget class="QPushButton" name="midiExAdlBrowsebank">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Browse...</string>
@@ -264,9 +261,9 @@
            <enum>QLayout::SetMinimumSize</enum>
           </property>
           <item row="0" column="2">
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="midiExOpnBrowsebank">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Browse...</string>
@@ -284,12 +281,12 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="lineEdit_2">
+           <widget class="QLineEdit" name="midiExOpnCustomBank">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
-             <string notr="true">&lt;WIP&gt;</string>
+             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -319,7 +316,7 @@
           <item row="0" column="0">
            <widget class="QLabel" name="label_10">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="text">
              <string>Custom bank:</string>
@@ -398,7 +395,7 @@
            <enum>QLayout::SetMinimumSize</enum>
           </property>
           <item row="2" column="1">
-           <widget class="QPushButton" name="midiFluidSFRemove">
+           <widget class="QPushButton" name="midiExFluidSFRemove">
             <property name="text">
              <string>Remove</string>
             </property>
@@ -418,7 +415,17 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QSpinBox" name="midiFluid"/>
+              <widget class="QSpinBox" name="midiExFluidPolyphony">
+               <property name="minimum">
+                <number>8</number>
+               </property>
+               <property name="maximum">
+                <number>512</number>
+               </property>
+               <property name="value">
+                <number>256</number>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -446,22 +453,35 @@
           <item row="0" column="0" colspan="2">
            <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>SoundFont banks list:</string>
+             <string>SoundFont banks list (can be re-ordered by drag &amp; drop)</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QPushButton" name="midiFluidSFAdd">
+           <widget class="QPushButton" name="midiExFluidSFAdd">
             <property name="text">
              <string>Add</string>
             </property>
            </widget>
           </item>
           <item row="1" column="0" rowspan="3">
-           <widget class="QListWidget" name="midiFluidSFList"/>
+           <widget class="QListWidget" name="midiExFluidSFList">
+            <property name="dragEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="dragDropMode">
+             <enum>QAbstractItemView::InternalMove</enum>
+            </property>
+            <property name="defaultDropAction">
+             <enum>Qt::MoveAction</enum>
+            </property>
+           </widget>
           </item>
           <item row="6" column="0" colspan="2">
-           <widget class="QGroupBox" name="midiFluidReverb">
+           <widget class="QGroupBox" name="midiExFluidReverb">
             <property name="title">
              <string comment="FluidSynth option">Reverb</string>
             </property>
@@ -480,7 +500,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QDoubleSpinBox" name="midiFluidRD">
+              <widget class="QDoubleSpinBox" name="midiExFluidRD">
                <property name="decimals">
                 <number>4</number>
                </property>
@@ -507,7 +527,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QDoubleSpinBox" name="midiFluidRW">
+              <widget class="QDoubleSpinBox" name="midiExFluidRW">
                <property name="decimals">
                 <number>4</number>
                </property>
@@ -520,7 +540,7 @@
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QDoubleSpinBox" name="midiFluidRR">
+              <widget class="QDoubleSpinBox" name="midiExFluidRR">
                <property name="decimals">
                 <number>4</number>
                </property>
@@ -540,7 +560,7 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QDoubleSpinBox" name="midiFluidRL">
+              <widget class="QDoubleSpinBox" name="midiExFluidRL">
                <property name="decimals">
                 <number>4</number>
                </property>
@@ -556,7 +576,7 @@
            </widget>
           </item>
           <item row="7" column="0" colspan="2">
-           <widget class="QGroupBox" name="groupBox_2">
+           <widget class="QGroupBox" name="midiExFluidChorus">
             <property name="title">
              <string comment="FluidSynth option">Chorus</string>
             </property>
@@ -565,7 +585,7 @@
             </property>
             <layout class="QGridLayout" name="gridLayout_9" columnstretch="0,10">
              <item row="0" column="1">
-              <widget class="QSpinBox" name="fluidChorusNR"/>
+              <widget class="QSpinBox" name="midiExFluidCN"/>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_16">
@@ -582,7 +602,7 @@
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QDoubleSpinBox" name="midiFluidCS">
+              <widget class="QDoubleSpinBox" name="midiExFluidCS">
                <property name="decimals">
                 <number>4</number>
                </property>
@@ -598,7 +618,7 @@
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QDoubleSpinBox" name="midiFluidCL">
+              <widget class="QDoubleSpinBox" name="midiExFluidCL">
                <property name="decimals">
                 <number>4</number>
                </property>
@@ -625,7 +645,7 @@
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QDoubleSpinBox" name="midiFluidCD">
+              <widget class="QDoubleSpinBox" name="midiExFluidCD">
                <property name="decimals">
                 <number>4</number>
                </property>
@@ -648,18 +668,7 @@
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QComboBox" name="midiFluidCT">
-               <item>
-                <property name="text">
-                 <string comment="FluidSynth: Chorus modulation waveform type.">Sine wave</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string comment="FluidSynth: Chorus modulation waveform type.">Triangle wave</string>
-                </property>
-               </item>
-              </widget>
+              <widget class="QComboBox" name="midiExFluidCT"/>
              </item>
             </layout>
            </widget>

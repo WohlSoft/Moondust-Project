@@ -38,15 +38,37 @@ class CustomMusicSetup : public QDialog
         ADLMIDI
     };
 
-    int adlDefaultBank = -1;
-    int adlDefaultChips = -1;
-    int adlDefaultVolumeModel = -1;
-    int opnDefaultChips = -1;
-    int opnDefaultVolumeModel = -1;
+    int     adlDefaultBank = -1;
+    int     adlDefaultChips = -1;
+    int     adlDefaultVolumeModel = -1;
+
+    int     opnDefaultChips = -1;
+    int     opnDefaultVolumeModel = -1;
+
+    int     fluidDefaultPolyphony = 256;
+
+    int     fluidDefaultChorus = -1;
+    int     fluidDefaultChorusN = 3;
+    double  fluidDefaultChorusLevel = 2.0;
+    double  fluidDefaultChorusSpeed = 0.3;
+    double  fluidDefaultChorusDepth = 8.0;
+    int     fluidDefaultChorusType = 0;
+
+    int     fluidDefaultReverb = -1;
+    double  fluidDefaultReverbRoom = 0.2;
+    double  fluidDefaultReverbDamp = 0.0;
+    double  fluidDefaultReverbWidth = 0.5;
+    double  fluidDefaultReverbLevel = 0.9;
 
     QString m_music;
     QString m_musicName;
     QString m_musicArgs;
+
+    //! Absolute path to the root directory (needed for the banks and/or soundfont browsing)
+    QString m_directoryRoot;
+    //! Name of the data sub-directory (not a path) at the root directory
+    QString m_directoryData;
+
     MusicType m_type = Unsupported;
     bool m_settingsNeeded = false;
 
@@ -62,6 +84,7 @@ public:
 
     void initLists();
 
+    void setDirectory(const QString &root, const QString &data);
     void setMusicPath(const QString &music);
     void setMusicPlayState(bool checked);
     bool settingsNeeded();
@@ -89,6 +112,8 @@ private slots:
     void on_midiTempoAbs_valueChanged(double arg1);
     void on_midiTempoReset_clicked();
 
+    void on_midiExAdlBrowsebank_clicked();
+    void on_midiExAdlCustomBank_editingFinished();
     void on_midiExAdlBank_currentIndexChanged(int index);
     void on_midiExAdlVolumeModel_currentIndexChanged(int index);
     void on_midiExAdlChipsEn_clicked();
@@ -96,6 +121,8 @@ private slots:
     void on_midiExAdlDeepTremolo_clicked(bool checked);
     void on_midiExAdlDeepVibrato_clicked(bool checked);
 
+    void on_midiExOpnBrowsebank_clicked();
+    void on_midiExOpnCustomBank_editingFinished();
     void on_midiExOpnVolumeModel_currentIndexChanged(int index);
     void on_midiExOpnChipsEn_clicked();
     void on_midiExOpnChips_valueChanged(int arg1);
@@ -114,6 +141,23 @@ private slots:
     void on_gmeTempoReset_clicked();
 
     void on_playMusicProxy_clicked(bool checked);
+
+    void on_midiExFluidMDragDropped(QModelIndex sourceParent, int sourceStart, int sourceEnd, QModelIndex destinationParent, int destinationRow);
+    void on_midiExFluidSFAdd_clicked();
+    void on_midiExFluidSFRemove_clicked();
+
+    void on_midiExFluidPolyphony_valueChanged(int arg1);
+    void on_midiExFluidReverb_clicked(bool checked);
+    void on_midiExFluidRR_valueChanged(double arg1);
+    void on_midiExFluidRD_valueChanged(double arg1);
+    void on_midiExFluidRW_valueChanged(double arg1);
+    void on_midiExFluidRL_valueChanged(double arg1);
+    void on_midiExFluidChorus_clicked(bool checked);
+    void on_midiExFluidCN_valueChanged(int arg1);
+    void on_midiExFluidCL_valueChanged(double arg1);
+    void on_midiExFluidCS_valueChanged(double arg1);
+    void on_midiExFluidCD_valueChanged(double arg1);
+    void on_midiExFluidCT_currentIndexChanged(int index);
 
 private:
     Ui::CustomMusicSetup *ui;
