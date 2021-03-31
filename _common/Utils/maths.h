@@ -26,6 +26,7 @@
 #include <type_traits>
 #include <cmath>
 #include <cfloat>
+#include <cstdlib>
 #include <cstdint>
 
 namespace Maths
@@ -46,12 +47,12 @@ namespace Maths
 
     inline void clearPrecision(double &n)
     {
-        n = double(float(n));
+        n = float(n);
     }
 
     inline double clearPrecisionRet(double n)
     {
-        return double(float(n));
+        return float(n);
     }
 
     inline double roundToUp(double numToRound, double multiple)
