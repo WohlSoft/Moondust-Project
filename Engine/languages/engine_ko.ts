@@ -158,12 +158,12 @@ therefore you can use same link to get updated version.</source>
 따라서 동일한 링크를 사용하여 업데이트 된 버전을 얻을 수 있습니다.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="240"/>
+        <location filename="../data_configs/config_manager.cpp" line="247"/>
         <source>main.ini is invalid</source>
         <translation>main.ini가 잘못되었습니다</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="242"/>
+        <location filename="../data_configs/config_manager.cpp" line="249"/>
         <source>Error has occouped in main.ini in line %1.</source>
         <translation>% 1 행의 main.ini에서 오류가 발생했습니다.</translation>
     </message>
@@ -463,17 +463,17 @@ configuration packages are not found!</source>
     </message>
     <message id="MSG_PLEASEWAIT">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="545"/>
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="575"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="580"/>
         <source>Please wait...</source>
         <translation>잠시만 기다려주세요 ...</translation>
     </message>
     <message id="MSG_EPISODES_NOT_FOUND">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="662"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="677"/>
         <source>&lt;episodes not found&gt;</source>
         <translation>&lt;에피소드를 찾을 수 없음&gt;</translation>
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="713"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="730"/>
         <source>&lt;levels not found&gt;</source>
         <translation>&lt;레벨을 찾을 수 없음&gt;</translation>
     </message>

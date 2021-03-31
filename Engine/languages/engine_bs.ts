@@ -146,12 +146,12 @@ therefore you can use same link to get updated version.</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="240"/>
+        <location filename="../data_configs/config_manager.cpp" line="247"/>
         <source>main.ini is invalid</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="242"/>
+        <location filename="../data_configs/config_manager.cpp" line="249"/>
         <source>Error has occouped in main.ini in line %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -439,17 +439,17 @@ Entrance point: %2</source>
     </message>
     <message id="MSG_PLEASEWAIT">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="545"/>
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="575"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="580"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSG_EPISODES_NOT_FOUND">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="662"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="677"/>
         <source>&lt;episodes not found&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="713"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="730"/>
         <source>&lt;levels not found&gt;</source>
         <translation type="unfinished"></translation>
     </message>

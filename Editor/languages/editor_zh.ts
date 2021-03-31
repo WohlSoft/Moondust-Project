@@ -533,6 +533,33 @@ Please set SoX path first</source>
     </message>
 </context>
 <context>
+    <name>BankFileList</name>
+    <message>
+        <source>Select WOPL bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the WOPL instruments bank file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select WOPN bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the WOPN instruments bank file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select SoundFont bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the SoundFont bank file to add</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BlocksPerSecondDialog</name>
     <message>
         <source>Blocks per second calculator</source>
@@ -1057,6 +1084,102 @@ Please save them before doing anything else.</source>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>本地 OPL3</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
+        <comment>FluidSynth general options group</comment>
+        <translation type="unfinished">通用</translation>
+    </message>
+    <message>
+        <source>Max polyphony</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">新增</translation>
+    </message>
+    <message>
+        <source>Reverb</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Room size</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Damping</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished">宽度</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished">关卡</translation>
+    </message>
+    <message>
+        <source>Chorus</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished">关卡</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Depth (ms)</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voice count (N)</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FluidSynth (needed an SF2-bank)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Native OPN2</source>
+        <comment>Volume model for libOPNMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sine wave</source>
+        <comment>FluidSynth Chorus type value</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triangle wave</source>
+        <comment>FluidSynth Chorus type value</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

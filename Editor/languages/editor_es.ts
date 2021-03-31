@@ -649,6 +649,33 @@ Por favor defínala primero</translation>
     </message>
 </context>
 <context>
+    <name>BankFileList</name>
+    <message>
+        <source>Select WOPL bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the WOPL instruments bank file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select WOPN bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the WOPN instruments bank file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select SoundFont bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the SoundFont bank file to add</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BlocksPerSecondDialog</name>
     <message>
         <source>Blocks per second calculator</source>
@@ -1280,6 +1307,102 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Remover</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <comment>FluidSynth general options group</comment>
+        <translation type="unfinished">General</translation>
+    </message>
+    <message>
+        <source>Max polyphony</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished">Añadir</translation>
+    </message>
+    <message>
+        <source>Reverb</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Room size</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Damping</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Width</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished">Ancho</translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished">Nivel</translation>
+    </message>
+    <message>
+        <source>Chorus</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Level</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished">Nivel</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Depth (ms)</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voice count (N)</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FluidSynth (needed an SF2-bank)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Native OPN2</source>
+        <comment>Volume model for libOPNMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sine wave</source>
+        <comment>FluidSynth Chorus type value</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triangle wave</source>
+        <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3990,7 +4113,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Usar predeterminado</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -11375,7 +11498,7 @@ El máximo es %2.</translation>
     <message>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Usar predeterminado</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -11671,7 +11794,7 @@ Esas preferencias no van a tener efecto en un proceso de prueba hasta que se ter
     <message>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Usar predeterminado</translation>
     </message>
     <message>
         <source>Custom</source>

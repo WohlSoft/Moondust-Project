@@ -645,6 +645,39 @@ Please set SoX path first</source>
     </message>
 </context>
 <context>
+    <name>BankFileList</name>
+    <message>
+        <location filename="../editing/_dialogs/bankfilelist.cpp" line="35"/>
+        <source>Select WOPL bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/bankfilelist.cpp" line="36"/>
+        <source>Please select the WOPL instruments bank file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/bankfilelist.cpp" line="41"/>
+        <source>Select WOPN bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/bankfilelist.cpp" line="42"/>
+        <source>Please select the WOPN instruments bank file to use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/bankfilelist.cpp" line="47"/>
+        <source>Select SoundFont bank file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_dialogs/bankfilelist.cpp" line="48"/>
+        <source>Please select the SoundFont bank file to add</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BlocksPerSecondDialog</name>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="14"/>
@@ -1119,167 +1152,283 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="54"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="192"/>
         <source>Synthesizer type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="64"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="473"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="377"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="761"/>
         <source>Gain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="106"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="164"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="404"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="440"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="199"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="250"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="692"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="728"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="113"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="447"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="384"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="735"/>
         <source>Tempo:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="171"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="299"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="67"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="257"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="391"/>
         <source>Extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="183"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="364"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="79"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="322"/>
         <source>Custom bank:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="190"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="354"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="86"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="312"/>
         <source>Volume model:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="197"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="93"/>
         <source>Deep vibrato</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="210"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="106"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="217"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="113"/>
         <source>Deep tremolo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="243"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="311"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="136"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="269"/>
         <source>Browse...</source>
         <translation type="unfinished">Utforsk…</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="250"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="143"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="260"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="318"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="153"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="276"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="273"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="338"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="166"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="296"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="289"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="371"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="182"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="329"/>
         <source>Chips number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="395"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="434"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="400"/>
+        <source>Remove</source>
+        <translation type="unfinished">Fjern</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="407"/>
+        <source>General</source>
+        <comment>FluidSynth general options group</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="413"/>
+        <source>Max polyphony</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
+        <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="466"/>
+        <source>Add</source>
+        <translation type="unfinished">Legg til</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="486"/>
+        <source>Reverb</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="498"/>
+        <source>Room size</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="518"/>
+        <source>Damping</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="525"/>
+        <source>Width</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="558"/>
+        <source>Level</source>
+        <comment>FluidSynth: Reverb effect option</comment>
+        <translation type="unfinished">Nivå</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
+        <source>Chorus</source>
+        <comment>FluidSynth option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="593"/>
+        <source>Level</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished">Nivå</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="600"/>
+        <source>Speed</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="636"/>
+        <source>Depth (ms)</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="643"/>
+        <source>Voice count (N)</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="666"/>
+        <source>Type</source>
+        <comment>FluidSynth: Chorus effect option</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="683"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="583"/>
         <source>Chiptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="508"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="796"/>
         <source>Track number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="517"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="805"/>
         <source>To begin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="531"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="819"/>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="538"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="826"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="565"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="853"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="432"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="581"/>
         <source>MIDI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="614"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="789"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="615"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="790"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="616"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="791"/>
         <source>Timidity (needed a bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="617"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="792"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="622"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="638"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="793"/>
+        <source>FluidSynth (needed an SF2-bank)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="798"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="814"/>
         <source>[Auto]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="623"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="639"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="799"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="815"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="624"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="640"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="800"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="816"/>
+        <source>Native OPN2</source>
+        <comment>Volume model for libOPNMIDI</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="824"/>
+        <source>Sine wave</source>
+        <comment>FluidSynth Chorus type value</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="825"/>
+        <source>Triangle wave</source>
+        <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2649,13 +2798,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="254"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="482"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="483"/>
         <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="255"/>
-        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="483"/>
+        <location filename="../editing/_scenes/level/items/item_npc.cpp" line="484"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3311,43 +3460,43 @@ Please, check the application directory and make sure it is installed properly.<
 <context>
     <name>LevelEdit</name>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="45"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="46"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="115"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="116"/>
         <source>Please enter a level title for &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="116"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="117"/>
         <source>Saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="120"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="583"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="121"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="610"/>
         <source>Level title: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="121"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="122"/>
         <source>Make custom folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="182"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="186"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="192"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="196"/>
         <source>SMBX file version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="193"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="197"/>
         <source>Which version do you want to save as? (from 0 to 64)
 List of known SMBX versions and format codes:
 %1
@@ -3356,40 +3505,40 @@ version code must be less or equal specific code)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="249"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="276"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="253"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="280"/>
         <source>Extension is not set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="250"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="277"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="254"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="281"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="347"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="369"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="437"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="351"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="373"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="441"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="348"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="370"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="438"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="352"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="374"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="442"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="401"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="416"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="405"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="420"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="417"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="421"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
@@ -3397,48 +3546,48 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="466"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="471"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="467"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="472"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="513"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="514"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="518"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="519"/>
         <source>Loading level data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="149"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="513"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="518"/>
         <source>Abort</source>
         <translation type="unfinished">Avbryt</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="557"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="563"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="558"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="564"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="579"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="606"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="581"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="608"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3715,7 +3864,7 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/levelprops.cpp" line="94"/>
+        <location filename="../editing/edit_level/levelprops.cpp" line="98"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
@@ -7549,7 +7698,7 @@ Please save the file first.</source>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
         <location filename="../main_window/file/file_open.cpp" line="148"/>
-        <location filename="../main_window/file/file_open.cpp" line="266"/>
+        <location filename="../main_window/file/file_open.cpp" line="270"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7560,17 +7709,17 @@ Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="156"/>
+        <location filename="../main_window/file/file_open.cpp" line="160"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="210"/>
+        <location filename="../main_window/file/file_open.cpp" line="214"/>
         <source>Level is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="211"/>
+        <location filename="../main_window/file/file_open.cpp" line="215"/>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7579,12 +7728,12 @@ Expected config pack ID: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="236"/>
+        <location filename="../main_window/file/file_open.cpp" line="240"/>
         <source>World map is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="237"/>
+        <location filename="../main_window/file/file_open.cpp" line="241"/>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7593,57 +7742,57 @@ Expected config pack ID: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="267"/>
+        <location filename="../main_window/file/file_open.cpp" line="271"/>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="286"/>
+        <location filename="../main_window/file/file_open.cpp" line="290"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="287"/>
+        <location filename="../main_window/file/file_open.cpp" line="291"/>
         <source>Can&apos;t open the file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="324"/>
+        <location filename="../main_window/file/file_open.cpp" line="328"/>
         <source>Level file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="374"/>
+        <location filename="../main_window/file/file_open.cpp" line="378"/>
         <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="391"/>
+        <location filename="../main_window/file/file_open.cpp" line="395"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="409"/>
+        <location filename="../main_window/file/file_open.cpp" line="413"/>
         <source>NPC Config loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="505"/>
+        <location filename="../main_window/file/file_open.cpp" line="509"/>
         <source>Game save statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="512"/>
+        <location filename="../main_window/file/file_open.cpp" line="516"/>
         <source>Bad file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="513"/>
+        <location filename="../main_window/file/file_open.cpp" line="517"/>
         <source>This file have unknown extension</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7992,44 +8141,44 @@ File not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="72"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="74"/>
         <source>Load file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="73"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="75"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="109"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="126"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="110"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="130"/>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="133"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="154"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="134"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="155"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="180"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="202"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="181"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="203"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
@@ -8763,18 +8912,18 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="391"/>
+        <location filename="../main_window/file/file_open.cpp" line="395"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="398"/>
+        <location filename="../main_window/file/file_open.cpp" line="402"/>
         <source>Unknown values are presented</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="399"/>
+        <location filename="../main_window/file/file_open.cpp" line="403"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation type="unfinished"></translation>

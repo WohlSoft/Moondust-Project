@@ -158,12 +158,12 @@ Remarque : La plupart des paquets de configuration sont mis à jour avec PGE.
 Cependant vous pouvez utiliser le même lien pour obtenir un version plus récente.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
-        <location filename="../data_configs/config_manager.cpp" line="240"/>
+        <location filename="../data_configs/config_manager.cpp" line="247"/>
         <source>main.ini is invalid</source>
         <translation>Le fichier main.ini est invalide</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_MSG">
-        <location filename="../data_configs/config_manager.cpp" line="242"/>
+        <location filename="../data_configs/config_manager.cpp" line="249"/>
         <source>Error has occouped in main.ini in line %1.</source>
         <translation>Un erreur s&apos;est produite dans le fichier main.ini à la ligne %1.</translation>
     </message>
@@ -463,17 +463,17 @@ Point d&apos;entrée N° : %2</translation>
     </message>
     <message id="MSG_PLEASEWAIT">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="545"/>
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="575"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="580"/>
         <source>Please wait...</source>
         <translation>Veuillez patienter…</translation>
     </message>
     <message id="MSG_EPISODES_NOT_FOUND">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="662"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="677"/>
         <source>&lt;episodes not found&gt;</source>
         <translation>&lt;épisodes introuvables&gt;</translation>
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
-        <location filename="../scenes/title/ttl_main_menu.cpp" line="713"/>
+        <location filename="../scenes/title/ttl_main_menu.cpp" line="730"/>
         <source>&lt;levels not found&gt;</source>
         <translation>&lt;niveaux introuvables&gt;</translation>
     </message>
