@@ -46,8 +46,9 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
     QRect mwg = mw()->geometry();
     int GOffset = 10;
     mw()->addDockWidget(Qt::RightDockWidgetArea, this);
-    connect(mw(), SIGNAL(languageSwitched()), this, SLOT(re_translate()));
-    connect(this, SIGNAL(visibilityChanged(bool)), mw()->ui->actionLayersBox, SLOT(setChecked(bool)));
+    QObject::connect(mw(), &MainWindow::languageSwitched, this, &LvlLayersBox::re_translate);
+    QObject::connect(this, &LvlLayersBox::visibilityChanged,
+                     mw()->ui->actionLayersBox, &QAction::setChecked);
     setFloating(true);
     setGeometry(
         mwg.right() - width() - GOffset,
@@ -56,8 +57,7 @@ LvlLayersBox::LvlLayersBox(QWidget *parent) :
         height()
     );
 
-    connect(ui->LvlLayerList->model(), SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)),
-            this, SLOT(dragAndDroppedLayer(QModelIndex, int, int, QModelIndex, int)));
+    QObject::connect(ui->LvlLayerList->model(), &QAbstractItemModel::rowsMoved, this, &LvlLayersBox::dragAndDroppedLayer);
 
     m_lastVisibilityState = isVisible();
     mw()->docks_level.
