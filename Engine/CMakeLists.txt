@@ -27,6 +27,8 @@ endif()
 if(ANDROID)
     include(AndroidNdkModules)
     android_ndk_import_module_cpufeatures()
+    include(../_common/ndk-stl-config.cmake)
+    set(ANDROID_STL "c++_static")
 endif()
 
 # Version
@@ -366,11 +368,25 @@ if(ANDROID)
         ${PGE_ENGINE_SRC_ARGS}
     )
     target_compile_options(pge_engine PRIVATE -fPIC)
-    add_library(SDL2 SHARED IMPORTED DEPENDS SDL2_Local)
-    set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libSDL2.so)
+    
+        # Include own-built libraries into the APK
+    set(APK_PACK_LIBS ${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${CMAKE_BUILD_TYPE_LOWER}/${ANDROID_ABI})
+    add_custom_target(SDL_ApkPackLibs_makeDir ALL COMMAND ${CMAKE_COMMAND} -E make_directory "${APK_PACK_LIBS}")
+    
+#    add_library(SDL2 SHARED IMPORTED DEPENDS SDL2_Local)
+#    set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libSDL2.so)
 
-    add_library(hidapi SHARED IMPORTED DEPENDS SDL2_Local)
-    set_target_properties(hidapi PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libhidapi.so)
+#    add_library(hidapi SHARED IMPORTED DEPENDS SDL2_Local)
+#    set_target_properties(hidapi PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libhidapi.so)
+    add_custom_target(SDL_ApkPackLibs_SDL2 ALL
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/lib/libSDL2.so" "${APK_PACK_LIBS}"
+        DEPENDS SDL_ApkPackLibs_makeDir "${CMAKE_BINARY_DIR}/lib/libSDL2.so" AudioCodecs_Local
+    )
+    add_custom_target(SDL_ApkPackLibs_hidapi ALL
+        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/lib/libhidapi.so" "${APK_PACK_LIBS}"
+        DEPENDS SDL_ApkPackLibs_makeDir "${CMAKE_BINARY_DIR}/lib/libhidapi.so" AudioCodecs_Local
+    )
+    add_dependencies(pge_engine SDL_ApkPackLibs_SDL2 SDL_ApkPackLibs_hidapi)
 else()
     add_executable(pge_engine
         ${PGE_ENGINE_SRC_ARGS}

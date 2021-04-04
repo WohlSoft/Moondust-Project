@@ -107,18 +107,18 @@ elseif(ANDROID)
         COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
         DEPENDS SDL2_Local_Build
     )
-    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
-    set_property(TARGET SDL2LibrarySO PROPERTY
-        IMPORTED_LOCATION
-        "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
-    )
-    add_library(HIDAPILibrary SHARED IMPORTED GLOBAL)
-    set_property(TARGET HIDAPILibrary PROPERTY
-        IMPORTED_LOCATION
-        "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
-    )
-    target_link_libraries(PGE_SDL2 INTERFACE SDL2LibrarySO HIDAPILibrary)
-    target_link_libraries(PGE_SDL2_static INTERFACE SDL2LibrarySO HIDAPILibrary)
+#    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
+#    set_property(TARGET SDL2LibrarySO PROPERTY
+#        IMPORTED_LOCATION
+#        "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
+#    )
+#    add_library(HIDAPILibrary SHARED IMPORTED GLOBAL)
+#    set_property(TARGET HIDAPILibrary PROPERTY
+#        IMPORTED_LOCATION
+#        "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
+#    )
+    target_link_libraries(PGE_SDL2 INTERFACE "${CMAKE_BINARY_DIR}/lib/libSDL2.so" "${CMAKE_BINARY_DIR}/lib/libhidapi.so")
+    target_link_libraries(PGE_SDL2_static INTERFACE "${CMAKE_BINARY_DIR}/lib/libSDL2.so" "${CMAKE_BINARY_DIR}/lib/libhidapi.so")
 
 elseif(SDL2_VIA_AUTOTOOLS)
     # ============================================================
