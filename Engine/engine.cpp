@@ -231,6 +231,12 @@ bool PGEEngineApp::initSDL()
     pLogDebug("Initialization of SDL...");
     Uint32 sdlInitFlags = 0;
     int sdlMixerInitFlags = 0;
+
+#if defined(__ANDROID__) || (defined(__APPLE__) && (defined(TARGET_IPHONE_SIMULATOR) || defined(TARGET_OS_IPHONE)))
+    // Restrict the landscape orientation only
+    SDL_SetHint(SDL_HINT_ORIENTATIONS, "LandscapeLeft LandscapeRight");
+#endif
+
     // Prepare flags for SDL initialization
     sdlInitFlags |= SDL_INIT_TIMER;
     sdlInitFlags |= SDL_INIT_AUDIO;
