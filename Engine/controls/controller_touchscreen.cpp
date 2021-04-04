@@ -89,8 +89,13 @@ static struct TouchKeyMap
 
     TouchKeyMap()
     {
-        for(int it = Controller::key_BEGIN; it < Controller::key_END; it++)
-            touchKeysMap[it].cmd = static_cast<Controller::commands>(it);
+        SDL_assert(sizeof(touchKeysMap) == TouchScreenController::key_END * sizeof(KeyPos));
+        for(int it = TouchScreenController::key_BEGIN; it < TouchScreenController::key_END; it++)
+        {
+            auto &p = touchKeysMap[it];
+            p.cmd = static_cast<TouchScreenController::commands>(it);
+            SDL_assert(p.cmd >= TouchScreenController::key_BEGIN && p.cmd < TouchScreenController::key_END);
+        }
     }
 
     /**
@@ -142,6 +147,7 @@ static struct TouchKeyMap
 
         for(const auto &p : touchKeysMap)
         {
+            SDL_assert(p.cmd >= TouchScreenController::key_BEGIN && p.cmd < TouchScreenController::key_END);
             fs.heldKey[p.cmd] = false;
             if(x >= p.x1 && x <= p.x2 && y >= p.y1 && y <= p.y2)
             {
@@ -304,9 +310,13 @@ void TouchScreenController::processTouchDevice(int dev_i)
                         m_actualDevice = dev_i;
                 }
             }
+
             st.alive = (keysCount > 0);
             if(st.alive)
+            {
+                D_pLogDebug("= Finger ID=%d came", static_cast<int>(finger_id));
                 m_fingers.insert({finger_id, st});
+            }
         }
 
         D_pLogDebug("= Finger press: ID=%d, X=%.04f, Y=%.04f, P=%.04f",
@@ -318,8 +328,16 @@ void TouchScreenController::processTouchDevice(int dev_i)
     {
         if(!it->second.alive)
         {
-            for(int key = 0; key < Controller::key_END; key++)
-                updateFingerKeyState(it->second, keys, key, false);
+            for(int key = key_BEGIN; key < key_END; key++)
+            {
+                if(it->second.heldKey[key]) // Key was previously held
+                {
+                    updateFingerKeyState(it->second, keys, key, false);
+                    D_pLogDebug("= Finger Key ID=%d released (take)", static_cast<int>(key));
+                }
+            }
+            D_pLogDebug("= Finger ID=%d has gone", static_cast<int>(it->first));
+
             it = m_fingers.erase(it);
             continue;
         }
