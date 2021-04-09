@@ -300,8 +300,16 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         auto pos = it.key();
         auto &frame = it.value();
 
-                continue;
-        }
+/* FIXME: Implement the "compatibility" menu to let users manage this rule:
+ *  - Save all used frames for SMBX2 compatibility
+ *  - Save only modified frames for needs of Moondust Engine and TheXTech to keep calibrations being compact
+ */
+//        if(merge_with)
+//        {
+//            if(merge_with->frames.contains(pos) &&
+//               merge_with->frames[pos] == frame)
+//                continue;
+//        }
 
         if(!frame.used)
             continue;
