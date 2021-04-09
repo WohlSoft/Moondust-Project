@@ -300,10 +300,6 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         auto pos = it.key();
         auto &frame = it.value();
 
-        if(merge_with)
-        {
-            if(merge_with->frames.contains(pos) &&
-               merge_with->frames[pos] == frame)
                 continue;
         }
 
@@ -316,7 +312,7 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         //conf.setValue("width", frameWidth);
         conf.setValue("offsetX", frame.offsetX);
         conf.setValue("offsetY", frame.offsetY);
-        // This filed is no longer useful, the "usage" logic will use presence of the frame section in the file, however
+        // This field is no longer useful, the "usage" logic will use presence of the frame section in the file, however
         conf.setValue("used", frame.used); // Keep it writing for backward compatibility with other applications
         if(frame.isDuck)
             conf.setValue("duck", frame.isDuck);
