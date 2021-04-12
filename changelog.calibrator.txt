@@ -1,3 +1,6 @@
+dev:
+* Fixed the frames data compatibility with SMBX2 that requires all frames presented at the calibration file
+
 2.3
 * Begin the changelog
 * Behavior now is more user-friendly: automation, question boxes, menus, etc.
