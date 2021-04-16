@@ -1324,7 +1324,7 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation>Грубина (мс)</translation>
+        <translation>Глубина (мс)</translation>
     </message>
     <message>
         <source>Voice count (N)</source>

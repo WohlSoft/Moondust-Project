@@ -573,34 +573,34 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ici vous pouvez rapidement convertir vos musiques ou fichiers SFX qui &lt;br&gt;n&apos;ont pas été formatés correctement (mauvais taux d&apos;échantillonnage, mauvais codec, etc.).&lt;/p&gt;
-&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration&#x202f;: underline&#x202f;; color&#x202f;:#0000ff&#x202f;;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color :#0000ff ;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez un fichier de données WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner le fichier de données d&apos;instruments WOPL à utiliser</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez un fichier de données WOPN</translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionnez le fichier de données d&apos;instruments WOPN à utiliser</translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez un fichier de données SoundFont</translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez sélectionner le fichier de données SoundFont à ajouter</translation>
     </message>
 </context>
 <context>
@@ -754,7 +754,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Configuration name:</source>
-        <translation>Nom de la configuration&#x202f;:</translation>
+        <translation>Nom de la configuration :</translation>
     </message>
     <message>
         <source>Configuration path:</source>
@@ -1141,11 +1141,11 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <message>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Polyphonie maximale</translation>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste des fichiers de données SoundFont (peut être réorganisée par glisser-déposer)</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1154,17 +1154,17 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <message>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Réverbération</translation>
     </message>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Taille de la salle</translation>
     </message>
     <message>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Atténuation</translation>
     </message>
     <message>
         <source>Width</source>
@@ -1179,7 +1179,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <message>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Chœurs</translation>
     </message>
     <message>
         <source>Level</source>
@@ -1189,41 +1189,41 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Vitesse</translation>
     </message>
     <message>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Profondeur (ms)</translation>
     </message>
     <message>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de voix (N)</translation>
     </message>
     <message>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>FluidSynth (nécessite un fichier de données SF2)</translation>
     </message>
     <message>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>OPN2 natif</translation>
     </message>
     <message>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation>Onde sinusoïdale</translation>
     </message>
     <message>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation>Onde triangulaire</translation>
     </message>
 </context>
 <context>
@@ -1366,7 +1366,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation>Affiche divers chemins importants&#x202f;!</translation>
+        <translation>Affiche divers chemins importants !</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
@@ -2300,7 +2300,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation>Position&#x202f;: X, Y</translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
@@ -3825,7 +3825,7 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque&#x202f;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
