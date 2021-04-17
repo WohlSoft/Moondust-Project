@@ -87,16 +87,22 @@ void MsgBoxPreview::paintEvent(QPaintEvent *e)
         }
         else
         {
-            for(A = 1; A <= int(SuperText.size()) && A < 27; A++)
+            for(A = 1; A <= int(SuperText.size()) && A <= 27; A++)
             {
                 auto c = SuperText[A - 1];
+
+                if(B == 0 && A >= 27)
+                    break;
+
                 if(A == SuperText.size())
                 {
                     if(A < 28)
                         B = A;
                 }
                 else if(c == ' ')
+                {
                     B = A;
+                }
                 else if(c == '\n')
                 {
                     B = A;
