@@ -541,27 +541,27 @@ Please set SoX path first</source>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати файл банку WOPL</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть файл банку інструментів WOPL для того, щоб використати його</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати файл банку WOPN</translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть файл банку інструментів WOPN для того, щоб використати його</translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть файл банку SoundFont</translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть файл банку SoundFont для того, щоб додати його</translation>
     </message>
 </context>
 <context>
@@ -1102,11 +1102,11 @@ Please save them before doing anything else.</source>
     <message>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Макс. поліфонія</translation>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
+        <translation>Список банків SoundFont (можливо відсортувати перетаскуванням)</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1115,17 +1115,17 @@ Please save them before doing anything else.</source>
     <message>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Реверберація</translation>
     </message>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Розмір кімнати</translation>
     </message>
     <message>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Гасіння</translation>
     </message>
     <message>
         <source>Width</source>
@@ -1140,7 +1140,7 @@ Please save them before doing anything else.</source>
     <message>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Хор</translation>
     </message>
     <message>
         <source>Level</source>
@@ -1150,41 +1150,41 @@ Please save them before doing anything else.</source>
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Швидкість</translation>
     </message>
     <message>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Глибина (мс)</translation>
     </message>
     <message>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>К-ість голосів (N)</translation>
     </message>
     <message>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>FluidSynth (потрібен SoundFont-банк)</translation>
     </message>
     <message>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вбудована OPN2</translation>
     </message>
     <message>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation>Синусоїдна хвиля</translation>
     </message>
     <message>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation>Трикутникова хвиля</translation>
     </message>
 </context>
 <context>
