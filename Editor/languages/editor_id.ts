@@ -5341,7 +5341,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Section 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Bagian 0</translation>
     </message>
     <message>
         <source>Apply (Enter)</source>
