@@ -267,10 +267,26 @@ bool BlockSetup::parse(IniProcessing *setup,
     default_slippery = (iTmp >= 0);
     default_slippery_value  = (iTmp >= 0) ? bool(iTmp) : false;
 
-    setup->read("default-npc-content", default_content_raw, pMerge(default_content_raw, -1));
-    iTmp = default_content_raw;
-    default_content = (iTmp >= 0);
-    default_content_value   = (iTmp >= 0) ? (iTmp < 1000 ? iTmp * -1 : iTmp - 1000) : 0;
+    if(setup->hasKey("default-content")) // New format
+    {
+        setup->read("default-content", default_content_raw, pMerge(default_content_raw, 0xFFFFFFFF));
+        iTmp = default_content_raw;
+        default_content = (iTmp != 0xFFFFFFFF);
+        default_content_value = (iTmp == 0xFFFFFFFF) ? 0 : iTmp;
+    }
+    else
+    if(setup->hasKey("default-npc-content")) // Deprecated format
+    {
+        setup->read("default-npc-content", default_content_raw, pMerge(default_content_raw, -1));
+        iTmp = default_content_raw;
+        default_content = (iTmp >= 0);
+        default_content_value   = (iTmp >= 0) ? (iTmp < 1000 ? iTmp * -1 : iTmp - 1000) : 0;
+    }
+    else if(!merge_with) // Default value
+    {
+        default_content = false;
+        default_content_value = 0;
+    }
 
 #undef pMerge
 #undef pMergeMe
