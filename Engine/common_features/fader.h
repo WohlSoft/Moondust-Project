@@ -27,6 +27,8 @@ public:
     PGE_Fader(const PGE_Fader &f);
     ~PGE_Fader();
 
+    PGE_Fader &operator=(const PGE_Fader &f);
+
     void setFade(int speed, double target, double step);
     void setRatio(double ratio);
     bool tickFader(double ticks);
@@ -40,11 +42,12 @@ public:
     int ticksLeft();
 private:
     void fadeStep();
-    double cur_ratio;
-    double target_ratio;
-    double fade_step;
-    int fadeSpeed;
-    double manual_ticks;
+
+    double cur_ratio = 0.0;
+    double target_ratio = 0.0;
+    double fade_step = 0.0;
+    int fadeSpeed = 0;
+    double manual_ticks = 0.0;
 };
 
 #endif // PGE_FADER_H

@@ -22,29 +22,12 @@
 
 #include <script/lua_engine.h>
 
-SpawnEffectDef::SpawnEffectDef()
+SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
 {
-    id = 0;
-    start_delay = 0;
-    startX = 0.0;
-    startY = 0.0;
-    animationLoops = 1;
-    delay = 0;
-    frameDelay = 64;
-    velocityX = 0.0;
-    velocityY = 0.0;
-    zIndex = -5.0L;
-    gravity = 0.0;
-    direction = 1;
-    min_vel_x = 0.0;
-    min_vel_y = 0.0;
-    max_vel_x = 0.0;
-    max_vel_y = 0.0;
-    decelerate_x = 0.0;
-    decelerate_y = 0.0;
+    this->operator=(c);
 }
 
-SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
+SpawnEffectDef &SpawnEffectDef::operator=(const SpawnEffectDef &c)
 {
     id = c.id;
     start_delay = c.start_delay;
@@ -65,6 +48,7 @@ SpawnEffectDef::SpawnEffectDef(const SpawnEffectDef &c)
     max_vel_y = c.max_vel_y;
     decelerate_x = c.decelerate_x;
     decelerate_y = c.decelerate_y;
+    return *this;
 }
 
 void SpawnEffectDef::fill(const std::string &prefix, IniProcessing *setup)

@@ -30,8 +30,9 @@
 class SpawnEffectDef
 {
 public:
-    SpawnEffectDef();
+    SpawnEffectDef() = default;
     SpawnEffectDef(const SpawnEffectDef &c);
+    SpawnEffectDef &operator=(const SpawnEffectDef &c);
     void fill(const std::string &prefix, IniProcessing *setup);
 
     //Call lua-function instead of spawning this effect
@@ -39,27 +40,27 @@ public:
 
     void lua_setSequence(luabind::object frames);
 
-    unsigned int start_delay;
+    unsigned int start_delay = 0;
 
-    unsigned long id;
-    double startX;
-    double startY;
-    int animationLoops;
-    int delay;
-    int frameDelay;
+    unsigned long id = 0;
+    double startX = 0.0;
+    double startY = 0.0;
+    int animationLoops = 1;
+    int delay =0 ;
+    int frameDelay = 0;
     std::vector<int> frame_sequence;
-    double velocityX;
-    double velocityY;
-    long double zIndex;
-    double gravity;
-    int direction;
+    double velocityX = 0.0;
+    double velocityY = 0.0;
+    long double zIndex = -5.0L;
+    double gravity = 0.0;
+    int direction = 1;
 
-    double min_vel_x;
-    double min_vel_y;
-    double max_vel_x;
-    double max_vel_y;
-    double decelerate_x;
-    double decelerate_y;
+    double min_vel_x = 0.0;
+    double min_vel_y = 0.0;
+    double max_vel_x = 0.0;
+    double max_vel_y = 0.0;
+    double decelerate_x = 0.0;
+    double decelerate_y = 0.0;
 };
 
 #endif // SPAWNEFFECTDEF_H

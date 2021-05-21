@@ -23,25 +23,25 @@
 #include <Utils/maths.h>
 
 PGE_Fader::PGE_Fader()
-{
-    cur_ratio    = 0.0;
-    target_ratio = 0.0;
-    fade_step    = 0.0;
-    fadeSpeed    = 0;
-    manual_ticks = 0;
-}
+{}
 
 PGE_Fader::PGE_Fader(const PGE_Fader &f)
+{
+    this->operator=(f);
+}
+
+PGE_Fader::~PGE_Fader()
+{}
+
+PGE_Fader &PGE_Fader::operator=(const PGE_Fader &f)
 {
     cur_ratio    = f.cur_ratio;
     target_ratio = f.target_ratio;
     fade_step    = f.fade_step;
     fadeSpeed    = f.fadeSpeed;
     manual_ticks = f.manual_ticks;
+    return *this;
 }
-
-PGE_Fader::~PGE_Fader()
-{}
 
 void PGE_Fader::setFade(int speed, double target, double step)
 {
