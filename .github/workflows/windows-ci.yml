@@ -167,7 +167,7 @@ jobs:
         mv bin-cmake-release/_packed/*.zip _packed
 
     - name: Deploy to builds.wohlsoft.ru
-      if: success()
+      if: success() && github.event_name != 'pull_request'
       shell: bash
       run: |
         if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
