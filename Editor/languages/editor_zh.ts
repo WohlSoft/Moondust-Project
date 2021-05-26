@@ -77,7 +77,7 @@
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>单关卡中最多的动画对象数量。超上限则会暂停。</translation>
+        <translation>单关卡中最多的动画对象数量，超上限则会暂停。</translation>
     </message>
     <message>
         <source>Animation items limit</source>
@@ -1021,7 +1021,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation>所使用的模拟 OPL3 芯片数量，增加数量可增加最大复音数（18 个 2-op 音色或 6 个 4-op 音色每芯片），若播放不流畅，可减少数量。</translation>
+        <translation>所使用的模拟 OPL3 芯片数量，增加芯片数量的同时可增加最大复音数（18 个 2-op 音色或 6 个 4-op 音色每芯片），若播放不流畅，可减少芯片数量。</translation>
     </message>
     <message>
         <source>Chips number:</source>
@@ -1145,7 +1145,7 @@ Please save them before doing anything else.</source>
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>合唱速度</translation>
     </message>
     <message>
         <source>Depth (ms)</source>
@@ -1747,7 +1747,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>请输入超出场景界限（像素）后要删除的对象。</translation>
+        <translation>请输入要删除场景外的对象范围（以像素为单位）。</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -1858,7 +1858,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>请输入超出场景界限（像素）后要删除的对象。</translation>
+        <translation>请输入要删除场景外的对象范围（以像素为单位）。</translation>
     </message>
     <message>
         <source>Event name</source>
@@ -2303,7 +2303,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>请输入超出场景界限（像素）后要删除的对象。</translation>
+        <translation>请输入要删除场景外的对象范围（以像素为单位）。</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -2882,10 +2882,10 @@ version code must be less or equal specific code)</source>
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation>你想保存这个格式吗？
-超出 SMBX 1.3 的数量上限可能会使SMBX发生错误 9 。
+        <translation>你想保存为此格式吗？
+超出 SMBX 1.3 的数量上限可能会使 SMBX 发生错误 9 。
 
-安装 LunaLua 可提高部分物品的上限。</translation>
+安装 LunaLua 可增加部分对象的上限。</translation>
     </message>
     <message>
         <source>File save error</source>
@@ -3026,7 +3026,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
-        <translation>复制素材到作品目录</translation>
+        <translation>复制素材到地图目录</translation>
     </message>
     <message>
         <source>Level items browser</source>
@@ -3662,7 +3662,7 @@ Do you want to continue the process?</source>
         <translation>已超出 SMBX64 标准！
 %1
 , SMBX 1.3 引擎可能异常终止！
-建议移除所有的超出对象。
+建议移除所有超出范围的对象。
 您要继续吗？</translation>
     </message>
     <message>
@@ -3783,11 +3783,11 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation>启动大地图失败，worlds 根目录中数量超出上限。</translation>
+        <translation>启动地图失败，worlds 根目录中数量超出上限。</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation>由于文件不支持，大地图启动失败。</translation>
+        <translation>由于文件不支持，因此大地图启动失败。</translation>
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
@@ -3822,7 +3822,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Margin (How far outside of the target section items can be copied, in pixels):</source>
-        <translation>范围（超出场景中需要复制的对象，以像素为单位）：</translation>
+        <translation>范围（需要在场景外复制的对象，以像素为单位）：</translation>
     </message>
     <message>
         <source>Section</source>
@@ -4494,7 +4494,7 @@ Warp entries:		%5
 Physical env. zones:	%6
 </source>
         <translation>玩家起点数量：	 %1
-砖块数量：		 %2
+砖块数量：	 %2
 背景物品数量：	 %3
 NPC 数量：	 %4
 传送点数量：	 %5
@@ -4921,7 +4921,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 0 - 瞬移：玩家将会瞬移且移动速度为 0.
 1 - 水管：各个方向的水管的入口和出口。
 2 - 门：玩家可按上键进入。
-3 - 传送门（仅限 PGE 和 TheXTech 引擎）：玩家将会瞬移，但不改变移动速度。</translation>
+3 - 传送门（仅限 PGE 和 TheXTech 引擎）：玩家将会瞬移，但移动速度不变。</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -4956,8 +4956,8 @@ does not have the required number of stars</source>
     <message>
         <source>Required number of stars
 to enter this warp</source>
-        <translation>进入此传送点需要的
-星星数量</translation>
+        <translation>进入此传送点时
+需要的星星数量</translation>
     </message>
     <message>
         <source>Warp type</source>
@@ -4966,8 +4966,8 @@ to enter this warp</source>
     <message>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
-        <translation>启用此设置后，将不显示已收集的星星数量
-和总星星数量。</translation>
+        <translation>启用此设置后，将不显示已收集
+的星星数量和总星星数量。</translation>
     </message>
     <message>
         <source>Don&apos;t show level completion amount</source>
@@ -6485,7 +6485,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation>您好！您正在试图使用 PGE 引擎测试关卡。
-PGE 引擎目前处于内测阶段，因此很多功能都未完善。如果您的关卡或地图属于 SMBX 1.3 引擎，并且要测试的是它的完整性，请您直接在 SMBX 上测试，PGE 仅限于测试 PGE 引擎本身和带 PGE 引擎专属功能的关卡。</translation>
+PGE 引擎目前处于内测阶段，因此很多功能都未完善。如果您的关卡或地图属于 SMBX 1.3 引擎，并且要测试的是它的完整性，请您直接在 SMBX 或 TheXTech 上测试，PGE 仅限于测试 PGE 引擎本身和带 PGE 引擎专属功能的关卡。</translation>
     </message>
     <message>
         <source>Sub-windows</source>
@@ -6543,7 +6543,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>请输入超出场景界限（像素）后要删除的对象。</translation>
+        <translation>请输入要删除场景外的对象范围（以像素为单位）。</translation>
     </message>
     <message>
         <source>Section has been removed</source>
@@ -6555,7 +6555,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation>请输入旋转对象后超出场景界限（像素）后要删除的砖块数量。</translation>
+        <translation>请输入在场景外删除对象之前所旋转的对象范围（以像素为单位）。</translation>
     </message>
     <message>
         <source>Select directory with custom data to import.</source>
@@ -7756,7 +7756,7 @@ All boundaries and settings of more than 21 sections will be lost.</source>
         <translation>SMBX64 标准不允许保存 %1 个场景，
 场景数量上限为 %2，
 如果你继续保存该格式的文件，
-所有超过 21 以上的场景设置将会丢失。</translation>
+所有超过 21 的场景设置将会丢失。</translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
@@ -8134,7 +8134,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid file.</source>
-        <translation>由于文件不支持，大地图启动失败。</translation>
+        <translation>由于文件不支持，因此大地图启动失败。</translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
@@ -9912,10 +9912,10 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation>你想保存这个格式吗？
+        <translation>你想保存为此格式吗？
 超出 SMBX 1.3 的数量上限可能会使 SMBX 发生错误 6。
 
-安装 LunaLua 可提高部分物品的上限。</translation>
+安装 LunaLua 可增加部分对象的上限。</translation>
     </message>
     <message>
         <source>File save error</source>
@@ -10050,11 +10050,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Credits of this episode (SMBX allows only 5 lines):</source>
-        <translation>作品作者（在SMBX 1.3 中仅限 5 行）：</translation>
+        <translation>地图作者（在SMBX 1.3 中仅限 5 行）：</translation>
     </message>
     <message>
         <source>Episode title:</source>
-        <translation>作品标题：</translation>
+        <translation>地图标题：</translation>
     </message>
     <message>
         <source>Restart last level after fail</source>
@@ -10198,8 +10198,8 @@ therefore you can use same link to get updated version</source>
     <message>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>选择输出路径
-（留空则输出在相同目录）</translation>
+        <translation>选择输出目录
+（留空则输出在相同文件夹）</translation>
     </message>
     <message>
         <source>Start</source>
@@ -10211,7 +10211,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>搜索子目录图片</translation>
+        <translation>搜索子目录中的图片</translation>
     </message>
     <message>
         <source>Close</source>
@@ -10227,7 +10227,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>选择 SMBX 的 GIF 图像输入路径</translation>
+        <translation>选择 SMBX 的 GIF 图像输入目录</translation>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
@@ -10297,7 +10297,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>搜索子目录图片</translation>
+        <translation>搜索子目录中的图片</translation>
     </message>
     <message>
         <source>Close</source>
