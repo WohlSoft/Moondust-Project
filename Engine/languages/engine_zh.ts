@@ -79,13 +79,13 @@ Download: %1
 Note: most of config packs are updates togeter with PGE,
 therefore you can use same link to get updated version.</source>
         <translation>您的配置包版本过旧。
-编辑器即将启动，但您会在对象和设置中遇到问题。
+编辑器即将启动，但您会在游戏中遇到问题。
 
 请下载并安装最新版本的配置包：
 
 下载： %1
 
-注：部分配置包和PGE同步更新，
+注：部分配置包和月尘引擎同步更新，
 确保可以在同一链接里下载到新版本。</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
@@ -116,7 +116,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="387"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>由于内存不足，因此引擎已停止运行！请关闭其他应用再重新开始游戏。</translation>
+        <translation>由于内存不足，因此引擎已停止运行！请关闭其他应用后重新启动游戏。</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="423"/>
@@ -190,7 +190,7 @@ and retry your recent actions to get more detailed information.</source>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="622"/>
         <source>Engine has been interrupted</source>
-        <translation>引擎已损坏</translation>
+        <translation>引擎已中断</translation>
     </message>
     <message id="GAMEOVER_TITLE">
         <location filename="../scenes/scene_gameover.cpp" line="56"/>
@@ -264,7 +264,7 @@ and retry your recent actions to get more detailed information.</source>
         <source>Fatal error: Impossible to find start section.
 Did you placed player start point (or entrance warp point) too far off of the section(s)?</source>
         <translation>错误：无法找到起点。
-请问您将起点（或者传送入口）放在场景以外的范围了吗？</translation>
+请问您将起点（或者传送入口）放在场景外了吗？</translation>
     </message>
     <message id="WLD_MENU_PAUSE_TTL">
         <location filename="../scenes/scene_world.cpp" line="618"/>
@@ -447,7 +447,7 @@ Did you placed player start point (or entrance warp point) too far off of the se
     <message id="MSG_EPISODES_NOT_FOUND">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="677"/>
         <source>&lt;episodes not found&gt;</source>
-        <translation>&lt;未找到作品&gt;</translation>
+        <translation>&lt;未找到地图&gt;</translation>
     </message>
     <message id="MSG_LEVELS_NOT_FOUND">
         <location filename="../scenes/title/ttl_main_menu.cpp" line="730"/>
@@ -479,7 +479,7 @@ configuration packages are not found!</source>
         <location filename="../main.cpp" line="295"/>
         <location filename="../main.cpp" line="480"/>
         <source>No opened files</source>
-        <translation>无已打开文件</translation>
+        <translation>未打开文件</translation>
     </message>
     <message id="ERROR_FAIL_START_WLD">
         <location filename="../main.cpp" line="316"/>
@@ -531,7 +531,7 @@ Exit into:
 Entrance point: %2</source>
         <translation>传送出口
 
-出口到：
+出口点：
 %1
 
 入口点 #：%2</translation>
