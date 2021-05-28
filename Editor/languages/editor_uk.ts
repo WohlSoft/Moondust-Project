@@ -2757,72 +2757,72 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
-        <translation>Утиліта LazyFix</translation>
+        <translation type="vanished">Утиліта LazyFix</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation type="vanished">Закрити</translation>
     </message>
     <message>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Папка, яка містить GIF-файли SMBX (*.gif і *m.gif)</translation>
+        <translation type="vanished">Папка, яка містить GIF-файли SMBX (*.gif і *m.gif)</translation>
     </message>
     <message>
         <source>Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation>Вихідна папка, в яку будуть збережені виправлені зображення
+        <translation type="vanished">Вихідна папка, в яку будуть збережені виправлені зображення
 (якщо поле пусте, вихідні файли будуть перезаписані із створенням рез. копії)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Шукати в підпапках</translation>
+        <translation type="vanished">Шукати в підпапках</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Огляд</translation>
+        <translation type="vanished">Огляд</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Прапори</translation>
+        <translation type="vanished">Прапори</translation>
     </message>
     <message>
         <source>Don&apos;t create back-up</source>
-        <translation>Не створювати рез. копію</translation>
+        <translation type="vanished">Не створювати рез. копію</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Старт</translation>
+        <translation type="vanished">Старт</translation>
     </message>
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Ця утиліта створена для того, щоб виправляти ліниво створені маски зображень/спрайтів SMBX. Ця утиліта коректує маску методом порівняння кольорів. Зображення будуть перезаписані, але при цьому завжди створюється резервна копія. Якщо конвертація закінчиться невдало, ви завжди зможете відновити вихідні зображення.</translation>
+        <translation type="vanished">Ця утиліта створена для того, щоб виправляти ліниво створені маски зображень/спрайтів SMBX. Ця утиліта коректує маску методом порівняння кольорів. Зображення будуть перезаписані, але при цьому завжди створюється резервна копія. Якщо конвертація закінчиться невдало, ви завжди зможете відновити вихідні зображення.</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Відкрити вихідну папку</translation>
+        <translation type="vanished">Відкрити вихідну папку</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Відкрити цільову папку</translation>
+        <translation type="vanished">Відкрити цільову папку</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Вихідна папка не вказана</translation>
+        <translation type="vanished">Вихідна папка не вказана</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Будь ласка, вкажіть вихідну папку</translation>
+        <translation type="vanished">Будь ласка, вкажіть вихідну папку</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Утиліта не знайдена</translation>
+        <translation type="vanished">Утиліта не знайдена</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Не можу запустити програму:
+        <translation type="vanished">Не можу запустити програму:
 %1
 Будь ласка, перевірте папку з програмою та впевніться, чи вона встановлена правильно.</translation>
     </message>
@@ -6421,6 +6421,20 @@ ID конфіг-пакету карти світу: %3
         <source>Editor, version %1</source>
         <translation>Редагувач, версія %1</translation>
     </message>
+    <message>
+        <source>Moondust Maintainer is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the Moondust Maintainer application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -9527,82 +9541,82 @@ Do you want to save your changes?</source>
     <name>gifs2png_gui</name>
     <message>
         <source>Convert masked GIFs into the PNG</source>
-        <translation>Конвертувати маскові GIF в PNG</translation>
+        <translation type="vanished">Конвертувати маскові GIF в PNG</translation>
     </message>
     <message>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Ця консольна утиліта конвертує графіку SMBX. GIF-формат з масками прозорості в PNG-формат з власною прозорістю.</translation>
+        <translation type="vanished">Ця консольна утиліта конвертує графіку SMBX. GIF-формат з масками прозорості в PNG-формат з власною прозорістю.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Огляд</translation>
+        <translation type="vanished">Огляд</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Старт</translation>
+        <translation type="vanished">Старт</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Вихідна папка, в яку будуть збережені PNG-зображення
+        <translation type="vanished">Вихідна папка, в яку будуть збережені PNG-зображення
 (якщо поле пусте, кінцеві зображення будуть збережені там, де і вихідні зображення)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Шукати в підпапках</translation>
+        <translation type="vanished">Шукати в підпапках</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation type="vanished">Закрити</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Флаги</translation>
+        <translation type="vanished">Флаги</translation>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>Помітка: якщо ви отримали пошкоджені зображення після конвертування, будь ласка, запустіть утиліту LazyFix і повторіть конвертування</translation>
+        <translation type="vanished">Помітка: якщо ви отримали пошкоджені зображення після конвертування, будь ласка, запустіть утиліту LazyFix і повторіть конвертування</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Виберіть папку, яка містить GIF-файли у форматі SMBX (*.gif і *m.gif)</translation>
+        <translation type="vanished">Виберіть папку, яка містить GIF-файли у форматі SMBX (*.gif і *m.gif)</translation>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
-        <translation>Видалити вихідні зображення після завершення</translation>
+        <translation type="vanished">Видалити вихідні зображення після завершення</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Відкрити вихідну папку</translation>
+        <translation type="vanished">Відкрити вихідну папку</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Відкрити цільову папку</translation>
+        <translation type="vanished">Відкрити цільову папку</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Вихідна папка не вказана</translation>
+        <translation type="vanished">Вихідна папка не вказана</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Будь ласка, вкажіть вихідну папку</translation>
+        <translation type="vanished">Будь ласка, вкажіть вихідну папку</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Утиліта не знайдена</translation>
+        <translation type="vanished">Утиліта не знайдена</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Не можу запустити програму:
+        <translation type="vanished">Не можу запустити програму:
 %1
 Будь ласка, перевірте папку з програмою.</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation>Не конвертувати фони (не конвертувати background2-*.gif)</translation>
+        <translation type="vanished">Не конвертувати фони (не конвертувати background2-*.gif)</translation>
     </message>
 </context>
 <context>
@@ -9631,72 +9645,72 @@ Please, check the application directory and make sure it is installed properly.<
     <name>png2gifs_gui</name>
     <message>
         <source>Convert PNG into the masked GIFs</source>
-        <translation>Конвертувати PNG в GIF з масками</translation>
+        <translation type="vanished">Конвертувати PNG в GIF з масками</translation>
     </message>
     <message>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Це консольна утиліта, яка конвертує PNG-зображення з власною прозорістю в GIF-формат з використанням маски прозорості по стандарту SMBX.</translation>
+        <translation type="vanished">Це консольна утиліта, яка конвертує PNG-зображення з власною прозорістю в GIF-формат з використанням маски прозорості по стандарту SMBX.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Огляд</translation>
+        <translation type="vanished">Огляд</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Вихідна папка, в яку будуть збережені файли SMBX-GIF (*.gif і *m.gif)
+        <translation type="vanished">Вихідна папка, в яку будуть збережені файли SMBX-GIF (*.gif і *m.gif)
 (якщо поле пусте, то кінцеві зображення будуть збережені разом з вихідними в тій же папці)</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Старт</translation>
+        <translation type="vanished">Старт</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Шукати в підпапках</translation>
+        <translation type="vanished">Шукати в підпапках</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрити</translation>
+        <translation type="vanished">Закрити</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Флаги</translation>
+        <translation type="vanished">Флаги</translation>
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>Вкажіть папку, яка містить PNG зображення (*.png)</translation>
+        <translation type="vanished">Вкажіть папку, яка містить PNG зображення (*.png)</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
-        <translation>Видалити вихідні зображення після успішної конвертації</translation>
+        <translation type="vanished">Видалити вихідні зображення після успішної конвертації</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Відкрити вихідну папку</translation>
+        <translation type="vanished">Відкрити вихідну папку</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Відкрити кінцеву папку</translation>
+        <translation type="vanished">Відкрити кінцеву папку</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Вихідна папка не вказана</translation>
+        <translation type="vanished">Вихідна папка не вказана</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Будь ласка, вкажіть вихідну папку</translation>
+        <translation type="vanished">Будь ласка, вкажіть вихідну папку</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Утиліта не знайдена</translation>
+        <translation type="vanished">Утиліта не знайдена</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Не можу запустити програму:
+        <translation type="vanished">Не можу запустити програму:
 %1
 Будь ласка, перевірте папку з програмою.</translation>
     </message>

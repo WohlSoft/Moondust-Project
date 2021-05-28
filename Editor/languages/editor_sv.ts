@@ -2658,72 +2658,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>LazyFixTool_gui</name>
     <message>
-        <source>LazyFix tool</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Browse</source>
-        <translation type="unfinished">Bläddra</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t create back-up</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Bläddra</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
-    </message>
-    <message>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Start</translation>
     </message>
 </context>
 <context>
@@ -6095,6 +6035,20 @@ Expected config pack ID: %4</source>
         <source>Editor, version %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Moondust Maintainer is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the Moondust Maintainer application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -9039,151 +8993,23 @@ Do you want to save your changes?</source>
 <context>
     <name>gifs2png_gui</name>
     <message>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Browse</source>
-        <translation type="unfinished">Bläddra</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Bläddra</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Start</translation>
     </message>
 </context>
 <context>
     <name>png2gifs_gui</name>
     <message>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Browse</source>
-        <translation type="unfinished">Bläddra</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Bläddra</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Start</translation>
     </message>
 </context>
 <context>

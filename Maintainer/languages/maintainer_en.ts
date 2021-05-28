@@ -514,162 +514,302 @@ Supported formats:
         <translation>Convert masked GIFs into PNG</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="31"/>
+        <location filename="../Graphics/gifs2png.ui" line="109"/>
         <source>Convert files</source>
         <translation>Convert files</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="47"/>
+        <location filename="../Graphics/gifs2png.ui" line="125"/>
         <source>Drop your masked GIFs files into this window for a quick conversion</source>
         <translation>Drop your masked GIFs files into this window for a quick conversion</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="58"/>
+        <location filename="../Graphics/gifs2png.ui" line="136"/>
         <source>Batch conversion for level/episode</source>
         <translation>Batch conversion for level/episode</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="64"/>
-        <location filename="../Graphics/gifs2png.ui" line="78"/>
+        <location filename="../Graphics/gifs2png.ui" line="142"/>
+        <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Browse...</source>
         <translation>Browse...</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="71"/>
+        <location filename="../Graphics/gifs2png.ui" line="149"/>
         <source>Remove source images after conversion</source>
         <translation>Remove source images after conversion</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="85"/>
+        <location filename="../Graphics/gifs2png.ui" line="163"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
         <translation>Input directory (for example, an episode root or level custom folder):</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="92"/>
+        <location filename="../Graphics/gifs2png.ui" line="170"/>
         <source>Process all content of subdirectories</source>
         <translation>Process all content of subdirectories</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="102"/>
+        <location filename="../Graphics/gifs2png.ui" line="180"/>
         <source>Path to an input directory with a source data</source>
         <translation>Path to an input directory with a source data</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="109"/>
+        <location filename="../Graphics/gifs2png.ui" line="187"/>
         <source>Path to a configuration package directory to use</source>
         <translation>Path to a configuration package directory to use</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="116"/>
+        <location filename="../Graphics/gifs2png.ui" line="194"/>
         <source>Configuration package path (needed to find missing mask files):</source>
         <translation>Configuration package path (needed to find missing mask files):</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="129"/>
+        <location filename="../Graphics/gifs2png.ui" line="207"/>
         <source>Flags</source>
         <translation>Flags</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="143"/>
+        <location filename="../Graphics/gifs2png.ui" line="98"/>
         <source>What do you want?</source>
         <translation>What do you want?</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="163"/>
-        <location filename="../Graphics/gifs2png.cpp" line="278"/>
+        <location filename="../Graphics/gifs2png.ui" line="27"/>
+        <location filename="../Graphics/gifs2png.cpp" line="283"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="170"/>
+        <location filename="../Graphics/gifs2png.ui" line="75"/>
         <source>This wizard will help you to convert graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask), into PNG with a true transparency.</source>
         <translation>This wizard will help you to convert graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask), into PNG with a true transparency.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="183"/>
+        <location filename="../Graphics/gifs2png.ui" line="34"/>
         <source>Output log</source>
         <translation>Output log</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.ui" line="217"/>
+        <location filename="../Graphics/gifs2png.ui" line="68"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="66"/>
+        <location filename="../Graphics/gifs2png.cpp" line="71"/>
         <source>Process is busy</source>
         <translation>Process is busy</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="67"/>
+        <location filename="../Graphics/gifs2png.cpp" line="72"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
         <translation>Can&apos;t convert these files while already running conversion!</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="107"/>
-        <location filename="../Graphics/gifs2png.cpp" line="115"/>
-        <location filename="../Graphics/gifs2png.cpp" line="126"/>
-        <location filename="../Graphics/gifs2png.cpp" line="135"/>
+        <location filename="../Graphics/gifs2png.cpp" line="112"/>
+        <location filename="../Graphics/gifs2png.cpp" line="120"/>
+        <location filename="../Graphics/gifs2png.cpp" line="131"/>
+        <location filename="../Graphics/gifs2png.cpp" line="140"/>
         <source>Incorrect input</source>
         <translation>Incorrect input</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="108"/>
+        <location filename="../Graphics/gifs2png.cpp" line="113"/>
         <source>Given config pack directory doesn&apos;t exist.</source>
         <translation>Given config pack directory doesn&apos;t exist.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="116"/>
+        <location filename="../Graphics/gifs2png.cpp" line="121"/>
         <source>Given config pack directory path is not a config pack.</source>
         <translation>Given config pack directory path is not a config pack.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="127"/>
+        <location filename="../Graphics/gifs2png.cpp" line="132"/>
         <source>You should give an input directory to start the conversion.</source>
         <translation>You should give an input directory to start the conversion.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="136"/>
+        <location filename="../Graphics/gifs2png.cpp" line="141"/>
         <source>Given input directory path doesn&apos;t exist.</source>
         <translation>Given input directory path doesn&apos;t exist.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="157"/>
+        <location filename="../Graphics/gifs2png.cpp" line="162"/>
         <source>Select a config pack directory</source>
         <translation>Select a config pack directory</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="176"/>
+        <location filename="../Graphics/gifs2png.cpp" line="181"/>
         <source>Select an input directory</source>
         <translation>Select an input directory</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="199"/>
+        <location filename="../Graphics/gifs2png.cpp" line="204"/>
         <source>Process was exited with a code %1.</source>
         <translation>Process was exited with a code %1.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="209"/>
+        <location filename="../Graphics/gifs2png.cpp" line="214"/>
         <source>Process was terminated</source>
         <translation>Process was terminated</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="210"/>
+        <location filename="../Graphics/gifs2png.cpp" line="215"/>
         <source>Conversion has been termiated.</source>
         <translation>Conversion has been terminated.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="215"/>
+        <location filename="../Graphics/gifs2png.cpp" line="220"/>
         <source>Unsuccess exit</source>
         <translation>Unsuccess exit</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="216"/>
+        <location filename="../Graphics/gifs2png.cpp" line="221"/>
         <source>Conversion was been completed with errors. Please look the output log for more detailed information.</source>
         <translation>Conversion has been completed with errors. Please look the output log for more detailed information.</translation>
     </message>
     <message>
-        <location filename="../Graphics/gifs2png.cpp" line="276"/>
+        <location filename="../Graphics/gifs2png.cpp" line="281"/>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+</context>
+<context>
+    <name>LazyFixTool</name>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="17"/>
+        <source>Fix bad-designed masked GIFs</source>
+        <translation>Fix bad-designed masked GIFs</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="31"/>
+        <source>Process files</source>
+        <translation>Process files</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="47"/>
+        <source>Drop your masked GIFs files into this window for a quick porcessing</source>
+        <translation>Drop your masked GIFs files into this window for a quick porcessing</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="58"/>
+        <source>Batch processing for level/episode</source>
+        <translation>Batch processing for level/episode</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="64"/>
+        <source>Input directory (for example, an episode root or level custom folder):</source>
+        <translation>Input directory (for example, an episode root or level custom folder):</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="71"/>
+        <source>Don&apos;t create backup for old images</source>
+        <translation>Don&apos;t create backup for old images</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="78"/>
+        <source>Browse...</source>
+        <translation>Browse...</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="85"/>
+        <source>Path to an input directory with a source data</source>
+        <translation>Path to an input directory with a source data</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="98"/>
+        <source>Flags</source>
+        <translation>Flags</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="105"/>
+        <source>Process all content of subdirectories</source>
+        <translation>Process all content of subdirectories</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="119"/>
+        <source>What do you want?</source>
+        <translation>What do you want?</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="126"/>
+        <location filename="../Graphics/lazyfix.cpp" line="187"/>
+        <source>Start</source>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="133"/>
+        <source>Output log</source>
+        <translation>Output log</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="167"/>
+        <source>Close</source>
+        <translation>Close</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.ui" line="174"/>
+        <source>This wizard will help you to automatically fix any SMBX 1.3 graphics (in a GIF format with the use of bitmask) that have a bad-designed invalid mask (e.g. made with a lazy effort). Masks made with a lazy effort are masks made by the copying of a front image and filling the background with white. This making method for masks gives an illusion of quick work, however, these masks are invalid and may cause strange glitches on some graphical engines and converters. After processing these sprites, all invalid masks will be turned into the valid form of the black shape as they must be, and therefore, they can be freely used everywhere without glitches.</source>
+        <translation>This wizard will help you to automatically fix any SMBX 1.3 graphics (in a GIF format with the use of bitmask) that have a bad-designed invalid mask (e.g. made with a lazy effort). Masks made with a lazy effort are masks made by the copying of a front image and filling the background with white. This making method for masks gives an illusion of quick work, however, these masks are invalid and may cause strange glitches on some graphical engines and converters. After processing these sprites, all invalid masks will be turned into the valid form of the black shape as they must be, and therefore, they can be freely used everywhere without glitches.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="65"/>
+        <source>Process is busy</source>
+        <translation>Process is busy</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="66"/>
+        <source>Can&apos;t convert these files while already running conversion!</source>
+        <translation>Can&apos;t convert these files while already running conversion!</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="102"/>
+        <location filename="../Graphics/lazyfix.cpp" line="111"/>
+        <source>Incorrect input</source>
+        <translation>Incorrect input</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="103"/>
+        <source>You should give an input directory to start the processing.</source>
+        <translation>You should give an input directory to start the processing.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="112"/>
+        <source>Given input directory path doesn&apos;t exist.</source>
+        <translation>Given input directory path doesn&apos;t exist.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="133"/>
+        <source>Select an input directory</source>
+        <translation>Select an input directory</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="155"/>
+        <source>Process was exited with a code %1.</source>
+        <translation>Process was exited with a code %1.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="165"/>
+        <source>Process was terminated</source>
+        <translation>Process was terminated</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="166"/>
+        <source>Processing has been termiated.</source>
+        <translation>Processing has been termiated.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="171"/>
+        <source>Unsuccess exit</source>
+        <translation>Unsuccess exit</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="172"/>
+        <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
+        <translation>Processing was been completed with errors. Please look the output log for more detailed information.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
@@ -723,6 +863,8 @@ Supported formats:
     </message>
     <message>
         <location filename="../main_window.ui" line="121"/>
+        <location filename="../main_window.ui" line="137"/>
+        <location filename="../main_window.ui" line="153"/>
         <source>Converts regular PNG graphics into pair of GIF files (frontend and it&apos;s mask) compatible with bitblit algorithm (required by SMBX legacy engine).</source>
         <translation>Converts regular PNG graphics into pair of GIF files (frontend and it&apos;s mask) compatible with bitblit algorithm (required by SMBX legacy engine).</translation>
     </message>
@@ -732,22 +874,32 @@ Supported formats:
         <translation>PNG to GIFs converter</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="137"/>
+        <location filename="../main_window.ui" line="140"/>
+        <source>Fix bad-designed masked GIF graphics</source>
+        <translation>Fix bad-designed masked GIF graphics</translation>
+    </message>
+    <message>
+        <location filename="../main_window.ui" line="156"/>
+        <source>Adjust graphics into a given palette</source>
+        <translation>Adjust graphics into a given palette</translation>
+    </message>
+    <message>
+        <location filename="../main_window.ui" line="169"/>
         <source>Fixes case mismatches of the paths in file system and in the references in levels, world maps and some config files.</source>
         <translation>Fixes case mismatches of the paths in file system and in the references in levels, world maps and some config files.</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="140"/>
+        <location filename="../main_window.ui" line="172"/>
         <source>Fix case sensitive paths compatibility</source>
         <translation>Fix case sensitive paths compatibility</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="150"/>
+        <location filename="../main_window.ui" line="182"/>
         <source>Language</source>
         <translation>Language</translation>
     </message>
     <message>
-        <location filename="../main_window.ui" line="170"/>
+        <location filename="../main_window.ui" line="202"/>
         <source>Quit</source>
         <translation>Quit</translation>
     </message>
@@ -757,12 +909,12 @@ Supported formats:
         <translation>Choice your action:</translation>
     </message>
     <message>
-        <location filename="../main_window.cpp" line="15"/>
+        <location filename="../main_window.cpp" line="17"/>
         <source>Under construction</source>
         <translation>Under construction</translation>
     </message>
     <message>
-        <location filename="../main_window.cpp" line="16"/>
+        <location filename="../main_window.cpp" line="18"/>
         <source>This feature is under construction, it doesn&apos;t work properly yet. It may damage some of your stuff you&apos;ll try to process. Therefore please, make a full backup of episode that you would to process by this thing.</source>
         <translation>This feature is under construction, it doesn&apos;t work properly yet. It may damage some of your stuff you&apos;ll try to process. Therefore please, make a full backup of episode that you would to process by this thing.</translation>
     </message>
@@ -775,73 +927,73 @@ Supported formats:
         <translation>Convert PNG into masked GIFs</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="31"/>
+        <location filename="../Graphics/png2gifs.ui" line="109"/>
         <source>Convert files</source>
         <translation>Convert files</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="47"/>
+        <location filename="../Graphics/png2gifs.ui" line="125"/>
         <source>Drop your PNG files into this window for a quick conversion</source>
         <translation>Drop your PNG files into this window for a quick conversion</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="58"/>
+        <location filename="../Graphics/png2gifs.ui" line="136"/>
         <source>Batch conversion for level/episode</source>
         <translation>Batch conversion for level/episode</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="64"/>
+        <location filename="../Graphics/png2gifs.ui" line="142"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
         <translation>Input directory (for example, an episode root or level custom folder):</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="71"/>
+        <location filename="../Graphics/png2gifs.ui" line="149"/>
         <source>Remove source images after conversion</source>
         <translation>Remove source images after conversion</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="78"/>
+        <location filename="../Graphics/png2gifs.ui" line="156"/>
         <source>Browse...</source>
         <translation>Browse...</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="85"/>
+        <location filename="../Graphics/png2gifs.ui" line="163"/>
         <source>Path to an input directory with a source data</source>
         <translation>Path to an input directory with a source data</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="98"/>
+        <location filename="../Graphics/png2gifs.ui" line="176"/>
         <source>Flags</source>
         <translation>Flags</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="105"/>
+        <location filename="../Graphics/png2gifs.ui" line="183"/>
         <source>Process all content of subdirectories</source>
         <translation>Process all content of subdirectories</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="119"/>
+        <location filename="../Graphics/png2gifs.ui" line="98"/>
         <source>What do you want?</source>
         <translation>What do you want?</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="139"/>
+        <location filename="../Graphics/png2gifs.ui" line="27"/>
         <location filename="../Graphics/png2gifs.cpp" line="187"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="146"/>
+        <location filename="../Graphics/png2gifs.ui" line="75"/>
         <source>This wizard will help you to convert PNG graphics with a true transparency into graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask).</source>
         <translation>This wizard will help you to convert PNG graphics with a true transparency into graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask).</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="159"/>
+        <location filename="../Graphics/png2gifs.ui" line="34"/>
         <source>Output log</source>
         <translation>Output log</translation>
     </message>
     <message>
-        <location filename="../Graphics/png2gifs.ui" line="193"/>
+        <location filename="../Graphics/png2gifs.ui" line="68"/>
         <source>Close</source>
         <translation>Close</translation>
     </message>
@@ -905,6 +1057,175 @@ Supported formats:
         <location filename="../Graphics/png2gifs.cpp" line="185"/>
         <source>Stop</source>
         <translation>Stop</translation>
+    </message>
+</context>
+<context>
+    <name>PaletteFilter</name>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="17"/>
+        <source>Palette filter</source>
+        <translation>Palette filter</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="27"/>
+        <location filename="../Graphics/palette_filter.cpp" line="210"/>
+        <source>Start</source>
+        <translation>Start</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="34"/>
+        <source>This wizard will help you to automatically adjust given graphics with a specific palette by replacing colors into most closed to any color that is available on the specified palette.</source>
+        <translation>This wizard will help you to automatically adjust given graphics with a specific palette by replacing colors into most closed to any color that is available on the specified palette.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="47"/>
+        <source>Output log</source>
+        <translation>Output log</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="81"/>
+        <source>Close</source>
+        <translation>Close</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="115"/>
+        <source>Process files</source>
+        <translation>Process files</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="131"/>
+        <source>Drop your PNG files into this window for a quick porcessing</source>
+        <translation>Drop your PNG files into this window for a quick porcessing</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="142"/>
+        <source>Batch processing for level/episode</source>
+        <translation>Batch processing for level/episode</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="148"/>
+        <source>Input directory (for example, an episode root or level custom folder):</source>
+        <translation>Input directory (for example, an episode root or level custom folder):</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="155"/>
+        <source>Don&apos;t create backup for old images</source>
+        <translation>Don&apos;t create backup for old images</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="162"/>
+        <location filename="../Graphics/palette_filter.ui" line="226"/>
+        <source>Browse...</source>
+        <translation>Browse...</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="169"/>
+        <source>Path to an input directory with a source data</source>
+        <translation>Path to an input directory with a source data</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="182"/>
+        <source>Flags</source>
+        <translation>Flags</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="189"/>
+        <source>Process all content of subdirectories</source>
+        <translation>Process all content of subdirectories</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="203"/>
+        <source>What do you want?</source>
+        <translation>What do you want?</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="210"/>
+        <source>Target palette</source>
+        <translation>Target palette</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="216"/>
+        <source>Palette reference image:</source>
+        <translation>Palette reference image:</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.ui" line="233"/>
+        <source>This is the picture that should contain all colors of the palette you want to enforce to all images you want to process. This would be a grid of colors or just a hand-made picture with manually drawn colors of the palette. All processed images will be adjusted to have the same colors as this image has.</source>
+        <translation>This is the picture that should contain all colors of the palette you want to enforce to all images you want to process. This would be a grid of colors or just a hand-made picture with manually drawn colors of the palette. All processed images will be adjusted to have the same colors as this image has.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="65"/>
+        <source>Process is busy</source>
+        <translation>Process is busy</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="66"/>
+        <source>Can&apos;t convert these files while already running conversion!</source>
+        <translation>Can&apos;t convert these files while already running conversion!</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="86"/>
+        <location filename="../Graphics/palette_filter.cpp" line="115"/>
+        <location filename="../Graphics/palette_filter.cpp" line="123"/>
+        <location filename="../Graphics/palette_filter.cpp" line="132"/>
+        <source>Incorrect input</source>
+        <translation>Incorrect input</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="87"/>
+        <location filename="../Graphics/palette_filter.cpp" line="116"/>
+        <source>You should give a PNG image with a target palette reference to start the processing.</source>
+        <translation>You should give a PNG image with a target palette reference to start the processing.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="124"/>
+        <source>You should give an input directory to start the processing.</source>
+        <translation>You should give an input directory to start the processing.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="133"/>
+        <source>Given input directory path doesn&apos;t exist.</source>
+        <translation>Given input directory path doesn&apos;t exist.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="156"/>
+        <source>Select an input directory</source>
+        <translation>Select an input directory</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="178"/>
+        <source>Process was exited with a code %1.</source>
+        <translation>Process was exited with a code %1.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="188"/>
+        <source>Process was terminated</source>
+        <translation>Process was terminated</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="189"/>
+        <source>Processing has been termiated.</source>
+        <translation>Processing has been termiated.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="194"/>
+        <source>Unsuccess exit</source>
+        <translation>Unsuccess exit</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="195"/>
+        <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
+        <translation>Processing was been completed with errors. Please look the output log for more detailed information.</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="208"/>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <location filename="../Graphics/palette_filter.cpp" line="217"/>
+        <source>Select the PNG image as a palette</source>
+        <translation>Select the PNG image as a palette</translation>
     </message>
 </context>
 <context>

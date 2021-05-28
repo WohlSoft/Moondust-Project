@@ -3372,89 +3372,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>LazyFixTool_gui</name>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="26"/>
-        <source>LazyFix tool</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="39"/>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="80"/>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="90"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="97"/>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="104"/>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="165"/>
         <source>Browse</source>
-        <translation type="unfinished">Utforsk</translation>
+        <translation type="obsolete">Utforsk</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="118"/>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="148"/>
-        <source>Don&apos;t create back-up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="155"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="172"/>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="47"/>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="58"/>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="71"/>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="71"/>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="88"/>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="88"/>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Start</translation>
     </message>
 </context>
 <context>
@@ -7867,6 +7790,23 @@ File not exist.</source>
         <source>No file loaded!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="89"/>
+        <source>Moondust Maintainer is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="90"/>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="95"/>
+        <source>Choose the Moondust Maintainer application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -11628,187 +11568,23 @@ Do you want to save your changes?</source>
 <context>
     <name>gifs2png_gui</name>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="26"/>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="39"/>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="52"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="59"/>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="69"/>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="76"/>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="89"/>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="142"/>
         <source>Browse</source>
-        <translation type="unfinished">Utforsk</translation>
+        <translation type="obsolete">Utforsk</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="156"/>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="163"/>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="177"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="191"/>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="198"/>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="48"/>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="60"/>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="73"/>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="73"/>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="90"/>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="90"/>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Start</translation>
     </message>
 </context>
 <context>
     <name>png2gifs_gui</name>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="26"/>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="53"/>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="66"/>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="132"/>
         <source>Browse</source>
-        <translation type="unfinished">Utforsk</translation>
+        <translation type="obsolete">Utforsk</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="80"/>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="94"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="101"/>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="111"/>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="125"/>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="155"/>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="165"/>
-        <source>Remove source images after successful conversion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="47"/>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="59"/>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="72"/>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="72"/>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="89"/>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="89"/>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Start</translation>
     </message>
 </context>
 <context>

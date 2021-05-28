@@ -370,14 +370,14 @@
         <translation>도구</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <location filename="../main/files_io.cpp" line="118"/>
         <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation>저장된</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <source>Configuration saved in file</source>
         <translation>파일에 저장된 구성</translation>
     </message>

@@ -380,14 +380,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <location filename="../main/files_io.cpp" line="118"/>
         <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <source>Configuration saved in file</source>
         <translation type="unfinished"></translation>
     </message>

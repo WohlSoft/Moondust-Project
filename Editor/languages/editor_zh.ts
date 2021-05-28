@@ -2729,73 +2729,73 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
-        <translation>LazyFix 工具</translation>
+        <translation type="vanished">LazyFix 工具</translation>
     </message>
     <message>
         <source>Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation>输出修复后 SMBX 的 GIF 图像目录。
+        <translation type="vanished">输出修复后 SMBX 的 GIF 图像目录。
 （留空则输出在相同目录）</translation>
     </message>
     <message>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>选择 SMBX 的 GIF 图像输入路径 (*.gif and *m.gif)</translation>
+        <translation type="vanished">选择 SMBX 的 GIF 图像输入路径 (*.gif and *m.gif)</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="vanished">关闭</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>搜索子目录图片</translation>
+        <translation type="vanished">搜索子目录图片</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>浏览</translation>
+        <translation type="vanished">浏览</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>其他选项</translation>
+        <translation type="vanished">其他选项</translation>
     </message>
     <message>
         <source>Don&apos;t create back-up</source>
-        <translation>不创建备份</translation>
+        <translation type="vanished">不创建备份</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation type="vanished">开始</translation>
     </message>
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
         <translatorcomment>翻译的不怎么样……</translatorcomment>
-        <translation>此工具可以修复错误的 SMBX 影子文件的图像，可修复包含彩色的影子文件，原有的文件将被覆盖，但这将会备份到一个新文件夹以还原文件。</translation>
+        <translation type="vanished">此工具可以修复错误的 SMBX 影子文件的图像，可修复包含彩色的影子文件，原有的文件将被覆盖，但这将会备份到一个新文件夹以还原文件。</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>打开源文件目录</translation>
+        <translation type="vanished">打开源文件目录</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>打开目标目录</translation>
+        <translation type="vanished">打开目标目录</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>源目录未设置</translation>
+        <translation type="vanished">源目录未设置</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>请设置源目录</translation>
+        <translation type="vanished">请设置源目录</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>未找到工具</translation>
+        <translation type="vanished">未找到工具</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>无法运行应用程序：
+        <translation type="vanished">无法运行应用程序：
 %1:
 请检查应用程序目录，并确保安装正确。</translation>
     </message>
@@ -6831,6 +6831,20 @@ Expected config pack ID: %4</source>
         <source>Editor, version %1</source>
         <translation>编辑器，版本 %1</translation>
     </message>
+    <message>
+        <source>Moondust Maintainer is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the Moondust Maintainer application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -10184,26 +10198,26 @@ therefore you can use same link to get updated version</source>
     <name>gifs2png_gui</name>
     <message>
         <source>Convert masked GIFs into the PNG</source>
-        <translation>将带有影子元件的 GIF 转换为 PNG</translation>
+        <translation type="vanished">将带有影子元件的 GIF 转换为 PNG</translation>
     </message>
     <message>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>此工具将带有影子元件的 GIF 格式图像转换为带有 Alpha 通道的 PNG 格式图像。</translation>
+        <translation type="vanished">此工具将带有影子元件的 GIF 格式图像转换为带有 Alpha 通道的 PNG 格式图像。</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>浏览</translation>
+        <translation type="vanished">浏览</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>选择输出目录
+        <translation type="vanished">选择输出目录
 （留空则输出在相同文件夹）</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation type="vanished">开始</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
@@ -10211,27 +10225,27 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>搜索子目录中的图片</translation>
+        <translation type="vanished">搜索子目录中的图片</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="vanished">关闭</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>其他选项</translation>
+        <translation type="vanished">其他选项</translation>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>说明：如果转换后图像损坏，请使用 LazyFix 工具修复后重试</translation>
+        <translation type="vanished">说明：如果转换后图像损坏，请使用 LazyFix 工具修复后重试</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>选择 SMBX 的 GIF 图像输入目录</translation>
+        <translation type="vanished">选择 SMBX 的 GIF 图像输入目录</translation>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
-        <translation>转换成功后删除源文件</translation>
+        <translation type="vanished">转换成功后删除源文件</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
@@ -10239,107 +10253,107 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>打开源目录</translation>
+        <translation type="vanished">打开源目录</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>打开目标目录</translation>
+        <translation type="vanished">打开目标目录</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>源目录未设置</translation>
+        <translation type="vanished">源目录未设置</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>请设置源目录</translation>
+        <translation type="vanished">请设置源目录</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>工具未找到</translation>
+        <translation type="vanished">工具未找到</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>无法运行应用程序：
+        <translation type="vanished">无法运行应用程序：
 %1:
 请检查应用程序目录，并确保安装正确。</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation>跳过大背景 （不转换 background2-*.gif）</translation>
+        <translation type="vanished">跳过大背景 （不转换 background2-*.gif）</translation>
     </message>
 </context>
 <context>
     <name>png2gifs_gui</name>
     <message>
         <source>Convert PNG into the masked GIFs</source>
-        <translation>将 PNG 转换为带有影子元件的 GIF</translation>
+        <translation type="vanished">将 PNG 转换为带有影子元件的 GIF</translation>
     </message>
     <message>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>此工具将带有 Alpha 通道的 PNG 格式图像转换到带有影子元件的 GIF 格式图像。</translation>
+        <translation type="vanished">此工具将带有 Alpha 通道的 PNG 格式图像转换到带有影子元件的 GIF 格式图像。</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>浏览</translation>
+        <translation type="vanished">浏览</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>输出 SMBX 的 GIF 图像目录（ * .gif 和 * m.gif ）
+        <translation type="vanished">输出 SMBX 的 GIF 图像目录（ * .gif 和 * m.gif ）
 （留空则输出在相同目录）</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation type="vanished">开始</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>搜索子目录中的图片</translation>
+        <translation type="vanished">搜索子目录中的图片</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>关闭</translation>
+        <translation type="vanished">关闭</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>其他选项</translation>
+        <translation type="vanished">其他选项</translation>
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>其中包含了PNG图像（ * .PNG ）输入目录</translation>
+        <translation type="vanished">其中包含了PNG图像（ * .PNG ）输入目录</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
-        <translation>转换成功后删除源文件</translation>
+        <translation type="vanished">转换成功后删除源文件</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>打开源目录</translation>
+        <translation type="vanished">打开源目录</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>打开目标目录</translation>
+        <translation type="vanished">打开目标目录</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>源目录未设置</translation>
+        <translation type="vanished">源目录未设置</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>请设置源目录</translation>
+        <translation type="vanished">请设置源目录</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>未找到工具</translation>
+        <translation type="vanished">未找到工具</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>无法运行应用程序：
+        <translation type="vanished">无法运行应用程序：
 %1:
 请检查应用程序目录，并确保安装正确。</translation>
     </message>

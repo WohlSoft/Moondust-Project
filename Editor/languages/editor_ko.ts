@@ -3400,90 +3400,73 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>LazyFixTool_gui</name>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="26"/>
         <source>LazyFix tool</source>
-        <translation>레이지픽스 도구</translation>
+        <translation type="vanished">레이지픽스 도구</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="39"/>
         <source>Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation>고친 이미지가 저장될 출력 디렉토리.
+        <translation type="vanished">고친 이미지가 저장될 출력 디렉토리.
 (이 필드를 비우면, 새로운 이미지는 백업으로 원래 이미지가 저장된 폴더에 저장됩니다)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="80"/>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>SMBX GIF파일(*.gif와 *m.gif)를 포함하는 입력 디렉토리</translation>
+        <translation type="vanished">SMBX GIF파일(*.gif와 *m.gif)를 포함하는 입력 디렉토리</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="90"/>
         <source>Close</source>
-        <translation>닫기</translation>
+        <translation type="vanished">닫기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="97"/>
         <source>Look for images in subdirectories</source>
-        <translation>하위디렉토리에서 이미지 검색</translation>
+        <translation type="vanished">하위디렉토리에서 이미지 검색</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="104"/>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="165"/>
         <source>Browse</source>
-        <translation>탐색</translation>
+        <translation type="vanished">탐색</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="118"/>
         <source>Flags</source>
-        <translation>플래그</translation>
+        <translation type="vanished">플래그</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="148"/>
         <source>Don&apos;t create back-up</source>
-        <translation>백업을 생성하지 않음</translation>
+        <translation type="vanished">백업을 생성하지 않음</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="155"/>
         <source>Start</source>
-        <translation>시작</translation>
+        <translation type="vanished">시작</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="172"/>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>이것은 SMBX 이미지 / 스프라이트에서 느리게 만들어진 마스크를 수정하는 도구입니다. 이 유틸리티는 색상 비교를 통해 마스크를 수정합니다. 원본 이미지를 덮어 쓰지만 백업이 새 디렉토리에 생성되므로 문제가 발생하면 원본을 복원 할 수 있습니다.</translation>
+        <translation type="vanished">이것은 SMBX 이미지 / 스프라이트에서 느리게 만들어진 마스크를 수정하는 도구입니다. 이 유틸리티는 색상 비교를 통해 마스크를 수정합니다. 원본 이미지를 덮어 쓰지만 백업이 새 디렉토리에 생성되므로 문제가 발생하면 원본을 복원 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="47"/>
         <source>Open Source Directory</source>
-        <translation>오픈소스 디렉토리</translation>
+        <translation type="vanished">오픈소스 디렉토리</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="58"/>
         <source>Open Target Directory</source>
-        <translation>타겟 디렉토리 열기</translation>
+        <translation type="vanished">타겟 디렉토리 열기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="71"/>
         <source>Source directory is not set</source>
-        <translation>소스 디렉토리가 설정되지 않음</translation>
+        <translation type="vanished">소스 디렉토리가 설정되지 않음</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="71"/>
         <source>Please, set the source directory</source>
-        <translation>소스 디렉토리를 설정해주세요</translation>
+        <translation type="vanished">소스 디렉토리를 설정해주세요</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="88"/>
         <source>Tool not found</source>
-        <translation>툴이 발견되지 않음</translation>
+        <translation type="vanished">툴이 발견되지 않음</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="88"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>응용 프로그램을 실행할 수 없음:
+        <translation type="vanished">응용 프로그램을 실행할 수 없음:
 %1
 응용 프로그램 디렉토리를 확인하고 올바르게 설치되었는지 확인하십시오.</translation>
     </message>
@@ -7998,6 +7981,23 @@ Please save the file first.</source>
         <source>Options</source>
         <translation>옵션</translation>
     </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="89"/>
+        <source>Moondust Maintainer is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="90"/>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="95"/>
+        <source>Choose the Moondust Maintainer application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -11830,100 +11830,81 @@ Do you want to save your changes?</source>
 <context>
     <name>gifs2png_gui</name>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="26"/>
         <source>Convert masked GIFs into the PNG</source>
-        <translation>마스크 된 GIF를 PNG로 변환</translation>
+        <translation type="vanished">마스크 된 GIF를 PNG로 변환</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="39"/>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>참고 : 변환으로 인해 이미지가 손상된 경우 LazyFix 도구를 실행하여 수정을 시도하고 다시 시도하십시오</translation>
+        <translation type="vanished">참고 : 변환으로 인해 이미지가 손상된 경우 LazyFix 도구를 실행하여 수정을 시도하고 다시 시도하십시오</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="52"/>
         <source>Close</source>
-        <translation>닫기</translation>
+        <translation type="vanished">닫기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="59"/>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>SMBX GIF 파일 (* .gif 및 * m.gif)의 입력 위치를 선택합니다</translation>
+        <translation type="vanished">SMBX GIF 파일 (* .gif 및 * m.gif)의 입력 위치를 선택합니다</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="69"/>
         <source>Look for images in subdirectories</source>
-        <translation>하위 디렉토리에서 이미지 찾기</translation>
+        <translation type="vanished">하위 디렉토리에서 이미지 찾기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="76"/>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>이 도구는 마스크를 투명 키로 사용하여 SMBX 그래픽을 GIF에서 PNG로 변환합니다.</translation>
+        <translation type="vanished">이 도구는 마스크를 투명 키로 사용하여 SMBX 그래픽을 GIF에서 PNG로 변환합니다.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="89"/>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="142"/>
         <source>Browse</source>
-        <translation>검색</translation>
+        <translation type="vanished">검색</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="156"/>
         <source>Flags</source>
-        <translation>플래그</translation>
+        <translation type="vanished">플래그</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="163"/>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>PNG 이미지의 출력 위치 선택
+        <translation type="vanished">PNG 이미지의 출력 위치 선택
 (출력 위치를 지정하지 않으면 이미지가 입력 디렉터리에 저장됩니다.)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="177"/>
         <source>Start</source>
-        <translation>스타트</translation>
+        <translation type="vanished">스타트</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="191"/>
         <source>Remove the original images after a successful conversion</source>
-        <translation>성공적인 변환 후 원본 이미지 제거</translation>
+        <translation type="vanished">성공적인 변환 후 원본 이미지 제거</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="198"/>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation>배경 변환 건너 뛰기 (background2-*. gif는 변환하지 않음)</translation>
+        <translation type="vanished">배경 변환 건너 뛰기 (background2-*. gif는 변환하지 않음)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="48"/>
         <source>Open Source Directory</source>
-        <translation>오픈 소스 디렉토리</translation>
+        <translation type="vanished">오픈 소스 디렉토리</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="60"/>
         <source>Open Target Directory</source>
-        <translation>대상 디렉토리 열기</translation>
+        <translation type="vanished">대상 디렉토리 열기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="73"/>
         <source>Source directory is not set</source>
-        <translation>입력 디렉토리가 지정되지 않았습니다</translation>
+        <translation type="vanished">입력 디렉토리가 지정되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="73"/>
         <source>Please, set the source directory</source>
-        <translation>입력 디렉토리를 지정하십시오</translation>
+        <translation type="vanished">입력 디렉토리를 지정하십시오</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="90"/>
         <source>Tool not found</source>
-        <translation>도구를 찾을 수 없습니다</translation>
+        <translation type="vanished">도구를 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="90"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>응용 프로그램을 실행할 수 없습니다.
+        <translation type="vanished">응용 프로그램을 실행할 수 없습니다.
 %1
 응용 프로그램 디렉토리를 확인하고 올바르게 설치되었는지 확인하십시오.</translation>
     </message>
@@ -11931,90 +11912,73 @@ Please, check the application directory and make sure it is installed properly.<
 <context>
     <name>png2gifs_gui</name>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="26"/>
         <source>Convert PNG into the masked GIFs</source>
-        <translation>PNG를 마스크 된 GIF로 변환</translation>
+        <translation type="vanished">PNG를 마스크 된 GIF로 변환</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="53"/>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>이 도구는 투명도가 내장 된 PNG 이미지를 별도의 투명 마스크 이미지가있는 GIF 형식의 SMBX 그래픽으로 변환합니다.</translation>
+        <translation type="vanished">이 도구는 투명도가 내장 된 PNG 이미지를 별도의 투명 마스크 이미지가있는 GIF 형식의 SMBX 그래픽으로 변환합니다.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="66"/>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="132"/>
         <source>Browse</source>
-        <translation>검색</translation>
+        <translation type="vanished">검색</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="80"/>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>GIF 파일이 저장 될 출력 디렉토리 (* .gif 및 * m.gif)
+        <translation type="vanished">GIF 파일이 저장 될 출력 디렉토리 (* .gif 및 * m.gif)
 (이 필드를 비워두면 대상 이미지가 원래 디렉토리에 저장됩니다)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="94"/>
         <source>Start</source>
-        <translation>스타트</translation>
+        <translation type="vanished">스타트</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="101"/>
         <source>Look for images in subdirectories</source>
-        <translation>하위 디렉토리에서 이미지 찾기</translation>
+        <translation type="vanished">하위 디렉토리에서 이미지 찾기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="111"/>
         <source>Close</source>
-        <translation>닫기</translation>
+        <translation type="vanished">닫기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="125"/>
         <source>Flags</source>
-        <translation>플래그</translation>
+        <translation type="vanished">플래그</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="155"/>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>PNG 이미지 (* .png)가 포함 된 입력 디렉토리</translation>
+        <translation type="vanished">PNG 이미지 (* .png)가 포함 된 입력 디렉토리</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="165"/>
         <source>Remove source images after successful conversion</source>
-        <translation>성공적인 변환 후 소스 이미지 제거</translation>
+        <translation type="vanished">성공적인 변환 후 소스 이미지 제거</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="47"/>
         <source>Open Source Directory</source>
-        <translation>오픈 소스 디렉토리</translation>
+        <translation type="vanished">오픈 소스 디렉토리</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="59"/>
         <source>Open Target Directory</source>
-        <translation>대상 디렉토리 열기</translation>
+        <translation type="vanished">대상 디렉토리 열기</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="72"/>
         <source>Source directory is not set</source>
-        <translation>소스 디렉토리가 설정되지 않았습니다</translation>
+        <translation type="vanished">소스 디렉토리가 설정되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="72"/>
         <source>Please, set the source directory</source>
-        <translation>소스 디렉토리를 설정하십시오</translation>
+        <translation type="vanished">소스 디렉토리를 설정하십시오</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="89"/>
         <source>Tool not found</source>
-        <translation>도구를 찾을 수 없습니다</translation>
+        <translation type="vanished">도구를 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="89"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>응용 프로그램을 실행할 수 없습니다.
+        <translation type="vanished">응용 프로그램을 실행할 수 없습니다.
 %1
 응용 프로그램 디렉토리를 확인하고 올바르게 설치되었는지 확인하십시오.</translation>
     </message>

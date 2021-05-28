@@ -385,14 +385,14 @@
         <translation>将判定范围地图保存为图片</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <location filename="../main/files_io.cpp" line="118"/>
         <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation>已保存</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <source>Configuration saved in file</source>
         <translation>设置已保存到文件</translation>
     </message>

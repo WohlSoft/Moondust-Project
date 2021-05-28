@@ -416,14 +416,14 @@
         <translation>Enregistrer la carte des boîtes de collision comme image</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <location filename="../main/files_io.cpp" line="118"/>
         <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation>Enregistré</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <source>Configuration saved in file</source>
         <translation>Configuration enregistrée dans un fichier</translation>
     </message>

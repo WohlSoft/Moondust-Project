@@ -2647,77 +2647,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
 </context>
 <context>
-    <name>LazyFixTool_gui</name>
-    <message>
-        <source>LazyFix tool</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Don&apos;t create back-up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>LevelEdit</name>
     <message>
         <source>Untitled %1</source>
@@ -4930,83 +4859,83 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Section 1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 1</translation>
     </message>
     <message>
         <source>Section 2</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 2</translation>
     </message>
     <message>
         <source>Section 3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 3</translation>
     </message>
     <message>
         <source>Section 4</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 4</translation>
     </message>
     <message>
         <source>Section 5</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 5</translation>
     </message>
     <message>
         <source>Section 6</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 6</translation>
     </message>
     <message>
         <source>Section 7</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 7</translation>
     </message>
     <message>
         <source>Section 8</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 8</translation>
     </message>
     <message>
         <source>Section 9</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 9</translation>
     </message>
     <message>
         <source>Section 10</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 10</translation>
     </message>
     <message>
         <source>Section 11</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 11</translation>
     </message>
     <message>
         <source>Section 12</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 12</translation>
     </message>
     <message>
         <source>Section 13</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 13</translation>
     </message>
     <message>
         <source>Section 14</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 14</translation>
     </message>
     <message>
         <source>Section 15</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 15</translation>
     </message>
     <message>
         <source>Section 16</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 16</translation>
     </message>
     <message>
         <source>Section 17</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 17</translation>
     </message>
     <message>
         <source>Section 18</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 18</translation>
     </message>
     <message>
         <source>Section 19</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 19</translation>
     </message>
     <message>
         <source>Section 20</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bagian 20</translation>
     </message>
     <message>
         <source>Offscreen exit</source>
@@ -6084,6 +6013,20 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Editor, version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moondust Maintainer is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the Moondust Maintainer application</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9024,156 +8967,6 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>gifs2png_gui</name>
-    <message>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>png2gifs_gui</name>
-    <message>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

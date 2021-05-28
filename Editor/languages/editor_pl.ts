@@ -2887,46 +2887,46 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
-        <translation>Narzędzie LazyFix</translation>
+        <translation type="vanished">Narzędzie LazyFix</translation>
     </message>
     <message>
         <source>Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation>Folder, do którego zapisane zostaną obrazy
+        <translation type="vanished">Folder, do którego zapisane zostaną obrazy
 (Jeżeli to pole pozosanie puste, obrazy zostaną zapisane do tego samego folderu, gdzie umieszczone są pliki GIF)</translation>
     </message>
     <message>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Folder, który zawiera grafiki do SMBX (*.gif i *m.gif)</translation>
+        <translation type="vanished">Folder, który zawiera grafiki do SMBX (*.gif i *m.gif)</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Zamknij</translation>
+        <translation type="vanished">Zamknij</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Szukaj obrazów w podfolderach</translation>
+        <translation type="vanished">Szukaj obrazów w podfolderach</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Przeglądaj</translation>
+        <translation type="vanished">Przeglądaj</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Flagi</translation>
+        <translation type="vanished">Flagi</translation>
     </message>
     <message>
         <source>Don&apos;t create back-up</source>
-        <translation>Nie twórz kopii zapasowej</translation>
+        <translation type="vanished">Nie twórz kopii zapasowej</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="vanished">Start</translation>
     </message>
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>To narzędzie naprawi szybko zrobione maski do używania w SMBX. To narzędie tworzy poprawne maski poprez porównywanie kolorów. Obrazy zostaną nadpisane, ale możesz je przywrócić z folderu kopii zapasowej.</translation>
+        <translation type="vanished">To narzędzie naprawi szybko zrobione maski do używania w SMBX. To narzędie tworzy poprawne maski poprez porównywanie kolorów. Obrazy zostaną nadpisane, ale możesz je przywrócić z folderu kopii zapasowej.</translation>
     </message>
     <message>
         <source>Output dir, where will be saved fixed images
@@ -2936,29 +2936,29 @@ Limity wiadomości: maksymalna długość jeden linii to 27 znaków</translation
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Otwórz folder źródłowy</translation>
+        <translation type="vanished">Otwórz folder źródłowy</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Otwórz Folder Docelowy</translation>
+        <translation type="vanished">Otwórz Folder Docelowy</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Folder źródłowy nie jest wybrany</translation>
+        <translation type="vanished">Folder źródłowy nie jest wybrany</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Proszę wybierz folder źródłowy</translation>
+        <translation type="vanished">Proszę wybierz folder źródłowy</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Narzędzie nie znalezione</translation>
+        <translation type="vanished">Narzędzie nie znalezione</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Nie można uruchomić aplikacji: 
+        <translation type="vanished">Nie można uruchomić aplikacji: 
 %1
 Proszę sprawdź folder aplikacji i upewnij się, że jest zainstalowana prawidłowo.</translation>
     </message>
@@ -7303,6 +7303,20 @@ Oczekiwany Indetyfikator pakietu konfiguracji: %4</translation>
         <source>Editor, version %1</source>
         <translation>Edytor, wersja %1</translation>
     </message>
+    <message>
+        <source>Moondust Maintainer is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the Moondust Maintainer application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -10745,50 +10759,50 @@ dlatego możesz użyć tego samego linku, aby pobać najnowszą wersję</transla
     <name>gifs2png_gui</name>
     <message>
         <source>Convert masked GIFs into the PNG</source>
-        <translation>Konwertuj obiekty GIF z maskami do PNG</translation>
+        <translation type="vanished">Konwertuj obiekty GIF z maskami do PNG</translation>
     </message>
     <message>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>To jest narzędzie, które pozwala konwertować grafikę SMBX z formatu Gif z maskami przezroczystości do formatu PNG obsługującego przezroczystość.</translation>
+        <translation type="vanished">To jest narzędzie, które pozwala konwertować grafikę SMBX z formatu Gif z maskami przezroczystości do formatu PNG obsługującego przezroczystość.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Przeglądaj</translation>
+        <translation type="vanished">Przeglądaj</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Folder, do którego zostaną zapisane obrazy PNG
+        <translation type="vanished">Folder, do którego zostaną zapisane obrazy PNG
 (jeżeli to pole pozostanie puste obazy zostaną zapisane do tego samego folderu)</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="vanished">Start</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Szukaj obrazów w podfolderach</translation>
+        <translation type="vanished">Szukaj obrazów w podfolderach</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Zamknij</translation>
+        <translation type="vanished">Zamknij</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Flagi</translation>
+        <translation type="vanished">Flagi</translation>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>Uwaga: Jeśli obrazy są niepoprawnie przekonwertowane, uruchom narzędzie LazyFix  i spróbuj konwersji ponownie</translation>
+        <translation type="vanished">Uwaga: Jeśli obrazy są niepoprawnie przekonwertowane, uruchom narzędzie LazyFix  i spróbuj konwersji ponownie</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Podaj folder, który zawiera grafiki do SMBX (*.gif i *m.gif)</translation>
+        <translation type="vanished">Podaj folder, który zawiera grafiki do SMBX (*.gif i *m.gif)</translation>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
-        <translation>Usuń obrazy użyte do konwersji po udanej konwersji</translation>
+        <translation type="vanished">Usuń obrazy użyte do konwersji po udanej konwersji</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
@@ -10796,107 +10810,107 @@ dlatego możesz użyć tego samego linku, aby pobać najnowszą wersję</transla
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Otwórz folder źródłowy</translation>
+        <translation type="vanished">Otwórz folder źródłowy</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Otwórz Folder Docelowy</translation>
+        <translation type="vanished">Otwórz Folder Docelowy</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Folder źródłowy nie jest wybrany</translation>
+        <translation type="vanished">Folder źródłowy nie jest wybrany</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Proszę wybierz folder źródłowy</translation>
+        <translation type="vanished">Proszę wybierz folder źródłowy</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Narzędzie nie znalezione</translation>
+        <translation type="vanished">Narzędzie nie znalezione</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Nie można uruchomić aplikacji: 
+        <translation type="vanished">Nie można uruchomić aplikacji: 
 %1
 Proszę sprawdź katalog aplikacji i upewnij się, że jest poprawnie zainstalowany.</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation>Pomiń konwersję tła (nie konwertuj background2-*.gif)</translation>
+        <translation type="vanished">Pomiń konwersję tła (nie konwertuj background2-*.gif)</translation>
     </message>
 </context>
 <context>
     <name>png2gifs_gui</name>
     <message>
         <source>Convert PNG into the masked GIFs</source>
-        <translation>Konwertuj PNG do GIF z maskami</translation>
+        <translation type="vanished">Konwertuj PNG do GIF z maskami</translation>
     </message>
     <message>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>To jest narzędzie, które pozwala konwertować grafikę SMBX z formatu PNG obsługującego przezroczystość przezroczystości do formatu GIF z maskami.</translation>
+        <translation type="vanished">To jest narzędzie, które pozwala konwertować grafikę SMBX z formatu PNG obsługującego przezroczystość przezroczystości do formatu GIF z maskami.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Przeglądaj</translation>
+        <translation type="vanished">Przeglądaj</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Folder, do którego zostaną zapisane obrazy GIF (*.gif i *m.gif)
+        <translation type="vanished">Folder, do którego zostaną zapisane obrazy GIF (*.gif i *m.gif)
 (jeżeli to pole pozostanie puste obazy zostaną zapisane do tego samego folderu)</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="vanished">Start</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Szukaj obrazów w podfolderach</translation>
+        <translation type="vanished">Szukaj obrazów w podfolderach</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Zamknij</translation>
+        <translation type="vanished">Zamknij</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Flagi</translation>
+        <translation type="vanished">Flagi</translation>
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>Podaj folder, który zawiera grafiki do SMBX (*.png)</translation>
+        <translation type="vanished">Podaj folder, który zawiera grafiki do SMBX (*.png)</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
-        <translation>Usuń obrazy użyte do konwersji po udanej konwersji</translation>
+        <translation type="vanished">Usuń obrazy użyte do konwersji po udanej konwersji</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Otwórz folder źródłowy</translation>
+        <translation type="vanished">Otwórz folder źródłowy</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Otwórz Folder Docelowy</translation>
+        <translation type="vanished">Otwórz Folder Docelowy</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Folder źródłowy nie jest wybrany</translation>
+        <translation type="vanished">Folder źródłowy nie jest wybrany</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Proszę ustawić katalog źródłowy</translation>
+        <translation type="vanished">Proszę ustawić katalog źródłowy</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Narzędzie nie znalezione</translation>
+        <translation type="vanished">Narzędzie nie znalezione</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Nie można uruchomić aplikacji: 
+        <translation type="vanished">Nie można uruchomić aplikacji: 
 %1
 Proszę sprawdź katalog aplikacji i upewnij się, że jest poprawnie zainstalowany.</translation>
     </message>

@@ -433,14 +433,14 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>Сохранить карту хитбоксов как картинку</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <location filename="../main/files_io.cpp" line="118"/>
         <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation>Сохранено</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="332"/>
+        <location filename="../main/settings.cpp" line="336"/>
         <source>Configuration saved in file</source>
         <translation>Конфигурация сохранена в файле</translation>
     </message>

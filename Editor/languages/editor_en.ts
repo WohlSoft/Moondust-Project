@@ -3131,7 +3131,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>LazyFixTool_gui</name>
     <message>
         <source>LazyFix tool</source>
-        <translation>LazyFix tool</translation>
+        <translation type="vanished">LazyFix tool</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
@@ -3139,7 +3139,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation type="vanished">Close</translation>
     </message>
     <message>
         <source>Walk in the sub-directories</source>
@@ -3147,11 +3147,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</translation>
+        <translation type="vanished">Input directory which contains the SMBX GIF files (*.gif and *m.gif)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Look for images in subdirectories</translation>
+        <translation type="vanished">Look for images in subdirectories</translation>
     </message>
     <message>
         <source>Make gray shades on masks is more dark</source>
@@ -3160,29 +3160,29 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation>Output directory, where the fixed images will be saved.
+        <translation type="vanished">Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Browse</translation>
+        <translation type="vanished">Browse</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Flags</translation>
+        <translation type="vanished">Flags</translation>
     </message>
     <message>
         <source>Don&apos;t create back-up</source>
-        <translation>Don&apos;t create back-up</translation>
+        <translation type="vanished">Don&apos;t create back-up</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="vanished">Start</translation>
     </message>
     <message>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>This is a tool for fixing lazily-made masks from SMBX images/sprites. This utility corrects the mask via color comparison. The original images will be overwritten, but backups will be created in a new directory so you can restore the originals if something goes wrong.</translation>
+        <translation type="vanished">This is a tool for fixing lazily-made masks from SMBX images/sprites. This utility corrects the mask via color comparison. The original images will be overwritten, but backups will be created in a new directory so you can restore the originals if something goes wrong.</translation>
     </message>
     <message>
         <source>Output dir, where will be saved fixed images
@@ -3198,29 +3198,29 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Open Source Directory</translation>
+        <translation type="vanished">Open Source Directory</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Open Target Directory</translation>
+        <translation type="vanished">Open Target Directory</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Source directory is not set</translation>
+        <translation type="vanished">Source directory is not set</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Please set the source directory</translation>
+        <translation type="vanished">Please set the source directory</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Tool not found</translation>
+        <translation type="vanished">Tool not found</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Can&apos;t run application:
+        <translation type="vanished">Can&apos;t run application:
 %1
 Please check the application directory and make sure it is installed properly.</translation>
     </message>
@@ -9984,6 +9984,22 @@ Expected config pack ID: %4</translation>
         <source>Editor, version %1</source>
         <translation>Editor, version %1</translation>
     </message>
+    <message>
+        <source>Moondust Maintainer is not found</source>
+        <translation>Moondust Maintainer is not found</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</translation>
+    </message>
+    <message>
+        <source>Choose the Moondust Maintainer application</source>
+        <translation>Choose the Moondust Maintainer application</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -14281,17 +14297,17 @@ therefore you can use same link to get updated version</source>
     <message>
         <source>Convert masked GIFs into the PNG</source>
         <translatorcomment>Fixed grammar.</translatorcomment>
-        <translation>Convert masked GIFs to PNG</translation>
+        <translation type="vanished">Convert masked GIFs to PNG</translation>
     </message>
     <message>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
         <translatorcomment>Not so necessary to convey that the result has its own transparance.</translatorcomment>
-        <translation>This tool converts SMBX graphics from GIF to PNG using the mask as a transparency key.</translation>
+        <translation type="vanished">This tool converts SMBX graphics from GIF to PNG using the mask as a transparency key.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Browse</translation>
+        <translation type="vanished">Browse</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
@@ -14305,7 +14321,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="vanished">Start</translation>
     </message>
     <message>
         <source>Walk in the sub-directories</source>
@@ -14314,32 +14330,32 @@ therefore you can use same link to get updated version</source>
     <message>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Select the output location of the PNG image(s)
+        <translation type="vanished">Select the output location of the PNG image(s)
 (If an output location isn&apos;t specified, the image(s) will be stored in the input directory)</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Look for images in subdirectories</translation>
+        <translation type="vanished">Look for images in subdirectories</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation type="vanished">Close</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Flags</translation>
+        <translation type="vanished">Flags</translation>
     </message>
     <message>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</translation>
+        <translation type="vanished">Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</translation>
     </message>
     <message>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Select the input location of the SMBX GIF files (*.gif and *m.gif)</translation>
+        <translation type="vanished">Select the input location of the SMBX GIF files (*.gif and *m.gif)</translation>
     </message>
     <message>
         <source>Remove the original images after a successful conversion</source>
-        <translation>Remove the original images after a successful conversion</translation>
+        <translation type="vanished">Remove the original images after a successful conversion</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
@@ -14347,35 +14363,35 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Open Source Directory</translation>
+        <translation type="vanished">Open Source Directory</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Open Target Directory</translation>
+        <translation type="vanished">Open Target Directory</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Input directory not specified</translation>
+        <translation type="vanished">Input directory not specified</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Please specify the input directory</translation>
+        <translation type="vanished">Please specify the input directory</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Tool not found</translation>
+        <translation type="vanished">Tool not found</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Can&apos;t run application:
+        <translation type="vanished">Can&apos;t run application:
 %1
 Please check the application directory and make sure it is installed properly.</translation>
     </message>
     <message>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</translation>
+        <translation type="vanished">Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</translation>
     </message>
 </context>
 <context>
@@ -14882,72 +14898,72 @@ Do you want to save your changes?</translation>
     <name>png2gifs_gui</name>
     <message>
         <source>Convert PNG into the masked GIFs</source>
-        <translation>Convert PNG into the masked GIFs</translation>
+        <translation type="vanished">Convert PNG into the masked GIFs</translation>
     </message>
     <message>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</translation>
+        <translation type="vanished">This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Browse</translation>
+        <translation type="vanished">Browse</translation>
     </message>
     <message>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Output dir, where the GIF files will be saved (*.gif and *m.gif)
+        <translation type="vanished">Output dir, where the GIF files will be saved (*.gif and *m.gif)
 (if this field is left empty, the target images will be stored in the original directory)</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="vanished">Start</translation>
     </message>
     <message>
         <source>Look for images in subdirectories</source>
-        <translation>Look for images in subdirectories</translation>
+        <translation type="vanished">Look for images in subdirectories</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Close</translation>
+        <translation type="vanished">Close</translation>
     </message>
     <message>
         <source>Flags</source>
-        <translation>Flags</translation>
+        <translation type="vanished">Flags</translation>
     </message>
     <message>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>Input directory which contains the PNG images (*.png)</translation>
+        <translation type="vanished">Input directory which contains the PNG images (*.png)</translation>
     </message>
     <message>
         <source>Remove source images after successful conversion</source>
-        <translation>Remove source images after successful conversion</translation>
+        <translation type="vanished">Remove source images after successful conversion</translation>
     </message>
     <message>
         <source>Open Source Directory</source>
-        <translation>Open Source Directory</translation>
+        <translation type="vanished">Open Source Directory</translation>
     </message>
     <message>
         <source>Open Target Directory</source>
-        <translation>Open Target Directory</translation>
+        <translation type="vanished">Open Target Directory</translation>
     </message>
     <message>
         <source>Source directory is not set</source>
-        <translation>Source directory is not set</translation>
+        <translation type="vanished">Source directory is not set</translation>
     </message>
     <message>
         <source>Please, set the source directory</source>
-        <translation>Please set the source directory</translation>
+        <translation type="vanished">Please set the source directory</translation>
     </message>
     <message>
         <source>Tool not found</source>
-        <translation>Tool not found</translation>
+        <translation type="vanished">Tool not found</translation>
     </message>
     <message>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Can&apos;t run application:
+        <translation type="vanished">Can&apos;t run application:
 %1
 Please check the application directory and make sure it is installed properly.</translation>
     </message>

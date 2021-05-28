@@ -3755,90 +3755,73 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
 <context>
     <name>LazyFixTool_gui</name>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="26"/>
         <source>LazyFix tool</source>
-        <translation>LazyFix hulpprogramma</translation>
+        <translation type="vanished">LazyFix hulpprogramma</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="90"/>
         <source>Close</source>
-        <translation>Sluiten</translation>
+        <translation type="vanished">Sluiten</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="80"/>
         <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Invoermap die de SMBX GIF-bestanden bevatten (*. gif en * m. gif)</translation>
+        <translation type="vanished">Invoermap die de SMBX GIF-bestanden bevatten (*. gif en * m. gif)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="39"/>
         <source>Output directory, where the fixed images will be saved.
 (If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation>Uitvoermap, waar de herstelde afbeeldingen worden opgeslagen.
+        <translation type="vanished">Uitvoermap, waar de herstelde afbeeldingen worden opgeslagen.
 (Als dit veld leeg bijft, worden de afbeeldingen samen met hun back-ups  in de map van de oorspronkelijke afbeeldingen opgeslagen)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="97"/>
         <source>Look for images in subdirectories</source>
-        <translation>Zoeken naar afbeeldingen in submappen</translation>
+        <translation type="vanished">Zoeken naar afbeeldingen in submappen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="104"/>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="165"/>
         <source>Browse</source>
-        <translation>Bladeren</translation>
+        <translation type="vanished">Bladeren</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="118"/>
         <source>Flags</source>
-        <translation>Vlaggen</translation>
+        <translation type="vanished">Vlaggen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="148"/>
         <source>Don&apos;t create back-up</source>
-        <translation>Geen back-up aanmaken</translation>
+        <translation type="vanished">Geen back-up aanmaken</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="155"/>
         <source>Start</source>
-        <translation>Starten</translation>
+        <translation type="vanished">Starten</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.ui" line="172"/>
         <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Dit hulpprogramma dient om slordig gemaakte SMBX afbeelding/maskers te herstellen. Dit wordt gedaan via kleurvergelijking. De oorspronkelijke afbeeldingen worden overschreven, maar back-ups zullen worden aangemaakt in een nieuwe map in het geval dat er iets fout loopt.</translation>
+        <translation type="vanished">Dit hulpprogramma dient om slordig gemaakte SMBX afbeelding/maskers te herstellen. Dit wordt gedaan via kleurvergelijking. De oorspronkelijke afbeeldingen worden overschreven, maar back-ups zullen worden aangemaakt in een nieuwe map in het geval dat er iets fout loopt.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="47"/>
         <source>Open Source Directory</source>
-        <translation>Invoermap openen</translation>
+        <translation type="vanished">Invoermap openen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="58"/>
         <source>Open Target Directory</source>
-        <translation>Uitvoermap openen</translation>
+        <translation type="vanished">Uitvoermap openen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="71"/>
         <source>Source directory is not set</source>
-        <translation>Invoermap is niet ingesteld</translation>
+        <translation type="vanished">Invoermap is niet ingesteld</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="71"/>
         <source>Please, set the source directory</source>
-        <translation>Gelieve de invoermap in te stellen</translation>
+        <translation type="vanished">Gelieve de invoermap in te stellen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="88"/>
         <source>Tool not found</source>
-        <translation>Hulpprogramma niet gevonden</translation>
+        <translation type="vanished">Hulpprogramma niet gevonden</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/lazyfixtool_gui.cpp" line="88"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Kan deze applicatie niet opstarten:
+        <translation type="vanished">Kan deze applicatie niet opstarten:
 %1
 Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>
@@ -8724,6 +8707,23 @@ Gelieve het bestand eerst op te slagen.</translation>
         <source>Please enter grid alignment size:</source>
         <translation>Voer de grootte van de rasteruitlijning in:</translation>
     </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="89"/>
+        <source>Moondust Maintainer is not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="90"/>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools_menu.cpp" line="95"/>
+        <source>Choose the Moondust Maintainer application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -12644,100 +12644,81 @@ therefore you can use same link to get updated version</source>
 <context>
     <name>gifs2png_gui</name>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="26"/>
         <source>Convert masked GIFs into the PNG</source>
-        <translation>Converteer GIF&apos;s met maskers tot PNG&apos;s</translation>
+        <translation type="vanished">Converteer GIF&apos;s met maskers tot PNG&apos;s</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="39"/>
         <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation>Opmerking: als de conversie resulteert in gebroken afbeeldingen, voer dan het hulpprogramma LazyFix uit omdit proberen op te lossen, en probeer opnieuw</translation>
+        <translation type="vanished">Opmerking: als de conversie resulteert in gebroken afbeeldingen, voer dan het hulpprogramma LazyFix uit omdit proberen op te lossen, en probeer opnieuw</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="76"/>
         <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Met dit hulpprogramma kunt u SMBX graphics converteren van GIF naar PNG door gebruik te maken van transparantiesleutels van maskers.</translation>
+        <translation type="vanished">Met dit hulpprogramma kunt u SMBX graphics converteren van GIF naar PNG door gebruik te maken van transparantiesleutels van maskers.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="89"/>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="142"/>
         <source>Browse</source>
-        <translation>Bladeren</translation>
+        <translation type="vanished">Bladeren</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="177"/>
         <source>Start</source>
-        <translation>Starten</translation>
+        <translation type="vanished">Starten</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="198"/>
         <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation>Conversie van achtergronden overslaan (background2-*. gif niet converteren)</translation>
+        <translation type="vanished">Conversie van achtergronden overslaan (background2-*. gif niet converteren)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="163"/>
         <source>Output dir, where will be saved a PNG images
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Selecteer de uitvoerlocatie van de PNG afbeelding(en)
+        <translation type="vanished">Selecteer de uitvoerlocatie van de PNG afbeelding(en)
 (Als er geen uitvoerlocatie gespecifieerd is, word(en) de afbeelding(en) opgeslagen in het invoermap)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="69"/>
         <source>Look for images in subdirectories</source>
-        <translation>Zoeken naar afbeeldingen in submappen</translation>
+        <translation type="vanished">Zoeken naar afbeeldingen in submappen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="52"/>
         <source>Close</source>
-        <translation>Sluiten</translation>
+        <translation type="vanished">Sluiten</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="156"/>
         <source>Flags</source>
-        <translation>Vlaggen</translation>
+        <translation type="vanished">Vlaggen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="59"/>
         <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation>Selecteer de invoermap van de SMBX GIF-bestanden (*. gif en * m. gif)</translation>
+        <translation type="vanished">Selecteer de invoermap van de SMBX GIF-bestanden (*. gif en * m. gif)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.ui" line="191"/>
         <source>Remove the original images after a successful conversion</source>
-        <translation>De originele afbeeldingen verwijderen na een succesvolle conversie</translation>
+        <translation type="vanished">De originele afbeeldingen verwijderen na een succesvolle conversie</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="48"/>
         <source>Open Source Directory</source>
-        <translation>Invoermap openen</translation>
+        <translation type="vanished">Invoermap openen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="60"/>
         <source>Open Target Directory</source>
-        <translation>Uitvoermap openen</translation>
+        <translation type="vanished">Uitvoermap openen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="73"/>
         <source>Source directory is not set</source>
-        <translation>Invoermap niet gespecifieerd</translation>
+        <translation type="vanished">Invoermap niet gespecifieerd</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="73"/>
         <source>Please, set the source directory</source>
-        <translation>Gelieve de invoermap in te stellen</translation>
+        <translation type="vanished">Gelieve de invoermap in te stellen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="90"/>
         <source>Tool not found</source>
-        <translation>Hulpprogramma niet gevonden</translation>
+        <translation type="vanished">Hulpprogramma niet gevonden</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/gifs2png_gui.cpp" line="90"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Kan deze applicatie niet opstarten:
+        <translation type="vanished">Kan deze applicatie niet opstarten:
 %1
 Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>
@@ -12745,90 +12726,73 @@ Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd i
 <context>
     <name>png2gifs_gui</name>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="26"/>
         <source>Convert PNG into the masked GIFs</source>
-        <translation>Converteer PNG naar GIF&apos;s met maskers</translation>
+        <translation type="vanished">Converteer PNG naar GIF&apos;s met maskers</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="53"/>
         <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
         <comment>About GIFs2PNG tool</comment>
-        <translation>Met dit hulpprogramma converteert u PNG-afbeeldingen met ingebouwde transparantie naar SMBX-afbeeldingen die het GIF-formaat hebben met een afzonderlijke transparantiemasker afbeelding.</translation>
+        <translation type="vanished">Met dit hulpprogramma converteert u PNG-afbeeldingen met ingebouwde transparantie naar SMBX-afbeeldingen die het GIF-formaat hebben met een afzonderlijke transparantiemasker afbeelding.</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="66"/>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="132"/>
         <source>Browse</source>
-        <translation>Bladeren</translation>
+        <translation type="vanished">Bladeren</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="80"/>
         <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
 (if this field will not be set, target images will be stored into the same directory)</source>
-        <translation>Uitvoermap, waar de GIF-bestanden zullen worden opgeslagen (*. gif en * m. gif)
+        <translation type="vanished">Uitvoermap, waar de GIF-bestanden zullen worden opgeslagen (*. gif en * m. gif)
 (als dit veld leeg blijft, worden de doelafbeeldingen opgeslagen in de oorspronkelijke map)</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="94"/>
         <source>Start</source>
-        <translation>Starten</translation>
+        <translation type="vanished">Starten</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="101"/>
         <source>Look for images in subdirectories</source>
-        <translation>Zoeken naar afbeeldingen in submappen</translation>
+        <translation type="vanished">Zoeken naar afbeeldingen in submappen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="111"/>
         <source>Close</source>
-        <translation>Sluiten</translation>
+        <translation type="vanished">Sluiten</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="125"/>
         <source>Flags</source>
-        <translation>Vlaggen</translation>
+        <translation type="vanished">Vlaggen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="155"/>
         <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation>Invoermap die de PNG-afbeeldingen (*. png) bevat</translation>
+        <translation type="vanished">Invoermap die de PNG-afbeeldingen (*. png) bevat</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.ui" line="165"/>
         <source>Remove source images after successful conversion</source>
-        <translation>Bronafbeeldingen verwijderen na succesvolle conversie</translation>
+        <translation type="vanished">Bronafbeeldingen verwijderen na succesvolle conversie</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="47"/>
         <source>Open Source Directory</source>
-        <translation>Invoermap openen</translation>
+        <translation type="vanished">Invoermap openen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="59"/>
         <source>Open Target Directory</source>
-        <translation>Uitvoermap openen</translation>
+        <translation type="vanished">Uitvoermap openen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="72"/>
         <source>Source directory is not set</source>
-        <translation>Invoermap is niet ingesteld</translation>
+        <translation type="vanished">Invoermap is niet ingesteld</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="72"/>
         <source>Please, set the source directory</source>
-        <translation>Gelieve de invoermap in te stellen</translation>
+        <translation type="vanished">Gelieve de invoermap in te stellen</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="89"/>
         <source>Tool not found</source>
-        <translation>Hulpprogramma niet gevonden</translation>
+        <translation type="vanished">Hulpprogramma niet gevonden</translation>
     </message>
     <message>
-        <location filename="../tools/external_tools/png2gifs_gui.cpp" line="89"/>
         <source>Can&apos;t run application:
 %1
 Please, check the application directory and make sure it is installed properly.</source>
-        <translation>Kan deze applicatie niet opstarten:
+        <translation type="vanished">Kan deze applicatie niet opstarten:
 %1
 Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
     </message>
