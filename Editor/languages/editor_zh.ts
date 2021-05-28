@@ -828,7 +828,7 @@ File path: %3</source>
     <name>CrashHandler</name>
     <message>
         <source>Crash</source>
-        <translation>PGE崩溃</translation>
+        <translation>月尘引擎崩溃</translation>
     </message>
     <message>
         <source>You might want to report this data to developers or post it at:</source>
@@ -836,7 +836,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>啊！PGE 编辑器程序异常终止！&lt;br&gt;详细信息:</translation>
+        <translation>啊！月尘引擎编辑器程序异常终止！&lt;br&gt;详细信息:</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
@@ -867,11 +867,11 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>在 PGE 论坛中反馈问题（需英文）</translation>
+        <translation>在 PGE 论坛中反馈问题（wohlsoft.ru/forum/，需英文）</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>在 Github 仓库中反馈问题（需英文）</translation>
+        <translation>在 Github 仓库中反馈问题（WohlSoft/PGE-Project，需英文）</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -1199,7 +1199,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;请下载并安装最新版本的配置包：
 &lt;br&gt;
 &lt;br&gt;下载: %1
-&lt;br&gt;注：部分配置包和PGE同步更新，
+&lt;br&gt;注：部分配置包和月尘引擎同步更新，
 &lt;br&gt;确保可以在同一链接里下载到新版本。</translation>
     </message>
 </context>
@@ -6475,7 +6475,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation>PGE 引擎测试</translation>
+        <translation>月尘引擎测试</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -6484,8 +6484,8 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>您好！您正在试图使用 PGE 引擎测试关卡。
-PGE 引擎目前处于内测阶段，因此很多功能都未完善。如果您的关卡或地图属于 SMBX 1.3 引擎，并且要测试的是它的完整性，请您直接在 SMBX 或 TheXTech 上测试，PGE 仅限于测试 PGE 引擎本身和带 PGE 引擎专属功能的关卡。</translation>
+        <translation>您好！您正在试图使用月尘引擎测试关卡。
+月尘引擎目前处于内测阶段，因此很多功能都未完善。如果您的关卡或地图属于 SMBX 1.3 引擎，并且要测试的是它的完整性，请您直接在 SMBX 或 TheXTech 上测试，月尘引擎仅限于测试月尘引擎本身和带月尘引擎专属功能的关卡。</translation>
     </message>
     <message>
         <source>Sub-windows</source>
@@ -7602,7 +7602,7 @@ Error description:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>非常抱歉，PGE 遭到异常终止。
+        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
 原因：内存溢出！
 
 为防止出现此现象，请关闭其他程序释放内存。</translation>
@@ -7614,7 +7614,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>非常抱歉，PGE 编辑器遭到异常终止。
+        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
 原因：未处理异常
 
 请将报告发送给论坛管理员，以便于我们处理问题。
@@ -7662,7 +7662,7 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation>非常抱歉，PGE 遭到异常终止。
+        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
 原因：%1
 
 </translation>
