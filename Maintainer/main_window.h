@@ -30,6 +30,7 @@ private slots:
     void on_gifs2png_converter_clicked();
     void on_png2gifs_converter_clicked();
     void on_lazyfix_tool_clicked();
+    void on_palette_filter_clicked();
     void on_pathcase_fixer_clicked();
 
 private:

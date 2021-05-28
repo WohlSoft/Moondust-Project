@@ -76,6 +76,7 @@ qt5_wrap_ui(UIS_HDRS
     Graphics/gifs2png.ui
     Graphics/png2gifs.ui
     Graphics/lazyfix.ui
+    Graphics/palette_filter.ui
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.qrc)
@@ -103,6 +104,7 @@ list(APPEND PGE_MAINTAINER_SRCS
     Graphics/gifs2png.cpp
     Graphics/png2gifs.cpp
     Graphics/lazyfix.cpp
+    Graphics/palette_filter.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
     ${QT_PLUGINS_CPP}
@@ -234,6 +236,13 @@ if(APPLE)
         set(LAZYFIXTOOL_BINARY "${CMAKE_BINARY_DIR}/bin/LazyFixTool")
         target_sources(pge_maintainer PRIVATE ${LAZYFIXTOOL_BINARY})
         set_source_files_properties(${LAZYFIXTOOL_BINARY} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS" GENERATED TRUE)
+    endif()
+
+    if(TARGET PaletteFilter)
+        add_dependencies(pge_maintainer PaletteFilter)
+        set(PALETTEFILTER_BINARY "${CMAKE_BINARY_DIR}/bin/PaletteFilter")
+        target_sources(pge_maintainer PRIVATE ${PALETTEFILTER_BINARY})
+        set_source_files_properties(${PALETTEFILTER_BINARY} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS" GENERATED TRUE)
     endif()
 
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)

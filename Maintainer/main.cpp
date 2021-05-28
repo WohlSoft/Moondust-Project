@@ -9,6 +9,7 @@
 #include <Graphics/gifs2png.h>
 #include <Graphics/png2gifs.h>
 #include <Graphics/lazyfix.h>
+#include <Graphics/palette_filter.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <EpisodeCvt/case_fixer.h>
 
@@ -31,6 +32,7 @@ enum OpenWindow
     OPEN_GIFs2PNG,
     OPEN_PNG2GIFs,
     OPEN_LAZYFIX,
+    OPEN_PALETTEFILTER,
     OPEN_MUSIC_CONVERTER,
     OPEN_FILE_CONVERTER,
     OPEN_CASE_FIXER
@@ -68,6 +70,8 @@ int main(int argc, char *argv[])
             open = OPEN_PNG2GIFs;
         else if(args[1] == "lazyfix")
             open = OPEN_LAZYFIX;
+        else if(args[1] == "palettefilter")
+            open = OPEN_PALETTEFILTER;
         else if(args[1] == "filecvt")
             open = OPEN_FILE_CONVERTER;
         else if(args[1] == "casefixer")
@@ -133,6 +137,16 @@ int main(int argc, char *argv[])
             lzf.setWindowFlags(g_dialogFlags);
             lzf.setWindowModality(Qt::NonModal);
             lzf.show();
+            return a.exec();
+        }
+        break;
+
+    case OPEN_PALETTEFILTER:
+        {
+            PaletteFilter pft(nullptr);
+            pft.setWindowFlags(g_dialogFlags);
+            pft.setWindowModality(Qt::NonModal);
+            pft.show();
             return a.exec();
         }
         break;

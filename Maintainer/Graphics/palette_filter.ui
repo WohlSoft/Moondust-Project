@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PaletteFilter</class>
+ <widget class="QDialog" name="PaletteFilter">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>590</width>
+    <height>660</height>
+   </rect>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>Palette filter</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../_resources/maintainer.qrc">
+    <normaloff>:/maintainer.ico</normaloff>:/maintainer.ico</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,10000" columnstretch="0,10000,0,0">
+   <item row="4" column="3">
+    <widget class="QPushButton" name="doMadJob">
+     <property name="text">
+      <string>Start</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="3">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>This wizard will help you to automatically adjust given graphics with a specific palette by replacing colors into most closed to any color that is available on the specified palette.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0" colspan="4">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Output log</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QTextBrowser" name="outputLog">
+        <property name="font">
+         <font>
+          <family>Monospace</family>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QPushButton" name="closeBox">
+     <property name="text">
+      <string>Close</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="picture">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../_resources/maintainer.qrc">:/tools/pallete_filter_128.png</pixmap>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="0" colspan="4">
+    <widget class="QTabWidget" name="whatToConvert">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="filesTab">
+      <attribute name="title">
+       <string>Process files</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QLabel" name="filesDropArea">
+         <property name="acceptDrops">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border-color: rgb(46, 52, 54);
+border-style: dotted;
+border-width: 2px;
+color: black;
+border-radius: 15px;</string>
+         </property>
+         <property name="text">
+          <string>Drop your PNG files into this window for a quick porcessing</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="episode">
+      <attribute name="title">
+       <string>Batch processing for level/episode</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Input directory (for example, an episode root or level custom folder):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="2">
+        <widget class="QCheckBox" name="flagRemoveOld">
+         <property name="text">
+          <string>Don't create backup for old images</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="inPathBrowse">
+         <property name="text">
+          <string>Browse...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="inPath">
+         <property name="placeholderText">
+          <string>Path to an input directory with a source data</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="label_4">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Flags</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QCheckBox" name="flagScanSubdirs">
+         <property name="text">
+          <string>Process all content of subdirectories</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>What do you want?</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="4">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Target palette</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_5" columnstretch="0,1000,0">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Palette reference image:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="paletteImg"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="paletteImgBrowse">
+        <property name="text">
+         <string>Browse...</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="3">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>This is the picture that should contain all colors of the palette you want to enforce to all images you want to process. This would be a grid of colors or just a hand-made picture with manually drawn colors of the palette. All processed images will be adjusted to have the same colors as this image has.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../_resources/maintainer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>closeBox</sender>
+   <signal>clicked()</signal>
+   <receiver>PaletteFilter</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>318</x>
+     <y>302</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

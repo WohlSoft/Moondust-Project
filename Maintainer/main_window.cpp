@@ -5,6 +5,7 @@
 #include <Graphics/gifs2png.h>
 #include <Graphics/png2gifs.h>
 #include <Graphics/lazyfix.h>
+#include <Graphics/palette_filter.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <EpisodeCvt/case_fixer.h>
 #include <common_features/app_path.h>
@@ -105,6 +106,16 @@ void MaintainerMain::on_lazyfix_tool_clicked()
     lzf.setWindowModality(Qt::NonModal);
     this->hide();
     lzf.exec();
+    this->show();
+}
+
+void MaintainerMain::on_palette_filter_clicked()
+{
+    PaletteFilter pft(nullptr);
+    pft.setWindowFlags(g_dialogFlags);
+    pft.setWindowModality(Qt::NonModal);
+    this->hide();
+    pft.exec();
     this->show();
 }
 

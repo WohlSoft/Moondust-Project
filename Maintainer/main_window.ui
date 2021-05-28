@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>376</width>
-    <height>425</height>
+    <width>377</width>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -138,6 +138,22 @@
         </property>
         <property name="text">
          <string>Fix bad-designed masked GIF graphics</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="palette_filter">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Converts regular PNG graphics into pair of GIF files (frontend and it's mask) compatible with bitblit algorithm (required by SMBX legacy engine).</string>
+        </property>
+        <property name="text">
+         <string>Adjust graphics into a given palette</string>
         </property>
        </widget>
       </item>
