@@ -132,7 +132,7 @@ static bool findEngine(MainWindow *parent, QString &command)
         command = QFileDialog::getOpenFileName(parent,
                                                MainWindow::tr("Choose the Engine application"),
                                                GlobalSettings::testing.enginePath,
-                                               QString("PGE Engine executable (%1);;All files(*.*)")
+                                               QString("PGE Engine executable (%1);;All files (*.*)")
                                                .arg(PGE_ENGINE_BUNLDE_MASK), nullptr, c_fileDialogOptions);
         if(command.isEmpty())
             return false;

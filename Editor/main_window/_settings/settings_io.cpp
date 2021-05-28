@@ -231,6 +231,7 @@ void MainWindow::loadSettings()
     settings.beginGroup("extra");
     {
         GlobalSettings::extra.attr_hdpi = settings.value("high-dpi-scaling", GlobalSettings::extra.attr_hdpi).toBool();
+        GlobalSettings::extra.maintainerPath = settings.value("maintainer-path", QString()).toString();
     }
     settings.endGroup();
 }
@@ -360,6 +361,7 @@ void MainWindow::saveSettings()
     settings.beginGroup("extra");
     {
         settings.setValue("high-dpi-scaling", GlobalSettings::extra.attr_hdpi);
+        settings.setValue("maintainer-path", GlobalSettings::extra.maintainerPath);
     }
     settings.endGroup();
 

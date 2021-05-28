@@ -94,6 +94,7 @@ struct SETTINGS_ScreenGrabSettings
 struct SETTINGS_Extra
 {
     bool attr_hdpi = true;
+    QString maintainerPath;
 };
 
 /**

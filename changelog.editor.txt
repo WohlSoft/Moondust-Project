@@ -11,6 +11,7 @@
 - Added the support for custom WOPL bank files at libADLMIDI synthesizer
 - Added the support for custom WOPN bank files at libOPNMIDI synthesizer
 - Added the support for the FluidSynth at MixerX library
+- All GUI overlays for console tools has been removed (except the audio converter) in favor of the Moondust Maintainer tool being executed instead
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

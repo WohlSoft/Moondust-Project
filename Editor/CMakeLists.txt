@@ -151,9 +151,6 @@ list(APPEND PGE_EDITOR_UI
     main_window/updater/check_updates.ui
     tools/debugger/custom_counter_gui.ui
     tools/external_tools/audiocvt_sox_gui.ui
-    tools/external_tools/gifs2png_gui.ui
-    tools/external_tools/lazyfixtool_gui.ui
-    tools/external_tools/png2gifs_gui.ui
     tools/math/blocksperseconddialog.ui
     tools/tilesets/tileset_editor.ui
     tools/tilesets/tilesetgroupeditor.ui
@@ -436,9 +433,6 @@ list(APPEND PGE_EDITOR_SRCS
     tools/debugger/custom_counter.cpp
     tools/debugger/custom_counter_gui.cpp
     tools/external_tools/audiocvt_sox_gui.cpp
-    tools/external_tools/gifs2png_gui.cpp
-    tools/external_tools/lazyfixtool_gui.cpp
-    tools/external_tools/png2gifs_gui.cpp
     tools/math/blocksperseconddialog.cpp
     tools/smart_import/smartimporter.cpp
     tools/tilesets/piecesmodel.cpp
