@@ -4,6 +4,7 @@
 #include <Music/audiocvt_sox_gui.h>
 #include <Graphics/gifs2png.h>
 #include <Graphics/png2gifs.h>
+#include <Graphics/lazyfix.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <EpisodeCvt/case_fixer.h>
 #include <common_features/app_path.h>
@@ -94,6 +95,16 @@ void MaintainerMain::on_png2gifs_converter_clicked()
     p2g.setWindowModality(Qt::NonModal);
     this->hide();
     p2g.exec();
+    this->show();
+}
+
+void MaintainerMain::on_lazyfix_tool_clicked()
+{
+    LazyFixTool lzf(nullptr);
+    lzf.setWindowFlags(g_dialogFlags);
+    lzf.setWindowModality(Qt::NonModal);
+    this->hide();
+    lzf.exec();
     this->show();
 }
 

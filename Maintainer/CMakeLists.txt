@@ -75,6 +75,7 @@ qt5_wrap_ui(UIS_HDRS
     Music/audiocvt_sox_gui.ui
     Graphics/gifs2png.ui
     Graphics/png2gifs.ui
+    Graphics/lazyfix.ui
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.qrc)
@@ -101,6 +102,7 @@ list(APPEND PGE_MAINTAINER_SRCS
     EpisodeCvt/case_fixer.cpp
     Graphics/gifs2png.cpp
     Graphics/png2gifs.cpp
+    Graphics/lazyfix.cpp
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
     ${QT_PLUGINS_CPP}
@@ -225,6 +227,13 @@ if(APPLE)
         set(PNG2GIFs_BINARY "${CMAKE_BINARY_DIR}/bin/PNG2GIFs")
         target_sources(pge_maintainer PRIVATE ${PNG2GIFs_BINARY})
         set_source_files_properties(${PNG2GIFs_BINARY} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS" GENERATED TRUE)
+    endif()
+
+    if(TARGET LazyFixTool)
+        add_dependencies(pge_maintainer LazyFixTool)
+        set(LAZYFIXTOOL_BINARY "${CMAKE_BINARY_DIR}/bin/LazyFixTool")
+        target_sources(pge_maintainer PRIVATE ${LAZYFIXTOOL_BINARY})
+        set_source_files_properties(${LAZYFIXTOOL_BINARY} PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS" GENERATED TRUE)
     endif()
 
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)

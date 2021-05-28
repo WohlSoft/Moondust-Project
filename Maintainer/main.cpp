@@ -8,6 +8,7 @@
 #include <Music/audiocvt_sox_gui.h>
 #include <Graphics/gifs2png.h>
 #include <Graphics/png2gifs.h>
+#include <Graphics/lazyfix.h>
 #include <EpisodeCvt/episode_converter.h>
 #include <EpisodeCvt/case_fixer.h>
 
@@ -29,6 +30,7 @@ enum OpenWindow
     OPEN_MAIN = 0,
     OPEN_GIFs2PNG,
     OPEN_PNG2GIFs,
+    OPEN_LAZYFIX,
     OPEN_MUSIC_CONVERTER,
     OPEN_FILE_CONVERTER,
     OPEN_CASE_FIXER
@@ -64,6 +66,8 @@ int main(int argc, char *argv[])
         }
         else if(args[1] == "png2gifs")
             open = OPEN_PNG2GIFs;
+        else if(args[1] == "lazyfix")
+            open = OPEN_LAZYFIX;
         else if(args[1] == "filecvt")
             open = OPEN_FILE_CONVERTER;
         else if(args[1] == "casefixer")
@@ -119,6 +123,16 @@ int main(int argc, char *argv[])
             p2g.setWindowFlags(g_dialogFlags);
             p2g.setWindowModality(Qt::NonModal);
             p2g.show();
+            return a.exec();
+        }
+        break;
+
+    case OPEN_LAZYFIX:
+        {
+            LazyFixTool lzf(nullptr);
+            lzf.setWindowFlags(g_dialogFlags);
+            lzf.setWindowModality(Qt::NonModal);
+            lzf.show();
             return a.exec();
         }
         break;
