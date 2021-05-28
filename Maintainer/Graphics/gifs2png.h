@@ -17,6 +17,8 @@ public:
     explicit GIFs2PNG(QWidget *parent = nullptr);
     ~GIFs2PNG();
 
+    void setConfigPackPath(const QString &path);
+
 protected:
     void closeEvent(QCloseEvent *e);
     void dragEnterEvent(QDragEnterEvent *e);

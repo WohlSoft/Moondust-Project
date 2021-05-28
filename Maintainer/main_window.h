@@ -15,10 +15,11 @@ class MaintainerMain : public QDialog
 {
     Q_OBJECT
 
-    void showWIP();
 public:
     explicit MaintainerMain(QWidget *parent = nullptr);
     ~MaintainerMain();
+
+    void showWIP();
 
 private slots:
     void languageSwitched();

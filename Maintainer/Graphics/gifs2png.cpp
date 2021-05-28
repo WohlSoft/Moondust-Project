@@ -38,6 +38,11 @@ GIFs2PNG::~GIFs2PNG()
     delete ui;
 }
 
+void GIFs2PNG::setConfigPackPath(const QString &path)
+{
+    ui->configPackPath->setText(path);
+}
+
 void GIFs2PNG::closeEvent(QCloseEvent *e)
 {
     if(m_gifs2png.state() == QProcess::Running)
