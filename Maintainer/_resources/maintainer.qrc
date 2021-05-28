@@ -6,6 +6,9 @@
         <file>icon/maintainer32.png</file>
         <file>icon/maintainer48.png</file>
         <file>icon/maintainer256.png</file>
+        <file>tools/cat_gif2png_128.png</file>
+        <file>tools/cat_glasses_128.png</file>
+        <file>tools/cat_png2gif_128.png</file>
+        <file>tools/pallete_filter_128.png</file>
     </qresource>
 </RCC>
-
