@@ -583,7 +583,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="75"/>
         <source>This wizard will help you to convert graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask), into PNG with a true transparency.</source>
-        <translation>Этот мастер помошет Вам преобразовать графику, созданную для SMBX 1.3 (в формате GIF с применением битовых масок), в PNG с истинной полупрозрачностью.</translation>
+        <translation>Этот мастер поможет Вам преобразовать графику, созданную для SMBX 1.3 (в формате GIF с применением битовых масок), в PNG с истинной полупрозрачностью.</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="34"/>
@@ -679,22 +679,22 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="17"/>
         <source>Fix bad-designed masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Исправить некорректные GIF-маски</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="31"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Обработать файлы</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
         <source>Drop your masked GIFs files into this window for a quick porcessing</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетащите сюда GIF-файлы с масками, чтобы обработать их</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="58"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Массовая обработка всего уровня/эпизода</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
@@ -704,7 +704,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>Не создавать резервные  копии для старых изображений</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
@@ -729,7 +729,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Чего бы вы хотели сделать?</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
@@ -771,7 +771,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы начать обработку, нужно указать путь ко входной директории.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="112"/>
@@ -796,7 +796,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="166"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обработка была прервана.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="171"/>
@@ -806,7 +806,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="172"/>
         <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обработка завершилась с ошибками. В выходном отчёте можно посмотреть все подробности.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
@@ -876,7 +876,7 @@ Supported formats:
     <message>
         <location filename="../main_window.ui" line="140"/>
         <source>Fix bad-designed masked GIF graphics</source>
-        <translation>Исправил некорректные GIF-маски</translation>
+        <translation>Исправить некорректные GIF-маски</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="156"/>
@@ -1075,7 +1075,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
         <source>This wizard will help you to automatically adjust given graphics with a specific palette by replacing colors into most closed to any color that is available on the specified palette.</source>
-        <translation type="unfinished"></translation>
+        <translation>Этот мастер поможет автоматически привести указанные изображения к конкретной палитре с помощью замены цветов на наиболее близкие из тех, что доступны в указанной палитре.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="47"/>
@@ -1095,7 +1095,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
         <source>Drop your PNG files into this window for a quick porcessing</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетащите сюда PNG-файлы, чтобы обработать их</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="142"/>
@@ -1110,7 +1110,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>Не создавать резервные  копии для старых изображений</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="162"/>
@@ -1136,22 +1136,22 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Чего бы вы хотели сделать?</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="210"/>
         <source>Target palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Целевая палитра</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="216"/>
         <source>Palette reference image:</source>
-        <translation type="unfinished"></translation>
+        <translation>Изображение-образец палитры:</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="233"/>
         <source>This is the picture that should contain all colors of the palette you want to enforce to all images you want to process. This would be a grid of colors or just a hand-made picture with manually drawn colors of the palette. All processed images will be adjusted to have the same colors as this image has.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это изображение, на котором находятся все цвета палитры, в которую вы бы хотели привести все ваши изображения. Это может быть, например, сетка цветов, или простая картинка с цветами, нарисованными вручную. Все обработанные изображения будут приведены к такому же набору цветов, что и указанное изображение-образец.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
@@ -1175,12 +1175,12 @@ Supported formats:
         <location filename="../Graphics/palette_filter.cpp" line="87"/>
         <location filename="../Graphics/palette_filter.cpp" line="116"/>
         <source>You should give a PNG image with a target palette reference to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы начать обработку, необходимо предоставить PNG-изображение, содержащее образец целевой палитры.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="124"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Чтобы начать обработку, нужно указать путь ко входной директории.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="133"/>
@@ -1205,7 +1205,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обработка была прервана.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
@@ -1215,7 +1215,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="195"/>
         <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обработка завершилась с ошибками. В выходном отчёте можно посмотреть все подробности.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
