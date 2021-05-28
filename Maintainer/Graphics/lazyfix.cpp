@@ -100,7 +100,7 @@ void LazyFixTool::on_doMadJob_clicked()
     {
         QMessageBox::warning(this,
                              tr("Incorrect input"),
-                             tr("You should give an input directory to start the conversion."));
+                             tr("You should give an input directory to start the processing."));
         return;
     }
 
@@ -163,13 +163,13 @@ void LazyFixTool::processFinished(int exitCode, QProcess::ExitStatus exitStatus)
         {
             QMessageBox::warning(this,
                                  tr("Process was terminated"),
-                                 tr("Conversion has been termiated."));
+                                 tr("Processing has been termiated."));
         }
         else
         {
             QMessageBox::warning(this,
                                  tr("Unsuccess exit"),
-                                 tr("Conversion was been completed with errors. "
+                                 tr("Processing was been completed with errors. "
                                     "Please look the output log for more detailed information."));
         }
     }

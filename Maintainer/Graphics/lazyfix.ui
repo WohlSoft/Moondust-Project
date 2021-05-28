@@ -14,7 +14,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>Fix lazily-made masked GIFs</string>
+   <string>Fix bad-designed masked GIFs</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../_resources/maintainer.qrc">
