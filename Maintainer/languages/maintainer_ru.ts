@@ -699,7 +699,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished">Входная директория (например, корень эпизода или польз.папка уровня):</translation>
+        <translation>Входная директория (например, корень эпизода или польз.папка уровня):</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
@@ -709,22 +709,22 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">Путь ко входной директории с исходными данными</translation>
+        <translation>Путь ко входной директории с исходными данными</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="98"/>
         <source>Flags</source>
-        <translation type="unfinished">Опции</translation>
+        <translation>Опции</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished">Также обработать содержимое всех поддиректорий</translation>
+        <translation>Также обработать содержимое всех поддиректорий</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
@@ -735,17 +735,17 @@ Supported formats:
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished">Запустить</translation>
+        <translation>Запустить</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
         <source>Output log</source>
-        <translation type="unfinished">Выводной отчёт</translation>
+        <translation>Выводной отчёт</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
         <source>Close</source>
-        <translation type="unfinished">Закрыть</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
@@ -755,18 +755,18 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">Процесс занят</translation>
+        <translation>Процесс занят</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished">Невозможно преобразовать эти файлы, пока предыдущая работа ещё не завершилась!</translation>
+        <translation>Невозможно преобразовать эти файлы, пока предыдущая работа ещё не завершилась!</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="102"/>
         <location filename="../Graphics/lazyfix.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">Неправильный входной путь</translation>
+        <translation>Неправильный входной путь</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
@@ -776,22 +776,22 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished">Указанный путь ко входной директрии не сщуествует.</translation>
+        <translation>Указанный путь ко входной директрии не сщуествует.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation type="unfinished">Указать входную директорию</translation>
+        <translation>Указать входную директорию</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished">Процесс завершился с кодом %1.</translation>
+        <translation>Процесс завершился с кодом %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="165"/>
         <source>Process was terminated</source>
-        <translation type="unfinished">Процесс прерван</translation>
+        <translation>Процесс прерван</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="166"/>
@@ -801,7 +801,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="171"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished">Безуспешное завершение</translation>
+        <translation>Безуспешное завершение</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="172"/>
@@ -811,7 +811,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished">Остановить</translation>
+        <translation>Остановить</translation>
     </message>
 </context>
 <context>
@@ -876,12 +876,12 @@ Supported formats:
     <message>
         <location filename="../main_window.ui" line="140"/>
         <source>Fix bad-designed masked GIF graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Исправил некорректные GIF-маски</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="156"/>
         <source>Adjust graphics into a given palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтрация палитры графики</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="169"/>
@@ -1064,13 +1064,13 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="17"/>
         <source>Palette filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Фильтр палитры</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="27"/>
         <location filename="../Graphics/palette_filter.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished">Запустить</translation>
+        <translation>Запустить</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
@@ -1080,17 +1080,17 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="47"/>
         <source>Output log</source>
-        <translation type="unfinished">Выводной отчёт</translation>
+        <translation>Выводной отчёт</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="81"/>
         <source>Close</source>
-        <translation type="unfinished">Закрыть</translation>
+        <translation>Закрыть</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Обработать файлы</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
@@ -1100,12 +1100,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="142"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Массовая обработка всего уровня/эпизода</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="148"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished">Входная директория (например, корень эпизода или польз.папка уровня):</translation>
+        <translation>Входная директория (например, корень эпизода или польз.папка уровня):</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
@@ -1116,22 +1116,22 @@ Supported formats:
         <location filename="../Graphics/palette_filter.ui" line="162"/>
         <location filename="../Graphics/palette_filter.ui" line="226"/>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">Путь ко входной директории с исходными данными</translation>
+        <translation>Путь ко входной директории с исходными данными</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="182"/>
         <source>Flags</source>
-        <translation type="unfinished">Опции</translation>
+        <translation>Опции</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="189"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished">Также обработать содержимое всех поддиректорий</translation>
+        <translation>Также обработать содержимое всех поддиректорий</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
@@ -1156,12 +1156,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">Процесс занят</translation>
+        <translation>Процесс занят</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished">Невозможно преобразовать эти файлы, пока предыдущая работа ещё не завершилась!</translation>
+        <translation>Невозможно преобразовать эти файлы, пока предыдущая работа ещё не завершилась!</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="86"/>
@@ -1169,7 +1169,7 @@ Supported formats:
         <location filename="../Graphics/palette_filter.cpp" line="123"/>
         <location filename="../Graphics/palette_filter.cpp" line="132"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">Неправильный входной путь</translation>
+        <translation>Неправильный входной путь</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="87"/>
@@ -1185,22 +1185,22 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="133"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished">Указанный путь ко входной директрии не сщуествует.</translation>
+        <translation>Указанный путь ко входной директрии не сщуествует.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="156"/>
         <source>Select an input directory</source>
-        <translation type="unfinished">Указать входную директорию</translation>
+        <translation>Указать входную директорию</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="178"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished">Процесс завершился с кодом %1.</translation>
+        <translation>Процесс завершился с кодом %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="188"/>
         <source>Process was terminated</source>
-        <translation type="unfinished">Процесс прерван</translation>
+        <translation>Процесс прерван</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
@@ -1210,7 +1210,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished">Безуспешное завершение</translation>
+        <translation>Безуспешное завершение</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="195"/>
@@ -1220,12 +1220,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
         <source>Stop</source>
-        <translation type="unfinished">Остановить</translation>
+        <translation>Остановить</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>
         <source>Select the PNG image as a palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите PNG-изображение в качестве палитры</translation>
     </message>
 </context>
 <context>
