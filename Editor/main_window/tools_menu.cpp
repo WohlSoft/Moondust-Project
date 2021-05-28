@@ -169,7 +169,7 @@ void MainWindow::on_actionGIFs2PNG_triggered()
     QString command;
     if(!findMaintainer(this, command))
         return;
-    QProcess::startDetached(command, {"gifs2png"});
+    QProcess::startDetached(command, {"gifs2png", ConfStatus::configPath});
 }
 
 void MainWindow::on_actionPNG2GIFs_triggered()
