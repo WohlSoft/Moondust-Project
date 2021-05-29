@@ -62,7 +62,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
         <source>What do you want?</source>
-        <translation>你想怎么做？</translation>
+        <translation>您想怎么做？</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
@@ -679,139 +679,139 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="17"/>
         <source>Fix bad-designed masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>修复错误的带有影子文件的 GIF 图像</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="31"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>处理文件</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
         <source>Drop your masked GIFs files into this window for a quick porcessing</source>
-        <translation type="unfinished"></translation>
+        <translation>将带有影子文件的 GIF 图像拖放至此进行快速处理</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="58"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>关卡/地图批量转换</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished">输入目录（例如地图根目录和关卡自定义目录）：</translation>
+        <translation>输入目录（例如地图根目录和关卡自定义目录）：</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>不备份图片源文件</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished">浏览……</translation>
+        <translation>浏览……</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">包含源数据的输入目录</translation>
+        <translation>包含源数据的输入目录</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="98"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished">同时处理子目录中的所有文件</translation>
+        <translation>同时处理子目录中的所有文件</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>您想怎么做？</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished">开始</translation>
+        <translation>开始</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
         <source>Output log</source>
-        <translation type="unfinished">输出日志</translation>
+        <translation>输出日志</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
         <source>Close</source>
-        <translation type="unfinished">关闭</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
         <source>This wizard will help you to automatically fix any SMBX 1.3 graphics (in a GIF format with the use of bitmask) that have a bad-designed invalid mask (e.g. made with a lazy effort). Masks made with a lazy effort are masks made by the copying of a front image and filling the background with white. This making method for masks gives an illusion of quick work, however, these masks are invalid and may cause strange glitches on some graphical engines and converters. After processing these sprites, all invalid masks will be turned into the valid form of the black shape as they must be, and therefore, they can be freely used everywhere without glitches.</source>
-        <translation type="unfinished"></translation>
+        <translation>此向导将帮助您修复 SMBX 1.3 的素材（带有影子文件的 GIF）中错误的影子文件（例如使用懒人方法），懒人方法是将前端文件作为副本并使用白色作为背景色的方法。虽然此方法可以加快制作素材的进度，但此方法是无效的，同时会在部分引擎和转换器中所显示的图像出现问题。处理完成后，所有的影子文件将会转为黑白图像，因此可以自由地在任何地方使用。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">进程繁忙</translation>
+        <translation>进程繁忙</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished">已经有进程在进行，无法转换！</translation>
+        <translation>已经有进程在进行，无法转换！</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="102"/>
         <location filename="../Graphics/lazyfix.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">输入目录错误</translation>
+        <translation>输入目录错误</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>输入目录为空，请选择输入目录开始处理。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished">指定的输入目录不存在。</translation>
+        <translation>指定的输入目录不存在。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation type="unfinished">选择输入目录</translation>
+        <translation>选择输入目录</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished">进程已结束，代码：%1。</translation>
+        <translation>进程已结束，代码：%1。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="165"/>
         <source>Process was terminated</source>
-        <translation type="unfinished">进程已停止</translation>
+        <translation>进程已停止</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="166"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>进程已终止。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="171"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished">未成功的退出</translation>
+        <translation>未成功的退出</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="172"/>
         <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>处理完成，但发生错误。要了解更多信息，请查看输出日志。</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished">停止</translation>
+        <translation>停止</translation>
     </message>
 </context>
 <context>
@@ -876,12 +876,12 @@ Supported formats:
     <message>
         <location filename="../main_window.ui" line="140"/>
         <source>Fix bad-designed masked GIF graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>修复错误的影子文件</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="156"/>
         <source>Adjust graphics into a given palette</source>
-        <translation type="unfinished"></translation>
+        <translation>使用所选的调色板重新为素材着色</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="169"/>
@@ -1064,104 +1064,104 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="17"/>
         <source>Palette filter</source>
-        <translation type="unfinished"></translation>
+        <translation>颜色过滤器</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="27"/>
         <location filename="../Graphics/palette_filter.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished">开始</translation>
+        <translation>开始</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
         <source>This wizard will help you to automatically adjust given graphics with a specific palette by replacing colors into most closed to any color that is available on the specified palette.</source>
-        <translation type="unfinished"></translation>
+        <translation>此向导将帮助您使用指定的调色板颜色来替换素材中的颜色。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="47"/>
         <source>Output log</source>
-        <translation type="unfinished">输出日志</translation>
+        <translation>输出日志</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="81"/>
         <source>Close</source>
-        <translation type="unfinished">关闭</translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>处理文件</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
         <source>Drop your PNG files into this window for a quick porcessing</source>
-        <translation type="unfinished"></translation>
+        <translation>将 PNG 文件拖放至此以进行快速处理</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="142"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>关卡/地图批量转换</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="148"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished">输入目录（例如地图根目录和关卡自定义目录）：</translation>
+        <translation>输入目录（例如地图根目录和关卡自定义目录）：</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>不备份图片源文件</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="162"/>
         <location filename="../Graphics/palette_filter.ui" line="226"/>
         <source>Browse...</source>
-        <translation type="unfinished">浏览……</translation>
+        <translation>浏览……</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">包含源数据的输入目录</translation>
+        <translation>包含源数据的输入目录</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="182"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>附加设置</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="189"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished">同时处理子目录中的所有文件</translation>
+        <translation>同时处理子目录中的所有文件</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>您想怎么做？</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="210"/>
         <source>Target palette</source>
-        <translation type="unfinished"></translation>
+        <translation>目标颜色</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="216"/>
         <source>Palette reference image:</source>
-        <translation type="unfinished"></translation>
+        <translation>调色板参考图片：</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="233"/>
         <source>This is the picture that should contain all colors of the palette you want to enforce to all images you want to process. This would be a grid of colors or just a hand-made picture with manually drawn colors of the palette. All processed images will be adjusted to have the same colors as this image has.</source>
-        <translation type="unfinished"></translation>
+        <translation>这是图片中所有要替换的颜色，所有处理后的图像将替换为与本图像相同的颜色。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">进程繁忙</translation>
+        <translation>进程繁忙</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished">已经有进程在进行，无法转换！</translation>
+        <translation>已经有进程在进行，无法转换！</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="86"/>
@@ -1169,63 +1169,63 @@ Supported formats:
         <location filename="../Graphics/palette_filter.cpp" line="123"/>
         <location filename="../Graphics/palette_filter.cpp" line="132"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">输入目录错误</translation>
+        <translation>输入目录错误</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="87"/>
         <location filename="../Graphics/palette_filter.cpp" line="116"/>
         <source>You should give a PNG image with a target palette reference to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>未选择文件，请选择带有参考调色板的 PNG 格式图片以开始处理。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="124"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>输入目录为空，请选择输入目录开始处理。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="133"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished">指定的输入目录不存在。</translation>
+        <translation>指定的输入目录不存在。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="156"/>
         <source>Select an input directory</source>
-        <translation type="unfinished">选择输入目录</translation>
+        <translation>选择输入目录</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="178"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished">进程已结束，代码：%1。</translation>
+        <translation>进程已结束，代码：%1。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="188"/>
         <source>Process was terminated</source>
-        <translation type="unfinished">进程已停止</translation>
+        <translation>进程已停止</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>进程已终止。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished">未成功的退出</translation>
+        <translation>未成功的退出</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="195"/>
         <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>处理完成，但发生错误。要了解更多信息，请查看输出日志。</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
         <source>Stop</source>
-        <translation type="unfinished">停止</translation>
+        <translation>停止</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>
         <source>Select the PNG image as a palette</source>
-        <translation type="unfinished"></translation>
+        <translation>选择 PNG 图像作为调色板</translation>
     </message>
 </context>
 <context>
