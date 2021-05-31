@@ -176,7 +176,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>タイプ:</translation>
     </message>
     <message>
         <source>Warp</source>
@@ -296,7 +296,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>表示</translation>
     </message>
     <message>
         <source>Log file</source>
@@ -581,7 +581,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remember current screen position on the level map or on the world map
@@ -590,7 +590,7 @@ and store a bookmark.</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>追加</translation>
     </message>
     <message>
         <source>Scroll to the saved position in the selected item.
@@ -692,11 +692,11 @@ File path: %3</source>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>名前</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>パス</translation>
     </message>
     <message>
         <source>Errors</source>
@@ -867,11 +867,11 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>追加</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Block</source>
@@ -879,11 +879,11 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>NPC</translation>
     </message>
     <message>
         <source>Terrain tile</source>
@@ -895,7 +895,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>パス</translation>
     </message>
     <message>
         <source>Level</source>
@@ -1178,7 +1178,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>追加</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -1186,11 +1186,11 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>編集</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
 </context>
 <context>
@@ -1300,7 +1300,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Force vertical background tiling</source>
@@ -1655,7 +1655,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1770,7 +1770,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -1864,7 +1864,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished"></translation>
+        <translation>/ ID</translation>
     </message>
     <message>
         <source>Descending</source>
@@ -1951,7 +1951,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Properties...</source>
@@ -2018,7 +2018,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2101,7 +2101,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2216,7 +2216,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
@@ -2287,7 +2287,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2406,7 +2406,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -2433,7 +2433,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
 </context>
 <context>
@@ -2476,7 +2476,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2606,7 +2606,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Remove all %1</source>
@@ -2932,7 +2932,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>有効化</translation>
     </message>
     <message>
         <source>Level name:</source>
@@ -3237,7 +3237,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Source</source>
-        <translation type="unfinished"></translation>
+        <translation>原文</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3434,7 +3434,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>無し</translation>
     </message>
     <message>
         <source>Game end &quot;Bowser defeat&quot;</source>
@@ -3526,7 +3526,7 @@ Do you want to continue?</source>
     <name>LvlHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Place</source>
@@ -3830,11 +3830,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>追加</translation>
     </message>
     <message>
         <source>Lock</source>
@@ -4643,7 +4643,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>編集</translation>
     </message>
     <message>
         <source>General</source>
@@ -4651,7 +4651,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>CommonEdit Bar</source>
-        <translation type="unfinished"></translation>
+        <translation>編集</translation>
     </message>
     <message>
         <source>EditingTools</source>
@@ -8013,11 +8013,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>追加</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
 </context>
 <context>
@@ -8368,7 +8368,7 @@ Data may be corrupted!</source>
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>Place</source>
