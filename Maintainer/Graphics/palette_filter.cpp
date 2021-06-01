@@ -19,7 +19,7 @@ PaletteFilter::PaletteFilter(QWidget *parent) :
 {
     ui->setupUi(this);
 #ifdef _WIN32
-    m_lazyfix.setProgram(ApplicationPath_x + "/PaletteFilter.exe");
+    m_paletteFilter.setProgram(ApplicationPath_x + "/PaletteFilter.exe");
 #else
     m_paletteFilter.setProgram(ApplicationPath_x + "/PaletteFilter");
 #endif
