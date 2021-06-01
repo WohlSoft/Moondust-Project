@@ -1298,13 +1298,14 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl)
     JSONparams["showFPS"] = t.xtra_showFPS;
 
     QString LVLRawData;
-    //Generate actual SMBX64 Level file data
-    if(hasLvlxSupport)
+    if(hasLvlxSupport && !lvl.meta.smbx64strict)
     {
+        //Generate the PGE-X Level file data
         FileFormats::WriteExtendedLvlFileRaw(lvl, LVLRawData);
     }
     else
     {
+        //Generate actual SMBX64 Level file data
         FileFormats::WriteSMBX64LvlFileRaw(lvl, LVLRawData, 64);
         //Set CRLF
         LVLRawData.replace("\n", "\r\n");
