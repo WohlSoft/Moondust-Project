@@ -473,7 +473,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>What do you want?</source>
-        <translation>你想怎么做？</translation>
+        <translation>您想怎么做？</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
@@ -1169,7 +1169,7 @@ Please save them before doing anything else.</source>
     <message>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>本地 OPN2</translation>
     </message>
     <message>
         <source>Sine wave</source>
@@ -1451,7 +1451,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation>欢迎来到 PGE 编辑器！</translation>
+        <translation>欢迎来到月尘引擎编辑器！</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -6833,17 +6833,19 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
+        <translation>未找到月尘引擎管理器</translation>
     </message>
     <message>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation>由于月尘引擎管理器未找到，因此无法启动：
+%1
+请选择月尘引擎管理器目录！</translation>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
-        <translation type="unfinished"></translation>
+        <translation>选择月尘引擎管理器目录</translation>
     </message>
 </context>
 <context>
