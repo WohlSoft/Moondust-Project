@@ -1259,15 +1259,16 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl)
     QJsonObject JSONparams;
     QString levelPathOut;
     QString smbxPath = getEnginePath();
+    QString x = (hasLvlxSupport && !lvl.meta.smbx64strict ? "x" : "");
 
     if(isUntitled)
     {
-        levelPathOut = QStringLiteral("worlds\\untitled.lvl") + (hasLvlxSupport ? "x" : "");
+        levelPathOut = QStringLiteral("worlds\\untitled.lvl") + x;
         JSONparams["filename"] = levelPathOut;
     }
     else
     {
-        QString levelPath = QString("%1/%2.%3").arg(lvl.meta.path).arg(lvl.meta.filename).arg(hasLvlxSupport ? "lvlx" : "lvl");
+        QString levelPath = QString("%1/%2.%3").arg(lvl.meta.path).arg(lvl.meta.filename).arg(x);
         levelPathOut = pathUnixToWine(levelPath);
         JSONparams["filename"] = levelPathOut;
     }

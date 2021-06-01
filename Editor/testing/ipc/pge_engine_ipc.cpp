@@ -258,15 +258,16 @@ void PgeEngineIpcClient::sendLevelBuffer()
     QString output;
     FileFormats::WriteExtendedLvlFileRaw(m_levelTestBuffer, output);
     QString sendLvlx;
+    QString x = (!m_levelTestBuffer.meta.smbx64strict ? "x" : "");
 
     if(!m_levelTestBuffer.meta.path.isEmpty())
         sendLvlx = QString("SEND_LVLX: %1/%2\n")
                    .arg(m_levelTestBuffer.meta.path)
-                   .arg(m_levelTestBuffer.meta.filename + ".lvlx");
+                   .arg(m_levelTestBuffer.meta.filename + ".lvl" + x);
     else
-        sendLvlx = QString("SEND_LVLX: %1/%2\n")
+        sendLvlx = QString("SEND_LVLX: %1/%2%3\n")
                    .arg(ApplicationPath)
-                   .arg("_untitled.lvlx");
+                   .arg("_untitled.lvl").arg(x);
 
     if(output.size() <= 0)
         output = "HEAD\nEMPTY:1\nHEAD_END\n";
