@@ -3953,7 +3953,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Left</source>
-        <translation>左键</translation>
+        <translation>左端</translation>
     </message>
     <message>
         <source>Top</source>
@@ -3969,7 +3969,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Right</source>
-        <translation>右键</translation>
+        <translation>右端</translation>
     </message>
     <message>
         <source>Set music</source>
@@ -5076,7 +5076,7 @@ Measured in pixels per 1/65 seconds.</source>
     </message>
     <message>
         <source>Up</source>
-        <translation>向上</translation>
+        <translation>上</translation>
     </message>
     <message>
         <source>Exit</source>
