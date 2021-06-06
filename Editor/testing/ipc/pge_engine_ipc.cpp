@@ -49,7 +49,12 @@ static void base64_encode(QByteArray &out, const QString &string)
 
 PgeEngineIpcClient::PgeEngineIpcClient(QObject *parent) :
     QObject(parent)
-{}
+{
+    QObject::connect(this, &PgeEngineIpcClient::signalEngineClosed,
+                     this, &PgeEngineIpcClient::showMainWindow, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::signalSendLevelBuffer,
+                     this, &PgeEngineIpcClient::sendLevelBuffer, Qt::QueuedConnection);
+}
 
 void PgeEngineIpcClient::setMainWindow(QWidget *mw)
 {
@@ -82,6 +87,7 @@ void PgeEngineIpcClient::readInputStream(QByteArray &out)
     }
 }
 
+
 void PgeEngineIpcClient::onInputData()
 {
     if(!isWorking())
@@ -90,25 +96,90 @@ void PgeEngineIpcClient::onInputData()
     QByteArray strData;
     readInputStream(strData);
 
-    QByteArray msg = QByteArray::fromBase64(strData);
+    const QByteArray msg = QByteArray::fromBase64(strData);
 
     if(msg.startsWith("CMD:"))
     {
-        char *msgP = msg.data() + 4; //"CMD:"
+        const char *msgP = msg.data() + 4; //"CMD:"
         LogDebug("ENGINE COMMAND: >>");
         LogDebug(msgP);
         LogDebug("<<ENGINE COMMAND END");
+        qApp->processEvents();
 
-        if(std::strcmp(msgP, "CONNECT_TO_ENGINE") == 0)
-            sendLevelBuffer();
-        else if(std::strcmp(msgP, "ENGINE_CLOSED") == 0)
+        if(std::strncmp(msgP, "NUM_STARS ", 10) == 0)
         {
-            if(m_mainWindow)
-            {
-                m_mainWindow->show();
-                m_mainWindow->raise();
-            }
+            QString num = QString::fromUtf8(msgP + 10);
+            int val;
+            bool ok;
+            val = num.toInt(&ok);
+            if(ok)
+                emit engineNumStarsChanged(val);
         }
+        else if(std::strncmp(msgP, "TAKEN_BLOCK\n", 12) == 0)
+        {
+            LevelData got;
+            QString raw = QString::fromUtf8(msgP);
+            PGE_FileFormats_misc::RawTextInput raw_file(&raw);
+            FileFormats::ReadExtendedLvlFile(raw_file, got);
+            if(!got.meta.ReadFileValid)
+                return;
+            if(got.blocks.empty())
+                return;
+            emit engineTakenBlock(got.blocks[0]);
+        }
+        else if(std::strncmp(msgP, "TAKEN_BGO\n", 10) == 0)
+        {
+            LevelData got;
+            QString raw = QString::fromUtf8(msgP);
+            PGE_FileFormats_misc::RawTextInput raw_file(&raw);
+            FileFormats::ReadExtendedLvlFile(raw_file, got);
+            if(!got.meta.ReadFileValid)
+                return;
+            if(got.bgo.empty())
+                return;
+            emit engineTakenBGO(got.bgo[0]);
+        }
+        else if(std::strncmp(msgP, "TAKEN_NPC\n", 10) == 0)
+        {
+            LevelData got;
+            QString raw = QString::fromUtf8(msgP);
+            PGE_FileFormats_misc::RawTextInput raw_file(&raw);
+            FileFormats::ReadExtendedLvlFile(raw_file, got);
+
+            if(!got.meta.ReadFileValid)
+                return;
+            if(got.npc.empty())
+                return;
+
+            emit engineTakenNPC(got.npc[0]);
+        }
+        else if(std::strncmp(msgP, "PLAYER_SETUP_UPDATE ", 20) == 0)
+        {
+            qApp->processEvents();
+            int val[5];
+            bool ok;
+            QString playernum = QString::fromUtf8(msgP + 20);
+            QStringList p = playernum.split(' ');
+
+            if(p.size() != 5)
+                return;
+
+            for(int i = 0; i < 5; i++)
+            {
+                val[i] = p[i].toInt(&ok);
+                if(!ok)
+                    break;
+            }
+
+            if(ok)
+                emit enginePlayerStateUpdated(val[0], val[1], val[2], val[3], val[4]);
+        }
+        else if(std::strcmp(msgP, "CLOSE_PROPERTIES") == 0)
+            emit engineCloseProperties();
+        else if(std::strcmp(msgP, "CONNECT_TO_ENGINE") == 0)
+            emit signalSendLevelBuffer();
+        else if(std::strcmp(msgP, "ENGINE_CLOSED") == 0)
+            emit signalEngineClosed();
     }
     else
     {
@@ -122,9 +193,10 @@ void PgeEngineIpcClient::init(QProcess *engine)
     m_engine = engine;
     if(m_engine)
         QObject::connect(m_engine, &QProcess::readyReadStandardOutput,
-                         this, &PgeEngineIpcClient::onInputData);
+                         this, &PgeEngineIpcClient::onInputData, Qt::QueuedConnection);
 
     m_engine->setReadChannel(QProcess::StandardOutput);
+    m_engine->setProcessChannelMode(QProcess::SeparateChannels);
 
     QObject::connect(&g_intEngine, &IntEngineSignals::sendCheat,
                      this, &PgeEngineIpcClient::sendCheat);
@@ -138,6 +210,19 @@ void PgeEngineIpcClient::init(QProcess *engine)
                      this, &PgeEngineIpcClient::sendPlacingNPC);
     QObject::connect(&g_intEngine, &IntEngineSignals::sendCurrentLayer,
                      this, &PgeEngineIpcClient::sendCurrentLayer);
+
+    QObject::connect(this, &PgeEngineIpcClient::engineTakenBlock,
+                     &g_intEngine, &IntEngineSignals::engineTakenBlock, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::engineTakenBGO,
+                     &g_intEngine, &IntEngineSignals::engineTakenBGO, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::engineTakenNPC,
+                     &g_intEngine, &IntEngineSignals::engineTakenNPC, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::engineNumStarsChanged,
+                     &g_intEngine, &IntEngineSignals::engineNumStarsChanged, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::enginePlayerStateUpdated,
+                     &g_intEngine, &IntEngineSignals::enginePlayerStateUpdated, Qt::QueuedConnection);
+    QObject::connect(this, &PgeEngineIpcClient::engineCloseProperties,
+                     &g_intEngine, &IntEngineSignals::engineCloseProperties, Qt::QueuedConnection);
 }
 
 void PgeEngineIpcClient::quit()
@@ -157,9 +242,22 @@ void PgeEngineIpcClient::quit()
     QObject::disconnect(&g_intEngine, &IntEngineSignals::sendCurrentLayer,
                         this, &PgeEngineIpcClient::sendCurrentLayer);
 
+    QObject::disconnect(this, &PgeEngineIpcClient::engineTakenBlock,
+                        &g_intEngine, &IntEngineSignals::engineTakenBlock);
+    QObject::disconnect(this, &PgeEngineIpcClient::engineTakenBGO,
+                        &g_intEngine, &IntEngineSignals::engineTakenBGO);
+    QObject::disconnect(this, &PgeEngineIpcClient::engineTakenNPC,
+                        &g_intEngine, &IntEngineSignals::engineTakenNPC);
+    QObject::disconnect(this, &PgeEngineIpcClient::engineNumStarsChanged,
+                        &g_intEngine, &IntEngineSignals::engineNumStarsChanged);
+    QObject::disconnect(this, &PgeEngineIpcClient::enginePlayerStateUpdated,
+                        &g_intEngine, &IntEngineSignals::enginePlayerStateUpdated);
+    QObject::disconnect(this, &PgeEngineIpcClient::engineCloseProperties,
+                        &g_intEngine, &IntEngineSignals::engineCloseProperties);
+
     if(m_engine)
         QObject::disconnect(m_engine, &QProcess::readyReadStandardOutput,
-                            this, &PgeEngineIpcClient::onInputData);
+                            this, static_cast<void(PgeEngineIpcClient::*)(void)>(&PgeEngineIpcClient::onInputData));
     m_engine = nullptr;
 }
 
@@ -254,6 +352,8 @@ void PgeEngineIpcClient::sendLevelBuffer()
     if(!isWorking())
         return;
 
+    sendNumStars(GlobalSettings::testing.xtra_starsNum);
+
     LogDebug("Attempt to send LVLX buffer");
     QString output;
     FileFormats::WriteExtendedLvlFileRaw(m_levelTestBuffer, output);
@@ -284,9 +384,25 @@ void PgeEngineIpcClient::sendLevelBuffer()
     LogDebug("LVLX buffer sent");
 }
 
+void PgeEngineIpcClient::showMainWindow()
+{
+    if(!m_mainWindow)
+        return;
+    m_mainWindow->show();
+    m_mainWindow->raise();
+}
+
 void PgeEngineIpcClient::setTestLvlBuffer(const LevelData &buffer)
 {
     m_levelTestBuffer = buffer;
+}
+
+void PgeEngineIpcClient::sendNumStars(int numStars)
+{
+    if(!isWorking())
+        return;
+    QString out = QString("SET_NUMSTARS: %1").arg(numStars);
+    sendMessage(out);
 }
 
 bool PgeEngineIpcClient::sendMessage(const char *msg)

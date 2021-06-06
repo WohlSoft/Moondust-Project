@@ -20,7 +20,11 @@
 
 IntEngineSignals::IntEngineSignals(QObject *parent) :
     QObject(parent)
-{}
+{
+    qRegisterMetaType<LevelBlock>("LevelBlock");
+    qRegisterMetaType<LevelBGO>("LevelBGO");
+    qRegisterMetaType<LevelNPC>("LevelNPC");
+}
 
 IntEngineSignals::~IntEngineSignals()
 {}

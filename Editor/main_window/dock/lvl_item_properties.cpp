@@ -130,6 +130,42 @@ LvlItemProperties::LvlItemProperties(QWidget *parent) :
         width(),
         height()
     );
+
+    QObject::connect(&g_intEngine, &IntEngineSignals::engineTakenBlock, this,
+    [this](const LevelBlock &block)
+    {
+        LvlPlacingItems::blockSet = block;
+        openBlockProps(LvlPlacingItems::blockSet,
+                       true,
+                       true,
+                       GlobalSettings::Placing_dontShowPropertiesBox);
+    });
+
+    QObject::connect(&g_intEngine, &IntEngineSignals::engineTakenBGO, this,
+    [this](const LevelBGO &bgo)
+    {
+        LvlPlacingItems::bgoSet = bgo;
+        openBgoProps(LvlPlacingItems::bgoSet,
+                     true,
+                     true,
+                     GlobalSettings::Placing_dontShowPropertiesBox);
+    });
+
+    QObject::connect(&g_intEngine, &IntEngineSignals::engineTakenNPC, this,
+    [this](const LevelNPC &npc)
+    {
+        LvlPlacingItems::npcSet = npc;
+        openNpcProps(LvlPlacingItems::npcSet,
+                     true,
+                     true,
+                     GlobalSettings::Placing_dontShowPropertiesBox);
+    });
+
+    QObject::connect(&g_intEngine, &IntEngineSignals::engineCloseProperties, this,
+    [this]()
+    {
+        mw()->on_actionSelect_triggered();
+    });
 }
 
 LvlItemProperties::~LvlItemProperties()

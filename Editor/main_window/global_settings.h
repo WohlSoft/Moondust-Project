@@ -68,6 +68,7 @@ struct SETTINGS_TestSettings
     bool xtra_showFPS = false;
     bool xtra_physdebug = false;
     bool xtra_worldfreedom = false;
+    int  xtra_starsNum = 0;
     int  numOfPlayers = 1;
     int  p1_char = 1;
     int  p1_state = 1;

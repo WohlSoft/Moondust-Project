@@ -35,12 +35,21 @@ public:
     ~IntEngineSignals();
 
 signals:
+    /* Outcoming commands */
     bool sendCheat(QString _args);
     bool sendMessageBox(QString _args);
     void sendPlacingBlock(const LevelBlock &block);
     void sendPlacingBGO(const LevelBGO &bgo);
     void sendPlacingNPC(const LevelNPC &npc);
     void sendCurrentLayer(const QString &layerName);
+
+    /* Incoming commands */
+    void engineTakenBlock(const LevelBlock &block);
+    void engineTakenBGO(const LevelBGO &bgo);
+    void engineTakenNPC(const LevelNPC &npc);
+    void engineNumStarsChanged(int numStars);
+    void enginePlayerStateUpdated(int playerID, int character, int state, int vehicleID, int vehicleType);
+    void engineCloseProperties();
 };
 
 extern IntEngineSignals g_intEngine;

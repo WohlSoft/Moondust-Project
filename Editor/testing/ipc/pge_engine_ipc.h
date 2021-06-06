@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QProcess>
+#include <QFuture>
 #include <PGE_File_Formats/lvl_filedata.h>
 
 /**
@@ -99,6 +100,12 @@ public:
      */
     void setTestLvlBuffer(const LevelData &buffer);
 
+    /**
+     * @brief Report the number of starts to the running game to set it
+     * @param numStars Number of stars to set
+     */
+    void sendNumStars(int numStars);
+
 private:
     /**
      * @brief Read all input data before last delimeter character
@@ -119,6 +126,48 @@ signals:
      */
     void engineInputMsg(const QString &msg);
 
+    /**
+     * @brief A hook for taken blocks by the magic hand
+     * @param block block data
+     */
+    void engineTakenBlock(const LevelBlock &block);
+
+    /**
+     * @brief A hook for taken BGO by the magic hand
+     * @param block BGO data
+     */
+    void engineTakenBGO(const LevelBGO &bgo);
+
+    /**
+     * @brief A hook for taken NPC by the magic hand
+     * @param block NPC data
+     */
+    void engineTakenNPC(const LevelNPC &npc);
+
+    /**
+     * @brief The number of stars got changed
+     * @param numStars Count of stars
+     */
+    void engineNumStarsChanged(int numStars);
+
+    /**
+     * @brief A hook for player state being updated
+     * @param playerID Player ID
+     * @param character Character ID
+     * @param state State ID
+     * @param vehicleID Vehicle/Mount ID
+     * @param vehicleType Vehicle type
+     */
+    void enginePlayerStateUpdated(int playerID, int character, int state, int vehicleID, int vehicleType);
+
+    /**
+     * @brief A hook for the properties close request
+     */
+    void engineCloseProperties();
+
+    void signalSendLevelBuffer();
+    void signalEngineClosed();
+
 private:
     /**
      * @brief Send a raw command to the Engine server
@@ -137,6 +186,8 @@ private:
      * @brief When engine is ready, submit a level data from a cache
      */
     void sendLevelBuffer();
+
+    void showMainWindow();
 
     /**
      * @brief Send a raw data of a placing item

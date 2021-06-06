@@ -36,6 +36,7 @@ TestingSettings::TestingSettings(QWidget *parent) :
     ui->ex_showFPS->setChecked(GlobalSettings::testing.xtra_showFPS);
     ui->ex_physdebug->setChecked(GlobalSettings::testing.xtra_physdebug);
     ui->ex_freedom->setChecked(GlobalSettings::testing.xtra_worldfreedom);
+    ui->ex_starsNum->setValue(GlobalSettings::testing.xtra_starsNum);
     ui->p1_character->setCurrentIndex(GlobalSettings::testing.p1_char-1);
     ui->p1_state->setCurrentIndex(GlobalSettings::testing.p1_state-1);
     ui->p1_vehicleID->setCurrentIndex(GlobalSettings::testing.p1_vehicleID);
@@ -60,19 +61,22 @@ TestingSettings::~TestingSettings()
 
 void TestingSettings::on_buttonBox_accepted()
 {
-    GlobalSettings::testing.xtra_god=ui->ex_god->isChecked();
-    GlobalSettings::testing.xtra_flyup=ui->ex_flyup->isChecked();
-    GlobalSettings::testing.xtra_chuck=ui->ex_chuck->isChecked();
-    GlobalSettings::testing.xtra_debug=ui->ex_debug->isChecked();
-    GlobalSettings::testing.xtra_showFPS=ui->ex_showFPS->isChecked();
-    GlobalSettings::testing.xtra_physdebug=ui->ex_physdebug->isChecked();
-    GlobalSettings::testing.xtra_worldfreedom=ui->ex_freedom->isChecked();
+    GlobalSettings::testing.xtra_god = ui->ex_god->isChecked();
+    GlobalSettings::testing.xtra_flyup = ui->ex_flyup->isChecked();
+    GlobalSettings::testing.xtra_chuck = ui->ex_chuck->isChecked();
+    GlobalSettings::testing.xtra_debug = ui->ex_debug->isChecked();
+    GlobalSettings::testing.xtra_showFPS = ui->ex_showFPS->isChecked();
+    GlobalSettings::testing.xtra_physdebug = ui->ex_physdebug->isChecked();
+    GlobalSettings::testing.xtra_worldfreedom = ui->ex_freedom->isChecked();
+    GlobalSettings::testing.xtra_starsNum = ui->ex_starsNum->value();
+
     if(ui->np_1p->isChecked())
-        GlobalSettings::testing.numOfPlayers=1;
+        GlobalSettings::testing.numOfPlayers = 1;
     else if(ui->np_2p->isChecked())
-        GlobalSettings::testing.numOfPlayers=2;
+        GlobalSettings::testing.numOfPlayers = 2;
     else
-        GlobalSettings::testing.numOfPlayers=1;
+        GlobalSettings::testing.numOfPlayers = 1;
+
     GlobalSettings::testing.p1_char = (ui->p1_character->currentIndex()+1);
     GlobalSettings::testing.p1_state = (ui->p1_state->currentIndex()+1);
     GlobalSettings::testing.p1_vehicleID = (ui->p1_vehicleID->currentIndex());
