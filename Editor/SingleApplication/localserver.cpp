@@ -20,6 +20,7 @@
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/logger.h>
+#include <networking/engine_intproc.h>
 
 #include "localserver.h"
 
@@ -181,27 +182,18 @@ void LocalServer::onCMD(QString data)
             case IPCCMD::TestSetup:
             {
                 QStringList args = argsPart.split(',');
-                SETTINGS_TestSettings &t = GlobalSettings::testing;
                 if(args.size() >= 5)
                 {
-                    bool ok;
-                    int playerID = args[0].toInt(&ok);
-                    if(ok)
+                    bool o1,o2,o3,o4;
+                    int playerID = args[0].toInt(&o1);
+                    if(o1)
                     {
-                        if(playerID == 0)
-                        {
-                            if(ok) t.p1_char        = args[1].toInt(&ok);
-                            if(ok) t.p1_state       = args[2].toInt(&ok);
-                            if(ok) t.p1_vehicleID   = args[3].toInt(&ok);
-                            if(ok) t.p1_vehicleType = args[4].toInt(&ok);
-                        }
-                        else if(playerID == 1)
-                        {
-                            if(ok) t.p2_char        = args[1].toInt(&ok);
-                            if(ok) t.p2_state       = args[2].toInt(&ok);
-                            if(ok) t.p2_vehicleID   = args[3].toInt(&ok);
-                            if(ok) t.p2_vehicleType = args[4].toInt(&ok);
-                        }
+                        int p_char = args[1].toInt(&o1);
+                        int p_state = args[2].toInt(&o2);
+                        int p_vehicleID = args[2].toInt(&o3);
+                        int p_vehicleType = args[2].toInt(&o4);
+                        if(o1 && o2 && o3 && o4)
+                            emit g_intEngine.enginePlayerStateUpdated(playerID, p_char, p_state, p_vehicleID, p_vehicleType);
                     }
                 }
                 break;

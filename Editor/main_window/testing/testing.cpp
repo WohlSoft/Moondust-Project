@@ -42,6 +42,7 @@
 #include <testing/luna_tester_engine.h>
 #include <testing/thextech_engine.h>
 #include <testing/38a_engine.h>
+#include <networking/engine_intproc.h>
 
 
 void MainWindow::initTesting()
@@ -150,6 +151,31 @@ void MainWindow::initTesting()
 
     ui->action_doTestWld->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_IPC));
     ui->action_doSafeTest->setEnabled(m_testEngine->hasCapability(AbstractRuntimeEngine::CAP_WORLD_FILE));
+
+    QObject::connect(&g_intEngine, &IntEngineSignals::engineNumStarsChanged, this, [](int stars)
+    {
+        GlobalSettings::testing.xtra_starsNum = stars;
+    });
+
+    QObject::connect(&g_intEngine, &IntEngineSignals::enginePlayerStateUpdated,
+                     this, [](int playerID, int character, int state, int vehicleID, int vehicleType)
+    {
+        auto &t =GlobalSettings::testing;
+        if(playerID == 0)
+        {
+            t.p1_char        = character;
+            t.p1_state       = state;
+            t.p1_vehicleID   = vehicleID;
+            t.p1_vehicleType = vehicleType;
+        }
+        else if(playerID == 1)
+        {
+            t.p2_char        = character;
+            t.p2_state       = state;
+            t.p2_vehicleID   = vehicleID;
+            t.p2_vehicleType = vehicleType;
+        }
+    });
 }
 
 void MainWindow::closeTesting()
