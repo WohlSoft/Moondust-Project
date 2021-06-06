@@ -8339,6 +8339,26 @@ The maximum number of Music Boxes is %2.</source>
         <source>Bulldozer mode</source>
         <translation>挖掘模式</translation>
     </message>
+    <message>
+        <source>Cheats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start with stars:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished">调试</translation>
+    </message>
+    <message>
+        <source>Player settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TheXTechEngine</name>

@@ -11999,6 +11999,26 @@ Those preferences will makes no effect on a testing process before it will be fi
         <source>Bulldozer mode</source>
         <translation>Режим бульдозера</translation>
     </message>
+    <message>
+        <source>Cheats</source>
+        <translation>Читы</translation>
+    </message>
+    <message>
+        <source>Initial state</source>
+        <translation>Начальное состояние</translation>
+    </message>
+    <message>
+        <source>Start with stars:</source>
+        <translation>Начать со звёздами:</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Отладка</translation>
+    </message>
+    <message>
+        <source>Player settings</source>
+        <translation>Настройки игроков</translation>
+    </message>
 </context>
 <context>
     <name>TheXTechEngine</name>

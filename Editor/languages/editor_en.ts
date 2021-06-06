@@ -12012,6 +12012,26 @@ Those preferences will makes no effect on a testing process before it will be fi
         <source>Bulldozer mode</source>
         <translation>Bulldozer mode</translation>
     </message>
+    <message>
+        <source>Cheats</source>
+        <translation>Cheats</translation>
+    </message>
+    <message>
+        <source>Initial state</source>
+        <translation>Initial state</translation>
+    </message>
+    <message>
+        <source>Start with stars:</source>
+        <translation>Start with stars:</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Debug</translation>
+    </message>
+    <message>
+        <source>Player settings</source>
+        <translation>Player settings</translation>
+    </message>
 </context>
 <context>
     <name>TheXTechEngine</name>
