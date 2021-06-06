@@ -1041,7 +1041,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">削除</translation>
     </message>
     <message>
         <source>General</source>
@@ -1059,7 +1059,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">追加</translation>
     </message>
     <message>
         <source>Reverb</source>
@@ -1859,7 +1859,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">名前</translation>
     </message>
     <message>
         <source>ID</source>
@@ -2515,11 +2515,11 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NPC</translation>
     </message>
     <message>
         <source>Terrain tile</source>
@@ -2531,7 +2531,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">パス</translation>
     </message>
     <message>
         <source>Level</source>
@@ -2621,7 +2621,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>JsonSettingsWidget</name>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">表示</translation>
     </message>
     <message>
         <source>Play</source>
@@ -2821,11 +2821,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NPC</translation>
     </message>
     <message>
         <source>Copy graphic to custom folder</source>
@@ -3621,7 +3621,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>Z-Position</source>
@@ -3670,7 +3670,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NPC</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -3710,7 +3710,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">タイプ:</translation>
     </message>
     <message>
         <source>Warp</source>
@@ -3973,7 +3973,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">タイプ:</translation>
     </message>
     <message>
         <source>Search Block</source>
@@ -3997,7 +3997,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>Search BGO</source>
@@ -4009,7 +4009,7 @@ Physical env. zones:	%6
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NPC</translation>
     </message>
     <message>
         <source>[None]</source>
@@ -6065,7 +6065,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> px</translation>
     </message>
     <message>
         <source>Height</source>
@@ -7389,6 +7389,26 @@ The maximum number of Music Boxes is %2.</source>
         <source>Bulldozer mode</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cheats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start with stars:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Player settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TheXTechEngine</name>
@@ -7542,11 +7562,11 @@ Arguments: %2</source>
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">BGO</translation>
     </message>
     <message>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NPC</translation>
     </message>
     <message>
         <source>Terrain tile</source>
@@ -7558,7 +7578,7 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">パス</translation>
     </message>
     <message>
         <source>Level</source>
@@ -7566,7 +7586,7 @@ Arguments: %2</source>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">タイプ:</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -7639,12 +7659,12 @@ Arguments: %2</source>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">名前</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">/ ID</translation>
     </message>
     <message>
         <source>Descending</source>
@@ -8064,7 +8084,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">表示</translation>
     </message>
     <message>
         <source>Go to coordinates:</source>
@@ -8439,7 +8459,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source> px</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> px</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8524,7 +8544,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">タイプ:</translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -8556,7 +8576,7 @@ Music boxes:		%5
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">パス</translation>
     </message>
     <message>
         <source>Search Path</source>
@@ -8904,7 +8924,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">表示</translation>
     </message>
     <message>
         <source>Counting...</source>

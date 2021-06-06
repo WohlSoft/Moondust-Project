@@ -4133,19 +4133,19 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation>Wine 설정을 변경하려면 현재 작동중인 LunaTester를 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1396"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1398"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation>LunaTester 디렉터리 체크 실패</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1398"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1400"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 LunaTester를 시작할 수 없습니다! 다음 이유 중 하나로 인해 발생할 수 있습니다:</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1402"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1404"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -4155,7 +4155,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1409"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1411"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
@@ -4163,12 +4163,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1446"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1448"/>
         <source>Vanilla SMBX detected!</source>
         <translation>바닐라 SMBX가 감지되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1447"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1449"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
@@ -4177,32 +4177,32 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
 즉, LunaTester로 레벨 테스트를 시작할 수 없습니다. SMBX Engine으로 레벨 테스트를 실행하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1460"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1462"/>
         <source>Incompatible LunaDll found</source>
         <translation>호환되지 않는 LunaDll 발견</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1461"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1463"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation>경로에서 발견 된 호환되지 않는 LunaDll.dll 모듈로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1470"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1472"/>
         <source>Incompatible LunaLua</source>
         <translation>호환되지 않는 LunaLua</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1471"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1473"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation>경로에 호환되지 않는 LunaLua로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1540"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1542"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation>SMBX64 한도 초과!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1541"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1543"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -4215,17 +4215,17 @@ Do you want to continue the process?</source>
 프로세스를 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1673"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1675"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation>잘못된 월드 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1682"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1684"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1717"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1719"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation>LunaTester 월드 루트에서 에피소드를 시작할 수 없습니다.</translation>
     </message>
@@ -4875,7 +4875,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="961"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1033"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="568"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="604"/>
         <source>Direction</source>
         <translation>방향</translation>
     </message>
@@ -4891,19 +4891,19 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1045"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="569"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="605"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1052"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="571"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="607"/>
         <source>Random</source>
         <translation>랜덤</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1059"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="572"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="608"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
@@ -4918,99 +4918,99 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>자동 증가</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="150"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="186"/>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="151"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="187"/>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="152"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="188"/>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation>위</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="153"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="189"/>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation>아래</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="154"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="190"/>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation>왼쪽-위</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="155"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="191"/>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation>오른쪽-위</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="156"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="192"/>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation>아래-왼쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="157"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="193"/>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation>아래-오른쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="272"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="308"/>
         <source>Block ID: %1, Array ID: %2</source>
         <translation>블록 ID:%1, 배열 ID:%2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="318"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="429"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="567"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="354"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="465"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="603"/>
         <source>Position: [%1, %2]</source>
         <translation>위치:[%1,%2]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="332"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1303"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="368"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1339"/>
         <source>%1 coins</source>
         <translation>%1 코인</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="333"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="594"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1304"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1727"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2091"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="369"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="630"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1340"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1763"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2127"/>
         <source>[empty]</source>
         <translation>[공백]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="415"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="451"/>
         <source>BGO ID: %1, Array ID: %2</source>
         <translation>BGO ID:%1,배열 ID:%2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="497"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="533"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation>NPC ID:%1,배열 ID:%2</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="601"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1982"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="637"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2018"/>
         <source>[none]</source>
         <translation>[없음]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="891"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="944"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="927"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="980"/>
         <source>Error in the file %1:
 %2</source>
         <translation>파일에 오류가 있음%1:
@@ -9619,117 +9619,142 @@ The maximum number of Music Boxes is %2.</source>
         <translation>테스트 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="30"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="434"/>
         <source>2 Player settings</source>
         <translation>플레이어 2 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="88"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="395"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="279"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="492"/>
         <source>PLSET_State</source>
         <comment>Character</comment>
         <translation>상태</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="95"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="359"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="243"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="499"/>
         <source>PLSET_Character</source>
         <comment>Character</comment>
         <translation>캐릭터</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="155"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="527"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="411"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="559"/>
         <source>PLSET_VehicleID</source>
         <comment>translate as &quot;Vehicle&quot;</comment>
         <translation>차량</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="162"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="534"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="418"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="566"/>
         <source>PLSET_VehicleType</source>
         <comment>translate as &quot;Vehicle type&quot;</comment>
         <translation>차량 종류</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="228"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="24"/>
         <source>Extra settings</source>
         <translation>추가 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="234"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="46"/>
         <source>Allows you to fly up to the space!</source>
         <translation>우주로 날아갈 수 있습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="237"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="49"/>
         <source>Unlimited flying</source>
         <translation>무제한 비행</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="244"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="36"/>
         <source>Playable character will not take damage on dangerous contacts and will not burn in the lava.</source>
         <translation>플레이 가능한 캐릭터는 데미지를 입지 않으며 용암에서 타지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="247"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="39"/>
         <source>God mode</source>
         <translation>신 모드</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="254"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="66"/>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
         <translation>경로에 관계없이 세계지도의 어느 곳이든 걸을 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="257"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="69"/>
         <source>World freedom</source>
         <translation>어디서나 걷기</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="264"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="56"/>
         <source>Allows you to destroy any objects with no exceptions.</source>
         <translation>예외없이 모든 개체를 파괴 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="267"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="59"/>
         <source>Bulldozer mode</source>
         <translation>불도저 모드</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="274"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="149"/>
         <source>Debug info</source>
         <comment>Enable printing of the debug information.</comment>
         <translation>디버그 정보</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="281"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="163"/>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
         <translation>물리학 디버그</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="301"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="156"/>
         <source>Show frame speed</source>
         <translation>프레임 속도 표시</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="311"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="30"/>
+        <source>Cheats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="92"/>
+        <source>Initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="98"/>
+        <source>Start with stars:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="143"/>
+        <source>Debug</source>
+        <translation type="unfinished">디버그</translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="189"/>
         <source>Number of players</source>
         <translation>선수 수</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="317"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="195"/>
         <source>1 player</source>
         <translation>1 명의 선수</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="324"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="202"/>
         <source>2 player</source>
         <translation>2 명의 선수</translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="353"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="225"/>
+        <source>Player settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="237"/>
         <source>1 Player settings</source>
         <translation>플레이어 1 설정</translation>
     </message>

@@ -3874,32 +3874,32 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1460"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1462"/>
         <source>Incompatible LunaDll found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1461"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1463"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1470"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1472"/>
         <source>Incompatible LunaLua</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1471"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1473"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1540"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1542"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1541"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1543"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -3908,7 +3908,7 @@ Do you want to continue the process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1396"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1398"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation type="unfinished"></translation>
@@ -3976,13 +3976,13 @@ Do you want to continue the process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1398"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1400"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1402"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1404"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -3990,31 +3990,31 @@ Do you want to continue the process?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1409"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1411"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1447"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1449"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1682"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1684"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1717"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1719"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1673"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1675"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4082,7 +4082,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1446"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1448"/>
         <source>Vanilla SMBX detected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4740,19 +4740,19 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="961"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1033"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="568"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="604"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1045"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="569"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="605"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1059"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="572"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="608"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4768,7 +4768,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1052"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="571"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="607"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4783,99 +4783,99 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="150"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="186"/>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="151"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="187"/>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="152"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="188"/>
         <source>Up</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="153"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="189"/>
         <source>Down</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="154"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="190"/>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="155"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="191"/>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="156"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="192"/>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="157"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="193"/>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="272"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="308"/>
         <source>Block ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="318"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="429"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="567"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="354"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="465"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="603"/>
         <source>Position: [%1, %2]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="332"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1303"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="368"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1339"/>
         <source>%1 coins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="333"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="594"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1304"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1727"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2091"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="369"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="630"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1340"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1763"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2127"/>
         <source>[empty]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="415"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="451"/>
         <source>BGO ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="497"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="533"/>
         <source>NPC ID: %1, Array ID: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="601"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="1982"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="637"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="2018"/>
         <source>[none]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="891"/>
-        <location filename="../main_window/dock/lvl_item_properties.cpp" line="944"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="927"/>
+        <location filename="../main_window/dock/lvl_item_properties.cpp" line="980"/>
         <source>Error in the file %1:
 %2</source>
         <translation type="unfinished"></translation>
@@ -9375,117 +9375,142 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="30"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="434"/>
         <source>2 Player settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="88"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="395"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="279"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="492"/>
         <source>PLSET_State</source>
         <comment>Character</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="95"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="359"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="243"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="499"/>
         <source>PLSET_Character</source>
         <comment>Character</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="155"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="527"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="411"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="559"/>
         <source>PLSET_VehicleID</source>
         <comment>translate as &quot;Vehicle&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="162"/>
-        <location filename="../main_window/testing/testing_settings.ui" line="534"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="418"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="566"/>
         <source>PLSET_VehicleType</source>
         <comment>translate as &quot;Vehicle type&quot;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="228"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="24"/>
         <source>Extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="234"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="46"/>
         <source>Allows you to fly up to the space!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="237"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="49"/>
         <source>Unlimited flying</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="244"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="36"/>
         <source>Playable character will not take damage on dangerous contacts and will not burn in the lava.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="247"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="39"/>
         <source>God mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="254"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="66"/>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="257"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="69"/>
         <source>World freedom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="264"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="56"/>
         <source>Allows you to destroy any objects with no exceptions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="267"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="59"/>
         <source>Bulldozer mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="274"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="149"/>
         <source>Debug info</source>
         <comment>Enable printing of the debug information.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="281"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="163"/>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="301"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="156"/>
         <source>Show frame speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="311"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="30"/>
+        <source>Cheats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="92"/>
+        <source>Initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="98"/>
+        <source>Start with stars:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="143"/>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="189"/>
         <source>Number of players</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="317"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="195"/>
         <source>1 player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="324"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="202"/>
         <source>2 player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/testing/testing_settings.ui" line="353"/>
+        <location filename="../main_window/testing/testing_settings.ui" line="225"/>
+        <source>Player settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.ui" line="237"/>
         <source>1 Player settings</source>
         <translation type="unfinished"></translation>
     </message>

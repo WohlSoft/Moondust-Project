@@ -11770,6 +11770,26 @@ Esas preferencias no van a tener efecto en un proceso de prueba hasta que se ter
         <source>Bulldozer mode</source>
         <translation>Modo Bulldozer</translation>
     </message>
+    <message>
+        <source>Cheats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start with stars:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished">Depuración</translation>
+    </message>
+    <message>
+        <source>Player settings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TheXTechEngine</name>
