@@ -105,6 +105,7 @@ list(APPEND PGE_MAINTAINER_SRCS
     Graphics/png2gifs.cpp
     Graphics/lazyfix.cpp
     Graphics/palette_filter.cpp
+    ${UTF8MAIN_SRCS}
     ${UIS_HDRS}
     ${RESOURCE_ADDED}
     ${QT_PLUGINS_CPP}
