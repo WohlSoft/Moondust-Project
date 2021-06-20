@@ -1,18 +1,18 @@
-# PGE Engine
+# Moondust Engine
 
-![PGE Engine](https://github.com/WohlSoft/PGE-Project/blob/master/Engine/_resources/icon/cat_256.png)
+![Moondust Engine](https://github.com/WohlSoft/Moondust-Project/blob/master/Engine/_resources/icon/cat_256.png)
 
-Is the main part of PGE Project which allows users to play levels and episodes.
+Is the main part of Moondust Project which allows users to play levels and episodes.
 
 Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (when used configuration packages which are following [SMBX64 Standard](http://wohlsoft.ru/pgewiki/SMBX64)).
 
-[More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/PGE_Engine)
+[More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/Moondust_Engine)
 
 # Important files
 
-* **pge_engine.pro** - project file for QMake
+* **CMakeLists.txt** - project file for CMake
 * **version.h** - Version information
-* **languages.pri** - list of available languages
+* **languages.cmake** - list of available languages
 
 # Folders
 

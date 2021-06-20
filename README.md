@@ -1,6 +1,6 @@
-Platform Game Engine by Wohlstand
+Moondust Project by Wohlstand
 ===========
-Platform Game Engine (PGE) is a free and open source game engine and toolkit, giving developers the ability to create platform games.
+Moondust Project (formerly known as PGE Project) is a free and open-source game engine and development kit for it, giving developers the ability to create platform games.
 
 ------
 
@@ -15,12 +15,12 @@ Created by Vitaly Novichkov "Wohlstand" &lt;admin@wohlnet.ru&gt;
 [![Join to our chat server](https://img.shields.io/badge/Discord-Join%20us-7289DA.svg)](https://discord.gg/qPBsvMy)
 
 How to build (Linux, Windows, Mac OS X):
-http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
+https://wohlsoft.ru/pgewiki/Building_Moondust_Project_from_sources
 
 ## Downloads
 [![Download latest stable release](https://img.shields.io/badge/Download-Stable-green.svg)](http://wohlsoft.ru/PGE/#links)
 [![Official project site](https://img.shields.io/badge/Download-Experimental-orange.svg)](http://wohlsoft.ru/docs/_laboratory/)
-[![Configuration packages are requires to work with PGE Project](https://img.shields.io/badge/Download-Config%20packs-blue.svg)](http://wohlsoft.ru/config_packs/)
+[![Configuration packages are requires to work with Moondust Project](https://img.shields.io/badge/Download-Config%20packs-blue.svg)](http://wohlsoft.ru/config_packs/)
 
 
 ## Donate us
@@ -33,64 +33,74 @@ http://wohlsoft.ru/pgewiki/Building_of_PGE_From_sources
 ## CI Build status
 Linux | Mac OS X | Windows
 ------------ | ------------- | -------------
-[![Build Status](https://semaphoreci.com/api/v1/wohlstand/pge-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/PGE-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/PGE-Project) | [![Windows CI](https://github.com/WohlSoft/PGE-Project/workflows/Windows%20CI/badge.svg?branch=master&event=push)](https://github.com/WohlSoft/PGE-Project/actions?query=workflow%3A%22Windows+CI%22)
+[![Build Status](https://semaphoreci.com/api/v1/wohlstand/pge-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/Moondust-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/Moondust-Project) | [![Windows CI](https://github.com/WohlSoft/Moondust-Project/workflows/Windows%20CI/badge.svg?branch=master&event=push)](https://github.com/WohlSoft/Moondust-Project/actions?query=workflow%3A%22Windows+CI%22)
 
 # Components
-A list of components are included with PGE Project
+A list of components are included with Moondust Project
 
-## PGE Engine
+## Moondust Engine
 
 ![PGE Engine](https://github.com/WohlSoft/PGE-Project/blob/master/Engine/_resources/icon/cat_256.png)
 
-The PGE Engine is the main part of the PGE Project, allowing users to play levels and episodes.
+The Moondust Engine is the main part of the Moondust Project, allowing users to play levels and episodes.
 
 Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (when used configuration packages which are following [SMBX64 Standard](http://wohlsoft.ru/pgewiki/SMBX64)).
 
 :point_up: **Note** This component is experimental and has not completed base implementation, but can be used for various testing.
 
-[More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/PGE_Engine)
+[More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/Moondust_Engine)
 
 
-## PGE Editor
+## Development Kit
+This is a set of tools used for creating levels and episodes for the Moondust Engine and also used to develop levels and episodes for some other projects too.
 
-![PGE Editor](https://github.com/WohlSoft/PGE-Project/blob/master/Editor/_resources/images/cat_builder/cat_builder_256.png)
+### Editor
+
+![Moondust Editor](https://github.com/WohlSoft/PGE-Project/blob/master/Editor/_resources/images/cat_builder/cat_builder_256.png)
 
 The PGE Editor is the main development tool, allowing the creation and editing of levels, world maps, and NPC configurations. Maintenance utilities are also provided.
 
 Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (when used configuration packages which are following [SMBX64 Standard](http://wohlsoft.ru/pgewiki/SMBX64)).
 
-[More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/PGE_Editor)
+[More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/Moondust_Editor)
 
-## Playable Character Calibrator
+### Playable Character Calibrator
 
-![PGE Calibrator](https://github.com/WohlSoft/PGE-Project/blob/master/PlayableCalibrator/_resourses/icon/calibrator_256.png)
+![Moondust Calibrator](https://github.com/WohlSoft/PGE-Project/blob/master/PlayableCalibrator/_resourses/icon/calibrator_256.png)
 
 The Playable Character Calibrator allows the developer to define a collision box for each respective frame of a playable character, and calibrate any incorrect positions of the frames in an SMBX64 playable character sprite.
 
 [More information on the PGE Wiki...](http://wohlsoft.ru/pgewiki/Playable_character_Calibrator)
 
 
-## PGE MusPlay
+### Music Player
 
-![PGE MusPlay](https://github.com/WohlSoft/PGE-Project/blob/master/MusicPlayer/_resources/cat_musplay/cat_musplay_256x256.png)
+![Moondust Music Player](https://github.com/WohlSoft/PGE-Project/blob/master/MusicPlayer/_resources/cat_musplay/cat_musplay_256x256.png)
 
-PGE MusPlay is a light-weight music player based on [SDL Mixer X audio library](http://wohlsoft.ru/pgewiki/SDL_Mixer_X) to test music files (include [OGG files with a loop tags](http://wohlsoft.ru/pgewiki/How_To:_Looping_music_files))
+Music Player is a lightweight music player based on [SDL Mixer X audio library](http://wohlsoft.ru/pgewiki/SDL_Mixer_X) to test music files (include [OGG files with a loop tags](http://wohlsoft.ru/pgewiki/How_To:_Looping_music_files))
 
-## GIFs to PNG Converter
 
-This small console utility merges bit-mask based GIF pairs used in the legacy engine into PNG format with alpha channel (semi-transparency) support.
+### Maintainer wizard
 
-## PNG to GIFs Converter
+This is a small and user-friendly graphical utility that allows you to process and convert various stuff like level and episode data, music files, graphic resources, etc.
 
-This small console utility converts PNG image into a pair of GIF files for bit-mask algorithm rendering, simplifying the creation of graphics for the legacy engine.
 
-## LazyFix tool
+### GIFs to PNG Converter
 
-This small console utility fixes incorrect mask images into valid black&white mask images.
+This is a small console utility that merges bit-mask-based GIF pairs used in the legacy engine into PNG format with alpha channel (semi-transparency) support.
 
-## PGE Maintainer
+### PNG to GIFs Converter
 
-This small utility converts and fixes music files and levels.
+This is a small console utility that converts PNG images into a pair of GIF files for bit-mask algorithm rendering, simplifying the creation of graphics for the legacy engine.
+
+### LazyFix tool
+
+This is a small console utility that fixes incorrect mask images into valid black&white mask images.
+
+### Palette filter tool
+
+This is a small console utility that adjusts the colors of a given image with the reference picture taken as a palette.
+
 
 
 # License
