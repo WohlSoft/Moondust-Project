@@ -699,7 +699,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished">Dossier d&apos;entrée (par exemple, le dossier racine d&apos;un épisode ou niveau personnalisé) :</translation>
+        <translation>Dossier d&apos;entrée (par exemple, le dossier racine d&apos;un épisode ou niveau personnalisé) :</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
@@ -709,43 +709,43 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished">Parcourir…</translation>
+        <translation>Parcourir…</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">Chemin vers un dossier d&apos;entrée avec des données sources</translation>
+        <translation>Chemin vers un dossier d&apos;entrée avec des données sources</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="98"/>
         <source>Flags</source>
-        <translation type="unfinished">Drapeaux</translation>
+        <translation>Drapeaux</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished">Traiter tout le contenu des sous-dossiers</translation>
+        <translation>Traiter tout le contenu des sous-dossiers</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Que souhaitez-vous faire ?</translation>
+        <translation>Que souhaitez-vous faire ?</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished">Démarrer</translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
         <source>Output log</source>
-        <translation type="unfinished">Journal de sortie</translation>
+        <translation>Journal de sortie</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
@@ -755,18 +755,18 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">Le processus est occupé</translation>
+        <translation>Le processus est occupé</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished">Impossible de convertir ces fichiers pendant qu&apos;une conversion est déjà en cours !</translation>
+        <translation>Impossible de convertir ces fichiers pendant qu&apos;une conversion est déjà en cours !</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="102"/>
         <location filename="../Graphics/lazyfix.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">Entrée invalide</translation>
+        <translation>Entrée invalide</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
@@ -776,22 +776,22 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished">Le chemin vers le dossier d&apos;entrée n&apos;existe pas.</translation>
+        <translation>Le chemin vers le dossier d&apos;entrée n&apos;existe pas.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation type="unfinished">Sélectionner un dossier d&apos;entrée</translation>
+        <translation>Sélectionner un dossier d&apos;entrée</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished">Le processus s&apos;est terminé avec le code %1.</translation>
+        <translation>Le processus s&apos;est terminé avec le code %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="165"/>
         <source>Process was terminated</source>
-        <translation type="unfinished">Le processus a été interrompu</translation>
+        <translation>Le processus a été interrompu</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="166"/>
@@ -801,7 +801,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="171"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished">Sortie sans succès</translation>
+        <translation>Sortie sans succès</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="172"/>
@@ -811,7 +811,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished">Arrêter</translation>
+        <translation>Arrêter</translation>
     </message>
 </context>
 <context>
@@ -1070,7 +1070,7 @@ Formats pris en charge :
         <location filename="../Graphics/palette_filter.ui" line="27"/>
         <location filename="../Graphics/palette_filter.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished">Démarrer</translation>
+        <translation>Démarrer</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
@@ -1080,12 +1080,12 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.ui" line="47"/>
         <source>Output log</source>
-        <translation type="unfinished">Journal de sortie</translation>
+        <translation>Journal de sortie</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="81"/>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
@@ -1105,7 +1105,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.ui" line="148"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished">Dossier d&apos;entrée (par exemple, le dossier racine d&apos;un épisode ou niveau personnalisé) :</translation>
+        <translation>Dossier d&apos;entrée (par exemple, le dossier racine d&apos;un épisode ou niveau personnalisé) :</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
@@ -1116,27 +1116,27 @@ Formats pris en charge :
         <location filename="../Graphics/palette_filter.ui" line="162"/>
         <location filename="../Graphics/palette_filter.ui" line="226"/>
         <source>Browse...</source>
-        <translation type="unfinished">Parcourir…</translation>
+        <translation>Parcourir…</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">Chemin vers un dossier d&apos;entrée avec des données sources</translation>
+        <translation>Chemin vers un dossier d&apos;entrée avec des données sources</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="182"/>
         <source>Flags</source>
-        <translation type="unfinished">Drapeaux</translation>
+        <translation>Drapeaux</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="189"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished">Traiter tout le contenu des sous-dossiers</translation>
+        <translation>Traiter tout le contenu des sous-dossiers</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Que souhaitez-vous faire ?</translation>
+        <translation>Que souhaitez-vous faire ?</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="210"/>
@@ -1156,12 +1156,12 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">Le processus est occupé</translation>
+        <translation>Le processus est occupé</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished">Impossible de convertir ces fichiers pendant qu&apos;une conversion est déjà en cours !</translation>
+        <translation>Impossible de convertir ces fichiers pendant qu&apos;une conversion est déjà en cours !</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="86"/>
@@ -1169,7 +1169,7 @@ Formats pris en charge :
         <location filename="../Graphics/palette_filter.cpp" line="123"/>
         <location filename="../Graphics/palette_filter.cpp" line="132"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">Entrée invalide</translation>
+        <translation>Entrée invalide</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="87"/>
@@ -1185,22 +1185,22 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="133"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished">Le chemin vers le dossier d&apos;entrée n&apos;existe pas.</translation>
+        <translation>Le chemin vers le dossier d&apos;entrée n&apos;existe pas.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="156"/>
         <source>Select an input directory</source>
-        <translation type="unfinished">Sélectionner un dossier d&apos;entrée</translation>
+        <translation>Sélectionner un dossier d&apos;entrée</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="178"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished">Le processus s&apos;est terminé avec le code %1.</translation>
+        <translation>Le processus s&apos;est terminé avec le code %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="188"/>
         <source>Process was terminated</source>
-        <translation type="unfinished">Le processus a été interrompu</translation>
+        <translation>Le processus a été interrompu</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
@@ -1210,7 +1210,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished">Sortie sans succès</translation>
+        <translation>Sortie sans succès</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="195"/>
@@ -1220,7 +1220,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
         <source>Stop</source>
-        <translation type="unfinished">Arrêter</translation>
+        <translation>Arrêter</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>
