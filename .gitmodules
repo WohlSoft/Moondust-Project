@@ -22,7 +22,7 @@
 	url = https://github.com/WohlSoft/SDL-Mixer-X.git
 [submodule "Content/help"]
 	path = Content/help
-	url = https://github.com/WohlSoft/PGE-Editor-Help.git
+	url = https://github.com/WohlSoft/Moondust-Devkit-Help.git
 [submodule "_Libs/luabind"]
 	path = _Libs/luabind
 	url = https://github.com/WohlSoft/moondust-luabind.git
