@@ -46,7 +46,6 @@ include(../_common/DirManager/dirman.cmake)
 include(../_common/FileMapper/FileMapper.cmake)
 include(../_common/fmt/fmt.cmake)
 include(../_common/IniProcessor/IniProcessor.cmake)
-include(../_common/PgeGameSave/submodule/pge_gamesave.cmake)
 include(../_common/tclap/tclap.cmake)
 include(../_common/Utf8Main/utf8main.cmake)
 include(../_common/Utils/Utils.cmake)
@@ -368,11 +367,11 @@ if(ANDROID)
         ${PGE_ENGINE_SRC_ARGS}
     )
     target_compile_options(pge_engine PRIVATE -fPIC)
-    
+
         # Include own-built libraries into the APK
     set(APK_PACK_LIBS ${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${CMAKE_BUILD_TYPE_LOWER}/${ANDROID_ABI})
     add_custom_target(SDL_ApkPackLibs_makeDir ALL COMMAND ${CMAKE_COMMAND} -E make_directory "${APK_PACK_LIBS}")
-    
+
 #    add_library(SDL2 SHARED IMPORTED DEPENDS SDL2_Local)
 #    set_target_properties(SDL2 PROPERTIES IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/lib/libSDL2.so)
 
@@ -441,7 +440,7 @@ add_dependencies(pge_engine
     SDL2_Local
     LuaBind_Local
     FreeImage_Local
-    SQLite_Local
+#    SQLite_Local
     PGE_FileFormats
     FREETYPE_Local
     engine_resource_data
@@ -467,7 +466,7 @@ list(APPEND PGE_ENGINE_LINK_LIBS
     PGE_LuaBind
     PGE_LuaJIT
     PGE_FreeType
-    PGE_SQLite
+#    PGE_SQLite
 )
 
 if(PGE_STATIC_SDLMIXER)

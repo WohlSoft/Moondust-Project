@@ -70,7 +70,7 @@ include(_common/res_generator.cmake)
 # Dependent libraries
 include(_common/library_libpng.cmake)
 include(_common/library_libjpeg.cmake)
-include(_common/library_sqlite.cmake)
+#include(_common/library_sqlite.cmake)
 include(_common/library_luajit.cmake)
 include(_common/library_luabind.cmake)
 include(_common/library_SDL2.cmake)
@@ -98,7 +98,7 @@ set(LIBS_TARGETS
     SDL2_Local
     LuaBind_Local
     FreeImage_Local
-    SQLite_Local
+#    SQLite_Local
     FREETYPE_Local
     pgefl
 )
