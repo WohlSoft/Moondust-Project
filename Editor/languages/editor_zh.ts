@@ -5,7 +5,7 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation>不支持从 IPC 测试大地图</translation>
+        <translation>不支持通过 IPC 测试大地图</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
@@ -8341,23 +8341,23 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation>作弊</translation>
     </message>
     <message>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>初始状态</translation>
     </message>
     <message>
         <source>Start with stars:</source>
-        <translation type="unfinished"></translation>
+        <translation>星星数：</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished">调试</translation>
+        <translation>调试</translation>
     </message>
     <message>
         <source>Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation>玩家设置</translation>
     </message>
 </context>
 <context>

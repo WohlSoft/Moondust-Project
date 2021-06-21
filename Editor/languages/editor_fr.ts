@@ -8142,23 +8142,23 @@ Motif : %1
     </message>
     <message>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation>Codes de triche</translation>
     </message>
     <message>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>État initial</translation>
     </message>
     <message>
         <source>Start with stars:</source>
-        <translation type="unfinished"></translation>
+        <translation>Commencer avec des étoiles :</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished">Débogage</translation>
+        <translation>Débogage</translation>
     </message>
     <message>
         <source>Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres du joueur</translation>
     </message>
 </context>
 <context>
