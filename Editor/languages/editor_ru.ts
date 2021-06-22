@@ -1867,7 +1867,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Default</source>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <source>Foreground</source>
@@ -3633,7 +3633,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Default</source>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <source>Physics type:</source>
@@ -5186,7 +5186,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
     </message>
     <message>
         <source>Default</source>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <source>Foreground</source>
@@ -11354,7 +11354,7 @@ Reason: %1
     <message>
         <source>Default</source>
         <comment>Name of pallete</comment>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <source>Dark blue</source>
@@ -12095,7 +12095,7 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
-        <translation>По-умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
     <message>
         <source>Software</source>
