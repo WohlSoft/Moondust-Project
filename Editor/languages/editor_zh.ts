@@ -1087,12 +1087,12 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>移除</translation>
     </message>
     <message>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation type="unfinished">通用</translation>
+        <translation>通用</translation>
     </message>
     <message>
         <source>Max polyphony</source>
@@ -1105,7 +1105,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">新增</translation>
+        <translation>新增</translation>
     </message>
     <message>
         <source>Reverb</source>
@@ -1125,27 +1125,27 @@ Please save them before doing anything else.</source>
     <message>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">宽度</translation>
+        <translation>房间宽度</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">关卡</translation>
+        <translation>混响等级</translation>
     </message>
     <message>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation>合唱</translation>
+        <translation>合声</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished">关卡</translation>
+        <translation>合声等级</translation>
     </message>
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation>合唱速度</translation>
+        <translation>合声速度</translation>
     </message>
     <message>
         <source>Depth (ms)</source>
@@ -1155,7 +1155,7 @@ Please save them before doing anything else.</source>
     <message>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation>合唱音色数（N）</translation>
+        <translation>合声音色数（N）</translation>
     </message>
     <message>
         <source>Type</source>
