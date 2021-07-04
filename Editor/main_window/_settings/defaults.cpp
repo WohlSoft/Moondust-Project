@@ -219,6 +219,14 @@ void MainWindow::setUiDefults()
         connect(action, &QAction::triggered, this, &MainWindow::customGrid);
         ui->menuSetGridSize->addSeparator();
 
+        action = ui->menuSetGridSize->addAction("2 x 2");
+        action->setData(2);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
+        action = ui->menuSetGridSize->addAction("4 x 4");
+        action->setData(4);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
         action = ui->menuSetGridSize->addAction("8 x 8");
         action->setData(8);
         connect(action, &QAction::triggered, this, &MainWindow::customGrid);
@@ -235,8 +243,24 @@ void MainWindow::setUiDefults()
         action->setData(64);
         connect(action, &QAction::triggered, this, &MainWindow::customGrid);
 
+        action = ui->menuSetGridSize->addAction("128 x 128");
+        action->setData(128);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
         action = ui->menuSetGridSize->addAction(tr("Custom..."));
         action->setData(-1);
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
+        ui->menuSetGridSize->addSeparator();
+
+        action = ui->menuSetGridSize->addAction(tr("Next grid size"));
+        action->setData(-2);
+        action->setShortcut(QKeySequence(Qt::Key_BracketRight));
+        connect(action, &QAction::triggered, this, &MainWindow::customGrid);
+
+        action = ui->menuSetGridSize->addAction(tr("Previous grid size"));
+        action->setData(-3);
+        action->setShortcut(QKeySequence(Qt::Key_BracketLeft));
         connect(action, &QAction::triggered, this, &MainWindow::customGrid);
     }
 

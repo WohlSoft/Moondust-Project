@@ -14,6 +14,7 @@
 - All GUI overlays for console tools has been removed (except the audio converter) in favor of the Moondust Maintainer tool being executed instead
 - The "lvl" or "lvlx" extension will be passed into the testing engines with the LVLX support depending on the SMBX64 strict mode
 - Extended the level testing support for the TheXTech engine
+- Added an ability to change the grid size option using braces keys
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

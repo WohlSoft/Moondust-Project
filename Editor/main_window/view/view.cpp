@@ -87,18 +87,70 @@ void MainWindow::customGrid(bool)
     QAction* action = (QAction*)sender();
     int gridSize = action->data().toInt();
 
-    GlobalSettings::LvlOpts.grid_override = (gridSize != 0);
+    if(gridSize >= 0)
+        GlobalSettings::LvlOpts.grid_override = (gridSize > 0);
+
     if(gridSize != 0)
     {
         if(gridSize == -1)
         {
-            bool ok=0;
+            bool ok = 0;
             gridSize = QInputDialog::getInt(this,
                                             tr("Custom align grid size"),
                                             tr("Please enter grid alignment size:"),
                                             32, 0, 2147483647, 1, &ok);
-            if(!ok) return;
+            if(!ok)
+                return;
+
+            GlobalSettings::LvlOpts.grid_override = (gridSize > 0);
         }
+        else if(gridSize == -2) // Next grid offset
+        {
+            if(!GlobalSettings::LvlOpts.grid_override) // 0
+            {
+                GlobalSettings::LvlOpts.grid_override = true;
+                gridSize = 1;
+                showStatusMsg(tr("Grid size: changed into %1x%1").arg(gridSize), 2000);
+            }
+            else
+            {
+                gridSize = GlobalSettings::LvlOpts.customGrid.width();
+                gridSize *= 2;
+                if(gridSize > 128)
+                {
+                    GlobalSettings::LvlOpts.grid_override = false;
+                    showStatusMsg(tr("Grid size: restored default"), 2000);
+                }
+                else
+                {
+                    showStatusMsg(tr("Grid size: changed into %1x%1").arg(gridSize), 2000);
+                }
+            }
+        }
+        else if(gridSize == -3) // Previous grid offset
+        {
+            if(!GlobalSettings::LvlOpts.grid_override) // 0
+            {
+                GlobalSettings::LvlOpts.grid_override = true;
+                gridSize = 128;
+                showStatusMsg(tr("Grid size: changed into %1x%1").arg(gridSize), 2000);
+            }
+            else
+            {
+                gridSize = GlobalSettings::LvlOpts.customGrid.width();
+                if(gridSize < 2)
+                {
+                    GlobalSettings::LvlOpts.grid_override = false;
+                    showStatusMsg(tr("Grid size: restored default"), 2000);
+                }
+                else
+                {
+                    gridSize /= 2;
+                    showStatusMsg(tr("Grid size: changed into %1x%1").arg(gridSize), 2000);
+                }
+            }
+        }
+
         GlobalSettings::LvlOpts.customGrid.setWidth(gridSize);
         GlobalSettings::LvlOpts.customGrid.setHeight(gridSize);
     }
