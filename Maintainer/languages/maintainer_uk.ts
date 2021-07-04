@@ -679,139 +679,139 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="17"/>
         <source>Fix bad-designed masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Виправити некоректні GIF з масками</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="31"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Обробити файли</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
         <source>Drop your masked GIFs files into this window for a quick porcessing</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістіть сюди GIF-файли з масками для їх обробки</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="58"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Масова обробка всього рівня/епізоду</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished">Вхідна директорія (наприклад, корінь епізоду або корист. папка рівня):</translation>
+        <translation>Вхідна директорія (наприклад, корінь епізоду або корист. папка рівня):</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>Не створювати резервні копії старих зображень</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished">Огляд...</translation>
+        <translation>Огляд...</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">Шлях до вхідної директорії з вихідними даними</translation>
+        <translation>Шлях до вхідної директорії з вихідними даними</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="98"/>
         <source>Flags</source>
-        <translation type="unfinished">Опції</translation>
+        <translation>Опції</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Обробити дані всіх підпапок</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Чого ви бажаєте?</translation>
+        <translation>Що ви бажаєте зробити?</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished">Почати</translation>
+        <translation>Почати</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
         <source>Output log</source>
-        <translation type="unfinished">Вихідний звіт</translation>
+        <translation>Вихідний звіт</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
         <source>Close</source>
-        <translation type="unfinished">Закрити</translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
         <source>This wizard will help you to automatically fix any SMBX 1.3 graphics (in a GIF format with the use of bitmask) that have a bad-designed invalid mask (e.g. made with a lazy effort). Masks made with a lazy effort are masks made by the copying of a front image and filling the background with white. This making method for masks gives an illusion of quick work, however, these masks are invalid and may cause strange glitches on some graphical engines and converters. After processing these sprites, all invalid masks will be turned into the valid form of the black shape as they must be, and therefore, they can be freely used everywhere without glitches.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей майстер допоможе вам автоматично виправити будь-яку графіку для SMBX 1.3 (у форматі GIF з використанням бітової маски), в якій є неправильно спроектовані маски (тобто, неякісні). Неякісні маски - це маски, які були створені шляхом копіювання лицьового зображення й залиття фона білим кольором. Цей метод створення масок лиш створює іллюзію швидкої роботи: насправді ж ці маски некоректні. Саме вони стають причиною різноманітних глюків в деякіх графічних двигунах і конвертерах. Після обробки таких зображень, всі недопустимі маски будуть конвертовані у свою коректну форму з чорним силуетом і білим фоном, якими вони і повинні бути. Отже, їх можна буде використовувати скрізь і всюди, не боячись будь-яких глюків.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">Процес вже йде</translation>
+        <translation>Процес зайнятий</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished"></translation>
+        <translation>Почекайте, поки не закінчиться конвертація попередніх файлів!</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="102"/>
         <location filename="../Graphics/lazyfix.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">Невірний вхідний шлях</translation>
+        <translation>Невірний вхідний шлях</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть шлях до вхідної папки для початку конвертації.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished">Заданий шлях до вхідної директорії не існує.</translation>
+        <translation>Заданий шлях до вхідної папки не існує.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть вхідну папку</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="155"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished">Процес завершився з кодом %1.</translation>
+        <translation>Процес завершено з кодом %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="165"/>
         <source>Process was terminated</source>
-        <translation type="unfinished">Процес перервано</translation>
+        <translation>Процес перервано</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="166"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Процес перервано.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="171"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished">Безуспішне завершення</translation>
+        <translation>Безуспішне завершення</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="172"/>
         <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обробка завершена з помилками. У вихідному звіті ви можете побачити всі подробиці.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished">Зупинити</translation>
+        <translation>Зупинити</translation>
     </message>
 </context>
 <context>
@@ -876,12 +876,12 @@ Supported formats:
     <message>
         <location filename="../main_window.ui" line="140"/>
         <source>Fix bad-designed masked GIF graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Виправити некоректні GIF-маски</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="156"/>
         <source>Adjust graphics into a given palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Фільтрація палітри графіки</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="169"/>
@@ -1064,104 +1064,104 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="17"/>
         <source>Palette filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Фільтр палітри</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="27"/>
         <location filename="../Graphics/palette_filter.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished">Почати</translation>
+        <translation>Почати</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
         <source>This wizard will help you to automatically adjust given graphics with a specific palette by replacing colors into most closed to any color that is available on the specified palette.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей майстер допоможе автоматично відрегулювати вказані зображення до конкретної палітри з допомогою заміни кольорів на найближчі кольори у вказаній палітрі.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="47"/>
         <source>Output log</source>
-        <translation type="unfinished">Вихідний звіт</translation>
+        <translation>Вихідний звіт</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="81"/>
         <source>Close</source>
-        <translation type="unfinished">Закрити</translation>
+        <translation>Закрити</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Обробити файли</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
         <source>Drop your PNG files into this window for a quick porcessing</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістіть сюди PNG-файли для того, щоб обробити їх</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="142"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Масова обробка всього рівня/епізоду</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="148"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished">Вхідна директорія (наприклад, корінь епізоду або корист. папка рівня):</translation>
+        <translation>Вхідна папка (наприклад, корінь епізоду або корист. папка рівня):</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>Не створювати резервні копії старих зображень</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="162"/>
         <location filename="../Graphics/palette_filter.ui" line="226"/>
         <source>Browse...</source>
-        <translation type="unfinished">Огляд...</translation>
+        <translation>Огляд...</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">Шлях до вхідної директорії з вихідними даними</translation>
+        <translation>Шлях до вхідної папки з вихідними даними</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="182"/>
         <source>Flags</source>
-        <translation type="unfinished">Опції</translation>
+        <translation>Опції</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="189"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Обробити дані всіх підпапок</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Чого ви бажаєте?</translation>
+        <translation>Що ви бажаєте зробити?</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="210"/>
         <source>Target palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Цільова палітра</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="216"/>
         <source>Palette reference image:</source>
-        <translation type="unfinished"></translation>
+        <translation>Зображення-зразок палітри:</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="233"/>
         <source>This is the picture that should contain all colors of the palette you want to enforce to all images you want to process. This would be a grid of colors or just a hand-made picture with manually drawn colors of the palette. All processed images will be adjusted to have the same colors as this image has.</source>
-        <translation type="unfinished"></translation>
+        <translation>Це зображення, на якому знаходяться всі кольора палітри, в яку ви бажаєте перефарбувати всі ваші зображення. Це може бути, наприклад, сітка кольорів, або якесь зображення з кольорами, намальованими власноруч. Всі оброблені зображення будуть мати такий же набір кольорів, як і в вказанному зображенні-зразку.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">Процес вже йде</translation>
+        <translation>Процес зайнятий</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished"></translation>
+        <translation>Почекайте, поки не закінчиться конвертація попередніх файлів!</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="86"/>
@@ -1169,63 +1169,63 @@ Supported formats:
         <location filename="../Graphics/palette_filter.cpp" line="123"/>
         <location filename="../Graphics/palette_filter.cpp" line="132"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">Невірний вхідний шлях</translation>
+        <translation>Невірний вхідний шлях</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="87"/>
         <location filename="../Graphics/palette_filter.cpp" line="116"/>
         <source>You should give a PNG image with a target palette reference to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Щоб почати обробку, необхідно вказати PNG-зображення, яке має зразок цільової палітри.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="124"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть шлях до вхідної папки для початку обробки.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="133"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation type="unfinished">Заданий шлях до вхідної директорії не існує.</translation>
+        <translation>Заданий шлях до вхідної папки не існує.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="156"/>
         <source>Select an input directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть вхідну папку</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="178"/>
         <source>Process was exited with a code %1.</source>
-        <translation type="unfinished">Процес завершився з кодом %1.</translation>
+        <translation>Процес завершено з кодом %1.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="188"/>
         <source>Process was terminated</source>
-        <translation type="unfinished">Процес перервано</translation>
+        <translation>Процес перервано</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Процес перервано.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
         <source>Unsuccess exit</source>
-        <translation type="unfinished">Безуспішне завершення</translation>
+        <translation>Безуспішне завершення</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="195"/>
         <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Обробка завершена з помилками. У вихідному звіті ви можете побачити всі подробиці.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
         <source>Stop</source>
-        <translation type="unfinished">Зупинити</translation>
+        <translation>Зупинити</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>
         <source>Select the PNG image as a palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть PNG-зображення як палітру</translation>
     </message>
 </context>
 <context>
