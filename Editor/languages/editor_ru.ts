@@ -5064,39 +5064,39 @@ the destination section first with &apos;Delete Section&apos;.</source>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation type="unfinished"></translation>
+        <translation>Автопрокрутка секции (устар.)</translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Данные настройки автопрокрутки секции являются устаревшими. Они использовались в старых SMBX64-уровнях, либо в уровнях, ранее сконвертированных из устаревшего формата в современный. Используйте данные настройки только при создании уровней для непосредственного их запуска на SMBX64-движках и более старых. Данные настройки также могут работать на более новых движках, таких как TheXTech и Moondust-движок. Однако, если в вашем уровне используются современные настройки автопрокрутки, эти будут полнолстью проигнорированы. Также, если уровень сохранён в формат SMBX-38A, данные настройки будут утеряны. Современные настройки автопрокрутки можно найти в блоке &quot;Настройки секции&quot;.</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить скорость автопрокрутки</translation>
     </message>
     <message>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Тип:</translation>
     </message>
     <message>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation type="unfinished"></translation>
+        <translation>Простой</translation>
     </message>
     <message>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Расширенный</translation>
     </message>
     <message>
         <source>Not implemented yet, sorry</source>
-        <translation type="unfinished"></translation>
+        <translation>Не реализовано пока что, извините</translation>
     </message>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключено из-за строго режима SMBX64</translation>
     </message>
 </context>
 <context>
@@ -10027,19 +10027,19 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Grid size: changed into %1x%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер сетки: изменено в %1x%1</translation>
     </message>
     <message>
         <source>Grid size: restored default</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер сетки: восстановлено поведение по-умолчанию</translation>
     </message>
     <message>
         <source>Next grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Следующий размер сетки</translation>
     </message>
     <message>
         <source>Previous grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Предыдущий размер сетки</translation>
     </message>
 </context>
 <context>
