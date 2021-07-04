@@ -48,6 +48,7 @@ private:
 
     Mix_Chunk *m_testSfx = nullptr;
     QString    m_testSfxDir;
+    bool       m_sendPanning = false;
     int16_t    m_angle = 0;
     uint8_t    m_distance = 0;
     uint8_t    m_panLeft = 255;

@@ -515,7 +515,7 @@ border-bottom-color: rgb(0, 120, 0);
      <x>0</x>
      <y>0</y>
      <width>461</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -546,6 +546,8 @@ border-bottom-color: rgb(0, 120, 0);
     <addaction name="actionFileAssoc"/>
     <addaction name="separator"/>
     <addaction name="actionEnableReverb"/>
+    <addaction name="actionEnableEcho"/>
+    <addaction name="actionTuneEcho"/>
     <addaction name="separator"/>
     <addaction name="menuMusicLooping"/>
    </widget>
@@ -648,6 +650,19 @@ border-bottom-color: rgb(0, 120, 0);
   <action name="actionAudioSetup">
    <property name="text">
     <string>Audio Setup...</string>
+   </property>
+  </action>
+  <action name="actionEnableEcho">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable echo</string>
+   </property>
+  </action>
+  <action name="actionTuneEcho">
+   <property name="text">
+    <string>Tune echo...</string>
    </property>
   </action>
  </widget>

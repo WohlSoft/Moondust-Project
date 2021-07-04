@@ -17,12 +17,14 @@
 #include "../Player/mus_player.h"
 #include "../AssocFiles/assoc_files.h"
 #include "../Effects/reverb.h"
+#include "../Effects/spc_echo.h"
 #include <math.h>
 #include "../version.h"
 
 #include "sfx_tester.h"
 #include "setup_midi.h"
 #include "setup_audio.h"
+#include "echo_tune.h"
 #include "seek_bar.h"
 
 
@@ -66,6 +68,9 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     m_setupMidi = new SetupMidi(this);
     m_setupMidi->setModal(false);
 
+    m_echoTune = new EchoTune(this);
+    m_echoTune->setModal(false);
+
     connect(m_setupMidi, &SetupMidi::songRestartNeeded, this, &MusPlayer_Qt::restartMusic);
 
     m_seekBar = new SeekBar(this);
@@ -81,16 +86,16 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
         Qt::WindowCloseButtonHint |
         Qt::WindowMinimizeButtonHint |
         Qt::MSWindowsFixedSizeDialogHint);
-    connect(&m_blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
-    connect(&m_positionWatcher, SIGNAL(timeout()), this, SLOT(updatePositionSlider()));
-    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenu(QPoint)));
-    connect(ui->volume, &QSlider::valueChanged, [this](int x)
+    QObject::connect(&m_blinker, SIGNAL(timeout()), this, SLOT(_blink_red()));
+    QObject::connect(&m_positionWatcher, SIGNAL(timeout()), this, SLOT(updatePositionSlider()));
+    QObject::connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(contextMenu(QPoint)));
+    QObject::connect(ui->volume, &QSlider::valueChanged, [this](int x)
     {
         on_volume_valueChanged(x);
         QToolTip::showText(QCursor::pos(), QString("%1").arg(x), this);
     });
 
-    connect(m_seekBar, &SeekBar::positionSeeked, this, &MusPlayer_Qt::musicPosition_seeked);
+    QObject::connect(m_seekBar, &SeekBar::positionSeeked, this, &MusPlayer_Qt::musicPosition_seeked);
 
     QSettings setup;
     m_seekBar->setEnabled(false);
@@ -171,6 +176,10 @@ void MusPlayer_Qt::moveEvent(QMoveEvent *event)
         QRect g = m_setupMidi->frameGeometry();
         m_setupMidi->move(g.x() + deltaX, g.y() + deltaY);
     }
+    {
+        QRect g = m_echoTune->frameGeometry();
+        m_echoTune->move(g.x() + deltaX, g.y() + deltaY);
+    }
 
     m_oldWindowPos = event->pos();
 }
@@ -183,10 +192,15 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
     QAction *stop        = x.addAction("Stop");
     x.addSeparator();
     QAction *reverb       = x.addAction("Reverb");
+    QAction *echo         = x.addAction("Echo");
+    QAction *echoTuner    = x.addAction("Echo tuner...");
     QAction *resetTempo   = x.addAction("Reset tempo");
     resetTempo->setEnabled(ui->tempoFrame->isEnabled());
     reverb->setCheckable(true);
     reverb->setChecked(PGE_MusicPlayer::reverbEnabled);
+    echo->setCheckable(true);
+    echo->setChecked(PGE_MusicPlayer::echoEnabled);
+    echoTuner->setEnabled(PGE_MusicPlayer::echoEnabled);
     QAction *assoc_files = x.addAction("Associate files");
     QAction *sfx_testing_show = x.addAction("Show SFX testing");
     sfx_testing_show->setEnabled(!m_sfxTester->isVisible());
@@ -216,6 +230,13 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
         ui->actionEnableReverb->setChecked(reverb->isChecked());
         on_actionEnableReverb_triggered(reverb->isChecked());
     }
+    else if(echo == ret)
+    {
+        ui->actionEnableEcho->setChecked(echo->isChecked());
+        on_actionEnableEcho_triggered(echo->isChecked());
+    }
+    else if(echoTuner == ret)
+        on_actionTuneEcho_triggered();
     else if(resetTempo == ret)
         ui->tempo->setValue(0);
     else if(assoc_files == ret)
@@ -278,8 +299,7 @@ void MusPlayer_Qt::on_open_clicked()
                                                 (m_currentMusic.isEmpty() ?
                                                 QApplication::applicationDirPath() :
                                                 m_currentMusic),
-                                                "All (*.*)", nullptr,
-                                                QFileDialog::DontUseNativeDialog);
+                                                "All (*.*)");
 
     if(file.isEmpty())
         return;
@@ -567,8 +587,24 @@ void MusPlayer_Qt::on_actionMidiSetup_triggered()
 void MusPlayer_Qt::on_actionAudioSetup_triggered()
 {
     SetupAudio as(this);
-    as.exec();
+    if(as.exec() == QDialog::Accepted)
+    {
+        on_actionEnableReverb_triggered(PGE_MusicPlayer::reverbEnabled);
+        on_actionEnableEcho_triggered(PGE_MusicPlayer::echoEnabled);
+        m_setupMidi->sendSetup();
+    }
 }
+
+void MusPlayer_Qt::on_actionTuneEcho_triggered()
+{
+    m_echoTune->show();
+    QRect g = this->frameGeometry();
+    m_echoTune->move(g.right(), g.top());
+    m_echoTune->on_echo_reload_clicked();
+    m_echoTune->update();
+    m_echoTune->repaint();
+}
+
 
 void MusPlayer_Qt::on_actionSfxTesting_triggered()
 {
@@ -586,6 +622,18 @@ void MusPlayer_Qt::on_actionEnableReverb_triggered(bool checked)
         Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, reverbEffectDone, nullptr);
     else
         Mix_UnregisterEffect(MIX_CHANNEL_POST, reverbEffect);
+}
+
+void MusPlayer_Qt::on_actionEnableEcho_triggered(bool checked)
+{
+    PGE_MusicPlayer::echoEnabled = checked;
+    PGE_MusicPlayer::echoEabled(PGE_MusicPlayer::echoEnabled);
+
+    if(PGE_MusicPlayer::echoEnabled)
+    {
+        m_echoTune->loadSetup();
+        m_echoTune->sendAll();
+    }
 }
 
 void MusPlayer_Qt::on_actionFileAssoc_triggered()

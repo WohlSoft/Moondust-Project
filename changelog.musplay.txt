@@ -1,3 +1,8 @@
+1.4.4
+- Fixed the incorrect working of the effects applying at the SFX tester
+- Stabilized the MIDI Setup change processing
+- Added the SPC echo effect code for testing and polishing puprose. Note: It will work incorrectly if the frequency formula isn't multiple 32000 Hz or at least, by half
+
 1.4.3
 - Default audio output format has been changed into float32 to improve the quality and prevent any possible clipping distortions
 

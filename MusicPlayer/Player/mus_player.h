@@ -57,11 +57,16 @@ inline int Mix_FadeInChannelTimedVolume(int which, Mix_Chunk *chunk, int loops, 
 #   define Mix_GetMusicCopyrightTag(mus) "[Empty tag]"
 #endif
 
+struct SpcEcho;
+
 namespace PGE_MusicPlayer
 {
     extern Mix_Music *s_playMus;
     extern Mix_MusicType type;
     extern bool reverbEnabled;
+    extern bool echoEnabled;
+
+    extern SpcEcho *effectEcho;
 
     extern void loadAudioSettings();
     extern void saveAudioSettings();
@@ -142,6 +147,14 @@ namespace PGE_MusicPlayer
     extern void stopWavRecording();
 
     extern bool isWavRecordingWorks();
+
+
+    extern void echoEabled(bool enabled);
+    extern void echoEffectDone(int chan, void *context);
+    extern void echoResetFir();
+    extern void echoResetDefaults();
+    extern void echoSetReg(int key, int val);
+    extern int  echoGetReg(int key);
 }
 
 #endif // MUS_PLAYER_H

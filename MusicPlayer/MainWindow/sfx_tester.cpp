@@ -84,9 +84,7 @@ void SfxTester::closeEvent(QCloseEvent *)
 void SfxTester::on_sfx_open_clicked()
 {
     QString file = QFileDialog::getOpenFileName(this, tr("Open SFX file"),
-                   (m_testSfxDir.isEmpty() ? QApplication::applicationDirPath() : m_testSfxDir), "All (*.*)",
-                                                nullptr,
-                                                QFileDialog::DontUseNativeDialog);
+                   (m_testSfxDir.isEmpty() ? QApplication::applicationDirPath() : m_testSfxDir), "All (*.*)");
 
     if(file.isEmpty())
         return;
@@ -119,6 +117,14 @@ void SfxTester::on_sfx_play_clicked()
     if(!m_testSfx)
         return;
 
+    Mix_HaltChannel(0);
+    if(!m_sendPanning)
+        updatePositionEffect();
+    else
+        updatePanningEffect();
+
+    updateChannelsFlip();
+
     if(Mix_PlayChannelTimedVolume(0,
                                   m_testSfx,
                                   ui->sfx_loops->value(),
@@ -133,6 +139,13 @@ void SfxTester::on_sfx_fadeIn_clicked()
 {
     if(!m_testSfx)
         return;
+
+    Mix_HaltChannel(0);
+    if(!m_sendPanning)
+        updatePositionEffect();
+    else
+        updatePanningEffect();
+    updateChannelsFlip();
 
     if(Mix_FadeInChannelTimedVolume(0,
                                     m_testSfx,
@@ -164,13 +177,17 @@ void SfxTester::on_sfx_fadeout_clicked()
 void SfxTester::on_positionAngle_sliderMoved(int value)
 {
     m_angle = (Sint16)(value);
+    qDebug() << "Angle" << m_angle;
     updatePositionEffect();
+    m_sendPanning = false;
 }
 
 void SfxTester::on_positionDistance_sliderMoved(int value)
 {
     m_distance = (Uint8)value;
+    qDebug() << "Distance" << m_distance;
     updatePositionEffect();
+    m_sendPanning = false;
 }
 
 void SfxTester::on_positionReset_clicked()
@@ -180,18 +197,21 @@ void SfxTester::on_positionReset_clicked()
     ui->positionAngle->setValue(0);
     ui->positionDistance->setValue(0);
     updatePositionEffect();
+    m_sendPanning = false;
 }
 
 void SfxTester::on_panningLeft_valueChanged(int value)
 {
     m_panLeft = (Uint8)value;
     updatePanningEffect();
+    m_sendPanning = true;
 }
 
 void SfxTester::on_panningRight_valueChanged(int value)
 {
     m_panRight = (Uint8)value;
     updatePanningEffect();
+    m_sendPanning = true;
 }
 
 void SfxTester::on_stereoFlip_clicked(bool value)
@@ -216,6 +236,7 @@ void SfxTester::on_panningReset_clicked()
     ui->stereoFlip->blockSignals(false);
     updatePanningEffect();
     updateChannelsFlip();
+    m_sendPanning = true;
 }
 
 void SfxTester::updatePositionEffect()

@@ -176,6 +176,15 @@
         <property name="invertedControls">
          <bool>false</bool>
         </property>
+        <property name="wrapping">
+         <bool>true</bool>
+        </property>
+        <property name="notchTarget">
+         <double>45.000000000000000</double>
+        </property>
+        <property name="notchesVisible">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>

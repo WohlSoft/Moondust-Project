@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include "../MainWindow/musplayer_qt.h"
+#include "../Effects/spc_echo.h"
 
 #include "../wave_writer.h"
 
@@ -16,6 +17,8 @@ namespace PGE_MusicPlayer
     Mix_Music *s_playMus = nullptr;
     Mix_MusicType type  = MUS_NONE;
     bool reverbEnabled = false;
+    bool echoEnabled = false;
+    SpcEcho *effectEcho = nullptr;
 
     static bool g_playlistMode = false;
     static int  g_loopsCount = -1;
@@ -435,5 +438,68 @@ namespace PGE_MusicPlayer
     bool isWavRecordingWorks()
     {
         return (s_wavCtx != nullptr);
+    }
+
+
+    void echoEabled(bool enabled)
+    {
+        if(enabled && !effectEcho)
+        {
+            effectEcho = echoEffectInit(g_sample_rate, g_sample_format, g_channels);
+            Mix_RegisterEffect(MIX_CHANNEL_POST, spcEchoEffect, echoEffectDone, effectEcho);
+        }
+        else if(!enabled && effectEcho)
+        {
+            Mix_UnregisterEffect(MIX_CHANNEL_POST, spcEchoEffect);
+            echoEffectFree(effectEcho);
+            effectEcho = nullptr;
+        }
+    }
+
+    void echoEffectDone(int, void *context)
+    {
+        SpcEcho *out = reinterpret_cast<SpcEcho *>(context);
+        if(out == effectEcho)
+        {
+            echoEffectFree(effectEcho);
+            effectEcho = nullptr;
+        }
+    }
+
+    void echoResetFir()
+    {
+        if(!effectEcho)
+            return;
+
+        SDL_LockAudio();
+        echoEffectResetFir(effectEcho);
+        SDL_UnlockAudio();
+    }
+
+    void echoResetDefaults()
+    {
+        if(!effectEcho)
+            return;
+
+        SDL_LockAudio();
+        echoEffectResetDefaults(effectEcho);
+        SDL_UnlockAudio();
+    }
+
+    void echoSetReg(int key, int val)
+    {
+        if(!effectEcho)
+            return;
+
+        SDL_LockAudio();
+        echoEffectSetReg(effectEcho, (EchoSetup)key, val);
+        SDL_UnlockAudio();
+    }
+
+    int echoGetReg(int key)
+    {
+        if(!effectEcho)
+            return 0;
+        return echoEffectGetReg(effectEcho, (EchoSetup)key);
     }
 }

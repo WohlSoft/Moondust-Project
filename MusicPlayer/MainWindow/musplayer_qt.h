@@ -13,6 +13,7 @@
 class SeekBar;
 class SfxTester;
 class SetupMidi;
+class EchoTune;
 
 namespace Ui {
 class MainWindow;
@@ -58,9 +59,8 @@ public slots:
     //void playListNext();
 
 private slots:
+    void on_actionTuneEcho_triggered();
     void on_actionAudioSetup_triggered();
-
-private slots:
     void restartMusic();
 
     void musicStopped();
@@ -91,6 +91,7 @@ private slots:
     void on_actionMidiSetup_triggered();
     void on_actionSfxTesting_triggered();
     void on_actionEnableReverb_triggered(bool checked);
+    void on_actionEnableEcho_triggered(bool checked);
     void on_actionFileAssoc_triggered();
 
     void cleanLoopChecks();
@@ -114,6 +115,7 @@ private:
     SeekBar   *m_seekBar = nullptr;
     SfxTester *m_sfxTester = nullptr;
     SetupMidi *m_setupMidi = nullptr;
+    EchoTune  *m_echoTune = nullptr;
 };
 
 #endif // MUSPLAYER_QT_H
