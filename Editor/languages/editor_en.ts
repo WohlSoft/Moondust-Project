@@ -5133,39 +5133,39 @@ the destination section first with &apos;Delete Section&apos;.</translation>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoscroll section (Legacy)</translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
-        <translation type="unfinished"></translation>
+        <translation>Change the autoscroll speed</translation>
     </message>
     <message>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation type="unfinished"></translation>
+        <translation>Simple</translation>
     </message>
     <message>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Advanced</translation>
     </message>
     <message>
         <source>Not implemented yet, sorry</source>
-        <translation type="unfinished"></translation>
+        <translation>Not implemented yet, sorry</translation>
     </message>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Disabled by the strict SMBX64 mode</translation>
     </message>
 </context>
 <context>
@@ -10038,19 +10038,19 @@ Please, choose the Moondust Maintainer application yourself!</translation>
     </message>
     <message>
         <source>Grid size: changed into %1x%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid size: changed into %1x%1</translation>
     </message>
     <message>
         <source>Grid size: restored default</source>
-        <translation type="unfinished"></translation>
+        <translation>Grid size: restored default</translation>
     </message>
     <message>
         <source>Next grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Next grid size</translation>
     </message>
     <message>
         <source>Previous grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>Previous grid size</translation>
     </message>
 </context>
 <context>
