@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>287</width>
-    <height>623</height>
+    <width>285</width>
+    <height>719</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -183,9 +183,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-876</y>
-       <width>271</width>
-       <height>1721</height>
+       <y>-1845</y>
+       <width>269</width>
+       <height>2724</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -625,7 +625,7 @@
       <item>
        <widget class="QPushButton" name="AutoscrollSection_toggleBox">
         <property name="text">
-         <string>Autoscroll section</string>
+         <string>Autoscroll section (Legacy)</string>
         </property>
         <property name="checkable">
          <bool>true</bool>
@@ -650,7 +650,21 @@
          <property name="verticalSpacing">
           <number>2</number>
          </property>
-         <item row="2" column="0" colspan="2">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_20">
+           <property name="text">
+            <string>Section</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="2">
+          <widget class="QToolButton" name="bps_Scroll_vertSpeed">
+           <property name="text">
+            <string>bps</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0" colspan="2">
           <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spX">
            <property name="mouseTracking">
             <bool>false</bool>
@@ -669,37 +683,7 @@
            </property>
           </widget>
          </item>
-         <item row="3" column="0" colspan="3">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Vertical speed:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="3">
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>Horisontal speed:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QSpinBox" name="LVLEvent_Scroll_Sct">
-           <property name="mouseTracking">
-            <bool>false</bool>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::ClickFocus</enum>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>21</number>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0" colspan="2">
+         <item row="5" column="0" colspan="2">
           <widget class="QDoubleSpinBox" name="LVLEvent_Scroll_spY">
            <property name="mouseTracking">
             <bool>false</bool>
@@ -718,24 +702,53 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_20">
+         <item row="4" column="0" colspan="3">
+          <widget class="QLabel" name="label_21">
            <property name="text">
-            <string>Section</string>
+            <string>Vertical speed:</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="2">
+         <item row="3" column="2">
           <widget class="QToolButton" name="bps_Scroll_horSpeed">
            <property name="text">
             <string>bps</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="2">
-          <widget class="QToolButton" name="bps_Scroll_vertSpeed">
+         <item row="2" column="0" colspan="3">
+          <widget class="QLabel" name="label_22">
            <property name="text">
-            <string>bps</string>
+            <string>Horisontal speed:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QSpinBox" name="LVLEvent_Scroll_Sct">
+           <property name="mouseTracking">
+            <bool>false</bool>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::ClickFocus</enum>
+           </property>
+           <property name="minimum">
+            <number>1</number>
+           </property>
+           <property name="maximum">
+            <number>21</number>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0" colspan="3">
+          <widget class="QLabel" name="sectionAutoscrollLegacyNote">
+           <property name="text">
+            <string extracomment="An explanaition message why these autoscroll settings legacy">There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignJustify|Qt::AlignTop</set>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1061,6 +1074,160 @@
                 <height>18</height>
                </size>
               </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="sectionAutoscroll">
+           <property name="title">
+            <string>Change the autoscroll speed</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_10" columnstretch="0,1000">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string comment="Autoscroll type">Type:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QComboBox" name="autoscrollType">
+              <item>
+               <property name="text">
+                <string comment="Simple autoscrolling">Simple</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string comment="Advanced autoscrolling (draw custom path)">Advanced</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QFrame" name="autoscrollSimple">
+              <property name="frameShape">
+               <enum>QFrame::NoFrame</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_11">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <property name="horizontalSpacing">
+                <number>0</number>
+               </property>
+               <item row="0" column="0" colspan="2">
+                <widget class="QLabel" name="label_26">
+                 <property name="text">
+                  <string>Horisontal speed:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QDoubleSpinBox" name="simpleAutoscrollH">
+                 <property name="mouseTracking">
+                  <bool>false</bool>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::ClickFocus</enum>
+                 </property>
+                 <property name="decimals">
+                  <number>15</number>
+                 </property>
+                 <property name="minimum">
+                  <double>-99999999.000000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>9999999.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QToolButton" name="simpleAutoscrollH_BPS">
+                 <property name="text">
+                  <string>bps</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0" colspan="2">
+                <widget class="QLabel" name="label_29">
+                 <property name="text">
+                  <string>Vertical speed:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QDoubleSpinBox" name="simpleAutoscrollV">
+                 <property name="mouseTracking">
+                  <bool>false</bool>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::ClickFocus</enum>
+                 </property>
+                 <property name="decimals">
+                  <number>15</number>
+                 </property>
+                 <property name="minimum">
+                  <double>-99999999.000000000000000</double>
+                 </property>
+                 <property name="maximum">
+                  <double>9999999.000000000000000</double>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QToolButton" name="simpleAutoscrollV_BPS">
+                 <property name="text">
+                  <string>bps</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="2">
+             <widget class="QFrame" name="autoscrollAdvanced">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_12">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_2">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>45</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: #F10000;</string>
+                 </property>
+                 <property name="text">
+                  <string>Not implemented yet, sorry</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
            </layout>
@@ -1417,6 +1584,7 @@
  </customwidgets>
  <resources>
   <include location="../../_resources/editor.qrc"/>
+  <include location="../../_resources/editor.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -1427,11 +1595,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>229</x>
-     <y>268</y>
+     <y>-972</y>
     </hint>
     <hint type="destinationlabel">
-     <x>296</x>
-     <y>296</y>
+     <x>259</x>
+     <y>-701</y>
     </hint>
    </hints>
   </connection>
@@ -1443,11 +1611,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>105</x>
-     <y>703</y>
+     <y>-520</y>
     </hint>
     <hint type="destinationlabel">
      <x>122</x>
-     <y>731</y>
+     <y>-372</y>
     </hint>
    </hints>
   </connection>
@@ -1459,11 +1627,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>116</x>
-     <y>925</y>
+     <y>-342</y>
     </hint>
     <hint type="destinationlabel">
      <x>112</x>
-     <y>953</y>
+     <y>-210</y>
     </hint>
    </hints>
   </connection>
@@ -1475,11 +1643,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>143</x>
-     <y>1130</y>
+     <y>-180</y>
     </hint>
     <hint type="destinationlabel">
      <x>144</x>
-     <y>1158</y>
+     <y>161</y>
     </hint>
    </hints>
   </connection>
@@ -1491,11 +1659,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>158</x>
-     <y>1665</y>
+     <y>607</y>
     </hint>
     <hint type="destinationlabel">
      <x>182</x>
-     <y>1693</y>
+     <y>753</y>
     </hint>
    </hints>
   </connection>
@@ -1506,12 +1674,12 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>323</x>
-     <y>1900</y>
+     <x>259</x>
+     <y>783</y>
     </hint>
     <hint type="destinationlabel">
-     <x>323</x>
-     <y>1928</y>
+     <x>259</x>
+     <y>907</y>
     </hint>
    </hints>
   </connection>
@@ -1522,12 +1690,76 @@
    <slot>setVisible(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>549</x>
-     <y>290</y>
+     <x>259</x>
+     <y>915</y>
     </hint>
     <hint type="destinationlabel">
-     <x>544</x>
-     <y>308</y>
+     <x>259</x>
+     <y>940</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sectionAutoscroll</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoscrollSimple</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>29</x>
+     <y>339</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>235</x>
+     <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sectionAutoscroll</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoscrollAdvanced</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>337</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>234</x>
+     <y>495</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sectionAutoscroll</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>autoscrollType</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>337</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>101</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sectionAutoscroll</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>44</x>
+     <y>342</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>40</x>
+     <y>374</y>
     </hint>
    </hints>
   </connection>

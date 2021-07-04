@@ -58,6 +58,9 @@ LvlEventsBox::LvlEventsBox(QWidget *parent) :
     QObject::connect(ui->sctBg_image, &ImageSelector::currentItemChanged,
                      this, &LvlEventsBox::sctBackgroundImageChanged);
 
+    QObject::connect(mw(), SIGNAL(setSMBX64Strict(bool)),
+                     this, SLOT(setSMBX64Strict(bool)));
+
     m_lastVisibilityState = isVisible();
     mw()->docks_level.
     addState(this, &m_lastVisibilityState);
@@ -330,7 +333,7 @@ void LvlEventsBox::setEventData(long index)
         {
             m_currentEventArrayID = cIndex;
 
-            foreach(LevelSMBX64Event event, edit->LvlData.events)
+            for(LevelSMBX64Event event : edit->LvlData.events)
             {
                 if(event.meta.array_id == (unsigned int)cIndex)
                 {
@@ -492,7 +495,8 @@ void LvlEventsBox::refreshShownTabs(LevelSMBX64Event event, bool hideAll)
         {
             if((event.sets[i].background_id != -1) ||
                (event.sets[i].music_id != -1) ||
-               (event.sets[i].position_left != -1))
+               (event.sets[i].position_left != -1) ||
+                event.sets[i].autoscrol)
             {
                 ui->SectionSettings_toggleBox->setChecked(true);
                 ui->SectionSettings_area->setVisible(true);
@@ -560,6 +564,19 @@ bool LvlEventsBox::eventIsExist(QString evt)
     }
 
     return false;
+}
+
+void LvlEventsBox::setSMBX64Strict(bool en)
+{
+    DataConfig &c = mw()->configs;
+    bool enabled = !en;
+
+    ui->sectionAutoscroll->setToolTip(en ? tr("Disabled by the strict SMBX64 mode") : QString());
+    ui->sectionAutoscroll->setEnabled(enabled && (c.editor.supported_features.level_event_new_autoscroll == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->sectionAutoscroll->setHidden(c.editor.supported_features.level_event_new_autoscroll == EditorSetup::FeaturesSupport::F_HIDDEN);
+
+    ui->sectionAutoscrollLegacyNote->setVisible(!en);
+    ui->AutoscrollSection_toggleBox->setText(en ? tr("Autoscroll section") : tr("Autoscroll section (Legacy)"));
 }
 
 
@@ -666,6 +683,12 @@ void LvlEventsBox::eventSectionSettingsSync()
             ui->sctBg_image->setItem(backgrndID);
             break;
         }
+
+        ui->sectionAutoscroll->setChecked(SectionSet.autoscrol);
+        ui->autoscrollType->setCurrentIndex(SectionSet.autoscroll_style);
+        on_autoscrollType_currentIndexChanged(SectionSet.autoscroll_style);
+        ui->simpleAutoscrollH->setValue(SectionSet.autoscrol_x);
+        ui->simpleAutoscrollV->setValue(SectionSet.autoscrol_y);
     }
 
     m_lockEventSectionDataList = false;
@@ -2120,6 +2143,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_reset_clicked()
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(-2));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        edit->LvlData.meta.modified = true;
         SectionSet.background_id = -2;
     }
 
@@ -2156,6 +2180,7 @@ void LvlEventsBox::on_LVLEvent_SctBg_define_clicked()
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(bgId));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        edit->LvlData.meta.modified = true;
         SectionSet.background_id = bgId;
     }
 
@@ -2191,6 +2216,7 @@ void LvlEventsBox::sctBackgroundImageChanged(int index)
         bgData.push_back(qlonglong(SectionSet.background_id));
         bgData.push_back(qlonglong(index));
         edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECBG, QVariant(bgData));
+        edit->LvlData.meta.modified = true;
         SectionSet.background_id = index;
     }
 
@@ -2647,4 +2673,169 @@ void LvlEventsBox::on_bps_Scroll_vertSpeed_clicked()
         return;
 
     ui->LVLEvent_Scroll_spY->setValue(bps.result());
+}
+
+void LvlEventsBox::on_autoscrollType_currentIndexChanged(int index)
+{
+    ui->autoscrollSimple->setVisible(false);
+    ui->autoscrollAdvanced->setVisible(false);
+
+    switch(index)
+    {
+    case LevelEvent_Sets::AUTOSCROLL_SIMPLE:
+        ui->autoscrollSimple->setVisible(true);
+        break;
+    case LevelEvent_Sets::AUTOSCROLL_ADVANCED:
+        ui->autoscrollAdvanced->setVisible(true);
+        break;
+    }
+
+    if(m_internalLock || m_externalLock || m_lockEventSectionDataList)
+        return;
+
+    int WinType = mw()->activeChildWindow();
+
+    if(WinType == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+
+        if(!edit)
+            return;
+
+        long i = getEventArrayIndex();
+
+        if(i < 0)
+            return;
+
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
+        QList<QVariant> bgData;
+        bgData.push_back(qlonglong(m_curSectionField));
+        bgData.push_back(qlonglong(SectionSet.autoscroll_style));
+        bgData.push_back(qlonglong(index));
+        edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECASTYPE, QVariant(bgData));
+        edit->LvlData.meta.modified = true;
+        SectionSet.autoscroll_style = index;
+    }
+}
+
+void LvlEventsBox::on_simpleAutoscrollH_valueChanged(double arg1)
+{
+    if(m_internalLock || m_externalLock || m_lockEventSectionDataList)
+        return;
+
+    int WinType = mw()->activeChildWindow();
+
+    if(WinType == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+
+        if(!edit)
+            return;
+
+        long i = getEventArrayIndex();
+
+        if(i < 0)
+            return;
+
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
+        QList<QVariant> bgData;
+        bgData.push_back(qlonglong(m_curSectionField));
+        bgData.push_back(qlonglong(SectionSet.autoscrol_x));
+        bgData.push_back(qlonglong(arg1));
+        edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECASX, QVariant(bgData));
+        edit->LvlData.meta.modified = true;
+        SectionSet.autoscrol_x = arg1;
+    }
+}
+
+
+void LvlEventsBox::on_simpleAutoscrollV_valueChanged(double arg1)
+{
+    if(m_internalLock || m_externalLock || m_lockEventSectionDataList)
+        return;
+
+    int WinType = mw()->activeChildWindow();
+
+    if(WinType == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+
+        if(!edit)
+            return;
+
+        long i = getEventArrayIndex();
+
+        if(i < 0)
+            return;
+
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
+        QList<QVariant> bgData;
+        bgData.push_back(qlonglong(m_curSectionField));
+        bgData.push_back(qlonglong(SectionSet.autoscrol_y));
+        bgData.push_back(qlonglong(arg1));
+        edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECASY, QVariant(bgData));
+        edit->LvlData.meta.modified = true;
+        SectionSet.autoscrol_y = arg1;
+    }
+}
+
+
+void LvlEventsBox::on_simpleAutoscrollH_BPS_clicked()
+{
+    BlocksPerSecondDialog bps;
+
+    if(!bps.exec())
+        return;
+
+    ui->simpleAutoscrollH->setValue(bps.result());
+}
+
+
+void LvlEventsBox::on_simpleAutoscrollV_BPS_clicked()
+{
+    BlocksPerSecondDialog bps;
+
+    if(!bps.exec())
+        return;
+
+    ui->simpleAutoscrollV->setValue(bps.result());
+}
+
+
+void LvlEventsBox::on_sectionAutoscroll_clicked(bool checked)
+{
+    if(m_internalLock || m_externalLock || m_lockEventSectionDataList)
+        return;
+
+    int WinType = mw()->activeChildWindow();
+
+    if(WinType == MainWindow::WND_Level)
+    {
+        LevelEdit *edit = mw()->activeLvlEditWin();
+
+        if(!edit)
+            return;
+
+        long i = getEventArrayIndex();
+
+        if(i < 0)
+            return;
+
+        LevelSMBX64Event &event = edit->LvlData.events[i];
+        checkSectionSet(event.sets, m_curSectionField);
+        LevelEvent_Sets &SectionSet = event.sets[m_curSectionField];
+        QList<QVariant> bgData;
+        bgData.push_back(qlonglong(m_curSectionField));
+        bgData.push_back(qlonglong(SectionSet.autoscrol));
+        bgData.push_back(qlonglong(checked));
+        edit->scene->m_history->addChangeEventSettings(event.meta.array_id, HistorySettings::SETTING_EV_SECASEN, QVariant(bgData));
+        edit->LvlData.meta.modified = true;
+        SectionSet.autoscrol = checked;
+    }
 }

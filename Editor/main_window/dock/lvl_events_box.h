@@ -45,6 +45,7 @@ public:
     bool eventIsExist(QString evt);
 
 public slots:
+    void setSMBX64Strict(bool en);
     void re_translate();
 
     void eventSectionSettingsSync();
@@ -140,6 +141,18 @@ private slots:
     void on_bps_LayerMov_vertSpeed_clicked();
     void on_bps_Scroll_horSpeed_clicked();
     void on_bps_Scroll_vertSpeed_clicked();
+
+    void on_autoscrollType_currentIndexChanged(int index);
+
+    void on_simpleAutoscrollH_valueChanged(double arg1);
+
+    void on_simpleAutoscrollV_valueChanged(double arg1);
+
+    void on_simpleAutoscrollH_BPS_clicked();
+
+    void on_simpleAutoscrollV_BPS_clicked();
+
+    void on_sectionAutoscroll_clicked(bool checked);
 
 private:
     void addNewEvent(QString eventName, bool setEdited);

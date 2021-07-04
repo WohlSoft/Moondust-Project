@@ -176,6 +176,8 @@ struct EditorSetup
         State level_warp_on_enter_event = F_ENABLED;
         State level_warp_cannon_exit = F_ENABLED;
 
+        State level_event_new_autoscroll = F_ENABLED;
+
         State level_npc_vertical_dontmove = F_DISABLED;
         State world_custom_credits = F_DISABLED;
 

@@ -291,6 +291,8 @@ bool DataConfig::loadBasics()
         guiset.readEnum("level-warp-on-enter-event", editor.supported_features.level_warp_on_enter_event, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-cannon-exit", editor.supported_features.level_warp_cannon_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
 
+        guiset.readEnum("level-event-new-autoscroll", editor.supported_features.level_event_new_autoscroll, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+
         guiset.readEnum("world-hawkmouth-exit", editor.supported_features.world_hawkmouth_exit, EditorSetup::FeaturesSupport::F_HIDDEN, formatEnum);
     }
     guiset.endGroup();

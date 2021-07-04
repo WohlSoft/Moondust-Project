@@ -15,6 +15,8 @@
 - The "lvl" or "lvlx" extension will be passed into the testing engines with the LVLX support depending on the SMBX64 strict mode
 - Extended the level testing support for the TheXTech engine
 - Added an ability to change the grid size option using braces keys
+- Added an ability to control the modern section auto-scrolling settings
+- Added the notice for the legacy auto-scroll settings block when the modern mode is enabled
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

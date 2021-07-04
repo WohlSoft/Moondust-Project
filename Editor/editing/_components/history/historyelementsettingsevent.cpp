@@ -141,6 +141,22 @@ void HistoryElementSettingsEvent::undo()
         eventp->sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[1].toLongLong();
     }
     else
+    if(subtype == HistorySettings::SETTING_EV_SECASEN){
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].autoscrol = extraData.toList()[1].toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_SECASTYPE){
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].autoscroll_style = extraData.toList()[1].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_SECASX){
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].autoscrol_x = extraData.toList()[1].toDouble();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_SECASY){
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].autoscrol_y = extraData.toList()[1].toDouble();
+    }
+    else
     if(subtype == HistorySettings::SETTING_EV_MSG){
         eventp->msg = extraData.toList()[0].toString();
     }
@@ -327,6 +343,22 @@ void HistoryElementSettingsEvent::redo()
     else
     if(subtype == HistorySettings::SETTING_EV_SECBG){
         eventp->sets[(int)extraData.toList()[0].toLongLong()].background_id = (long)extraData.toList()[2].toLongLong();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_SECASEN){
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].autoscrol = extraData.toList()[2].toBool();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_SECASTYPE){
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].autoscroll_style = extraData.toList()[2].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_SECASX){
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].autoscrol_x = extraData.toList()[2].toDouble();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_EV_SECASY){
+        eventp->sets[(int)extraData.toList()[0].toLongLong()].autoscrol_y = extraData.toList()[2].toDouble();
     }
     else
     if(subtype == HistorySettings::SETTING_EV_MSG){
