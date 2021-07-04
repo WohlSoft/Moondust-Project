@@ -1131,12 +1131,12 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation type="unfinished">Général</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Max polyphony</source>
@@ -1149,7 +1149,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Ajouter</translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Reverb</source>
@@ -1169,12 +1169,12 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <message>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Largeur</translation>
+        <translation>Largeur</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Niveau</translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <source>Chorus</source>
@@ -1184,7 +1184,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <message>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished">Niveau</translation>
+        <translation>Niveau</translation>
     </message>
     <message>
         <source>Speed</source>

@@ -12012,7 +12012,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
-        <translation>Отдал. физики</translation>
+        <translation>Отлад. физики</translation>
     </message>
     <message>
         <source>Show frame speed</source>

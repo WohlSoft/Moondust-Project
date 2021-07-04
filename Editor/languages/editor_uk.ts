@@ -1092,12 +1092,12 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Видалити</translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation type="unfinished"></translation>
+        <translation>Загальне</translation>
     </message>
     <message>
         <source>Max polyphony</source>
@@ -1110,7 +1110,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Додати</translation>
+        <translation>Додати</translation>
     </message>
     <message>
         <source>Reverb</source>
@@ -1130,12 +1130,12 @@ Please save them before doing anything else.</source>
     <message>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Ширина</translation>
+        <translation>Ширина</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Рівень</translation>
+        <translation>Рівень</translation>
     </message>
     <message>
         <source>Chorus</source>
@@ -1145,7 +1145,7 @@ Please save them before doing anything else.</source>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished">Рівень</translation>
+        <translation>Рівень</translation>
     </message>
     <message>
         <source>Speed</source>
@@ -5134,11 +5134,11 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Rectangular fill</source>
-        <translation>Прямокутна заливка</translation>
+        <translation>Прямокутне залиття</translation>
     </message>
     <message>
         <source>Rectangular Fill (Shift+S)</source>
-        <translation>Прямокутна заливка (Shift+S)</translation>
+        <translation>Прямокутне залиття (Shift+S)</translation>
     </message>
     <message>
         <source>Tileset Item Box</source>
@@ -5428,11 +5428,11 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Circular fill</source>
-        <translation>Кругова заливка</translation>
+        <translation>Кругове залиття</translation>
     </message>
     <message>
         <source>Circular fill (Shift+C)</source>
-        <translation>Кругова заливка (Shift+C)</translation>
+        <translation>Кругове залиття (Shift+C)</translation>
     </message>
     <message>
         <source>Show grid</source>
@@ -5609,7 +5609,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Fill</source>
-        <translation>Заливка</translation>
+        <translation>Залиття</translation>
     </message>
     <message>
         <source>Clear unused data</source>
@@ -6459,17 +6459,19 @@ ID конфіг-пакету карти світу: %3
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
+        <translation>Moondust Maintainer не знайдено</translation>
     </message>
     <message>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо запустити утиліту, так як Moondust Maintainer не знайдено:
+%1
+Будь ласка, вкажіть шлях до додатку Moondust Maintainer власноруч!</translation>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть додаток Moondust Maintainer</translation>
     </message>
     <message>
         <source>Grid size: changed into %1x%1</source>
@@ -7931,23 +7933,23 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation>Чіти</translation>
     </message>
     <message>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Первісний стан</translation>
     </message>
     <message>
         <source>Start with stars:</source>
-        <translation type="unfinished"></translation>
+        <translation>Почати з зірками:</translation>
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished"></translation>
+        <translation>Відлагоджувач</translation>
     </message>
     <message>
         <source>Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування гравців</translation>
     </message>
 </context>
 <context>
