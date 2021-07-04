@@ -4247,6 +4247,42 @@ Message limits: max line lenth is 28 characters</source>
         <translation type="vanished">Por favor, insira a mensagm
 Apenas 28 caracteres por linha</translation>
     </message>
+    <message>
+        <source>Autoscroll section (Legacy)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
+        <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the autoscroll speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <comment>Autoscroll type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simple</source>
+        <comment>Simple autoscrolling</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <comment>Advanced autoscrolling (draw custom path)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not implemented yet, sorry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabled by the strict SMBX64 mode</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
@@ -7255,6 +7291,22 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid size: changed into %1x%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Grid size: restored default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next grid size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous grid size</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
