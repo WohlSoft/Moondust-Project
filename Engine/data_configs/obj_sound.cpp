@@ -69,6 +69,9 @@ void obj_sound_index::setPath(std::string _path)
 
 void obj_sound_index::play()
 {
+    if(silent)
+        return; // Do nothing at silent SFX entries
+
     if(chunk)
         Mix_PlayChannel(channel, chunk, 0);
     else
@@ -100,7 +103,7 @@ void ConfigManager::buildSoundIndex()
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
                 FileMapper fileMap;
 
-                if(fileMap.open_file(snd.absPath.c_str()))
+                if(!snd.silent && fileMap.open_file(snd.absPath.c_str()))
                 {
                     sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(),
                                                  static_cast<int>(fileMap.size())), 1);
@@ -111,11 +114,15 @@ void ConfigManager::buildSoundIndex()
                 sound.chunk = Mix_LoadWAV(snd.absPath.c_str());
 #endif
                 sound.path = snd.absPath;
+                sound.silent = snd.silent;
 
-                if(!sound.chunk)
-                    pLogWarning("Fail to load sound-%d: %s", i, Mix_GetError());
-                else
-                    need_to_reserve += (snd.channel >= 0 ? 1 : 0);
+                if(!snd.silent)
+                {
+                    if(!sound.chunk)
+                        pLogWarning("Fail to load sound-%d: %s", i, Mix_GetError());
+                    else
+                        need_to_reserve += (snd.channel >= 0 ? 1 : 0);
+                }
 
                 sound.channel = snd.channel;
             }
@@ -138,7 +145,7 @@ void ConfigManager::buildSoundIndex()
 #if  defined(__unix__) || defined(__APPLE__) || defined(_WIN32) || defined(__HAIKU__)
                     FileMapper fileMap;
 
-                    if(fileMap.open_file(snd.absPath.c_str()))
+                    if(!sound.silent && fileMap.open_file(snd.absPath.c_str()))
                     {
                         sound.chunk = Mix_LoadWAV_RW(SDL_RWFromMem(fileMap.data(),
                                                      static_cast<int>(fileMap.size())),
@@ -151,10 +158,13 @@ void ConfigManager::buildSoundIndex()
 #endif
                 }
 
-                if(!sound.chunk)
-                    pLogWarning("Fail to load sound-%d: %s", i, Mix_GetError());
-                else
-                    need_to_reserve += (snd.channel >= 0 ? 1 : 0);
+                if(!snd.silent)
+                {
+                    if(!sound.chunk)
+                        pLogWarning("Fail to load sound-%d: %s", i, Mix_GetError());
+                    else
+                        need_to_reserve += (snd.channel >= 0 ? 1 : 0);
+                }
 
                 sound.channel = snd.channel;
             }
@@ -288,9 +298,10 @@ bool ConfigManager::loadSound(std::string rootPath, std::string iniFile, bool is
                 sound.name = fmt::format_ne("sound-{0}", i);
         }
 
+        sound.silent = soundset.value("silent", false).toBool();
         sound.file = soundset.value("file", "").toString();
 
-        if(sound.file.empty())
+        if(sound.file.empty() && !sound.silent)
         {
             if(!isCustom) //Show errors if error caused with the internal stuff folder
                 addError(fmt::format_ne("Sound-{0} Item file isn't defined", i));

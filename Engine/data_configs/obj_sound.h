@@ -28,6 +28,7 @@ struct Mix_Chunk;
 struct obj_sound_index
 {
     std::string path;
+    bool silent = false;
     bool need_reload = false;
     Mix_Chunk *chunk = nullptr;
     int channel = -1;
@@ -43,6 +44,7 @@ struct obj_sound
     std::string file;
     std::string absPath;
     int channel = -1;
+    bool silent = false;
     bool hidden = false;
 };
 
