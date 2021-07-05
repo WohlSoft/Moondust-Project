@@ -2300,24 +2300,29 @@ void LvlEventsBox::on_LVLEvent_Cmn_PlaySnd_currentIndexChanged(int index)
 
 void LvlEventsBox::on_LVLEvent_playSnd_clicked()
 {
-    if(ui->LVLEvent_Cmn_PlaySnd->currentData().toInt() == 0) return;
+    if(ui->LVLEvent_Cmn_PlaySnd->currentData().toInt() == 0)
+        return;
 
     QString sndPath = mw()->configs.dirs.sounds;
     long i;
-    bool found = false;
+    bool silent = true;
+
     i = mw()->configs.getSndI(ui->LVLEvent_Cmn_PlaySnd->currentData().toInt());
 
     if(i >= 0)
     {
-        found = true;
-        sndPath += mw()->configs.main_sound[i].file;
+        auto &s = mw()->configs.main_sound[i];
+        silent = s.silent;
+        sndPath += s.file;
     }
 
     LogDebug(QString("Test Sound -> path-1 %1").arg(sndPath));
 
-    if(!found) return;
+    if(silent)
+        return;
 
-    if(!QFileInfo::exists(sndPath)) return;
+    if(!QFileInfo::exists(sndPath))
+        return;
 
     PGE_SfxPlayer::playFile(sndPath);
     LogDebug(QString("Test Sound -> done!"));

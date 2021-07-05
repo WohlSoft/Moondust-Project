@@ -217,6 +217,7 @@ struct obj_sound
     QString name;
     QString file;
     bool hidden;
+    bool silent;
 };
 
 /**

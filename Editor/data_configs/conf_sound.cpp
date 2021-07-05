@@ -83,14 +83,16 @@ void DataConfig::loadSound()
                 addError(QString("Sound-%1 Item name isn't defined").arg(i));
             }
 
+            sound.silent = soundset.value("silent", false).toBool();
+
             soundset.read("file", sound.file, "");
-            if(sound.file.isEmpty())
+            if(sound.file.isEmpty() && !sound.silent)
             {
                 valid = false;
-                addError(QString("Sound-%1 Item file isn't defined").arg(i));
+                addError(QString("Sound-%1 Item file isn't defined, or wasn't marked as silent").arg(i));
             }
 
-            sound.hidden = soundset.value("hidden", "0").toBool();
+            sound.hidden = soundset.value("hidden", false).toBool();
             sound.id = i;
             main_sound.storeElement(int(i), sound, valid);
         }
