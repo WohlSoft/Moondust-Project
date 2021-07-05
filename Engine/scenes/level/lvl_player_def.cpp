@@ -13,9 +13,15 @@ LVL_PlayerDef::~LVL_PlayerDef()
 
 LVL_PlayerDef::LVL_PlayerDef(const LVL_PlayerDef &d)
 {
+    operator=(d);
+}
+
+LVL_PlayerDef &LVL_PlayerDef::operator=(const LVL_PlayerDef &d)
+{
     _playerID       = d._playerID;
     _characterID    = d._characterID;
     _currentState   = d._currentState;
+    return *this;
 }
 
 void LVL_PlayerDef::setCharacterID(unsigned long _id)

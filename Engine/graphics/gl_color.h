@@ -28,6 +28,7 @@ class GlColor
 public:
     GlColor();
     GlColor(const GlColor &clr);
+    GlColor &operator=(const GlColor &clr);
     GlColor(GLuint rgba);
     GlColor(double _r, double _g, double _b);
     GlColor(double _r, double _g, double _b, double _a);

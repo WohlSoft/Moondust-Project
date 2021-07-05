@@ -9,6 +9,7 @@ class LVL_PlayerDef
         LVL_PlayerDef();
         ~LVL_PlayerDef();
         LVL_PlayerDef(const LVL_PlayerDef &d);
+        LVL_PlayerDef &operator=(const LVL_PlayerDef &d);
         void setCharacterID(unsigned long _id);
         void setState(unsigned long _state);
         void setPlayerID(int id);

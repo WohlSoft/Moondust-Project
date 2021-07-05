@@ -88,10 +88,16 @@ GlColor::GlColor()
 
 GlColor::GlColor(const GlColor &clr)
 {
-    this->m_r = clr.m_r;
-    this->m_g = clr.m_g;
-    this->m_b = clr.m_b;
-    this->m_a = clr.m_a;
+    operator=(clr);
+}
+
+GlColor &GlColor::operator=(const GlColor &clr)
+{
+    m_r = clr.m_r;
+    m_g = clr.m_g;
+    m_b = clr.m_b;
+    m_a = clr.m_a;
+    return *this;
 }
 
 GlColor::GlColor(GLuint rgba)
