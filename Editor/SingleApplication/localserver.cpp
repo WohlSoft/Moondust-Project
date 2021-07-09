@@ -190,8 +190,8 @@ void LocalServer::onCMD(QString data)
                     {
                         int p_char = args[1].toInt(&o1);
                         int p_state = args[2].toInt(&o2);
-                        int p_vehicleID = args[2].toInt(&o3);
-                        int p_vehicleType = args[2].toInt(&o4);
+                        int p_vehicleID = args[3].toInt(&o3);
+                        int p_vehicleType = args[4].toInt(&o4);
                         if(o1 && o2 && o3 && o4)
                             emit g_intEngine.enginePlayerStateUpdated(playerID, p_char, p_state, p_vehicleID, p_vehicleType);
                     }
