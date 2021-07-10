@@ -442,7 +442,7 @@ void LvlScene::loadUserData(QProgressDialog &progress)
     }
 }
 
-QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
+QPixmap LvlScene::getNPCimg(unsigned long npcID, int direction)
 {
     bool found = false;
     found = (npcID > 0) && m_localConfigNPCs.contains(npcID);
@@ -450,25 +450,30 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
     if(!found)
         return m_dummyNpcImg;
 
-    int gfxH = 0;
+    int gfxW, gfxH;
     obj_npc &merged = m_localConfigNPCs[npcID];
+
     found = merged.isValid;
+    gfxW  = merged.setup.gfx_w;
     gfxH  = merged.setup.gfx_h;
 
     if(merged.cur_image->isNull())
         return m_dummyNpcImg;
 
-    if(Direction <= 0)
+    if(direction <= 0)
     {
         int frame = 0;
+
         if(merged.setup.custom_animate)
             frame = merged.setup.custom_ani_fl;
-        return merged.cur_image->copy(0, frame * gfxH, merged.cur_image->width(), gfxH);
+
+        return merged.cur_image->copy(0, frame * gfxH, gfxW, gfxH);
     }
     else
     {
         int frame = 0;
         int framesQ;
+
         if(merged.setup.custom_animate)
             frame = merged.setup.custom_ani_fr;
         else
@@ -488,6 +493,7 @@ QPixmap LvlScene::getNPCimg(unsigned long npcID, int Direction)
                 break;
             }
         }
-        return merged.cur_image->copy(0, frame * gfxH, merged.cur_image->width(), gfxH);
+
+        return merged.cur_image->copy(0, frame * gfxH, gfxW, gfxH);
     }
 }

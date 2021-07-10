@@ -17,6 +17,7 @@
 - Added an ability to change the grid size option using braces keys
 - Added an ability to control the modern section auto-scrolling settings
 - Added the notice for the legacy auto-scroll settings block when the modern mode is enabled
+- Fixed the wrong NPC cursor width when it was shrunk by width
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings
