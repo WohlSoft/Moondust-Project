@@ -1504,7 +1504,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Аргументы: {команды движка} Отправить команду или сообщение в запущенный движок</translation>
+        <translation type="unfinished">Аргументы: {команды движка} Отправить команду или сообщение в запущенный движок</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -11378,7 +11378,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Извините, но PGE Editor сломался.
+        <translation type="unfinished">Извините, но PGE Editor сломался.
 Причина: необработанное исключение
 
 Пожалуйста, обратитесь к разработчикам через форум, и мы сможем устранить ошибку. Спасибо.
