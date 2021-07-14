@@ -5096,7 +5096,7 @@ the destination section first with &apos;Delete Section&apos;.</source>
     </message>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation>Отключено из-за строго режима SMBX64</translation>
+        <translation>Отключено из-за строгого режима SMBX64</translation>
     </message>
 </context>
 <context>
