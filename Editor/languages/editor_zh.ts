@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation>此功能尚未实现</translation>
+        <translation>功能开发中，敬请期待</translation>
     </message>
 </context>
 <context>
@@ -4099,39 +4099,39 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation type="unfinished"></translation>
+        <translation>强制卷轴场景（旧）</translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>旧版的强制卷轴场景设置，用于老旧的 SMBX64 关卡文件或从旧版格式转换为现代格式。请在使用 SMBX64 或更早的引擎制作的关卡文件中使用这些设置。这些设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。如果您的关卡中使用现代强制卷轴模式，则旧版的强制卷轴场景设置会被忽略。如果您保存为 SMBX-38A 格式，则这些设置将会丢失。可在“场景设置”中找到“强制卷轴场景”。</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
-        <translation type="unfinished"></translation>
+        <translation>更改强制卷轴速度</translation>
     </message>
     <message>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation>类型：</translation>
     </message>
     <message>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation type="unfinished"></translation>
+        <translation>简单</translation>
     </message>
     <message>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation type="unfinished"></translation>
+        <translation>高级</translation>
     </message>
     <message>
         <source>Not implemented yet, sorry</source>
-        <translation type="unfinished"></translation>
+        <translation>功能开发中，敬请期待</translation>
     </message>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation type="unfinished"></translation>
+        <translation>在 SMBX64 模式中被禁用</translation>
     </message>
 </context>
 <context>
@@ -6885,19 +6885,19 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Grid size: changed into %1x%1</source>
-        <translation type="unfinished"></translation>
+        <translation>网格大小：已更改为 %1 x %1</translation>
     </message>
     <message>
         <source>Grid size: restored default</source>
-        <translation type="unfinished"></translation>
+        <translation>网格大小：已恢复默认</translation>
     </message>
     <message>
         <source>Next grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>下一网格大小</translation>
     </message>
     <message>
         <source>Previous grid size</source>
-        <translation type="unfinished"></translation>
+        <translation>上一网格大小</translation>
     </message>
 </context>
 <context>
