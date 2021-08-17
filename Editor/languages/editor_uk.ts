@@ -5797,7 +5797,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation>Відмінити</translation>
+        <translation>Повернути</translation>
     </message>
     <message>
         <source>Redo</source>
@@ -6279,7 +6279,7 @@ Press &quot;Help&quot; to show info about the junk NPCs we found.</source>
         <source>NPC garbabe has been removed!
 This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation>Зайві НІП були видалені!
-Ця операція може бути відмінена з допомогою клавіш Ctrl+Z або через меню Правка/Відмінити.</translation>
+Ця операція може бути скасована з допомогою клавіш Ctrl+Z або через меню Правка/Повернути.</translation>
     </message>
     <message>
         <source>Section %1</source>
@@ -9577,7 +9577,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Our project site</source>
-        <translation>Сайт нашого проекту</translation>
+        <translation>Сайт нашого проєкту</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
