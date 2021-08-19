@@ -21,6 +21,7 @@
 #include <SDL2/SDL_version.h>
 #include <SDL2/SDL_mixer_ext.h>
 #include <cstdlib>
+#include <exception>
 #include <signal.h>
 #include <common_features/tr.h>
 #include <settings/debugger.h>
