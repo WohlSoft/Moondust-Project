@@ -1033,7 +1033,7 @@ Are you want to configure it?</translation>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translatorcomment>&quot;Information data&quot; is somewhat redundant</translatorcomment>
-        <translation>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</translation>
+        <translation>Uh-oh, Moondust Editor has crashed :(&lt;br&gt;Detailed crash information:</translation>
     </message>
     <message>
         <source>Ouch, PGE Editor was crashed :(&lt;br&gt;Detail crash information data:</source>
@@ -1084,11 +1084,11 @@ Please save them before doing anything else.</translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>Post a report at PGE Forum (wohlsoft.ru/forum/)</translation>
+        <translation>Post a report at WohlSoft Forum (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>Make an issue at GitHub repository (WohlSoft/PGE-Project)</translation>
+        <translation>Make an issue at GitHub repository (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -1419,7 +1419,7 @@ therefore you can use same link to get updated version</source>
 &lt;br&gt;Please download and install the latest version of your configuration package:
 &lt;br&gt;
 &lt;br&gt;Download: %1
-&lt;br&gt;Note: most config packs are updated togeter with PGE,
+&lt;br&gt;Note: most config packs are updated together with Moondust Engine,
 &lt;br&gt;therefore you can use the same link to get an updated version.</translation>
     </message>
 </context>
@@ -1550,7 +1550,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</translation>
+        <translation>Args: {engine commands} Send a command or message into the Moondust Engine if it&apos;s running</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1699,7 +1699,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation>Welcome to PGE Editor!</translation>
+        <translation>Welcome to Moondust Editor!</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1859,12 +1859,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>PGE Level file</translation>
+        <translation>Moondust Level file</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>PGE World Map</translation>
+        <translation>Moondust World Map</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -6405,7 +6405,7 @@ Physical env. zones:	 %6
 0 - Instant, player will be teleported instantly and movement speed will be reset to 0.
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
-3 - Portal, player will be teleported, but preserving movement speed (PGE Engine only).</translation>
+3 - Portal, player will be teleported, but preserving movement speed (Moondust Engine only).</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -9455,7 +9455,7 @@ To launch a level testing, start a game and select playing of the %1 episode.</t
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation>PGE Engine testing</translation>
+        <translation>Moondust Engine testing</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -9465,7 +9465,7 @@ To launch a level testing, start a game and select playing of the %1 episode.</t
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation>Hello! You are attempting to test a level in the PGE Engine.
-The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</translation>
+The Moondust Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use Moondust Testing for cases when you want to test the Moondust Engine itself or you want to test levels with Moondust-specific features.</translation>
     </message>
     <message>
         <source>Can&apos;t start testing, engine is not found:
@@ -11381,7 +11381,7 @@ The maximum number of Music boxes is %2.</translation>
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+        <translation>We&apos;re sorry, but Moondust Editor has crashed. 
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</translation>
@@ -11393,7 +11393,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+        <translation>We&apos;re sorry, but Moondust Editor has crashed. 
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -11405,7 +11405,7 @@ Forum link: wohlsoft.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation>We&apos;re sorry, but PGE Editor has crashed. 
+        <translation>We&apos;re sorry, but Moondust Editor has crashed. 
 Reason: %1
 
 </translation>
