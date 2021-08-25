@@ -556,27 +556,27 @@ Ustaw ścieżkę ponownie</translation>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -857,7 +857,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>Ups, PGE Editor zcrashował :(&lt;br&gt;Informacje o crashu:</translation>
+        <translation type="unfinished">Ups, PGE Editor zcrashował :(&lt;br&gt;Informacje o crashu:</translation>
     </message>
     <message>
         <source>Ouch, PGE Editor was crashed :(&lt;br&gt;Detail crash information data:</source>
@@ -1131,16 +1131,16 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Add</source>
@@ -1149,17 +1149,17 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Width</source>
@@ -1174,7 +1174,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level</source>
@@ -1184,41 +1184,41 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1502,7 +1502,7 @@ dlatego możesz użyć tego samego linku, aby pobrać najnowszą wersję.</trans
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation>Witaj w PGE Editor!</translation>
+        <translation type="unfinished">Witaj w PGE Editor!</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1662,12 +1662,12 @@ a także z pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym e
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>Plik Poziomu PGE</translation>
+        <translation type="unfinished">Plik Poziomu PGE</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>Plik Mapy PGE</translation>
+        <translation type="unfinished">Plik Mapy PGE</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -4255,39 +4255,39 @@ Limity: 28 znaków w jedej linii</translation>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Not implemented yet, sorry</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5129,7 +5129,7 @@ Fizyczne strefy środowiska: %6
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>Definije typ przejścia:
+        <translation type="unfinished">Definije typ przejścia:
 0 - Automatyczne, gracz zostanie teleportowany
 1 - Rura
 2 - Drzwi, gracz może wejść trzymając klawisz w górę
@@ -6904,7 +6904,7 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation>Test w PGE Engine</translation>
+        <translation type="unfinished">Test w PGE Engine</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -6913,7 +6913,7 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>Witaj! To jest PGE Engine!
+        <translation type="unfinished">Witaj! To jest PGE Engine!
 PGE Engine jest w fazie deweloperskiej. Narazie, jest eksperymentem i nie ma wielu funkcji. Część z nich może nie być wprowadzona lub działać nieporawnie. Jeśli tworzysz poziomy do SMBX i chcesz uruchomić test ze wszystkimi funkcjami, przetestuj poziom w SMBX. Używaj testowania w PGE, kiedy tworzysz poziomy albo epizody dla PGE.</translation>
     </message>
     <message>
@@ -7341,33 +7341,33 @@ Oczekiwany Indetyfikator pakietu konfiguracji: %4</translation>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Grid size: changed into %1x%1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Grid size: restored default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Next grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Previous grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8132,7 +8132,7 @@ Opis błędu:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>PGE Editor zcrashował. 
+        <translation type="unfinished">PGE Editor zcrashował. 
 Powód: Brak pamięci!
 
 Zamknij inne programy, aby uniknąć tego błędu.</translation>
@@ -8144,7 +8144,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>PGE Editor zcrashował. 
+        <translation type="unfinished">PGE Editor zcrashował. 
 Powód: nieobsługiwany wyjątek
 
 Poinformuj nas na froum, aby naprawić, Thank you
@@ -8200,7 +8200,7 @@ Forum: wohlsoft.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation>PGE Editor zcrashował. 
+        <translation type="unfinished">PGE Editor zcrashował. 
 Powód: %1
 
 </translation>
@@ -8919,15 +8919,15 @@ Ustawienia nie będą miały efektu na testowaniu, dopóki nie zostanie skończo
     </message>
     <message>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Start with stars:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Debug</source>
@@ -8935,7 +8935,7 @@ Ustawienia nie będą miały efektu na testowaniu, dopóki nie zostanie skończo
     </message>
     <message>
         <source>Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
