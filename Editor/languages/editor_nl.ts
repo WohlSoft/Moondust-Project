@@ -389,17 +389,17 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="862"/>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="914"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="933"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="953"/>
@@ -827,32 +827,32 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="36"/>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="41"/>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="42"/>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="48"/>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -873,12 +873,12 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="34"/>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="41"/>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="61"/>
@@ -888,7 +888,7 @@ Gelieve eerst een SoX pad aan te maken</translation>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="80"/>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="97"/>
@@ -1277,27 +1277,27 @@ Bestandspad:%3</translation>
     <message>
         <location filename="../common_features/crashhandler.ui" line="57"/>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="74"/>
         <source>Copy report into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="127"/>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="94"/>
@@ -1305,7 +1305,7 @@ Bestandspad:%3</translation>
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>You might want to report this data to developers or post it at:</source>
@@ -1357,7 +1357,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="473"/>
         <source>Copied!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1452,7 +1452,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="14"/>
         <source>Music setup</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="34"/>
@@ -1462,13 +1462,13 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="192"/>
         <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="377"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="761"/>
         <source>Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="199"/>
@@ -1482,7 +1482,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="384"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="735"/>
         <source>Tempo:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="67"/>
@@ -1495,29 +1495,29 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="79"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="322"/>
         <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="86"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="312"/>
         <source>Volume model:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="93"/>
         <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="106"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="113"/>
         <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="136"/>
@@ -1528,25 +1528,25 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="143"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="153"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="276"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="166"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="296"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="182"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="329"/>
         <source>Chips number:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="400"/>
@@ -1563,12 +1563,12 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="413"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="466"/>
@@ -1579,19 +1579,19 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="486"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="498"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="518"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="525"/>
@@ -1609,7 +1609,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="593"/>
@@ -1621,123 +1621,123 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="600"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="636"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="643"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="666"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="683"/>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="583"/>
         <source>Chiptune</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="796"/>
         <source>Track number</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="805"/>
         <source>To begin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="819"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="826"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="853"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="581"/>
         <source>MIDI</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="789"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="790"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="791"/>
         <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="792"/>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="793"/>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="798"/>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="814"/>
         <source>[Auto]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="799"/>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="815"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="800"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="816"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="824"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="825"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2150,7 +2150,7 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     <message>
         <location filename="../editing/_components/history/historyelementrenamelayer.cpp" line="84"/>
         <source>Toggle the visibility of a layer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2303,13 +2303,13 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../common_features/installer.cpp" line="256"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>PGE Niveau Bestand</translation>
+        <translation type="unfinished">PGE Niveau Bestand</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="261"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>PGE Wereld Map</translation>
+        <translation type="unfinished">PGE Wereld Map</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="266"/>
@@ -4568,13 +4568,13 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1098"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1107"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1167"/>
@@ -4585,22 +4585,22 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1462"/>
         <source>Incompatible LunaDll found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1463"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1472"/>
         <source>Incompatible LunaLua</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1473"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1542"/>
@@ -4623,75 +4623,75 @@ Wilt u doorgaan met het proces?</translation>
         <location filename="../testing/luna_tester_engine.cpp" line="1398"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="427"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="429"/>
         <source>Select a Wine toolchain for use.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="448"/>
         <source>Failed to start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="451"/>
         <source>Crashed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="454"/>
         <source>Timed out: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="457"/>
         <source>Write error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="460"/>
         <source>Read error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="464"/>
         <source>Unknown error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="640"/>
         <source>Error has occured: (Error %1) %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1097"/>
         <location filename="../testing/luna_tester_engine.cpp" line="1197"/>
         <source>LunaTester is still active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1185"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1198"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1400"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1404"/>
@@ -4699,14 +4699,14 @@ Wilt u doorgaan met het proces?</translation>
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1411"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1449"/>
@@ -4720,17 +4720,17 @@ Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) 
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1684"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1719"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1675"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to launch LunaTester, due to %1</source>
@@ -5177,13 +5177,13 @@ Wilt u toch doorgaan?</translation>
         <location filename="../main_window/dock/lvl_events_box.ui" line="628"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="579"/>
         <source>Autoscroll section (Legacy)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="745"/>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="903"/>
@@ -5215,30 +5215,30 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1085"/>
         <source>Change the autoscroll speed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1094"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1107"/>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1223"/>
         <source>Not implemented yet, sorry</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1249"/>
@@ -5354,7 +5354,7 @@ Wilt u toch doorgaan?</translation>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="574"/>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1128"/>
@@ -6052,21 +6052,21 @@ Fysieke omgevingszones:	%6
         <location filename="../main_window/dock/lvl_search_box.ui" line="314"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="843"/>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="190"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="335"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="511"/>
         <source>Search in current section</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="204"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="342"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="608"/>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="277"/>
@@ -6234,7 +6234,7 @@ Fysieke omgevingszones:	%6
     <message>
         <location filename="../main_window/dock/lvl_search_box.cpp" line="803"/>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -6268,7 +6268,7 @@ Fysieke omgevingszones:	%6
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="411"/>
         <source>Change the extra format specific settings of a custom music</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="479"/>
@@ -7651,7 +7651,7 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
     <message>
         <location filename="../mainwindow.ui" line="2833"/>
         <source>Show camera grid</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2942"/>
@@ -8174,7 +8174,7 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="214"/>
         <source>Level is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="215"/>
@@ -8183,12 +8183,12 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="240"/>
         <source>World map is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="241"/>
@@ -8197,7 +8197,7 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/file/file_open.cpp" line="271"/>
@@ -8571,17 +8571,17 @@ Laad het huidige bestand opnieuw om de wijzigingen te zien.</translation>
     <message>
         <location filename="../mainwindow.cpp" line="63"/>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="133"/>
         <source>Running the 32-bit Editor a 64-bit processor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="141"/>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="247"/>
@@ -8687,12 +8687,12 @@ Gelieve het bestand eerst op te slagen.</translation>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="256"/>
         <source>Next grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="261"/>
         <source>Previous grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="273"/>
@@ -8772,30 +8772,30 @@ Gelieve het bestand eerst op te slagen.</translation>
         <location filename="../main_window/view/view.cpp" line="136"/>
         <location filename="../main_window/view/view.cpp" line="149"/>
         <source>Grid size: changed into %1x%1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/view/view.cpp" line="122"/>
         <location filename="../main_window/view/view.cpp" line="144"/>
         <source>Grid size: restored default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="89"/>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="90"/>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="95"/>
         <source>Choose the Moondust Maintainer application</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10138,7 +10138,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <location filename="../common_features/themes.cpp" line="728"/>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10187,34 +10187,34 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <location filename="../testing/38a_engine.cpp" line="295"/>
         <source>Don&apos;t auto-suspend game</source>
         <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="297"/>
         <source>Game will always run and it will never suspend while window is unfocused.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="301"/>
         <source>Change the path to SMBX-38A...</source>
         <comment>Select the path to SMBX-38A executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="303"/>
         <source>Select the path to SMBX-38A executable.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="309"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="311"/>
         <source>Select a Wine toolchain for use.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="317"/>
@@ -10231,12 +10231,12 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <location filename="../testing/38a_engine.cpp" line="561"/>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="568"/>
         <source>Please select a path to SMBX-38A executable:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="577"/>
@@ -10248,7 +10248,7 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <location filename="../testing/38a_engine.cpp" line="580"/>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="584"/>
@@ -10264,68 +10264,68 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <location filename="../testing/38a_engine.cpp" line="622"/>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="648"/>
         <source>SMBX-38A is still active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="649"/>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="798"/>
         <source>Executable not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="799"/>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="825"/>
         <source>Impossible to prepare a temp file for a test run.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="887"/>
         <source>Impossible to launch a level because of an invalid file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="897"/>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="906"/>
         <location filename="../testing/38a_engine.cpp" line="971"/>
         <source>Caution</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="907"/>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="952"/>
         <source>Impossible to launch an episode because of an invalid file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="962"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="972"/>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10479,7 +10479,7 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="30"/>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="39"/>
@@ -10494,12 +10494,12 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="92"/>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="98"/>
         <source>Start with stars:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="143"/>
@@ -10509,7 +10509,7 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="225"/>
         <source>Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="411"/>
@@ -10713,17 +10713,17 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="572"/>
         <source>Executable not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="573"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="582"/>
         <source>TheXtech start failed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="583"/>
@@ -10732,7 +10732,7 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
 
 Command: &quot;%1&quot;
 Arguments: %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select TheXTech path...</source>
@@ -11534,7 +11534,7 @@ Data zou corrupt kunnen zijn!</translation>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="186"/>
         <source>9 - Hawk Mouth Exit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="418"/>
@@ -11692,7 +11692,7 @@ Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.I
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="14"/>
         <source>Wine configuration</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="20"/>
@@ -11702,22 +11702,22 @@ Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.I
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="42"/>
         <source>Wine config</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="61"/>
         <source>Version dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="68"/>
         <source>Stop process</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="75"/>
         <source>Not running</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="97"/>
@@ -11727,17 +11727,17 @@ Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.I
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="120"/>
         <source>Specify a custom environment (PlayOnLinux/Mac)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="139"/>
         <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="142"/>
         <source>Wine home prefix</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="152"/>
@@ -11748,52 +11748,52 @@ Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.I
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="162"/>
         <source>Location of Wine</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="178"/>
         <source>Use a system-wide installed Wine from a PATH environment.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="181"/>
         <source>System default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="188"/>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="191"/>
         <source>Custom:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="211"/>
         <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="69"/>
         <source>Import setup from PlayOnMac</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="71"/>
         <source>Import setup from PlayOnLinux</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="375"/>
         <source>Select a Wine install prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="385"/>
         <source>Select a Wine home prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="436"/>
@@ -11805,25 +11805,25 @@ Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.I
         <location filename="../testing/wine/wine_setup.cpp" line="437"/>
         <location filename="../testing/wine/wine_setup.cpp" line="459"/>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="525"/>
         <source>Not running</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="531"/>
         <source>Starting...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="537"/>
         <source>Running...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -12119,7 +12119,7 @@ Muziekdozen:	%5
         <location filename="../main_window/dock/wld_search_box.ui" line="644"/>
         <location filename="../main_window/dock/wld_search_box.ui" line="764"/>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="135"/>
@@ -12128,7 +12128,7 @@ Muziekdozen:	%5
         <location filename="../main_window/dock/wld_search_box.ui" line="637"/>
         <location filename="../main_window/dock/wld_search_box.ui" line="712"/>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="167"/>
@@ -12297,7 +12297,7 @@ Muziekdozen:	%5
     <message>
         <location filename="../main_window/dock/wld_search_box.cpp" line="791"/>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -12662,37 +12662,37 @@ Wilt u uw wijzigingen opslaan?</translation>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="80"/>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="81"/>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="82"/>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="85"/>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="94"/>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="95"/>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
