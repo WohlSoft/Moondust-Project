@@ -655,32 +655,32 @@ Please set SoX path first</source>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="36"/>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="41"/>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="42"/>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="48"/>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1032,7 +1032,7 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="127"/>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="24"/>
@@ -1257,7 +1257,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="400"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="407"/>
@@ -1269,35 +1269,35 @@ Please save them before doing anything else.</source>
         <location filename="../main_window/dock/custom_music_setup.ui" line="413"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="466"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="486"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="498"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="518"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="525"/>
@@ -1309,43 +1309,43 @@ Please save them before doing anything else.</source>
         <location filename="../main_window/dock/custom_music_setup.ui" line="558"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="593"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="600"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="636"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="643"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="666"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="683"/>
@@ -1406,7 +1406,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="793"/>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="798"/>
@@ -1431,19 +1431,19 @@ Please save them before doing anything else.</source>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="816"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="824"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="825"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4408,7 +4408,7 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="628"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="579"/>
         <source>Autoscroll section (Legacy)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="656"/>
@@ -4420,7 +4420,7 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="745"/>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="768"/>
@@ -4510,30 +4510,30 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1085"/>
         <source>Change the autoscroll speed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1094"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1107"/>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1223"/>
         <source>Not implemented yet, sorry</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1249"/>
@@ -4639,7 +4639,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="574"/>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1128"/>
@@ -7436,13 +7436,13 @@ See %1 for more information.</source>
         <location filename="../main_window/view/view.cpp" line="136"/>
         <location filename="../main_window/view/view.cpp" line="149"/>
         <source>Grid size: changed into %1x%1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/view/view.cpp" line="122"/>
         <location filename="../main_window/view/view.cpp" line="144"/>
         <source>Grid size: restored default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
@@ -7985,12 +7985,12 @@ Please save the file first.</source>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="256"/>
         <source>Next grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="261"/>
         <source>Previous grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="273"/>
@@ -8057,19 +8057,19 @@ Please save the file first.</source>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="89"/>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="90"/>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="95"/>
         <source>Choose the Moondust Maintainer application</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9789,17 +9789,17 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="30"/>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="92"/>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="98"/>
         <source>Start with stars:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="143"/>
@@ -9824,7 +9824,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="225"/>
         <source>Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="237"/>
