@@ -655,32 +655,32 @@ Please set SoX path first</source>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="36"/>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="41"/>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="42"/>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="48"/>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1012,7 +1012,7 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation>어-오, PGE 편집기가 충돌했습니다 :( &lt;br&gt; 자세한 충돌 정보 :</translation>
+        <translation type="unfinished">어-오, PGE 편집기가 충돌했습니다 :( &lt;br&gt; 자세한 충돌 정보 :</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="57"/>
@@ -1032,17 +1032,17 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="127"/>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>PGE 포럼 (wohlsoft.ru/forum/)에 보고서 게시</translation>
+        <translation type="unfinished">PGE 포럼 (wohlsoft.ru/forum/)에 보고서 게시</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>GitHub 저장소 (WohlSoft / PGE-Project)에서 문제 제기</translation>
+        <translation type="unfinished">GitHub 저장소 (WohlSoft / PGE-Project)에서 문제 제기</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="94"/>
@@ -1257,7 +1257,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="400"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="407"/>
@@ -1269,35 +1269,35 @@ Please save them before doing anything else.</source>
         <location filename="../main_window/dock/custom_music_setup.ui" line="413"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="466"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="486"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="498"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="518"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="525"/>
@@ -1309,43 +1309,43 @@ Please save them before doing anything else.</source>
         <location filename="../main_window/dock/custom_music_setup.ui" line="558"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="593"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="600"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="636"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="643"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="666"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="683"/>
@@ -1406,7 +1406,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="793"/>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="798"/>
@@ -1431,19 +1431,19 @@ Please save them before doing anything else.</source>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="816"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="824"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="825"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1458,7 +1458,7 @@ Please save them before doing anything else.</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation>레거시 구성 패키지가 있습니다.
+        <translation type="unfinished">레거시 구성 패키지가 있습니다.
 &lt;br&gt; Editor가 시작되지만, 항목 또는 설정에 문제가 발생할 수 있습니다.
 &lt;br&gt;
 &lt;br&gt; 최신 버전의 구성 패키지를 다운로드하여 설치하십시오:
@@ -1631,7 +1631,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="294"/>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Args : {engine commands} 실행중인 경우 PGE 엔진에 명령이나 메시지를 보냅니다</translation>
+        <translation type="unfinished">Args : {engine commands} 실행중인 경우 PGE 엔진에 명령이나 메시지를 보냅니다</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="295"/>
@@ -1772,7 +1772,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="172"/>
         <source>Welcome to PGE Editor!</source>
-        <translation>PGE 편집기에 오신 것을 환영합니다!</translation>
+        <translation type="unfinished">PGE 편집기에 오신 것을 환영합니다!</translation>
     </message>
     <message>
         <location filename="../main_window/greeting_dialog/greeting_dialog.ui" line="191"/>
@@ -1960,13 +1960,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../common_features/installer.cpp" line="256"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>PGE 레벨 파일</translation>
+        <translation type="unfinished">PGE 레벨 파일</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="261"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>PGE 세계지도</translation>
+        <translation type="unfinished">PGE 세계지도</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="266"/>
@@ -3065,7 +3065,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="91"/>
@@ -4408,7 +4408,7 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="628"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="579"/>
         <source>Autoscroll section (Legacy)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="656"/>
@@ -4420,7 +4420,7 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="745"/>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="768"/>
@@ -4510,30 +4510,30 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1085"/>
         <source>Change the autoscroll speed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1094"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1107"/>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1223"/>
         <source>Not implemented yet, sorry</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1249"/>
@@ -4639,7 +4639,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="574"/>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1128"/>
@@ -5821,7 +5821,7 @@ when you exit from a level through this warp.</source>
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation>워프 유형을 정의합니다.
+        <translation type="unfinished">워프 유형을 정의합니다.
 0-즉시, 플레이어가 즉시 순간 이동되고 이동 속도가 0으로 재설정됩니다.
 1-파이프, 방향 경사 입구 및 출구.
 2-출입문, 플레이어는 위쪽 키로 입장 할 수 있습니다.
@@ -7297,7 +7297,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../testing/pge_engine.cpp" line="69"/>
         <source>PGE Engine testing</source>
-        <translation>PGE 엔진 테스트</translation>
+        <translation type="unfinished">PGE 엔진 테스트</translation>
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="72"/>
@@ -7309,7 +7309,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <location filename="../testing/pge_engine.cpp" line="74"/>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>여보세요! PGE 엔진에서 레벨을 테스트하려고합니다.
+        <translation type="unfinished">여보세요! PGE 엔진에서 레벨을 테스트하려고합니다.
 PGE 엔진은 아직 개발 초기 단계에 있으며 누락되거나 올바르게 작동하지 않는 몇 가지 기능이 있습니다. 기존 SMBX 엔진 용 레벨이나 에피소드를 만들고 있고 완전한 기능 세트로 테스트하고 싶다면 SMBX에서 직접 테스트하십시오. PGE 엔진 자체를 테스트하거나 PGE 관련 기능으로 레벨을 테스트하려는 경우에 PGE 테스트를 사용하십시오.</translation>
     </message>
     <message>
@@ -7436,13 +7436,13 @@ See %1 for more information.</source>
         <location filename="../main_window/view/view.cpp" line="136"/>
         <location filename="../main_window/view/view.cpp" line="149"/>
         <source>Grid size: changed into %1x%1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/view/view.cpp" line="122"/>
         <location filename="../main_window/view/view.cpp" line="144"/>
         <source>Grid size: restored default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
@@ -7985,12 +7985,12 @@ Please save the file first.</source>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="256"/>
         <source>Next grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="261"/>
         <source>Previous grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="273"/>
@@ -8057,19 +8057,19 @@ Please save the file first.</source>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="89"/>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="90"/>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="95"/>
         <source>Choose the Moondust Maintainer application</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8527,7 +8527,7 @@ Error description:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>죄송합니다. PGE Editor가 다운되었습니다.
+        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
 이유 : 메모리 부족!
 
 이를 방지하려면 다른 불필요한 프로그램을 닫아 더 많은 메모리를 확보하십시오.</translation>
@@ -8540,7 +8540,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>죄송합니다. PGE Editor가 다운되었습니다.
+        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
 이유 : 처리되지 않은 예외
 
 이 문제를 해결할 수 있도록 포럼 직원에게 알려주십시오. 감사합니다.
@@ -8598,7 +8598,7 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation>죄송합니다. PGE Editor가 다운되었습니다.
+        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
 이유 : % 1
 
 </translation>
@@ -9789,17 +9789,17 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="30"/>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="92"/>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="98"/>
         <source>Start with stars:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="143"/>
@@ -9824,7 +9824,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="225"/>
         <source>Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="237"/>

@@ -867,11 +867,11 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation>在 PGE 论坛中反馈问题（wohlsoft.ru/forum/，需英文）</translation>
+        <translation>在 WohlSoft 论坛中反馈问题（wohlsoft.ru/forum/，需英文）</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation>在 Github 仓库中反馈问题（WohlSoft/PGE-Project，需英文）</translation>
+        <translation>在 Github 仓库中反馈问题（WohlSoft/Moondust-Project，需英文）</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -889,7 +889,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation>加入 Moondust Discord 服务器以提交报告（仅限海外用户）</translation>
+        <translation>加入月尘 Discord 服务器以提交报告（仅限海外用户）</translation>
     </message>
 </context>
 <context>
@@ -1318,7 +1318,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>参数：{引擎指令} 当执行时发送指令或信息到 PGE 引擎</translation>
+        <translation>参数：{引擎指令} 当执行时发送指令或信息到月尘引擎</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1613,12 +1613,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>PGE 关卡文件</translation>
+        <translation>月尘引擎关卡文件</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>PGE 大地图文件</translation>
+        <translation>月尘引擎大地图文件</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -4957,7 +4957,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 0 - 瞬移：玩家将会瞬移且移动速度为 0.
 1 - 水管：各个方向的水管的入口和出口。
 2 - 门：玩家可按上键进入。
-3 - 传送门（仅限 PGE 和 TheXTech 引擎）：玩家将会瞬移，但移动速度不变。</translation>
+3 - 传送门（仅限月尘和 TheXTech 引擎）：玩家将会瞬移，但移动速度不变。</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -5124,7 +5124,7 @@ Measured in pixels per 1/65 seconds.</source>
     </message>
     <message>
         <source>X:</source>
-        <translation></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <source>Target coordinates of player on the world map
@@ -5133,7 +5133,7 @@ when you exit from a level through this warp.</source>
     </message>
     <message>
         <source>Y:</source>
-        <translation></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <source>Browse the world map to set an exit point</source>
