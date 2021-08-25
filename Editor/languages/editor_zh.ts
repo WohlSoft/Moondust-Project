@@ -5124,7 +5124,7 @@ Measured in pixels per 1/65 seconds.</source>
     </message>
     <message>
         <source>X:</source>
-        <translation></translation>
+        <translation>X:</translation>
     </message>
     <message>
         <source>Target coordinates of player on the world map
@@ -5133,7 +5133,7 @@ when you exit from a level through this warp.</source>
     </message>
     <message>
         <source>Y:</source>
-        <translation></translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <source>Browse the world map to set an exit point</source>
