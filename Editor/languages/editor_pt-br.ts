@@ -71,7 +71,7 @@
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation>Subjanelas</translation>
+        <translation type="unfinished">Subjanelas</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
@@ -147,7 +147,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Use custom:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Width:</source>
@@ -163,11 +163,11 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Classic Events tabs to auto-expand</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Common</source>
@@ -195,7 +195,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Section Settings</source>
@@ -203,7 +203,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Generator</source>
@@ -263,7 +263,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>View</source>
@@ -371,23 +371,23 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Use default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -402,7 +402,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation>Contando estrelas...</translation>
+        <translation type="unfinished">Contando estrelas...</translation>
     </message>
 </context>
 <context>
@@ -554,27 +554,27 @@ Please set SoX path first</source>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -601,15 +601,15 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -643,7 +643,7 @@ Também pode dar um duplo clique em um item para ter o mesmo efeito.</translatio
     </message>
     <message>
         <source>Go To...</source>
-        <translation>Ir para...</translation>
+        <translation type="unfinished">Ir para...</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
@@ -699,7 +699,7 @@ Você gostaria de configurá-lo?</translation>
     <message>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>No configuration needed</source>
@@ -936,34 +936,34 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy report into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copied!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1041,7 +1041,7 @@ Please save them first before doing anything else.</source>
     <name>CustomMusicSetup</name>
     <message>
         <source>Music setup</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Play music</source>
@@ -1049,11 +1049,11 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Gain:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Reset</source>
@@ -1061,32 +1061,32 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>Tempo:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Volume model:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1094,81 +1094,81 @@ Please save them first before doing anything else.</source>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Chips number:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Chiptune</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Track number</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>To begin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>MIDI</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>[Auto]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>General</source>
@@ -1178,11 +1178,11 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Add</source>
@@ -1191,17 +1191,17 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Width</source>
@@ -1216,7 +1216,7 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level</source>
@@ -1226,41 +1226,41 @@ Please save them first before doing anything else.</source>
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1274,7 +1274,7 @@ Please save them first before doing anything else.</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1352,7 +1352,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Clear All Logs</source>
-        <translation></translation>
+        <translation>Clear All Logs</translation>
     </message>
     <message>
         <source>Clear %1 Log</source>
@@ -1388,7 +1388,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Simulates crash signal</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
@@ -1404,7 +1404,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation>Argumentos: {comandos da engine} Envia comandos ou mensagens para a engine em execução</translation>
+        <translation type="unfinished">Argumentos: {comandos da engine} Envia comandos ou mensagens para a engine em execução</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1424,7 +1424,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1475,7 +1475,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Force vertical background tiling</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Height</source>
@@ -1487,7 +1487,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
@@ -1506,7 +1506,7 @@ therefore you can use same link to get updated version</source>
     <name>FileListBrowser</name>
     <message>
         <source>Files list</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1514,7 +1514,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Please select a file from the list:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1541,7 +1541,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
@@ -1555,7 +1555,7 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1576,7 +1576,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <name>HistoryElementChangeLayerVisibility</name>
     <message>
         <source>Toggle the visibility of a layer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1700,12 +1700,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation>Arquivo de nível PGE</translation>
+        <translation type="unfinished">Arquivo de nível PGE</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation>Arquivo de mundo PGE</translation>
+        <translation type="unfinished">Arquivo de mundo PGE</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -1782,7 +1782,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>BGO-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -1842,7 +1842,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1995,7 +1995,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2003,22 +2003,22 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Name</source>
@@ -2033,22 +2033,22 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2079,7 +2079,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation>Barrar veículos</translation>
+        <translation type="unfinished">Barrar veículos</translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -2091,15 +2091,15 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Need a bomb</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Required special state</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2111,7 +2111,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2146,11 +2146,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2162,7 +2162,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2178,7 +2178,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2210,7 +2210,7 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please, enter NPC&apos;s talkative message
@@ -2220,7 +2220,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2235,11 +2235,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>World-Music-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2251,7 +2251,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2267,7 +2267,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2350,7 +2350,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Change included NPC...</source>
@@ -2358,11 +2358,11 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2374,7 +2374,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2414,18 +2414,18 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>ItemPath</name>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Path-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2437,7 +2437,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2453,7 +2453,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2496,63 +2496,63 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Custom liquid</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Gravity Field</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Mouse click Event</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Collision script</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Mouse click Script</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Collision Event</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Air chamber</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
@@ -2560,7 +2560,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Resize</source>
@@ -2576,7 +2576,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
@@ -2610,11 +2610,11 @@ Apenas 27 caracteres por linha</translation>
     <name>ItemScene</name>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Scenery-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2626,7 +2626,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2642,7 +2642,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2729,7 +2729,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>[Empty]</source>
-        <translation>[Vazio]</translation>
+        <translation type="unfinished">[Vazio]</translation>
     </message>
     <message>
         <source>NPC from List</source>
@@ -2752,11 +2752,11 @@ Apenas 27 caracteres por linha</translation>
     <name>ItemTile</name>
     <message>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Tile-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position: X, Y</source>
@@ -2768,7 +2768,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy</source>
@@ -2784,7 +2784,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2858,7 +2858,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Play</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -2867,12 +2867,12 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <source>W</source>
         <comment>Width, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>H</source>
         <comment>Height, shortly</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>%1 coins</source>
@@ -3048,7 +3048,7 @@ List of known SMBX versions and format codes:
 %1
 (To allow level file work in specific SMBX version,
 version code must be less or equal specific code)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Extension is not set</source>
@@ -3075,7 +3075,7 @@ version code must be less or equal specific code)</source>
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allow to save %1 blocks
@@ -3167,13 +3167,13 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&apos;%1&apos; has been modified.
@@ -3187,32 +3187,32 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>1/%1 Loading user data...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1/%1 Loading Backgrounds...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>2/%1 Loading BGOs...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>3/%1 Loading Blocks...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>4/%1 Loading NPCs...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>5/%1 Loading PhysEZ...</source>
         <comment>PhysEZ - Physical Environment Zone.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>6/%1 Loading Doors...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3274,23 +3274,23 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Copy graphic to custom folder</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3385,7 +3385,7 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Level name:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source> sec.</source>
@@ -3405,12 +3405,12 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>No settings available</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3482,81 +3482,81 @@ Um arquivo temporário será criado. Continuar?</translation>
     <message>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Custom</source>
@@ -3573,15 +3573,15 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>File save error</source>
@@ -3595,34 +3595,34 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3630,122 +3630,122 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Do you want to continue the process?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in LunaTester from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select a Wine toolchain for use.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Failed to start: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Crashed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Timed out: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Write error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Read error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Unknown error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Error has occured: (Error %1) %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>LunaTester is still active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Incompatible LunaDll found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Incompatible LunaLua</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -3941,7 +3941,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -3969,7 +3969,7 @@ Apenas 27 caracteres por linha</translation>
     </message>
     <message>
         <source>Initialize new section</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Sections aren&apos;t selected</source>
@@ -3986,7 +3986,7 @@ Apenas 27 caracteres por linha</translation>
     <message>
         <source>Source section is empty!
 Please select another section, or clear.</source>
-        <translation>A seção fonte está vazia!
+        <translation type="unfinished">A seção fonte está vazia!
 Por favor, escolha outra.</translation>
     </message>
     <message>
@@ -3996,7 +3996,7 @@ Por favor, escolha outra.</translation>
     <message>
         <source>Destination section is in use, therefore it will be overridden with removing of all it&apos;s objects.
 Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Destination section is used!
@@ -4161,7 +4161,7 @@ Por favor, escolha outra seção ou delete-a primeiro com a opção &quot;Deleta
     </message>
     <message>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation>Fim do jogo &quot;Bowser Derrotado&quot;</translation>
+        <translation type="unfinished">Fim do jogo &quot;Bowser Derrotado&quot;</translation>
     </message>
     <message>
         <source>Player Control hold keys</source>
@@ -4253,16 +4253,16 @@ Apenas 28 caracteres por linha</translation>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Type:</source>
@@ -4272,27 +4272,27 @@ Apenas 28 caracteres por linha</translation>
     <message>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Not implemented yet, sorry</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>LvlHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Place</source>
@@ -4554,7 +4554,7 @@ Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para i
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Left</source>
@@ -4564,7 +4564,7 @@ Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para i
     <message>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Up</source>
@@ -4579,22 +4579,22 @@ Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para i
     <message>
         <source>Up-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Up-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Down-Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Down-Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4629,12 +4629,12 @@ Esta opção usa um bug na renderização de objetos decorativos em SMBX. Para i
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Rename layer</source>
@@ -4651,12 +4651,12 @@ All objects on this layer will be moved to the &apos;Default&apos; layer.</sourc
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4728,12 +4728,12 @@ Por favor, converta suas imagens para um formato válido e recarregue o nível.<
     <message>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>LEVELSCENE_CONTEXTMENU_LevelProperties...</source>
         <comment>Level properties...</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Player start points:		%1
@@ -4743,7 +4743,7 @@ Non-playable characters&apos;s:	%4
 Warp entries:		%5
 Physical env. zones:	%6
 </source>
-        <translation>Pontos de início do jogador:		%1
+        <translation type="unfinished">Pontos de início do jogador:		%1
 Blocos:			%2
 Objetos decorativos:	%3
 NPCs:	%4
@@ -4808,7 +4808,7 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Ev. Hited</source>
-        <translation>Evento &apos;Bater&apos;</translation>
+        <translation type="unfinished">Evento &apos;Bater&apos;</translation>
     </message>
     <message>
         <source>Ev. Layer Empty:</source>
@@ -4836,7 +4836,7 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Attached layer:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search NPC</source>
@@ -4844,19 +4844,19 @@ Zonas de ambientes físicos:	%6
     </message>
     <message>
         <source>Evt activate:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Evt death:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Evt talk:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Evt empty layer:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Doesn&apos;t move</source>
@@ -4930,19 +4930,19 @@ las?</translation>
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search in current section</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -4978,11 +4978,11 @@ para trás)</translation>
     <message>
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Wrap vertically</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Current Section</source>
@@ -5006,7 +5006,7 @@ para trás)</translation>
     </message>
     <message>
         <source>Edit a custom background config...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5047,15 +5047,15 @@ para trás)</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to manage custom background config files.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Choose a background first</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please, choose the background image first.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
@@ -5064,26 +5064,26 @@ para trás)</translation>
     <message>
         <source>Name that will appear in the editor</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Backdrop fill color</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Add layers here, for example:</source>
         <comment>A comment in the template of Background2 INI file.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Change the extra format specific settings of a custom music</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -5103,7 +5103,7 @@ para trás)</translation>
     <message>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation>Barrar veículos</translation>
+        <translation type="unfinished">Barrar veículos</translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -5120,11 +5120,11 @@ para trás)</translation>
     </message>
     <message>
         <source>Place exit point or quickly jump to existing warp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Point already placed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Defines the type of warp:
@@ -5132,7 +5132,7 @@ para trás)</translation>
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -5148,16 +5148,16 @@ para trás)</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Message which will be shown if the player
 does not have the required number of stars</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Need stars message</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Need stars</source>
@@ -5166,7 +5166,7 @@ does not have the required number of stars</source>
     <message>
         <source>Required number of stars
 to enter this warp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Warp type</source>
@@ -5175,15 +5175,15 @@ to enter this warp</source>
     <message>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Don&apos;t show level completion amount</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Place entrance point or quickly jump to already placed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Set Entrance</source>
@@ -5191,78 +5191,78 @@ number of existing and collected stars in the level will not be shown.</source>
     </message>
     <message>
         <source>On-Enter event:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Trigger event when he player enters this warp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Any mounted vehicles will be removed
 when player passes through this warp.
 They will be given back when player
 finishes the level or lose a life.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Player can carry items and NPCs through this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Entrance closed with a lock. Need a key to open it.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Entrance closed with a lock. Need to blow up the lock to open it.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Bomb needed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>The player can only enter this warp under a special state.
 The special state is defined by the active configuration pack.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Sp. State only</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allow entering from both sides of this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Two-way warp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannon shoot exit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Projectile speed:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>The speed at which the player will exit the warp.
 Measured in pixels per 1/65 seconds.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>The direction in which the player will exit the warp.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannon exit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Pipe direction</source>
@@ -5303,7 +5303,7 @@ Measured in pixels per 1/65 seconds.</source>
     <message>
         <source>Target coordinates of player on the world map
 when you exit from a level through this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Y:</source>
@@ -5311,7 +5311,7 @@ when you exit from a level through this warp.</source>
     </message>
     <message>
         <source>Browse the world map to set an exit point</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Set</source>
@@ -5324,21 +5324,21 @@ when you exit from a level through this warp.</source>
     <message>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>To other level</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Prevents any in-level warp to exit at this warp.
 Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>From other level</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Warp to other level</source>
@@ -5346,7 +5346,7 @@ If this flag is enabled, you can only place a warp exit.</source>
     </message>
     <message>
         <source>If this field is not empty, player will travel from the current level to the specified one.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level file:</source>
@@ -5355,41 +5355,41 @@ If this flag is enabled, you can only place a warp exit.</source>
     <message>
         <source>Determines the warp through which the player will enter the target level.
 If set to zero, the player will start at the pre-defined level start point.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Browse for another level file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Hide level enter screen</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allow inter-level NPC</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Choose a warp entry to edit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove current warp entry with all placed points.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level file</source>
@@ -5558,11 +5558,11 @@ Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <source>Go to left-bottom of the section</source>
-        <translation>Ir para o canto inferior esquerdo</translation>
+        <translation type="unfinished">Ir para o canto inferior esquerdo</translation>
     </message>
     <message>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Retornar para o canto inferior esquerdo da seção ou para a coordenada [0,0] do mundo</translation>
+        <translation type="unfinished">Retornar para o canto inferior esquerdo da seção ou para a coordenada [0,0] do mundo</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -5570,20 +5570,20 @@ Escolha qual da lista quer utilizar:</translation>
     </message>
     <message>
         <source>Prevent overlap</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Prevents similar items from overlapping each other.
 Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Go to the left-top of the section</source>
-        <translation>Ir para o canto superior esquerdo da seção</translation>
+        <translation type="unfinished">Ir para o canto superior esquerdo da seção</translation>
     </message>
     <message>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
-        <translation>Retornar para o canto superior esquerdo da seção ou para a coordenada [0,0] do mundo</translation>
+        <translation type="unfinished">Retornar para o canto superior esquerdo da seção ou para a coordenada [0,0] do mundo</translation>
     </message>
     <message>
         <source>Refresh menus</source>
@@ -5595,7 +5595,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Lock Scenery tiles</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Square Fill</source>
@@ -5753,7 +5753,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Lock Terrain tiles</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Tileset Item Box</source>
@@ -5765,7 +5765,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Testing options...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Position bookmarks</source>
@@ -5789,11 +5789,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Configuration</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Plugins</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open (Ctrl+O)</source>
@@ -6035,7 +6035,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Wrap Horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Offscreen exit</source>
@@ -6259,83 +6259,83 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Circular fill</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Circular fill (Shift+C)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Modern GUI</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Go to top-right of the section</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Go to right-bottom of the section</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Script Editor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Run configure tool...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open local script</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open episode script</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open the episode common script. If it does not exist, a file will be created.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level local (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level global (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>World map script (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Welcome dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Lock tiles</source>
@@ -6359,11 +6359,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Rectangular fill</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Rectangular Fill (Shift+S)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show Developer Console</source>
@@ -6407,39 +6407,39 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Clear NPC garbadge...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>More sections...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Tip of the day...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Launch game engine application.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -6599,7 +6599,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Configuration is busy</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Reloading configuration pack</source>
@@ -6671,12 +6671,12 @@ Arquivo não existente.</translation>
     </message>
     <message>
         <source>Configuration is loaded with errors</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot create NPC config file:
 The configuration pack was loaded, but contains errors.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Create new NPC.txt configuration file</source>
@@ -6685,34 +6685,34 @@ The configuration pack was loaded, but contains errors.</source>
     <message>
         <source>Cannot create level file:
 The configuration pack was loaded, but contains errors.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot create world map file:
 The configuration pack was loaded, but contains errors.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Untitled file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please save file to the disk first.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Can&apos;t open the file: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level file loaded</source>
@@ -6724,7 +6724,7 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <source>Can&apos;t read the file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC Config loaded</source>
@@ -6818,11 +6818,11 @@ Por favor, verifique a pasta do aplicativo.</translation>
         <source>Can&apos;t start testing, engine is not found: 
 %1
 Please, choose the engine application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Choose the Engine application</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Engine already runned</source>
@@ -6836,12 +6836,12 @@ Quer parar o teste atual?</translation>
     </message>
     <message>
         <source>World map testing of saved file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>File is not saved!
 Do you want to save file or you want to run test of copy which is currently saved on the disk?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Save file first</source>
@@ -6866,7 +6866,7 @@ Em breve esta opção estará disponível.</translation>
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -6875,7 +6875,7 @@ Em breve esta opção estará disponível.</translation>
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>To run testing via SMBX file must be saved into disk first!</source>
@@ -6944,7 +6944,7 @@ Um arquivo temporário será criado. Continuar?</translation>
     <message>
         <source>Section has been successfully cloned!
 Do you want to clone another section?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove section</source>
@@ -7059,27 +7059,27 @@ Substituir?</translation>
     <message>
         <source>Configuration can&apos;t be loaded.
 See %1 for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Loading theme...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Initializing dock widgets...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Initalizing plugins...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Finishing loading...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Configuration package is loaded with errors.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Configuration can&apos;t be loaded.
@@ -7103,56 +7103,56 @@ Abra Ferramentas/Configuração Global/Status da configuração para mais detalh
     </message>
     <message>
         <source>NPC garbage clean-up</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Everything is fine, level has no NPC garbage!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Found %1 junk NPC&apos;s. Do you want to remove them?
 Press &quot;Help&quot; to show info about the junk NPCs we found.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC garbabe has been removed!
 This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Section %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Initialize section %1...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>File is not saved</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to open/create script file.
 Please save the file first.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Default by item</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Custom...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Erase</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Items</source>
@@ -7162,7 +7162,7 @@ Please save the file first.</source>
     <message>
         <source>Player</source>
         <comment>Vanilla-like toolbar</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Section</source>
@@ -7186,70 +7186,70 @@ Please save the file first.</source>
     </message>
     <message>
         <source>Options</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Custom align grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please enter grid alignment size:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>When reloading the configuration, all opened files will be closed and restored after reloading. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Items browser with a search</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>World map items browser</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Music change points</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Configuration can&apos;t be loaded:
 %1.
 See %2 for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test level</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Start Game</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test world map</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>&lt;no extra settings&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show camera grid</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -7257,11 +7257,11 @@ See %2 for more information.</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>World map is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
@@ -7269,49 +7269,49 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Running the 32-bit Editor a 64-bit processor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>You are using the 32-bit version of the Editor on a 64-bit processor. This Editor version targeted to legacy architectures and Windows XP compatibility. We highly recommend getting the 64-bit version of the Editor to have better compatibility with modern architectures and to extend a limit of memory usage. For 32-bit applications, there is a 2 GB memory limit.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Grid size: changed into %1x%1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Grid size: restored default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Next grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Previous grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7341,15 +7341,15 @@ Quer continuar?</translation>
     </message>
     <message>
         <source>Select SFX file</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select SFX file to use</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select music file to use as custom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7460,11 +7460,11 @@ de velocidadde</translation>
     </message>
     <message>
         <source>Alignment in the editor:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Grid size</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>offset y</source>
@@ -7549,23 +7549,23 @@ velocidade de animação</translation>
     </message>
     <message>
         <source>Grid offset X</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Grid offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Middle of cell by center</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Edge of cell by center</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Align at</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Don&apos;t kill on hammer</source>
@@ -7577,7 +7577,7 @@ velocidade de animação</translation>
     </message>
     <message>
         <source>Default health level</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Preview</source>
@@ -7634,7 +7634,7 @@ Deseja salvar sua mudanças?</translation>
     <name>PGE_EditorPluginInfo</name>
     <message>
         <source>Plugin Manager</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Name:</source>
@@ -7642,29 +7642,29 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Author:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Failed to load &quot;%1&quot; package!
 
 Error description:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>PGE_EditorPluginManager</name>
     <message>
         <source>%1 at line %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7672,25 +7672,25 @@ Error description:
     <message>
         <source>Test level/world</source>
         <comment>Run the testing of current file in PGE Engine via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in PGE Engine from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch PGE Engine as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Unsupported yet</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Currently this is not supported for world maps yet. Please use &apos;Test saved level/world&apos; action tu run a world map test.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -7851,7 +7851,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Two-way warp</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allow NPC</source>
@@ -7859,7 +7859,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Allow NPC inter level</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Locked</source>
@@ -7867,23 +7867,23 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Need a bomb</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Hide number of stars</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Enable cannon exit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Special state required</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Hide level entering scene</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Warp Type</source>
@@ -7895,11 +7895,11 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Need Stars message</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannon exit projectile speed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Entrance Direction</source>
@@ -7967,7 +7967,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Event Warp Enter</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC Special Data</source>
@@ -8224,7 +8224,7 @@ Para evitar isso, tente fechar programas desnecessários para liberar memória.<
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
@@ -8233,50 +8233,50 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Terminal was closed [SIGHUP]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Quit command [SIGQUIT]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Editor was abourted because physical memory error! [SIGBUS]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Wrong CPU Instruction [SIGILL]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Floating-point exception [SIGFPE]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Aborted! [SIGABRT]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Signal Segmentation Violation [SIGSEGV]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Interrupted! [SIGINT]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
 </source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
@@ -8400,95 +8400,95 @@ ao salvar o arquivo</translation>
         <source>SMBX64 standard isn&apos;t allows to save %1 section
 The maximum number of sections is %2.
 All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 blocks
 The maximum number of blocks is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
 The maximum number of Background Objects is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
 The maximum number of NPC&apos;s is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Warps
 The maximum number of Warps is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
 The maximum number of Water Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Layers
 The maximum number of Layers is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Events
 The maximum number of Events is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>A some issues are found on preparing to save SMBX64 Level file format:
 
 %1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
 The maximum number of Tiles is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
 The maximum number of Sceneries is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Paths
 The maximum number of Paths is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Levels
 The maximum number of Levels is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
 The maximum number of Music Boxes is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>A some issues are found on preparing to save SMBX64 World map file format:
 
 %1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Loading rotation rules table...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Loading Tilesets...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Loading Tileset groups...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Finishing loading...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Disable logging</source>
@@ -8496,7 +8496,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>System messages</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Fatal</source>
@@ -8504,11 +8504,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Critical</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Debug</source>
@@ -8516,31 +8516,31 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Initializing tileset categories...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Block user data change</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>BGO user data change</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC user data change</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level Settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Section extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Default</source>
@@ -8550,7 +8550,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8674,84 +8674,84 @@ ao salvar o arquivo</translation>
     <message>
         <source>Test level</source>
         <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in SMBX-38A from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Don&apos;t auto-suspend game</source>
         <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Game will always run and it will never suspend while window is unfocused.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Change the path to SMBX-38A...</source>
         <comment>Select the path to SMBX-38A executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select the path to SMBX-38A executable.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select a Wine toolchain for use.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select a path to SMBX-38A executable:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Custom</source>
@@ -8769,55 +8769,55 @@ ao salvar o arquivo</translation>
     <message>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>SMBX-38A is still active</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Executable not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to prepare a temp file for a test run.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to launch a level because of an invalid file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Caution</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8839,15 +8839,15 @@ ao salvar o arquivo</translation>
     <name>ScriptEditor</name>
     <message>
         <source>Script editor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Add script</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove script</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Script</source>
@@ -8855,7 +8855,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Import</source>
@@ -8863,11 +8863,11 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Import from file...</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Close script editor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>New</source>
@@ -8875,7 +8875,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Empty script has been added!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8897,109 +8897,109 @@ ao salvar o arquivo</translation>
     <name>TestingSettings</name>
     <message>
         <source>2 Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>PLSET_Character</source>
         <comment>Character</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>PLSET_State</source>
         <comment>Character</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Debug info</source>
         <comment>Enable printing of the debug information.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allows you to destroy any objects with no exceptions.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>World freedom</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Playable character will not take damage on dangerous contacts and will not burn in the lava.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>God mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allows you to fly up to the space!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Testing settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>PLSET_VehicleID</source>
         <comment>translate as &quot;Vehicle&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>PLSET_VehicleType</source>
         <comment>translate as &quot;Vehicle type&quot;</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Unlimited flying</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Physics debug</source>
         <comment>Enable debug drawing of physical objects (draw all hit boxes).</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show frame speed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Number of players</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1 player</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>2 player</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>1 Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Bulldozer mode</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cheats</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Initial state</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Start with stars:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Debug</source>
@@ -9007,7 +9007,7 @@ ao salvar o arquivo</translation>
     </message>
     <message>
         <source>Player settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9028,26 +9028,26 @@ ao salvar o arquivo</translation>
     <message>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Custom</source>
@@ -9057,17 +9057,17 @@ ao salvar o arquivo</translation>
     <message>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Default</source>
@@ -9077,70 +9077,70 @@ ao salvar o arquivo</translation>
     <message>
         <source>Software</source>
         <comment>Software rendering</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Allow player to grab any NPCs in a game.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select the path to TheXTech executable.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Executable not found</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>TheXtech start failed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Can&apos;t start TheXTech because of following reason:
@@ -9148,7 +9148,7 @@ ao salvar o arquivo</translation>
 
 Command: &quot;%1&quot;
 Arguments: %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9294,7 +9294,7 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     </message>
     <message>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>NPC</source>
@@ -9310,7 +9310,7 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level</source>
@@ -9354,39 +9354,39 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show default only</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Name</source>
@@ -9401,15 +9401,15 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Clean tileset editor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
@@ -9465,15 +9465,15 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Tileset removed</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Tileset has been removed!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9488,7 +9488,7 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     </message>
     <message>
         <source>Order weight</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Tileset group name:</source>
@@ -9500,7 +9500,7 @@ Se quiser criar tilesets específicos para o mundo/nível que usem gráficos per
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Open</source>
@@ -9578,7 +9578,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9612,23 +9612,23 @@ Os dados podem estar corrompidos!</translation>
     <name>TipOfDay</name>
     <message>
         <source>Tip of day</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Did you know?</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show tip at startup</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Previouse tip</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Next tip</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Close</source>
@@ -9749,30 +9749,30 @@ Os dados podem estar corrompidos!</translation>
     <name>UserDataEdit</name>
     <message>
         <source>User data editing</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>VariablesBox</name>
     <message>
         <source>Variables [Under Construction]</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Show variables group</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Global</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Local</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Add</source>
@@ -9780,7 +9780,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -9811,7 +9811,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>You can set a condition to open path in specified direction (controls at each side of those arrows), dependent on level exit code.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Level file:</source>
@@ -9879,11 +9879,11 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>1 - Card Roulette Exit</source>
-        <translation>1 - Saída pela roleta de cartões</translation>
+        <translation type="unfinished">1 - Saída pela roleta de cartões</translation>
     </message>
     <message>
         <source>2 - SMB3 Boss Exit</source>
-        <translation>2 - Saída de boss do SMB3</translation>
+        <translation type="unfinished">2 - Saída de boss do SMB3</translation>
     </message>
     <message>
         <source>3 - Walked Offscreen</source>
@@ -9895,7 +9895,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>5 - Crystal Sphare Exit</source>
-        <translation>5 - Saída pela esfera de cristal</translation>
+        <translation type="unfinished">5 - Saída pela esfera de cristal</translation>
     </message>
     <message>
         <source>6 - Warp Exit</source>
@@ -9907,7 +9907,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>8 - Tape Exit</source>
-        <translation>8 - Saída do SMW</translation>
+        <translation type="unfinished">8 - Saída do SMW</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -9927,7 +9927,7 @@ Os dados podem estar corrompidos!</translation>
     </message>
     <message>
         <source>9 - Hawk Mouth Exit</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10032,18 +10032,18 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Configuration package has errors</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Cannot load the &quot;%1&quot; world map because of errors in a configuration package.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>WineSetup</name>
     <message>
         <source>Wine configuration</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Test</source>
@@ -10051,19 +10051,19 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Wine config</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Version dialog</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Stop process</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Not running</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Import</source>
@@ -10071,11 +10071,11 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Specify a custom environment (PlayOnLinux/Mac)</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Wine home prefix</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -10083,35 +10083,35 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Location of Wine</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>System default</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Custom:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Import setup from PlayOnMac</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Import setup from PlayOnLinux</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select a Wine install prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select a Wine home prefix path</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Error</source>
@@ -10119,34 +10119,34 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Not running</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Starting...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Running...</source>
         <comment>State of a test app</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Use a system-wide installed Wine from a PATH environment.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10196,7 +10196,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Place</source>
@@ -10303,26 +10303,26 @@ Fundo:	%4</translation>
     </message>
     <message>
         <source>Hide meta-objects</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>WldScene</name>
     <message>
         <source>Search User Tiles %1</source>
-        <translation>Procurar tiles do usuário %1</translation>
+        <translation type="unfinished">Procurar tiles do usuário %1</translation>
     </message>
     <message>
         <source>Search User Sceneries %1</source>
-        <translation>Procurar objetos de cenário do usuário %1</translation>
+        <translation type="unfinished">Procurar objetos de cenário do usuário %1</translation>
     </message>
     <message>
         <source>Search User Paths %1</source>
-        <translation>Procurar caminhos do usuário %1</translation>
+        <translation type="unfinished">Procurar caminhos do usuário %1</translation>
     </message>
     <message>
         <source>Search User Levels %1</source>
-        <translation>Procurar níveis do usuário %1</translation>
+        <translation type="unfinished">Procurar níveis do usuário %1</translation>
     </message>
     <message>
         <source>Wrong custom images</source>
@@ -10406,7 +10406,7 @@ Caixas de música:	%5</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Tipo:</translation>
+        <translation type="unfinished">Tipo:</translation>
     </message>
     <message>
         <source>[empty]</source>
@@ -10426,7 +10426,7 @@ Caixas de música:	%5</translation>
     </message>
     <message>
         <source>Search Terrain Tile</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Scenery</source>
@@ -10478,7 +10478,7 @@ Caixas de música:	%5</translation>
     </message>
     <message>
         <source>Music box</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Music</source>
@@ -10538,15 +10538,15 @@ Caixas de música:	%5</translation>
     </message>
     <message>
         <source>Search in selection group</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>%1 found elements were selected.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10653,7 +10653,7 @@ Por favor, veja se a pasta config/SMBX existe e contém os arquivos *.INI com as
     </message>
     <message>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Extension is not set</source>
@@ -10720,7 +10720,7 @@ Por favor, retire o excesso de áreas aquáticas ou salve no formato LVLX.</tran
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Loading World map data</source>
@@ -10728,13 +10728,13 @@ Installed LunaLUA partially extends than limits.</source>
     </message>
     <message>
         <source>Incorrect custom configs</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>World title:</source>
@@ -10775,7 +10775,7 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Terrain</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Scenery</source>
@@ -10807,14 +10807,14 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>World Map Items browser</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>WorldMusicBoxItemBox</name>
     <message>
         <source>Music boxes</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Music Box</source>
@@ -10849,11 +10849,11 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>Credits of this episode (SMBX allows only 5 lines):</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Episode title:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Credits of this world (SMBX allows only 5 lines):</source>
@@ -10897,11 +10897,11 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>The name of the level that will be loaded when the game first loads.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Main hub level:</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -10916,31 +10916,31 @@ Deseja salvar sua mudanças?</translation>
     </message>
     <message>
         <source>By Wohlstand</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Editor, version %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Revision</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Build date</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Our project site</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
