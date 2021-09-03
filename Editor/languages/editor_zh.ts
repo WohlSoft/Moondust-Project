@@ -7972,7 +7972,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>LTR</source>
-        <translation>从左到右</translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <source>Level Settings</source>
