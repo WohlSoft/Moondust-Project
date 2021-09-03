@@ -7805,7 +7805,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>LTR</source>
-        <translation>De gauche à droite</translation>
+        <translation>LTR</translation>
     </message>
     <message>
         <source>Block user data change</source>
