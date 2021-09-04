@@ -842,7 +842,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished">Ой-йой, PGE Редагувач зламався :(&lt;br&gt;Детальна інформація аварії:</translation>
+        <translation>Ой-йой, Moondust Редагувач зламався :(&lt;br&gt;Детальна інформація аварії:</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
@@ -873,11 +873,11 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished">Відправити рапорт на форум PGE (wohlsoft.ru/forum/)</translation>
+        <translation>Відправити рапорт у форум WohlSoft (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished">Створити задачу на репозиторії GitHub (WohlSoft/PGE-Project)</translation>
+        <translation>Створити задачу на репозиторії GitHub (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -1198,13 +1198,13 @@ Please save them before doing anything else.</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished">Вибачте, але ви використовуєте застарілий конфігураційний пакет.
+        <translation>Вибачте, але ви використовуєте застарілий конфігураційний пакет.
 &lt;br&gt;Редагувач запуститься, однак можуть виникнути проблеми з ігровими елементами або з їх налаштуваннями.
 &lt;br&gt;
 &lt;br&gt;Будь ласка, завантажте й встановіть останню версію вашого конфіг-пакету:
 &lt;br&gt;
 &lt;br&gt;Завантажити: %1
-&lt;br&gt;Примітка: більшість конфіг-пакетів оновлюються разом з комплектом PGE,&lt;br&gt;
+&lt;br&gt;Примітка: більшість конфіг-пакетів оновлюються разом з комплектом Moondust,&lt;br&gt;
 тому ви можете використовувати те ж саме посилання, щоб отримати оновлену версію.</translation>
     </message>
 </context>
@@ -1323,7 +1323,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation type="unfinished">Аргументи: {команди двигуна} Відправити команду або повідомлення в запущений двигун</translation>
+        <translation>Аргументи: {команди двигуна} Відправити команду або повідомлення в запущений двигун</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1456,7 +1456,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished">Ласкаво просимо у PGE Редагувач!</translation>
+        <translation>Ласкаво просимо до Moondust Редагувача!</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1615,12 +1615,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Файл рівня PGE</translation>
+        <translation>Файл рівня Moondust</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Файл карти світу PGE</translation>
+        <translation>Файл карти світу Moondust</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -4659,11 +4659,11 @@ Physical env. zones:	%6
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation type="unfinished">Визначення типів проходів:
+        <translation>Визначення типів проходів:
 0 - Миттєвий, гравець телепортується з втратою швидкості руху.
 1 - Труба, спрямований вхід та вихід.
 2 - Двері, гравець може в них увійти, натиснув &apos;&apos;Вгору&quot;.
-3 - Портал, гравець телепортується без втрати швидкості руху (тільки PGE Двигун).</translation>
+3 - Портал, гравець телепортується без втрати швидкості руху (тільки Moondust Двигун).</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -6129,7 +6129,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation type="unfinished">Тестування на двигуні PGE</translation>
+        <translation>Тестування на двигуні Moondust</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -6138,8 +6138,8 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation type="unfinished">Вітаємо, друже! Це тестування на двигуні PGE.
-Двигун PGE - це, компонент PGE Project, на стадії розробки, який реалізує ігровий процес та функціональність тестування рівнів. Зараз двигун являється експериментальним і має багато нереалізованих функцій. Деякі з них можуть все ще розроблятися, а деякі зовсім не працюють (поки що). Якщо ви створите рівні або епізоди для старого двигуна SMBX і ви захочете почати тестування з повною функціональністю, будь ласка, проводьте тестування на двигуні SMBX. Використовуйте тестування на двигуні PGE у тих випадках, коли ви хочете протестувати сам двигун PGE, або створені рівні та епізоди специфічно для PGE.</translation>
+        <translation>Вітаємо, друже! Це тестування на двигуні Moondust.
+Двигун Moondust ще знаходиться на стадії розробки і має багато нереалізованих функцій. Деякі з них можуть все ще розроблятися, а деякі зовсім не працюють (поки що). Якщо ви створите рівні або епізоди для старого двигуна SMBX і ви хочете почати тестування з повною функціональністю, будь ласка, проводьте тестування у двигуні SMBX. Проводьте тестування в двигуні Moondust у тих випадках, коли ви хочете протестувати сам двигун, або рівні та епізоди, створені специфічно для Moondust.</translation>
     </message>
     <message>
         <source>Clonning of section...</source>
@@ -7230,7 +7230,7 @@ Error description:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished">Вибачаємось, але редагувач зламався.
+        <translation>Вибачаємось, але редагувач зламався.
 Причина: Недостатньо пам&apos;яті!
 
 Спробуйте закрити інші непотрібні програми, щоб звільнити пам&apos;ять й запобігти аварії.</translation>
@@ -7242,12 +7242,12 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished">Вибачте, але PGE Editor зламався.
+        <translation>Вибачте, але Редагувач Moondust зламався.
 Причина: необроблене виключення
 
 Будь ласка, зв&apos;яжіться з розробниками через форум і ми зможемо виправити помилку. Дякуємо.
 
-Посилання форуму: wohlsoft.ru/forum</translation>
+Посилання до форуму: wohlsoft.ru/forum</translation>
     </message>
     <message>
         <source>Terminal was closed [SIGHUP]</source>
@@ -7290,7 +7290,7 @@ Forum link: wohlsoft.ru/forum</source>
 Reason: %1
 
 </source>
-        <translation type="unfinished">Вибачте, але Редагувач PGE аварійно завершився. 
+        <translation>Вибачте, але Редагувач Moondust аварійно завершився. 
 Причина: %1
 
 </translation>
