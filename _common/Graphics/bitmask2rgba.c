@@ -30,7 +30,7 @@
 
 void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask)
 {
-    unsigned int x, y, ym, img_w, img_h, mask_w, mask_h;
+    unsigned int x, y, ym, img_w, img_h, mask_w, mask_h, img_pitch, mask_pitch;
 
     BYTE *img_bits, *mask_bits, *FPixP, *SPixP;
     RGBQUAD Npix = {0x00, 0x00, 0x00, 0xFF};   /* Destination pixel color */
@@ -44,8 +44,10 @@ void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask)
 
     img_w  = FreeImage_GetWidth(front);
     img_h  = FreeImage_GetHeight(front);
+    img_pitch = FreeImage_GetPitch(front);
     mask_w = FreeImage_GetWidth(mask);
     mask_h = FreeImage_GetHeight(mask);
+    mask_pitch = FreeImage_GetPitch(mask);
 
     img_bits  = FreeImage_GetBits(front);
     mask_bits = FreeImage_GetBits(mask);
@@ -57,9 +59,9 @@ void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask)
 
     while(1)
     {
-        FPixP = img_bits + (img_w * y * 4);
+        FPixP = img_bits + (img_pitch * y);
         if(!endOfY)
-            SPixP = mask_bits + (mask_w * ym * 4);
+            SPixP = mask_bits + (mask_pitch * ym);
 
         for(x = 0; (x < img_w); x++)
         {
