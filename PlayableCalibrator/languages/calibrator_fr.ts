@@ -665,7 +665,7 @@ Pour sélectionner une image à modifier, appuyez sur le bouton sur l&apos;image
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
-        <translation>De gauche à droite</translation>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>

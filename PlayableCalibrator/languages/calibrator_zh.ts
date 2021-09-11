@@ -634,7 +634,7 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
-        <translation>从左到右</translation>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>
