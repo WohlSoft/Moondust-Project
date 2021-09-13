@@ -469,6 +469,7 @@ void MusPlayer_Qt::on_trackID_editingFinished()
         if((PGE_MusicPlayer::type == MUS_GME) && (m_prevTrackID != ui->trackID->value()))
         {
             PGE_MusicPlayer::stopMusic();
+            qApp->processEvents();
             on_play_clicked();
         }
     }
