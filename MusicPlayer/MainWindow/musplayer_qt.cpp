@@ -14,6 +14,9 @@
 
 #include "ui_mainwindow.h"
 #include "musplayer_qt.h"
+#include "multi_music_test.h"
+#include "musicfx.h"
+#include "track_muter.h"
 #include "../Player/mus_player.h"
 #include "../AssocFiles/assoc_files.h"
 #include "../Effects/reverb.h"
@@ -64,6 +67,15 @@ MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
 
     m_sfxTester = new SfxTester(this);
     m_sfxTester->setModal(false);
+
+    m_multiMusicTest = new MultiMusicTest(this);
+    m_multiMusicTest->setModal(false);
+
+    m_musicFx = new MusicFX(this);
+    m_musicFx->setModal(false);
+
+    m_trackMuter = new TrackMuter(this);
+    m_trackMuter->setModal(false);
 
     m_setupMidi = new SetupMidi(this);
     m_setupMidi->setModal(false);
@@ -119,6 +131,7 @@ MusPlayer_Qt::~MusPlayer_Qt()
     on_stop_clicked();
 
     m_sfxTester->close();
+    m_multiMusicTest->close();
 
     m_setupMidi->close();
     m_setupMidi->saveSetup();
@@ -150,6 +163,7 @@ void MusPlayer_Qt::dropEvent(QDropEvent *e)
 
     ui->recordWav->setEnabled(!m_currentMusic.endsWith(".wav", Qt::CaseInsensitive));//Avoid self-trunkling!
     PGE_MusicPlayer::stopMusic();
+    qApp->processEvents();
     on_play_clicked();
     this->raise();
     e->accept();
@@ -180,6 +194,18 @@ void MusPlayer_Qt::moveEvent(QMoveEvent *event)
         QRect g = m_echoTune->frameGeometry();
         m_echoTune->move(g.x() + deltaX, g.y() + deltaY);
     }
+    {
+        QRect g = m_multiMusicTest->frameGeometry();
+        m_multiMusicTest->move(g.x() + deltaX, g.y() + deltaY);
+    }
+    {
+        QRect g = m_musicFx->frameGeometry();
+        m_musicFx->move(g.x() + deltaX, g.y() + deltaY);
+    }
+    {
+        QRect g = m_trackMuter->frameGeometry();
+        m_trackMuter->move(g.x() + deltaX, g.y() + deltaY);
+    }
 
     m_oldWindowPos = event->pos();
 }
@@ -194,6 +220,7 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
     QAction *reverb       = x.addAction("Reverb");
     QAction *echo         = x.addAction("Echo");
     QAction *echoTuner    = x.addAction("Echo tuner...");
+    QAction *musicFX      = x.addAction("Music FX...");
     QAction *resetTempo   = x.addAction("Reset tempo");
     resetTempo->setEnabled(ui->tempoFrame->isEnabled());
     reverb->setCheckable(true);
@@ -237,6 +264,8 @@ void MusPlayer_Qt::contextMenu(const QPoint &pos)
     }
     else if(echoTuner == ret)
         on_actionTuneEcho_triggered();
+    else if(musicFX == ret)
+        on_actionMusicFX_triggered();
     else if(resetTempo == ret)
         ui->tempo->setValue(0);
     else if(assoc_files == ret)
@@ -260,6 +289,7 @@ void MusPlayer_Qt::openMusicByArg(QString musPath)
 
     m_currentMusic = musPath;
     PGE_MusicPlayer::stopMusic();
+    qApp->processEvents();
     on_play_clicked();
 }
 
@@ -268,6 +298,7 @@ void MusPlayer_Qt::restartMusic()
     if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
         PGE_MusicPlayer::stopMusic();
+        qApp->processEvents();
         on_play_clicked();
     }
 }
@@ -306,6 +337,7 @@ void MusPlayer_Qt::on_open_clicked()
 
     m_currentMusic = file;
     PGE_MusicPlayer::stopMusic();
+    qApp->processEvents();
     on_play_clicked();
 }
 
@@ -371,6 +403,8 @@ void MusPlayer_Qt::on_play_clicked()
         playSuccess = PGE_MusicPlayer::playMusic();
         ui->play->setToolTip(tr("Pause"));
         ui->play->setIcon(QIcon(":/buttons/pause.png"));
+        m_musicFx->resetAll();
+        m_trackMuter->buildTracksList();
     }
 
     m_positionWatcher.stop();
@@ -615,6 +649,35 @@ void MusPlayer_Qt::on_actionSfxTesting_triggered()
     m_sfxTester->repaint();
 }
 
+
+void MusPlayer_Qt::on_actionMultiMusicTesting_triggered()
+{
+    m_multiMusicTest->show();
+    QRect g = this->frameGeometry();
+    m_multiMusicTest->move(g.left(), g.bottom());
+    m_multiMusicTest->update();
+    m_multiMusicTest->repaint();
+}
+
+void MusPlayer_Qt::on_actionMusicFX_triggered()
+{
+    m_musicFx->show();
+    QRect g = this->frameGeometry();
+    m_musicFx->move(g.right(), g.top());
+    m_musicFx->update();
+    m_musicFx->repaint();
+}
+
+
+void MusPlayer_Qt::on_actionTracksMuter_triggered()
+{
+    m_trackMuter->show();
+    QRect g = this->frameGeometry();
+    m_trackMuter->move(g.right(), g.top());
+    m_trackMuter->update();
+    m_trackMuter->repaint();
+}
+
 void MusPlayer_Qt::on_actionEnableReverb_triggered(bool checked)
 {
     PGE_MusicPlayer::reverbEnabled = checked;
@@ -641,6 +704,11 @@ void MusPlayer_Qt::on_actionFileAssoc_triggered()
     AssocFiles af(this);
     af.setWindowModality(Qt::WindowModal);
     af.exec();
+}
+
+void MusPlayer_Qt::on_actionPause_the_audio_stream_triggered(bool checked)
+{
+    Mix_PauseAudio(checked);
 }
 
 void MusPlayer_Qt::cleanLoopChecks()

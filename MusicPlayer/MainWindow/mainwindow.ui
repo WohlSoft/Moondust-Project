@@ -542,7 +542,10 @@ border-bottom-color: rgb(0, 120, 0);
     </widget>
     <addaction name="actionAudioSetup"/>
     <addaction name="actionMidiSetup"/>
+    <addaction name="actionMultiMusicTesting"/>
     <addaction name="actionSfxTesting"/>
+    <addaction name="actionMusicFX"/>
+    <addaction name="actionTracksMuter"/>
     <addaction name="actionFileAssoc"/>
     <addaction name="separator"/>
     <addaction name="actionEnableReverb"/>
@@ -550,6 +553,7 @@ border-bottom-color: rgb(0, 120, 0);
     <addaction name="actionTuneEcho"/>
     <addaction name="separator"/>
     <addaction name="menuMusicLooping"/>
+    <addaction name="actionPause_the_audio_stream"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -665,6 +669,29 @@ border-bottom-color: rgb(0, 120, 0);
     <string>Tune echo...</string>
    </property>
   </action>
+  <action name="actionMultiMusicTesting">
+   <property name="text">
+    <string>Multi-Music Testing</string>
+   </property>
+  </action>
+  <action name="actionMusicFX">
+   <property name="text">
+    <string>Music FX</string>
+   </property>
+  </action>
+  <action name="actionTracksMuter">
+   <property name="text">
+    <string>Tracks enable/disable</string>
+   </property>
+  </action>
+  <action name="actionPause_the_audio_stream">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Pause the audio stream</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -675,6 +702,7 @@ border-bottom-color: rgb(0, 120, 0);
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../_resources/musicplayer.qrc"/>
   <include location="../_resources/musicplayer.qrc"/>
  </resources>
  <connections/>

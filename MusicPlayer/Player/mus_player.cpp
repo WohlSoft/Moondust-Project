@@ -182,7 +182,7 @@ namespace PGE_MusicPlayer
                    type == MUS_NONE ? "No Music" :
                    type == MUS_CMD ? "CMD" :
                    type == MUS_WAV ? "PCM Wave" :
-                   type == MUS_MOD ? "Tracker music" :
+                   type == MUS_MOD ? "Tracker" :
                    type == MUS_MID ? "MIDI" :
                    type == MUS_OGG ? "OGG" :
                    type == MUS_MP3 ? "MP3" :
@@ -193,7 +193,10 @@ namespace PGE_MusicPlayer
                    type == MUS_OPUS ? "OPUS" :
 #   endif
                    type == MUS_ADLMIDI ? "IMF/MUS/XMI" :
-                   type == MUS_GME ? "Game Music Emulator" :
+                   type == MUS_OPNMIDI ? "MUS/XMI(OPN)" :
+                   type == MUS_FLUIDLITE ? "MUS/XMI(Fluid)" :
+                   type == MUS_NATIVEMIDI ? "MUS/XMI(Native)" :
+                   type == MUS_GME ? "GME Chiptune" :
 #else
 #   if SDL_MIXER_MAJOR_VERSION > 2 || \
     (SDL_MIXER_MAJOR_VERSION == 2 && SDL_MIXER_MINOR_VERSION > 0) || \

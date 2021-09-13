@@ -14,6 +14,9 @@ class SeekBar;
 class SfxTester;
 class SetupMidi;
 class EchoTune;
+class MultiMusicTest;
+class MusicFX;
+class TrackMuter;
 
 namespace Ui {
 class MainWindow;
@@ -90,9 +93,13 @@ private slots:
     void on_actionHelpGitHub_triggered();
     void on_actionMidiSetup_triggered();
     void on_actionSfxTesting_triggered();
+    void on_actionMultiMusicTesting_triggered();
+    void on_actionMusicFX_triggered();
+    void on_actionTracksMuter_triggered();
     void on_actionEnableReverb_triggered(bool checked);
     void on_actionEnableEcho_triggered(bool checked);
     void on_actionFileAssoc_triggered();
+    void on_actionPause_the_audio_stream_triggered(bool checked);
 
     void cleanLoopChecks();
     void on_actionLoopForever_triggered();
@@ -116,6 +123,9 @@ private:
     SfxTester *m_sfxTester = nullptr;
     SetupMidi *m_setupMidi = nullptr;
     EchoTune  *m_echoTune = nullptr;
+    MultiMusicTest *m_multiMusicTest = nullptr;
+    MusicFX *m_musicFx = nullptr;
+    TrackMuter *m_trackMuter = nullptr;
 };
 
 #endif // MUSPLAYER_QT_H

@@ -1,9 +1,9 @@
 # Major
 set(MUSPLAY_VERSION_1 1)
 # Minor
-set(MUSPLAY_VERSION_2 4)
+set(MUSPLAY_VERSION_2 5)
 # Revision
-set(MUSPLAY_VERSION_3 4)
+set(MUSPLAY_VERSION_3 0)
 # Patch
 set(MUSPLAY_VERSION_4 0)
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
