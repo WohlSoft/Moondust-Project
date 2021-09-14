@@ -260,7 +260,7 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         modS_h *= 2;
     }
 
-    if(event->modifiers() & Qt::AltModifier)
+    if(event->modifiers() & Qt::ControlModifier)
     {
         // Scale the view / do the zoom
         if(event->delta() > 0)
@@ -285,7 +285,7 @@ void GraphicsWorkspace::wheelEvent(QWheelEvent *event)
         return;
     }
 
-    if(event->modifiers() & Qt::ControlModifier)
+    if(event->modifiers() & Qt::AltModifier)
     {
         if(event->delta() > 0)
             horizontalScrollBar()->setValue(horizontalScrollBar()->value() - modS_h);
