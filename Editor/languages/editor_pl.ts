@@ -857,7 +857,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished">Ups, PGE Editor zcrashował :(&lt;br&gt;Informacje o crashu:</translation>
+        <translation>Ups, PGE Editor uszkodził się:(&lt;br&gt;Informacje o uszkodzeniu:</translation>
     </message>
     <message>
         <source>Ouch, PGE Editor was crashed :(&lt;br&gt;Detail crash information data:</source>
@@ -907,11 +907,11 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished">Opublikuj raport na Forum PGE (wohlsoft.ru/forum/)</translation>
+        <translation>Opublikuj raport na Forum PGE (WohlSoft) (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished">Zgłoś problem w repozytorium GitHub&apos;a (WohlSoft/PGE-Project)</translation>
+        <translation>Zgłoś problem w repozytorium GitHub&apos;a (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -1126,7 +1126,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Usuń</translation>
+        <translation>Usuń</translation>
     </message>
     <message>
         <source>General</source>
@@ -1144,7 +1144,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Dodaj</translation>
+        <translation>Dodaj</translation>
     </message>
     <message>
         <source>Reverb</source>
@@ -1164,12 +1164,12 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Szerokość</translation>
+        <translation>Szerokość</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished">Poziom</translation>
+        <translation>Poziom</translation>
     </message>
     <message>
         <source>Chorus</source>
@@ -1179,7 +1179,7 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished">Poziom</translation>
+        <translation>Poziom</translation>
     </message>
     <message>
         <source>Speed</source>
@@ -1232,13 +1232,13 @@ Proszę zapisz je przed robieniem czegokolwiek innego.</translation>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished">Masz starą paczkę konfigruracyjną.
+        <translation>Masz starą paczkę konfigruracyjną.
 &lt;br&gt;Edytor uruchomi się, ale możesz mieć problemy z obiektami lub ustawieniami..
 &lt;br&gt;
-&lt;br&gt;Proszę pobierz najnowszą wersję paczki:
+&lt;br&gt;Proszę, pobierz najnowszą wersję paczki:
 &lt;br&gt;
 &lt;br&gt;Pobierz: %1
-&lt;br&gt;Notatka: większość paczek jest aktualizowana razem z PGE,&lt;br&gt;
+&lt;br&gt;Uwaga: większość paczek konfiguracyjnych jest aktualizowana razem z PGE,&lt;br&gt;
 dlatego możesz użyć tego samego linku, aby pobrać najnowszą wersję.</translation>
     </message>
 </context>
@@ -1361,7 +1361,7 @@ dlatego możesz użyć tego samego linku, aby pobrać najnowszą wersję.</trans
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation type="unfinished">Args: {engine commands} Wyślij komendę lub wiadomość do uruchomionego silnika</translation>
+        <translation>Args: {engine commands} Wyślij komendę lub wiadomość do Silnika Moondust, jeżeli jest uruchomiony</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
@@ -1502,7 +1502,7 @@ dlatego możesz użyć tego samego linku, aby pobrać najnowszą wersję.</trans
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished">Witaj w PGE Editor!</translation>
+        <translation>Witaj w Edytorze Moondust!</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1662,12 +1662,12 @@ a także z pasków narzędzi (panele z ikonami na górze okna) i z menu. W tym e
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Plik Poziomu PGE</translation>
+        <translation>Plik poziomu Moondust</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Plik Mapy PGE</translation>
+        <translation>Plik Mapy Moondust</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -5129,11 +5129,12 @@ Fizyczne strefy środowiska: %6
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation type="unfinished">Definije typ przejścia:
-0 - Automatyczne, gracz zostanie teleportowany
-1 - Rura
-2 - Drzwi, gracz może wejść trzymając klawisz w górę
-3 - Gracz zostanie teleportowany, ale zachowa swoją prędkość.</translation>
+        <translation>Rodzaje przejść:
+0 - Automatyczne, gracz zostanie teleportowany a jego prędkość ruchu zostanie zresetowana do 0.
+1 - Rura, kierunkowe wejście i wyjście.
+2 - Drzwi, gracz może wejść trzymając klawisz w górę.
+3 - Portal, gracz zostanie teleportowany, ale zachowa swoją prędkość.
+(Tylko Silnik Moondust)</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -6904,7 +6905,7 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation type="unfinished">Test w PGE Engine</translation>
+        <translation>Test w Silniku Moondust</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -6913,8 +6914,8 @@ Jeżeli dalej chcesz mieć pełną możliwość testowania pobierz LunaLUA:&lt;b
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation type="unfinished">Witaj! To jest PGE Engine!
-PGE Engine jest w fazie deweloperskiej. Narazie, jest eksperymentem i nie ma wielu funkcji. Część z nich może nie być wprowadzona lub działać nieporawnie. Jeśli tworzysz poziomy do SMBX i chcesz uruchomić test ze wszystkimi funkcjami, przetestuj poziom w SMBX. Używaj testowania w PGE, kiedy tworzysz poziomy albo epizody dla PGE.</translation>
+        <translation>Witaj! To jest Moondust!
+Moondust jest w fazie deweloperskiej. Na razie, jest eksperymentem i nie ma wielu funkcji. Część z nich może nie być wprowadzona lub działać nieporawnie. Jeśli tworzysz poziomy do SMBX i chcesz uruchomić test ze wszystkimi funkcjami, przetestuj poziom w SMBX. Używaj testowania w Moondust, kiedy tworzysz poziomy albo epizody dla Moondust.</translation>
     </message>
     <message>
         <source>patching has failed.</source>
@@ -8132,10 +8133,10 @@ Opis błędu:
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished">PGE Editor zcrashował. 
+        <translation>Przepraszamy, Edytor Moondust się uszkodził.
 Powód: Brak pamięci!
 
-Zamknij inne programy, aby uniknąć tego błędu.</translation>
+Zamknij inne programy, aby uniknąć tego błędu i zwolnić trochę pamięci.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
@@ -8144,12 +8145,12 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished">PGE Editor zcrashował. 
-Powód: nieobsługiwany wyjątek
+        <translation>Przepraszamy, Edytor Moondust się uszkodził. 
+Powód: Nieobsługiwany Wyjątek
 
-Poinformuj nas na froum, aby naprawić, Thank you
+Prosimy o kontakt z nami, aby naprawić ten problem, Dziękujemy. 
 
-Forum: wohlsoft.ru/forum</translation>
+Link do forum: wohlsoft.ru/forum</translation>
     </message>
     <message>
         <source>Terminal was closed [SIGHUP]</source>
@@ -8200,7 +8201,7 @@ Forum: wohlsoft.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation type="unfinished">PGE Editor zcrashował. 
+        <translation>Przepraszamy, Edytor Moondust się uszkodził.
 Powód: %1
 
 </translation>
@@ -8931,7 +8932,7 @@ Ustawienia nie będą miały efektu na testowaniu, dopóki nie zostanie skończo
     </message>
     <message>
         <source>Debug</source>
-        <translation type="unfinished">Debug</translation>
+        <translation>Debugowanie</translation>
     </message>
     <message>
         <source>Player settings</source>
