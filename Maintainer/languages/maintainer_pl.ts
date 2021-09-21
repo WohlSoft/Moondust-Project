@@ -679,22 +679,22 @@ Wspierane formaty:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="17"/>
         <source>Fix bad-designed masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Napraw źle zaprojektowane zamaskowane GIFy</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="31"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Przetwarzanie plików</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
         <source>Drop your masked GIFs files into this window for a quick porcessing</source>
-        <translation type="unfinished"></translation>
+        <translation>Wrzuć swoje maskowane GIFy do tego okienka dla szybkiego przetwarzania</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="58"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Przetwarzanie wsadowe dla poziomu/epizodu</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
