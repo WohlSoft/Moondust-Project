@@ -558,7 +558,7 @@ void MusPlayer_Qt::musicPosition_seeked(double value)
     qDebug() << "Seek to: " << value;
     if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
-        Mix_SetMusicStreamPosition(PGE_MusicPlayer::s_playMus, value);
+        Mix_SetMusicPositionStream(PGE_MusicPlayer::s_playMus, value);
         ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)value).toUTC().toString("hh:mm:ss"));
     }
 }

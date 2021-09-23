@@ -302,7 +302,7 @@ void MultiMusicItem::musicPosition_seeked(double value)
     qDebug() << "Seek to: " << value;
     if(Mix_PlayingMusicStream(m_curMus))
     {
-        Mix_SetMusicStreamPosition(m_curMus, value);
+        Mix_SetMusicPositionStream(m_curMus, value);
         ui->playingTimeLabel->setText(QDateTime::fromTime_t((uint)value).toUTC().toString("hh:mm:ss"));
     }
 }
@@ -336,8 +336,12 @@ void MultiMusicItem::on_playFadeIn_clicked()
         double curPos = Mix_GetMusicPosition(m_curMus);
         if(total > 0.0 && curPos >= 0.0)
             m_positionWatcher.start(128);
+    }
 
-        Mix_FadeInMusicStream(m_curMus, -1, 4000);
+    if(!Mix_PlayingMusicStream(m_curMus) || Mix_FadingMusicStream(m_curMus))
+    {
+        if(Mix_FadeInMusicStream(m_curMus, -1, 4000) < 0)
+            qWarning() << "Mix_FadeInMusicStream" << Mix_GetError();
     }
 }
 
@@ -348,7 +352,10 @@ void MultiMusicItem::on_stopFadeOut_clicked()
         return;
 
     if(Mix_PlayingMusicStream(m_curMus))
-        Mix_FadeOutMusicStream(m_curMus, 4000);
+    {
+        if(Mix_FadeOutMusicStream(m_curMus, 4000) < 0)
+            qWarning() << "Mix_FadeOutMusicStream" << Mix_GetError();
+    }
 }
 
 void MultiMusicItem::on_showMusicFX_clicked()
