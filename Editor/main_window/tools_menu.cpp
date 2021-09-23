@@ -17,6 +17,9 @@
  */
 
 #include <QProcess>
+#ifdef Q_OS_MAC
+#include <QStandardPaths>
+#endif
 #include <common_features/util.h>
 #include <common_features/app_path.h>
 #include <tools/tilesets/tileset_editor.h>
