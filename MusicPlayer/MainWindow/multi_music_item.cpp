@@ -3,6 +3,7 @@
 #include <QtDebug>
 #include <QDateTime>
 #include <QFileInfo>
+#include <cmath>
 
 #include "multi_music_item.h"
 #include "ui_multi_music_item.h"
