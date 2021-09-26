@@ -699,53 +699,53 @@ Wspierane formaty:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished"></translation>
+        <translation>Katalog wejściowy (dla przykładu, początek epizodu lub własny folder):</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie twórz kopii zapasowej dla starych obrazków</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished">Przeglądaj...</translation>
+        <translation>Przeglądaj...</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished">Ścieżka do katalogu wejściowego z danymi źródłowymi</translation>
+        <translation>Ścieżka do katalogu wejściowego z danymi źródłowymi</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="98"/>
         <source>Flags</source>
-        <translation type="unfinished">Flagi</translation>
+        <translation>Flagi</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished">Przetwarzaj całą zawartość podkatalogów</translation>
+        <translation>Przetwarzaj całą zawartość podkatalogów</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Co chcesz?</translation>
+        <translation>Co chcesz?</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished">Uruchom</translation>
+        <translation>Uruchom</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
         <source>Output log</source>
-        <translation type="unfinished">Dziennik wyników</translation>
+        <translation>Dziennik wyników</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
         <source>Close</source>
-        <translation type="unfinished">Zamknij</translation>
+        <translation>Zamknij</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
