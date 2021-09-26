@@ -750,23 +750,23 @@ Wspierane formaty:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
         <source>This wizard will help you to automatically fix any SMBX 1.3 graphics (in a GIF format with the use of bitmask) that have a bad-designed invalid mask (e.g. made with a lazy effort). Masks made with a lazy effort are masks made by the copying of a front image and filling the background with white. This making method for masks gives an illusion of quick work, however, these masks are invalid and may cause strange glitches on some graphical engines and converters. After processing these sprites, all invalid masks will be turned into the valid form of the black shape as they must be, and therefore, they can be freely used everywhere without glitches.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ten kreator pomoże Ci automatycznie naprawić dowolne grafiki SMBX 1.3 (w formacie GIF z maską) które mają źle zaprojektowane, nieprawidłowe maski (np. zrobione z leniwym wysiłkiem). Maski zrobione z leniwym wysiłkiem, są to maski, które są przekolorowanym obrazkiem na biało. Ten sposób może się wydawać wrażenie szybkiej pracy, jednakże, maski te mogą powodować błędy silników graficznych i konwerterów. Po przetworzeniu tych grafik, wszystkie nieprawidłowe maski zostaną zmienione w prawidłowe formy z czarnym kształtem, który musi być, dlatego, żeby mogły zostać swobodnie używane bez błędów.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished">Proces jest zajęty</translation>
+        <translation>Proces jest zajęty</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="66"/>
         <source>Can&apos;t convert these files while already running conversion!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można konwertować plików podczas już działającej konwersji!</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="102"/>
         <location filename="../Graphics/lazyfix.cpp" line="111"/>
         <source>Incorrect input</source>
-        <translation type="unfinished">Niepoprawne dane wejściowe</translation>
+        <translation>Niepoprawne dane wejściowe</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
