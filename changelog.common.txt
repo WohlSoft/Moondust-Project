@@ -4,6 +4,7 @@
 - Added the support for custom WOPN bank files at libOPNMIDI synthesizer
 - Added the support for the FluidSynth at MixerX library
 - Added the support for macros at the music path arguments
+- Fixed the legacy autoscroll conversion from the SMBX64-LVL files into SMBX-38A-LVL files
 
 0.4.3
 - Native support for MSYS2 build environment via build.sh script
