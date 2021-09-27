@@ -43,15 +43,15 @@
     </message>
     <message>
         <source>Window layout</source>
-        <translation>窗口风格</translation>
+        <translation>窗口布局</translation>
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation>经典风格</translation>
+        <translation>分离模式（经典）</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation>现代风格</translation>
+        <translation>标签模式（现代）</translation>
     </message>
     <message>
         <source>Music player</source>
