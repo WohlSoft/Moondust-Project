@@ -90,6 +90,7 @@ list(APPEND PGE_CALIBRATOR_SRCS
     main.cpp
     calibration_main.cpp
     frame_matrix/matrix.cpp
+    frame_matrix/matrix_widget.cpp
     about/about.cpp
     animator/animator.cpp
     animator/animation_edit.cpp

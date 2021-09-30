@@ -24,6 +24,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 #include <QDialog>
+#include <QMap>
 #include <QSharedPointer>
 #include "../calibration_main.h"
 #include "main/calibration.h"
@@ -40,13 +41,14 @@ class Matrix : public QDialog
 {
     Q_OBJECT
 
-    QCheckBox *m_enFrame[10][10];
     Calibration *m_conf = nullptr;
-    QGraphicsScene *m_matrixScene = nullptr;
     QGridLayout *m_matrixGrid = nullptr;
-    QVector<QSharedPointer<QCheckBox>> m_matrixCheckBoxes;
+    QMap<Calibration::FramePos, QSharedPointer<QCheckBox>> m_matrixCheckBoxes;
     QVector<QSharedPointer<QPushButton>> m_matrixSelectors;
     QVector<QSharedPointer<QGridLayout>> m_matrixCells;
+
+    int m_gridW = 10;
+    int m_gridH = 10;
 
     void clearGrid();
     void rebuildGrid();
@@ -54,22 +56,22 @@ class Matrix : public QDialog
 public:
     explicit Matrix(Calibration *conf, QWidget *mw, QWidget *parent = nullptr);
     ~Matrix();
-    Calibration::FramesSet m_frameConfig;
 
+    void changeGridSize(int w, int h);
     void updateScene(const QPixmap &sprite);
+    void setFrameEnabled(int x, int y, bool enabled);
 
     int m_frameX = 0;
     int m_frameY = 0;
 
     void setFrame(int x, int y);
-    void drawGrid();
+//    void drawGrid();
 
 signals:
     void frameSelected(int x, int y);
+    void currentFrameSwitched(bool enabled);
 
 private:
-    QGraphicsPixmapItem m_image;
-    QPixmap m_scaledImage;
     Ui::Matrix *ui;
 };
 

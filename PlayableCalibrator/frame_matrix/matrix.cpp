@@ -39,9 +39,9 @@ void Matrix::rebuildGrid()
     clearGrid();
 
     //Set data to matrix:
-    for(int y = 0; y < 10; ++y)
+    for(int y = 0; y < m_gridH; ++y)
     {
-        for(int x = 0; x < 10; ++x)
+        for(int x = 0; x < m_gridW; ++x)
         {
             QSharedPointer<QGridLayout> cell(new QGridLayout());
             cell->setMargin(0);
@@ -50,17 +50,21 @@ void Matrix::rebuildGrid()
             cell->addItem(new QSpacerItem(10, 10, QSizePolicy::Minimum, QSizePolicy::Expanding), 2, 0, 1, 1);
 
             QSharedPointer<QCheckBox> cb(new QCheckBox);
-            cb->setChecked(m_frameConfig[{x, y}].used);
+            cb->setChecked(m_conf->frames[{x, y}].used);
             cb->setToolTip(tr("Include or exclude the %1 x %1 frame from the final calibration file").arg(x).arg(y));
             QCheckBox *s = cb.get();
             QObject::connect(s, static_cast<void (QCheckBox::*)(bool)>(&QCheckBox::clicked),
                              [this, s, x, y](bool en)->void
             {
                 if(s->hasFocus())
-                    m_frameConfig[{x, y}].used = en;
+                {
+                    m_conf->frames[{x, y}].used = en;
+                    if(m_frameX == x && m_frameY == y)
+                        currentFrameSwitched(en);
+                }
             });
             cell->addWidget(cb.get(), 2, 2);
-            m_matrixCheckBoxes.push_back(cb);
+            m_matrixCheckBoxes.insert({x, y}, cb);
 
             QSharedPointer<QPushButton> sb(new QPushButton);
             sb->setFixedSize(20, 20);
@@ -90,17 +94,11 @@ Matrix::Matrix(Calibration *conf, QWidget *mw, QWidget *parent) :
     m_conf = conf;
     m_frameX = 0;
     m_frameY = 0;
-    m_matrixScene = new QGraphicsScene;
-    ui->SpriteMatrix->setScene(m_matrixScene);
 
     m_matrixGrid = new QGridLayout(ui->SpriteMatrix);
     m_matrixGrid->setSpacing(0);
     m_matrixGrid->setMargin(0);
     ui->SpriteMatrix->setLayout(m_matrixGrid);
-
-    this->updateGeometry();
-    //qApp->processEvents();
-//    this->show();
 
     auto *mmw = qobject_cast<CalibrationMain*>(mw);
     Q_ASSERT(mmw);
@@ -112,59 +110,35 @@ Matrix::~Matrix()
     delete ui;
 }
 
+void Matrix::changeGridSize(int w, int h)
+{
+    m_gridW = w;
+    m_gridH = h;
+    ui->SpriteMatrix->setGridSize(w, h);
+    rebuildGrid();
+}
+
 void Matrix::updateScene(const QPixmap &sprite)
 {
     updateGeometry();
-    m_scaledImage = sprite.scaled(ui->SpriteMatrix->viewport()->width(),
-                                  ui->SpriteMatrix->viewport()->height(),
-                                  Qt::KeepAspectRatio);
-    drawGrid();
-    m_image.setPixmap(m_scaledImage);
-    m_image.setPos(0.0, 0.0);
-    m_matrixScene->addItem(&m_image);
-    m_frameConfig = m_conf->frames;
+    ui->SpriteMatrix->setTexture(sprite, m_gridW, m_gridH);
     qDebug() << "Building a scene: " << ui->SpriteMatrix->width() << ui->SpriteMatrix->height();
     rebuildGrid();
+}
+
+void Matrix::setFrameEnabled(int x, int y, bool enabled)
+{
+    if(m_matrixCheckBoxes.contains({x, y}))
+        m_matrixCheckBoxes[{x, y}]->setChecked(enabled);
 }
 
 void Matrix::setFrame(int x, int y)
 {
     m_frameX = x;
     m_frameY = y;
-    auto si = m_scaledImage;
-    QPainter painter(&si);
-    QColor color;
-    color.setRed(255);
-    color.setBlue(0);
-    color.setGreen(0);
-    color.setAlpha(128);
-    painter.setBrush(QBrush(color));
-    painter.drawEllipse(QPoint(
-                            (m_scaledImage.width() / 10)*x + (m_scaledImage.width() / 10) / 2,
-                            (m_scaledImage.height() / 10)*y + (m_scaledImage.height() / 10) / 2
-                        ), 30, 30);
-    painter.end();
-    m_image.setPixmap(si);
+
+    ui->SpriteMatrix->setFrame(x, y);
+
     if(isModal())
         accept();
 }
-
-void Matrix::drawGrid()
-{
-    int ws = m_scaledImage.width() / 10;
-    int hs = m_scaledImage.height() / 10;
-    int w = m_scaledImage.width();
-    int h = m_scaledImage.height();
-    QPainter painter(&m_scaledImage);
-    painter.setPen(QPen(Qt::black, 1));
-
-    for(int i = 1; i <= 9; i++)
-        painter.drawLine(ws * i, 0, ws * i, w);
-
-    for(int i = 1; i <= 9; i++)
-        painter.drawLine(0, hs * i, h, hs * i);
-
-    painter.end();
-    m_image.setPixmap(m_scaledImage);
-}
-

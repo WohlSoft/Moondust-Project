@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>623</width>
+    <width>619</width>
     <height>654</height>
    </rect>
   </property>
@@ -29,7 +29,7 @@
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,1000">
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
@@ -45,44 +45,25 @@ To choose a frame for edit, push to the button over a necessary frame.</string>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QGraphicsView" name="SpriteMatrix">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>601</width>
-       <height>601</height>
-      </size>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::NoFrame</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="lineWidth">
+    <widget class="MatrixWidget" name="SpriteMatrix" native="true">
+     <property name="lineWidth" stdset="0">
       <number>0</number>
      </property>
-     <property name="midLineWidth">
+     <property name="midLineWidth" stdset="0">
       <number>0</number>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="sizeAdjustPolicy">
-      <enum>QAbstractScrollArea::AdjustToContents</enum>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MatrixWidget</class>
+   <extends>QWidget</extends>
+   <header>frame_matrix/matrix_widget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>SpriteMatrix</tabstop>
  </tabstops>
