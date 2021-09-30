@@ -23,6 +23,7 @@
 #include "ui_calibration_main.h"
 #include "graphics.h"
 #include "app_path.h"
+#include "../frame_matrix/matrix.h"
 
 #include "qfile_dialogs_default_options.hpp"
 
@@ -60,6 +61,8 @@ void CalibrationMain::openFile(QString fileName)
     initScene();
     updateControls();
     updateScene();
+    m_matrix->updateScene(m_xImageSprite);
+    m_matrix->setFrame(m_frmX, m_frmY);
 }
 
 //Made templates for test calibration

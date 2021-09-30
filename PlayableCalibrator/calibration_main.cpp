@@ -226,6 +226,11 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     sc->addItem(&m_grabLineY);
     sc->addItem(&m_mountItem);
 
+    m_matrix = new Matrix(&m_calibration, this, this);
+    m_matrix->setModal(false);
+    QObject::connect(m_matrix, &Matrix::frameSelected,
+                     this, &CalibrationMain::frameSelected);
+
     if(m_currentFile.isEmpty())
     {
         if(!on_OpenSprite_clicked())
@@ -272,6 +277,18 @@ void CalibrationMain::languageSwitched()
     translateMenus();
 }
 
+void CalibrationMain::frameSelected(int x, int y)
+{
+    m_lockControls = true;
+    ui->FrameX->setValue(x);
+    ui->FrameY->setValue(y);
+    m_lockControls = false;
+    m_calibration.frames = m_matrix->m_frameConfig;
+    initScene();
+    updateControls();
+    updateScene();
+}
+
 void CalibrationMain::translateMenus()
 {
     if(m_saveMenuQuickSave)
@@ -299,6 +316,7 @@ void CalibrationMain::on_FrameX_valueChanged(int)
     initScene();
     updateControls();
     updateScene();
+    m_matrix->setFrame(m_frmX, m_frmY);
 }
 
 void CalibrationMain::on_FrameY_valueChanged(int)
@@ -307,6 +325,7 @@ void CalibrationMain::on_FrameY_valueChanged(int)
     initScene();
     updateControls();
     updateScene();
+    m_matrix->setFrame(m_frmX, m_frmY);
 }
 
 
@@ -489,24 +508,25 @@ void CalibrationMain::on_mountRiding_clicked(bool checked)
 
 void CalibrationMain::on_Matrix_clicked()
 {
-    Matrix dialog(&m_calibration, this, this);
-    this->hide();
-    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    dialog.setFrame(m_frmX, m_frmY);
-    dialog.show();
-    dialog.raise();
-    if(dialog.exec() == QDialog::Accepted)
-    {
-        ui->FrameX->setValue(dialog.m_frameX);
-        ui->FrameY->setValue(dialog.m_frameY);
-    }
-    this->show();
-    this->raise();
+    m_matrix->show();
+//    Matrix dialog(&m_calibration, this, this);
+//    this->hide();
+//    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+//    dialog.setFrame(m_frmX, m_frmY);
+//    dialog.show();
+//    dialog.raise();
+//    if(dialog.exec() == QDialog::Accepted)
+//    {
+//        ui->FrameX->setValue(dialog.m_frameX);
+//        ui->FrameY->setValue(dialog.m_frameY);
+//    }
+//    this->show();
+//    this->raise();
 
-    m_calibration.frames = dialog.m_frameConfig;
-    initScene();
-    updateControls();
-    updateScene();
+//    m_calibration.frames = dialog.m_frameConfig;
+//    initScene();
+//    updateControls();
+//    updateScene();
 }
 
 
@@ -597,6 +617,8 @@ void CalibrationMain::updateControls()
     ui->showGrabItem->setChecked(frame.showGrabItem);
     ui->mountRiding->setChecked(frame.isMountRiding);
     m_lockControls = false;
+
+    m_matrix->m_frameConfig = m_calibration.frames;
 }
 
 

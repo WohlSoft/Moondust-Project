@@ -35,6 +35,8 @@ namespace Ui {
 class CalibrationMain;
 }
 
+class Matrix;
+
 class CalibrationMain : public QWidget
 {
     Q_OBJECT
@@ -46,6 +48,8 @@ class CalibrationMain : public QWidget
     Calibration m_calibration;
     Calibration m_calibrationDefault;
     CalibrationFrame m_clipboard;
+
+    Matrix *m_matrix = nullptr;
 public:
     explicit CalibrationMain(QWidget *parent = nullptr);
     ~CalibrationMain();
@@ -77,6 +81,8 @@ protected:
 
 private slots:
     void languageSwitched();
+
+    void frameSelected(int x, int y);
 
     void on_AboutButton_clicked();
     void on_Matrix_clicked();
