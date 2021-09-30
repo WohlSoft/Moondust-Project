@@ -213,11 +213,18 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     m_grabLineX.setZValue(10);
     m_grabLineY.setZValue(10);
 
+    m_mountPixmap = QPixmap(":/images/mount.png");
+    m_mountDuckPixmap = QPixmap(":/images/mount_duck.png");
+    m_mountItem.setPixmap(m_mountPixmap);
+    m_mountItem.setZValue(-9);
+    m_mountItem.setVisible(false);
+
     sc->addItem(&m_frameBox_gray);
     sc->addItem(&m_currentImageItem);
     sc->addItem(&m_hitBox_green);
     sc->addItem(&m_grabLineX);
     sc->addItem(&m_grabLineY);
+    sc->addItem(&m_mountItem);
 
     if(m_currentFile.isEmpty())
     {
@@ -470,6 +477,14 @@ void CalibrationMain::on_showGrabItem_clicked(bool checked)
     updateScene();
 }
 
+void CalibrationMain::on_mountRiding_clicked(bool checked)
+{
+    if(m_lockControls) return;
+    m_calibration.frames[{m_frmX, m_frmY}].isMountRiding = checked;
+    enableFrame();
+    updateScene();
+}
+
 
 
 void CalibrationMain::on_Matrix_clicked()
@@ -580,6 +595,7 @@ void CalibrationMain::updateControls()
     ui->isDuckFrame->setChecked(frame.isDuck);
     ui->isRightDirect->setChecked(frame.isRightDir);
     ui->showGrabItem->setChecked(frame.showGrabItem);
+    ui->mountRiding->setChecked(frame.isMountRiding);
     m_lockControls = false;
 }
 
@@ -638,6 +654,20 @@ void CalibrationMain::updateScene()
         m_grabLineY.setVisible(frame.showGrabItem);
     }
 
+    m_mountItem.setVisible(frame.isMountRiding);
+
+    if(frame.isMountRiding)
+    {
+        auto &pm = frame.isDuck ? m_mountDuckPixmap : m_mountPixmap;
+        int mw = pm.width();
+        int mh = pm.height() / 2;
+
+        m_mountItem.setPixmap(pm.copy(0, isRight ? mh : 0, mw, mh));
+
+        x = m_hitBox_green.scenePos().x() + (w / 2) - (mw / 2);
+        y = m_hitBox_green.scenePos().y() + h - mh + 2;
+        m_mountItem.setPos(x, y);
+    }
 }
 
 void CalibrationMain::initScene()

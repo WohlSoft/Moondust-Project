@@ -92,16 +92,26 @@ bool ImageCalibrator::init(QString imgPath)
     }
 
     loadCalibrates();
+
     m_imgFrame = sc->addPixmap(m_sprite.copy(m_frmX * 100, m_frmY * 100, 100, 100));
     m_imgFrame->setZValue(0);
     m_imgFrame->setPos(0, 0);
+
     m_phsFrame = sc->addRect(0, 0, 99, 99, QPen(QBrush(Qt::gray), 1));
     m_phsFrame->setZValue(-2);
     m_phsFrame->setOpacity(0.5);
     m_phsFrame->setPos(0, 0);
+
     m_physics = sc->addRect(0, 0, 99, 99, QPen(QBrush(Qt::green), 1));
     m_physics->setZValue(4);
     m_physics->setPos(0, 0);
+
+    m_mountPixmap = QPixmap(":/images/mount.png");
+    m_mountDuckPixmap = QPixmap(":/images/mount_duck.png");
+    m_mountItem = sc->addPixmap(m_mountPixmap);
+    m_mountItem->setZValue(-9);
+    m_mountItem->setVisible(false);
+
     updateScene();
     return true;
 }
@@ -251,10 +261,29 @@ void ImageCalibrator::updateScene()
                  static_cast<int>(m_imgOffsets[m_frmX][m_frmY].w),
                  static_cast<int>(m_imgOffsets[m_frmX][m_frmY].h))
     );
+
+    int fw = m_conf->frameWidth;
+    int fh = (f.isDuck ? m_conf->frameHeightDuck : m_conf->frameHeight);
+
     m_physics->setRect(f.offsetX,
                        f.offsetY,
-                       m_conf->frameWidth - 1,
-                       (f.isDuck ? m_conf->frameHeightDuck : m_conf->frameHeight) - 1);
+                       fw - 1,
+                       fh - 1);
+
+    m_mountItem->setVisible(f.isMountRiding);
+
+    if(f.isMountRiding)
+    {
+        auto &pm = f.isDuck ? m_mountDuckPixmap : m_mountPixmap;
+        int mw = pm.width();
+        int mh = pm.height() / 2;
+
+        m_mountItem->setPixmap(pm.copy(0, f.isRightDir ? mh : 0, mw, mh));
+
+        int x = f.offsetX + (fw / 2) - (mw / 2);
+        int y = f.offsetY + fh - mh + 2;
+        m_mountItem->setPos(x, y);
+    }
 }
 
 void ImageCalibrator::saveCalibrates()

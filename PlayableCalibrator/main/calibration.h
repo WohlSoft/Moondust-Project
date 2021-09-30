@@ -17,6 +17,7 @@ struct CalibrationFrame
     bool isDuck = false;
     bool isRightDir = false;
     bool showGrabItem = false;
+    bool isMountRiding = false;
 
     bool operator==(const CalibrationFrame &o)
     {

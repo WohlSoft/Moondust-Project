@@ -7,5 +7,7 @@
         <file>images/open.png</file>
         <file>images/save.png</file>
         <file>calibrator.icns</file>
+        <file>images/mount.png</file>
+        <file>images/mount_duck.png</file>
     </qresource>
 </RCC>

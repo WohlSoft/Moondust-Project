@@ -65,6 +65,10 @@ private:
     QGraphicsRectItem *m_phsFrame;
     QGraphicsRectItem *m_physics;
 
+    QGraphicsPixmapItem *m_mountItem;
+    QPixmap             m_mountPixmap;
+    QPixmap             m_mountDuckPixmap;
+
     QString m_pngPath;
     QString m_gifPath;
     QString m_gifPathM;

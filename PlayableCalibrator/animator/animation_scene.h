@@ -65,6 +65,12 @@ private:
     QGraphicsRectItem m_ground;
     //! Image that contains a current frame
     QPixmap m_currentImage;
+    //! Mount example item
+    QGraphicsPixmapItem m_mountItem;
+    //! standing mount
+    QPixmap m_mountPixmap;
+    //! ducking mount
+    QPixmap m_mountDuckPixmap;
     //! Current frame's X cell on a sprite
     int m_currentFrameX = 0;
     //! Current frame's Y cell on a sprite

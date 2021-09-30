@@ -102,6 +102,7 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
             frame.isDuck = conf.value("duck", false).toBool();
             frame.isRightDir = conf.value("isRightDir", false).toBool();
             frame.showGrabItem = conf.value("showGrabItem", false).toBool();
+            frame.isMountRiding = conf.value("isMountRiding", false).toBool();
         }
         conf.endGroup();
 
@@ -279,7 +280,10 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
             return false;
     }
 
-    //ini_sprite = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
+    // Because of QSettings, it don't remove parameters from existing file, that makes a pain
+    if(QFile::exists(ini_sprite))
+        QFile::remove(ini_sprite); // So, remove it before saving a new one
+
     QSettings conf(ini_sprite, QSettings::IniFormat);
 
     conf.clear();
@@ -328,6 +332,8 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
             conf.setValue("isRightDir", frame.isRightDir);
         if(frame.showGrabItem)
             conf.setValue("showGrabItem", frame.showGrabItem);
+        if(frame.isMountRiding)
+            conf.setValue("isMountRiding", frame.isMountRiding);
         conf.endGroup();
     }
 

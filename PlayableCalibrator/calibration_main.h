@@ -104,7 +104,7 @@ private slots:
     void on_isDuckFrame_clicked(bool checked);
     void on_isRightDirect_clicked(bool checked);
     void on_showGrabItem_clicked(bool checked);
-
+    void on_mountRiding_clicked(bool checked);
 
     void on_CopyButton_clicked();
     void on_PasteButton_clicked();
@@ -131,6 +131,10 @@ private:
     QPixmap             m_currentPixmap;
     QGraphicsRectItem m_frameBox_gray;
     QGraphicsRectItem m_hitBox_green;
+
+    QGraphicsPixmapItem m_mountItem;
+    QPixmap             m_mountPixmap;
+    QPixmap             m_mountDuckPixmap;
 
     QGraphicsLineItem m_grabLineX;
     QGraphicsLineItem m_grabLineY;
