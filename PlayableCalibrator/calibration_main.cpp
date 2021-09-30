@@ -35,6 +35,7 @@
 #include "main/graphics.h"
 #include "main/app_path.h"
 #include "main/calibration.h"
+#include "main/mouse_scene.h"
 
 #include "qfile_dialogs_default_options.hpp"
 
@@ -188,7 +189,50 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     //    }
 
 
-    m_scene = new QGraphicsScene(ui->PreviewGraph);
+    m_scene = new MouseScene(ui->PreviewGraph);
+    QObject::connect(m_scene, &MouseScene::deltaX,
+                     this, [this](Qt::MouseButton button, int delta)->void
+    {
+        switch(button)
+        {
+        case Qt::LeftButton:
+            ui->OffsetX->setValue(ui->OffsetX->value() + delta);
+            break;
+        case Qt::RightButton:
+            if(!ui->showGrabItem->isChecked())
+                break;
+            if(!ui->isRightDirect->isChecked())
+                delta *= -1;
+            ui->grabOffsetX->setValue(ui->grabOffsetX->value() + delta);
+            m_calibration.grabOffsetX = ui->grabOffsetX->value();
+            enableFrame();
+            updateScene();
+            break;
+        default:
+            break;
+        }
+    });
+
+    QObject::connect(m_scene, &MouseScene::deltaY,
+                     this, [this](Qt::MouseButton button, int delta)->void
+    {
+        switch(button)
+        {
+        case Qt::LeftButton:
+            ui->OffsetY->setValue(ui->OffsetY->value() + delta);
+            break;
+        case Qt::RightButton:
+            if(!ui->showGrabItem->isChecked())
+                break;
+            ui->grabOffsetY->setValue(ui->grabOffsetY->value() + delta);
+            m_calibration.grabOffsetY = ui->grabOffsetY->value();
+            enableFrame();
+            updateScene();
+            break;
+        default:
+            break;
+        }
+    });
 
     ui->PreviewGraph->setScene(m_scene);
     QGraphicsScene *sc = ui->PreviewGraph->scene();

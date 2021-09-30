@@ -6,6 +6,7 @@
 #include <ui_image_calibrator.h>
 #include "calibration_main.h"
 #include "main/graphics.h"
+#include "main/mouse_scene.h"
 #include "frame_matrix/matrix.h"
 
 
@@ -65,8 +66,41 @@ bool ImageCalibrator::init(QString imgPath)
     m_iniPath =     dirPath + imgBaseName + "_orig_calibrates.ini";
 
     //generate scene
-    ui->PreviewGraph->setScene(new QGraphicsScene(ui->PreviewGraph));
-    QGraphicsScene *sc = ui->PreviewGraph->scene();
+    MouseScene *sc = new MouseScene(ui->PreviewGraph);
+
+    QObject::connect(sc, &MouseScene::deltaX,
+                     this, [this](Qt::MouseButton button, int delta)->void
+    {
+        switch(button)
+        {
+        case Qt::LeftButton:
+            ui->OffsetX->setValue(ui->OffsetX->value() - delta);
+            break;
+        case Qt::RightButton:
+            ui->CropW->setValue(ui->CropW->value() - delta);
+            break;
+        default:
+            break;
+        }
+    });
+
+    QObject::connect(sc, &MouseScene::deltaY,
+                     this, [this](Qt::MouseButton button, int delta)->void
+    {
+        switch(button)
+        {
+        case Qt::LeftButton:
+            ui->OffsetY->setValue(ui->OffsetY->value() - delta);
+            break;
+        case Qt::RightButton:
+            ui->CropH->setValue(ui->CropH->value() - delta);
+            break;
+        default:
+            break;
+        }
+    });
+
+    ui->PreviewGraph->setScene(sc);
     m_frmX = 0;
     m_frmY = 0;
     CalibrationFrame xyCell;
@@ -172,6 +206,7 @@ void ImageCalibrator::on_Matrix_clicked()
     Matrix dialog(m_conf, m_mw, this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.setFrame(m_frmX, m_frmY);
+    dialog.updateScene(generateTarget());
 
     if(dialog.exec() == QDialog::Accepted)
     {

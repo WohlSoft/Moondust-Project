@@ -36,6 +36,7 @@ class CalibrationMain;
 }
 
 class Matrix;
+class MouseScene;
 
 class CalibrationMain : public QWidget
 {
@@ -57,7 +58,7 @@ public:
     void translateMenus();
 
     //! Scene for drawing of playable character preview
-    QGraphicsScene *m_scene;
+    MouseScene *m_scene;
 
     void fillDefaultAniData(Calibration &dst);
     void loadSpriteAniEntry(Calibration &dst, QSettings &set, QString name);

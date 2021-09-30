@@ -16,6 +16,7 @@ namespace Ui
 }
 
 class CalibrationMain;
+class MouseScene;
 
 class ImageCalibrator : public QDialog
 {
@@ -29,7 +30,7 @@ public:
     ~ImageCalibrator();
 
     bool init(QString imgPath);
-    QGraphicsScene *m_scene;
+    MouseScene *m_scene = nullptr;
     QString m_targetPath;
 
 private slots:
