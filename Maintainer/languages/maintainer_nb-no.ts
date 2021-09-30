@@ -11,7 +11,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Ikke endre format</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
@@ -21,7 +21,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Sett bitrate</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
@@ -31,22 +31,22 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer vil bli konvertert til FLAC</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="488"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer vil bli konvertert til OGG</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="504"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Sett kvalitet</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="583"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>Filer vil bli konvertert til WAV</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
@@ -57,12 +57,12 @@
         <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
         <location filename="../Music/audiocvt_sox_gui.ui" line="630"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utforsk …</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hva vil du?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
@@ -108,7 +108,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="108"/>
         <source>make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag sikkerhetskopi</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
@@ -118,20 +118,20 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="44"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="199"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX-feil</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
@@ -149,27 +149,27 @@ Please set SoX path first</source>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
         <source>Nothing to do</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingenting å gjøre</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen filer å konvertere</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="175"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopp</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>Operation cancaled</source>
-        <translation type="unfinished"></translation>
+        <translation>Operasjon avbrutt</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="297"/>
         <source>SoX was crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX har krasjet</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="307"/>
@@ -209,7 +209,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
         <source>Add file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til filer å konvertere</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="617"/>
@@ -288,12 +288,12 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="153"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="173"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
