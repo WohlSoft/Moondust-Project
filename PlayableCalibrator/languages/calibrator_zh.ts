@@ -135,247 +135,257 @@
         <translation>人物校准工具</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="195"/>
+        <location filename="../calibration_main.ui" line="450"/>
         <source>Height</source>
         <translation>高</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="247"/>
+        <location filename="../calibration_main.ui" line="356"/>
         <source>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</source>
         <translation>玩家后部物品的偏移量（不要忘记在方向源中设置左方向或右方向）</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="326"/>
+        <location filename="../calibration_main.ui" line="85"/>
         <source>Width</source>
         <translation>宽</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="399"/>
+        <location filename="../calibration_main.ui" line="36"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
         <translation>玩家判定宽度</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="202"/>
+        <location filename="../calibration_main.ui" line="49"/>
         <source>Grab offset Y</source>
         <translation>搬运物品纵向偏移</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="237"/>
+        <location filename="../calibration_main.ui" line="397"/>
         <source>Select current frame (10x10):</source>
         <translation>选择当前帧（10x10）：</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="122"/>
+        <location filename="../calibration_main.ui" line="62"/>
         <source>GFX offsets of frame:</source>
         <translation>帧偏差：</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="132"/>
+        <location filename="../calibration_main.ui" line="499"/>
         <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
         <translation>若启用此选项，则搬运物品时图像判定位置为左偏差位置，反之为右偏差位置。</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="279"/>
+        <location filename="../calibration_main.cpp" line="286"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation>适用于测试或从头创作素材</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="278"/>
+        <location filename="../calibration_main.cpp" line="285"/>
         <source>Export a map of hitboxes as image...</source>
         <translation>导出分配表至图片……</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="303"/>
+        <location filename="../calibration_main.ui" line="466"/>
         <source>Select frame on a sprite</source>
         <translation>选择帧</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="346"/>
+        <location filename="../calibration_main.ui" line="327"/>
         <source>Grab offset X</source>
         <translation>搬运物品横向偏差</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="353"/>
+        <location filename="../calibration_main.ui" line="294"/>
         <source>Global:</source>
         <translation>全局：</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="383"/>
+        <location filename="../calibration_main.ui" line="437"/>
         <source>Normal height of player&apos;s collision box (hitbox)</source>
         <translation>玩家的判定高度</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="434"/>
+        <location filename="../calibration_main.ui" line="378"/>
         <source>Save config</source>
         <translation>保存设置</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="494"/>
+        <location filename="../calibration_main.ui" line="141"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="542"/>
+        <location filename="../calibration_main.ui" line="189"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="555"/>
+        <location filename="../calibration_main.ui" line="202"/>
         <source>Calibrating frames relative to exists physics (useful for old SMBX where you can&apos;t edit physics)</source>
         <translation>物理状态关联的帧数校正（适用于无法编辑物理状态的旧 SMBX）</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="565"/>
+        <location filename="../calibration_main.ui" line="212"/>
         <source>Language</source>
         <translation>语言</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="589"/>
+        <location filename="../calibration_main.ui" line="582"/>
         <source>Hitbox setup:</source>
         <translation>判定范围设置：</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="602"/>
+        <location filename="../calibration_main.ui" line="273"/>
         <source>Tools</source>
         <translation>工具</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="158"/>
+        <location filename="../calibration_main.ui" line="518"/>
         <source>Enabling this frame. If this frame disabled, it will not be saved into your config file.</source>
         <translation>启用此帧，禁用后，在配置文件将中不保存。</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="161"/>
+        <location filename="../calibration_main.ui" line="521"/>
         <source>Enable this frame</source>
         <translation>启用此帧</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="135"/>
+        <location filename="../calibration_main.ui" line="502"/>
         <source>Right direction</source>
         <translation>右方向</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="287"/>
+        <location filename="../calibration_main.ui" line="535"/>
         <source>Frame Y</source>
         <translation>帧 Y</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="276"/>
+        <location filename="../calibration_main.ui" line="423"/>
         <source>Open sprite</source>
         <translation>打开图像</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="558"/>
+        <location filename="../calibration_main.ui" line="205"/>
         <source>Image frames calibration</source>
         <translation>图像帧校正</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="300"/>
+        <location filename="../calibration_main.ui" line="463"/>
         <source>Interactive selection of frame</source>
         <translation>帧数交互选择</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="363"/>
+        <location filename="../calibration_main.ui" line="545"/>
         <source>Enable displaying of grabbed item corner</source>
         <translation>使用一个角显示要搬运的物品</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="366"/>
+        <location filename="../calibration_main.ui" line="548"/>
         <source>Show carried item</source>
         <translation>显示搬运的物品</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="185"/>
+        <location filename="../calibration_main.ui" line="599"/>
         <source>Apply duck height to this frame</source>
         <translation>在此帧中应用蹲下时的高度</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="188"/>
+        <location filename="../calibration_main.ui" line="602"/>
         <source>Is duck frame</source>
         <translation>蹲下时高度</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="142"/>
+        <location filename="../calibration_main.ui" line="609"/>
+        <source>Mark this frame as a mount riding and show the mount example at background in the Calibrator.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="612"/>
+        <source>Mount riding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="473"/>
         <source>Offset X</source>
         <translation>偏差 X</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="36"/>
+        <location filename="../calibration_main.ui" line="307"/>
         <source>Vertical offset of hitbox relative to top side of frame</source>
         <translation>判定与图像的纵向偏差</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="415"/>
+        <location filename="../calibration_main.ui" line="483"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
         <translation>判定范围与图像的横向偏差</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="263"/>
+        <location filename="../calibration_main.ui" line="280"/>
         <source>Frame X</source>
         <translation>帧 X</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="373"/>
+        <location filename="../calibration_main.ui" line="320"/>
         <source>Offset Y</source>
         <translation>偏差 Y</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="175"/>
+        <location filename="../calibration_main.ui" line="589"/>
         <source>Height (duck)</source>
         <translation>高度（蹲下时）</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="52"/>
+        <location filename="../calibration_main.ui" line="337"/>
         <source>Offset relative to middle of player&apos;s height</source>
         <translation>从中间部分确定玩家高度偏差</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="491"/>
+        <location filename="../calibration_main.ui" line="138"/>
         <source>Copy this frame into internal clipboard</source>
         <translation>复制到剪贴板</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="475"/>
+        <location filename="../calibration_main.ui" line="122"/>
         <source>Apply to all</source>
         <translation>应用到所有</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="74"/>
+        <location filename="../calibration_main.ui" line="225"/>
         <source>Duck height of player&apos;s collision box (hitbox)</source>
         <translation>蹲下时玩家的判定高度</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="510"/>
+        <location filename="../calibration_main.ui" line="157"/>
         <source>Paste from internal clipboard</source>
         <translation>从剪贴板粘贴</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="513"/>
+        <location filename="../calibration_main.ui" line="160"/>
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="526"/>
+        <location filename="../calibration_main.ui" line="173"/>
         <source>Edit animations set</source>
         <translation>编辑动画组</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="529"/>
+        <location filename="../calibration_main.ui" line="176"/>
         <source>Animator</source>
         <translation>动画编辑器</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="90"/>
+        <location filename="../calibration_main.ui" line="241"/>
         <source>Grab type</source>
         <translation>拿起类型</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="99"/>
+        <location filename="../calibration_main.ui" line="250"/>
         <source>Side</source>
         <translation>两侧</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="106"/>
+        <location filename="../calibration_main.ui" line="257"/>
         <source>Top</source>
         <translation>向上</translation>
     </message>
@@ -385,14 +395,14 @@
         <translation>将判定范围地图保存为图片</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="336"/>
+        <location filename="../main/settings.cpp" line="342"/>
         <location filename="../main/files_io.cpp" line="118"/>
         <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation>已保存</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="336"/>
+        <location filename="../main/settings.cpp" line="342"/>
         <source>Configuration saved in file</source>
         <translation>设置已保存到文件</translation>
     </message>
@@ -402,28 +412,28 @@
         <translation>判定范围地图已保存！</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="271"/>
+        <location filename="../calibration_main.cpp" line="278"/>
         <source>Save in the same folder with image file</source>
         <translation>在同一目录下与图片文件保存</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="273"/>
+        <location filename="../calibration_main.cpp" line="280"/>
         <source>Save into custom place...</source>
         <translation>另存为……</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="384"/>
+        <location filename="../calibration_main.cpp" line="391"/>
         <source>Open sprite file</source>
         <translation>打开图像文件</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="388"/>
+        <location filename="../calibration_main.cpp" line="395"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation>SMBX 玩家图像</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="386"/>
+        <location filename="../calibration_main.cpp" line="393"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation>GIF 图像</translation>
@@ -476,50 +486,50 @@
         <translation>补丁已打入关卡文件！</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="282"/>
+        <location filename="../calibration_main.cpp" line="289"/>
         <source>Import data from SMBX-38A level...</source>
         <translation>从 SMBX-38A 关卡文件中导入数据……</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="285"/>
+        <location filename="../calibration_main.cpp" line="292"/>
         <source>Export data into SMBX-38A level...</source>
         <translation>从 SMBX-38A 关卡文件中导出数据……</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="385"/>
+        <location filename="../calibration_main.cpp" line="392"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>支持的类型</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="387"/>
+        <location filename="../calibration_main.cpp" line="394"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>PNG 图像</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="389"/>
+        <location filename="../calibration_main.cpp" line="396"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>所有文件</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="413"/>
+        <location filename="../calibration_main.cpp" line="420"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="414"/>
+        <location filename="../calibration_main.cpp" line="421"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>此操作将复制所有判定范围到其他帧，其他帧的设置将被当前设置覆盖，您要继续吗？</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="435"/>
+        <location filename="../calibration_main.cpp" line="442"/>
         <source>Calibration is not saved!</source>
         <translation>更改未保存！</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="436"/>
+        <location filename="../calibration_main.cpp" line="443"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation>设置已更改，但未保存，您要保存更改吗？</translation>
     </message>

@@ -135,249 +135,259 @@
         <translation>플레이 가능한 캐릭터 스프라이트 캘리브레이터</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="36"/>
+        <location filename="../calibration_main.ui" line="307"/>
         <source>Vertical offset of hitbox relative to top side of frame</source>
         <translation>프레임의 상단으로부터 히트박스의 수직 오프셋</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="52"/>
+        <location filename="../calibration_main.ui" line="337"/>
         <source>Offset relative to middle of player&apos;s height</source>
         <translation>플레이어 높이의 중간으로부터의 오프셋</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="74"/>
+        <location filename="../calibration_main.ui" line="225"/>
         <source>Duck height of player&apos;s collision box (hitbox)</source>
         <translation>숙인상태에서 플레이어 충돌 박스(히트 박스)의 높이</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="90"/>
+        <location filename="../calibration_main.ui" line="241"/>
         <source>Grab type</source>
         <translation>타입 불러오기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="99"/>
+        <location filename="../calibration_main.ui" line="250"/>
         <source>Side</source>
         <translation>측면</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="106"/>
+        <location filename="../calibration_main.ui" line="257"/>
         <source>Top</source>
         <translation>상단</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="122"/>
+        <location filename="../calibration_main.ui" line="62"/>
         <source>GFX offsets of frame:</source>
         <translation>프레임의 GFX 오프셋:</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="132"/>
+        <location filename="../calibration_main.ui" line="499"/>
         <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
         <translation>만약 이 신호가 활성화되면, 불러온 아이템이 충돌상자의 왼쪽에서 오프셋됩니다. 아니라면 불러온 아이템은 충돌상자의 왼쪽에서 오프셋됩니다.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="135"/>
+        <location filename="../calibration_main.ui" line="502"/>
         <source>Right direction</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="142"/>
+        <location filename="../calibration_main.ui" line="473"/>
         <source>Offset X</source>
         <translation>오프셋 X</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="158"/>
+        <location filename="../calibration_main.ui" line="518"/>
         <source>Enabling this frame. If this frame disabled, it will not be saved into your config file.</source>
         <translation>이 프레임을 활성화. 만약 이 프레임이 비활성화된다면, 당신의 config 파일에 저장되지 않을 것 입니다.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="161"/>
+        <location filename="../calibration_main.ui" line="521"/>
         <source>Enable this frame</source>
         <translation>이 프레임 활성화</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="175"/>
+        <location filename="../calibration_main.ui" line="589"/>
         <source>Height (duck)</source>
         <translation>높이 (숙인 상태)</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="185"/>
+        <location filename="../calibration_main.ui" line="599"/>
         <source>Apply duck height to this frame</source>
         <translation>숙인 높이를 이 프레임에 적용</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="188"/>
+        <location filename="../calibration_main.ui" line="602"/>
         <source>Is duck frame</source>
         <translation>캐릭터가 숙인 프레임인지</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="195"/>
+        <location filename="../calibration_main.ui" line="450"/>
         <source>Height</source>
         <translation>높이</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="202"/>
+        <location filename="../calibration_main.ui" line="49"/>
         <source>Grab offset Y</source>
         <translation>오프셋 Y를 불러오기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="237"/>
+        <location filename="../calibration_main.ui" line="397"/>
         <source>Select current frame (10x10):</source>
         <translation>현재 프레임 선택(10x10):</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="247"/>
+        <location filename="../calibration_main.ui" line="356"/>
         <source>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</source>
         <translation>사용자의 등으로부터 오프셋(소스 측면을 정의하려면 왼쪽이나 오른쪽 방향을 설정해야함을 잊지 말 것)</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="263"/>
+        <location filename="../calibration_main.ui" line="280"/>
         <source>Frame X</source>
         <translation>프레임 X</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="276"/>
+        <location filename="../calibration_main.ui" line="423"/>
         <source>Open sprite</source>
         <translation>스프라이트 열기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="287"/>
+        <location filename="../calibration_main.ui" line="535"/>
         <source>Frame Y</source>
         <translation>프레임 Y</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="300"/>
+        <location filename="../calibration_main.ui" line="463"/>
         <source>Interactive selection of frame</source>
         <translation>프레임의 상호적 선택</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="303"/>
+        <location filename="../calibration_main.ui" line="466"/>
         <source>Select frame on a sprite</source>
         <translation>스프라이트에서 프레임을 선택</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="326"/>
+        <location filename="../calibration_main.ui" line="85"/>
         <source>Width</source>
         <translation>너비</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="346"/>
+        <location filename="../calibration_main.ui" line="327"/>
         <source>Grab offset X</source>
         <translation>오프셋 X 불러오기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="353"/>
+        <location filename="../calibration_main.ui" line="294"/>
         <source>Global:</source>
         <translation>전역:</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="363"/>
+        <location filename="../calibration_main.ui" line="545"/>
         <source>Enable displaying of grabbed item corner</source>
         <translation>잡은 아이템의 코너 표시 활성화</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="366"/>
+        <location filename="../calibration_main.ui" line="548"/>
         <source>Show carried item</source>
         <translation>소유한 아이템을 보여줌</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="373"/>
+        <location filename="../calibration_main.ui" line="320"/>
         <source>Offset Y</source>
         <translation>오프셋 Y</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="383"/>
+        <location filename="../calibration_main.ui" line="437"/>
         <source>Normal height of player&apos;s collision box (hitbox)</source>
         <translation>프레이어 충돌박스(히트박스)의 일반적 높이</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="399"/>
+        <location filename="../calibration_main.ui" line="36"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
         <translation>플레이어의 충돌 박스의 너비(히트 박스)</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="415"/>
+        <location filename="../calibration_main.ui" line="483"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
         <translation>프레임의 왼쪽으로부터 히트 박스의 수평 오프셋</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="434"/>
+        <location filename="../calibration_main.ui" line="378"/>
         <source>Save config</source>
         <translation>config 저장</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="475"/>
+        <location filename="../calibration_main.ui" line="122"/>
         <source>Apply to all</source>
         <translation>전체에 적용</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="491"/>
+        <location filename="../calibration_main.ui" line="138"/>
         <source>Copy this frame into internal clipboard</source>
         <translation>내부 클립보드로 이 프레임을 복사</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="494"/>
+        <location filename="../calibration_main.ui" line="141"/>
         <source>Copy</source>
         <translation>복사</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="510"/>
+        <location filename="../calibration_main.ui" line="157"/>
         <source>Paste from internal clipboard</source>
         <translation>내부 클립보드로부터 붙여넣기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="513"/>
+        <location filename="../calibration_main.ui" line="160"/>
         <source>Paste</source>
         <translation>붙여넣기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="526"/>
+        <location filename="../calibration_main.ui" line="173"/>
         <source>Edit animations set</source>
         <translation>에니메이션 셋 편집</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="529"/>
+        <location filename="../calibration_main.ui" line="176"/>
         <source>Animator</source>
         <translation>애니메이터</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="542"/>
+        <location filename="../calibration_main.ui" line="189"/>
         <source>About</source>
         <translation>대해서</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="555"/>
+        <location filename="../calibration_main.ui" line="202"/>
         <source>Calibrating frames relative to exists physics (useful for old SMBX where you can&apos;t edit physics)</source>
         <translation>기존 물리에 대해 프레임을 보정(물리를 수정할 수 없는 구형 SMBX에 유용)</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="558"/>
+        <location filename="../calibration_main.ui" line="205"/>
         <source>Image frames calibration</source>
         <translation>이미지 프레임 조정</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="565"/>
+        <location filename="../calibration_main.ui" line="212"/>
         <source>Language</source>
         <translation>언어</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="589"/>
+        <location filename="../calibration_main.ui" line="582"/>
         <source>Hitbox setup:</source>
         <translation>히트박스 설정:</translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="602"/>
+        <location filename="../calibration_main.ui" line="609"/>
+        <source>Mark this frame as a mount riding and show the mount example at background in the Calibrator.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="612"/>
+        <source>Mount riding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="273"/>
         <source>Tools</source>
         <translation>도구</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="336"/>
+        <location filename="../main/settings.cpp" line="342"/>
         <location filename="../main/files_io.cpp" line="118"/>
         <location filename="../calibration_main.cpp" line="153"/>
         <source>Saved</source>
         <translation>저장된</translation>
     </message>
     <message>
-        <location filename="../main/settings.cpp" line="336"/>
+        <location filename="../main/settings.cpp" line="342"/>
         <source>Configuration saved in file</source>
         <translation>파일에 저장된 구성</translation>
     </message>
@@ -439,87 +449,87 @@
         <translation>레벨 파일이 패치되었습니다!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="271"/>
+        <location filename="../calibration_main.cpp" line="278"/>
         <source>Save in the same folder with image file</source>
         <translation>이미지 파일과 같은 폴더에 저장</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="273"/>
+        <location filename="../calibration_main.cpp" line="280"/>
         <source>Save into custom place...</source>
         <translation>지정한 장소에 저장…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="278"/>
+        <location filename="../calibration_main.cpp" line="285"/>
         <source>Export a map of hitboxes as image...</source>
         <translation>히트박스를 이미지로 내보내기…</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="279"/>
+        <location filename="../calibration_main.cpp" line="286"/>
         <source>Useful for tests or sprites creation from the scratch</source>
         <translation>시작단계에서 테스트하거나 스프라이트하는 것에 유용함</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="282"/>
+        <location filename="../calibration_main.cpp" line="289"/>
         <source>Import data from SMBX-38A level...</source>
         <translation>SMBX-38A 레벨로부터 데이터 불러오기...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="285"/>
+        <location filename="../calibration_main.cpp" line="292"/>
         <source>Export data into SMBX-38A level...</source>
         <translation>SBMX-38A 레벨로 데이터 내보내기...</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="384"/>
+        <location filename="../calibration_main.cpp" line="391"/>
         <source>Open sprite file</source>
         <translation>스프라이트 파일 열기</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="385"/>
+        <location filename="../calibration_main.cpp" line="392"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>열 이미지 파일의 유형</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="386"/>
+        <location filename="../calibration_main.cpp" line="393"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
         <translation>GIF 이미지</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="387"/>
+        <location filename="../calibration_main.cpp" line="394"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
         <translation>PNG 이미지</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="388"/>
+        <location filename="../calibration_main.cpp" line="395"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
         <translation>SMBX 플레이 가능한 스프라이트</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="389"/>
+        <location filename="../calibration_main.cpp" line="396"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
         <translation>모든 파일</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="413"/>
+        <location filename="../calibration_main.cpp" line="420"/>
         <source>Warning</source>
         <translation>경고</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="414"/>
+        <location filename="../calibration_main.cpp" line="421"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>이 작업은 현재 히트 박스의 설정을 다른 모든 프레임에 복사합니다. 다른 모든 프레임의 설정은 현재 프레임의 설정으로 덮어집니다. 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="435"/>
+        <location filename="../calibration_main.cpp" line="442"/>
         <source>Calibration is not saved!</source>
         <translation>보정이 저장되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="436"/>
+        <location filename="../calibration_main.cpp" line="443"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation>구성이 수정된 후 저장되지 않았습니다. 저장하시겠습니까?</translation>
     </message>

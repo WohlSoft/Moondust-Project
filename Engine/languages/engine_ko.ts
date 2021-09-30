@@ -4,82 +4,82 @@
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="371"/>
+        <location filename="../common_features/crash_handler.cpp" line="372"/>
         <source>Unhandled exception!</source>
         <translation>처리되지 않은 예외!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="373"/>
+        <location filename="../common_features/crash_handler.cpp" line="374"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
         <translation>처리되지 않은 예외를 수락했기 때문에 엔진이 충돌했습니다!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="385"/>
+        <location filename="../common_features/crash_handler.cpp" line="386"/>
         <source>Out of memory!</source>
         <translation>메모리 부족!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="387"/>
+        <location filename="../common_features/crash_handler.cpp" line="388"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
         <translation>메모리 부족으로 엔진이 충돌했습니다! 다른 응용 프로그램을 닫고 게임을 다시 시작하십시오.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="423"/>
+        <location filename="../common_features/crash_handler.cpp" line="424"/>
         <source>Time out!</source>
         <translation>타임 아웃!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="425"/>
+        <location filename="../common_features/crash_handler.cpp" line="426"/>
         <source>Engine has abourted because alarm() time out!</source>
         <translation>alarm () 시간이 초과되어 엔진이 중단되었습니다!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="470"/>
+        <location filename="../common_features/crash_handler.cpp" line="471"/>
         <source>Physical memory address error!</source>
         <translation>물리적 메모리 주소 오류!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="472"/>
+        <location filename="../common_features/crash_handler.cpp" line="473"/>
         <source>Engine has crashed because a physical memory address error</source>
         <translation>실제 메모리 주소 오류로 인해 엔진이 충돌했습니다</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="489"/>
+        <location filename="../common_features/crash_handler.cpp" line="490"/>
         <source>Wrong CPU Instruction!</source>
         <translation>잘못된 CPU 명령!</translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="491"/>
+        <location filename="../common_features/crash_handler.cpp" line="492"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
         <translation>잘못된 CPU 명령으로 인해 엔진이 충돌했습니다</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="546"/>
+        <location filename="../common_features/crash_handler.cpp" line="547"/>
         <source>Wrong arithmetical operation</source>
         <translation>잘못된 산술 연산</translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="548"/>
+        <location filename="../common_features/crash_handler.cpp" line="549"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
         <translation>잘못된 산술 연산으로 인해 엔진이 고장났습니다!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="560"/>
+        <location filename="../common_features/crash_handler.cpp" line="561"/>
         <source>Aborted</source>
         <translation>중단됨</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="562"/>
+        <location filename="../common_features/crash_handler.cpp" line="563"/>
         <source>Engine has been aborted because critical error was occouped.</source>
         <translation>심각한 오류가 발생하여 엔진이 중단되었습니다.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="607"/>
+        <location filename="../common_features/crash_handler.cpp" line="608"/>
         <source>Segmentation fault</source>
         <translation>세그멘테이션 오류</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="611"/>
+        <location filename="../common_features/crash_handler.cpp" line="612"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
@@ -88,12 +88,12 @@ and retry your recent actions to get more detailed information.</source>
 더 자세한 정보를 얻으려면 최근 작업을 다시 시도하십시오.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="620"/>
+        <location filename="../common_features/crash_handler.cpp" line="621"/>
         <source>Interrupt</source>
         <translation>일시 정지</translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="622"/>
+        <location filename="../common_features/crash_handler.cpp" line="623"/>
         <source>Engine has been interrupted</source>
         <translation>엔진이 중단되었습니다</translation>
     </message>

@@ -1090,7 +1090,7 @@ Wspierane formaty:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Przetwarzanie plików</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
@@ -1100,7 +1100,7 @@ Wspierane formaty:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="142"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Przetwarzanie wsadowe dla poziomu/epizodu</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="148"/>
@@ -1110,7 +1110,7 @@ Wspierane formaty:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nie twórz kopii zapasowej dla starych obrazków</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="162"/>

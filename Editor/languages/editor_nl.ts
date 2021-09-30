@@ -8781,19 +8781,19 @@ Gelieve het bestand eerst op te slagen.</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/tools_menu.cpp" line="89"/>
+        <location filename="../main_window/tools_menu.cpp" line="92"/>
         <source>Moondust Maintainer is not found</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/tools_menu.cpp" line="90"/>
+        <location filename="../main_window/tools_menu.cpp" line="93"/>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/tools_menu.cpp" line="95"/>
+        <location filename="../main_window/tools_menu.cpp" line="98"/>
         <source>Choose the Moondust Maintainer application</source>
         <translation></translation>
     </message>

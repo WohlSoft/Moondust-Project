@@ -4,82 +4,82 @@
 <context>
     <name></name>
     <message id="CRASH_UNHEXC_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="371"/>
+        <location filename="../common_features/crash_handler.cpp" line="372"/>
         <source>Unhandled exception!</source>
         <translation>Необроблене виключення!</translation>
     </message>
     <message id="CRASH_UNHEXC_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="373"/>
+        <location filename="../common_features/crash_handler.cpp" line="374"/>
         <source>Engine has crashed because accepted unhandled exception!</source>
         <translation>Двигун аварійно завершився у зв&apos;язку з отриманням необробленого виключення!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="385"/>
+        <location filename="../common_features/crash_handler.cpp" line="386"/>
         <source>Out of memory!</source>
         <translation>Недостатньо пам&apos;яті!</translation>
     </message>
     <message id="CRASH_OUT_OF_MEM_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="387"/>
+        <location filename="../common_features/crash_handler.cpp" line="388"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
         <translation>Двигун аварійно завершився у зв&apos;язку з переповненням пам&apos;яті! Спробуйте закрити інші програми й перезапустіть гру.</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="423"/>
+        <location filename="../common_features/crash_handler.cpp" line="424"/>
         <source>Time out!</source>
         <translation>Час вийшов!</translation>
     </message>
     <message id="CRASH_TIMEOUT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="425"/>
+        <location filename="../common_features/crash_handler.cpp" line="426"/>
         <source>Engine has abourted because alarm() time out!</source>
         <translation>Робота двигуна була перервана у зв&apos;язку з закінченням часу alarm()!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="470"/>
+        <location filename="../common_features/crash_handler.cpp" line="471"/>
         <source>Physical memory address error!</source>
         <translation>Невірна фізична адреса пам&apos;яті!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="472"/>
+        <location filename="../common_features/crash_handler.cpp" line="473"/>
         <source>Engine has crashed because a physical memory address error</source>
         <translation>Двигун аварійно завершився у зв&apos;язку з помилковою фізичною адресою пам&apos;яті</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="489"/>
+        <location filename="../common_features/crash_handler.cpp" line="490"/>
         <source>Wrong CPU Instruction!</source>
         <translation>Невірна інструкція процесора!</translation>
     </message>
     <message id="CRASH_ILL_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="491"/>
+        <location filename="../common_features/crash_handler.cpp" line="492"/>
         <source>Engine has crashed because a wrong CPU instruction</source>
         <translation>Двигун аварійно завершився у зв&apos;язку з невірною інструкцією процесора</translation>
     </message>
     <message id="CRASH_FPE_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="546"/>
+        <location filename="../common_features/crash_handler.cpp" line="547"/>
         <source>Wrong arithmetical operation</source>
         <translation>Помилкова арифметична операція</translation>
     </message>
     <message id="CRASH_FPE_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="548"/>
+        <location filename="../common_features/crash_handler.cpp" line="549"/>
         <source>Engine has crashed because of a wrong arithmetical operation!</source>
         <translation>Двигун аварійно завершився у зв&apos;язку з помилковою арифметичною операцією!</translation>
     </message>
     <message id="CRASH_ABORT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="560"/>
+        <location filename="../common_features/crash_handler.cpp" line="561"/>
         <source>Aborted</source>
         <translation>Перервано</translation>
     </message>
     <message id="CRASH_ABORT_TITLE.">
-        <location filename="../common_features/crash_handler.cpp" line="562"/>
+        <location filename="../common_features/crash_handler.cpp" line="563"/>
         <source>Engine has been aborted because critical error was occouped.</source>
         <translation>Двигун аварійно завершився у зв&apos;язку з критичною помилкою.</translation>
     </message>
     <message id="CRASH_SIGSEGV_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="607"/>
+        <location filename="../common_features/crash_handler.cpp" line="608"/>
         <source>Segmentation fault</source>
         <translation>Помилка сегментування</translation>
     </message>
     <message id="CRASH_SIGSEGV_MSG.">
-        <location filename="../common_features/crash_handler.cpp" line="611"/>
+        <location filename="../common_features/crash_handler.cpp" line="612"/>
         <source>Engine has crashed because of a Segmentation fault.
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
@@ -89,12 +89,12 @@ and retry your recent actions to get more detailed information.</source>
 які спровокували цю помилку.</translation>
     </message>
     <message id="CRASH_INT_TITLE">
-        <location filename="../common_features/crash_handler.cpp" line="620"/>
+        <location filename="../common_features/crash_handler.cpp" line="621"/>
         <source>Interrupt</source>
         <translation>Перервати</translation>
     </message>
     <message id="CRASH_INT_MSG">
-        <location filename="../common_features/crash_handler.cpp" line="622"/>
+        <location filename="../common_features/crash_handler.cpp" line="623"/>
         <source>Engine has been interrupted</source>
         <translation>Робота двигуна була перервана</translation>
     </message>
