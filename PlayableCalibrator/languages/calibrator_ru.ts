@@ -430,12 +430,12 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibration_main.ui" line="609"/>
         <source>Mark this frame as a mount riding and show the mount example at background in the Calibrator.</source>
-        <translation type="unfinished"></translation>
+        <translation>Отметить кадр для отображения верховой езды и отобразить на сцене калибратора пример животного.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="612"/>
         <source>Mount riding</source>
-        <translation type="unfinished"></translation>
+        <translation>Верховая езда</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="100"/>
