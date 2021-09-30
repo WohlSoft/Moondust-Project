@@ -1,6 +1,8 @@
 dev:
 * Fixed the frames data compatibility with SMBX2 that requires all frames presented at the calibration file
 * Added the mount displaying to help calibrate the mount-riding frames
+* Turned the frame selection dialog into non-modal to simplify the general workflow
+* Added mouse support for the coarse movement of hitbox at the preview box directly
 
 2.3
 * Begin the changelog

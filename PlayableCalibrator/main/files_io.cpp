@@ -23,6 +23,7 @@
 #include "ui_calibration_main.h"
 #include "graphics.h"
 #include "app_path.h"
+#include "../frame_matrix/matrix.h"
 
 #include "qfile_dialogs_default_options.hpp"
 
@@ -60,11 +61,20 @@ void CalibrationMain::openFile(QString fileName)
     initScene();
     updateControls();
     updateScene();
+
+    ui->FrameX->setMaximum(m_calibration.matrixWidth);
+    ui->FrameY->setMaximum(m_calibration.matrixHeight);
+
+    m_matrix->updateScene(m_xImageSprite);
+    m_matrix->changeGridSize(m_calibration.matrixWidth, m_calibration.matrixHeight);
+    m_matrix->setFrame(m_frmX, m_frmY);
 }
 
 //Made templates for test calibration
 void CalibrationMain::exportHitboxesMap()
 {
+    // FIXME: allow the support of any-size textures
+
     QImage output(1000, 1000, QImage::Format_ARGB32);
     output.fill(Qt::transparent);
 

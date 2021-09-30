@@ -35,6 +35,9 @@ namespace Ui {
 class CalibrationMain;
 }
 
+class Matrix;
+class MouseScene;
+
 class CalibrationMain : public QWidget
 {
     Q_OBJECT
@@ -46,6 +49,8 @@ class CalibrationMain : public QWidget
     Calibration m_calibration;
     Calibration m_calibrationDefault;
     CalibrationFrame m_clipboard;
+
+    Matrix *m_matrix = nullptr;
 public:
     explicit CalibrationMain(QWidget *parent = nullptr);
     ~CalibrationMain();
@@ -53,7 +58,7 @@ public:
     void translateMenus();
 
     //! Scene for drawing of playable character preview
-    QGraphicsScene *m_scene;
+    MouseScene *m_scene;
 
     void fillDefaultAniData(Calibration &dst);
     void loadSpriteAniEntry(Calibration &dst, QSettings &set, QString name);
@@ -77,6 +82,8 @@ protected:
 
 private slots:
     void languageSwitched();
+
+    void frameSelected(int x, int y);
 
     void on_AboutButton_clicked();
     void on_Matrix_clicked();
