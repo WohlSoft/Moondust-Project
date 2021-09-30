@@ -6,24 +6,24 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="20"/>
         <source>Animation editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Animasjonsredigerer</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="163"/>
         <location filename="../animator/animation_edit.ui" line="183"/>
         <location filename="../animator/animation_edit.ui" line="238"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Legg til</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="65"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Forhåndsvis</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="170"/>
         <source>Animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Animasjonsnavn</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
@@ -46,12 +46,12 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="190"/>
         <source>Frames (left)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rammer (venstre)</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="259"/>
         <source>Frames (right)</source>
-        <translation type="unfinished"></translation>
+        <translation>Rammer (Høyre)</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="118"/>
@@ -66,22 +66,22 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="95"/>
         <source>Frame delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rammeforsinkelse:</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Tomt animasjonsnavn</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Animation name is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Animasjonsnavnet er tomt.</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="368"/>
         <source>Animation exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Animasjon finnes</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
@@ -94,37 +94,37 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animatør</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Retning</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Venstre</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Høyre</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="82"/>
         <source>Edit animations</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger animasjoner</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="102"/>
         <source>Frame speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rammehastighet:</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="119"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animasjon</translation>
     </message>
 </context>
 <context>
@@ -137,7 +137,7 @@
     <message>
         <location filename="../calibration_main.ui" line="450"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Høyde</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="356"/>
@@ -147,7 +147,7 @@
     <message>
         <location filename="../calibration_main.ui" line="85"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Bredde</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="36"/>
@@ -207,17 +207,17 @@
     <message>
         <location filename="../calibration_main.ui" line="378"/>
         <source>Save config</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre oppsett</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="141"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kopier</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="189"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Om</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="202"/>
@@ -227,7 +227,7 @@
     <message>
         <location filename="../calibration_main.ui" line="212"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Språk</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="582"/>
@@ -237,7 +237,7 @@
     <message>
         <location filename="../calibration_main.ui" line="273"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Verktøy</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="518"/>
