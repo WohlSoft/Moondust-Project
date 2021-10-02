@@ -21,6 +21,7 @@
 //#include <QtDebug>
 #include <QSettings>
 #include <QMenu>
+#include <QColorDialog>
 
 #include "calibration_main.h"
 #include <ui_calibration_main.h>
@@ -42,22 +43,16 @@
 
 
 CalibrationMain::CalibrationMain(QWidget *parent) :
-    QWidget(parent),
+    QMainWindow(parent),
     ui(new Ui::CalibrationMain)
 {
-    m_clipboard.w = 100;
-    m_clipboard.h = 100;
-    m_clipboard.offsetX = 0;
-    m_clipboard.offsetY = 0;
-    m_clipboard.used = true;
-    m_clipboard.isDuck = true;
-    m_clipboard.isRightDir = false;
     m_wasCanceled = false;
 
     ui->setupUi(this);
 
     QObject::connect(&m_translator, &Translator::languageSwitched,
                      this, &CalibrationMain::languageSwitched);
+
     ui->language->setMenu(&m_langMenu);
     m_translator.setSettings(&m_langMenu,
                              "calibrator",
@@ -73,14 +68,12 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
 
         QObject::connect(m_saveMenuQuickSave, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            saveConfig(m_calibration, m_currentFile, false, &m_calibrationDefault);
-            m_wasModified = false;
+            on_actionSaveSameDir_triggered();
         });
 
         QObject::connect(m_saveMenuSaveAs, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            if(saveConfig(m_calibration, m_currentFile, true, &m_calibrationDefault))
-                m_wasModified = false;
+            on_actionSaveCustomDir_triggered();
         });
     }
 
@@ -99,62 +92,121 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
 
         QObject::connect(m_toolsImport38A, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            if(!trySave())
-                return;
-
-            QString fileName_DATA = QFileDialog::getOpenFileName(this,
-                                    tr("Open SMBX-38A level file"),
-                                    (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
-                                    tr("SMBX-38A level files", "Type of file to open") + " (*.lvl);;" +
-                                    tr("All Files", "Type of file to open") + " (*.*)", nullptr, c_fileDialogOptions);
-
-            if(fileName_DATA == nullptr)
-                return;
-
-            QFileInfo s(m_currentFile);
-
-            if(!importFrom38A(m_calibration, s.fileName(), fileName_DATA))
-            {
-                QMessageBox::warning(this,
-                                     tr("File opening error"),
-                                     tr("Can't import calibration data from this file: the file doesn't "
-                                        "contain calibration settings, or this file is not a valid SMBX-38A level file."),
-                                     QMessageBox::Ok);
-                return;
-            }
-
-            initScene();
-            updateControls();
-            updateScene();
-
-            m_wasModified = false;
+            on_actionImport38A_triggered();
         });
 
         QObject::connect(m_toolsExport38A, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
-            QString san_ba_level = QFileDialog::getOpenFileName(this,
-                                   tr("Export calibration settings into SMBX-38A level file"),
-                                   (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
-                                   "*.lvl", nullptr, c_fileDialogOptions);
-            if(san_ba_level.isEmpty())
-                return;
-
-            QFileInfo s(m_currentFile);
-
-            if(!exportTo38A(m_calibration, s.fileName(), san_ba_level))
-            {
-                QMessageBox::warning(this,
-                                     tr("File saving error"),
-                                     tr("Can't export calibration data into this file: this is not a valid SMBX-38A level file."),
-                                     QMessageBox::Ok);
-                return;
-            }
-
-            QMessageBox::information(this,
-                                     tr("Saved"),
-                                     tr("The level file has been patched!") + "\n" + san_ba_level);
+            on_actionExport38A_triggered();
         });
     }
+
+    {
+        m_wallMenuNone = m_wallMenu.addAction("none");
+        m_wallMenuFloor = m_wallMenu.addAction("floor");
+        m_wallMenuFloorWallL = m_wallMenu.addAction("floor-wall-l");
+        m_wallMenuFloorWallR = m_wallMenu.addAction("floor-wall-r");
+        m_wallMenuCeiling = m_wallMenu.addAction("ceiling");
+        m_wallMenuCeilingWallL = m_wallMenu.addAction("ceiling-wall-l");
+        m_wallMenuCeilingWallR = m_wallMenu.addAction("ceiling-wall-r");
+
+        ui->wallMenu->setMenu(&m_wallMenu);
+
+        QObject::connect(m_wallMenuNone, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            ui->preview->setWall(FrameTuneScene::WALL_NONE);
+        });
+
+        QObject::connect(m_wallMenuFloor, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            ui->preview->setWall(FrameTuneScene::WALL_FLOOR);
+        });
+
+        QObject::connect(m_wallMenuFloorWallL, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            ui->preview->setWall(FrameTuneScene::WALL_FLOOR_WL);
+        });
+
+        QObject::connect(m_wallMenuFloorWallR, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            ui->preview->setWall(FrameTuneScene::WALL_FLOOR_WR);
+        });
+
+        QObject::connect(m_wallMenuCeiling, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            ui->preview->setWall(FrameTuneScene::WALL_CEILING);
+        });
+
+        QObject::connect(m_wallMenuCeilingWallL, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            ui->preview->setWall(FrameTuneScene::WALL_CEILING_WL);
+        });
+
+        QObject::connect(m_wallMenuCeilingWallR, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            ui->preview->setWall(FrameTuneScene::WALL_CEILING_WR);
+        });
+    }
+
+    {
+        m_compatMenuMoondust = m_compatMenu.addAction("Moondust");
+        m_compatMenuMoondust->setCheckable(true);
+        m_compatMenuMoondust->setIcon(QIcon(":/compat/moondust.ico"));
+
+        m_compatMenuTheXTech = m_compatMenu.addAction("TheXTech");
+        m_compatMenuTheXTech->setCheckable(true);
+        m_compatMenuTheXTech->setIcon(QIcon(":/compat/thextech.ico"));
+
+        m_compatMenuSMBX2 = m_compatMenu.addAction("SMBX2");
+        m_compatMenuSMBX2->setCheckable(true);
+        m_compatMenuSMBX2->setIcon(QIcon(":/compat/smbx2.ico"));
+
+        m_compatMenu38A = m_compatMenu.addAction("SMBX-38A");
+        m_compatMenu38A->setCheckable(true);
+        m_compatMenu38A->setIcon(QIcon(":/compat/38a.ico"));
+
+        QObject::connect(m_compatMenuMoondust, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            m_calibration.compatProfile = Calibration::COMPAT_MOONDUST;
+            updateCompatMode();
+        });
+
+        QObject::connect(m_compatMenuTheXTech, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            m_calibration.compatProfile = Calibration::COMPAT_THEXTECH;
+            updateCompatMode();
+        });
+
+        QObject::connect(m_compatMenuSMBX2, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            m_calibration.compatProfile = Calibration::COMPAT_SMBX2;
+            updateCompatMode();
+        });
+
+        QObject::connect(m_compatMenu38A, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            m_calibration.compatProfile = Calibration::COMPAT_SMBX38A;
+            updateCompatMode();
+        });
+
+        ui->compatMode->setMenu(&m_compatMenu);
+        updateCompatMode();
+    }
+
+    {
+        QToolButton *newAction = new QToolButton(ui->toolBar);
+        newAction->setMenu(ui->menuSave);
+        newAction->setIcon(ui->menuSave->icon());
+        newAction->setPopupMode(QToolButton::InstantPopup);
+        newAction->setToolTip(ui->menuSave->title());
+        //Automatically reset label on language switching
+        newAction->connect(this, &CalibrationMain::languageSwitched, [this, newAction](){
+                                newAction->setToolTip(ui->menuSave->title());
+                           });
+        ui->toolBar->insertWidget(ui->actionSaveMenu, newAction);
+        ui->actionSaveMenu->setVisible(false);
+    }
+//    ui->actionSaveMenu->setMenu(ui->menuSave);
 
     translateMenus();
 
@@ -173,24 +225,9 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     m_lockControls = false;
     settings.endGroup();
 
-    //    QVector<frameOpts > framesY;
-    //    frameOpts spriteData;
 
-    //    // Write default values
-    //    for(int i = 0; i < 10; i++)
-    //    {
-    //        framesY.clear();
-    //        for(int j = 0; j < 10; j++)
-    //        {
-    //            spriteData = g_buffer;
-    //            framesY.push_back(spriteData);
-    //        }
-    //        g_framesX.push_back(framesY);
-    //    }
-
-
-    m_scene = new MouseScene(ui->PreviewGraph);
-    QObject::connect(m_scene, &MouseScene::deltaX,
+    ui->preview->setAllowScroll(true);
+    QObject::connect(ui->preview, &FrameTuneScene::deltaX,
                      this, [this](Qt::MouseButton button, int delta)->void
     {
         switch(button)
@@ -204,16 +241,14 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
             if(!ui->isRightDirect->isChecked())
                 delta *= -1;
             ui->grabOffsetX->setValue(ui->grabOffsetX->value() + delta);
-            m_calibration.grabOffsetX = ui->grabOffsetX->value();
-            enableFrame();
-            updateScene();
+            grabOffsetXupdate();
             break;
         default:
             break;
         }
     });
 
-    QObject::connect(m_scene, &MouseScene::deltaY,
+    QObject::connect(ui->preview, &FrameTuneScene::deltaY,
                      this, [this](Qt::MouseButton button, int delta)->void
     {
         switch(button)
@@ -225,69 +260,27 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
             if(!ui->showGrabItem->isChecked())
                 break;
             ui->grabOffsetY->setValue(ui->grabOffsetY->value() + delta);
-            m_calibration.grabOffsetY = ui->grabOffsetY->value();
-            enableFrame();
-            updateScene();
+            grabOffsetYupdate();
             break;
         default:
             break;
         }
     });
 
-    ui->PreviewGraph->setScene(m_scene);
-    QGraphicsScene *sc = ui->PreviewGraph->scene();
-
-    m_currentPixmap = QPixmap(100, 100);
-    m_currentPixmap.fill(Qt::transparent);
-    m_currentImageItem.setPixmap(m_currentPixmap);
-    m_currentImageItem.setZValue(0);
-
-    m_frameBox_gray.setRect(0, 0, 100, 100);
-    m_frameBox_gray.setPen(QPen(Qt::gray, 1));
-    m_frameBox_gray.setBrush(Qt::transparent);
-    m_frameBox_gray.setZValue(-10);
-
-    m_hitBox_green.setRect(0, 0, m_calibration.frameWidth - 1, m_calibration.frameHeight - 1);
-    m_hitBox_green.setPen(QPen(Qt::green));
-    m_hitBox_green.setZValue(3);
-
-    m_grabLineX.setPen(QPen(Qt::red));
-    m_grabLineY.setPen(QPen(Qt::red));
-
-    m_grabLineX.setZValue(10);
-    m_grabLineY.setZValue(10);
-
-    m_mountPixmap = QPixmap(":/images/mount.png");
-    m_mountDuckPixmap = QPixmap(":/images/mount_duck.png");
-    m_mountItem.setPixmap(m_mountPixmap);
-    m_mountItem.setZValue(-9);
-    m_mountItem.setVisible(false);
-
-    sc->addItem(&m_frameBox_gray);
-    sc->addItem(&m_currentImageItem);
-    sc->addItem(&m_hitBox_green);
-    sc->addItem(&m_grabLineX);
-    sc->addItem(&m_grabLineY);
-    sc->addItem(&m_mountItem);
-
     m_matrix = new Matrix(&m_calibration, this, this);
     m_matrix->setModal(false);
     m_matrix->changeGridSize(m_calibration.matrixWidth, m_calibration.matrixHeight);
 
+    QObject::connect(&m_translator, &Translator::languageSwitched,
+                     m_matrix, &Matrix::languageSwitched);
     QObject::connect(m_matrix, &Matrix::frameSelected,
                      this, &CalibrationMain::frameSelected);
     QObject::connect(m_matrix, &Matrix::currentFrameSwitched,
                      ui->EnableFrame, &QCheckBox::setChecked);
 
-    if(m_currentFile.isEmpty())
-    {
-        if(!on_OpenSprite_clicked())
-        {
-            m_wasCanceled = true;
-            return;
-        }
-    }
-    else
+    windowDisable(true);
+
+    if(!m_currentFile.isEmpty() && QFile::exists(m_currentFile))
         openFile(m_currentFile);
 }
 
@@ -319,10 +312,46 @@ void CalibrationMain::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
+void CalibrationMain::dragEnterEvent(QDragEnterEvent *e)
+{
+    if (e->mimeData()->hasUrls()) {
+        e->acceptProposedAction();
+    }
+}
+
+void CalibrationMain::dropEvent(QDropEvent *e)
+{
+    this->raise();
+    this->setFocus(Qt::ActiveWindowFocusReason);
+
+    for(const QUrl &url : e->mimeData()->urls())
+    {
+        const QString &fileName = url.toLocalFile();
+        //qDebug() << "Dropped file:" << fileName;
+
+        QFileInfo i(fileName);
+        // Accepting PNG and GIF only
+        if(i.suffix().compare("png", Qt::CaseInsensitive) &&
+           i.suffix().compare("gif", Qt::CaseInsensitive))
+            continue;
+
+        openFile(fileName);
+        break;
+    }
+}
+
 void CalibrationMain::languageSwitched()
 {
     ui->retranslateUi(this);
     translateMenus();
+}
+
+void CalibrationMain::windowDisable(bool d)
+{
+    ui->centralwidget->setEnabled(!d);
+    ui->menuSave->setEnabled(!d);
+    ui->menuEdit->setEnabled(!d);
+    ui->menuImport_Export->setEnabled(!d);
 }
 
 void CalibrationMain::frameSelected(int x, int y)
@@ -349,11 +378,30 @@ void CalibrationMain::translateMenus()
         m_toolsExportHitboxMap->setText(tr("Export a map of hitboxes as image..."));
         m_toolsExportHitboxMap->setToolTip(tr("Useful for tests or sprites creation from the scratch"));
     }
+
     if(m_toolsImport38A)
         m_toolsImport38A->setText(tr("Import data from SMBX-38A level..."));
 
     if(m_toolsExport38A)
         m_toolsExport38A->setText(tr("Export data into SMBX-38A level..."));
+
+
+    if(m_wallMenuNone)
+        m_wallMenuNone->setText(tr("None", "Display wall"));
+
+    if(m_wallMenuFloor)
+        m_wallMenuFloor->setText(tr("Floor", "Display wall"));
+    if(m_wallMenuFloorWallL)
+        m_wallMenuFloorWallL->setText(tr("Floor + left wall", "Display wall"));
+    if(m_wallMenuFloorWallR)
+        m_wallMenuFloorWallR->setText(tr("Floor + right wall", "Display wall"));
+
+    if(m_wallMenuCeiling)
+        m_wallMenuCeiling->setText(tr("Ceiling", "Display wall"));
+    if(m_wallMenuCeilingWallL)
+        m_wallMenuCeilingWallL->setText(tr("Ceiling + left wall", "Display wall"));
+    if(m_wallMenuCeilingWallR)
+        m_wallMenuCeilingWallR->setText(tr("Ceiling + right wall", "Display wall"));
 }
 
 
@@ -426,17 +474,13 @@ void CalibrationMain::on_OffsetY_valueChanged(int arg1)
 
 void CalibrationMain::on_CopyButton_clicked()
 {
-    m_clipboard = m_calibration.frames[ {m_frmX, m_frmY}];
+    on_actionCopy_settings_triggered();
 }
 
 
 void CalibrationMain::on_PasteButton_clicked()
 {
-    m_calibration.frames[ {m_frmX, m_frmY}] = m_clipboard;
-
-    updateControls();
-    updateScene();
-    m_wasModified = true;
+    on_actionPaste_settings_triggered();
 }
 
 void CalibrationMain::on_isDuckFrame_clicked(bool checked)
@@ -448,33 +492,15 @@ void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 
 
 
-bool CalibrationMain::on_OpenSprite_clicked()
+void CalibrationMain::on_OpenSprite_clicked()
 {
-    if(!trySave())
-        return false;
-
-    QString fileName_DATA = QFileDialog::getOpenFileName(this,
-                            tr("Open sprite file"), (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
-                            tr("GIF and PNG images", "Type of image file to open") + " (*.png *.gif);;" +
-                            tr("GIF images", "Type of image file to open") + " (*.gif);;" +
-                            tr("PNG images", "Type of image file to open") + " (*.png);;" +
-                            tr("SMBX playble sprite", "Type of image file to open") + " (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;" +
-                            tr("All Files", "Type of image file to open") + " (*.*)", nullptr, c_fileDialogOptions);
-
-    if(fileName_DATA == nullptr)
-        return false;
-
-    openFile(fileName_DATA);
-    m_wasModified = false;
-    return true;
+    openSprite();
 }
 
 
 void CalibrationMain::on_AboutButton_clicked()
 {
-    about dialog(this);
-    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    dialog.exec();
+    on_actionAbout_triggered();
 }
 
 
@@ -482,22 +508,7 @@ void CalibrationMain::on_AboutButton_clicked()
 // Copy current sizes and offsets to ALL frames
 void CalibrationMain::on_applyToAll_clicked()
 {
-    int reply = QMessageBox::question(this,
-                                      tr("Warning"),
-                                      tr("This action will copy settings of current hitbox to all other frames. "
-                                         "Settings of all other frames will be overriden with settings of a current frame. "
-                                         "Do you want to continue?"),
-                                      QMessageBox::Yes | QMessageBox::No);
-    if(reply != QMessageBox::Yes)
-        return;
-
-    m_clipboard = m_calibration.frames[ {m_frmX, m_frmY}];
-
-    for(int x = 0; x < 10; x++)
-        for(int y = 0; y < 10; y++)
-            m_calibration.frames[ {x, y}] = m_clipboard;
-
-    m_wasModified = true;
+    on_actionApplyToAll_triggered();
 }
 
 bool CalibrationMain::trySave()
@@ -584,41 +595,68 @@ void CalibrationMain::on_AnimatorButton_clicked()
 void CalibrationMain::on_calibrateImage_clicked()
 {
     m_matrix->hide();
-
-    ImageCalibrator imgCalibrator(&m_calibration, this);
-    imgCalibrator.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    if(!imgCalibrator.init(m_currentFile))
-        return;
-
-    imgCalibrator.m_scene = m_scene;
-
     this->hide();
-    imgCalibrator.exec();
+
+    ImageCalibrator *imgCalibrator = new ImageCalibrator(&m_calibration, this);
+    imgCalibrator->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    if(!imgCalibrator->init(m_currentFile))
+    {
+        delete imgCalibrator;
+        this->show();
+        this->raise();
+        return;
+    }
+
+    imgCalibrator->exec();
+    imgCalibrator->unInit();
+
+    auto oldFrames = m_calibration.frames;
+
+    openFile(imgCalibrator->m_targetPath);
+    // Do update hitboxes in only condition when calibrated image got been saved
+    // Otherwise, reset back the previous state
+    if(imgCalibrator->hitboxNeedSave())
+    {
+        m_calibration.frames = oldFrames;
+        m_wasModified = true;
+        saveConfig(m_calibration, m_currentFile, false, &m_calibrationDefault);
+        m_wasModified = false;
+    }
+
+    delete imgCalibrator;
+
     this->show();
     this->raise();
-    openFile(imgCalibrator.m_targetPath);
+    updateControls();
+    updateScene();
 }
 
 
 
-void CalibrationMain::on_grabOffsetX_valueChanged(int arg1)
+void CalibrationMain::on_grabOffsetX_valueChanged(int)
 {
     if(ui->grabOffsetX->hasFocus())
-    {
-        m_calibration.grabOffsetX = arg1;
-        enableFrame();
-        updateScene();
-    }
+        grabOffsetXupdate();
 }
 
-void CalibrationMain::on_grabOffsetY_valueChanged(int arg1)
+void CalibrationMain::on_grabOffsetY_valueChanged(int)
 {
     if(ui->grabOffsetY->hasFocus())
-    {
-        m_calibration.grabOffsetY = arg1;
-        enableFrame();
-        updateScene();
-    }
+        grabOffsetYupdate();
+}
+
+void CalibrationMain::grabOffsetXupdate()
+{
+    m_calibration.grabOffsetX = ui->grabOffsetX->value();
+    enableFrame();
+    updateScene();
+}
+
+void CalibrationMain::grabOffsetYupdate()
+{
+    m_calibration.grabOffsetY = ui->grabOffsetY->value();
+    enableFrame();
+    updateScene();
 }
 
 void CalibrationMain::enableFrame()
@@ -665,72 +703,8 @@ void CalibrationMain::updateControls()
 
 void CalibrationMain::updateScene()
 {
-    int x, y, h, w, relX, relY;
-    bool isRight;
-    auto &frame = m_calibration.frames[ {m_frmX, m_frmY}];
-    x = frame.offsetX;
-    y = frame.offsetY;
-    h = frame.isDuck ? m_calibration.frameHeightDuck : m_calibration.frameHeight;
-    w = m_calibration.frameWidth;
-    isRight = frame.isRightDir;
-
-    relX = m_frameBox_gray.scenePos().x();
-    relY = m_frameBox_gray.scenePos().y();
-
-    m_hitBox_green.setPos(relX + x,
-                          relY + y);
-    m_hitBox_green.setRect(0.0, 0.0, w, h);
-
-    relX = m_hitBox_green.scenePos().x();
-    relY = m_hitBox_green.scenePos().y();
-
-    if(m_calibration.grabOverTop)
-    {
-        m_grabLineX.setLine(relX,
-                            relY - 1,
-                            relX + w, relY - 1);
-
-        m_grabLineY.setLine(relX + w / 2,
-                            relY - 1,
-
-                            relX + w / 2,
-                            relY - 21);
-
-        m_grabLineX.setVisible(frame.showGrabItem);
-        m_grabLineY.setVisible(frame.showGrabItem);
-
-    }
-    else
-    {
-        m_grabLineX.setLine(relX + (isRight ? 0 : w) + m_calibration.grabOffsetX * (isRight ? 1 : -1),
-                            relY + h / 2 + m_calibration.grabOffsetY,
-                            relX + (isRight ? 0 : w) + m_calibration.grabOffsetX * (isRight ? 1 : -1) + (isRight ? 20 : -20),
-                            relY + h / 2 + m_calibration.grabOffsetY);
-
-        m_grabLineY.setLine(relX + (isRight ? 0 : w) + m_calibration.grabOffsetX * (isRight ? 1 : -1),
-                            relY + h / 2 + m_calibration.grabOffsetY,
-
-                            relX + (isRight ? 0 : w) + m_calibration.grabOffsetX * (isRight ? 1 : -1),
-                            relY + h / 2 + m_calibration.grabOffsetY - 20);
-
-        m_grabLineX.setVisible(frame.showGrabItem);
-        m_grabLineY.setVisible(frame.showGrabItem);
-    }
-
-    m_mountItem.setVisible(frame.isMountRiding);
-
-    if(frame.isMountRiding)
-    {
-        auto &pm = frame.isDuck ? m_mountDuckPixmap : m_mountPixmap;
-        int mw = pm.width();
-        int mh = pm.height() / 2;
-
-        m_mountItem.setPixmap(pm.copy(0, isRight ? mh : 0, mw, mh));
-
-        x = m_hitBox_green.scenePos().x() + (w / 2) - (mw / 2);
-        y = m_hitBox_green.scenePos().y() + h - mh + 2;
-        m_mountItem.setPos(x, y);
-    }
+    ui->preview->setGlobalSetup(m_calibration);
+    ui->preview->setFrameSetup(m_calibration.frames[{m_frmX, m_frmY}]);
 }
 
 void CalibrationMain::initScene()
@@ -738,15 +712,10 @@ void CalibrationMain::initScene()
     m_frmX = ui->FrameX->value();
     m_frmY = ui->FrameY->value();
 
-    m_framePos.setX(m_frmX * 100);
-    m_framePos.setY(m_frmY * 100);
+    int cellWidth = m_xImageSprite.width() / m_calibration.matrixWidth;
+    int cellHeight = m_xImageSprite.height() / m_calibration.matrixHeight;
 
-    QRectF rect = ui->PreviewGraph->scene()->sceneRect();
-
-    m_frameBox_gray.setPos(rect.width() / 2 - 50, rect.height() / 2 - 50);
-    m_currentPixmap = m_xImageSprite.copy(QRect(m_framePos.x(), m_framePos.y(), 100, 100));
-    m_currentImageItem.setPixmap(QPixmap(m_currentPixmap));
-    m_currentImageItem.setPos(m_frameBox_gray.scenePos().x(), m_frameBox_gray.scenePos().y());
+    ui->preview->setImage(m_xImageSprite.copy(QRect(m_frmX * cellWidth, m_frmY * cellHeight, cellWidth, cellHeight)));
 }
 
 void CalibrationMain::on_grabTop_clicked()
@@ -762,3 +731,214 @@ void CalibrationMain::on_grabSide_clicked()
     enableFrame();
     updateScene();
 }
+
+void CalibrationMain::on_resetScroll_clicked()
+{
+    on_actionResetScroll_triggered();
+}
+
+
+void CalibrationMain::on_bgColor_clicked()
+{
+    QColor res = QColorDialog::getColor(ui->preview->getBgColor(), this, tr("Background color"));
+    if(res.isValid())
+        ui->preview->setBgColor(res);
+}
+
+
+void CalibrationMain::on_actionOpen_triggered()
+{
+    openSprite();
+}
+
+
+void CalibrationMain::on_actionQuit_triggered()
+{
+    this->close();
+}
+
+
+void CalibrationMain::on_actionSaveSameDir_triggered()
+{
+    saveConfig(m_calibration, m_currentFile, false, &m_calibrationDefault);
+    m_wasModified = false;
+}
+
+
+void CalibrationMain::on_actionSaveCustomDir_triggered()
+{
+    if(saveConfig(m_calibration, m_currentFile, true, &m_calibrationDefault))
+        m_wasModified = false;
+}
+
+
+void CalibrationMain::on_actionImport38A_triggered()
+{
+    if(!trySave())
+        return;
+
+    QString fileName_DATA = QFileDialog::getOpenFileName(this,
+                            tr("Open SMBX-38A level file"),
+                            (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
+                            tr("SMBX-38A level files", "Type of file to open") + " (*.lvl);;" +
+                            tr("All Files", "Type of file to open") + " (*.*)", nullptr, c_fileDialogOptions);
+
+    if(fileName_DATA == nullptr)
+        return;
+
+    QFileInfo s(m_currentFile);
+
+    if(!importFrom38A(m_calibration, s.fileName(), fileName_DATA))
+    {
+        QMessageBox::warning(this,
+                             tr("File opening error"),
+                             tr("Can't import calibration data from this file: the file doesn't "
+                                "contain calibration settings, or this file is not a valid SMBX-38A level file."),
+                             QMessageBox::Ok);
+        return;
+    }
+
+    initScene();
+    updateControls();
+    updateScene();
+
+    m_wasModified = false;
+}
+
+
+void CalibrationMain::on_actionExport38A_triggered()
+{
+    QString san_ba_level = QFileDialog::getOpenFileName(this,
+                           tr("Export calibration settings into SMBX-38A level file"),
+                           (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
+                           "*.lvl", nullptr, c_fileDialogOptions);
+    if(san_ba_level.isEmpty())
+        return;
+
+    QFileInfo s(m_currentFile);
+
+    if(!exportTo38A(m_calibration, s.fileName(), san_ba_level))
+    {
+        QMessageBox::warning(this,
+                             tr("File saving error"),
+                             tr("Can't export calibration data into this file: this is not a valid SMBX-38A level file."),
+                             QMessageBox::Ok);
+        return;
+    }
+
+    ui->statusBar->showMessage(tr("The level file has been patched!") + "\n" + san_ba_level, 5000);
+}
+
+
+void CalibrationMain::on_actionExportHitboxMap_triggered()
+{
+    exportHitboxesMap();
+}
+
+
+void CalibrationMain::on_actionAbout_triggered()
+{
+    about dialog(this);
+    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    dialog.exec();
+}
+
+void CalibrationMain::on_actionResetScroll_triggered()
+{
+    ui->preview->resetScroll();
+}
+
+
+void CalibrationMain::on_actionCopy_settings_triggered()
+{
+    m_clipboard = m_calibration.frames[{m_frmX, m_frmY}];
+}
+
+
+void CalibrationMain::on_actionPaste_settings_triggered()
+{
+    m_calibration.frames[ {m_frmX, m_frmY}] = m_clipboard;
+
+    updateControls();
+    updateScene();
+    m_wasModified = true;
+}
+
+
+void CalibrationMain::on_actionApplyToAll_triggered()
+{
+    int reply = QMessageBox::question(this,
+                                      tr("Warning"),
+                                      tr("This action will copy settings of current hitbox to all other frames. "
+                                         "Settings of all other frames will be overriden with settings of a current frame. "
+                                         "Do you want to continue?"),
+                                      QMessageBox::Yes | QMessageBox::No);
+    if(reply != QMessageBox::Yes)
+        return;
+
+    m_clipboard = m_calibration.frames[ {m_frmX, m_frmY}];
+
+    for(int x = 0; x < m_calibration.matrixWidth; x++)
+        for(int y = 0; y < m_calibration.matrixHeight; y++)
+            m_calibration.frames[ {x, y}] = m_clipboard;
+
+    m_wasModified = true;
+}
+
+
+void CalibrationMain::on_actionWikiPage_triggered()
+{
+    QDesktopServices::openUrl(QUrl("https://wohlsoft.ru/pgewiki/Playable_character_Calibrator"));
+}
+
+void CalibrationMain::updateCompatMode()
+{
+    m_compatMenuMoondust->setChecked(false);
+    m_compatMenuTheXTech->setChecked(false);
+    m_compatMenuSMBX2->setChecked(false);
+    m_compatMenu38A->setChecked(false);
+
+    switch(m_calibration.compatProfile)
+    {
+    case Calibration::COMPAT_UNSPECIFIED:
+        ui->compatMode->setText(tr("Compatibility: %1").arg(tr("Unspecified", "Unspecified compatibility mode")));
+        ui->compatMode->setIcon(QIcon(":/compat/unspecified.png"));
+        break;
+
+    case Calibration::COMPAT_MOONDUST:
+        m_compatMenuMoondust->setChecked(true);
+        ui->compatMode->setText(tr("Compatibility: %1").arg("Moondust"));
+        ui->compatMode->setIcon(m_compatMenuMoondust->icon());
+        break;
+
+    case Calibration::COMPAT_THEXTECH:
+        m_compatMenuTheXTech->setChecked(true);
+        ui->compatMode->setText(tr("Compatibility: %1").arg("TheXTech"));
+        ui->compatMode->setIcon(m_compatMenuTheXTech->icon());
+        break;
+
+    case Calibration::COMPAT_SMBX38A:
+        m_compatMenuSMBX2->setChecked(true);
+        ui->compatMode->setText(tr("Compatibility: %1").arg("SMBX-38A"));
+        ui->compatMode->setIcon(m_compatMenuSMBX2->icon());
+        break;
+
+    case Calibration::COMPAT_SMBX2:
+        m_compatMenu38A->setChecked(true);
+        ui->compatMode->setText(tr("Compatibility: %1").arg("LunaLua/SMBX2"));
+        ui->compatMode->setIcon(m_compatMenu38A->icon());
+        break;
+    }
+}
+
+void CalibrationMain::on_actionBrowseSpriteDirectory_triggered()
+{
+    if(!m_currentFile.isEmpty())
+    {
+        QFileInfo i(m_currentFile);
+        auto d = i.absoluteDir();
+        if(d.exists())
+            QDesktopServices::openUrl(QUrl("file:///" + d.absolutePath()));
+    }
+}
+

@@ -29,7 +29,8 @@ struct CalibrationFrame
             used == o.used &&
             isDuck == o.isDuck &&
             isRightDir == o.isRightDir &&
-            showGrabItem == o.showGrabItem
+            showGrabItem == o.showGrabItem &&
+            isMountRiding == o.isMountRiding
         ;
     }
 };
@@ -74,6 +75,16 @@ struct Calibration
     int grabOffsetX = 0;
     int grabOffsetY = 0;
     bool grabOverTop = false;
+
+    enum CalibrationCompat
+    {
+        COMPAT_UNSPECIFIED = 0,
+        COMPAT_MOONDUST,
+        COMPAT_THEXTECH,
+        COMPAT_SMBX2,
+        COMPAT_SMBX38A
+    };
+    int compatProfile = COMPAT_UNSPECIFIED;
 
     typedef QPair<int /*x*/, int /*y*/> FramePos;
     typedef QMap<FramePos, CalibrationFrame> FramesSet;

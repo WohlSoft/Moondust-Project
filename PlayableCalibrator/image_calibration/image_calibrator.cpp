@@ -13,22 +13,82 @@
 ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
     QDialog(parent),
     m_conf(conf),
-    m_scene(nullptr),
     m_frmX(0),
     m_frmY(0),
-    m_imgFrame(nullptr),
-    m_phsFrame(nullptr),
-    m_physics(nullptr),
     ui(new Ui::ImageCalibrator),
     m_lockUI(false)
 {
     m_mw = qobject_cast<CalibrationMain*>(parent);
     Q_ASSERT(m_mw);
+    Q_ASSERT(conf);
     ui->setupUi(this);
+
+    ui->preview->setAllowScroll(true);
+    QObject::connect(ui->preview, &FrameTuneScene::deltaX,
+                     this, [this](Qt::MouseButton button, int delta)->void
+    {
+        switch(button)
+        {
+        case Qt::LeftButton:
+            if(ui->hitboxMove->isChecked())
+            {
+                m_conf->frames[{m_frmX, m_frmY}].offsetX += delta;
+                m_hitboxModified = true;
+            }
+            ui->OffsetX->setValue(ui->OffsetX->value() - delta);
+            break;
+        case Qt::RightButton:
+            ui->CropW->setValue(ui->CropW->value() - delta);
+            break;
+        default:
+            break;
+        }
+    });
+
+    QObject::connect(ui->preview, &FrameTuneScene::deltaY,
+                     this, [this](Qt::MouseButton button, int delta)->void
+    {
+        switch(button)
+        {
+        case Qt::LeftButton:
+            if(ui->hitboxMove->isChecked())
+            {
+                m_conf->frames[{m_frmX, m_frmY}].offsetY += delta;
+                m_hitboxModified = true;
+            }
+            ui->OffsetY->setValue(ui->OffsetY->value() - delta);
+            break;
+        case Qt::RightButton:
+            ui->CropH->setValue(ui->CropH->value() - delta);
+            break;
+        default:
+            break;
+        }
+    });
+
+    QObject::connect(ui->preview, &FrameTuneScene::mouseReleased,
+                     this, [this]()->void
+    {
+        m_matrix->updateScene(generateTarget());
+    });
+
+    m_matrix = new Matrix(conf, m_mw, this);
+    m_matrix->setModal(false);
+    m_matrix->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    m_matrix->allowEnableDisable(false);
+    m_matrix->changeGridSize(conf->matrixWidth, conf->matrixHeight);
+
+    QObject::connect(m_matrix, &Matrix::frameSelected,
+                     this, &ImageCalibrator::frameSelected);
+
+    QObject::connect(m_matrix, &Matrix::referenceSelected,
+                     this, &ImageCalibrator::referenceSelected);
 }
 
 ImageCalibrator::~ImageCalibrator()
 {
+    if(m_matrix)
+        m_matrix->close();
     delete ui;
 }
 
@@ -65,44 +125,9 @@ bool ImageCalibrator::init(QString imgPath)
     m_gifPathM =    dirPath + imgBaseName + "m.gif";
     m_iniPath =     dirPath + imgBaseName + "_orig_calibrates.ini";
 
-    //generate scene
-    MouseScene *sc = new MouseScene(ui->PreviewGraph);
-
-    QObject::connect(sc, &MouseScene::deltaX,
-                     this, [this](Qt::MouseButton button, int delta)->void
-    {
-        switch(button)
-        {
-        case Qt::LeftButton:
-            ui->OffsetX->setValue(ui->OffsetX->value() - delta);
-            break;
-        case Qt::RightButton:
-            ui->CropW->setValue(ui->CropW->value() - delta);
-            break;
-        default:
-            break;
-        }
-    });
-
-    QObject::connect(sc, &MouseScene::deltaY,
-                     this, [this](Qt::MouseButton button, int delta)->void
-    {
-        switch(button)
-        {
-        case Qt::LeftButton:
-            ui->OffsetY->setValue(ui->OffsetY->value() - delta);
-            break;
-        case Qt::RightButton:
-            ui->CropH->setValue(ui->CropH->value() - delta);
-            break;
-        default:
-            break;
-        }
-    });
-
-    ui->PreviewGraph->setScene(sc);
     m_frmX = 0;
     m_frmY = 0;
+
     CalibrationFrame xyCell;
     xyCell.offsetX = 0;
     xyCell.offsetY = 0;
@@ -112,6 +137,7 @@ bool ImageCalibrator::init(QString imgPath)
     xyCell.isDuck = false;
     xyCell.isRightDir = false;
     xyCell.showGrabItem = false;
+
     // Write default values
     QVector<CalibrationFrame > xRow;
 
@@ -127,27 +153,20 @@ bool ImageCalibrator::init(QString imgPath)
 
     loadCalibrates();
 
-    m_imgFrame = sc->addPixmap(m_sprite.copy(m_frmX * 100, m_frmY * 100, 100, 100));
-    m_imgFrame->setZValue(0);
-    m_imgFrame->setPos(0, 0);
-
-    m_phsFrame = sc->addRect(0, 0, 99, 99, QPen(QBrush(Qt::gray), 1));
-    m_phsFrame->setZValue(-2);
-    m_phsFrame->setOpacity(0.5);
-    m_phsFrame->setPos(0, 0);
-
-    m_physics = sc->addRect(0, 0, 99, 99, QPen(QBrush(Qt::green), 1));
-    m_physics->setZValue(4);
-    m_physics->setPos(0, 0);
-
-    m_mountPixmap = QPixmap(":/images/mount.png");
-    m_mountDuckPixmap = QPixmap(":/images/mount_duck.png");
-    m_mountItem = sc->addPixmap(m_mountPixmap);
-    m_mountItem->setZValue(-9);
-    m_mountItem->setVisible(false);
-
     updateScene();
     return true;
+}
+
+void ImageCalibrator::unInit()
+{
+    delete m_matrix;
+    m_matrix = nullptr;
+}
+
+void ImageCalibrator::closeEvent(QCloseEvent *)
+{
+    if(m_matrix)
+        m_matrix->close();
 }
 
 
@@ -167,6 +186,28 @@ void ImageCalibrator::on_FrameY_valueChanged(int arg1)
     m_frmY = arg1;
     updateControls();
     updateScene();
+}
+
+void ImageCalibrator::frameSelected(int x, int y)
+{
+    m_frmX = x;
+    m_frmY = y;
+    m_lockUI = true;
+    ui->FrameX->setValue(m_frmX);
+    ui->FrameY->setValue(m_frmY);
+    updateControls();
+    m_lockUI = false;
+    updateScene();
+}
+
+void ImageCalibrator::referenceSelected(int x, int y)
+{
+    ui->preview->setRefImage(getFrame(x,
+                                      y,
+                                      m_imgOffsets[x][y].offsetX,
+                                      m_imgOffsets[x][y].offsetY,
+                                      static_cast<int>(m_imgOffsets[x][y].w),
+                                      static_cast<int>(m_imgOffsets[x][y].h)));
 }
 
 void ImageCalibrator::on_OffsetX_valueChanged(int arg1)
@@ -201,26 +242,23 @@ void ImageCalibrator::on_CropH_valueChanged(int arg1)
     updateScene();
 }
 
+bool ImageCalibrator::hitboxModified() const
+{
+    return m_hitboxModified;
+}
+
+bool ImageCalibrator::hitboxNeedSave() const
+{
+    return m_hitboxNeedSave;
+}
+
 void ImageCalibrator::on_Matrix_clicked()
 {
-    Matrix dialog(m_conf, m_mw, this);
-    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    dialog.setFrame(m_frmX, m_frmY);
-    dialog.updateScene(generateTarget());
-
-    if(dialog.exec() == QDialog::Accepted)
-    {
-        m_frmX = dialog.m_frameX;
-        m_frmY = dialog.m_frameY;
-        m_lockUI = true;
-        ui->FrameX->setValue(m_frmX);
-        ui->FrameY->setValue(m_frmY);
-        updateControls();
-        m_lockUI = false;
-    }
-
-    this->raise();
-    updateScene();
+    m_matrix->show();
+    QRect g = this->frameGeometry();
+    m_matrix->move(g.right(), g.top());
+    m_matrix->update();
+    m_matrix->repaint();
 }
 
 void ImageCalibrator::on_Reset_clicked()
@@ -287,42 +325,20 @@ void ImageCalibrator::updateControls()
 
 void ImageCalibrator::updateScene()
 {
-    auto &f = m_conf->frames[{m_frmX, m_frmY}];
-    m_imgFrame->setPixmap(
-        getFrame(m_frmX,
-                 m_frmY,
-                 m_imgOffsets[m_frmX][m_frmY].offsetX,
-                 m_imgOffsets[m_frmX][m_frmY].offsetY,
-                 static_cast<int>(m_imgOffsets[m_frmX][m_frmY].w),
-                 static_cast<int>(m_imgOffsets[m_frmX][m_frmY].h))
-    );
+    ui->preview->setImage(getFrame(m_frmX,
+                                   m_frmY,
+                                   m_imgOffsets[m_frmX][m_frmY].offsetX,
+                                   m_imgOffsets[m_frmX][m_frmY].offsetY,
+                                   static_cast<int>(m_imgOffsets[m_frmX][m_frmY].w),
+                                   static_cast<int>(m_imgOffsets[m_frmX][m_frmY].h)));
 
-    int fw = m_conf->frameWidth;
-    int fh = (f.isDuck ? m_conf->frameHeightDuck : m_conf->frameHeight);
-
-    m_physics->setRect(f.offsetX,
-                       f.offsetY,
-                       fw - 1,
-                       fh - 1);
-
-    m_mountItem->setVisible(f.isMountRiding);
-
-    if(f.isMountRiding)
-    {
-        auto &pm = f.isDuck ? m_mountDuckPixmap : m_mountPixmap;
-        int mw = pm.width();
-        int mh = pm.height() / 2;
-
-        m_mountItem->setPixmap(pm.copy(0, f.isRightDir ? mh : 0, mw, mh));
-
-        int x = f.offsetX + (fw / 2) - (mw / 2);
-        int y = f.offsetY + fh - mh + 2;
-        m_mountItem->setPos(x, y);
-    }
+    ui->preview->setGlobalSetup(*m_conf);
+    ui->preview->setFrameSetup(m_conf->frames[{m_frmX, m_frmY}]);
 }
 
 void ImageCalibrator::saveCalibrates()
 {
+    // FIXME: Make grid size and frame size being dynamical, not fixed 100x100!!!
     QSettings conf(m_iniPath, QSettings::IniFormat);
 
     for(int i = 0; i < 10; i++)
@@ -337,10 +353,14 @@ void ImageCalibrator::saveCalibrates()
             conf.endGroup();
         }
     }
+
+    if(m_hitboxModified)
+        m_hitboxNeedSave = true;
 }
 
 void ImageCalibrator::loadCalibrates()
 {
+    // FIXME: Make grid size and frame size being dynamical, not fixed 100x100!!!
     QSettings conf(m_iniPath, QSettings::IniFormat);
 
     for(int i = 0; i < 10; i++)
@@ -359,6 +379,7 @@ void ImageCalibrator::loadCalibrates()
 
 QPixmap ImageCalibrator::generateTarget()
 {
+    // FIXME: Make grid size and frame size being dynamical, not fixed 100x100!!!
     QPixmap target(1000, 1000);
     target.fill(Qt::transparent);
     QPainter x(&target);
@@ -381,6 +402,7 @@ QPixmap ImageCalibrator::generateTarget()
 
 QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY, int cW, int cH)
 {
+    // FIXME: Make grid size and frame size being dynamical, not fixed 100x100!!!
     int pX = 0, pY = 0, pXo = 0, pYo = 0;
     int X, Y;
     X = x * 100 + oX;
@@ -405,12 +427,33 @@ QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY, int cW, int cH)
     qDebug() << pX << 100 - pXo;
     qDebug() << pY << 100 - pYo;
     qDebug() << X - pX << Y - pY << 100 - pXo << 100 - pYo;
+
     QPixmap frame(100, 100);
     frame.fill(Qt::transparent);
+
     QPainter pt(&frame);
-    pt.drawPixmap(-pX, -pY, 100 - pXo - cW, 100 - pYo - cH,
-                  m_sprite.copy(X - pX,
-                                Y - pY, 100 - pXo - cW, 100 - pYo - cH));
+    pt.drawPixmap(QRect(-pX,
+                        -pY,
+                        100 - pXo - cW,
+                        100 - pYo - cH),
+                  m_sprite,
+                  QRect(X - pX,
+                        Y - pY,
+                        100 - pXo - cW,
+                        100 - pYo - cH));
     pt.end();
+
     return frame;
 }
+
+void ImageCalibrator::on_refOpacity_sliderMoved(int position)
+{
+    ui->preview->setRefOpacity(position);
+}
+
+
+void ImageCalibrator::on_refClear_clicked()
+{
+    ui->preview->clearRef();
+}
+

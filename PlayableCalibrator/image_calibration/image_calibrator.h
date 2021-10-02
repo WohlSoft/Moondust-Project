@@ -16,7 +16,7 @@ namespace Ui
 }
 
 class CalibrationMain;
-class MouseScene;
+class Matrix;
 
 class ImageCalibrator : public QDialog
 {
@@ -25,17 +25,28 @@ class ImageCalibrator : public QDialog
     QList<QVector<CalibrationFrame > > m_imgOffsets;
     Calibration *m_conf = nullptr;
     CalibrationMain *m_mw = nullptr;
+
+    Matrix *m_matrix = nullptr;
 public:
     explicit ImageCalibrator(Calibration *conf, QWidget *parent = nullptr);
     ~ImageCalibrator();
 
     bool init(QString imgPath);
-    MouseScene *m_scene = nullptr;
+    void unInit();
     QString m_targetPath;
+
+    bool hitboxModified() const;
+    bool hitboxNeedSave() const;
+
+protected:
+    void closeEvent(QCloseEvent *e);
 
 private slots:
     void on_FrameX_valueChanged(int arg1);
     void on_FrameY_valueChanged(int arg1);
+    void frameSelected(int x, int y);
+    void referenceSelected(int x, int y);
+
     void on_OffsetX_valueChanged(int arg1);
     void on_OffsetY_valueChanged(int arg1);
 
@@ -53,8 +64,10 @@ private slots:
     QPixmap getFrame(int x, int y, int oX, int oY, int cW, int cH);
 
     void on_CropW_valueChanged(int arg1);
-
     void on_CropH_valueChanged(int arg1);
+
+    void on_refOpacity_sliderMoved(int position);
+    void on_refClear_clicked();
 
 private:
     int m_frmX;
@@ -62,19 +75,15 @@ private:
 
     QPixmap m_sprite;
     QPixmap m_spriteOrig;
-    QGraphicsPixmapItem *m_imgFrame;
-    QGraphicsRectItem *m_phsFrame;
-    QGraphicsRectItem *m_physics;
-
-    QGraphicsPixmapItem *m_mountItem;
-    QPixmap             m_mountPixmap;
-    QPixmap             m_mountDuckPixmap;
 
     QString m_pngPath;
     QString m_gifPath;
     QString m_gifPathM;
     QString m_backupPath;
     QString m_iniPath;
+
+    bool m_hitboxModified = false;
+    bool m_hitboxNeedSave = false;
 
     Ui::ImageCalibrator *ui;
     bool m_lockUI;

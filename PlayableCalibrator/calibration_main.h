@@ -36,9 +36,8 @@ class CalibrationMain;
 }
 
 class Matrix;
-class MouseScene;
 
-class CalibrationMain : public QWidget
+class CalibrationMain : public QMainWindow
 {
     Q_OBJECT
 
@@ -57,9 +56,6 @@ public:
 
     void translateMenus();
 
-    //! Scene for drawing of playable character preview
-    MouseScene *m_scene;
-
     void fillDefaultAniData(Calibration &dst);
     void loadSpriteAniEntry(Calibration &dst, QSettings &set, QString name);
     void saveSpriteAniData(Calibration &src, QSettings &set, Calibration *merge_with);
@@ -70,6 +66,7 @@ public:
     bool importFrom38A(Calibration &dst, QString imageName, QString fileName);
     bool exportTo38A(Calibration &src, QString imageName, QString fileName);
     void openFile(QString fileName);
+    bool openSprite();
 
     void createDirs();
 
@@ -80,8 +77,13 @@ public:
 protected:
     void closeEvent(QCloseEvent *event);
 
+    void dragEnterEvent(QDragEnterEvent *e);
+    void dropEvent(QDropEvent *e);
+
 private slots:
     void languageSwitched();
+
+    void windowDisable(bool d);
 
     void frameSelected(int x, int y);
 
@@ -102,6 +104,9 @@ private slots:
     void on_grabOffsetX_valueChanged(int arg1);
     void on_grabOffsetY_valueChanged(int arg1);
 
+    void grabOffsetXupdate();
+    void grabOffsetYupdate();
+
     void on_grabTop_clicked();
     void on_grabSide_clicked();
 
@@ -116,7 +121,7 @@ private slots:
     void on_CopyButton_clicked();
     void on_PasteButton_clicked();
 
-    bool on_OpenSprite_clicked();
+    void on_OpenSprite_clicked();
 
     void on_applyToAll_clicked();
 
@@ -126,6 +131,25 @@ private slots:
     void enableFrame();
     void updateScene();
 
+    void on_resetScroll_clicked();
+    void on_bgColor_clicked();
+
+    void on_actionOpen_triggered();
+    void on_actionQuit_triggered();
+    void on_actionSaveSameDir_triggered();
+    void on_actionSaveCustomDir_triggered();
+    void on_actionImport38A_triggered();
+    void on_actionExport38A_triggered();
+    void on_actionExportHitboxMap_triggered();
+    void on_actionAbout_triggered();
+    void on_actionResetScroll_triggered();
+    void on_actionCopy_settings_triggered();
+    void on_actionPaste_settings_triggered();
+    void on_actionApplyToAll_triggered();
+    void on_actionWikiPage_triggered();
+
+    void on_actionBrowseSpriteDirectory_triggered();
+
 private:
     int m_frmX = 0;
     int m_frmY = 0;
@@ -133,21 +157,24 @@ private:
     bool m_lockControls = false;
     bool m_wasModified = false;
 
-    QPoint m_framePos;
-    QGraphicsPixmapItem m_currentImageItem;
-    QPixmap             m_currentPixmap;
-    QGraphicsRectItem m_frameBox_gray;
-    QGraphicsRectItem m_hitBox_green;
-
-    QGraphicsPixmapItem m_mountItem;
-    QPixmap             m_mountPixmap;
-    QPixmap             m_mountDuckPixmap;
-
-    QGraphicsLineItem m_grabLineX;
-    QGraphicsLineItem m_grabLineY;
-
     Ui::CalibrationMain *ui;
     QString     m_titleCache;
+
+    QMenu       m_wallMenu;
+    QAction    *m_wallMenuNone = nullptr;
+    QAction    *m_wallMenuFloor = nullptr;
+    QAction    *m_wallMenuFloorWallL = nullptr;
+    QAction    *m_wallMenuFloorWallR = nullptr;
+    QAction    *m_wallMenuCeiling = nullptr;
+    QAction    *m_wallMenuCeilingWallL = nullptr;
+    QAction    *m_wallMenuCeilingWallR = nullptr;
+
+    QMenu       m_compatMenu;
+    QAction    *m_compatMenuMoondust = nullptr;
+    QAction    *m_compatMenuTheXTech = nullptr;
+    QAction    *m_compatMenuSMBX2 = nullptr;
+    QAction    *m_compatMenu38A = nullptr;
+    void        updateCompatMode();
 
     QMenu       m_saveMenu;
     QAction    *m_saveMenuQuickSave = nullptr;

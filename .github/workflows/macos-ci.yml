@@ -1,0 +1,144 @@
+name: macOS CI
+
+on:
+  push:
+    branches:
+      - master
+      - stable
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }} | ${{ matrix.config.build_type }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "x86_64",
+            os: macos-latest,
+            extra_path: "/Users/StaticQt/5.14.2/bin",
+            extra_options: "-DCMAKE_PREFIX_PATH=\"C:/Qt/5.6.3-i686/\" -DCMAKE_TOOLCHAIN_FILE=`pwd`/_common/ci_windows_mingw_toolchain_x32.cmake",
+            build_type: "Release",
+            upload_directory: "www/macosx/",
+            qt_download: "http://wohlsoft.ru/docs/Software/QtBuilds/qt-5-14-2-static-macosx-10-14-6.tar.bz2", qt_install_dir: "/Users/StaticQt/",
+            qt_ver: "5.14.2",
+            qt_dir: "/Users/StaticQt/5.14.2/bin",
+            qt_lib_dir: "/Users/StaticQt/5.14.2/lib"
+          }
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 3
+        submodules: recursive
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        brew install ninja cmake coreutils binutils gnu-sed lftp wget p7zip axel
+        git submodule init
+        git submodule update
+
+    - name: Download Qt
+      if: matrix.config.qt_download
+      uses: carlosperate/download-file-action@v1.0.3
+      with:
+        file-url: "${{ matrix.config.qt_download }}"
+        file-name: qt.tar.bz2
+
+    - name: Extract Qt
+      if: matrix.config.qt_install_dir
+      shell: bash
+      run: |
+        tar -xf qt.tar.bz2 -o"${{ matrix.config.qt_install_dir }}"
+
+    - name: Configure
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+            export QT_VER="${{ matrix.config.qt_ver }}"
+            export QT_PATH="${{ matrix.config.qt_dir }}"
+            export QT_LIB_PATH="${{ matrix.config.qt_lib_dir }}"
+
+            echo "# ==============Qt paths================" > _paths.sh;
+            echo "QT_PATH=\"/Users/StaticQt/${QT_VER}/bin/\"" >> _paths.sh;
+            echo "QT_LIB_PATH=\"/Users/StaticQt/${QT_VER}/lib/\"" >> _paths.sh;
+            echo "QMake=\"qmake\"" >> _paths.sh;
+            echo "LRelease=\"lrelease\"" >> _paths.sh;
+            echo "" >> _paths.sh;
+            chmod u+x _paths.sh;
+            echo "============== _paths.sh ================="
+            cat _paths.sh
+            echo "=========================================="
+            export PATH=${{ matrix.config.extra_path }}:${PATH}
+            echo "PATH environment: ${PATH}"
+        fi
+
+        echo "====================================="
+        qmake --version
+        echo "====================================="
+        gcc --version
+        echo "====================================="
+        git --version
+        echo "====================================="
+        cmake --version
+        echo "====================================="
+
+    - name: Build
+      shell: bash
+      run: |
+        export PATH=${{ matrix.config.qt_dir }}:${{ matrix.config.qt_lib_dir }}:/usr/local/opt/coreutils/libexec/gnubin:${PATH}
+        ./build.sh no-pause ninja deploy static-qt
+
+    - name: Install
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+          export QT_DIR="${{ matrix.config.qt_dir }}"
+          export QtDir="${{ matrix.config.qt_dir }}"
+        fi
+        export MAKEFLAGS=--keep-going
+        cmake --build build --target install --config ${{ matrix.config.build_type }}
+
+    - name: Deploy
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+          export QT_DIR="${{ matrix.config.qt_dir }}"
+          export QtDir="${{ matrix.config.qt_dir }}"
+        fi
+        export MAKEFLAGS=--keep-going
+        cmake --build build --target windeploy --config ${{ matrix.config.build_type }}
+        cmake --build build --target enable_portable
+        cmake --build build --target put_online_help
+        cmake --build build --target create_zip
+        cmake --build build --target create_zip_tools
+        cmake --build build --target create_zip_install
+        mkdir _packed
+        mv bin-cmake-release/_packed/*.zip _packed
+
+    - name: Deploy to builds.wohlsoft.ru
+      if: success() && github.event_name != 'pull_request'
+      shell: bash
+      run: |
+        if [[ ! -z "${{ matrix.config.extra_path }}" ]]; then
+          export PATH=${{ matrix.config.extra_path }}:${PATH}
+        fi
+        UPLOAD_LIST="set ssl:verify-certificate no;"
+        for q in ./_packed/*.zip; do
+            UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} $q;"
+        done
+        lftp -e "${UPLOAD_LIST} exit" -u ${{ secrets.builds_login }},${{ secrets.builds_password }} ${{ secrets.builds_host }}
+
+    - name: List Build Directory
+      if: always()
+      shell: bash
+      run: |
+        git status
+        ls -lR build

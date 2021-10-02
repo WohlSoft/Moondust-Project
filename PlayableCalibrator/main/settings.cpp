@@ -60,6 +60,7 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
         dst.grabOffsetX = conf.value("grab-offset-x", pMerge(grabOffsetX, 0)).toInt();
         dst.grabOffsetY = conf.value("grab-offset-y", pMerge(grabOffsetY, 0)).toInt();
         dst.grabOverTop = conf.value("over-top-grab", pMerge(grabOverTop, false)).toBool();
+        dst.compatProfile = conf.value("compat", pMerge(compatProfile, Calibration::COMPAT_UNSPECIFIED)).toInt();
     }
     conf.endGroup();
 
@@ -296,6 +297,7 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         conf.setValue("grab-offset-x", src.grabOffsetX);
         conf.setValue("grab-offset-y", src.grabOffsetY);
         conf.setValue("over-top-grab", src.grabOverTop);
+        conf.setValue("compat", src.compatProfile);
     }
     conf.endGroup();
 
@@ -304,28 +306,27 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
         auto pos = it.key();
         auto &frame = it.value();
 
-/* FIXME: Implement the "compatibility" menu to let users manage this rule:
- *  - Save all used frames for SMBX2 compatibility
- *  - Save only modified frames for needs of Moondust Engine and TheXTech to keep calibrations being compact
- */
-//        if(merge_with)
-//        {
-//            if(merge_with->frames.contains(pos) &&
-//               merge_with->frames[pos] == frame)
-//                continue;
-//        }
+        // Save only modified frames for needs of Moondust Engine and TheXTech to keep calibrations being compact
+        if((src.compatProfile == Calibration::COMPAT_MOONDUST ||
+            src.compatProfile == Calibration::COMPAT_THEXTECH) && merge_with)
+        {
+            if(merge_with->frames.contains(pos) &&
+               merge_with->frames[pos] == frame)
+                continue;
+        }
+        // Otherwise, save all used frames for SMBX2 compatibility
 
         if(!frame.used)
             continue;
 
         conf.beginGroup("frame-" + QString::number(pos.first) + "-" + QString::number(pos.second));
-        // Don't save width and height parameters!
-        //conf.setValue("height", (framesX[i][j].isDuck?frameHeightDuck:frameHeight));
-        //conf.setValue("width", frameWidth);
         conf.setValue("offsetX", frame.offsetX);
         conf.setValue("offsetY", frame.offsetY);
+
         // This field is no longer useful, the "usage" logic will use presence of the frame section in the file, however
-        conf.setValue("used", frame.used); // Keep it writing for backward compatibility with other applications
+        if(src.compatProfile == Calibration::COMPAT_SMBX2 || src.compatProfile == Calibration::COMPAT_UNSPECIFIED)
+            conf.setValue("used", frame.used); // Keep it writing for backward compatibility with other applications
+
         if(frame.isDuck)
             conf.setValue("duck", frame.isDuck);
         if(frame.isRightDir)
@@ -334,12 +335,13 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
             conf.setValue("showGrabItem", frame.showGrabItem);
         if(frame.isMountRiding)
             conf.setValue("isMountRiding", frame.isMountRiding);
+
         conf.endGroup();
     }
 
     saveSpriteAniData(src, conf, merge_with);
 
-    QMessageBox::information(this, tr("Saved"), tr("Configuration saved in file") + "\n" + ini_sprite);
+    ui->statusBar->showMessage(tr("Configuration saved in file") + "\n" + ini_sprite, 5000);
 
     return true;
 }
