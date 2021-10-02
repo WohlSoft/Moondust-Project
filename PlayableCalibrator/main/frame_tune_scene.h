@@ -23,6 +23,12 @@ class FrameTuneScene : public QFrame
     QPoint  m_scrollOffset;
     double  m_zoom = 1.0;
 
+    bool    m_drawGrid = true;
+    bool    m_drawMetaData = true;
+
+    //! Focus on hitbox instead of the left-top frame corder
+    bool    m_focusHitBox = false;
+
     double  m_refOpacity = 0.5;
 
     QColor  m_bgColor;
@@ -33,6 +39,8 @@ class FrameTuneScene : public QFrame
     bool    m_ducking = false;
     bool    m_showMount = false;
     bool    m_isRightDir = false;
+
+    bool    m_blockRepaint = false;
 
     bool    m_showGrabOffset = false;
     bool    m_grabTop = false;
@@ -57,8 +65,14 @@ public:
     void setGlobalSetup(const Calibration &calibration);
     void setFrameSetup(const CalibrationFrame &frame);
     void setAllowScroll(bool allowScroll);
+    void setDrawMetaData(bool en);
+    void setDrawGrid(bool en);
+    void setHitBoxFocus(bool en);
     void resetScroll();
     void setBgColor(QColor clr);
+
+    void setBlockRepaint(bool en);
+
     QColor getBgColor() const;
 
     enum Wall

@@ -30,22 +30,33 @@ Animator::Animator(Calibration &conf, QWidget *parent) :
     ui->setupUi(this);
 
     m_conf = &conf;
+    m_mw = qobject_cast<CalibrationMain*>(parent);
+    Q_ASSERT(m_mw);
+
+    m_noAnimate = QPixmap(":/images/NoAni.png");
+
+    ui->preview->setGlobalSetup(*m_conf);
 
     //Here will be read AniFrames from INI
 
-    m_aniScene = new AnimationScene(conf, parent);
-    m_aniScene->setSceneRect(0, 0,
-                             ui->AnimatorView->width() - 20,
-                             ui->AnimatorView->height() - 20);
+//    m_aniScene = new AnimationScene(conf, parent);
+//    m_aniScene->setSceneRect(0, 0,
+//                             ui->AnimatorView->width() - 20,
+//                             ui->AnimatorView->height() - 20);
 
-    ui->AnimatorView->setScene(m_aniScene);
+//    ui->AnimatorView->setScene(m_aniScene);
 
     m_aniStyle = "Idle";
     m_aniDir = 1; //0 - left, 1 - right
 
+    ui->preview->setDrawMetaData(false);
+
     rebuildAnimationsList();
 
     aniFindSet();
+
+    m_timer.setInterval(128);
+    QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
 }
 
 Animator::~Animator()
@@ -86,10 +97,11 @@ void Animator::aniFindSet()
 
     auto &frms = m_conf->animations[m_aniStyle];
 
-    if(m_aniDir == 1)
-        m_aniScene->setAnimation(frms.R);
-    else
-        m_aniScene->setAnimation(frms.L);
+    m_timer.stop();
+    m_currentAnimation = (m_aniDir == 1) ? frms.R : frms.L;
+    ui->preview->setAllowScroll(true);
+    setFrame(0);
+    m_timer.start();
 }
 
 void Animator::rebuildAnimationsList()
@@ -138,7 +150,7 @@ void Animator::on_directRight_clicked()
 
 void Animator::on_FrameSpeed_valueChanged(int arg1)
 {
-    m_aniScene->setFrameInterval(arg1);
+    m_timer.setInterval(arg1);
 }
 
 void Animator::on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
@@ -147,4 +159,44 @@ void Animator::on_animationsList_currentItemChanged(QListWidgetItem *item, QList
         return;
     m_aniStyle = item->text();
     aniFindSet();
+}
+
+void Animator::nextFrame()
+{
+    m_curFrameIdx++;
+
+    if(m_curFrameIdx >= m_currentAnimation.size())
+        m_curFrameIdx = 0;
+
+    setFrame(m_curFrameIdx);
+}
+
+void Animator::setFrame(int frame)
+{
+    auto &img = m_mw->m_xImageSprite;
+    int cellW = m_mw->m_xImageSprite.width() / m_conf->matrixWidth;
+    int cellH = m_mw->m_xImageSprite.height() / m_conf->matrixWidth;
+
+    if((m_currentAnimation.size() == 0) || (frame >= m_currentAnimation.size()))
+    {
+        CalibrationFrame frame;
+        ui->preview->setBlockRepaint(true);
+        ui->preview->setAllowScroll(false);
+        ui->preview->setFrameSetup(frame);
+        ui->preview->setHitBoxFocus(false);
+        ui->preview->setImage(m_noAnimate);
+        ui->preview->setWall(FrameTuneScene::WALL_NONE);
+        ui->preview->setBlockRepaint(false);
+        return;
+    }
+
+    auto &cf = m_currentAnimation[frame];
+    auto &ff = m_conf->frames[{cf.x, cf.y}];
+
+    ui->preview->setBlockRepaint(true);
+    ui->preview->setImage(img.copy(QRect(cf.x * cellW, cf.y * cellH, cellW, cellH)));
+    ui->preview->setFrameSetup(ff);
+    ui->preview->setHitBoxFocus(true);
+    ui->preview->setWall(FrameTuneScene::WALL_FLOOR);
+    ui->preview->setBlockRepaint(false);
 }

@@ -360,9 +360,11 @@ void CalibrationMain::frameSelected(int x, int y)
     ui->FrameX->setValue(x);
     ui->FrameY->setValue(y);
     m_lockControls = false;
+    ui->preview->setBlockRepaint(true);
     initScene();
     updateControls();
     updateScene();
+    ui->preview->setBlockRepaint(false);
 }
 
 void CalibrationMain::translateMenus()
@@ -408,19 +410,23 @@ void CalibrationMain::translateMenus()
 void CalibrationMain::on_FrameX_valueChanged(int)
 {
     if(m_lockControls) return;
+    ui->preview->setBlockRepaint(true);
     initScene();
     updateControls();
     updateScene();
     m_matrix->setFrame(m_frmX, m_frmY);
+    ui->preview->setBlockRepaint(false);
 }
 
 void CalibrationMain::on_FrameY_valueChanged(int)
 {
     if(m_lockControls) return;
+    ui->preview->setBlockRepaint(true);
     initScene();
     updateControls();
     updateScene();
     m_matrix->setFrame(m_frmX, m_frmY);
+    ui->preview->setBlockRepaint(false);
 }
 
 
@@ -901,32 +907,32 @@ void CalibrationMain::updateCompatMode()
     switch(m_calibration.compatProfile)
     {
     case Calibration::COMPAT_UNSPECIFIED:
-        ui->compatMode->setText(tr("Compatibility: %1").arg(tr("Unspecified", "Unspecified compatibility mode")));
+        ui->compatMode->setText(tr("Compat: %1").arg(tr("Unspecified", "Unspecified compatibility mode")));
         ui->compatMode->setIcon(QIcon(":/compat/unspecified.png"));
         break;
 
     case Calibration::COMPAT_MOONDUST:
         m_compatMenuMoondust->setChecked(true);
-        ui->compatMode->setText(tr("Compatibility: %1").arg("Moondust"));
+        ui->compatMode->setText(tr("Compat: %1").arg("Moondust"));
         ui->compatMode->setIcon(m_compatMenuMoondust->icon());
         break;
 
     case Calibration::COMPAT_THEXTECH:
         m_compatMenuTheXTech->setChecked(true);
-        ui->compatMode->setText(tr("Compatibility: %1").arg("TheXTech"));
+        ui->compatMode->setText(tr("Compat: %1").arg("TheXTech"));
         ui->compatMode->setIcon(m_compatMenuTheXTech->icon());
         break;
 
     case Calibration::COMPAT_SMBX38A:
-        m_compatMenuSMBX2->setChecked(true);
-        ui->compatMode->setText(tr("Compatibility: %1").arg("SMBX-38A"));
-        ui->compatMode->setIcon(m_compatMenuSMBX2->icon());
+        m_compatMenu38A->setChecked(true);
+        ui->compatMode->setText(tr("Compat: %1").arg("SMBX-38A"));
+        ui->compatMode->setIcon(m_compatMenu38A->icon());
         break;
 
     case Calibration::COMPAT_SMBX2:
-        m_compatMenu38A->setChecked(true);
-        ui->compatMode->setText(tr("Compatibility: %1").arg("LunaLua/SMBX2"));
-        ui->compatMode->setIcon(m_compatMenu38A->icon());
+        m_compatMenuSMBX2->setChecked(true);
+        ui->compatMode->setText(tr("Compat: %1").arg("LunaLua/X2"));
+        ui->compatMode->setIcon(m_compatMenuSMBX2->icon());
         break;
     }
 }

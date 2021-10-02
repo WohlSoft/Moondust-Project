@@ -24,25 +24,29 @@ FrameTuneScene::FrameTuneScene(QWidget *parent) : QFrame(parent)
 void FrameTuneScene::setImage(const QPixmap &image)
 {
     m_image = image;
-    repaint();
+    if(!m_blockRepaint)
+        repaint();
 }
 
 void FrameTuneScene::setRefImage(const QPixmap &image)
 {
     m_ref = image;
-    repaint();
+    if(!m_blockRepaint)
+        repaint();
 }
 
 void FrameTuneScene::setRefOpacity(int percents)
 {
     m_refOpacity = percents / 100.0;
-    repaint();
+    if(!m_blockRepaint)
+        repaint();
 }
 
 void FrameTuneScene::clearRef()
 {
     m_ref = QPixmap();
-    repaint();
+    if(!m_blockRepaint)
+        repaint();
 }
 
 void FrameTuneScene::setGlobalSetup(const Calibration &calibration)
@@ -64,7 +68,8 @@ void FrameTuneScene::setFrameSetup(const CalibrationFrame &frame)
                      frame.offsetY,
                      m_hitboxWidth,
                      frame.isDuck ? m_hitboxHeightDuck : m_hitboxHeight);
-    repaint();
+    if(!m_blockRepaint)
+        repaint();
 }
 
 void FrameTuneScene::setAllowScroll(bool allowScroll)
@@ -74,16 +79,46 @@ void FrameTuneScene::setAllowScroll(bool allowScroll)
         m_scrollOffset = QPoint(0, 0);
 }
 
+void FrameTuneScene::setDrawMetaData(bool en)
+{
+    m_drawMetaData = en;
+    if(!m_blockRepaint)
+        repaint();
+}
+
+void FrameTuneScene::setDrawGrid(bool en)
+{
+    m_drawGrid = en;
+    if(!m_blockRepaint)
+        repaint();
+}
+
+void FrameTuneScene::setHitBoxFocus(bool en)
+{
+    m_focusHitBox = en;
+    if(!m_blockRepaint)
+        repaint();
+}
+
 void FrameTuneScene::resetScroll()
 {
     m_scrollOffset = QPoint(0, 0);
-    repaint();
+    if(!m_blockRepaint)
+        repaint();
 }
 
 void FrameTuneScene::setBgColor(QColor clr)
 {
     m_bgColor = clr;
-    repaint();
+    if(!m_blockRepaint)
+        repaint();
+}
+
+void FrameTuneScene::setBlockRepaint(bool en)
+{
+    m_blockRepaint = en;
+    if(!m_blockRepaint)
+        repaint();
 }
 
 QColor FrameTuneScene::getBgColor() const
@@ -94,7 +129,8 @@ QColor FrameTuneScene::getBgColor() const
 void FrameTuneScene::setWall(Wall w)
 {
     m_showWall = w;
-    repaint();
+    if(!m_blockRepaint)
+        repaint();
 }
 
 QSize FrameTuneScene::sizeHint() const
@@ -110,18 +146,24 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
     auto canvas = rect();
     auto c = canvas.center() + (m_scrollOffset * m_zoom);
     QRect dst;
+    dst.moveTo(c);
 
     // Simulate SMBX' constant mount offset
     int mountOffset = ((m_ducking ? 64 : 72) - m_hitbox.height());
 
-    dst.moveTo(c);
-
     if(!m_image.isNull())
     {
         QSize is = m_image.size();
-
-        dst.setX(c.x() - qRound((is.width() / 2) * m_zoom));
-        dst.setY(c.y() - qRound((is.height() / 2) * m_zoom));
+        if(m_focusHitBox)
+        {
+            dst.setX(c.x() - qRound((m_hitbox.x() + m_hitbox.width() / 2) * m_zoom));
+            dst.setY(c.y() - qRound((m_hitbox.bottom() + (m_showMount ? mountOffset : 0)) * m_zoom));
+        }
+        else
+        {
+            dst.setX(c.x() - qRound((is.width() / 2) * m_zoom));
+            dst.setY(c.y() - qRound((is.height() / 2) * m_zoom));
+        }
         dst.setWidth(qRound(is.width() * m_zoom));
         dst.setHeight(qRound(is.width() * m_zoom));
     }
@@ -140,8 +182,8 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
         case WALL_FLOOR_WR:
         {
             y = dst.y() + (m_hitbox.bottom() + 1) * m_zoom;
-            x_begin = dst.left() - 100 * m_zoom;
-            x_end = dst.right() + 100 * m_zoom;
+            x_begin = c.x() - 256 * m_zoom;
+            x_end = c.x() + 256 * m_zoom;
 
             if(m_showMount)
                 y += mountOffset * m_zoom;
@@ -167,8 +209,8 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
         case WALL_CEILING_WR:
         {
             y = dst.y() + (m_hitbox.top() - m_wall.height()) * m_zoom;
-            x_begin = dst.left() - 100 * m_zoom;
-            x_end = dst.right() + 100 * m_zoom;
+            x_begin = c.x() - 256 * m_zoom;
+            x_end = c.x() + 256 * m_zoom;
 
             if(m_showMount)
                 y += mountOffset * m_zoom;
@@ -274,39 +316,42 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
     {
         painter.drawPixmap(dst, m_image);
 
-        painter.save();
-        painter.setPen(QPen(Qt::gray, 1));
-        painter.setBrush(Qt::transparent);
-        painter.drawRect(dst);
-        painter.restore();
-
-        painter.save();
-        painter.setOpacity(5.0);
-        painter.setPen(QPen(Qt::gray, 1, Qt::DotLine));
-
-        if(m_zoom > 3.0)
+        if(m_drawGrid && m_drawMetaData)
         {
-            for(int y = 0; y < m_image.height(); y += 2)
-            {
-                painter.drawLine(
-                    dst.x() + 0 * m_zoom,
-                    dst.y() + y * m_zoom - 1,
-                    dst.x() + m_image.width() * m_zoom,
-                    dst.y() + y * m_zoom - 1
-                );
-            }
+            painter.save();
+            painter.setPen(QPen(Qt::gray, 1));
+            painter.setBrush(Qt::transparent);
+            painter.drawRect(dst);
+            painter.restore();
 
-            for(int x = 0; x < m_image.width(); x += 2)
+            painter.save();
+            painter.setOpacity(5.0);
+            painter.setPen(QPen(Qt::gray, 1, Qt::DotLine));
+
+            if(m_zoom > 3.0)
             {
-                painter.drawLine(
-                    dst.x() + x * m_zoom - 1,
-                    dst.y() + 0 * m_zoom,
-                    dst.x() + x * m_zoom - 1,
-                    dst.y() + m_image.height() * m_zoom
-                );
+                for(int y = 0; y < m_image.height(); y += 2)
+                {
+                    painter.drawLine(
+                        dst.x() + 0 * m_zoom,
+                        dst.y() + y * m_zoom - 1,
+                        dst.x() + m_image.width() * m_zoom,
+                        dst.y() + y * m_zoom - 1
+                    );
+                }
+
+                for(int x = 0; x < m_image.width(); x += 2)
+                {
+                    painter.drawLine(
+                        dst.x() + x * m_zoom - 1,
+                        dst.y() + 0 * m_zoom,
+                        dst.x() + x * m_zoom - 1,
+                        dst.y() + m_image.height() * m_zoom
+                    );
+                }
             }
+            painter.restore();
         }
-        painter.restore();
     }
 
     if(!m_ref.isNull())
@@ -317,20 +362,23 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
         painter.restore();
     }
 
-    painter.save();
+    if(m_drawMetaData)
     {
-        painter.setPen(QPen(Qt::green));
-        painter.setBrush(Qt::transparent);
-        QRect out;
-        out.setX(dst.x() + (m_hitbox.x() * m_zoom));
-        out.setY(dst.y() + (m_hitbox.y() * m_zoom));
-        out.setWidth((m_hitbox.width() * m_zoom) - 1);
-        out.setHeight((m_hitbox.height() * m_zoom) - 1);
-        painter.drawRect(out);
+        painter.save();
+        {
+            painter.setPen(QPen(Qt::green));
+            painter.setBrush(Qt::transparent);
+            QRect out;
+            out.setX(dst.x() + (m_hitbox.x() * m_zoom));
+            out.setY(dst.y() + (m_hitbox.y() * m_zoom));
+            out.setWidth((m_hitbox.width() * m_zoom) - 1);
+            out.setHeight((m_hitbox.height() * m_zoom) - 1);
+            painter.drawRect(out);
+        }
+        painter.restore();
     }
-    painter.restore();
 
-    if(m_showGrabOffset)
+    if(m_showGrabOffset && m_drawMetaData)
     {
         painter.save();
         painter.setPen(QPen(Qt::red));
