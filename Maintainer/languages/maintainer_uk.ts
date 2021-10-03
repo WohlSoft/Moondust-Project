@@ -532,7 +532,7 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="142"/>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Browse...</source>
-        <translation>Огляд...</translation>
+        <translation>Огляд…</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="149"/>
