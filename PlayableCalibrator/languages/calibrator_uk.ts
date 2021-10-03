@@ -328,12 +328,12 @@
     <message>
         <location filename="../calibration_main.ui" line="130"/>
         <source>Mark this frame as a mount riding and show the mount example at background in the Calibrator.</source>
-        <translation type="unfinished"></translation>
+        <translation>Помітити цей кадр для відображення верхової їзди і відобразити на сцені калібратора приклад тварини.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="133"/>
         <source>Mount riding</source>
-        <translation type="unfinished"></translation>
+        <translation>Верхова їзда</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="45"/>
