@@ -24,49 +24,7 @@
     <normaloff>:/images/Icon16.png</normaloff>:/images/Icon16.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,0,0,10000">
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Drag offset X</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="QLabel" name="label_8">
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Drag frame offset:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QSpinBox" name="OffsetX">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimum">
-      <number>-100</number>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>Frame Y</string>
-     </property>
-    </widget>
-   </item>
-   <item row="13" column="0" colspan="2">
+   <item row="14" column="0" colspan="2">
     <widget class="QLabel" name="label_2">
      <property name="font">
       <font>
@@ -81,58 +39,21 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
-    <widget class="QSpinBox" name="CropH">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimum">
-      <number>0</number>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="1">
-    <widget class="QSlider" name="refOpacity">
-     <property name="maximum">
-      <number>100</number>
-     </property>
-     <property name="value">
-      <number>50</number>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="label_7">
-     <property name="font">
-      <font>
-       <family>Liberation Sans</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Current frame (10x10):</string>
+      <string>Drag offset X</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="2">
-    <widget class="QPushButton" name="Matrix">
-     <property name="text">
-      <string>Show sprite map</string>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
+   <item row="2" column="1">
+    <widget class="QSpinBox" name="FrameY">
+     <property name="maximum">
+      <number>9</number>
      </property>
     </widget>
    </item>
-   <item row="18" column="0" colspan="4">
+   <item row="19" column="0" colspan="4">
     <widget class="QGroupBox" name="groupBox_2">
      <property name="minimumSize">
       <size>
@@ -160,6 +81,149 @@
      </layout>
     </widget>
    </item>
+   <item row="15" column="0">
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>Opacity</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>Frame Y</string>
+     </property>
+    </widget>
+   </item>
+   <item row="16" column="0" colspan="2">
+    <widget class="QPushButton" name="refClear">
+     <property name="text">
+      <string comment="reference frame">Clear</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QSpinBox" name="FrameX">
+     <property name="maximum">
+      <number>9</number>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QSpinBox" name="OffsetY">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="minimum">
+      <number>-100</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+   </item>
+   <item row="17" column="0" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::MinimumExpanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Crop bottom</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="0" colspan="2">
+    <widget class="QPushButton" name="openFrameInEditor">
+     <property name="text">
+      <string>Open frame in editor...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_7">
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Current frame (10x10):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QSpinBox" name="OffsetX">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="minimum">
+      <number>-100</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_10">
+     <property name="text">
+      <string>Crop right</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Frame X</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QSpinBox" name="CropH">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="minimum">
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Drag offset Y</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
+    <widget class="QPushButton" name="Matrix">
+     <property name="text">
+      <string>Show sprite map</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
    <item row="7" column="1">
     <widget class="QSpinBox" name="CropW">
      <property name="enabled">
@@ -173,21 +237,39 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_5">
+   <item row="10" column="0" rowspan="2" colspan="2">
+    <widget class="QPushButton" name="Reset">
      <property name="text">
-      <string>Frame X</string>
+      <string>Reset calibration</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="label_9">
+   <item row="4" column="0" colspan="2">
+    <widget class="QLabel" name="label_8">
+     <property name="font">
+      <font>
+       <family>Liberation Sans</family>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="text">
-      <string>Crop bottom</string>
+      <string>Drag frame offset:</string>
      </property>
     </widget>
    </item>
-   <item row="17" column="0" colspan="4">
+   <item row="0" column="3" rowspan="18">
+    <widget class="FrameTuneScene" name="preview">
+     <property name="frameShape">
+      <enum>QFrame::WinPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="18" column="0" colspan="4">
     <widget class="QGroupBox" name="groupBox">
      <property name="minimumSize">
       <size>
@@ -223,119 +305,21 @@
      </layout>
     </widget>
    </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_10">
-     <property name="text">
-      <string>Crop right</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QSpinBox" name="FrameX">
-     <property name="maximum">
-      <number>9</number>
-     </property>
-    </widget>
-   </item>
-   <item row="14" column="0">
-    <widget class="QLabel" name="label_11">
-     <property name="text">
-      <string>Opacity</string>
-     </property>
-    </widget>
-   </item>
-   <item row="15" column="0" colspan="2">
-    <widget class="QPushButton" name="refClear">
-     <property name="text">
-      <string comment="reference frame">Clear</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="0" colspan="2">
-    <widget class="QPushButton" name="openFrameInEditor">
-     <property name="text">
-      <string>Open frame in editor...</string>
-     </property>
-    </widget>
-   </item>
-   <item row="16" column="0" colspan="2">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::MinimumExpanding</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="6" column="1">
-    <widget class="QSpinBox" name="OffsetY">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimum">
-      <number>-100</number>
-     </property>
+   <item row="15" column="1">
+    <widget class="QSlider" name="refOpacity">
      <property name="maximum">
       <number>100</number>
      </property>
-    </widget>
-   </item>
-   <item row="9" column="0" rowspan="2" colspan="2">
-    <widget class="QPushButton" name="Reset">
-     <property name="text">
-      <string>Reset calibration</string>
+     <property name="value">
+      <number>50</number>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </item>
-   <item row="0" column="3" rowspan="17">
-    <widget class="FrameTuneScene" name="preview">
-     <property name="frameShape">
-      <enum>QFrame::WinPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QSpinBox" name="FrameY">
-     <property name="maximum">
-      <number>9</number>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Drag offset Y</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="0" colspan="2">
-    <widget class="QCheckBox" name="hitboxMove">
-     <property name="toolTip">
-      <string>When using mouse to move the picture, also move hitbox too</string>
-     </property>
-     <property name="text">
-      <string>Hitbox move</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2" rowspan="17">
+   <item row="0" column="2" rowspan="18">
     <widget class="QFrame" name="toolBox">
-     <property name="maximumSize">
-      <size>
-       <width>48</width>
-       <height>16777215</height>
-      </size>
-     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -344,7 +328,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="toolDrag">
+       <widget class="QToolButton" name="toolDrag">
         <property name="text">
          <string>D</string>
         </property>
@@ -354,7 +338,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="toolPencil">
+       <widget class="QToolButton" name="toolPencil">
         <property name="text">
          <string>Pe</string>
         </property>
@@ -364,7 +348,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="toolPicker">
+       <widget class="QToolButton" name="toolPicker">
         <property name="text">
          <string>Pi</string>
         </property>
@@ -374,7 +358,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="toolRubber">
+       <widget class="QToolButton" name="toolRubber">
         <property name="text">
          <string>R</string>
         </property>
@@ -397,6 +381,16 @@
        </spacer>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="9" column="0" colspan="2">
+    <widget class="QCheckBox" name="hitboxMove">
+     <property name="toolTip">
+      <string>When using mouse to move the picture, also move hitbox too</string>
+     </property>
+     <property name="text">
+      <string>Hitbox move</string>
+     </property>
     </widget>
    </item>
   </layout>

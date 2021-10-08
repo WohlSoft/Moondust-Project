@@ -32,6 +32,7 @@ public:
 
 class DrawToolPencil : public DrawTool
 {
+    QPoint startAt;
 public:
     explicit DrawToolPencil(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
@@ -39,13 +40,18 @@ public:
 
     virtual bool mousePress(const QPoint &p)
     {
+        startAt = p;
         m_image->setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
         return true;
     }
 
     virtual bool mouseMove(const QPoint &p)
     {
-        m_image->setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
+        QPainter pa(m_image);
+        pa.setPen(m_self->m_drawColor);
+        pa.drawLine(startAt, p);
+        pa.end();
+        startAt = p;
         return true;
     }
 
@@ -81,6 +87,7 @@ public:
 
 class DrawToolRubber : public DrawTool
 {
+    QPoint startAt;
 public:
     explicit DrawToolRubber(QImage *image, FrameTuneScene *parent = 0) :
         DrawTool(image, parent)
@@ -88,13 +95,19 @@ public:
 
     virtual bool mousePress(const QPoint &p)
     {
+        startAt = p;
         m_image->setPixel(p.x(), p.y(), 0x00000000);
         return true;
     }
 
     virtual bool mouseMove(const QPoint &p)
     {
-        m_image->setPixel(p.x(), p.y(), 0x00000000);
+        QPainter pa(m_image);
+        pa.setCompositionMode (QPainter::CompositionMode_Source);
+        pa.setPen(Qt::transparent);
+        pa.drawLine(startAt, p);
+        pa.end();
+        startAt = p;
         return true;
     }
 
@@ -193,6 +206,30 @@ void FrameTuneScene::setRefOpacity(int percents)
 void FrameTuneScene::clearRef()
 {
     m_ref = QPixmap();
+    if(!m_blockRepaint)
+        repaint();
+}
+
+void FrameTuneScene::setOffset(const QPoint &offset)
+{
+    curScrollOffset() = offset;
+    if(!m_blockRepaint)
+        repaint();
+}
+
+QPoint FrameTuneScene::getOffset() const
+{
+    return m_focusHitBox ? m_scrollOffsetHitbox : m_scrollOffsetImage;
+}
+
+double FrameTuneScene::getZoom() const
+{
+    return m_zoom;
+}
+
+void FrameTuneScene::setZoom(double zoom)
+{
+    m_zoom = zoom;
     if(!m_blockRepaint)
         repaint();
 }

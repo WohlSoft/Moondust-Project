@@ -859,6 +859,16 @@ void CalibrationMain::on_actionSpriteEditor_triggered()
         return;
     }
 
+    imgCalibrator->setFrame(m_frmX, m_frmY);
+    imgCalibrator->setPreviewOffset(ui->preview->getOffset());
+    imgCalibrator->setPreviewZoom(ui->preview->getZoom());
+
+    if(ui->Matrix->isChecked())
+    {
+        imgCalibrator->show();
+        imgCalibrator->showSpriteMap();
+    }
+
     imgCalibrator->exec();
     imgCalibrator->unInit();
 
@@ -884,4 +894,3 @@ void CalibrationMain::on_actionSpriteEditor_triggered()
     updateControls();
     updateScene();
 }
-

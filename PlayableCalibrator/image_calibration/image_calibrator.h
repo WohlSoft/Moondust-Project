@@ -36,6 +36,11 @@ public:
     void unInit();
     QString m_targetPath;
 
+    void setFrame(int x, int y);
+    void setPreviewOffset(const QPoint &off);
+    void setPreviewZoom(double zoom);
+    void showSpriteMap();
+
     bool hitboxModified() const;
     bool hitboxNeedSave() const;
 

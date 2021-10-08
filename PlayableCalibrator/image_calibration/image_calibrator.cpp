@@ -186,6 +186,32 @@ void ImageCalibrator::unInit()
     m_matrix = nullptr;
 }
 
+void ImageCalibrator::setFrame(int x, int y)
+{
+    m_lockUI = true;
+    ui->FrameX->setValue(x);
+    ui->FrameY->setValue(y);
+    m_lockUI = false;
+    m_matrix->setFrame(x, y);
+    frameSelected(x, y);
+}
+
+void ImageCalibrator::setPreviewOffset(const QPoint &off)
+{
+    ui->preview->setOffset(off);
+}
+
+void ImageCalibrator::setPreviewZoom(double zoom)
+{
+    ui->preview->setZoom(zoom);
+}
+
+void ImageCalibrator::showSpriteMap()
+{
+    ui->Matrix->setChecked(true);
+    on_Matrix_clicked(true);
+}
+
 void ImageCalibrator::closeEvent(QCloseEvent *)
 {
     if(m_matrix)
@@ -196,8 +222,8 @@ void ImageCalibrator::closeEvent(QCloseEvent *)
 void ImageCalibrator::on_FrameX_valueChanged(int arg1)
 {
     if(m_lockUI) return;
-
     m_frmX = arg1;
+    m_matrix->setFrame(m_frmX, m_frmY);
     updateControls();
     updateScene();
 }
@@ -207,6 +233,7 @@ void ImageCalibrator::on_FrameY_valueChanged(int arg1)
     if(m_lockUI) return;
 
     m_frmY = arg1;
+    m_matrix->setFrame(m_frmX, m_frmY);
     updateControls();
     updateScene();
 }

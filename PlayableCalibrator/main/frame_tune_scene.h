@@ -82,6 +82,12 @@ public:
     void setRefOpacity(int percents);
     void clearRef();
 
+    void setOffset(const QPoint &offset);
+    QPoint getOffset() const;
+
+    double getZoom() const;
+    void setZoom(double zoom);
+
     void setGlobalSetup(const Calibration &calibration);
     void setFrameSetup(const CalibrationFrame &frame);
     void setAllowScroll(bool allowScroll);
