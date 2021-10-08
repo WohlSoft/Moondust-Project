@@ -97,13 +97,21 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
 
     ui->toolDrag->setChecked(true);
 
-    QObject::connect(ui->toolDrag, &QPushButton::clicked,
+    QObject::connect(ui->toolDrag, &QToolButton::clicked,
                      this, &ImageCalibrator::toolChanged);
-    QObject::connect(ui->toolPencil, &QPushButton::clicked,
+    QObject::connect(ui->toolSelect, &QToolButton::clicked,
                      this, &ImageCalibrator::toolChanged);
-    QObject::connect(ui->toolPicker, &QPushButton::clicked,
+    QObject::connect(ui->toolSelectCopy, &QToolButton::clicked,
                      this, &ImageCalibrator::toolChanged);
-    QObject::connect(ui->toolRubber, &QPushButton::clicked,
+    QObject::connect(ui->toolPencil, &QToolButton::clicked,
+                     this, &ImageCalibrator::toolChanged);
+    QObject::connect(ui->toolPicker, &QToolButton::clicked,
+                     this, &ImageCalibrator::toolChanged);
+    QObject::connect(ui->toolRubber, &QToolButton::clicked,
+                     this, &ImageCalibrator::toolChanged);
+    QObject::connect(ui->toolLine, &QToolButton::clicked,
+                     this, &ImageCalibrator::toolChanged);
+    QObject::connect(ui->toolRects, &QToolButton::clicked,
                      this, &ImageCalibrator::toolChanged);
 }
 
@@ -544,14 +552,28 @@ void ImageCalibrator::toolChanged(bool)
     auto *s = sender();
 
     ui->toolDrag->setChecked(false);
+    ui->toolSelect->setChecked(false);
+    ui->toolSelectCopy->setChecked(false);
     ui->toolPencil->setChecked(false);
     ui->toolPicker->setChecked(false);
     ui->toolRubber->setChecked(false);
+    ui->toolLine->setChecked(false);
+    ui->toolRects->setChecked(false);
 
     if(s == ui->toolDrag)
     {
         ui->preview->setMode(FrameTuneScene::MODE_NONE);
         ui->toolDrag->setChecked(true);
+    }
+    else if(s == ui->toolSelect)
+    {
+        ui->preview->setMode(FrameTuneScene::MODE_SELECT);
+        ui->toolSelect->setChecked(true);
+    }
+    else if(s == ui->toolSelectCopy)
+    {
+        ui->preview->setMode(FrameTuneScene::MODE_SELECT_COPY);
+        ui->toolSelectCopy->setChecked(true);
     }
     else if(s == ui->toolPencil)
     {
@@ -567,6 +589,16 @@ void ImageCalibrator::toolChanged(bool)
     {
         ui->preview->setMode(FrameTuneScene::MODE_RUBBER);
         ui->toolRubber->setChecked(true);
+    }
+    else if(s == ui->toolLine)
+    {
+        ui->preview->setMode(FrameTuneScene::MODE_LINE);
+        ui->toolLine->setChecked(true);
+    }
+    else if(s == ui->toolRects)
+    {
+        ui->preview->setMode(FrameTuneScene::MODE_RECT);
+        ui->toolRects->setChecked(true);
     }
 }
 

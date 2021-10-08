@@ -163,7 +163,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     }
 
     {
-        QToolButton *newAction = new QToolButton(ui->toolBar);
+        QToolButton *newAction = new QToolButton(ui->mainBar);
         newAction->setMenu(ui->menuSave);
         newAction->setIcon(ui->menuSave->icon());
         newAction->setPopupMode(QToolButton::InstantPopup);
@@ -172,7 +172,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
         newAction->connect(this, &CalibrationMain::languageSwitched, [this, newAction](){
                                 newAction->setToolTip(ui->menuSave->title());
                            });
-        ui->toolBar->insertWidget(ui->actionSaveMenu, newAction);
+        ui->mainBar->insertWidget(ui->actionSaveMenu, newAction);
         ui->actionSaveMenu->setVisible(false);
     }
 //    ui->actionSaveMenu->setMenu(ui->menuSave);

@@ -36,6 +36,9 @@ class FrameTuneScene : public QFrame
     friend class DrawToolPencil;
     friend class DrawToolPicker;
     friend class DrawToolRubber;
+    friend class DrawToolSelect;
+    friend class DrawToolRect;
+    friend class DrawToolLine;
 
     int     m_mode = MODE_NONE;
     QColor  m_drawColor = Qt::black;
@@ -119,9 +122,13 @@ public:
     enum Mode
     {
         MODE_NONE = 0,
+        MODE_SELECT,
+        MODE_SELECT_COPY,
         MODE_DRAW,
         MODE_PICK_COLOR,
-        MODE_RUBBER
+        MODE_RUBBER,
+        MODE_RECT,
+        MODE_LINE
     };
 
     void setMode(Mode mode);
@@ -135,6 +142,7 @@ protected:
 
     virtual void mousePressEvent(QMouseEvent *event);
     virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mouseDoubleClickEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
 
 signals:

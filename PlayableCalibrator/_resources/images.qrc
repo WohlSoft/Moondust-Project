@@ -23,5 +23,15 @@
         <file>compat/unspecified.png</file>
         <file>images/mount2.png</file>
         <file>images/mount2_duck.png</file>
+        <file>edit/edit_move.png</file>
+        <file>edit/edit_pencil.png</file>
+        <file>edit/edit_pick.png</file>
+        <file>edit/edit_rubber.png</file>
+        <file>edit/edit_picture.png</file>
+        <file>edit/edit_animator.png</file>
+        <file>edit/edit_line.png</file>
+        <file>edit/edit_rect.png</file>
+        <file>edit/edit_select.png</file>
+        <file>edit/edit_select_copy.png</file>
     </qresource>
 </RCC>

@@ -561,8 +561,6 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionAnimator"/>
-    <addaction name="actionSpriteEditor"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -571,7 +569,10 @@
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QToolBar" name="toolBar">
+  <widget class="QToolBar" name="mainBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::NoContextMenu</enum>
+   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
@@ -591,6 +592,23 @@
    <addaction name="actionPaste_settings"/>
    <addaction name="separator"/>
    <addaction name="actionResetScroll"/>
+   <addaction name="separator"/>
+  </widget>
+  <widget class="QToolBar" name="toolsBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextBesideIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionAnimator"/>
+   <addaction name="actionSpriteEditor"/>
   </widget>
   <action name="actionOpen">
    <property name="icon">
@@ -737,11 +755,19 @@
    </property>
   </action>
   <action name="actionAnimator">
+   <property name="icon">
+    <iconset resource="_resources/images.qrc">
+     <normaloff>:/edit/edit_animator.png</normaloff>:/edit/edit_animator.png</iconset>
+   </property>
    <property name="text">
     <string>Animator</string>
    </property>
   </action>
   <action name="actionSpriteEditor">
+   <property name="icon">
+    <iconset resource="_resources/images.qrc">
+     <normaloff>:/edit/edit_picture.png</normaloff>:/edit/edit_picture.png</iconset>
+   </property>
    <property name="text">
     <string>Sprite editor</string>
    </property>
