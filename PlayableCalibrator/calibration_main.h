@@ -87,10 +87,7 @@ private slots:
 
     void frameSelected(int x, int y);
 
-    void on_AboutButton_clicked();
     void on_Matrix_clicked();
-    void on_AnimatorButton_clicked();
-    void on_calibrateImage_clicked();
     void exportHitboxesMap();
 
     void on_EnableFrame_clicked(bool checked);
@@ -118,13 +115,6 @@ private slots:
     void on_showGrabItem_clicked(bool checked);
     void on_mountRiding_clicked(bool checked);
 
-    void on_CopyButton_clicked();
-    void on_PasteButton_clicked();
-
-    void on_OpenSprite_clicked();
-
-    void on_applyToAll_clicked();
-
     bool trySave();
     void updateControls();
     void initScene();
@@ -150,6 +140,10 @@ private slots:
 
     void on_actionBrowseSpriteDirectory_triggered();
 
+    void on_actionAnimator_triggered();
+
+    void on_actionSpriteEditor_triggered();
+
 private:
     int m_frmX = 0;
     int m_frmY = 0;
@@ -170,22 +164,13 @@ private:
     QAction    *m_wallMenuCeilingWallR = nullptr;
 
     QMenu       m_compatMenu;
+    QAction    *m_compatMenuCalibratorFull = nullptr;
     QAction    *m_compatMenuMoondust = nullptr;
     QAction    *m_compatMenuTheXTech = nullptr;
     QAction    *m_compatMenuSMBX2 = nullptr;
     QAction    *m_compatMenu38A = nullptr;
     void        updateCompatMode();
 
-    QMenu       m_saveMenu;
-    QAction    *m_saveMenuQuickSave = nullptr;
-    QAction    *m_saveMenuSaveAs = nullptr;
-
-    QMenu       m_toolsMenu;
-    QAction    *m_toolsExportHitboxMap = nullptr;
-    QAction    *m_toolsImport38A = nullptr;
-    QAction    *m_toolsExport38A = nullptr;
-
-    QMenu       m_langMenu;
     Translator  m_translator;
 };
 

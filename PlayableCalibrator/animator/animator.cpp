@@ -184,6 +184,7 @@ void Animator::setFrame(int frame)
         ui->preview->setAllowScroll(false);
         ui->preview->setFrameSetup(frame);
         ui->preview->setHitBoxFocus(false);
+        ui->preview->resetScroll();
         ui->preview->setImage(m_noAnimate);
         ui->preview->setWall(FrameTuneScene::WALL_NONE);
         ui->preview->setBlockRepaint(false);

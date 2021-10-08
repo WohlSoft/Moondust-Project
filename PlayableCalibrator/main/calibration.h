@@ -79,10 +79,16 @@ struct Calibration
     enum CalibrationCompat
     {
         COMPAT_UNSPECIFIED = 0,
+        // Shorter config for Moondust
         COMPAT_MOONDUST,
+        // Shorter config for TheXTech
         COMPAT_THEXTECH,
+        // Shorter config for SMBX2
         COMPAT_SMBX2,
-        COMPAT_SMBX38A
+        // SMBX-38A compatibility
+        COMPAT_SMBX38A,
+        // Export the full config with all data
+        COMPAT_CALIBRATOR_FULL
     };
     int compatProfile = COMPAT_UNSPECIFIED;
 

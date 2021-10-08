@@ -10,6 +10,11 @@ bool FrameTuneScene::scrollPossible()
     return m_scrollAllowed;
 }
 
+QPoint &FrameTuneScene::curScrollOffset()
+{
+    return m_focusHitBox ? m_scrollOffsetHitbox : m_scrollOffsetImage;
+}
+
 FrameTuneScene::FrameTuneScene(QWidget *parent) : QFrame(parent)
 {
     m_bgColor = QColor(Qt::white);
@@ -76,7 +81,7 @@ void FrameTuneScene::setAllowScroll(bool allowScroll)
 {
     m_scrollAllowed = allowScroll;
     if(!m_scrollAllowed)
-        m_scrollOffset = QPoint(0, 0);
+        curScrollOffset() = QPoint(0, 0);
 }
 
 void FrameTuneScene::setDrawMetaData(bool en)
@@ -102,7 +107,7 @@ void FrameTuneScene::setHitBoxFocus(bool en)
 
 void FrameTuneScene::resetScroll()
 {
-    m_scrollOffset = QPoint(0, 0);
+    curScrollOffset() = QPoint(0, 0);
     if(!m_blockRepaint)
         repaint();
 }
@@ -144,7 +149,7 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
     painter.fillRect(rect(), QBrush(m_bgColor));
 
     auto canvas = rect();
-    auto c = canvas.center() + (m_scrollOffset * m_zoom);
+    auto c = canvas.center() + (curScrollOffset() * m_zoom);
     QRect dst;
     dst.moveTo(c);
 
@@ -461,7 +466,7 @@ void FrameTuneScene::wheelEvent(QWheelEvent *event)
     }
 
     if(!scrollPossible())
-        m_scrollOffset = QPoint(0, 0);
+        curScrollOffset() = QPoint(0, 0);
     repaint();
 }
 
@@ -489,11 +494,13 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
 
     auto p = event->localPos() / m_zoom;
 
+    auto &so = curScrollOffset();
+
     if(std::floor(std::abs(prevPos.x() - p.x())) >= 1)
     {
         if(button == Qt::MidButton && scrollPossible())
         {
-            m_scrollOffset.setX(m_scrollOffset.x() + p.x() - prevPos.x());
+            so.setX(so.x() + p.x() - prevPos.x());
             repaint();
         }
         else
@@ -505,7 +512,7 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
     {
         if(button == Qt::MidButton && scrollPossible())
         {
-            m_scrollOffset.setY(m_scrollOffset.y() + p.y() - prevPos.y());
+            so.setY(so.y() + p.y() - prevPos.y());
             repaint();
         }
         else

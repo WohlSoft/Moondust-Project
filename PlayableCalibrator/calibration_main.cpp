@@ -53,53 +53,12 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     QObject::connect(&m_translator, &Translator::languageSwitched,
                      this, &CalibrationMain::languageSwitched);
 
-    ui->language->setMenu(&m_langMenu);
-    m_translator.setSettings(&m_langMenu,
+//    ui->menuLanguage(&m_langMenu);
+    m_translator.setSettings(ui->menuLanguage,
                              "calibrator",
                              AppPathManager::languagesDir(),
                              AppPathManager::settingsFile());
     m_translator.initTranslator();
-
-    {
-        m_saveMenuQuickSave = m_saveMenu.addAction("");
-        m_saveMenuSaveAs = m_saveMenu.addAction("");
-
-        ui->SaveConfigButton->setMenu(&m_saveMenu);
-
-        QObject::connect(m_saveMenuQuickSave, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
-        {
-            on_actionSaveSameDir_triggered();
-        });
-
-        QObject::connect(m_saveMenuSaveAs, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
-        {
-            on_actionSaveCustomDir_triggered();
-        });
-    }
-
-    {
-        m_toolsExportHitboxMap = m_toolsMenu.addAction("");
-        m_toolsMenu.addSeparator();
-        m_toolsImport38A = m_toolsMenu.addAction("");
-        m_toolsExport38A = m_toolsMenu.addAction("");
-
-        ui->toolsButton->setMenu(&m_toolsMenu);
-
-        QObject::connect(m_toolsExportHitboxMap, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
-        {
-            exportHitboxesMap();
-        });
-
-        QObject::connect(m_toolsImport38A, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
-        {
-            on_actionImport38A_triggered();
-        });
-
-        QObject::connect(m_toolsExport38A, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
-        {
-            on_actionExport38A_triggered();
-        });
-    }
 
     {
         m_wallMenuNone = m_wallMenu.addAction("none");
@@ -149,6 +108,10 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     }
 
     {
+        m_compatMenuCalibratorFull = m_compatMenu.addAction("Calibrator");
+        m_compatMenuCalibratorFull->setCheckable(true);
+        m_compatMenuCalibratorFull->setIcon(QIcon(":/images/Icon16.png"));
+
         m_compatMenuMoondust = m_compatMenu.addAction("Moondust");
         m_compatMenuMoondust->setCheckable(true);
         m_compatMenuMoondust->setIcon(QIcon(":/compat/moondust.ico"));
@@ -164,6 +127,12 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
         m_compatMenu38A = m_compatMenu.addAction("SMBX-38A");
         m_compatMenu38A->setCheckable(true);
         m_compatMenu38A->setIcon(QIcon(":/compat/38a.ico"));
+
+        QObject::connect(m_compatMenuCalibratorFull, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
+        {
+            m_calibration.compatProfile = Calibration::COMPAT_CALIBRATOR_FULL;
+            updateCompatMode();
+        });
 
         QObject::connect(m_compatMenuMoondust, static_cast<void(QAction::*)(bool)>(&QAction::triggered), [this](bool)
         {
@@ -352,6 +321,7 @@ void CalibrationMain::windowDisable(bool d)
     ui->menuSave->setEnabled(!d);
     ui->menuEdit->setEnabled(!d);
     ui->menuImport_Export->setEnabled(!d);
+    ui->actionBrowseSpriteDirectory->setEnabled(!d);
 }
 
 void CalibrationMain::frameSelected(int x, int y)
@@ -369,25 +339,6 @@ void CalibrationMain::frameSelected(int x, int y)
 
 void CalibrationMain::translateMenus()
 {
-    if(m_saveMenuQuickSave)
-        m_saveMenuQuickSave->setText(tr("Save in the same folder with image file"));
-    if(m_saveMenuSaveAs)
-        m_saveMenuSaveAs->setText(tr("Save into custom place..."));
-
-
-    if(m_toolsExportHitboxMap)
-    {
-        m_toolsExportHitboxMap->setText(tr("Export a map of hitboxes as image..."));
-        m_toolsExportHitboxMap->setToolTip(tr("Useful for tests or sprites creation from the scratch"));
-    }
-
-    if(m_toolsImport38A)
-        m_toolsImport38A->setText(tr("Import data from SMBX-38A level..."));
-
-    if(m_toolsExport38A)
-        m_toolsExport38A->setText(tr("Export data into SMBX-38A level..."));
-
-
     if(m_wallMenuNone)
         m_wallMenuNone->setText(tr("None", "Display wall"));
 
@@ -478,17 +429,6 @@ void CalibrationMain::on_OffsetY_valueChanged(int arg1)
 }
 
 
-void CalibrationMain::on_CopyButton_clicked()
-{
-    on_actionCopy_settings_triggered();
-}
-
-
-void CalibrationMain::on_PasteButton_clicked()
-{
-    on_actionPaste_settings_triggered();
-}
-
 void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 {
     m_calibration.frames[ {m_frmX, m_frmY}].isDuck = checked;
@@ -498,24 +438,6 @@ void CalibrationMain::on_isDuckFrame_clicked(bool checked)
 
 
 
-void CalibrationMain::on_OpenSprite_clicked()
-{
-    openSprite();
-}
-
-
-void CalibrationMain::on_AboutButton_clicked()
-{
-    on_actionAbout_triggered();
-}
-
-
-
-// Copy current sizes and offsets to ALL frames
-void CalibrationMain::on_applyToAll_clicked()
-{
-    on_actionApplyToAll_triggered();
-}
 
 bool CalibrationMain::trySave()
 {
@@ -581,62 +503,6 @@ void CalibrationMain::on_Matrix_clicked()
     m_matrix->update();
     m_matrix->repaint();
 }
-
-
-void CalibrationMain::on_AnimatorButton_clicked()
-{
-    m_matrix->hide();
-    this->hide();
-    auto old = m_calibration.animations;
-    Animator dialog(m_calibration, this);
-    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    dialog.exec();
-    if(old != m_calibration.animations)
-        m_wasModified = true;
-    this->show();
-    this->raise();
-}
-
-
-void CalibrationMain::on_calibrateImage_clicked()
-{
-    m_matrix->hide();
-    this->hide();
-
-    ImageCalibrator *imgCalibrator = new ImageCalibrator(&m_calibration, this);
-    imgCalibrator->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    if(!imgCalibrator->init(m_currentFile))
-    {
-        delete imgCalibrator;
-        this->show();
-        this->raise();
-        return;
-    }
-
-    imgCalibrator->exec();
-    imgCalibrator->unInit();
-
-    auto oldFrames = m_calibration.frames;
-
-    openFile(imgCalibrator->m_targetPath);
-    // Do update hitboxes in only condition when calibrated image got been saved
-    // Otherwise, reset back the previous state
-    if(imgCalibrator->hitboxNeedSave())
-    {
-        m_calibration.frames = oldFrames;
-        m_wasModified = true;
-        saveConfig(m_calibration, m_currentFile, false, &m_calibrationDefault);
-        m_wasModified = false;
-    }
-
-    delete imgCalibrator;
-
-    this->show();
-    this->raise();
-    updateControls();
-    updateScene();
-}
-
 
 
 void CalibrationMain::on_grabOffsetX_valueChanged(int)
@@ -899,6 +765,7 @@ void CalibrationMain::on_actionWikiPage_triggered()
 
 void CalibrationMain::updateCompatMode()
 {
+    m_compatMenuCalibratorFull->setChecked(false);
     m_compatMenuMoondust->setChecked(false);
     m_compatMenuTheXTech->setChecked(false);
     m_compatMenuSMBX2->setChecked(false);
@@ -909,6 +776,12 @@ void CalibrationMain::updateCompatMode()
     case Calibration::COMPAT_UNSPECIFIED:
         ui->compatMode->setText(tr("Compat: %1").arg(tr("Unspecified", "Unspecified compatibility mode")));
         ui->compatMode->setIcon(QIcon(":/compat/unspecified.png"));
+        break;
+
+    case Calibration::COMPAT_CALIBRATOR_FULL:
+        m_compatMenuCalibratorFull->setChecked(true);
+        ui->compatMode->setText(tr("Compat: %1").arg("Calibrator"));
+        ui->compatMode->setIcon(m_compatMenuCalibratorFull->icon());
         break;
 
     case Calibration::COMPAT_MOONDUST:
@@ -946,5 +819,60 @@ void CalibrationMain::on_actionBrowseSpriteDirectory_triggered()
         if(d.exists())
             QDesktopServices::openUrl(QUrl("file:///" + d.absolutePath()));
     }
+}
+
+
+void CalibrationMain::on_actionAnimator_triggered()
+{
+    m_matrix->hide();
+    this->hide();
+    auto old = m_calibration.animations;
+    Animator dialog(m_calibration, this);
+    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    dialog.exec();
+    if(old != m_calibration.animations)
+        m_wasModified = true;
+    this->show();
+    this->raise();
+}
+
+
+void CalibrationMain::on_actionSpriteEditor_triggered()
+{
+    m_matrix->hide();
+    this->hide();
+
+    ImageCalibrator *imgCalibrator = new ImageCalibrator(&m_calibration, this);
+    imgCalibrator->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+    if(!imgCalibrator->init(m_currentFile))
+    {
+        delete imgCalibrator;
+        this->show();
+        this->raise();
+        return;
+    }
+
+    imgCalibrator->exec();
+    imgCalibrator->unInit();
+
+    auto oldFrames = m_calibration.frames;
+
+    openFile(imgCalibrator->m_targetPath);
+    // Do update hitboxes in only condition when calibrated image got been saved
+    // Otherwise, reset back the previous state
+    if(imgCalibrator->hitboxNeedSave())
+    {
+        m_calibration.frames = oldFrames;
+        m_wasModified = true;
+        saveConfig(m_calibration, m_currentFile, false, &m_calibrationDefault);
+        m_wasModified = false;
+    }
+
+    delete imgCalibrator;
+
+    this->show();
+    this->raise();
+    updateControls();
+    updateScene();
 }
 

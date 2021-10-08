@@ -60,7 +60,7 @@ void CalibrationMain::loadConfig(Calibration &dst, QString fileName, Calibration
         dst.grabOffsetX = conf.value("grab-offset-x", pMerge(grabOffsetX, 0)).toInt();
         dst.grabOffsetY = conf.value("grab-offset-y", pMerge(grabOffsetY, 0)).toInt();
         dst.grabOverTop = conf.value("over-top-grab", pMerge(grabOverTop, false)).toBool();
-        dst.compatProfile = conf.value("compat", pMerge(compatProfile, Calibration::COMPAT_UNSPECIFIED)).toInt();
+        dst.compatProfile = conf.value("compat", Calibration::COMPAT_UNSPECIFIED).toInt();
     }
     conf.endGroup();
 
@@ -273,6 +273,9 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
     QFileInfo ourFile(fileName);
     QString ini_sprite;
     ini_sprite = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
+
+    if(src.compatProfile == Calibration::COMPAT_CALIBRATOR_FULL)
+        merge_with = nullptr; // Ignore the merge profile entirely
 
     if(customPath)
     {

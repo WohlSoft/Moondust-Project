@@ -20,7 +20,8 @@ class FrameTuneScene : public QFrame
 
     QRect   m_hitbox;
     bool    m_scrollAllowed = false;
-    QPoint  m_scrollOffset;
+    QPoint  m_scrollOffsetImage;
+    QPoint  m_scrollOffsetHitbox;
     double  m_zoom = 1.0;
 
     bool    m_drawGrid = true;
@@ -52,6 +53,7 @@ class FrameTuneScene : public QFrame
     QPointF prevPos;
 
     bool scrollPossible();
+    QPoint &curScrollOffset();
 
 public:
     explicit FrameTuneScene(QWidget *parent = nullptr);
