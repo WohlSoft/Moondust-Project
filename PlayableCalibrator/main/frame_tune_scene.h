@@ -4,14 +4,19 @@
 #include <QWidget>
 #include <QFrame>
 #include <QPixmap>
+#include <QSharedPointer>
 #include "calibration.h"
 
+class DrawTool;
+class DrawToolPencil;
+class DrawToolPicker;
+class DrawToolRubber;
 
 class FrameTuneScene : public QFrame
 {
     Q_OBJECT
 
-    QPixmap m_image;
+    QImage  m_image;
     QPixmap m_ref;
     QPixmap m_mount[2];
     QPixmap m_mountDuck[2];
@@ -26,6 +31,15 @@ class FrameTuneScene : public QFrame
 
     bool    m_drawGrid = true;
     bool    m_drawMetaData = true;
+
+    friend class DrawTool;
+    friend class DrawToolPencil;
+    friend class DrawToolPicker;
+    friend class DrawToolRubber;
+
+    int     m_mode = MODE_NONE;
+    QColor  m_drawColor = Qt::black;
+    QSharedPointer<DrawTool> m_curTool = nullptr;
 
     //! Focus on hitbox instead of the left-top frame corder
     bool    m_focusHitBox = false;
@@ -55,10 +69,14 @@ class FrameTuneScene : public QFrame
     bool scrollPossible();
     QPoint &curScrollOffset();
 
+    QPoint mapToImg(const QPointF &p);
+
 public:
     explicit FrameTuneScene(QWidget *parent = nullptr);
+    virtual ~FrameTuneScene();
 
     void setImage(const QPixmap &image);
+    QPixmap getImage();
 
     void setRefImage(const QPixmap &image);
     void setRefOpacity(int percents);
@@ -91,6 +109,17 @@ public:
     };
 
     void setWall(Wall w);
+
+    enum Mode
+    {
+        MODE_NONE = 0,
+        MODE_DRAW,
+        MODE_PICK_COLOR,
+        MODE_RUBBER
+    };
+
+    void setMode(Mode mode);
+    Mode mode() const;
 
     virtual QSize sizeHint() const;
 

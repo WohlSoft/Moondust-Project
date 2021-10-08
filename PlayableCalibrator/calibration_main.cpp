@@ -495,13 +495,18 @@ void CalibrationMain::on_mountRiding_clicked(bool checked)
 
 
 
-void CalibrationMain::on_Matrix_clicked()
+void CalibrationMain::on_Matrix_clicked(bool checked)
 {
-    m_matrix->show();
-    QRect g = this->frameGeometry();
-    m_matrix->move(g.right(), g.top());
-    m_matrix->update();
-    m_matrix->repaint();
+    if(checked)
+    {
+        m_matrix->show();
+        QRect g = this->frameGeometry();
+        m_matrix->move(g.right(), g.top());
+        m_matrix->update();
+        m_matrix->repaint();
+    }
+    else
+        m_matrix->hide();
 }
 
 
@@ -834,6 +839,8 @@ void CalibrationMain::on_actionAnimator_triggered()
         m_wasModified = true;
     this->show();
     this->raise();
+    if(ui->Matrix->isChecked())
+        m_matrix->show();
 }
 
 
@@ -872,6 +879,8 @@ void CalibrationMain::on_actionSpriteEditor_triggered()
 
     this->show();
     this->raise();
+    if(ui->Matrix->isChecked())
+        m_matrix->show();
     updateControls();
     updateScene();
 }

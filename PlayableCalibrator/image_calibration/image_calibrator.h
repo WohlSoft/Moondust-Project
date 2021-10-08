@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QImage>
 #include <QList>
+#include <QFileSystemWatcher>
 #include <QGraphicsRectItem>
 #include <QGraphicsPixmapItem>
 #include "main/calibration.h"
@@ -50,7 +51,7 @@ private slots:
     void on_OffsetX_valueChanged(int arg1);
     void on_OffsetY_valueChanged(int arg1);
 
-    void on_Matrix_clicked();
+    void on_Matrix_clicked(bool checked);
     void on_Reset_clicked();
     void makeBackup();
     void on_WritePNG_GIF_clicked();
@@ -69,12 +70,18 @@ private slots:
     void on_refOpacity_sliderMoved(int position);
     void on_refClear_clicked();
 
+    void on_openFrameInEditor_clicked();
+
+    void toolChanged(bool);
+
+
 private:
     int m_frmX;
     int m_frmY;
 
     QPixmap m_sprite;
     QPixmap m_spriteOrig;
+    bool    m_spriteModified = false;
 
     QString m_pngPath;
     QString m_gifPath;
@@ -87,6 +94,12 @@ private:
 
     Ui::ImageCalibrator *ui;
     bool m_lockUI;
+
+    QFileSystemWatcher m_watchingFrame;
+    void tempFrameUpdated(const QString &path);
+    void frameEdited();
+    int m_tempFileX = 0;
+    int m_tempFileY = 0;
 };
 
 #endif // IMAGE_CALIBRATOR_H

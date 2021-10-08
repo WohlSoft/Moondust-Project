@@ -2,7 +2,107 @@
 #include <QPainter>
 #include <QWheelEvent>
 #include <QKeyEvent>
+#include <QtDebug>
 #include <cmath>
+
+
+class DrawTool : public QObject
+{
+protected:
+    QImage *m_image;
+    FrameTuneScene *m_self;
+
+public:
+    explicit DrawTool(QImage *image, FrameTuneScene *parent = 0) :
+        QObject(parent),
+        m_image(image),
+        m_self(parent)
+    {};
+
+    virtual bool mousePress(const QPoint &p) = 0;
+    virtual bool mouseMove(const QPoint &p) = 0;
+    virtual bool mouseRelease(const QPoint &p) = 0;
+
+    void setImage(QImage &img)
+    {
+        m_image = &img;
+    }
+};
+
+
+class DrawToolPencil : public DrawTool
+{
+public:
+    explicit DrawToolPencil(QImage *image, FrameTuneScene *parent = 0) :
+        DrawTool(image, parent)
+    {};
+
+    virtual bool mousePress(const QPoint &p)
+    {
+        m_image->setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
+        return true;
+    }
+
+    virtual bool mouseMove(const QPoint &p)
+    {
+        m_image->setPixel(p.x(), p.y(), m_self->m_drawColor.toRgb().rgba());
+        return true;
+    }
+
+    virtual bool mouseRelease(const QPoint &)
+    {
+        return false;
+    }
+};
+
+class DrawToolPicker : public DrawTool
+{
+public:
+    explicit DrawToolPicker(QImage *image, FrameTuneScene *parent = 0) :
+        DrawTool(image, parent)
+    {};
+
+    virtual bool mousePress(const QPoint &)
+    {
+        return false;
+    }
+
+    virtual bool mouseMove(const QPoint &)
+    {
+        return false;
+    }
+
+    virtual bool mouseRelease(const QPoint &p)
+    {
+        m_self->m_drawColor.setRgba(m_image->pixel(p.x(), p.y()));
+        return true;
+    }
+};
+
+class DrawToolRubber : public DrawTool
+{
+public:
+    explicit DrawToolRubber(QImage *image, FrameTuneScene *parent = 0) :
+        DrawTool(image, parent)
+    {};
+
+    virtual bool mousePress(const QPoint &p)
+    {
+        m_image->setPixel(p.x(), p.y(), 0x00000000);
+        return true;
+    }
+
+    virtual bool mouseMove(const QPoint &p)
+    {
+        m_image->setPixel(p.x(), p.y(), 0x00000000);
+        return true;
+    }
+
+    virtual bool mouseRelease(const QPoint &)
+    {
+        return false;
+    }
+};
 
 
 bool FrameTuneScene::scrollPossible()
@@ -13,6 +113,39 @@ bool FrameTuneScene::scrollPossible()
 QPoint &FrameTuneScene::curScrollOffset()
 {
     return m_focusHitBox ? m_scrollOffsetHitbox : m_scrollOffsetImage;
+}
+
+QPoint FrameTuneScene::mapToImg(const QPointF &p)
+{
+    auto canvas = rect();
+    auto c = canvas.center() + (curScrollOffset() * m_zoom);
+    QRect dst;
+    dst.moveTo(c);
+
+    // Simulate SMBX' constant mount offset
+    int mountOffset = ((m_ducking ? 64 : 72) - m_hitbox.height());
+
+    if(!m_image.isNull())
+    {
+        QSize is = m_image.size();
+        if(m_focusHitBox)
+        {
+            dst.setX(c.x() - qRound((m_hitbox.x() + m_hitbox.width() / 2) * m_zoom));
+            dst.setY(c.y() - qRound((m_hitbox.bottom() + (m_showMount ? mountOffset : 0)) * m_zoom));
+        }
+        else
+        {
+            dst.setX(c.x() - qRound((is.width() / 2) * m_zoom));
+            dst.setY(c.y() - qRound((is.height() / 2) * m_zoom));
+        }
+        dst.setWidth(qRound(is.width() * m_zoom));
+        dst.setHeight(qRound(is.width() * m_zoom));
+    }
+
+    QPoint o = QPoint((p.x() - dst.x()) / m_zoom, (p.y() - dst.y()) / m_zoom);
+    qDebug() << "x=" << o.x() << "y=" << o.y();
+
+    return o;
 }
 
 FrameTuneScene::FrameTuneScene(QWidget *parent) : QFrame(parent)
@@ -26,11 +159,21 @@ FrameTuneScene::FrameTuneScene(QWidget *parent) : QFrame(parent)
     m_tool = QPixmap(":/images/tool.png");
 }
 
+FrameTuneScene::~FrameTuneScene()
+{
+    m_curTool.reset();
+}
+
 void FrameTuneScene::setImage(const QPixmap &image)
 {
-    m_image = image;
+    m_image = image.toImage();
     if(!m_blockRepaint)
         repaint();
+}
+
+QPixmap FrameTuneScene::getImage()
+{
+    return QPixmap::fromImage(m_image);
 }
 
 void FrameTuneScene::setRefImage(const QPixmap &image)
@@ -136,6 +279,35 @@ void FrameTuneScene::setWall(Wall w)
     m_showWall = w;
     if(!m_blockRepaint)
         repaint();
+}
+
+void FrameTuneScene::setMode(Mode mode)
+{
+    m_mode = mode;
+
+    switch(m_mode)
+    {
+    case MODE_NONE:
+        m_curTool.reset();
+        break;
+
+    case MODE_DRAW:
+        m_curTool.reset(new DrawToolPencil(&m_image, this));
+        break;
+
+    case MODE_PICK_COLOR:
+        m_curTool.reset(new DrawToolPicker(&m_image, this));
+        break;
+
+    case MODE_RUBBER:
+        m_curTool.reset(new DrawToolRubber(&m_image, this));
+        break;
+    }
+}
+
+FrameTuneScene::Mode FrameTuneScene::mode() const
+{
+    return (Mode)m_mode;
 }
 
 QSize FrameTuneScene::sizeHint() const
@@ -319,7 +491,7 @@ void FrameTuneScene::paintEvent(QPaintEvent * /*event*/)
 
     if(!m_image.isNull())
     {
-        painter.drawPixmap(dst, m_image);
+        painter.drawImage(dst, m_image);
 
         if(m_drawGrid && m_drawMetaData)
         {
@@ -481,6 +653,13 @@ void FrameTuneScene::mousePressEvent(QMouseEvent *event)
     pressed = true;
     prevPos = event->localPos() / m_zoom;
     button = event->button();
+
+    if(button == Qt::LeftButton && m_mode != MODE_NONE)
+    {
+        if(m_curTool->mousePress(mapToImg(event->localPos())))
+            repaint();
+    }
+
     QWidget::mousePressEvent(event);
 }
 
@@ -503,6 +682,11 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
             so.setX(so.x() + p.x() - prevPos.x());
             repaint();
         }
+        else if(button == Qt::LeftButton && m_mode != MODE_NONE)
+        {
+            if(m_curTool->mouseMove(mapToImg(event->localPos())))
+                repaint();
+        }
         else
             emit deltaX(button, p.x() - prevPos.x());
         prevPos.setX(p.x());
@@ -514,6 +698,11 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
         {
             so.setY(so.y() + p.y() - prevPos.y());
             repaint();
+        }
+        else if(button == Qt::LeftButton && m_mode != MODE_NONE)
+        {
+            if(m_curTool->mouseMove(mapToImg(event->localPos())))
+                repaint();
         }
         else
             emit deltaY(button, p.y() - prevPos.y());
@@ -529,6 +718,12 @@ void FrameTuneScene::mouseReleaseEvent(QMouseEvent *event)
     {
         QWidget::mouseReleaseEvent(event);
         return;
+    }
+
+    if(button == Qt::LeftButton && m_mode != MODE_NONE)
+    {
+        if(m_curTool->mouseRelease(mapToImg(event->localPos())))
+            repaint();
     }
 
     pressed = false;

@@ -355,7 +355,10 @@
           <string>Interactive selection of frame</string>
          </property>
          <property name="text">
-          <string>Select frame on a sprite</string>
+          <string>Show sprite map...</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -667,7 +670,7 @@
     <string>Save into custom place...</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+, Ctrl+Shift+S</string>
+    <string notr="true">, Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionImport38A">

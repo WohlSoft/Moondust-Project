@@ -87,7 +87,7 @@ private slots:
 
     void frameSelected(int x, int y);
 
-    void on_Matrix_clicked();
+    void on_Matrix_clicked(bool checked);
     void exportHitboxesMap();
 
     void on_EnableFrame_clicked(bool checked);
@@ -139,9 +139,7 @@ private slots:
     void on_actionWikiPage_triggered();
 
     void on_actionBrowseSpriteDirectory_triggered();
-
     void on_actionAnimator_triggered();
-
     void on_actionSpriteEditor_triggered();
 
 private:
