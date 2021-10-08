@@ -95,6 +95,9 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
     ui->toolPicker->setShortcut(Qt::Key_O);
     ui->toolRubber->setShortcut(Qt::Key_R);
 
+    ui->toolUndo->setShortcut(QKeySequence("Ctrl+Z"));
+    ui->toolRedo->setShortcut(QKeySequence("Ctrl+Y"));
+
     ui->toolDrag->setChecked(true);
 
     QObject::connect(ui->toolDrag, &QToolButton::clicked,
@@ -113,6 +116,11 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
                      this, &ImageCalibrator::toolChanged);
     QObject::connect(ui->toolRects, &QToolButton::clicked,
                      this, &ImageCalibrator::toolChanged);
+
+    QObject::connect(ui->toolUndo, &QToolButton::clicked,
+                     this, &ImageCalibrator::historyUndo);
+    QObject::connect(ui->toolRedo, &QToolButton::clicked,
+                     this, &ImageCalibrator::historyRedo);
 }
 
 ImageCalibrator::~ImageCalibrator()
@@ -170,16 +178,15 @@ bool ImageCalibrator::init(QString imgPath)
     xyCell.showGrabItem = false;
 
     // Write default values
-    QVector<CalibrationFrame > xRow;
+    m_imgOffsets.clear();
+    m_imgOffsets.resize(m_conf->matrixWidth);
+    m_history.clear();
+    m_history.resize(m_conf->matrixWidth);
 
-    for(int y = 0; y < m_conf->matrixHeight; y++)
+    for(int x = 0; x < m_conf->matrixWidth; x++)
     {
-        xRow.clear();
-
-        for(int x = 0; x < m_conf->matrixWidth; x++)
-            xRow.push_back(xyCell);
-
-        m_imgOffsets.push_back(xRow);
+        m_imgOffsets[x].fill(xyCell, m_conf->matrixHeight);
+        m_history[x].fill(FrameHistory(), m_conf->matrixHeight);
     }
 
     loadCalibrates();
@@ -389,15 +396,12 @@ void ImageCalibrator::updateControls()
 
 void ImageCalibrator::updateScene()
 {
-    ui->preview->setImage(getFrame(m_frmX,
-                                   m_frmY,
-                                   m_imgOffsets[m_frmX][m_frmY].offsetX,
-                                   m_imgOffsets[m_frmX][m_frmY].offsetY,
-                                   static_cast<int>(m_imgOffsets[m_frmX][m_frmY].w),
-                                   static_cast<int>(m_imgOffsets[m_frmX][m_frmY].h)));
-
+    ui->preview->setImage(getCurrentFrame());
     ui->preview->setGlobalSetup(*m_conf);
     ui->preview->setFrameSetup(m_conf->frames[{m_frmX, m_frmY}]);
+    auto &his = m_history[m_frmX][m_frmY];
+    ui->toolUndo->setEnabled(his.canUndo());
+    ui->toolRedo->setEnabled(his.canRedo());
 }
 
 void ImageCalibrator::saveCalibrates()
@@ -465,6 +469,16 @@ QPixmap ImageCalibrator::generateTarget()
 
     x.end();
     return target;
+}
+
+QPixmap ImageCalibrator::getCurrentFrame()
+{
+    return getFrame(m_frmX,
+                    m_frmY,
+                    m_imgOffsets[m_frmX][m_frmY].offsetX,
+                    m_imgOffsets[m_frmX][m_frmY].offsetY,
+                    static_cast<int>(m_imgOffsets[m_frmX][m_frmY].w),
+                    static_cast<int>(m_imgOffsets[m_frmX][m_frmY].h));
 }
 
 QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY, int cW, int cH)
@@ -631,7 +645,26 @@ void ImageCalibrator::tempFrameUpdated(const QString &path)
 void ImageCalibrator::frameEdited()
 {
     auto f = ui->preview->getImage();
+    auto &his = m_history[m_frmX][m_frmY];
 
+    // Preserve first frame
+    if(his.history.empty())
+        his.addHistory(getCurrentFrame());
+
+    updateCurrentFrame(f);
+
+    his.addHistory(getCurrentFrame());
+
+    m_spriteOrig = m_sprite;
+    m_spriteModified = true;
+    m_matrix->updateScene(generateTarget());
+
+    ui->toolUndo->setEnabled(his.canUndo());
+    ui->toolRedo->setEnabled(his.canRedo());
+}
+
+void ImageCalibrator::updateCurrentFrame(const QPixmap &f)
+{
     int cellWidth = m_sprite.width() / m_conf->matrixWidth;
     int cellHeight = m_sprite.height() / m_conf->matrixHeight;
     auto &c = m_imgOffsets[m_frmX][m_frmY];
@@ -645,8 +678,30 @@ void ImageCalibrator::frameEdited()
     p.restore();
     p.drawPixmap(cellX, cellY, f);
     p.end();
+}
 
-    m_spriteOrig = m_sprite;
-    m_spriteModified = true;
+void ImageCalibrator::historyUndo(bool)
+{
+    auto &his = m_history[m_frmX][m_frmY];
+    if(!his.canUndo())
+        return;
+
+    updateCurrentFrame(his.undo());
+    updateScene();
     m_matrix->updateScene(generateTarget());
+    ui->toolUndo->setEnabled(his.canUndo());
+    ui->toolRedo->setEnabled(his.canRedo());
+}
+
+void ImageCalibrator::historyRedo(bool)
+{
+    auto &his = m_history[m_frmX][m_frmY];
+    if(!his.canRedo())
+        return;
+
+    updateCurrentFrame(his.redo());
+    updateScene();
+    m_matrix->updateScene(generateTarget());
+    ui->toolUndo->setEnabled(his.canUndo());
+    ui->toolRedo->setEnabled(his.canRedo());
 }

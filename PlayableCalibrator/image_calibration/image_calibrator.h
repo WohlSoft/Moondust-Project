@@ -23,9 +23,49 @@ class ImageCalibrator : public QDialog
 {
     Q_OBJECT
 
-    QList<QVector<CalibrationFrame > > m_imgOffsets;
+    QVector<QVector<CalibrationFrame > > m_imgOffsets;
     Calibration *m_conf = nullptr;
     CalibrationMain *m_mw = nullptr;
+
+    struct FrameHistory
+    {
+        int state = -1;
+        QVector<QPixmap> history;
+
+        bool canUndo()
+        {
+            return state > 0;
+        }
+
+        bool canRedo()
+        {
+            return state < history.size() - 1;
+        }
+
+        QPixmap undo()
+        {
+            if(!canUndo())
+                return QPixmap();
+            return history[--state];
+        }
+
+        QPixmap redo()
+        {
+            if(!canRedo())
+                return QPixmap();
+            return history[++state];
+        }
+
+        void addHistory(const QPixmap &img)
+        {
+            if(!history.isEmpty() && canRedo())
+                history.resize(state + 1);
+            history.push_back(img);
+            state++;
+        }
+    };
+
+    QVector<QVector<FrameHistory > > m_history;
 
     Matrix *m_matrix = nullptr;
 public:
@@ -67,6 +107,7 @@ private slots:
     void saveCalibrates();
     void loadCalibrates();
     QPixmap generateTarget();
+    QPixmap getCurrentFrame();
     QPixmap getFrame(int x, int y, int oX, int oY, int cW, int cH);
 
     void on_CropW_valueChanged(int arg1);
@@ -103,6 +144,9 @@ private:
     QFileSystemWatcher m_watchingFrame;
     void tempFrameUpdated(const QString &path);
     void frameEdited();
+    void updateCurrentFrame(const QPixmap &f);
+    void historyUndo(bool);
+    void historyRedo(bool);
     int m_tempFileX = 0;
     int m_tempFileY = 0;
 };

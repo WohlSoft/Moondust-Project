@@ -33,5 +33,7 @@
         <file>edit/edit_rect.png</file>
         <file>edit/edit_select.png</file>
         <file>edit/edit_select_copy.png</file>
+        <file>edit/edit_redo.png</file>
+        <file>edit/edit_undo.png</file>
     </qresource>
 </RCC>

@@ -61,12 +61,19 @@
        </widget>
       </item>
       <item>
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QToolButton" name="toolSelect">
         <property name="toolTip">
          <string>Select fragment and cut it, move it into necessary place and double-click to paste</string>
         </property>
         <property name="text">
-         <string>Select</string>
+         <string>Select and move</string>
         </property>
         <property name="icon">
          <iconset resource="../_resources/images.qrc">
@@ -83,7 +90,7 @@
          <string>Select fragment and copy it, move it into necessary place and double-click to paste</string>
         </property>
         <property name="text">
-         <string>Select</string>
+         <string>Select and copy</string>
         </property>
         <property name="icon">
          <iconset resource="../_resources/images.qrc">
@@ -176,6 +183,47 @@
         </property>
         <property name="checkable">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolUndo">
+        <property name="toolTip">
+         <string>Undo a recent change</string>
+        </property>
+        <property name="text">
+         <string>Undo a recent change</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../_resources/images.qrc">
+          <normaloff>:/edit/edit_undo.png</normaloff>:/edit/edit_undo.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolRedo">
+        <property name="toolTip">
+         <string>Redo a recent change</string>
+        </property>
+        <property name="text">
+         <string>Redo a recent change</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../_resources/images.qrc">
+          <normaloff>:/edit/edit_redo.png</normaloff>:/edit/edit_redo.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
         </property>
        </widget>
       </item>

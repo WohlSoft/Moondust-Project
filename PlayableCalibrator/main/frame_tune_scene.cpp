@@ -997,8 +997,8 @@ void FrameTuneScene::wheelEvent(QWheelEvent *event)
     QPoint numDegrees = event->angleDelta();
     if(numDegrees.y() > 0)
     {
-        if(m_zoom >= 10.0)
-            m_zoom = 10.0;
+        if(m_zoom >= 20.0)
+            m_zoom = 20.0;
         else
             m_zoom += 0.5;
     }
