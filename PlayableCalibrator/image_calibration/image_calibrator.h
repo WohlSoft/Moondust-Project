@@ -86,6 +86,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *e);
+    virtual void focusInEvent(QFocusEvent *event);
 
 private slots:
     void on_FrameX_valueChanged(int arg1);
@@ -108,6 +109,7 @@ private slots:
     void loadCalibrates();
     QPixmap generateTarget();
     QPixmap getCurrentFrame();
+    QPixmap getFrame(int x, int y);
     QPixmap getFrame(int x, int y, int oX, int oY, int cW, int cH);
 
     void on_CropW_valueChanged(int arg1);
@@ -142,9 +144,12 @@ private:
     bool m_lockUI;
 
     QFileSystemWatcher m_watchingFrame;
+    QString            m_pendingFileToUpdate;
     void tempFrameUpdated(const QString &path);
+    void tempFrameUpdatedProceed();
     void frameEdited();
     void updateCurrentFrame(const QPixmap &f);
+    void updateFrame(int x, int y, const QPixmap &f);
     void historyUndo(bool);
     void historyRedo(bool);
     int m_tempFileX = 0;

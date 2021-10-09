@@ -1,6 +1,7 @@
 #include <QFileInfo>
 #include <QDir>
 #include <QSettings>
+#include <QFocusEvent>
 
 #include "image_calibrator.h"
 #include <ui_image_calibrator.h>
@@ -233,6 +234,11 @@ void ImageCalibrator::closeEvent(QCloseEvent *)
         m_matrix->close();
 }
 
+void ImageCalibrator::focusInEvent(QFocusEvent *)
+{
+    tempFrameUpdatedProceed();
+}
+
 
 void ImageCalibrator::on_FrameX_valueChanged(int arg1)
 {
@@ -447,7 +453,6 @@ void ImageCalibrator::loadCalibrates()
 
 QPixmap ImageCalibrator::generateTarget()
 {
-    // FIXME: Make grid size and frame size being dynamical, not fixed 100x100!!!
     QPixmap target(m_sprite.width(), m_sprite.height());
     target.fill(Qt::transparent);
     QPainter x(&target);
@@ -458,13 +463,7 @@ QPixmap ImageCalibrator::generateTarget()
     for(int i = 0; i < m_conf->matrixWidth; i++)
     {
         for(int j = 0; j < m_conf->matrixHeight; j++)
-        {
-            x.drawPixmap(i * cellWidth, j * cellHeight, cellWidth, cellHeight,
-                         getFrame(i, j, m_imgOffsets[i][j].offsetX, m_imgOffsets[i][j].offsetY,
-                                  static_cast<int>(m_imgOffsets[i][j].w),
-                                  static_cast<int>(m_imgOffsets[i][j].h))
-                        );
-        }
+            x.drawPixmap(i * cellWidth, j * cellHeight, cellWidth, cellHeight, getFrame(i, j));
     }
 
     x.end();
@@ -473,12 +472,19 @@ QPixmap ImageCalibrator::generateTarget()
 
 QPixmap ImageCalibrator::getCurrentFrame()
 {
+    auto &s = m_imgOffsets[m_frmX][m_frmY];
     return getFrame(m_frmX,
                     m_frmY,
-                    m_imgOffsets[m_frmX][m_frmY].offsetX,
-                    m_imgOffsets[m_frmX][m_frmY].offsetY,
-                    static_cast<int>(m_imgOffsets[m_frmX][m_frmY].w),
-                    static_cast<int>(m_imgOffsets[m_frmX][m_frmY].h));
+                    s.offsetX, s.offsetY,
+                    static_cast<int>(s.w), static_cast<int>(s.h));
+}
+
+QPixmap ImageCalibrator::getFrame(int x, int y)
+{
+    auto &s = m_imgOffsets[x][y];
+    return getFrame(x, y,
+                    s.offsetX, s.offsetY,
+                    static_cast<int>(s.w), static_cast<int>(s.h));
 }
 
 QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY, int cW, int cH)
@@ -549,9 +555,7 @@ void ImageCalibrator::on_openFrameInEditor_clicked()
         m_watchingFrame.removePath(f);
 
     QString tempFramePath = QDir::tempPath() + "/calibrator-temp-frame.png";
-    int cellWidth = m_sprite.width() / m_conf->matrixWidth;
-    int cellHeight = m_sprite.height() / m_conf->matrixHeight;
-    auto frm = m_sprite.copy((m_frmX * cellWidth), (m_frmY * cellHeight), cellWidth, cellHeight);
+    auto frm = getCurrentFrame();
     if(frm.save(tempFramePath, "PNG"))
     {
         m_tempFileX = m_frmX;
@@ -618,28 +622,38 @@ void ImageCalibrator::toolChanged(bool)
 
 void ImageCalibrator::tempFrameUpdated(const QString &path)
 {
-    QPixmap f = QPixmap(path);
+    if(!m_pendingFileToUpdate.isEmpty())
+        return;
+
+    m_pendingFileToUpdate = path;
+    QTimer::singleShot(500, this, &ImageCalibrator::tempFrameUpdatedProceed);
+}
+
+void ImageCalibrator::tempFrameUpdatedProceed()
+{
+    if(m_pendingFileToUpdate.isEmpty())
+        return;
+
+    QPixmap f = QPixmap(m_pendingFileToUpdate);
+    m_pendingFileToUpdate.clear();
+
     if(f.isNull())
         return; // Invalid frame
 
-    int cellWidth = m_sprite.width() / m_conf->matrixWidth;
-    int cellHeight = m_sprite.height() / m_conf->matrixHeight;
-    int cellX = (m_tempFileX * cellWidth);
-    int cellY = (m_tempFileY * cellHeight);
+    auto &his = m_history[m_tempFileX][m_tempFileY];
 
-    QPainter p(&m_sprite);
-    p.save();
-    p.setCompositionMode (QPainter::CompositionMode_Source);
-    p.fillRect(cellX, cellY, cellWidth, cellHeight, Qt::transparent);
-    p.restore();
-    p.drawPixmap(cellX, cellY, f);
-    p.end();
+    // Preserve first frame
+    if(his.history.empty())
+        his.addHistory(getFrame(m_tempFileX, m_tempFileY));
+
+    updateFrame(m_tempFileX, m_tempFileY, f);
+
+    his.addHistory(getFrame(m_tempFileX, m_tempFileY));
 
     m_spriteOrig = m_sprite;
     m_spriteModified = true;
-
-    updateScene();
     m_matrix->updateScene(generateTarget());
+    updateScene();
 }
 
 void ImageCalibrator::frameEdited()
@@ -665,11 +679,16 @@ void ImageCalibrator::frameEdited()
 
 void ImageCalibrator::updateCurrentFrame(const QPixmap &f)
 {
+    updateFrame(m_frmX, m_frmY, f);
+}
+
+void ImageCalibrator::updateFrame(int x, int y, const QPixmap &f)
+{
     int cellWidth = m_sprite.width() / m_conf->matrixWidth;
     int cellHeight = m_sprite.height() / m_conf->matrixHeight;
-    auto &c = m_imgOffsets[m_frmX][m_frmY];
-    int cellX = (m_frmX * cellWidth) + c.offsetX;
-    int cellY = (m_frmY * cellHeight) + c.offsetY;
+    auto &c = m_imgOffsets[x][y];
+    int cellX = (x * cellWidth) + c.offsetX;
+    int cellY = (y * cellHeight) + c.offsetY;
 
     QPainter p(&m_sprite);
     p.save();

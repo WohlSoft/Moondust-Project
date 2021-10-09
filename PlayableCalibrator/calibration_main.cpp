@@ -169,7 +169,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
         newAction->setPopupMode(QToolButton::InstantPopup);
         newAction->setToolTip(ui->menuSave->title());
         //Automatically reset label on language switching
-        newAction->connect(this, &CalibrationMain::languageSwitched, [this, newAction](){
+        newAction->connect(&m_translator, &Translator::languageSwitched, [this, newAction](){
                                 newAction->setToolTip(ui->menuSave->title());
                            });
         ui->mainBar->insertWidget(ui->actionSaveMenu, newAction);
