@@ -236,6 +236,15 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
         }
     });
 
+    m_animator = new Animator(m_calibration, this);
+    m_animator->setModal(false);
+
+    QObject::connect(m_animator, &Animator::settingsModified,
+    [this]()->void
+    {
+        m_wasModified = true;
+    });
+
     m_matrix = new Matrix(&m_calibration, this, this);
     m_matrix->setModal(false);
     m_matrix->changeGridSize(m_calibration.matrixWidth, m_calibration.matrixHeight);
@@ -582,6 +591,7 @@ void CalibrationMain::updateScene()
 {
     ui->preview->setGlobalSetup(m_calibration);
     ui->preview->setFrameSetup(m_calibration.frames[{m_frmX, m_frmY}]);
+    m_animator->syncCalibration();
 }
 
 void CalibrationMain::initScene()
@@ -829,24 +839,31 @@ void CalibrationMain::on_actionBrowseSpriteDirectory_triggered()
 
 void CalibrationMain::on_actionAnimator_triggered()
 {
-    m_matrix->hide();
-    this->hide();
-    auto old = m_calibration.animations;
-    Animator dialog(m_calibration, this);
-    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-    dialog.exec();
-    if(old != m_calibration.animations)
-        m_wasModified = true;
-    this->show();
-    this->raise();
-    if(ui->Matrix->isChecked())
-        m_matrix->show();
+    m_animator->show();
+    QRect g = this->frameGeometry();
+    m_animator->move(g.right(), g.top() - (g.height() - m_animator->height()));
+    m_animator->update();
+    m_animator->repaint();
+
+//    m_matrix->hide();
+//    this->hide();
+//    auto old = m_calibration.animations;
+//    Animator dialog(m_calibration, this);
+//    dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+//    dialog.exec();
+//    if(old != m_calibration.animations)
+//        m_wasModified = true;
+//    this->show();
+//    this->raise();
+//    if(ui->Matrix->isChecked())
+//        m_matrix->show();
 }
 
 
 void CalibrationMain::on_actionSpriteEditor_triggered()
 {
     m_matrix->hide();
+    m_animator->hide();
     this->hide();
 
     ImageCalibrator *imgCalibrator = new ImageCalibrator(&m_calibration, this);

@@ -23,6 +23,7 @@
 #include "ui_calibration_main.h"
 #include "graphics.h"
 #include "app_path.h"
+#include "animator/animator.h"
 #include "../frame_matrix/matrix.h"
 
 #include "qfile_dialogs_default_options.hpp"
@@ -70,6 +71,8 @@ void CalibrationMain::openFile(QString fileName)
     m_matrix->updateScene(m_xImageSprite);
     m_matrix->changeGridSize(m_calibration.matrixWidth, m_calibration.matrixHeight);
     m_matrix->setFrame(m_frmX, m_frmY);
+
+    m_animator->fullReload();
 
     updateCompatMode();
 

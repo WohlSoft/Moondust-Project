@@ -39,16 +39,18 @@ class Animator : public QDialog
 
     QString m_aniStyle;
     int     m_aniDir = 1;
+    QPoint  m_prevOffset;
 
-//    AnimationScene *m_aniScene = nullptr;
 
     void aniFindSet();
-
     void rebuildAnimationsList();
 
 public:
     explicit Animator(Calibration &conf, QWidget *parent = nullptr);
     ~Animator();
+
+    void syncCalibration();
+    void fullReload();
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -60,9 +62,12 @@ private slots:
     void on_directRight_clicked();
 
     void on_FrameSpeed_valueChanged(int arg1);
-    void on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
-
     void nextFrame();
+
+    void on_animationsList_itemSelectionChanged();
+
+signals:
+    void settingsModified();
 
 private:
     Ui::Animator *ui;

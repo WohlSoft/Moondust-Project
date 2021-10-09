@@ -36,6 +36,7 @@ class CalibrationMain;
 }
 
 class Matrix;
+class Animator;
 
 class CalibrationMain : public QMainWindow
 {
@@ -50,6 +51,7 @@ class CalibrationMain : public QMainWindow
     CalibrationFrame m_clipboard;
 
     Matrix *m_matrix = nullptr;
+    Animator *m_animator = nullptr;
 public:
     explicit CalibrationMain(QWidget *parent = nullptr);
     ~CalibrationMain();
