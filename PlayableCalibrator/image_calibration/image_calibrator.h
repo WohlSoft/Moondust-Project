@@ -96,6 +96,9 @@ private slots:
 
     void on_OffsetX_valueChanged(int arg1);
     void on_OffsetY_valueChanged(int arg1);
+    void updateOffset(int x, int y, int offsetX, int offsetY);
+    void updateOffsets(int x, int y, int deltaX, int deltaY);
+    void updateAllOffsets(int deltaX, int deltaY);
 
     void on_Matrix_clicked(bool checked);
     void on_Reset_clicked();

@@ -69,6 +69,10 @@ struct Calibration
 {
     int matrixWidth = 10;
     int matrixHeight = 10;
+    int spriteWidth = 1000;
+    int spriteHeight = 1000;
+    int cellWidth = 100;
+    int cellHeight = 100;
     int frameWidth = 0;
     int frameHeight = 0;
     int frameHeightDuck = -1;

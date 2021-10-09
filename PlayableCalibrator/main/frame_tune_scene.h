@@ -146,8 +146,7 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent *event);
 
 signals:
-    void deltaX(Qt::MouseButton button, int delta);
-    void deltaY(Qt::MouseButton button, int delta);
+    void delta(Qt::MouseButton button, int deltaX, int deltaY);
     void mouseReleased();
 
 private:

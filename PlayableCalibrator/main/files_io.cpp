@@ -68,6 +68,8 @@ void CalibrationMain::openFile(QString fileName)
     ui->FrameX->setMaximum(m_calibration.matrixWidth);
     ui->FrameY->setMaximum(m_calibration.matrixHeight);
 
+    updateImageMetrics(m_calibration, m_xImageSprite);
+
     m_matrix->updateScene(m_xImageSprite);
     m_matrix->changeGridSize(m_calibration.matrixWidth, m_calibration.matrixHeight);
     m_matrix->setFrame(m_frmX, m_frmY);

@@ -19,12 +19,13 @@ void MatrixWidget::setTexture(const QPixmap &texture, int cellsX, int cellsY)
     int cw = (m_texture.width() / m_gridW);
     int ch = (m_texture.height() / m_gridH);
 
+    const QImage t = m_texture.toImage();
+
     // Validate the 2pix-compatibility
     for(int cy = 0; cy < m_gridH; ++cy)
     {
         for(int cx = 0; cx < m_gridW; ++cx)
         {
-            QImage t = m_texture.toImage();
             int px = cw * cx;
             int py = ch * cy;
             int plx = px + cw;

@@ -22,7 +22,7 @@ public:
     virtual ~DrawTool() {}
 
     virtual bool mousePress(const QPoint &p) = 0;
-    virtual bool mouseMove(const QPoint &p) = 0;
+    virtual bool mouseMove(const QPoint &p, const QPoint &delta) = 0;
     virtual bool mouseRelease(const QPoint &p) = 0;
 
     virtual bool mouseDoubleClick(const QPoint &)
@@ -55,7 +55,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p)
+    virtual bool mouseMove(const QPoint &p, const QPoint &)
     {
         QPainter pa(m_image);
         pa.setPen(m_self->m_drawColor);
@@ -99,7 +99,7 @@ public:
         return false;
     }
 
-    virtual bool mouseMove(const QPoint &)
+    virtual bool mouseMove(const QPoint &, const QPoint &)
     {
         return false;
     }
@@ -142,7 +142,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p)
+    virtual bool mouseMove(const QPoint &p, const QPoint &)
     {
         QPainter pa(m_image);
         pa.setCompositionMode (QPainter::CompositionMode_Source);
@@ -195,7 +195,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p)
+    virtual bool mouseMove(const QPoint &p, const QPoint &)
     {
         demo = QImage(m_image->size(), QImage::Format_ARGB32);
         demo.fill(Qt::transparent);
@@ -255,7 +255,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p)
+    virtual bool mouseMove(const QPoint &p, const QPoint &)
     {
         demo = QImage(m_image->size(), QImage::Format_ARGB32);
         demo.fill(Qt::transparent);
@@ -333,7 +333,7 @@ public:
         return true;
     }
 
-    virtual bool mouseMove(const QPoint &p)
+    virtual bool mouseMove(const QPoint &p, const QPoint &delta)
     {
         if(resetting)
             return false;
@@ -347,7 +347,7 @@ public:
         }
         else if(moving)
         {
-            selection.moveTo(selection.topLeft() + (p - startAt));
+            selection.translate(delta);
             startAt = p;
         }
         return true;
@@ -1048,41 +1048,36 @@ void FrameTuneScene::mouseMoveEvent(QMouseEvent *event)
     }
 
     auto p = event->localPos() / m_zoom;
-
     auto &so = curScrollOffset();
+    int dX = 0, dY = 0;
 
     if(std::floor(std::abs(prevPos.x() - p.x())) >= 1)
     {
-        if(button == Qt::MidButton && scrollPossible())
-        {
-            so.setX(so.x() + p.x() - prevPos.x());
-            repaint();
-        }
-        else if(button == Qt::LeftButton && m_mode != MODE_NONE)
-        {
-            if(m_curTool->mouseMove(mapToImg(event->localPos())))
-                repaint();
-        }
-        else
-            emit deltaX(button, p.x() - prevPos.x());
+        dX = p.x() - prevPos.x();
         prevPos.setX(p.x());
     }
 
     if(std::floor(std::abs(prevPos.y() - p.y())) >= 1)
     {
+        dY = p.y() - prevPos.y();
+        prevPos.setY(p.y());
+    }
+
+    if(dX != 0 || dY != 0)
+    {
         if(button == Qt::MidButton && scrollPossible())
         {
-            so.setY(so.y() + p.y() - prevPos.y());
+            so.setX(so.x() + dX);
+            so.setY(so.y() + dY);
             repaint();
         }
         else if(button == Qt::LeftButton && m_mode != MODE_NONE)
         {
-            if(m_curTool->mouseMove(mapToImg(event->localPos())))
+            if(m_curTool->mouseMove(mapToImg(event->localPos()), QPoint(dX, dY)))
                 repaint();
         }
         else
-            emit deltaY(button, p.y() - prevPos.y());
-        prevPos.setY(p.y());
+            emit delta(button, dX, dY);
     }
 
     QWidget::mouseMoveEvent(event);

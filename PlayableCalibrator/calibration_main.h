@@ -65,6 +65,7 @@ public:
     QString m_currentConfig;
     void loadConfig(Calibration &dst, QString fileName, Calibration *merge_with = nullptr);
     bool saveConfig(Calibration &src, QString fileName, bool customPath = false, Calibration *merge_with = nullptr);
+    void updateImageMetrics(Calibration &dst, const QPixmap &sprite);
     bool importFrom38A(Calibration &dst, QString imageName, QString fileName);
     bool exportTo38A(Calibration &src, QString imageName, QString fileName);
     void openFile(QString fileName);

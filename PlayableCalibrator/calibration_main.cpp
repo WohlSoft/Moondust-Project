@@ -196,41 +196,38 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
 
 
     ui->preview->setAllowScroll(true);
-    QObject::connect(ui->preview, &FrameTuneScene::deltaX,
-                     this, [this](Qt::MouseButton button, int delta)->void
+    QObject::connect(ui->preview, &FrameTuneScene::delta,
+                     this, [this](Qt::MouseButton button, int deltaX, int deltaY)->void
     {
         switch(button)
         {
         case Qt::LeftButton:
-            ui->OffsetX->setValue(ui->OffsetX->value() + delta);
+            if(deltaX != 0)
+                ui->OffsetX->setValue(ui->OffsetX->value() + deltaX);
+            if(deltaY != 0)
+                ui->OffsetY->setValue(ui->OffsetY->value() + deltaY);
             break;
-        case Qt::RightButton:
-            if(!ui->showGrabItem->isChecked())
-                break;
-            if(!ui->isRightDirect->isChecked())
-                delta *= -1;
-            ui->grabOffsetX->setValue(ui->grabOffsetX->value() + delta);
-            grabOffsetXupdate();
-            break;
-        default:
-            break;
-        }
-    });
 
-    QObject::connect(ui->preview, &FrameTuneScene::deltaY,
-                     this, [this](Qt::MouseButton button, int delta)->void
-    {
-        switch(button)
-        {
-        case Qt::LeftButton:
-            ui->OffsetY->setValue(ui->OffsetY->value() + delta);
-            break;
         case Qt::RightButton:
             if(!ui->showGrabItem->isChecked())
                 break;
-            ui->grabOffsetY->setValue(ui->grabOffsetY->value() + delta);
-            grabOffsetYupdate();
+
+            if(!ui->isRightDirect->isChecked())
+                deltaX *= -1;
+
+            if(deltaX != 0)
+            {
+                ui->grabOffsetX->setValue(ui->grabOffsetX->value() + deltaX);
+                grabOffsetXupdate();
+            }
+
+            if(deltaY != 0)
+            {
+                ui->grabOffsetY->setValue(ui->grabOffsetY->value() + deltaY);
+                grabOffsetYupdate();
+            }
             break;
+
         default:
             break;
         }
@@ -599,10 +596,13 @@ void CalibrationMain::initScene()
     m_frmX = ui->FrameX->value();
     m_frmY = ui->FrameY->value();
 
-    int cellWidth = m_xImageSprite.width() / m_calibration.matrixWidth;
-    int cellHeight = m_xImageSprite.height() / m_calibration.matrixHeight;
+    int cellWidth = m_calibration.cellWidth;
+    int cellHeight = m_calibration.cellHeight;
 
-    ui->preview->setImage(m_xImageSprite.copy(QRect(m_frmX * cellWidth, m_frmY * cellHeight, cellWidth, cellHeight)));
+    ui->preview->setImage(m_xImageSprite.copy(QRect(m_frmX * cellWidth,
+                                                    m_frmY * cellHeight,
+                                                    cellWidth,
+                                                    cellHeight)));
 }
 
 void CalibrationMain::on_grabTop_clicked()

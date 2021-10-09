@@ -25,43 +25,25 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
     ui->setupUi(this);
 
     ui->preview->setAllowScroll(true);
-    QObject::connect(ui->preview, &FrameTuneScene::deltaX,
-                     this, [this](Qt::MouseButton button, int delta)->void
+    QObject::connect(ui->preview, &FrameTuneScene::delta,
+                     this, [this](Qt::MouseButton button, int deltaX, int deltaY)->void
     {
         switch(button)
         {
         case Qt::LeftButton:
-            if(ui->hitboxMove->isChecked())
-            {
-                m_conf->frames[{m_frmX, m_frmY}].offsetX += delta;
-                m_hitboxModified = true;
-            }
-            ui->OffsetX->setValue(ui->OffsetX->value() - delta);
+            if(ui->moveAllFrames->isChecked())
+                updateAllOffsets(deltaX, deltaY);
+            else
+                updateOffsets(m_frmX, m_frmY, deltaX, deltaY);
             break;
-        case Qt::RightButton:
-            ui->CropW->setValue(ui->CropW->value() - delta);
-            break;
-        default:
-            break;
-        }
-    });
 
-    QObject::connect(ui->preview, &FrameTuneScene::deltaY,
-                     this, [this](Qt::MouseButton button, int delta)->void
-    {
-        switch(button)
-        {
-        case Qt::LeftButton:
-            if(ui->hitboxMove->isChecked())
-            {
-                m_conf->frames[{m_frmX, m_frmY}].offsetY += delta;
-                m_hitboxModified = true;
-            }
-            ui->OffsetY->setValue(ui->OffsetY->value() - delta);
-            break;
         case Qt::RightButton:
-            ui->CropH->setValue(ui->CropH->value() - delta);
+            if(deltaX != 0)
+                ui->CropW->setValue(ui->CropW->value() - deltaX);
+            if(deltaY != 0)
+                ui->CropH->setValue(ui->CropH->value() - deltaY);
             break;
+
         default:
             break;
         }
@@ -297,6 +279,86 @@ void ImageCalibrator::on_OffsetY_valueChanged(int arg1)
     updateScene();
 }
 
+void ImageCalibrator::updateOffset(int x, int y, int offsetX, int offsetY)
+{
+    auto &o = m_imgOffsets[x][y];
+    o.offsetX = offsetX;
+    o.offsetY = offsetY;
+
+    if(x == m_frmX && y == m_frmY)
+    {
+        ui->OffsetX->blockSignals(true);
+        ui->OffsetX->setValue(o.offsetX);
+        ui->OffsetX->blockSignals(false);
+        ui->OffsetY->blockSignals(true);
+        ui->OffsetY->setValue(o.offsetY);
+        ui->OffsetY->blockSignals(false);
+    }
+
+    updateScene();
+}
+
+void ImageCalibrator::updateOffsets(int x, int y, int deltaX, int deltaY)
+{
+    auto &o = m_imgOffsets[x][y];
+    o.offsetX -= deltaX;
+    o.offsetY -= deltaY;
+
+    if(x == m_frmX && y == m_frmY)
+    {
+        ui->OffsetX->blockSignals(true);
+        ui->OffsetX->setValue(o.offsetX);
+        ui->OffsetX->blockSignals(false);
+
+        ui->OffsetY->blockSignals(true);
+        ui->OffsetY->setValue(o.offsetY);
+        ui->OffsetY->blockSignals(false);
+    }
+
+    if(ui->hitboxMove->isChecked())
+    {
+        auto &f = m_conf->frames[{x, y}];
+        f.offsetX += deltaX;
+        f.offsetY += deltaY;
+        m_hitboxModified = true;
+    }
+
+    updateScene();
+}
+
+void ImageCalibrator::updateAllOffsets(int deltaX, int deltaY)
+{
+    for(int x = 0; x < m_conf->matrixWidth; ++x)
+    {
+        for(int y = 0; y < m_conf->matrixHeight; ++y)
+        {
+            auto &o = m_imgOffsets[x][y];
+            o.offsetX -= deltaX;
+            o.offsetY -= deltaY;
+
+            if(x == m_frmX && y == m_frmY)
+            {
+                ui->OffsetX->blockSignals(true);
+                ui->OffsetX->setValue(o.offsetX);
+                ui->OffsetX->blockSignals(false);
+                ui->OffsetY->blockSignals(true);
+                ui->OffsetY->setValue(o.offsetY);
+                ui->OffsetY->blockSignals(false);
+            }
+
+            if(ui->hitboxMove->isChecked())
+            {
+                auto &f = m_conf->frames[{x, y}];
+                f.offsetX += deltaX;
+                f.offsetY += deltaY;
+                m_hitboxModified = true;
+            }
+        }
+    }
+
+    updateScene();
+}
+
 void ImageCalibrator::on_CropW_valueChanged(int arg1)
 {
     if(m_lockUI) return;
@@ -457,8 +519,8 @@ QPixmap ImageCalibrator::generateTarget()
     target.fill(Qt::transparent);
     QPainter x(&target);
 
-    int cellWidth = m_sprite.width() / m_conf->matrixWidth;
-    int cellHeight = m_sprite.height() / m_conf->matrixHeight;
+    int cellWidth = m_conf->cellWidth;
+    int cellHeight = m_conf->cellHeight;
 
     for(int i = 0; i < m_conf->matrixWidth; i++)
     {
@@ -489,11 +551,10 @@ QPixmap ImageCalibrator::getFrame(int x, int y)
 
 QPixmap ImageCalibrator::getFrame(int x, int y, int oX, int oY, int cW, int cH)
 {
-    // FIXME: Make grid size and frame size being dynamical, not fixed 100x100!!!
     int pX = 0, pY = 0, pXo = 0, pYo = 0;
     int X, Y;
-    int cellWidth = m_sprite.width() / m_conf->matrixWidth;
-    int cellHeight = m_sprite.height() / m_conf->matrixHeight;
+    int cellWidth = m_conf->cellWidth;
+    int cellHeight = m_conf->cellHeight;
 
     X = x * cellWidth + oX;
     Y = y * cellHeight + oY;
@@ -684,16 +745,14 @@ void ImageCalibrator::updateCurrentFrame(const QPixmap &f)
 
 void ImageCalibrator::updateFrame(int x, int y, const QPixmap &f)
 {
-    int cellWidth = m_sprite.width() / m_conf->matrixWidth;
-    int cellHeight = m_sprite.height() / m_conf->matrixHeight;
     auto &c = m_imgOffsets[x][y];
-    int cellX = (x * cellWidth) + c.offsetX;
-    int cellY = (y * cellHeight) + c.offsetY;
+    int cellX = (x * m_conf->cellWidth) + c.offsetX;
+    int cellY = (y * m_conf->cellHeight) + c.offsetY;
 
     QPainter p(&m_sprite);
     p.save();
     p.setCompositionMode (QPainter::CompositionMode_Source);
-    p.fillRect(cellX, cellY, cellWidth, cellHeight, Qt::transparent);
+    p.fillRect(cellX, cellY, m_conf->cellWidth, m_conf->cellHeight, Qt::transparent);
     p.restore();
     p.drawPixmap(cellX, cellY, f);
     p.end();

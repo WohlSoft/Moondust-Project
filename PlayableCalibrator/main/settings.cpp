@@ -349,6 +349,14 @@ bool CalibrationMain::saveConfig(Calibration &src, QString fileName, bool custom
     return true;
 }
 
+void CalibrationMain::updateImageMetrics(Calibration &dst, const QPixmap &sprite)
+{
+    dst.spriteWidth = sprite.width();
+    dst.spriteHeight = sprite.height();
+    dst.cellWidth = sprite.width() / m_calibration.matrixWidth;
+    dst.cellHeight = sprite.height() / m_calibration.matrixHeight;
+}
+
 static const QStringList s_charNames =
 {
     "mario",
