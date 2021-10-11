@@ -3838,7 +3838,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Initialize new section</source>
-        <translation>初始化馨场景</translation>
+        <translation>初始化新场景</translation>
     </message>
     <message>
         <source>Sections aren&apos;t selected</source>
