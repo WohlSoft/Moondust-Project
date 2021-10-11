@@ -114,7 +114,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
         <source>Sox binary path:</source>
-        <translation>Sox 文件目录：</translation>
+        <translation>SoX 文件目录：</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
