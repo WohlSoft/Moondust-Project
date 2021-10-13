@@ -21,6 +21,7 @@
 #include <QtDebug>
 #include <QSettings>
 #include <QFileDialog>
+#include <QHash>
 
 #include "calibration_main.h"
 #include "ui_calibration_main.h"
@@ -420,6 +421,38 @@ struct SanBaEiLevelFile
     }
 };
 
+
+struct RelSize38A
+{
+    int w;
+    int h;
+    int hd;
+};
+
+//static RelSize38A s_q[5][2]  =
+//{
+//    {
+//        {24, 30, 30},
+//        {24, 53, 30}
+//    },
+//    {
+//        {24, 30, 30},
+//        {24, 60, 30}
+//    },
+//    {
+//        {24, 38, 26},
+//        {24, 60, 30}
+//    },
+//    {
+//        {24, 30, 26},
+//        {24, 50, 30}
+//    },
+//    {
+//        {22, 54, 44},
+//        {22, 54, 44}
+//    }
+//};
+
 bool CalibrationMain::importFrom38A(Calibration &dst, QString imageName, QString fileName)
 {
     QRegExp fileNameReg("(\\w+)-(\\d).png");
@@ -435,6 +468,28 @@ bool CalibrationMain::importFrom38A(Calibration &dst, QString imageName, QString
         return false;
 
     bool hasData = false;
+
+//    int relWidth = dst.frameWidth;
+//    int relHeight = dst.frameHeight;
+//    int relHeightDuck = dst.frameHeightDuck;
+
+//    if(charId >= 0 && charId <= 4)
+//    {
+//        switch(stateId)
+//        {
+//        case 1:
+//            relWidth = s_q[charId][0].w;
+//            relHeight = s_q[charId][0].h;
+////            relHeightDuck = s_q[charId][0].hd;
+//            break;
+
+//        default:
+//            relWidth = s_q[charId][1].w;
+//            relHeight = s_q[charId][1].h;
+////            relHeightDuck = s_q[charId][1].hd;
+//            break;
+//        }
+//    }
 
     for(auto &l : lev.lines)
     {
@@ -468,10 +523,15 @@ bool CalibrationMain::importFrom38A(Calibration &dst, QString imageName, QString
             frame.used = true;
             int x = e[0].toInt();
             int y = e[1].toInt();
-            frame.offsetX = -(e[2].toInt() - 64);
-            frame.offsetY = -(e[3].toInt() - 64);
 
             Calibration::FramePos pos = {x, y};
+            CalibrationFrame relDefFrame;
+
+            if(m_calibrationDefault.frames.contains(pos))
+                relDefFrame = m_calibrationDefault.frames[pos];
+
+            frame.offsetX = relDefFrame.offsetX - (e[2].toInt() - 64);
+            frame.offsetY = relDefFrame.offsetY - (e[3].toInt() - 64);
 
             if(dst.frames.contains(pos))
             {
@@ -497,6 +557,7 @@ bool CalibrationMain::exportTo38A(Calibration &src, QString imageName, QString f
 
     int charId = nameToInt(fileNameReg.cap(1));
     int stateId = fileNameReg.cap(2).toInt();
+    bool possibleCrash = false;
 
     SanBaEiLevelFile lev;
 
@@ -507,6 +568,25 @@ bool CalibrationMain::exportTo38A(Calibration &src, QString imageName, QString f
 
     outputLine = QString("PX|%1,%2").arg(charId).arg(stateId);
 
+//    int relWidth = src.frameWidth;
+//    int relHeight = src.frameHeight;
+
+//    if(charId >= 0 && charId <= 4)
+//    {
+//        switch(stateId)
+//        {
+//        case 1:
+//            relWidth = s_q[charId][0].w;
+//            relHeight = s_q[charId][0].h;
+//            break;
+
+//        default:
+//            relWidth = s_q[charId][1].w;
+//            relHeight = s_q[charId][1].h;
+//            break;
+//        }
+//    }
+
     for(auto it = src.frames.begin(); it != src.frames.end(); ++it)
     {
         auto pos = it.key();
@@ -514,11 +594,22 @@ bool CalibrationMain::exportTo38A(Calibration &src, QString imageName, QString f
         if(!frame.used)
             continue;
 
+        CalibrationFrame relDefFrame;
+
+        if(m_calibrationDefault.frames.contains(pos))
+            relDefFrame = m_calibrationDefault.frames[pos];
+
+        int outOffsetX = (relDefFrame.offsetX - frame.offsetX) + 64;
+        int outOffsetY = (relDefFrame.offsetY - frame.offsetY) + 64;
+
+        if(outOffsetX < 0 || outOffsetX > 127)
+            possibleCrash = true;
+
         outputLine += QString("|%1,%2,%3,%4")
                 .arg(pos.first)
                 .arg(pos.second)
-                .arg(-frame.offsetX + 64)
-                .arg(-frame.offsetY + 64);
+                .arg(outOffsetX)
+                .arg(outOffsetY);
 
     }
 
@@ -553,6 +644,15 @@ bool CalibrationMain::exportTo38A(Calibration &src, QString imageName, QString f
 
     if(!hasLine)
         lev.lines.push_back(outputLine);
+
+    if(possibleCrash)
+    {
+        QMessageBox::warning(this,
+                             tr("Bad data generated"),
+                             tr("Some generated values are out of range, SMBX-38A may crash. File will not be patched."),
+                             QMessageBox::Ok);
+        return false;
+    }
 
     return lev.writeFile(fileName);
 }
