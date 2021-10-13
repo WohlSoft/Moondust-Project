@@ -326,6 +326,8 @@ void CalibrationMain::windowDisable(bool d)
     ui->centralwidget->setEnabled(!d);
     ui->menuSave->setEnabled(!d);
     ui->menuEdit->setEnabled(!d);
+    ui->actionAnimator->setEnabled(!d);
+    ui->actionSpriteEditor->setEnabled(!d);
     ui->menuImport_Export->setEnabled(!d);
     ui->actionBrowseSpriteDirectory->setEnabled(!d);
 }
