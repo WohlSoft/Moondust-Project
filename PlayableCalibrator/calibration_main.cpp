@@ -253,6 +253,59 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
     QObject::connect(m_matrix, &Matrix::currentFrameSwitched,
                      ui->EnableFrame, &QCheckBox::setChecked);
 
+    // TODO: Merge up sprite editor and hitbox tuner into the same box!
+    ui->tipSpriteEditor->setVisible(false);
+
+    QObject::connect(ui->scrollLeft, &QToolButton::clicked,
+                     this, [this](bool)->void
+    {
+        auto o = ui->preview->getOffset();
+        o.setX(o.x() + 4);
+        ui->preview->setOffset(o);
+    });
+
+    QObject::connect(ui->scrollRight, &QToolButton::clicked,
+                     this, [this](bool)->void
+    {
+        auto o = ui->preview->getOffset();
+        o.setX(o.x() - 4);
+        ui->preview->setOffset(o);
+    });
+
+    QObject::connect(ui->scrollUp, &QToolButton::clicked,
+                     this, [this](bool)->void
+    {
+        auto o = ui->preview->getOffset();
+        o.setY(o.y() + 4);
+        ui->preview->setOffset(o);
+    });
+
+    QObject::connect(ui->scrollDown, &QToolButton::clicked,
+                     this, [this](bool)->void
+    {
+        auto o = ui->preview->getOffset();
+        o.setY(o.y() - 4);
+        ui->preview->setOffset(o);
+    });
+
+    QObject::connect(ui->scrollReturn, &QToolButton::clicked,
+                     this, [this](bool)->void
+    {
+        ui->preview->resetScroll();
+    });
+
+    QObject::connect(ui->zoomIn, &QToolButton::clicked,
+                     this, [this](bool)->void
+    {
+        ui->preview->setZoom(ui->preview->getZoom() + 2);
+    });
+
+    QObject::connect(ui->zoomOut, &QToolButton::clicked,
+                     this, [this](bool)->void
+    {
+        ui->preview->setZoom(ui->preview->getZoom() - 2);
+    });
+
     windowDisable(true);
 
     if(!m_currentFile.isEmpty() && QFile::exists(m_currentFile))

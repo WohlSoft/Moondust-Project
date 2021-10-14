@@ -35,5 +35,11 @@
         <file>edit/edit_select_copy.png</file>
         <file>edit/edit_redo.png</file>
         <file>edit/edit_undo.png</file>
+        <file>edit/red_down.png</file>
+        <file>edit/red_left.png</file>
+        <file>edit/red_right.png</file>
+        <file>edit/red_up.png</file>
+        <file>edit/zoom_in.png</file>
+        <file>edit/zoom_out.png</file>
     </qresource>
 </RCC>

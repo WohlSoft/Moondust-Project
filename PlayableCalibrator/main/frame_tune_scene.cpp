@@ -526,6 +526,10 @@ double FrameTuneScene::getZoom() const
 void FrameTuneScene::setZoom(double zoom)
 {
     m_zoom = zoom;
+    if(m_zoom >= 20.0)
+        m_zoom = 20.0;
+    else if(m_zoom <= 1.0)
+        m_zoom = 1.0;
     if(!m_blockRepaint)
         repaint();
 }
