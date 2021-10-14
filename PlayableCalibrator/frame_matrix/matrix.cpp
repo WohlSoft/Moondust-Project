@@ -52,7 +52,7 @@ void Matrix::rebuildGrid()
             QSharedPointer<QCheckBox> cb(new QCheckBox);
             cb->setChecked(m_conf->frames[{x, y}].used);
             cb->setToolTip(tr("Include or exclude the %1 x %1 frame from the final calibration file").arg(x).arg(y));
-            QCheckBox *s = cb.get();
+            QCheckBox *s = cb.data();
             QObject::connect(s, static_cast<void (QCheckBox::*)(bool)>(&QCheckBox::clicked),
                              [this, s, x, y](bool en)->void
             {
@@ -63,15 +63,15 @@ void Matrix::rebuildGrid()
                         currentFrameSwitched(en);
                 }
             });
-            cell->addWidget(cb.get(), 2, 2);
+            cell->addWidget(cb.data(), 2, 2);
             m_matrixCheckBoxes.insert({x, y}, cb);
 
             QSharedPointer<QPushButton> sb(new QPushButton);
             sb->setFixedSize(20, 20);
             sb->setToolTip(tr("Select the %1 x %1 frame").arg(x).arg(y));
-            cell->addWidget(sb.get(), 2, 1);
+            cell->addWidget(sb.data(), 2, 1);
             m_matrixSelectors.push_back(sb);
-            QObject::connect(sb.get(), static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
+            QObject::connect(sb.data(), static_cast<void (QPushButton::*)(bool)>(&QPushButton::clicked),
                              [this, x, y](bool)->void
             {
                 setFrame(x, y);
@@ -80,7 +80,7 @@ void Matrix::rebuildGrid()
             m_matrixCells.push_back(cell);
 
             auto *w = new QWidget();
-            w->setLayout(cell.get());
+            w->setLayout(cell.data());
             m_matrixGrid->addWidget(w, y, x);
         }
     }
