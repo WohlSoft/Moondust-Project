@@ -297,12 +297,12 @@
     <message>
         <location filename="../calibration_main.ui" line="130"/>
         <source>Mark this frame as a mount riding and show the mount example at background in the Calibrator.</source>
-        <translation type="unfinished"></translation>
+        <translation>在校正器中标记此帧为坐骑并在背景中显示坐骑示例。</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="133"/>
         <source>Mount riding</source>
-        <translation type="unfinished"></translation>
+        <translation>坐骑</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="45"/>
