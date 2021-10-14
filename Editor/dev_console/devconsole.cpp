@@ -133,7 +133,8 @@ DevConsole::DevConsole(QWidget *parent) :
     font.setFamily("Courier New");
     ui->plainTextEdit->setFont(font);
 
-    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA &&
+       QSysInfo::WindowsVersion <= QSysInfo::WV_WINDOWS7)
     {
         if(QtWin::isCompositionEnabled())
         {

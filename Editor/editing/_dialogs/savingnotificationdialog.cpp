@@ -44,7 +44,8 @@ SavingNotificationDialog::SavingNotificationDialog(bool showDiscardButton, Dialo
     }
 
 #ifdef Q_OS_WIN
-    if(QSysInfo::WindowsVersion>=QSysInfo::WV_VISTA)
+    if(QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA &&
+       QSysInfo::WindowsVersion <= QSysInfo::WV_WINDOWS7)
     {
         if(QtWin::isCompositionEnabled())
         {

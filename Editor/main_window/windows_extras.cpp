@@ -10,7 +10,8 @@
 
 void MainWindow::initWindowsThumbnail()
 {
-    if( QSysInfo::WindowsVersion < QSysInfo::WV_VISTA ) return;
+    if(QSysInfo::WindowsVersion < QSysInfo::WV_VISTA)
+        return;
 
     pge_thumbbar = new QWinThumbnailToolBar(this);
     pge_thumbbar->setWindow(this->windowHandle());
@@ -40,7 +41,8 @@ void MainWindow::initWindowsThumbnail()
 
 void MainWindow::updateWindowsExtrasPixmap()
 {
-    if( QSysInfo::WindowsVersion < QSysInfo::WV_VISTA) return;
+    if(QSysInfo::WindowsVersion < QSysInfo::WV_VISTA)
+        return;
 
     QRect viewPort;
 
@@ -94,9 +96,10 @@ void MainWindow::updateWindowsExtrasPixmap()
 
 void MainWindow::drawWindowsDefaults()
 {
-    if( QSysInfo::WindowsVersion < QSysInfo::WV_VISTA ) return;
+    if(QSysInfo::WindowsVersion < QSysInfo::WV_VISTA)
+        return;
 
-    QPixmap defThumbPixmap(400,300);
+    QPixmap defThumbPixmap(400, 300);
     QPixmap defLivePreviewPixmap(size());
     QPainter defThumbPainter(&defThumbPixmap);
     QPainter defLivePreviewPainter(&defLivePreviewPixmap);
