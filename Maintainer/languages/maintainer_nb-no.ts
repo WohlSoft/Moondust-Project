@@ -6,7 +6,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Konverter lyd (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
@@ -26,7 +26,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>Filene vil bli konvertert til MP3</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="205"/>
         <source>Convert all music files of specific episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Konverter alle musikkfiler for spesifikk episode</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="228"/>
@@ -113,7 +113,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
         <source>Sox binary path:</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX-binærsti:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
@@ -199,12 +199,12 @@ Overwritten worlds: %3
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="549"/>
         <source>Open SoX binary path</source>
-        <translation type="unfinished"></translation>
+        <translation>Åpne SoX-binærsti</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
         <source>Open FFMPEG binary path</source>
-        <translation type="unfinished"></translation>
+        <translation>Åpne FFMPEG-binærsti</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
@@ -248,12 +248,12 @@ Overwritten worlds: %3
         <location filename="../EpisodeCvt/case_fixer.ui" line="57"/>
         <location filename="../EpisodeCvt/case_fixer.ui" line="120"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utforsk …</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="67"/>
         <source>Choose the mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg modus:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="73"/>
@@ -308,7 +308,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
         <source>Worker error</source>
-        <translation type="unfinished"></translation>
+        <translation>Arbeiderfeil</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="309"/>
@@ -351,27 +351,27 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="88"/>
         <source>No files to scan</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen filer å skanne</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="147"/>
         <source>Looking for levels and world maps...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ser etter nivåer og verdenskart …</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="162"/>
         <source>Processing levels and world maps...</source>
-        <translation type="unfinished"></translation>
+        <translation>Behandler nivåer og verdenskart …</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="173"/>
         <source>Looking for resources...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ser etter ressurser …</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="193"/>
         <source>Processing resources...</source>
-        <translation type="unfinished"></translation>
+        <translation>Behandler ressurser …</translation>
     </message>
 </context>
 <context>
@@ -379,7 +379,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="14"/>
         <source>Episode conversion tool</source>
-        <translation type="unfinished"></translation>
+        <translation>Episodekonverteringsverktøy</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="24"/>
@@ -393,7 +393,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="41"/>
         <source>Episode path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Episodesti:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
@@ -403,22 +403,22 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utforsk …</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
         <source>Target format:</source>
-        <translation type="unfinished"></translation>
+        <translation>Målformat:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="88"/>
         <source>Version:</source>
-        <translation type="unfinished"></translation>
+        <translation>Versjon:</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="105"/>
         <source>Look for subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Se etter undermapper</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="112"/>
@@ -428,12 +428,12 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="122"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
@@ -555,18 +555,18 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="207"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Flagg</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="98"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation>Hva vil du gjøre?</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="27"/>
         <location filename="../Graphics/gifs2png.cpp" line="283"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="75"/>
@@ -576,17 +576,17 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="34"/>
         <source>Output log</source>
-        <translation type="unfinished"></translation>
+        <translation>Utdata-logg</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="68"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="71"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosessen er opptatt</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="72"/>
@@ -659,7 +659,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="281"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopp</translation>
     </message>
 </context>
 <context>
@@ -697,7 +697,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utforsk …</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
@@ -707,7 +707,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="98"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Flagg</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
@@ -733,7 +733,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
@@ -799,7 +799,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopp</translation>
     </message>
 </context>
 <context>
@@ -884,12 +884,12 @@ Supported formats:
     <message>
         <location filename="../main_window.ui" line="182"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Språk</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="202"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutt</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="39"/>
@@ -917,7 +917,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="109"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation>Konverter filer</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="125"/>
@@ -952,7 +952,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="176"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Flagg</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="183"/>
@@ -968,7 +968,7 @@ Supported formats:
         <location filename="../Graphics/png2gifs.ui" line="27"/>
         <location filename="../Graphics/png2gifs.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="75"/>
@@ -978,17 +978,17 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="34"/>
         <source>Output log</source>
-        <translation type="unfinished"></translation>
+        <translation>Utdata-logg</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="68"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosessen er opptatt</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="66"/>
@@ -1044,7 +1044,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopp</translation>
     </message>
 </context>
 <context>
@@ -1058,7 +1058,7 @@ Supported formats:
         <location filename="../Graphics/palette_filter.ui" line="27"/>
         <location filename="../Graphics/palette_filter.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
@@ -1073,12 +1073,12 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="81"/>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Lukk</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Behandle filer</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
@@ -1104,7 +1104,7 @@ Supported formats:
         <location filename="../Graphics/palette_filter.ui" line="162"/>
         <location filename="../Graphics/palette_filter.ui" line="226"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Utforsk …</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
@@ -1114,7 +1114,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="182"/>
         <source>Flags</source>
-        <translation type="unfinished"></translation>
+        <translation>Flagg</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="189"/>
@@ -1144,7 +1144,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation>Prosessen er opptatt</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="66"/>
@@ -1208,7 +1208,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Stopp</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>

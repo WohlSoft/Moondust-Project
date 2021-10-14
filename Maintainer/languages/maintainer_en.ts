@@ -114,7 +114,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
         <source>Sox binary path:</source>
-        <translation>Sox binary path:</translation>
+        <translation>SoX binary path:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
@@ -532,7 +532,7 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="142"/>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Browse...</source>
-        <translation>Browse...</translation>
+        <translation>Browse…</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="149"/>
@@ -906,7 +906,7 @@ Supported formats:
     <message>
         <location filename="../main_window.ui" line="39"/>
         <source>Choice your action:</source>
-        <translation>Choice your action:</translation>
+        <translation>Choose your action:</translation>
     </message>
     <message>
         <location filename="../main_window.cpp" line="17"/>
