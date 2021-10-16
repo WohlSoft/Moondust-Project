@@ -248,6 +248,8 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
 
     QObject::connect(&m_translator, &Translator::languageSwitched,
                      m_matrix, &Matrix::languageSwitched);
+    QObject::connect(&m_translator, &Translator::languageSwitched,
+                     m_animator, &Animator::languageSwitched);
     QObject::connect(m_matrix, &Matrix::frameSelected,
                      this, &CalibrationMain::frameSelected);
     QObject::connect(m_matrix, &Matrix::currentFrameSwitched,

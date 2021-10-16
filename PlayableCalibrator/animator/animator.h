@@ -52,6 +52,9 @@ public:
     void syncCalibration();
     void fullReload();
 
+public slots:
+    void languageSwitched();
+
 protected:
     void keyPressEvent(QKeyEvent *e);
 

@@ -70,6 +70,11 @@ void Animator::fullReload()
     aniFindSet();
 }
 
+void Animator::languageSwitched()
+{
+    ui->retranslateUi(this);
+}
+
 void Animator::keyPressEvent(QKeyEvent *e)
 {
     switch(e->key())
