@@ -31,9 +31,10 @@ PGE_JS_File::PGE_JS_File(QObject *parent)
     : QObject(parent)
 {}
 
-PGE_JS_File::PGE_JS_File(const QString &scriptPath, QObject *parent)
+PGE_JS_File::PGE_JS_File(const QString &scriptPath, const QString &cpSettingsFile, QObject *parent)
     : QObject(parent),
-      m_scriptPath(scriptPath)
+      m_scriptPath(scriptPath),
+      m_configSettingsFile(cpSettingsFile)
 {}
 
 PGE_JS_File::~PGE_JS_File() {}
@@ -47,6 +48,16 @@ void PGE_JS_File::setScriptPath(QString scriptPath)
 QString PGE_JS_File::scriptPath()
 {
     return m_scriptPath;
+}
+
+void PGE_JS_File::setConfigSettingsFile(QString filePath)
+{
+    m_configSettingsFile = filePath;
+}
+
+QString PGE_JS_File::configSettingFile()
+{
+    return m_configSettingsFile;
 }
 
 QString PGE_JS_File::appPath()

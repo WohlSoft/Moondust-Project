@@ -41,6 +41,8 @@
 #include <js_engine/proxies/js_file.h>
 #include <js_engine/proxies/js_ini.h>
 
+#include "../data_configs.h"
+
 #define CONFIGURE_TOOL_NAME "configure.js"
 
 #define CP_NAME_ROLE        (Qt::ToolTipRole)
@@ -475,12 +477,29 @@ void ConfigManager::on_buttonBox_accepted()
 
 bool ConfigManager::isConfigured()
 {
-    bool isConfigured = false;
+    QSettings settings(DataConfig::buildLocalConfigPath(m_currentConfigPath), QSettings::IniFormat);
+
+    settings.beginGroup("main");
+    bool ret = settings.value("application-path-configured", false).toBool();
+    QString path = settings.value("application-path", QString()).toString();
+    settings.endGroup();
+
+    // When directory got moved or deleted, config pack should be marked as not configured because got broken
+    ret &= !path.isEmpty() &&
+            QFileInfo(path).isDir();
+
+    return ret;
+}
+
+bool ConfigManager::isIntegrationCompatible()
+{
+    int apiVersion;
     QSettings settings(m_currentConfigPath + "main.ini", QSettings::IniFormat);
     settings.beginGroup("main");
-    isConfigured = settings.value("application-path-configured", false).toBool();
+    apiVersion = settings.value("api-version", -1).toInt();
     settings.endGroup();
-    return isConfigured;
+    // Integrational config packs since API 42 were compatible
+    return (apiVersion >= 42);
 }
 
 bool ConfigManager::checkForConfigureTool()
@@ -490,6 +509,18 @@ bool ConfigManager::checkForConfigureTool()
     //If configure tool has been detected
     if(QFile::exists(configureToolApp) && (!isConfigured()))
     {
+        if(!isIntegrationCompatible())
+        {
+            QMessageBox::warning(this,
+                                 tr("Integrational configuration package is incompatible"),
+                                 tr("This integrational configuration package is older than API version 42 and it "
+                                    "is no longer compatible with thi version of Moondust Devkit. "
+                                    "Since API 42, integrational configuration packages must use the local settings "
+                                    "file instead the main.ini overriding."),
+                                 QMessageBox::Ok);
+            return false;
+        }
+
         QMessageBox::StandardButton reply =
             QMessageBox::information(this,
                                      tr("Configuration package is not configured!"),
@@ -517,8 +548,11 @@ bool ConfigManager::runConfigureTool()
     if(QFile::exists(configureToolApp))
     {
         PGE_JsEngine js;
+        QString cpDirName = QDir(m_currentConfigPath).dirName();
+        QString cpSetupFile = DataConfig::buildLocalConfigPath(m_currentConfigPath);
+
         js.bindProxy(new PGE_JS_Common(parentW), "PGE");
-        js.bindProxy(new PGE_JS_File(m_currentConfigPath, parentW), "FileIO");
+        js.bindProxy(new PGE_JS_File(m_currentConfigPath, cpSetupFile, parentW), "FileIO");
         js.bindProxy(new PGE_JS_INI(parentW), "INI");
 
         bool successfulLoaded = false;

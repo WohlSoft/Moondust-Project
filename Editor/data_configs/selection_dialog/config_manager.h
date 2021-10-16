@@ -66,6 +66,11 @@ public:
      */
     bool isConfigured();
     /**
+     * @brief Check the integrational config pack for compatibiltiy
+     * @return true if config pack compatible or false if not
+     */
+    bool isIntegrationCompatible();
+    /**
      * @brief Starts configure tool if available
      * @return true on success configuring, false if no config tool found, rejected or script was been errored
      */

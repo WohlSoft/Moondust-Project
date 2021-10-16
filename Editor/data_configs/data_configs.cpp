@@ -412,39 +412,42 @@ bool DataConfig::loadFullConfig()
 
     IniProcessing mainSet(main_ini);
 
-    QString customAppPath = ApplicationPath;
+    // PreSetup
+    QString preSetup_customAppPath = ApplicationPath;
+    bool    preSetup_lookAppDir = false;
+    QString preSetup_worlds;
+    QString preSetup_music;
+    QString preSetup_sound;
+    QString preSetup_gfxLevel;
+    QString preSetup_gfxWorldMap;
+    QString preSetup_gfxCharacters;
+    QString preSetup_custom;
+    // PreSetup END
 
+    // Load the main.ini settings (read-only)
     LogDebug("Loading main.ini...");
     if(!openSection(&mainSet, "main"))
         return false;
     {
-        mainSet.read("application-path", customAppPath, ApplicationPath);
-        customAppPath.replace('\\', '/');
-        bool lookAppDir = mainSet.value("application-dir", false).toBool();
-        data_dir = (lookAppDir ? customAppPath + "/" : config_dir + "data/");
-        if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
-            data_dir = ApplicationPath + "/" + data_dir;
-        else if(!QDir(data_dir).exists()) //Check as absolute
-        {
-            LogCritical(QString("Config data path not exists: %1").arg(data_dir));
-            return false;
-        }
+        mainSet.read("application-path", preSetup_customAppPath, ApplicationPath);
+        preSetup_customAppPath.replace('\\', '/');
+        preSetup_lookAppDir = mainSet.value("application-dir", false).toBool();
 
-        data_dir = QDir(data_dir).absolutePath() + "/";
-        ConfStatus::configDataPath = data_dir;
+        QString cpDirName = QDir(config_dir).dirName();
 
-        mainSet.read("config_name", ConfStatus::configName, QDir(config_dir).dirName());
-        // For LunaTester
-        mainSet.read("smbx-exe-name",           ConfStatus::SmbxEXE_Name,           "smbx.exe");
+        mainSet.read("config_name", ConfStatus::configName, cpDirName);
+        // Default executable name for the LunaTester
+        mainSet.read("smbx-exe-name",  ConfStatus::SmbxEXE_Name, "smbx.exe");
 
-        mainSet.read("config-pack-id",          configPackId, QString());
-        mainSet.read("target-engine-name",      targetEngineName, QString());
+        mainSet.read("config-pack-id", configPackId, QString());
+        mainSet.read("target-engine-name", targetEngineName, QString());
 
         mainSet.readEnum("default-engine-type",
                          ConfStatus::defaultTestEngine,
-                         ConfStatus::ENGINE_PGE,
+                         ConfStatus::ENGINE_MOONDUST,
         {
-            {"pge", ConfStatus::ENGINE_PGE},
+            {"moondust", ConfStatus::ENGINE_MOONDUST},
+            {"pge", ConfStatus::ENGINE_MOONDUST},
 
             {"luna", ConfStatus::ENGINE_LUNA},
             {"lunatester", ConfStatus::ENGINE_LUNA},
@@ -472,23 +475,76 @@ bool DataConfig::loadFullConfig()
             }
         }
 
-        dirs.worlds     = data_dir + mainSet.value("worlds", "worlds").toQString() + "/";
+        preSetup_worlds = mainSet.value("worlds", "worlds").toQString();
 
-        dirs.music      = data_dir + mainSet.value("music", "data/music").toQString() + "/";
-        dirs.sounds     = data_dir + mainSet.value("sound", "data/sound").toQString() + "/";
+        preSetup_music = mainSet.value("music", "data/music").toQString();
+        preSetup_sound = mainSet.value("sound", "data/sound").toQString();
 
-        dirs.glevel     = data_dir + mainSet.value("graphics-level", "data/graphics/level").toQString() + "/";
-        dirs.gworld     = data_dir + mainSet.value("graphics-worldmap", "data/graphics/worldmap").toQString() + "/";
-        dirs.gplayble   = data_dir + mainSet.value("graphics-characters", "data/graphics/characters").toQString() + "/";
+        preSetup_gfxLevel = mainSet.value("graphics-level", "data/graphics/level").toQString();
+        preSetup_gfxWorldMap = mainSet.value("graphics-worldmap", "data/graphics/worldmap").toQString();
+        preSetup_gfxCharacters = mainSet.value("graphics-characters", "data/graphics/characters").toQString();
 
         localScriptName_lvl  = mainSet.value("local-script-name-lvl", "level.lua").toQString();
         commonScriptName_lvl = mainSet.value("common-script-name-lvl", "level.lua").toQString();
         localScriptName_wld  = mainSet.value("local-script-name-wld", "world.lua").toQString();
         commonScriptName_wld = mainSet.value("common-script-name-wld", "world.lua").toQString();
 
-        dirs.gcustom = data_dir + mainSet.value("custom-data", "data-custom").toQString() + "/";
+        preSetup_custom = mainSet.value("custom-data", "data-custom").toQString();
     }
     closeSection(&mainSet);
+
+
+    // Load the local config pack settings (writable)
+    ConfStatus::configLocalSettingsFile = buildLocalConfigPath(config_dir);
+    {
+        IniProcessing localSet(ConfStatus::configLocalSettingsFile);
+        if(localSet.contains("main"))
+        {
+            localSet.beginGroup("main");
+            localSet.read("application-path", preSetup_customAppPath, preSetup_customAppPath);
+            preSetup_customAppPath.replace('\\', '/');
+            preSetup_lookAppDir = localSet.value("application-dir", preSetup_lookAppDir).toBool();
+
+            localSet.read("smbx-exe-name",  ConfStatus::SmbxEXE_Name, ConfStatus::SmbxEXE_Name);
+
+            preSetup_worlds = localSet.value("worlds", preSetup_worlds).toQString();
+
+            preSetup_music = localSet.value("music", preSetup_music).toQString();
+            preSetup_sound = localSet.value("sound", preSetup_sound).toQString();
+
+            preSetup_gfxLevel = localSet.value("graphics-level", preSetup_gfxLevel).toQString();
+            preSetup_gfxWorldMap = localSet.value("graphics-worldmap", preSetup_gfxWorldMap).toQString();
+            preSetup_gfxCharacters = localSet.value("graphics-characters", preSetup_gfxCharacters).toQString();
+            preSetup_custom = localSet.value("custom-data", preSetup_custom).toQString();
+            localSet.endGroup();
+        }
+    }
+
+    // ================ Apply pre-Setup ================
+    data_dir = (preSetup_lookAppDir ? preSetup_customAppPath + "/" : config_dir + "data/");
+    if(QDir(ApplicationPath + "/" + data_dir).exists()) //Check as relative
+        data_dir = ApplicationPath + "/" + data_dir;
+    else if(!QDir(data_dir).exists()) //Check as absolute
+    {
+        LogCritical(QString("Config data path not exists: %1").arg(data_dir));
+        return false;
+    }
+
+    data_dir = QDir(data_dir).absolutePath() + "/";
+    ConfStatus::configDataPath = data_dir;
+
+    dirs.worlds     = data_dir + preSetup_worlds + "/";
+
+    dirs.music      = data_dir + preSetup_music + "/";
+    dirs.sounds     = data_dir + preSetup_sound + "/";
+
+    dirs.glevel     = data_dir + preSetup_gfxLevel + "/";
+    dirs.gworld     = data_dir + preSetup_gfxWorldMap + "/";
+    dirs.gplayble   = data_dir + preSetup_gfxCharacters + "/";
+    dirs.gcustom = preSetup_custom;
+    // ================ Apply pre-Setup ================
+
+
 
     //Check existing of most important graphics paths
     if(!QDir(dirs.glevel).exists())
@@ -797,4 +853,10 @@ QString DataConfig::getWlvlExtraSettingsPath()
             return folderWldLevelPoints.extraSettings;
         return config_dir + folderWldLevelPoints.extraSettings;
     }
+}
+
+QString DataConfig::buildLocalConfigPath(const QString &configPackPath)
+{
+    QString cpDirName = QDir(configPackPath).dirName();
+    return AppPathManager::settingsPath() + "/pge_editor_config_" + cpDirName + ".ini";
 }

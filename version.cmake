@@ -13,7 +13,7 @@ add_definitions(-DPGE_TOOLCHAIN_VERSION_3=${Moondust_PATCH_VERSION})
 add_definitions(-DPGE_TOOLCHAIN_VERSION_4=${Moondust_TWEAK_VERSION})
 
 # Config pack API version
-add_definitions(-DPGE_CONFIG_PACK_API_VERSION=41)
+add_definitions(-DPGE_CONFIG_PACK_API_VERSION=42)
 
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
 add_definitions(-DPGE_TOOLCHAIN_VERSION_REL="")

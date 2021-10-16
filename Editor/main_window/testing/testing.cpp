@@ -55,7 +55,7 @@ void MainWindow::initTesting()
     m_testPGE.reset(new PgeEngine(this));
     m_testPGE->init();
     m_testAllEngines.push_back(&m_testPGE);
-    if(!noDefault || defEngine == ConfStatus::ENGINE_PGE)
+    if(!noDefault || defEngine == ConfStatus::ENGINE_MOONDUST)
     {
         ui->sepEngineExtras->setVisible(false);
         QIcon pgeEngine;
@@ -131,7 +131,7 @@ void MainWindow::initTesting()
 
     switch(defEngine)
     {
-    case ConfStatus::ENGINE_PGE:
+    case ConfStatus::ENGINE_MOONDUST:
     default:
         m_testEngine = m_testPGE.get();
         break;

@@ -45,6 +45,7 @@
 #include <QFileDialog>
 #include <QGroupBox>
 #include <QSpacerItem>
+#include <QInputDialog>
 
 #if !defined(_WIN32)
 #include <QStandardPaths>
@@ -340,6 +341,15 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
         m_menuItems[menuItemId++] = choosEnginePath;
     }
 
+    QAction *choosExeName;
+    {
+        choosExeName = lunaMenu->addAction("changeExeName");
+        QObject::connect(choosExeName,   &QAction::triggered,
+                    this,                &LunaTesterEngine::chooseExeName,
+                    Qt::QueuedConnection);
+        m_menuItems[menuItemId++] = choosExeName;
+    }
+
 #ifndef _WIN32
     lunaMenu->addSeparator();
     {
@@ -420,6 +430,12 @@ void LunaTesterEngine::retranslateMenu()
         chooseEnginePath->setText(tr("Change the path to LunaTester...",
                                      "Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory)."));
         chooseEnginePath->setToolTip(tr("Select the location of LunaTester."));
+    }
+    {
+        QAction *chooseExeName = m_menuItems[menuItemId++];
+        chooseExeName->setText(tr("Change the executable name...",
+                                     "Open a dialog to choose the name for executable LunaTester will use."));
+        chooseExeName->setToolTip(tr("Select the name of executable for the LunaTester."));
     }
 #ifndef _WIN32
     {
@@ -1188,6 +1204,46 @@ void LunaTesterEngine::chooseEnginePath()
     }
 }
 
+void LunaTesterEngine::chooseExeName()
+{
+    if(isEngineActive())
+    {
+        int ret = QMessageBox::question(m_w,
+                                        tr("LunaTester is still active"),
+                                        tr("To change an executable name, you will need to shut down a currently running game. "
+                                           "Do you want to shut down LunaTester now?"),
+                                        QMessageBox::Yes|QMessageBox::No);
+        if(ret != QMessageBox::Yes)
+            return; // Do nothing
+        killEngine();
+    }
+
+    QString cur;
+
+    if(m_customExeName.isEmpty())
+    {
+        cur = ConfStatus::SmbxEXE_Name;
+    }
+    else
+    {
+        cur = m_customExeName;
+    }
+
+    bool ok;
+    QString en = QInputDialog::getText(m_w,
+                                       tr("Change the executable name"),
+                                       tr("Please type the PE executable name to be used with LunaTester (for example, smbx.exe)"),
+                                       QLineEdit::Normal, cur, &ok);
+
+    if(ok && !en.isEmpty())
+    {
+        if(en != ConfStatus::SmbxEXE_Name)
+            m_customLunaPath = en;
+        else
+            m_customLunaPath.clear();
+    }
+}
+
 #ifndef _WIN32
 void LunaTesterEngine::runWineSetup()
 {
@@ -1481,14 +1537,14 @@ bool LunaTesterEngine::verifyCompatibility()
 
 void LunaTesterEngine::loadSetup()
 {
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
+    QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
 
     settings.beginGroup("LunaTester");
     {
         m_noGL = settings.value("nogl", false).toBool();
         m_killPreviousSession = settings.value("kill-engine-on-every-test", false).toBool();
         m_customLunaPath = settings.value("custom-runtime-path", QString()).toString();
+        m_customExeName = settings.value("custom-exe-name", QString()).toString();
 #ifndef _WIN32
         WineSetup::iniLoad(settings, m_wineSetup);
 #endif
@@ -1501,14 +1557,14 @@ void LunaTesterEngine::loadSetup()
 
 void LunaTesterEngine::saveSetup()
 {
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
+    QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
 
     settings.beginGroup("LunaTester");
     {
         settings.setValue("nogl", m_noGL);
         settings.setValue("kill-engine-on-every-test", m_killPreviousSession);
         settings.setValue("custom-runtime-path", m_customLunaPath);
+        settings.setValue("custom-exe-name", m_customExeName);
 #ifndef _WIN32
         WineSetup::iniSave(settings, m_wineSetup);
 #endif
