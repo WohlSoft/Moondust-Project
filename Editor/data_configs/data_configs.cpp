@@ -400,6 +400,7 @@ bool DataConfig::loadFullConfig()
     if((!QDir(config_dir).exists()) || (QFileInfo(config_dir).isFile()))
     {
         LogCritical(QString("CONFIG DIR NOT FOUND AT: %1").arg(config_dir));
+        emit errorOccured();
         return false;
     }
 
@@ -408,7 +409,10 @@ bool DataConfig::loadFullConfig()
 
     QString main_ini = getFullIniPath("main.ini");
     if(main_ini.isEmpty())
+    {
+        emit errorOccured();
         return false;
+    }
 
     IniProcessing mainSet(main_ini);
 
@@ -427,7 +431,10 @@ bool DataConfig::loadFullConfig()
     // Load the main.ini settings (read-only)
     LogDebug("Loading main.ini...");
     if(!openSection(&mainSet, "main"))
+    {
+        emit errorOccured();
         return false;
+    }
     {
         mainSet.read("application-path", preSetup_customAppPath, ApplicationPath);
         preSetup_customAppPath.replace('\\', '/');
@@ -527,6 +534,7 @@ bool DataConfig::loadFullConfig()
     else if(!QDir(data_dir).exists()) //Check as absolute
     {
         LogCritical(QString("Config data path not exists: %1").arg(data_dir));
+        emit errorOccured();
         return false;
     }
 
@@ -550,11 +558,13 @@ bool DataConfig::loadFullConfig()
     if(!QDir(dirs.glevel).exists())
     {
         LogCritical(QString("Level graphics path not exists: %1").arg(dirs.glevel));
+        emit errorOccured();
         return false;
     }
     if(!QDir(dirs.gworld).exists())
     {
         LogCritical(QString("World map graphics path not exists: %1").arg(dirs.gworld));
+        emit errorOccured();
         return false;
     }
 
@@ -567,6 +577,7 @@ bool DataConfig::loadFullConfig()
     if(mainSet.lastError() != IniProcessing::ERR_OK)
     {
         LogCriticalQD(QString("ERROR LOADING main.ini N:%1").arg(mainSet.lastError()));
+        emit errorOccured();
         return false;
     }
 
