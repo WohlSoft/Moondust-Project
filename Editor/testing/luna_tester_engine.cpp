@@ -856,6 +856,16 @@ QString LunaTesterEngine::getEnginePath()
                 m_customLunaPath + "/";
 }
 
+QString LunaTesterEngine::getExeName()
+{
+    if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA)
+        return ConfStatus::SmbxEXE_Name; // Ignore custom name
+
+    return m_customExeName.isEmpty() ?
+                ConfStatus::SmbxEXE_Name :
+                m_customExeName;
+}
+
 QString LunaTesterEngine::getBridgePath()
 {
     const QString execProxy = getEnginePath() + "LunaLoader-exec.exe";
@@ -897,6 +907,8 @@ void LunaTesterEngine::killProcess()
     // Mark kill as pending for purposes of command processing
     m_pendingCommands += PendC_Kill;
 
+    const QString smbxExeName = getExeName();
+
     QString lunaExecPath = getEnginePath();
     if(isEngineActive())
     {
@@ -904,13 +916,13 @@ void LunaTesterEngine::killProcess()
         // Kill everything that has "smbx.exe"
         DWORD proc_id[1024];
         DWORD proc_count = 0;
-        QString smbxPath = lunaExecPath + ConfStatus::SmbxEXE_Name;
+        QString smbxPath = lunaExecPath + smbxExeName;
         smbxPath.replace('/', '\\');
         proc_count = getPidsByPath(smbxPath.toStdWString(), proc_id, 1024);
         if(proc_count > 0)
         {
             LogDebugNC(QString("LunaEngineWorker: Found matching PIDs for running %1, going to kill...")
-                     .arg(ConfStatus::SmbxEXE_Name));
+                     .arg(smbxExeName));
             for(DWORD i = 0; i < proc_count; i++)
             {
                 DWORD f_pid = proc_id[i];
@@ -922,7 +934,7 @@ void LunaTesterEngine::killProcess()
                     {
                         LogDebugNC(
                             QString("LunaEngineWorker: Failed to kill %1 with PID %2 by 'TerminateProcess()' with error '%3', possibly it's already terminated.")
-                                 .arg(ConfStatus::SmbxEXE_Name)
+                                 .arg(smbxExeName)
                                  .arg(f_pid)
                                  .arg(GetLastError())
                         );
@@ -932,17 +944,17 @@ void LunaTesterEngine::killProcess()
             }
         }
         else
-            LogDebugNC(QString("LunaEngineWorker: No matching PIDs found for %1:").arg(ConfStatus::SmbxEXE_Name));
+            LogDebugNC(QString("LunaEngineWorker: No matching PIDs found for %1:").arg(smbxExeName));
 #else // _WIN32
 #   ifdef __APPLE__
-        LogDebugNC(QString("LunaEngineWorker: Killing %1 by 'kill'...").arg(ConfStatus::SmbxEXE_Name));
+        LogDebugNC(QString("LunaEngineWorker: Killing %1 by 'kill'...").arg(smbxExeName));
         QProcess ps;
         ps.start("/bin/ps", {"-A"});
         ps.waitForFinished();
         QString psAll = ps.readAllStandardOutput();
 
         QStringList psAllList = psAll.split('\n');
-        QString smbxExeName = ConfStatus::SmbxEXE_Name;
+        QString smbxExeName = smbxExeName;
 
         QRegExp psReg(QString("(\\d+) .*(wine-preloader).*(%1)").arg(smbxExeName));
         for(QString &psOne : psAllList)
@@ -957,9 +969,9 @@ void LunaTesterEngine::killProcess()
             }
         }
 #   else
-        pid_t pid = find_pid(lunaExecPath + ConfStatus::SmbxEXE_Name);
+        pid_t pid = find_pid(lunaExecPath + smbxExeName);
         LogDebugNC(QString("LunaEngineWorker: Killing %1 by pid %2...")
-            .arg(ConfStatus::SmbxEXE_Name)
+            .arg(smbxExeName)
             .arg(pid));
         if(pid > 0)
             ::kill(pid, SIGKILL);
@@ -1238,9 +1250,9 @@ void LunaTesterEngine::chooseExeName()
     if(ok && !en.isEmpty())
     {
         if(en != ConfStatus::SmbxEXE_Name)
-            m_customLunaPath = en;
+            m_customExeName = en;
         else
-            m_customLunaPath.clear();
+            m_customExeName.clear();
     }
 }
 
@@ -1423,8 +1435,10 @@ bool LunaTesterEngine::verifyCompatibility()
 
     //! Path to SMBX root
     const QString smbxPath = getEnginePath();
+    //! Executable name
+    const QString smbxExeName = getExeName();
     //! Full path to SMBX executable
-    const QString smbxExePath = smbxPath + ConfStatus::SmbxEXE_Name;
+    const QString smbxExePath = smbxPath + smbxExeName;
     //! Full path to LunaDLL library
     const QString lunaDllPath = smbxPath + "LunaDll.dll";
     //! Full path to LunaTester proxy executable
