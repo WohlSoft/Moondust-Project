@@ -45,7 +45,7 @@ void MultiMusicTest::changeEvent(QEvent *e)
     }
 }
 
-void MultiMusicTest::closeEvent(QCloseEvent *e)
+void MultiMusicTest::closeEvent(QCloseEvent *)
 {
     for(auto *it : m_items)
     {
