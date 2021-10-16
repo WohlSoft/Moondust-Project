@@ -93,12 +93,13 @@ long ConfStatus::total_sound=0;
 
 QString ConfStatus::configName;
 QString ConfStatus::configPath;
+QString ConfStatus::configLocalSettingsFile;
 
 QString ConfStatus::configDataPath;
 
 QString ConfStatus::SmbxEXE_Name;
 
-ConfStatus::TestEngineType ConfStatus::defaultTestEngine = ConfStatus::ENGINE_PGE;
+ConfStatus::TestEngineType ConfStatus::defaultTestEngine = ConfStatus::ENGINE_MOONDUST;
 bool ConfStatus::hideNonDefaultEngines = false;
 
 QString ConfStatus::defaultTheme;

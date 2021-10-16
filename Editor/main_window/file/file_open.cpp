@@ -186,7 +186,7 @@ static QString getEngineName(DataConfig *config)
     switch(ConfStatus::defaultTestEngine)
     {
     default:
-    case ConfStatus::ENGINE_PGE:
+    case ConfStatus::ENGINE_MOONDUST:
         return "PGE Engine";
 
     case ConfStatus::ENGINE_LUNA:

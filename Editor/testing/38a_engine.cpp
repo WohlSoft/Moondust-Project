@@ -376,8 +376,7 @@ QString SanBaEiRuntimeEngine::getBridgePath()
 
 void SanBaEiRuntimeEngine::loadSetup()
 {
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
+    QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
 
     settings.beginGroup("38aTester");
     {
@@ -394,8 +393,7 @@ void SanBaEiRuntimeEngine::loadSetup()
 
 void SanBaEiRuntimeEngine::saveSetup()
 {
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
+    QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
 
     settings.beginGroup("38aTester");
     {

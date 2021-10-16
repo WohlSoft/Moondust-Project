@@ -201,6 +201,8 @@ public:
     static QString configName;
     static QString defaultTheme;
     static QString configPath;
+    //! Config pack specific settings (they won't go between config packs when reloading)
+    static QString configLocalSettingsFile;
 
     static QString configDataPath;
 
@@ -208,7 +210,7 @@ public:
 
     enum TestEngineType
     {
-        ENGINE_PGE,
+        ENGINE_MOONDUST,
         ENGINE_LUNA,
         ENGINE_THEXTECH,
         ENGINE_38A

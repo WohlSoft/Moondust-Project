@@ -42,7 +42,7 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     //! Pointer to main window
     MainWindow *m_w = nullptr;
     //! List of registered menu items
-    QAction *m_menuItems[10];
+    QAction *m_menuItems[11];
 
     QAction *m_menuRunLunaTest = nullptr;
     QAction *m_menuRunLevelSafeTest = nullptr;
@@ -53,6 +53,8 @@ class LunaTesterEngine : public AbstractRuntimeEngine
     bool                m_killPreviousSession = false;
     //! Custom path to LunaTester
     QString             m_customLunaPath;
+    //! Custom luna executable name
+    QString             m_customExeName;
     //! Capabilities of given LunaLua build
     LunaLuaCapabilities m_caps;
     bool                m_capsNeedReload = false;
@@ -163,6 +165,10 @@ public slots:
      * @brief Change path to LunaTester
      */
     void chooseEnginePath();
+    /**
+     * @brief Change the executable name (apply into config pack specific settings)
+     */
+    void chooseExeName();
 
 #ifndef _WIN32
 private:

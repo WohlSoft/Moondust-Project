@@ -67,8 +67,7 @@ QString TheXTechEngine::getEnginePath()
 
 void TheXTechEngine::loadSetup()
 {
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
+    QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
 
     settings.beginGroup("TheXTech");
     {
@@ -81,8 +80,7 @@ void TheXTechEngine::loadSetup()
 
 void TheXTechEngine::saveSetup()
 {
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
+    QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
 
     settings.beginGroup("TheXTech");
     {

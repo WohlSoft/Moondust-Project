@@ -396,6 +396,8 @@ public:
     QString getPathExtraSettingsPath();
     QString getWlvlExtraSettingsPath();
 
+    static QString buildLocalConfigPath(const QString &configPackPath);
+
 signals:
     void progressValue(int);
     void progressMax(int);
