@@ -120,6 +120,11 @@ private:
      * @return path to LunaTester directory
      */
     QString getEnginePath();
+    /**
+     * @brief Returns a name of executable that LunaTester will run
+     * @return name of executable file to run
+     */
+    QString getExeName();
 
     /**
      * @brief Returns a path to a bridge executable to run a LunaTester
