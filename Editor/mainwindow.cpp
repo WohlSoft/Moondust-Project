@@ -198,7 +198,8 @@ bool MainWindow::initEverything(const QString &configDir, const QString &themePa
         /*********************Loading of config pack**********************/
         QFutureWatcher<bool> isOk;
         QEventLoop waitLoop;
-        QObject::connect(&isOk, SIGNAL(finished()), &waitLoop, SLOT(quit()));
+        QObject::connect(&isOk, &QFutureWatcher<bool>::finished, &waitLoop, &QEventLoop::quit);
+        QObject::connect(&configs, &DataConfig::errorOccured, &waitLoop, &QEventLoop::quit);
         // Do the loading in a thread
         isOk.setFuture(QtConcurrent::run(&this->configs, &DataConfig::loadFullConfig));
         /*********************Loading of config pack**********************/

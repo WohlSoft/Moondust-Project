@@ -404,6 +404,7 @@ signals:
     void progressTitle(QString);
     void progressPartsTotal(int);
     void progressPartNumber(int);
+    void errorOccured();
 
 private:
     unsigned long total_data;
