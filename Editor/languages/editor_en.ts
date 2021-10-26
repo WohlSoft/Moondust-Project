@@ -9465,7 +9465,7 @@ To launch a level testing, start a game and select playing of the %1 episode.</t
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation>Hello! You are attempting to test a level in the Moondust Engine.
-The Moondust Engine is still at an early stage in development, and there are several features that are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use Moondust Testing for cases when you want to test the Moondust Engine itself or you want to test levels with Moondust-specific features.</translation>
+The Moondust Engine is still at an early stage in development, and there are several features that are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX or TheXTech directly. Use Moondust Testing for cases when you want to test the Moondust Engine itself or you want to test levels with Moondust-specific features.</translation>
     </message>
     <message>
         <source>Can&apos;t start testing, engine is not found:
