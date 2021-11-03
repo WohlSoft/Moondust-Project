@@ -114,7 +114,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
         <source>Sox binary path:</source>
-        <translation>Chemin des binaires de Sox :</translation>
+        <translation>Chemin des binaires de SoX :</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
