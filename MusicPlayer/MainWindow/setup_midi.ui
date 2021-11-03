@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>447</width>
-    <height>689</height>
+    <width>485</width>
+    <height>803</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,54 +46,6 @@
       <string>OPNMIDI Extra Setup</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,1000">
-      <item row="0" column="0">
-       <widget class="QLabel" name="adlEmulatorLabel_2">
-        <property name="text">
-         <string>Chip emulator:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_6">
-        <property name="text">
-         <string>Volume ranges model:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="opnVolumeModel">
-        <item>
-         <property name="text">
-          <string>[Auto]</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Generic</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Native OPN2</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>DMX</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Apogee</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>9X</string>
-         </property>
-        </item>
-       </widget>
-      </item>
       <item row="3" column="0" colspan="2">
        <widget class="QFrame" name="frame">
         <property name="minimumSize">
@@ -164,6 +116,13 @@
         </layout>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="adlEmulatorLabel_2">
+        <property name="text">
+         <string>Chip emulator:</string>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="1">
        <widget class="QComboBox" name="opnEmulator">
         <item>
@@ -191,6 +150,77 @@
           <string>Mame YM2608 (OPNA)</string>
          </property>
         </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Volume ranges model:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="opnVolumeModel">
+        <item>
+         <property name="text">
+          <string>[Auto]</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Generic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Native OPN2</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>DMX</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Apogee</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>9X</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QCheckBox" name="opn_autoArpeggio">
+        <property name="text">
+         <string>Enable automatic arpeggio</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Number of chips:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="opnNumChips">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>8</number>
+        </property>
        </widget>
       </item>
      </layout>
@@ -336,7 +366,7 @@
         </item>
        </widget>
       </item>
-      <item row="4" column="0" colspan="2">
+      <item row="5" column="0" colspan="2">
        <widget class="QFrame" name="frame_3">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -394,7 +424,7 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
         </layout>
        </widget>
       </item>
-      <item row="5" column="0" colspan="2">
+      <item row="6" column="0" colspan="2">
        <widget class="QCheckBox" name="adl_tremolo">
         <property name="text">
          <string>Tremolo</string>
@@ -407,7 +437,7 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
         </property>
        </widget>
       </item>
-      <item row="6" column="0" colspan="2">
+      <item row="7" column="0" colspan="2">
        <widget class="QCheckBox" name="adl_vibrato">
         <property name="text">
          <string>Vibrato</string>
@@ -420,7 +450,7 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
         </property>
        </widget>
       </item>
-      <item row="7" column="0" colspan="2">
+      <item row="8" column="0" colspan="2">
        <widget class="QCheckBox" name="adl_scalableModulation">
         <property name="text">
          <string>Scalable modulation</string>
@@ -430,10 +460,40 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
         </property>
        </widget>
       </item>
-      <item row="8" column="0" colspan="2">
+      <item row="10" column="0" colspan="2">
        <widget class="QPushButton" name="resetDefaultADLMIDI">
         <property name="text">
          <string>Reset to defaults</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0" colspan="2">
+       <widget class="QCheckBox" name="adl_autoArpeggio">
+        <property name="text">
+         <string>Enable automatic arpeggio</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Number of chips:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="adlNumChips">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>4</number>
         </property>
        </widget>
       </item>

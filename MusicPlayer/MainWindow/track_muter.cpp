@@ -65,7 +65,7 @@ void TrackMuter::buildTracksList()
     for(int i = 0; i < tracks; ++i)
     {
         QCheckBox *t = new QCheckBox();
-        t->setText(tr("Track %1").arg(i + 1));
+        t->setText(tr("Track %1").arg(i));
         t->setChecked(true);
         QObject::connect(t, static_cast<void (QCheckBox::*)(bool)>(&QCheckBox::clicked),
                          [this, i](bool s)->void
