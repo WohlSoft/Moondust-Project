@@ -573,7 +573,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ici vous pouvez rapidement convertir vos musiques ou fichiers SFX qui &lt;br&gt;n&apos;ont pas été formatés correctement (mauvais taux d&apos;échantillonnage, mauvais codec, etc.).&lt;/p&gt;
-&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration&#x202f;: underline&#x202f;; color&#x202f;:#0000ff&#x202f;;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color :#0000ff ;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -754,7 +754,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Configuration name:</source>
-        <translation>Nom de la configuration&#x202f;:</translation>
+        <translation>Nom de la configuration :</translation>
     </message>
     <message>
         <source>Configuration path:</source>
@@ -881,7 +881,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished">Oh non, Éditeur PGE a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
+        <translation>Oh non, Éditeur Moondust a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
     </message>
     <message>
         <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
@@ -912,11 +912,11 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished">Publier un rapport sur le forum de PGE (wohlsoft.ru/forum/)</translation>
+        <translation>Publier un rapport sur le forum de WohlSoft (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished">Déposer un ticket sur le dépôt GitHub (WohlSoft/PGE-Project)</translation>
+        <translation>Déposer un ticket sur le dépôt GitHub (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
@@ -1237,13 +1237,13 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished">Vous possédez un ancien paquet de configuration.
+        <translation>Vous possédez un ancien paquet de configuration.
 &lt;br&gt;L&apos;éditeur sera lancé, mais vous pourriez rencontrer des problèmes avec les éléments ou les paramètres.
 &lt;br&gt;
 &lt;br&gt;Veuillez télécharger et installer la dernière version de votre paquet de configuration :
 &lt;br&gt;
 &lt;br&gt;Télécharger : %1
-&lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec PGE,
+&lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec le moteur Moondust,
 &lt;br&gt;cependant vous pouvez utiliser le même lien pour obtenir une version plus récente.</translation>
     </message>
 </context>
@@ -1362,11 +1362,11 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation type="unfinished">Args : {commandes du moteur} Envoie une commande ou un message vers le moteur PGE s&apos;il est en cours d&apos;exécution</translation>
+        <translation>Args : {commandes du moteur} Envoie une commande ou un message vers le moteur Moondust s&apos;il est en cours d&apos;exécution</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation>Affiche divers chemins importants&#x202f;!</translation>
+        <translation>Affiche divers chemins importants !</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
@@ -1491,7 +1491,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation type="unfinished">Bienvenue dans l&apos;Éditeur PGE !</translation>
+        <translation>Bienvenue dans l&apos;Éditeur Moondust !</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1651,12 +1651,12 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Fichier de niveau PGE</translation>
+        <translation>Fichier de niveau Moondust</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished">Carte de monde PGE</translation>
+        <translation>Carte de monde Moondust</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
@@ -2300,7 +2300,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation>Position&#x202f;: X, Y</translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
@@ -3825,7 +3825,7 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque&#x202f;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -4949,11 +4949,11 @@ Zones d&apos;env. physique : 			%6
 1 - Pipe, directional warp entrance and exit.
 2 - Door, player can enter with up key.
 3 - Portal, player will be teleported, but preserving movement speed.</source>
-        <translation type="unfinished">Définit le type de passage :
+        <translation>Définit le type de passage :
 0 - Instantané, le joueur sera téléporté instantanément et la vitesse de déplacement sera réinitialisée à 0.
 1 - Tuyau, entrée et sortie directionnelles.
 2 - Porte, le joueur peut entrer en appuyant sur la flèche du haut.
-3 - Portail, le joueur sera téléporté, mais en conservant la vitesse de déplacement (Moteur PGE uniquement).</translation>
+3 - Portail, le joueur sera téléporté, mais en conservant la vitesse de déplacement (Moteur Moondust uniquement).</translation>
     </message>
     <message>
         <source>0 - Instant</source>
@@ -6414,7 +6414,7 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     </message>
     <message>
         <source>PGE Engine testing</source>
-        <translation type="unfinished">Test du moteur de jeu PGE</translation>
+        <translation>Test du moteur de jeu Moondust</translation>
     </message>
     <message>
         <source>Don&apos;t show this message again.</source>
@@ -6423,8 +6423,8 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation type="unfinished">Bonjour ! Vous essayez de tester un niveau avec le moteur PGE.
-Le moteur PGE n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX. Utilisez les tests de PGE pour les cas où vous souhaitez tester le moteur PGE lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à PGE.</translation>
+        <translation type="unfinished">Bonjour ! Vous essayez de tester un niveau avec le moteur Moondust.
+Le moteur Moondust n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX. Utilisez les tests de Moondust pour les cas où vous souhaitez tester le moteur Moondust lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à Moondust.</translation>
     </message>
     <message>
         <source>Clonning of section...</source>
@@ -7832,7 +7832,7 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished">Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
+        <translation>Nous sommes désolé, mais l&apos;éditeur Moondust a planté. 
 Motif : Dépassement de mémoire !
 
 Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
@@ -7844,7 +7844,7 @@ Reason: Unhandled Exception
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté. 
 Motif : Exception non gérée
 
 Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
@@ -7856,7 +7856,7 @@ Lien du forum : wohlsoft.ru/forum</translation>
 Reason: %1
 
 </source>
-        <translation type="unfinished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
+        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté. 
 Motif : %1
 
 </translation>

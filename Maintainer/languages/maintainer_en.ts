@@ -1095,7 +1095,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
         <source>Drop your PNG files into this window for a quick porcessing</source>
-        <translation>Drop your PNG files into this window for a quick porcessing</translation>
+        <translation>Drop your PNG files into this window for a quick processing</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="142"/>
