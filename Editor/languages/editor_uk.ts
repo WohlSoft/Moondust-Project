@@ -6139,7 +6139,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
         <translation>Вітаємо, друже! Це тестування на двигуні Moondust.
-Двигун Moondust ще знаходиться на стадії розробки і має багато нереалізованих функцій. Деякі з них можуть все ще розроблятися, а деякі зовсім не працюють (поки що). Якщо ви створите рівні або епізоди для старого двигуна SMBX і ви хочете почати тестування з повною функціональністю, будь ласка, проводьте тестування у двигуні SMBX. Проводьте тестування в двигуні Moondust у тих випадках, коли ви хочете протестувати сам двигун, або рівні та епізоди, створені специфічно для Moondust.</translation>
+Двигун Moondust ще знаходиться на стадії розробки і має багато нереалізованих функцій. Деякі з них можуть все ще розроблятися, а деякі зовсім не працюють (поки що). Якщо ви створите рівні або епізоди для старого двигуна SMBX і ви хочете почати тестування з повною функціональністю, будь ласка, проводьте тестування у двигуні SMBX. Проводьте тестування в двигуні Moondust у тому випадку, коли ви хочете протестувати сам двигун, або рівні та епізоди, створені специфічно для Moondust.</translation>
     </message>
     <message>
         <source>Clonning of section...</source>
