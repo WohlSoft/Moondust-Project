@@ -56,6 +56,10 @@ class TheXTechEngine : public AbstractRuntimeEngine
     bool    m_battleMode = false;
     //! Compatibility level
     int     m_compatLevel = -1;
+    //! Speed-run mode
+    int     m_speedRunMode = -1;
+    //! Enable semi-transparent timer showing
+    bool    m_speedRunTimerST = false;
     /************** Settings **************/
 
 

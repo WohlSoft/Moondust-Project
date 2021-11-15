@@ -75,6 +75,8 @@ void TheXTechEngine::loadSetup()
         m_enableMagicHand = settings.value("enable-magic-hand", true).toBool();
         m_renderType = settings.value("render-type", -1).toInt();
         m_compatLevel = settings.value("compat-level", -1).toInt();
+        m_speedRunMode = settings.value("speedrun-mode", -1).toInt();
+        m_speedRunTimerST = settings.value("speedrun-st-stopwatch", false).toBool();
     }
     settings.endGroup();
 }
@@ -89,6 +91,8 @@ void TheXTechEngine::saveSetup()
         settings.setValue("enable-magic-hand", m_enableMagicHand);
         settings.setValue("render-type", m_renderType);
         settings.setValue("compat-level", m_compatLevel);
+        settings.setValue("speedrun-mode", m_speedRunMode);
+        settings.setValue("speedrun-st-stopwatch", m_speedRunTimerST);
     }
     settings.endGroup();
 }
@@ -487,6 +491,82 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
     }
 
     {
+        QMenu *speedRunMode = destmenu->addMenu("speedRunMode");
+        m_menuItems[menuItemId++] = speedRunMode->menuAction();
+
+        QAction *c_d, *c_m, *c_x, *c_v, *stt;
+
+        c_d = speedRunMode->addAction("speedRunDisabled");
+        c_d->setCheckable(true);
+        c_d->setChecked(m_renderType == -1);
+        m_menuItems[menuItemId++] = c_d;
+
+        c_m = speedRunMode->addAction("speedRunModern");
+        c_m->setCheckable(true);
+        c_m->setChecked(m_renderType == 0);
+        m_menuItems[menuItemId++] = c_m;
+
+        c_x = speedRunMode->addAction("speedRunX2");
+        c_x->setCheckable(true);
+        c_x->setChecked(m_renderType == 1);
+        m_menuItems[menuItemId++] = c_x;
+
+        c_v = speedRunMode->addAction("speedRunVanilla");
+        c_v->setCheckable(true);
+        c_v->setChecked(m_renderType == 2);
+        m_menuItems[menuItemId++] = c_v;
+
+        speedRunMode->addSeparator();
+
+        stt = speedRunMode->addAction("semiTransparentTimer");
+        stt->setCheckable(true);
+        c_v->setChecked(m_speedRunTimerST);
+        m_menuItems[menuItemId++] = stt;
+
+        QObject::connect(c_d,   &QAction::triggered,
+                    [this, c_d, c_m, c_x, c_v](bool)
+        {
+            c_d->setChecked(true);
+            c_m->setChecked(false);
+            c_x->setChecked(false);
+            c_v->setChecked(false);
+            m_speedRunMode = -1;
+        });
+        QObject::connect(c_m,   &QAction::triggered,
+                    [this, c_d, c_m, c_x, c_v](bool)
+        {
+            c_d->setChecked(false);
+            c_m->setChecked(true);
+            c_x->setChecked(false);
+            c_v->setChecked(false);
+            m_speedRunMode = 0;
+        });
+        QObject::connect(c_x,   &QAction::triggered,
+                    [this, c_d, c_m, c_x, c_v](bool)
+        {
+            c_d->setChecked(false);
+            c_m->setChecked(false);
+            c_x->setChecked(true);
+            c_v->setChecked(false);
+            m_speedRunMode = 1;
+        });
+        QObject::connect(c_v,   &QAction::triggered,
+                    [this, c_d, c_m, c_x, c_v](bool)
+        {
+            c_d->setChecked(false);
+            c_m->setChecked(false);
+            c_x->setChecked(true);
+            c_v->setChecked(false);
+            m_speedRunMode = 2;
+        });
+        QObject::connect(stt,   &QAction::triggered,
+                    [this](bool b)
+        {
+            m_speedRunTimerST = b;
+        });
+    }
+
+    {
         QAction *enableMagicHand;
         enableMagicHand = destmenu->addAction("enableMagicHand");
         enableMagicHand->setCheckable(true);
@@ -621,6 +701,38 @@ void TheXTechEngine::retranslateMenu()
     }
 
     {
+        QAction *speedRunMode = m_menuItems[menuItemId++];
+        speedRunMode->setText(tr("Speedruner's stopwatch",
+                                 "Speedrun mode menu"));
+        //  Sub-menu
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Disabled",
+                                   "Speedrun mode disabled"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Mode 1 (Modern)",
+                                   "Enable speedrun with mode 1 (modern compatibility level)"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Mode 1 (X2)",
+                                   "Enable speedrun with mode 2 (X2 compatibility level)"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Mode 3 (Strict SMBX 1.3)",
+                                   "Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)"));
+        }
+        {
+            QAction *stTimer = m_menuItems[menuItemId++];
+            stTimer->setText(tr("Semi-transparent stopwatch",
+                                "Show the speedrun stopwatch with a semi-transparent font."));
+        }
+    }
+
+    {
         QAction *enableMagicHand = m_menuItems[menuItemId++];
         enableMagicHand->setText(tr("Enable magic hand",
                                     "Allow real-time picking-up of elements while playing a level test."));
@@ -745,7 +857,25 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
         }
     }
 
-    if(m_compatLevel >= 0)
+    if(m_speedRunMode >= 0)
+    {
+        switch(m_speedRunMode)
+        {
+        case 0:
+            args << "--speed-run-mode" << "1";
+            break;
+        case 1:
+            args << "--speed-run-mode" << "2";
+            break;
+        case 2:
+            args << "--speed-run-mode" << "3";
+            break;
+        }
+
+        if(m_speedRunTimerST)
+            args << "--speed-run-semitransparent";
+    }
+    else if(m_compatLevel >= 0)
     {
         switch(m_compatLevel)
         {
