@@ -45,8 +45,10 @@ class SanBaEiRuntimeEngine : public AbstractRuntimeEngine
     SanBaEiIpcClient m_interface;
 
     MainWindow *m_w = nullptr;
+    //! Size of the menu items array
+    static const size_t m_menuItemsSize = 10;
     //! List of registered menu items
-    QAction *m_menuItems[10];
+    QAction *m_menuItems[m_menuItemsSize];
 
     /************** Settings **************/
     //! Path to custom SMBX-38A executable

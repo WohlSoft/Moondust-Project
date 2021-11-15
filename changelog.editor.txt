@@ -21,6 +21,7 @@
 - The Ctrl+Wheel and Alt+Wheel behaviour has been swapped: a Ctrl+Wheel will zoom in/out while Alt+Wheel will scroll horizontally
 - Reworked the logic of integrational configuration packages work: the new local settings file will be used instead of the "main.ini" overriding.
 - Fixed a dead freeze on configuration package loading fatal errors
+- Added the compatibility mode and speedrunner's stopwatch settings for TheXTech tester
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

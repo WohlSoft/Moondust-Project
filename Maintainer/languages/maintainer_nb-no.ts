@@ -448,7 +448,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="305"/>
         <source>Worker error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arbeiderfeil</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="306"/>
@@ -491,7 +491,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ingen filer å konvertere</translation>
     </message>
 </context>
 <context>
@@ -504,7 +504,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Konverter filer</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="125"/>
@@ -520,7 +520,7 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="142"/>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utforsk …</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="149"/>
@@ -672,7 +672,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="31"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Behandle filer</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
@@ -723,12 +723,12 @@ Supported formats:
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Start</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
         <source>Output log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utdata-logg</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
@@ -743,7 +743,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="65"/>
         <source>Process is busy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Prosessen er opptatt</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="66"/>
@@ -942,7 +942,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="156"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utforsk …</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="163"/>
@@ -1068,7 +1068,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="47"/>
         <source>Output log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Utdata-logg</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="81"/>

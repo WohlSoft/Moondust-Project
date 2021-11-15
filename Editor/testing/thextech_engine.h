@@ -38,8 +38,10 @@ class TheXTechEngine : public AbstractRuntimeEngine
     QMutex   m_engineMutex;
 
     MainWindow *m_w = nullptr;
+    //! Size of the menu items array
+    static const size_t m_menuItemsSize = 30;
     //! List of registered menu items
-    QAction *m_menuItems[20];
+    QAction *m_menuItems[m_menuItemsSize];
 
     /************** Settings **************/
     //! Path to custom TheXTech executable
@@ -54,6 +56,12 @@ class TheXTechEngine : public AbstractRuntimeEngine
     int     m_renderType = -1;
     //! Start game in battle mode
     bool    m_battleMode = false;
+    //! Compatibility level
+    int     m_compatLevel = -1;
+    //! Speed-run mode
+    int     m_speedRunMode = -1;
+    //! Enable semi-transparent timer showing
+    bool    m_speedRunTimerST = false;
     /************** Settings **************/
 
 

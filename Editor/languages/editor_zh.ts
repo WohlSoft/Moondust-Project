@@ -692,6 +692,14 @@ File path: %3</source>
         <source>This config pack has no configuring tool.</source>
         <translation>此配置包无配置工具。</translation>
     </message>
+    <message>
+        <source>Integrational configuration package is incompatible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ConfigStatus</name>
@@ -3796,6 +3804,27 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation>由于保存的大地图文件是不支持的格式，因此无法打开大地图。请使用 SMBX64-WLD 格式保存。</translation>
+    </message>
+    <message>
+        <source>Change the executable name...</source>
+        <comment>Open a dialog to choose the name for executable LunaTester will use.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the name of executable for the LunaTester.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change the executable name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8555,6 +8584,61 @@ Arguments: %2</source>
 
 指令: &quot;%1&quot;
 参数: %2</translation>
+    </message>
+    <message>
+        <source>Compatibility level</source>
+        <comment>Choose the compatibility level used by the game</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <comment>Use preferred compatibility level</comment>
+        <translation type="unfinished">默认</translation>
+    </message>
+    <message>
+        <source>Modern</source>
+        <comment>Prefer all updates and bugfixes enabled</comment>
+        <translation type="unfinished">现代风格</translation>
+    </message>
+    <message>
+        <source>X2</source>
+        <comment>Disable all bugfixes and updates exceot these made at X2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strict SMBX 1.3</source>
+        <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speedruner&apos;s stopwatch</source>
+        <comment>Speedrun mode menu</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <comment>Speedrun mode disabled</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode 1 (Modern)</source>
+        <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode 3 (Strict SMBX 1.3)</source>
+        <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Semi-transparent stopwatch</source>
+        <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mode 2 (X2)</source>
+        <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

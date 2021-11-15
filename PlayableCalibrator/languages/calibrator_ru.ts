@@ -704,12 +704,12 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
     <message>
         <location filename="../frame_matrix/matrix.cpp" line="54"/>
         <source>Include or exclude the %1 x %1 frame from the final calibration file</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить или исключить кадр %1 x %1 из конечного файла-калибровки</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.cpp" line="71"/>
         <source>Select the %1 x %1 frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать кадр %1 x %1</translation>
     </message>
 </context>
 <context>
