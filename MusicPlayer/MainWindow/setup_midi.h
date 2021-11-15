@@ -43,6 +43,12 @@ private slots:
     void on_adl_vibrato_clicked();
     void on_adl_scalableModulation_clicked();
 
+    void on_adl_autoArpeggio_clicked();
+    void on_opn_autoArpeggio_clicked();
+
+    void on_opnNumChips_editingFinished();
+    void on_adlNumChips_editingFinished();
+
     void on_timidityCfgPathBrowse_clicked();
     void on_timidityCfgPath_editingFinished();
 
