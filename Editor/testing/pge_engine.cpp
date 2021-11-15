@@ -236,6 +236,8 @@ void PgeEngine::initMenu(QMenu *destmenu)
         m_menuItems[menuItemId++] = startGame;
     }
 
+    Q_ASSERT(menuItemId < m_menuItemsSize);
+
     retranslateMenu();
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &PgeEngine::retranslateMenu);
 }

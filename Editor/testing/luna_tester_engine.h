@@ -41,8 +41,10 @@ class LunaTesterEngine : public AbstractRuntimeEngine
 
     //! Pointer to main window
     MainWindow *m_w = nullptr;
+    //! Size of the menu items array
+    static const size_t m_menuItemsSize = 11;
     //! List of registered menu items
-    QAction *m_menuItems[11];
+    QAction *m_menuItems[m_menuItemsSize];
 
     QAction *m_menuRunLunaTest = nullptr;
     QAction *m_menuRunLevelSafeTest = nullptr;

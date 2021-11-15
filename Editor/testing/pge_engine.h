@@ -37,8 +37,10 @@ class PgeEngine : public AbstractRuntimeEngine
     QMutex   m_engineMutex;
 
     MainWindow *m_w = nullptr;
+    //! Size of the menu items array
+    static const size_t m_menuItemsSize = 7;
     //! List of registered menu items
-    QAction *m_menuItems[7];
+    QAction *m_menuItems[m_menuItemsSize];
     //! IPC protocol client
     PgeEngineIpcClient m_interface;
 private slots:

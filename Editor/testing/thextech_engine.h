@@ -38,8 +38,10 @@ class TheXTechEngine : public AbstractRuntimeEngine
     QMutex   m_engineMutex;
 
     MainWindow *m_w = nullptr;
+    //! Size of the menu items array
+    static const size_t m_menuItemsSize = 30;
     //! List of registered menu items
-    QAction *m_menuItems[24];
+    QAction *m_menuItems[m_menuItemsSize];
 
     /************** Settings **************/
     //! Path to custom TheXTech executable

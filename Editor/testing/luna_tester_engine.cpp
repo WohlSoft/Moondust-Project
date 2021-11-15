@@ -371,6 +371,8 @@ void LunaTesterEngine::initMenu(QMenu *lunaMenu)
         m_menuItems[menuItemId++] = runLegacyEngine;
     }
 
+    Q_ASSERT(menuItemId < m_menuItemsSize);
+
     retranslateMenu();
     QObject::connect(m_w, &MainWindow::languageSwitched, this, &LunaTesterEngine::retranslateMenu);
 
