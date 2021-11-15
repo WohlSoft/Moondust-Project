@@ -74,6 +74,7 @@ void TheXTechEngine::loadSetup()
         m_customEnginePath = settings.value("custom-runtime-path", QString()).toString();
         m_enableMagicHand = settings.value("enable-magic-hand", true).toBool();
         m_renderType = settings.value("render-type", -1).toInt();
+        m_compatLevel = settings.value("compat-level", -1).toInt();
     }
     settings.endGroup();
 }
@@ -87,6 +88,7 @@ void TheXTechEngine::saveSetup()
         settings.setValue("custom-runtime-path", m_customEnginePath);
         settings.setValue("enable-magic-hand", m_enableMagicHand);
         settings.setValue("render-type", m_renderType);
+        settings.setValue("compat-level", m_compatLevel);
     }
     settings.endGroup();
 }
@@ -421,6 +423,70 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
     }
 
     {
+        QMenu *compatMode = destmenu->addMenu("compatMode");
+        m_menuItems[menuItemId++] = compatMode->menuAction();
+
+        QAction *c_d, *c_m, *c_x, *c_v;
+
+        c_d = compatMode->addAction("compatDefault");
+        c_d->setCheckable(true);
+        c_d->setChecked(m_renderType == -1);
+        m_menuItems[menuItemId++] = c_d;
+
+        c_m = compatMode->addAction("compatModern");
+        c_m->setCheckable(true);
+        c_m->setChecked(m_renderType == 0);
+        m_menuItems[menuItemId++] = c_m;
+
+        c_x = compatMode->addAction("compatX2");
+        c_x->setCheckable(true);
+        c_x->setChecked(m_renderType == 1);
+        m_menuItems[menuItemId++] = c_x;
+
+        c_v = compatMode->addAction("compatVanilla");
+        c_v->setCheckable(true);
+        c_v->setChecked(m_renderType == 2);
+        m_menuItems[menuItemId++] = c_v;
+
+        QObject::connect(c_d,   &QAction::triggered,
+                    [this, c_d, c_m, c_x, c_v](bool)
+        {
+            c_d->setChecked(true);
+            c_m->setChecked(false);
+            c_x->setChecked(false);
+            c_v->setChecked(false);
+            m_compatLevel = -1;
+        });
+        QObject::connect(c_m,   &QAction::triggered,
+                    [this, c_d, c_m, c_x, c_v](bool)
+        {
+            c_d->setChecked(false);
+            c_m->setChecked(true);
+            c_x->setChecked(false);
+            c_v->setChecked(false);
+            m_compatLevel = 0;
+        });
+        QObject::connect(c_x,   &QAction::triggered,
+                    [this, c_d, c_m, c_x, c_v](bool)
+        {
+            c_d->setChecked(false);
+            c_m->setChecked(false);
+            c_x->setChecked(true);
+            c_v->setChecked(false);
+            m_compatLevel = 1;
+        });
+        QObject::connect(c_v,   &QAction::triggered,
+                    [this, c_d, c_m, c_x, c_v](bool)
+        {
+            c_d->setChecked(false);
+            c_m->setChecked(false);
+            c_x->setChecked(true);
+            c_v->setChecked(false);
+            m_compatLevel = 2;
+        });
+    }
+
+    {
         QAction *enableMagicHand;
         enableMagicHand = destmenu->addAction("enableMagicHand");
         enableMagicHand->setCheckable(true);
@@ -524,6 +590,33 @@ void TheXTechEngine::retranslateMenu()
             QAction *renderType = m_menuItems[menuItemId++];
             renderType->setText(tr("Accelerated with V-Sync",
                                    "Hardware accelerated rendering with vertical synchronization support"));
+        }
+    }
+
+    {
+        QAction *compatMode = m_menuItems[menuItemId++];
+        compatMode->setText(tr("Compatibility level",
+                               "Choose the compatibility level used by the game"));
+        //  Sub-menu
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Default",
+                                   "Use preferred compatibility level"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Modern",
+                                   "Prefer all updates and bugfixes enabled"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("X2",
+                                   "Disable all bugfixes and updates exceot these made at X2"));
+        }
+        {
+            QAction *renderType = m_menuItems[menuItemId++];
+            renderType->setText(tr("Strict SMBX 1.3",
+                                   "Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour."));
         }
     }
 
@@ -648,6 +741,22 @@ bool TheXTechEngine::doTestLevelIPC(const LevelData &d)
             break;
         case 2:
             args << "--render" << "vsync";
+            break;
+        }
+    }
+
+    if(m_compatLevel >= 0)
+    {
+        switch(m_compatLevel)
+        {
+        case 0:
+            args << "--compat-level" << "modern";
+            break;
+        case 1:
+            args << "--compat-level" << "smbx2";
+            break;
+        case 2:
+            args << "--compat-level" << "smbx13";
             break;
         }
     }

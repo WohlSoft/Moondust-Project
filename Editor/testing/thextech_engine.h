@@ -39,7 +39,7 @@ class TheXTechEngine : public AbstractRuntimeEngine
 
     MainWindow *m_w = nullptr;
     //! List of registered menu items
-    QAction *m_menuItems[20];
+    QAction *m_menuItems[24];
 
     /************** Settings **************/
     //! Path to custom TheXTech executable
@@ -54,6 +54,8 @@ class TheXTechEngine : public AbstractRuntimeEngine
     int     m_renderType = -1;
     //! Start game in battle mode
     bool    m_battleMode = false;
+    //! Compatibility level
+    int     m_compatLevel = -1;
     /************** Settings **************/
 
 
