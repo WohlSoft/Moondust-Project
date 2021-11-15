@@ -719,7 +719,7 @@ void TheXTechEngine::retranslateMenu()
         }
         {
             QAction *renderType = m_menuItems[menuItemId++];
-            renderType->setText(tr("Mode 1 (X2)",
+            renderType->setText(tr("Mode 2 (X2)",
                                    "Enable speedrun with mode 2 (X2 compatibility level)"));
         }
         {

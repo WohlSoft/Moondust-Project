@@ -372,7 +372,7 @@
     <message>
         <location filename="../calibration_main.ui" line="566"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animatør</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="364"/>
