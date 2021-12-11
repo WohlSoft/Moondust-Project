@@ -44,6 +44,7 @@ class CalibrationMain : public QMainWindow
 
     QString m_lastOpenDir;
     QString m_currentFile;
+    QString m_externalGfxEditorPath;
     int m_curFrameX = 0, m_curFrameY = 0;
 
     Calibration m_calibration;
@@ -76,6 +77,11 @@ public:
     bool m_wasCanceled = false;
 
     QPixmap m_xImageSprite;
+
+    void loadAppSettings();
+    void saveAppSettings();
+    QString getGfxEditorPath(QWidget *parent = nullptr);
+    bool changeGfxEditor(QWidget *parent = nullptr);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -144,6 +150,8 @@ private slots:
     void on_actionBrowseSpriteDirectory_triggered();
     void on_actionAnimator_triggered();
     void on_actionSpriteEditor_triggered();
+
+    void on_actionChangeGFXEditor_triggered();
 
 private:
     int m_frmX = 0;

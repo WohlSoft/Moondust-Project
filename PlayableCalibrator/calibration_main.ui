@@ -182,6 +182,7 @@
     <property name="title">
      <string>Tools</string>
     </property>
+    <addaction name="actionChangeGFXEditor"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -932,6 +933,11 @@ Right button - Move the right-bottom crop edges.</string>
    </property>
    <property name="text">
     <string>Sprite editor</string>
+   </property>
+  </action>
+  <action name="actionChangeGFXEditor">
+   <property name="text">
+    <string>Extrenal GFX editor...</string>
    </property>
   </action>
  </widget>

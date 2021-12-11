@@ -181,19 +181,12 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
 
     Graphics::init();
 
-    QString inifile = AppPathManager::settingsFile();
-    QSettings settings(inifile, QSettings::IniFormat);
-    settings.beginGroup("Main");
-    m_lastOpenDir = settings.value("lastpath", ".").toString();
-    m_currentFile = settings.value("lastfile", m_currentFile).toString();
-    m_frmX = settings.value("last-frame-x", ui->FrameX->value()).toInt();
-    m_frmY = settings.value("last-frame-y", ui->FrameY->value()).toInt();
+    loadAppSettings();
+
     m_lockControls = true;
     ui->FrameX->setValue(m_frmX);
     ui->FrameY->setValue(m_frmY);
     m_lockControls = false;
-    settings.endGroup();
-
 
     ui->preview->setAllowScroll(true);
     QObject::connect(ui->preview, &FrameTuneScene::delta,
@@ -322,16 +315,7 @@ CalibrationMain::~CalibrationMain()
 
 void CalibrationMain::closeEvent(QCloseEvent *event)
 {
-    QString config = AppPathManager::settingsFile();
-    QSettings opts(config, QSettings::IniFormat);
-    opts.beginGroup("Main");
-    {
-        opts.setValue("lastpath", m_lastOpenDir);
-        opts.setValue("lastfile", m_currentFile);
-        opts.setValue("last-frame-x", m_frmX);
-        opts.setValue("last-frame-y", m_frmY);
-    }
-    opts.endGroup();
+    saveAppSettings();
 
     if(!trySave())
     {
@@ -968,3 +952,9 @@ void CalibrationMain::on_actionSpriteEditor_triggered()
     updateControls();
     updateScene();
 }
+
+void CalibrationMain::on_actionChangeGFXEditor_triggered()
+{
+    changeGfxEditor();
+}
+

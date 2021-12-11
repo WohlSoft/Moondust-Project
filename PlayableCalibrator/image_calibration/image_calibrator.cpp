@@ -611,17 +611,24 @@ void ImageCalibrator::on_refClear_clicked()
 
 void ImageCalibrator::on_openFrameInEditor_clicked()
 {
+    Q_ASSERT(m_mw);
+    QString gfxEditor = m_mw->getGfxEditorPath(this);
+
+    if(gfxEditor.isEmpty())
+        return;
+
     auto of = m_watchingFrame.files();
     for(auto &f : of)
         m_watchingFrame.removePath(f);
 
     QString tempFramePath = QDir::tempPath() + "/calibrator-temp-frame.png";
+
     auto frm = getCurrentFrame();
     if(frm.save(tempFramePath, "PNG"))
     {
         m_tempFileX = m_frmX;
         m_tempFileY = m_frmY;
-        QProcess::startDetached("gimp", {tempFramePath});
+        QProcess::startDetached(gfxEditor, {tempFramePath});
         m_watchingFrame.addPath(tempFramePath);
     }
 }
