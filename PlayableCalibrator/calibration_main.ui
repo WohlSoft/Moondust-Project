@@ -54,6 +54,9 @@
        </property>
        <item row="0" column="2">
         <widget class="QPushButton" name="wallMenu">
+         <property name="toolTip">
+          <string>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</string>
+         </property>
          <property name="text">
           <string>Wall</string>
          </property>
@@ -80,6 +83,9 @@
        </item>
        <item row="0" column="4">
         <widget class="QPushButton" name="bgColor">
+         <property name="toolTip">
+          <string>Change background color</string>
+         </property>
          <property name="text">
           <string>BG Color</string>
          </property>
@@ -87,6 +93,9 @@
        </item>
        <item row="0" column="3">
         <widget class="QPushButton" name="resetScroll">
+         <property name="toolTip">
+          <string>Reset a scroll position into initial state</string>
+         </property>
          <property name="text">
           <string>Reset scroll</string>
          </property>
@@ -94,6 +103,19 @@
        </item>
        <item row="0" column="5">
         <widget class="QPushButton" name="compatMode">
+         <property name="toolTip">
+          <string>Select the target engine for this calibration.&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Next modes supported:&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Calibrator&lt;/b&gt; - create or modify default calibrations used at the Calibrator itself, inheritance mode will be disabled, all data will be saved without stripping.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Moondust&lt;/b&gt; - calibrations for Moondust Engine, inheritance mode works for everything.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;TheXTech&lt;/b&gt; - calibrations for TheXTech, inheritance mode works for everything, custom animation doesn't work in game.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX2&lt;/b&gt; - calibrations for Super Mario Bros. X2, inheritance mode works for animations only, all frames will be stored even they matching, deprecated fields will be added, custom animation doesn't work in game.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - using the file as a storage of working data only (engine has the different format for calibrations).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br&gt;</string>
+         </property>
          <property name="text">
           <string notr="true">&lt;Compatibility&gt;</string>
          </property>
@@ -804,6 +826,9 @@ Right button - Move the right-bottom crop edges.</string>
    <property name="text">
     <string>Copy</string>
    </property>
+   <property name="toolTip">
+    <string>Copy calibration settings of the current frame</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl+C</string>
    </property>
@@ -815,6 +840,9 @@ Right button - Move the right-bottom crop edges.</string>
    </property>
    <property name="text">
     <string>Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Past calibration settings from the clipboard</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+V</string>

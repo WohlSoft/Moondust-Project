@@ -258,7 +258,7 @@
       <item row="9" column="0" colspan="2">
        <widget class="QCheckBox" name="hitboxMove">
         <property name="toolTip">
-         <string>When using mouse to move the picture, also move hitbox too</string>
+         <string>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</string>
         </property>
         <property name="text">
          <string>Hitbox move</string>
@@ -487,6 +487,9 @@
       </item>
       <item row="10" column="0" colspan="2">
        <widget class="QCheckBox" name="moveAllFrames">
+        <property name="toolTip">
+         <string>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</string>
+        </property>
         <property name="text">
          <string>Move all frames</string>
         </property>
