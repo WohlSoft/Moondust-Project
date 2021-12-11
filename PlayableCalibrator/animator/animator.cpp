@@ -30,22 +30,20 @@ Animator::Animator(Calibration &conf, QWidget *parent) :
     ui->setupUi(this);
 
     m_conf = &conf;
+    m_mw = qobject_cast<CalibrationMain*>(parent);
+    Q_ASSERT(m_mw);
 
-    //Here will be read AniFrames from INI
-
-    m_aniScene = new AnimationScene(conf, parent);
-    m_aniScene->setSceneRect(0, 0,
-                             ui->AnimatorView->width() - 20,
-                             ui->AnimatorView->height() - 20);
-
-    ui->AnimatorView->setScene(m_aniScene);
+    m_noAnimate = QPixmap(":/images/NoAni.png");
 
     m_aniStyle = "Idle";
     m_aniDir = 1; //0 - left, 1 - right
 
-    rebuildAnimationsList();
+    ui->preview->setDrawMetaData(false);
 
-    aniFindSet();
+    m_timer.setInterval(128);
+    QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
+
+    fullReload();
 }
 
 Animator::~Animator()
@@ -57,6 +55,24 @@ Animator::~Animator()
         delete it;
     }
     delete ui;
+}
+
+void Animator::syncCalibration()
+{
+    ui->preview->setGlobalSetup(*m_conf);
+    aniFindSet();
+}
+
+void Animator::fullReload()
+{
+    ui->preview->setGlobalSetup(*m_conf);
+    rebuildAnimationsList();
+    aniFindSet();
+}
+
+void Animator::languageSwitched()
+{
+    ui->retranslateUi(this);
 }
 
 void Animator::keyPressEvent(QKeyEvent *e)
@@ -86,21 +102,26 @@ void Animator::aniFindSet()
 
     auto &frms = m_conf->animations[m_aniStyle];
 
-    if(m_aniDir == 1)
-        m_aniScene->setAnimation(frms.R);
-    else
-        m_aniScene->setAnimation(frms.L);
+    m_timer.stop();
+    m_currentAnimation = (m_aniDir == 1) ? frms.R : frms.L;
+    ui->preview->setAllowScroll(true);
+    setFrame(0);
+    m_timer.start();
 }
 
 void Animator::rebuildAnimationsList()
 {
+    ui->animationsList->blockSignals(true);
+
     ui->animationsList->clear();
+
     for(AniFrameSet frms : m_conf->animations)
         ui->animationsList->addItem(frms.name);
 
-    QList<QListWidgetItem *> items = ui->animationsList->findItems("*", Qt::MatchWildcard);
-    for(auto &it : items)
+    for(int i = 0; i < ui->animationsList->count(); ++i)
     {
+        auto *it = ui->animationsList->item(i);
+
         if(it->text() == m_aniStyle)
         {
             it->setSelected(true);
@@ -108,6 +129,8 @@ void Animator::rebuildAnimationsList()
             break;
         }
     }
+
+    ui->animationsList->blockSignals(false);
 }
 
 
@@ -115,12 +138,16 @@ void Animator::rebuildAnimationsList()
 
 void Animator::on_EditAnimationBtn_clicked()
 {
+    auto old = m_conf->animations;
     AnimationEdit dialog(m_conf, this->parent(), this);
     dialog.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     dialog.exec();
     m_conf->animations = dialog.m_frameList;
     rebuildAnimationsList();
     aniFindSet();
+
+    if(old != m_conf->animations)
+        emit settingsModified();
 }
 
 //Set Direction
@@ -138,13 +165,66 @@ void Animator::on_directRight_clicked()
 
 void Animator::on_FrameSpeed_valueChanged(int arg1)
 {
-    m_aniScene->setFrameInterval(arg1);
+    m_timer.setInterval(arg1);
 }
 
-void Animator::on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *)
+void Animator::on_animationsList_itemSelectionChanged()
 {
+    auto s = ui->animationsList->selectedItems();
+    if(s.isEmpty())
+        return;
+    auto *item = s.first();
     if(!item)
         return;
     m_aniStyle = item->text();
     aniFindSet();
+}
+
+void Animator::nextFrame()
+{
+    m_curFrameIdx++;
+
+    if(m_curFrameIdx >= m_currentAnimation.size())
+        m_curFrameIdx = 0;
+
+    setFrame(m_curFrameIdx);
+}
+
+void Animator::setFrame(int frame)
+{
+    auto &img = m_mw->m_xImageSprite;
+    int cellW = m_mw->m_xImageSprite.width() / m_conf->matrixWidth;
+    int cellH = m_mw->m_xImageSprite.height() / m_conf->matrixWidth;
+
+    if((m_currentAnimation.size() == 0) || (frame >= m_currentAnimation.size()))
+    {
+        CalibrationFrame frame;
+        if(m_prevOffset.isNull())
+            m_prevOffset = ui->preview->getOffset();
+        ui->preview->setBlockRepaint(true);
+        ui->preview->setAllowScroll(false);
+        ui->preview->setFrameSetup(frame);
+        ui->preview->setHitBoxFocus(false);
+        ui->preview->resetScroll();
+        ui->preview->setImage(m_noAnimate);
+        ui->preview->setWall(FrameTuneScene::WALL_NONE);
+        ui->preview->setBlockRepaint(false);
+        return;
+    }
+
+    auto &cf = m_currentAnimation[frame];
+    auto &ff = m_conf->frames[{cf.x, cf.y}];
+
+    ui->preview->setBlockRepaint(true);
+    ui->preview->setImage(img.copy(QRect(cf.x * cellW, cf.y * cellH, cellW, cellH)));
+    ui->preview->setFrameSetup(ff);
+    ui->preview->setHitBoxFocus(true);
+    ui->preview->setWall(FrameTuneScene::WALL_FLOOR);
+    if(!m_prevOffset.isNull())
+    {
+        ui->preview->setOffset(m_prevOffset);
+        m_prevOffset.setX(0);
+        m_prevOffset.setY(0);
+    }
+    ui->preview->setBlockRepaint(false);
 }

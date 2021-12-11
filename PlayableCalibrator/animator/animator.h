@@ -23,7 +23,7 @@
 
 #include <QDialog>
 #include "calibration_main.h"
-#include "animation_scene.h"
+//#include "animation_scene.h"
 #include "main/calibration.h"
 
 namespace Ui {
@@ -35,19 +35,25 @@ class Animator : public QDialog
     Q_OBJECT
 
     Calibration *m_conf = nullptr;
+    CalibrationMain *m_mw = nullptr;
 
     QString m_aniStyle;
     int     m_aniDir = 1;
+    QPoint  m_prevOffset;
 
-    AnimationScene *m_aniScene = nullptr;
 
     void aniFindSet();
-
     void rebuildAnimationsList();
 
 public:
     explicit Animator(Calibration &conf, QWidget *parent = nullptr);
     ~Animator();
+
+    void syncCalibration();
+    void fullReload();
+
+public slots:
+    void languageSwitched();
 
 protected:
     void keyPressEvent(QKeyEvent *e);
@@ -59,10 +65,22 @@ private slots:
     void on_directRight_clicked();
 
     void on_FrameSpeed_valueChanged(int arg1);
-    void on_animationsList_currentItemChanged(QListWidgetItem *item, QListWidgetItem *);
+    void nextFrame();
+
+    void on_animationsList_itemSelectionChanged();
+
+signals:
+    void settingsModified();
 
 private:
     Ui::Animator *ui;
+
+// ANIMATION
+    QPixmap m_noAnimate;
+    void setFrame(int frame);
+    QVector<AniFrame> m_currentAnimation;
+    QTimer m_timer;
+    int m_curFrameIdx = 0;
 };
 
 #endif // ANIMATE_H

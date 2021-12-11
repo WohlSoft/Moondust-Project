@@ -29,7 +29,8 @@ struct CalibrationFrame
             used == o.used &&
             isDuck == o.isDuck &&
             isRightDir == o.isRightDir &&
-            showGrabItem == o.showGrabItem
+            showGrabItem == o.showGrabItem &&
+            isMountRiding == o.isMountRiding
         ;
     }
 };
@@ -68,12 +69,32 @@ struct Calibration
 {
     int matrixWidth = 10;
     int matrixHeight = 10;
+    int spriteWidth = 1000;
+    int spriteHeight = 1000;
+    int cellWidth = 100;
+    int cellHeight = 100;
     int frameWidth = 0;
     int frameHeight = 0;
     int frameHeightDuck = -1;
     int grabOffsetX = 0;
     int grabOffsetY = 0;
     bool grabOverTop = false;
+
+    enum CalibrationCompat
+    {
+        COMPAT_UNSPECIFIED = 0,
+        // Shorter config for Moondust
+        COMPAT_MOONDUST,
+        // Shorter config for TheXTech
+        COMPAT_THEXTECH,
+        // Shorter config for SMBX2
+        COMPAT_SMBX2,
+        // SMBX-38A compatibility
+        COMPAT_SMBX38A,
+        // Export the full config with all data
+        COMPAT_CALIBRATOR_FULL
+    };
+    int compatProfile = COMPAT_UNSPECIFIED;
 
     typedef QPair<int /*x*/, int /*y*/> FramePos;
     typedef QMap<FramePos, CalibrationFrame> FramesSet;

@@ -23,6 +23,7 @@
 #include "ui_calibration_main.h"
 #include "graphics.h"
 #include "app_path.h"
+#include "animator/animator.h"
 #include "../frame_matrix/matrix.h"
 
 #include "qfile_dialogs_default_options.hpp"
@@ -52,6 +53,8 @@ void CalibrationMain::openFile(QString fileName)
     QString ini_default = ApplicationPath + "/calibrator/spriteconf/" + ourFile.baseName() + ".ini";
     QString ini_custom = ourFile.absoluteDir().path() + "/" + ourFile.baseName() + ".ini";
 
+    m_calibrationDefault = Calibration();
+
     loadConfig(m_calibrationDefault, ini_default);
     m_calibration = m_calibrationDefault;
     if(QFile::exists(ini_custom))
@@ -65,9 +68,38 @@ void CalibrationMain::openFile(QString fileName)
     ui->FrameX->setMaximum(m_calibration.matrixWidth);
     ui->FrameY->setMaximum(m_calibration.matrixHeight);
 
+    updateImageMetrics(m_calibration, m_xImageSprite);
+
     m_matrix->updateScene(m_xImageSprite);
     m_matrix->changeGridSize(m_calibration.matrixWidth, m_calibration.matrixHeight);
     m_matrix->setFrame(m_frmX, m_frmY);
+
+    m_animator->fullReload();
+
+    updateCompatMode();
+
+    windowDisable(false);
+}
+
+bool CalibrationMain::openSprite()
+{
+    if(!trySave())
+        return false;
+
+    QString fileName_DATA = QFileDialog::getOpenFileName(this,
+                            tr("Open sprite file"), (m_lastOpenDir.isEmpty() ? AppPathManager::userAppDir() : m_lastOpenDir),
+                            tr("GIF and PNG images", "Type of image file to open") + " (*.png *.gif);;" +
+                            tr("GIF images", "Type of image file to open") + " (*.gif);;" +
+                            tr("PNG images", "Type of image file to open") + " (*.png);;" +
+                            tr("SMBX playble sprite", "Type of image file to open") + " (mario-*.gif peach-*.gif toad-*.gif luigi-*.gif link-*.gif);;" +
+                            tr("All Files", "Type of image file to open") + " (*.*)", nullptr, c_fileDialogOptions);
+
+    if(fileName_DATA == nullptr)
+        return false;
+
+    openFile(fileName_DATA);
+    m_wasModified = false;
+    return true;
 }
 
 //Made templates for test calibration
@@ -125,5 +157,5 @@ void CalibrationMain::exportHitboxesMap()
 
     QApplication::restoreOverrideCursor();
 
-    QMessageBox::information(this, tr("Saved"), tr("Hitbox map has been saved!"));
+    ui->statusBar->showMessage(tr("Hitbox map has been saved!"), 5000);
 }

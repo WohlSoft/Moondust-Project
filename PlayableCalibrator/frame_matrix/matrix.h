@@ -42,15 +42,11 @@ class Matrix : public QDialog
     Q_OBJECT
 
     Calibration *m_conf = nullptr;
-    QGridLayout *m_matrixGrid = nullptr;
-    QMap<Calibration::FramePos, QSharedPointer<QCheckBox>> m_matrixCheckBoxes;
-    QVector<QSharedPointer<QPushButton>> m_matrixSelectors;
-    QVector<QSharedPointer<QGridLayout>> m_matrixCells;
+    bool    m_allowEnableDisable = true;
 
     int m_gridW = 10;
     int m_gridH = 10;
 
-    void clearGrid();
     void rebuildGrid();
 
 public:
@@ -60,15 +56,19 @@ public:
     void changeGridSize(int w, int h);
     void updateScene(const QPixmap &sprite);
     void setFrameEnabled(int x, int y, bool enabled);
+    void allowEnableDisable(bool en);
 
     int m_frameX = 0;
     int m_frameY = 0;
 
     void setFrame(int x, int y);
-//    void drawGrid();
+
+public slots:
+    void languageSwitched();
 
 signals:
     void frameSelected(int x, int y);
+    void referenceSelected(int x, int y);
     void currentFrameSwitched(bool enabled);
 
 private:

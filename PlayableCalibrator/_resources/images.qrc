@@ -9,5 +9,37 @@
         <file>calibrator.icns</file>
         <file>images/mount.png</file>
         <file>images/mount_duck.png</file>
+        <file>images/wall.png</file>
+        <file>images/tool.png</file>
+        <file>images/enabled.png</file>
+        <file>images/warn.png</file>
+        <file>images/cur_pasta.png</file>
+        <file>images/edit_copy.png</file>
+        <file>images/reset_pos.png</file>
+        <file>compat/38a.ico</file>
+        <file>compat/moondust.ico</file>
+        <file>compat/smbx2.ico</file>
+        <file>compat/thextech.ico</file>
+        <file>compat/unspecified.png</file>
+        <file>images/mount2.png</file>
+        <file>images/mount2_duck.png</file>
+        <file>edit/edit_move.png</file>
+        <file>edit/edit_pencil.png</file>
+        <file>edit/edit_pick.png</file>
+        <file>edit/edit_rubber.png</file>
+        <file>edit/edit_picture.png</file>
+        <file>edit/edit_animator.png</file>
+        <file>edit/edit_line.png</file>
+        <file>edit/edit_rect.png</file>
+        <file>edit/edit_select.png</file>
+        <file>edit/edit_select_copy.png</file>
+        <file>edit/edit_redo.png</file>
+        <file>edit/edit_undo.png</file>
+        <file>edit/red_down.png</file>
+        <file>edit/red_left.png</file>
+        <file>edit/red_right.png</file>
+        <file>edit/red_up.png</file>
+        <file>edit/zoom_in.png</file>
+        <file>edit/zoom_out.png</file>
     </qresource>
 </RCC>

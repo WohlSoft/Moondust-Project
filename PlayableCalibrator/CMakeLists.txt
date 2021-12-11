@@ -94,9 +94,10 @@ list(APPEND PGE_CALIBRATOR_SRCS
     about/about.cpp
     animator/animator.cpp
     animator/animation_edit.cpp
-    animator/animation_scene.cpp
     image_calibration/image_calibrator.cpp
     main/mouse_scene.cpp
+    main/calibration_file.cpp
+    main/frame_tune_scene.cpp
     main/files_io.cpp
     main/graphics.cpp
     main/settings.cpp
