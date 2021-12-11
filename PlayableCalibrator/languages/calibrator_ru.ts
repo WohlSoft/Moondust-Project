@@ -206,17 +206,17 @@
     <message>
         <location filename="../calibration_main.ui" line="662"/>
         <source>Scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутка</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="685"/>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутить направо</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="696"/>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутить наверх</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="707"/>
@@ -229,27 +229,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - move grab offset if visible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Совет: поддерживается мышь!
+
+Левая кнопка - перетащить хитбокс
+
+Средняя кнопка - прокрутка вокруг
+
+Колёсико - Увеличить/уменьшить
+
+Правая кнопка- перетащить точку захвата, если видна.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="725"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Уменьшить</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="736"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Увеличить</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="747"/>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутка налево</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="769"/>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутка вниз</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="780"/>
@@ -262,27 +270,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - Move the right-bottom crop edges.</source>
-        <translation type="unfinished"></translation>
+        <translation>Совет: поддерживается мышь!
+
+Левая кнопка: перетащить кадр или использовать действия
+
+Средняя кнопка - прокрутка вокруг
+
+Колёсико - Увеличить/уменьшить
+
+Правая кнопка мыши - перетащить границы отсечения правого и нижнего краёв.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="812"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Выйти</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="830"/>
         <source>Copy calibration settings of the current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Скопировать настройки калиборвки текущего кадра</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="845"/>
         <source>Past calibration settings from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставить настройки калибровки из буфера обмена</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="866"/>
         <source>Open the Wiki page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть Wiki-страницу...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="900"/>
@@ -497,39 +513,39 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <location filename="../calibration_main.ui" line="23"/>
         <source>Character Calibrator</source>
         <comment>The title for utility to edit playable character sprites and their settings</comment>
-        <translation type="unfinished"></translation>
+        <translation>Калибратор персонажа</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="58"/>
         <source>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить рисунок стены, пола или потолка. Позволяет проиллюстрировать взаимодействие игрового персонажа с поверхностями.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="61"/>
         <source>Wall</source>
-        <translation type="unfinished"></translation>
+        <translation>Стена</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="87"/>
         <source>Change background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Сменить цвет фона</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="90"/>
         <source>BG Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет фона</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="97"/>
         <source>Reset a scroll position into initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить положение прокрутки в начальное состояние</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="100"/>
         <location filename="../calibration_main.ui" line="758"/>
         <location filename="../calibration_main.ui" line="921"/>
         <source>Reset scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>Сбросить прокрутку</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="107"/>
@@ -544,42 +560,52 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
   &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - using the file as a storage of working data only (engine has the different format for calibrations).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор целевого движка для данной калибровки.&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Следующие режимы поддерживаются:&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Calibrator&lt;/b&gt; - создать или изменить калибровки по-умолчанию, используемые самим Калибратором, режим наследования будет отключён, все данные будут сохранены без отсечения.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Moondust&lt;/b&gt; - калиборвки для движка Moondust, режим наследования работает для всего.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;TheXTech&lt;/b&gt; - калиборвки для TheXTech, режим наследования работает для всего, собственная анимация не поддерживается игрой.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX2&lt;/b&gt; - калибровки для Super Mario Bros. X2, режим наследования работает только для анимаций, все кадры будут сохранены даже если совпадают с оригиналом, будут добавлены устаревшие поля, собственная анимация не поддерживается игрой.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - файл будет использоваться в качестве хранилища рабочих данных (сам движок использует собственный формат калибровки, встраиваемый в файл уровня).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="150"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="165"/>
         <source>Import/Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Импорт/Экспорт</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="191"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Справка</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="221"/>
         <source>Main toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Главная панель</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="265"/>
         <source>Select current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбор текущего кадра</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="284"/>
         <source>Show sprite map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать карту спрайта...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="355"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="527"/>
@@ -604,22 +630,22 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibration_main.ui" line="909"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="926"/>
         <source>Open the srite directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть папку спрайта...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="963"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор спрайта</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="968"/>
         <source>Extrenal GFX editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Внешний графический редактор...</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="142"/>
@@ -638,12 +664,12 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../main/calibration_file.cpp" line="637"/>
         <source>Bad data generated</source>
-        <translation type="unfinished"></translation>
+        <translation>Сгенерированы испорченные данные</translation>
     </message>
     <message>
         <location filename="../main/calibration_file.cpp" line="638"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
-        <translation type="unfinished"></translation>
+        <translation>Некоторые сгенерированные значения находятся за пределами диапазонов, SMBX-38A может сломаться. Файл останется незименным.</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="160"/>
@@ -775,43 +801,43 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <location filename="../calibration_main.cpp" line="390"/>
         <source>None</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="393"/>
         <source>Floor</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пол</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="395"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пол + левая стена</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="397"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Пол + правая стена</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="400"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Потолок</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="402"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Потолок + левая стена</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="404"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Потолок + правая стена</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="495"/>
@@ -821,7 +847,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibration_main.cpp" line="671"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Цвет фона</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="833"/>
@@ -831,13 +857,13 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <location filename="../calibration_main.cpp" line="857"/>
         <location filename="../calibration_main.cpp" line="863"/>
         <source>Compat: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Совмест.: %1</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="833"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Не указано</translation>
     </message>
     <message>
         <source>There are physical settings for a sprite, this need only for creation of new character sprite
@@ -850,18 +876,18 @@ Do you want to continue?</source>
     <message>
         <location filename="../main/settings.cpp" line="79"/>
         <source>Graphical editor is not specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Графический редактор не назначен</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="80"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Приложение внешнего графического редактора не назначено. Хотите выбрать его сейчас?</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="102"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Выберите путь к приложению графического редактора</translation>
     </message>
 </context>
 <context>
@@ -908,166 +934,166 @@ Do you want to continue?</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="23"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редактор спрайтов</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="52"/>
         <source>Drag the frame through entire sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетащить кадр через весь спрайт</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="55"/>
         <source>Drag mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим перетаскивания</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="76"/>
         <source>Select fragment and cut it, move it into necessary place and double-click to paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите фрагмент и вырежьте его, перетащите в нужное положение, и произведите двойной щелочок мыши, чтобы вставить</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="79"/>
         <source>Select and move</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать и переместить</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="93"/>
         <source>Select fragment and copy it, move it into necessary place and double-click to paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите фрагмент и скопируйте его, перетащите в нужное положение, и произведите двойной щелочок мыши, чтобы вставить</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="96"/>
         <source>Select and copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать и скопировать</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="110"/>
         <source>Pencil to draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Карандаш, чтобы рисовать</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="113"/>
         <source>Pencil</source>
-        <translation type="unfinished"></translation>
+        <translation>Карандаш</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="127"/>
         <source>Pick a color</source>
-        <translation type="unfinished"></translation>
+        <translation>Подобрать цвет с изображения</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="130"/>
         <source>Color picker</source>
-        <translation type="unfinished"></translation>
+        <translation>Цветовая проба</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="144"/>
         <location filename="../image_calibration/image_calibrator.ui" line="147"/>
         <source>Rubber</source>
-        <translation type="unfinished"></translation>
+        <translation>Ластик</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="161"/>
         <source>Draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарисовать линию</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="164"/>
         <source>Draw lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Рисование линий</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="178"/>
         <source>Draw a rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарисовать прямоугольник</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="181"/>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>Рисование прямоугольников</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="202"/>
         <location filename="../image_calibration/image_calibrator.ui" line="205"/>
         <source>Undo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>Отменить недавнее изменение</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="219"/>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>
         <source>Redo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>Повторить недавнее изменение</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="261"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Используя мышь для перетаскивания картинки, также будет перетаскиваться хитбокс. Используйте это, если хотите выровнять кадр без искажения настроек калибровки.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="264"/>
         <source>Hitbox move</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетаскивать хитбокс</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="286"/>
         <source>Drag offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение X</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="293"/>
         <source>Show sprite map</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать карту спрайта</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="303"/>
         <source>Clear</source>
         <comment>reference frame</comment>
-        <translation type="unfinished"></translation>
+        <translation>Очистить</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="325"/>
         <source>Drag frame offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетащить кадр:</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="353"/>
         <source>Referrence frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадр-образец:</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="386"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Прозрачность</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="416"/>
         <source>Crop right</source>
-        <translation type="unfinished"></translation>
+        <translation>Срез справа</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="430"/>
         <source>Drag offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Смещение Y</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="450"/>
         <source>Crop bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Срез снизу</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="484"/>
         <source>Open frame in editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть кадр в редакторе...</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="491"/>
         <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемещать все кадры спрайта синхронно с текущим. Используйте это, чтобы упростить общую работу по выравниванию.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="494"/>
         <source>Move all frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Таскать все кадры</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="510"/>
@@ -1153,7 +1179,7 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
     <message>
         <location filename="../about/about.ui" line="17"/>
         <source>About Character Calibrator</source>
-        <translation type="unfinished"></translation>
+        <translation>О калибраторе персонажей</translation>
     </message>
     <message>
         <location filename="../about/about.ui" line="63"/>
