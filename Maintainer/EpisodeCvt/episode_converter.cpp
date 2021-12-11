@@ -60,10 +60,10 @@ bool EpisodeConverterWorker::initJob(QString path, bool recursive, int targetFor
 
 static bool preparePath(QDir &episode, QString &relDirPath, QString &inPath, QString &backupTo, bool doBackup)
 {
-    relDirPath = episode.relativeFilePath( inPath );
+    relDirPath = episode.relativeFilePath(inPath);
     int idx = relDirPath.lastIndexOf('/');
     if(idx >= 0)
-        relDirPath.remove(idx, relDirPath.size()-idx);
+        relDirPath.remove(idx, relDirPath.size() - idx);
     else
         relDirPath.clear();
 
@@ -74,7 +74,7 @@ static bool preparePath(QDir &episode, QString &relDirPath, QString &inPath, QSt
         qDebug() << "Make backup";
         QFileInfo oldFile(inPath);
         episode.mkpath(backupTo + "/" + relDirPath);
-        QFile::copy(inPath, backupTo+"/" + relDirPath + "/" + oldFile.fileName() );
+        QFile::copy(inPath, backupTo + "/" + relDirPath + "/" + oldFile.fileName());
     }
     return ret;
 }
@@ -82,9 +82,9 @@ static bool preparePath(QDir &episode, QString &relDirPath, QString &inPath, QSt
 static void renameExtension(QString &str, QString into)
 {
     int dot = str.lastIndexOf('.');
-    if(dot==-1)
+    if(dot == -1)
         str.append(into);
-    str.replace(dot, str.size()-dot, into);
+    str.replace(dot, str.size() - dot, into);
 }
 
 bool EpisodeConverterWorker::runJob()
@@ -93,19 +93,19 @@ bool EpisodeConverterWorker::runJob()
     m_isFine = false;
 
     QString BackupDirectory = QString("pge_maintainer_backup-%1-%2-%3_%4-%5-%6")
-            .arg(QDate().currentDate().year())
-            .arg(QDate().currentDate().month())
-            .arg(QDate().currentDate().day())
-            .arg(QTime().currentTime().hour())
-            .arg(QTime().currentTime().minute())
-            .arg(QTime().currentTime().second());
+                              .arg(QDate().currentDate().year())
+                              .arg(QDate().currentDate().month())
+                              .arg(QDate().currentDate().day())
+                              .arg(QTime().currentTime().hour())
+                              .arg(QTime().currentTime().minute())
+                              .arg(QTime().currentTime().second());
     m_currentValue = 0;
 
     try
     {
-        for(int i=0; i<m_episodeBox.d.size(); i++)
+        for(int i = 0; i < m_episodeBox.d.size(); i++)
         {
-            EpisodeBox_level& lvl = m_episodeBox.d[i];
+            EpisodeBox_level &lvl = m_episodeBox.d[i];
             QString relDirPath;
             QString oldPath = lvl.fPath;
             if(preparePath(m_episode, relDirPath, lvl.fPath, BackupDirectory, m_doBackup))
@@ -145,9 +145,9 @@ bool EpisodeConverterWorker::runJob()
             m_currentValue++;
         }
 
-        for(int i=0; i<m_episodeBox.dw.size(); i++)
+        for(int i = 0; i < m_episodeBox.dw.size(); i++)
         {
-            EpisodeBox_world& wld = m_episodeBox.dw[i];
+            EpisodeBox_world &wld = m_episodeBox.dw[i];
             qDebug() << "Open world map" << wld.fPath;
             QString relDirPath;
             if(preparePath(m_episode, relDirPath, wld.fPath, BackupDirectory, m_doBackup))
@@ -160,7 +160,7 @@ bool EpisodeConverterWorker::runJob()
                 qDebug() << "Make backup";
                 QFileInfo oldFile(wld.fPath);
                 m_episode.mkpath(BackupDirectory + "/" + relDirPath);
-                QFile::copy(wld.fPath, BackupDirectory+"/" + relDirPath + "/" + oldFile.fileName() );
+                QFile::copy(wld.fPath, BackupDirectory + "/" + relDirPath + "/" + oldFile.fileName());
             }
             QString oldPath = wld.fPath;
 
@@ -174,7 +174,7 @@ bool EpisodeConverterWorker::runJob()
                     throw(wld.d.meta.ERROR_info);
                 break;
             case 1://SMBX 1...64
-                qDebug() << "Make WLD SMBX "<<wld.ftypeVer;
+                qDebug() << "Make WLD SMBX " << wld.ftypeVer;
                 wld.ftype = EpisodeBox_world::F_WLD;
                 wld.ftypeVer = m_targetFormatVer;
                 renameExtension(wld.fPath, ".wld");
@@ -200,7 +200,7 @@ bool EpisodeConverterWorker::runJob()
             m_currentValue++;
         }
 
-        m_isFine=true;
+        m_isFine = true;
     }
     catch(QString err)
     {
@@ -233,12 +233,12 @@ EpisodeConverter::EpisodeConverter(QWidget *parent) :
     ui->progressBar->reset();
 
     connect(&m_progressWatcher, &QTimer::timeout,
-                   this, &EpisodeConverter::refreshProgressBar,
-                   Qt::QueuedConnection);
+            this, &EpisodeConverter::refreshProgressBar,
+            Qt::QueuedConnection);
 
     connect(&m_worker, &EpisodeConverterWorker::totalElements,
-                   ui->progressBar, &QProgressBar::setMaximum,
-                   Qt::QueuedConnection);
+            ui->progressBar, &QProgressBar::setMaximum,
+            Qt::QueuedConnection);
 
     connect(&m_worker, &EpisodeConverterWorker::workFinished,
             this, &EpisodeConverter::workFinished, Qt::QueuedConnection);
@@ -314,8 +314,8 @@ void EpisodeConverter::on_DoMadJob_clicked()
 void EpisodeConverter::on_browse_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Open target episode path"),
-                                                    (ui->episodePath->text().isEmpty() ? ApplicationPath : ui->episodePath->text()),
-                                                    c_dirDialogOptions);
+                  (ui->episodePath->text().isEmpty() ? ApplicationPath : ui->episodePath->text()),
+                  c_dirDialogOptions);
     if(dir.isEmpty())
         return;
 
