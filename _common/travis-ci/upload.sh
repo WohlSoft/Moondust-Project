@@ -26,14 +26,14 @@ then
     # Skip deploy on Coverity-Scan platform
     if [[ "${IS_COVERITY_SCAN}" != "true" ]];
     then
-        #PROJECT_ROOT=/home/runner/PGE-Project
+        #PROJECT_ROOT=/home/runner/Moondust-Project
         #HAMSTER_ROOT=/home/runner/
-        PROJECT_ROOT=$HOME/PGE-Project
+        PROJECT_ROOT=$HOME/Moondust-Project
         HAMSTER_ROOT=$HOME/
 
         #Different project root path on Travis-CI
         if [[ -d /home/travis/build/WohlSoft ]]; then
-            PROJECT_ROOT=/home/travis/build/WohlSoft/PGE-Project
+            PROJECT_ROOT=/home/travis/build/WohlSoft/Moondust-Project
         fi
 
         if [[ ! -d ${PROJECT_ROOT}/bin-cmake-release ]];
