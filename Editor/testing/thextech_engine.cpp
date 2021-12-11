@@ -434,22 +434,22 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
 
         c_d = compatMode->addAction("compatDefault");
         c_d->setCheckable(true);
-        c_d->setChecked(m_renderType == -1);
+        c_d->setChecked(m_compatLevel == -1);
         m_menuItems[menuItemId++] = c_d;
 
         c_m = compatMode->addAction("compatModern");
         c_m->setCheckable(true);
-        c_m->setChecked(m_renderType == 0);
+        c_m->setChecked(m_compatLevel == 0);
         m_menuItems[menuItemId++] = c_m;
 
         c_x = compatMode->addAction("compatX2");
         c_x->setCheckable(true);
-        c_x->setChecked(m_renderType == 1);
+        c_x->setChecked(m_compatLevel == 1);
         m_menuItems[menuItemId++] = c_x;
 
         c_v = compatMode->addAction("compatVanilla");
         c_v->setCheckable(true);
-        c_v->setChecked(m_renderType == 2);
+        c_v->setChecked(m_compatLevel == 2);
         m_menuItems[menuItemId++] = c_v;
 
         QObject::connect(c_d,   &QAction::triggered,
@@ -498,22 +498,22 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
 
         c_d = speedRunMode->addAction("speedRunDisabled");
         c_d->setCheckable(true);
-        c_d->setChecked(m_renderType == -1);
+        c_d->setChecked(m_speedRunMode == -1);
         m_menuItems[menuItemId++] = c_d;
 
         c_m = speedRunMode->addAction("speedRunModern");
         c_m->setCheckable(true);
-        c_m->setChecked(m_renderType == 0);
+        c_m->setChecked(m_speedRunMode == 0);
         m_menuItems[menuItemId++] = c_m;
 
         c_x = speedRunMode->addAction("speedRunX2");
         c_x->setCheckable(true);
-        c_x->setChecked(m_renderType == 1);
+        c_x->setChecked(m_speedRunMode == 1);
         m_menuItems[menuItemId++] = c_x;
 
         c_v = speedRunMode->addAction("speedRunVanilla");
         c_v->setCheckable(true);
-        c_v->setChecked(m_renderType == 2);
+        c_v->setChecked(m_speedRunMode == 2);
         m_menuItems[menuItemId++] = c_v;
 
         speedRunMode->addSeparator();
@@ -681,24 +681,24 @@ void TheXTechEngine::retranslateMenu()
                                "Choose the compatibility level used by the game"));
         //  Sub-menu
         {
-            QAction *renderType = m_menuItems[menuItemId++];
-            renderType->setText(tr("Default",
-                                   "Use preferred compatibility level"));
+            QAction *item = m_menuItems[menuItemId++];
+            item->setText(tr("Default",
+                             "Use preferred compatibility level"));
         }
         {
-            QAction *renderType = m_menuItems[menuItemId++];
-            renderType->setText(tr("Modern",
-                                   "Prefer all updates and bugfixes enabled"));
+            QAction *item = m_menuItems[menuItemId++];
+            item->setText(tr("Modern",
+                             "Prefer all updates and bugfixes enabled"));
         }
         {
-            QAction *renderType = m_menuItems[menuItemId++];
-            renderType->setText(tr("X2",
-                                   "Disable all bugfixes and updates exceot these made at X2"));
+            QAction *item = m_menuItems[menuItemId++];
+            item->setText(tr("X2",
+                             "Disable all bugfixes and updates exceot these made at X2"));
         }
         {
-            QAction *renderType = m_menuItems[menuItemId++];
-            renderType->setText(tr("Strict SMBX 1.3",
-                                   "Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour."));
+            QAction *item = m_menuItems[menuItemId++];
+            item ->setText(tr("Strict SMBX 1.3",
+                              "Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour."));
         }
     }
 
