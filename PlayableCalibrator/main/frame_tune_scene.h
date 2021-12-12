@@ -42,7 +42,7 @@ class FrameTuneScene : public QFrame
 
     int     m_mode = MODE_NONE;
     QColor  m_drawColor = Qt::black;
-    QSharedPointer<DrawTool> m_curTool = nullptr;
+    QSharedPointer<DrawTool> m_curTool;
 
     //! Focus on hitbox instead of the left-top frame corder
     bool    m_focusHitBox = false;
