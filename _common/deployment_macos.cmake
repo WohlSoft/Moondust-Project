@@ -11,6 +11,7 @@ add_custom_target(create_dmg
         --window-size 800 600
         --app-drop-link 450 320
         --subfolder
+        --no-internet-enable
         "${CMAKE_INSTALL_PREFIX}/pge-project-${PACKAGE_SUFFIX}-macosx.dmg"
         "${CMAKE_INSTALL_PREFIX}/${PGE_INSTALL_DIRECTORY}/"
         COMMENT "Packing DMG..."
