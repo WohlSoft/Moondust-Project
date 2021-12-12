@@ -58,7 +58,7 @@ jobs:
       shell: bash
       run: |
         sudo mkdir -p "${{ matrix.config.qt_install_dir }}"
-        tar -xf qt.tar.bz2 -C "${{ matrix.config.qt_install_dir }}"
+        sudo tar -xf qt.tar.bz2 -C "${{ matrix.config.qt_install_dir }}"
 
     - name: Configure
       shell: bash
