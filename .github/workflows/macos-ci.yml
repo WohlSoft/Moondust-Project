@@ -29,15 +29,15 @@ jobs:
             qt_lib_dir: "/Users/StaticQt/5.14.2/lib"
           }
 
-    - name: Set output
-      id: vars
-      run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
-
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 3
         submodules: recursive
+
+    - name: Set output
+      id: vars
+      run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
 
     - name: Install dependencies
       shell: bash
