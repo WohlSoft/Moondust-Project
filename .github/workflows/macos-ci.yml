@@ -45,20 +45,21 @@ jobs:
         brew install ninja cmake coreutils binutils gnu-sed lftp wget p7zip axel
         git submodule init
         git submodule update
+        mkdir build-temp
 
     - name: Download Qt
       if: matrix.config.qt_download
       uses: carlosperate/download-file-action@v1.0.3
       with:
         file-url: "${{ matrix.config.qt_download }}"
-        file-name: qt.tar.bz2
+        file-name: build-temp/qt.tar.bz2
 
     - name: Extract Qt
       if: matrix.config.qt_install_dir
       shell: bash
       run: |
         sudo mkdir -p "${{ matrix.config.qt_install_dir }}"
-        sudo tar -xf qt.tar.bz2 -C "${{ matrix.config.qt_install_dir }}"
+        sudo tar -xf build-temp/qt.tar.bz2 -C "${{ matrix.config.qt_install_dir }}"
 
     - name: Configure
       shell: bash
@@ -96,7 +97,7 @@ jobs:
       shell: bash
       run: |
         export PATH=${{ matrix.config.qt_dir }}:${{ matrix.config.qt_lib_dir }}:/usr/local/opt/coreutils/libexec/gnubin:${PATH}
-        TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build_date_${{ steps.vars.outputs.short_ref }}_osx.txt
+        TZ=Europe/Moscow date +"%Y-%m-%d %H:%M:%S" > build-temp/build_date_${{ steps.vars.outputs.short_ref }}_osx.txt
         ./build.sh no-pause ninja deploy static-qt
 
     - name: Deploy to builds.wohlsoft.ru
@@ -111,7 +112,7 @@ jobs:
         for q in ./bin-cmake-release/*.dmg; do
             UPLOAD_LIST="${UPLOAD_LIST} put -O ${{ matrix.config.upload_directory }} $q;"
         done
-        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions build_date_${{ steps.vars.outputs.short_ref }}_osx.txt;"
+        UPLOAD_LIST="${UPLOAD_LIST} put -O ./www/_versions build-temp/build_date_${{ steps.vars.outputs.short_ref }}_osx.txt;"
 
         lftp -e "${UPLOAD_LIST} exit" -u ${{ secrets.builds_login }},${{ secrets.builds_password }} ${{ secrets.builds_host }}
 
@@ -120,4 +121,4 @@ jobs:
       shell: bash
       run: |
         git status
-        ls -lR build
+        ls -lR bin-cmake-release
