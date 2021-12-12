@@ -68,7 +68,10 @@ if(WIN32)
 endif()
 
 if(QT_DISABLE_NATIVE_FILE_DIALOG) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
+    message("== Editor: Native file dialogs will be DISABLED")
     add_definitions(-DQT_DONT_USE_NATIVE_FILE_DIALOG)
+else()
+    message("== Editor: Native file dialogs will be ALLOWED if possible")
 endif()
 
 # =============== Translations ===============

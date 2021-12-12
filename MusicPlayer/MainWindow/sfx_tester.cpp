@@ -10,6 +10,8 @@
 #include <QDropEvent>
 #include <QMimeData>
 
+#include "qfile_dialogs_default_options.hpp"
+
 #include "../Player/mus_player.h"
 
 SfxTester::SfxTester(QWidget *parent) :
@@ -84,7 +86,8 @@ void SfxTester::closeEvent(QCloseEvent *)
 void SfxTester::on_sfx_open_clicked()
 {
     QString file = QFileDialog::getOpenFileName(this, tr("Open SFX file"),
-                   (m_testSfxDir.isEmpty() ? QApplication::applicationDirPath() : m_testSfxDir), "All (*.*)");
+                   (m_testSfxDir.isEmpty() ? QApplication::applicationDirPath() : m_testSfxDir),
+                   "All (*.*)", nullptr, c_fileDialogOptions);
 
     if(file.isEmpty())
         return;

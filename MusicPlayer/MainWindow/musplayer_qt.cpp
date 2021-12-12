@@ -30,6 +30,8 @@
 #include "echo_tune.h"
 #include "seek_bar.h"
 
+#include "qfile_dialogs_default_options.hpp"
+
 
 MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     MusPlayerBase(),
@@ -330,7 +332,8 @@ void MusPlayer_Qt::on_open_clicked()
                                                 (m_currentMusic.isEmpty() ?
                                                 QApplication::applicationDirPath() :
                                                 m_currentMusic),
-                                                "All (*.*)");
+                                                "All (*.*)", nullptr,
+                                                c_fileDialogOptions);
 
     if(file.isEmpty())
         return;

@@ -50,6 +50,13 @@ find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 
+if(QT_DISABLE_NATIVE_FILE_DIALOG) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
+    message("== Music Player: Native file dialogs will be DISABLED")
+    add_definitions(-DQT_DONT_USE_NATIVE_FILE_DIALOG)
+else()
+    message("== Music Player: Native file dialogs will be ALLOWED if possible")
+endif()
+
 # Executables fail to build with Qt 5 in the default configuration
 # without -fPIE. We add that here.
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS} ${Qt5Network_EXECUTABLE_COMPILE_FLAGS}")

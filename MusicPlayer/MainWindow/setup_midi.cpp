@@ -2,6 +2,8 @@
 #include "ui_setup_midi.h"
 #include "../Player/mus_player.h"
 
+#include "qfile_dialogs_default_options.hpp"
+
 #include <QSettings>
 
 static int tristateToInt(Qt::CheckState state)
@@ -231,7 +233,8 @@ void SetupMidi::on_opn_bank_browse_clicked()
                    tr("Select WOPN bank file"),
                    ui->opn_bank->text(),
                    "OPN bank file by Wohlstand (*.wopn);;"
-                   "All Files (*.*)");
+                   "All Files (*.*)", nullptr,
+                   c_fileDialogOptions);
     if(!path.isEmpty())
     {
         ui->opn_bank->setText(path);
@@ -289,7 +292,8 @@ void SetupMidi::on_adl_bank_browse_clicked()
                    tr("Select WOPL bank file"),
                    ui->adl_bank->text(),
                    "OPL3 bank file by Wohlstand (*.wopl);;"
-                   "All Files (*.*)");
+                   "All Files (*.*)", nullptr,
+                   c_fileDialogOptions);
     if(!path.isEmpty())
     {
         ui->adl_bank->setText(path);
@@ -432,7 +436,8 @@ void SetupMidi::on_timidityCfgPathBrowse_clicked()
                    tr("Select Timidity config file"),
                    ui->timidityCfgPath->text(),
                    "Timidity config files (*.cfg);;"
-                   "All Files (*.*)");
+                   "All Files (*.*)", nullptr,
+                   c_fileDialogOptions);
     if(!path.isEmpty())
     {
         ui->timidityCfgPath->setText(path);
@@ -472,7 +477,8 @@ void SetupMidi::on_fluidSynthSF2PathsBrowse_clicked()
                    tr("Select SoundFont bank for FluidSynth"),
                    ui->fluidSynthSF2Paths->text(),
                    "SoundFont files (*.sf2);;"
-                   "All Files (*.*)");
+                   "All Files (*.*)", nullptr,
+                   c_fileDialogOptions);
     if(!path.isEmpty())
     {
         ui->fluidSynthSF2Paths->setText(path);

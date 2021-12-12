@@ -43,7 +43,10 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 
 if(QT_DISABLE_NATIVE_FILE_DIALOG) # Disable native file dialogs when locally-built libPNG was been used to avoid the crash
+    message("== Calibrator: Native file dialogs will be DISABLED")
     add_definitions(-DQT_DONT_USE_NATIVE_FILE_DIALOG)
+else()
+    message("== Calibrator: Native file dialogs will be ALLOWED if possible")
 endif()
 
 # =============== Translations ===============
