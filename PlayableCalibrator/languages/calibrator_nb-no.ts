@@ -331,12 +331,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="87"/>
         <source>Change background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Endre bakgrunnsfarge</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="90"/>
         <source>BG Color</source>
-        <translation type="unfinished"></translation>
+        <translation>BG-farge</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="97"/>
@@ -348,7 +348,7 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.ui" line="758"/>
         <location filename="../calibration_main.ui" line="921"/>
         <source>Reset scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilbakestill rulling</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="107"/>
@@ -368,12 +368,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="150"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="165"/>
         <source>Import/Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Importer/eksporter</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="183"/>
@@ -383,17 +383,17 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="191"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Hjelp</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="221"/>
         <source>Main toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Hovedverktøylinje</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="265"/>
         <source>Select current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg nåværende ramme</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="284"/>
@@ -403,7 +403,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="355"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Innstillinger</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="627"/>
@@ -413,7 +413,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="909"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="926"/>
@@ -538,12 +538,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="527"/>
         <source>Side</source>
-        <translation type="unfinished"></translation>
+        <translation>Side</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="534"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Topp</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="142"/>
@@ -553,12 +553,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../main/calibration_file.cpp" line="334"/>
         <source>Configuration saved in file</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppsett lagret i fil</translation>
     </message>
     <message>
         <location filename="../main/calibration_file.cpp" line="637"/>
         <source>Bad data generated</source>
-        <translation type="unfinished"></translation>
+        <translation>Feilaktig data generert</translation>
     </message>
     <message>
         <location filename="../main/calibration_file.cpp" line="638"/>
@@ -595,12 +595,12 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../main/files_io.cpp" line="92"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>GIF-bilder</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="671"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Bakgrunnsfarge</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="709"/>
@@ -617,12 +617,12 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="712"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alle filer</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="722"/>
         <source>File opening error</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke åpne fil</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="723"/>
@@ -637,7 +637,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.cpp" line="751"/>
         <source>File saving error</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunne ikke lagre fil</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="752"/>
@@ -663,7 +663,7 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="833"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ikke angitt</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="887"/>
@@ -679,24 +679,24 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../main/files_io.cpp" line="91"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Bildetype å åpne</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="93"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>PNG-bilder</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="95"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alle filer</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="799"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Advarsel</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="800"/>
@@ -712,43 +712,43 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="390"/>
         <source>None</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="393"/>
         <source>Floor</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gulv</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="395"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gulv + venstre vegg</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="397"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Gulv + høyre vegg</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="400"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tak</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="402"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tak + venstre vegg</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="404"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tak + høyre vegg</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="495"/>
@@ -822,7 +822,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="96"/>
         <source>Select and copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg og kopier</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="110"/>
@@ -837,50 +837,50 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="127"/>
         <source>Pick a color</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg en farge</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="130"/>
         <source>Color picker</source>
-        <translation type="unfinished"></translation>
+        <translation>Fargevelger</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="144"/>
         <location filename="../image_calibration/image_calibrator.ui" line="147"/>
         <source>Rubber</source>
-        <translation type="unfinished"></translation>
+        <translation>Viskelær</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="161"/>
         <source>Draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn en linje</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="164"/>
         <source>Draw lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn linjer</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="178"/>
         <source>Draw a rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn et rektangel</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="181"/>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>Tegn rektangler</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="202"/>
         <location filename="../image_calibration/image_calibrator.ui" line="205"/>
         <source>Undo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>Angre nylig endring</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="219"/>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>
         <source>Redo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>Gjenta nylig endring</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="261"/>
@@ -906,7 +906,7 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../image_calibration/image_calibrator.ui" line="303"/>
         <source>Clear</source>
         <comment>reference frame</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tøm</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="325"/>
@@ -921,12 +921,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="386"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Dekkevne</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="416"/>
         <source>Crop right</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskjær høyre</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="430"/>
@@ -936,12 +936,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="450"/>
         <source>Crop bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskjær bunn</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="484"/>
         <source>Open frame in editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Åpne ramme i behandler …</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="491"/>
@@ -951,22 +951,22 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="494"/>
         <source>Move all frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytt alle rammer</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="510"/>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre bilde</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="516"/>
         <source>Write PNG+GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv PNG+GIF-er</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="523"/>
         <source>Write PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>Skriv PNG</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="530"/>
@@ -976,7 +976,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="470"/>
         <source>Reset calibration</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilbakestill kalibrering</translation>
     </message>
 </context>
 <context>
