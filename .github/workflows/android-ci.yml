@@ -25,7 +25,7 @@ jobs:
       - name: Install Dependencies
         shell: bash
         run: |
-          sudo apt-get update -qq && sudo apt-get install -qq lftp
+          sudo apt-get update -qq && sudo apt-get install -qq lftp gcc g++ qttools5-dev-tools
           # Pull submodules
           git submodule init
           git submodule update
