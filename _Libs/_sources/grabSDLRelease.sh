@@ -24,21 +24,23 @@ freshLatestSDL()
 freshLatestSDL
 echo "Previous version was $LatestSDL"
 
-wget --content-disposition https://github.com/libsdl-org/SDL/archive/release-2.0.16.tar.gz -O SDL-2.0.16-new.tar.gz
+SDLVER=2.0.18
 
-tar -xf SDL-2.0.16-new.tar.gz
-rm -f SDL-2.0.16-new.tar.gz
-mv SDL-release-2.0.16 SDL-main
+wget --content-disposition https://github.com/libsdl-org/SDL/archive/release-${SDLVER}.tar.gz -O SDL-${SDLVER}-new.tar.gz
+
+tar -xf SDL-${SDLVER}-new.tar.gz
+rm -f SDL-${SDLVER}-new.tar.gz
+mv SDL-release-${SDLVER} SDL-main
 cleanUp
 tar -czf SDL-main-new.tar.gz SDL-main
 rm -Rf SDL-main
 
-wget --content-disposition https://github.com/libsdl-org/SDL/archive/release-2.0.16.zip -O SDL-2.0.16-new.zip
+wget --content-disposition https://github.com/libsdl-org/SDL/archive/release-${SDLVER}.zip -O SDL-${SDLVER}-new.zip
 
-7z x SDL-2.0.16-new.zip
+7z x SDL-${SDLVER}-new.zip
 # Remove unnecessary folders from a Windows-used archive
-rm -f SDL-2.0.16-new.zip
-mv SDL-release-2.0.16 SDL-main
+rm -f SDL-${SDLVER}-new.zip
+mv SDL-release-${SDLVER} SDL-main
 cleanUp
 rm -Rf SDL-main/android-project
 rm -Rf SDL-main/android-project-ant

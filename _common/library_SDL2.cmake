@@ -34,6 +34,8 @@ set(SDL2_main_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX
 
 if(WIN32)
     set(SDL2_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
+elseif(ANDROID)
+    set(SDL2_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${CMAKE_SHARED_LIBRARY_SUFFIX}")
 else()
     set(SDL2_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 endif()
@@ -41,6 +43,8 @@ endif()
 if(WIN32)
     # list(APPEND FOUND_LIBS "${_mixerx_SEARCH_PATHS}/libSDL2_mixer_ext-static${MIX_DEBUG_SUFFIX}.a")
     set(SDL2_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2-static${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
+elseif(ANDROID)
+    set(SDL2_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${CMAKE_STATIC_LIBRARY_SUFFIX}")
 else()
     set(SDL2_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 endif()
@@ -69,56 +73,56 @@ if(SDL2_USE_SYSTEM)
     set(SDL2_A_Lib ${SDL2_LIBRARIES})
     set(SDL2_main_Lib ${SDL2MAIN_LIBRARY})
 
-elseif(ANDROID)
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        set(SDL2_DEBUG_SUFFIX "d")
-    else()
-        set(SDL2_DEBUG_SUFFIX "")
-    endif()
-    ExternalProject_Add(SDL2_Local_Build
-        PREFIX ${CMAKE_BINARY_DIR}/external/SDL2-NDK
-        URL ${SDL2_SOURCE_TARBALL}
-        URL_HASH SHA256=${SDL2_SOURCE_TARBALL_HASH}
-        CONFIGURE_COMMAND ""
-        INSTALL_COMMAND ""
-        BUILD_COMMAND ${ANDROID_NDK}/ndk-build -C ${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build SDL2 SDL2_main hidapi
-        NDK_PROJECT_PATH=null
-        APP_BUILD_SCRIPT=${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/Android.mk
-        # NDK_OUT=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../..
-        NDK_OUT=${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/
-        # NDK_LIBS_OUT=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/..
-        NDK_LIBS_OUT=${DEPENDENCIES_INSTALL_DIR}/lib-ndk-libs-out/
-        APP_ABI=${ANDROID_ABI}
-        NDK_ALL_ABIS=${ANDROID_ABI}
-        APP_PLATFORM=${ANDROID_PLATFORM}
-        BUILD_BYPRODUCTS
-            ${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/libSDL2.so
-            "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
-            "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
-    )
-    add_custom_target(SDL2_Local ALL
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/include/SDL2"
-        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/include/*.h" "${CMAKE_BINARY_DIR}/include/SDL2"
-        # COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2.a" "${CMAKE_BINARY_DIR}/lib/libSDL2${SDL2_DEBUG_SUFFIX}.a"
-        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2main.a" "${CMAKE_BINARY_DIR}/lib/libSDL2main${SDL2_DEBUG_SUFFIX}.a"
-        # COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libstdc++.a" "${CMAKE_BINARY_DIR}/lib/libstdc++.a"
-        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
-        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_BINARY_DIR}/lib"
-        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
-        DEPENDS SDL2_Local_Build
-    )
-#    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
-#    set_property(TARGET SDL2LibrarySO PROPERTY
-#        IMPORTED_LOCATION
-#        "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
+#elseif(ANDROID)
+#    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+#        set(SDL2_DEBUG_SUFFIX "d")
+#    else()
+#        set(SDL2_DEBUG_SUFFIX "")
+#    endif()
+#    ExternalProject_Add(SDL2_Local_Build
+#        PREFIX ${CMAKE_BINARY_DIR}/external/SDL2-NDK
+#        URL ${SDL2_SOURCE_TARBALL}
+#        URL_HASH SHA256=${SDL2_SOURCE_TARBALL_HASH}
+#        CONFIGURE_COMMAND ""
+#        INSTALL_COMMAND ""
+#        BUILD_COMMAND ${ANDROID_NDK}/ndk-build -C ${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build SDL2 SDL2_main # hidapi
+#        NDK_PROJECT_PATH=null
+#        APP_BUILD_SCRIPT=${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/Android.mk
+#        # NDK_OUT=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../..
+#        NDK_OUT=${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/
+#        # NDK_LIBS_OUT=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/..
+#        NDK_LIBS_OUT=${DEPENDENCIES_INSTALL_DIR}/lib-ndk-libs-out/
+#        APP_ABI=${ANDROID_ABI}
+#        NDK_ALL_ABIS=${ANDROID_ABI}
+#        APP_PLATFORM=${ANDROID_PLATFORM}
+#        BUILD_BYPRODUCTS
+#            ${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/libSDL2.so
+#            "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
+#//            "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
 #    )
-#    add_library(HIDAPILibrary SHARED IMPORTED GLOBAL)
-#    set_property(TARGET HIDAPILibrary PROPERTY
-#        IMPORTED_LOCATION
-#        "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
+#    add_custom_target(SDL2_Local ALL
+#        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_BINARY_DIR}/include/SDL2"
+#        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/external/SDL2-NDK/src/SDL2_Local_Build/include/*.h" "${CMAKE_BINARY_DIR}/include/SDL2"
+#        # COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2.a" "${CMAKE_BINARY_DIR}/lib/libSDL2${SDL2_DEBUG_SUFFIX}.a"
+#        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libSDL2main.a" "${CMAKE_BINARY_DIR}/lib/libSDL2main${SDL2_DEBUG_SUFFIX}.a"
+#        # COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/libstdc++.a" "${CMAKE_BINARY_DIR}/lib/libstdc++.a"
+#        COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
+#        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_BINARY_DIR}/lib"
+#        COMMAND ${CMAKE_COMMAND} -E copy "${DEPENDENCIES_INSTALL_DIR}/lib-ndk-out/local/${ANDROID_ABI}/*.so" "${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${ANDROID_ABI}"
+#        DEPENDS SDL2_Local_Build
 #    )
-    target_link_libraries(PGE_SDL2 INTERFACE "${CMAKE_BINARY_DIR}/lib/libSDL2.so" "${CMAKE_BINARY_DIR}/lib/libhidapi.so")
-    target_link_libraries(PGE_SDL2_static INTERFACE "${CMAKE_BINARY_DIR}/lib/libSDL2.so" "${CMAKE_BINARY_DIR}/lib/libhidapi.so")
+#//    add_library(SDL2LibrarySO SHARED IMPORTED GLOBAL)
+#//    set_property(TARGET SDL2LibrarySO PROPERTY
+#//        IMPORTED_LOCATION
+#//        "${CMAKE_BINARY_DIR}/lib/libSDL2.so"
+#//    )
+#//    add_library(HIDAPILibrary SHARED IMPORTED GLOBAL)
+#//    set_property(TARGET HIDAPILibrary PROPERTY
+#//        IMPORTED_LOCATION
+#//        "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
+#//    )
+#    target_link_libraries(PGE_SDL2 INTERFACE "${CMAKE_BINARY_DIR}/lib/libSDL2.so") # "${CMAKE_BINARY_DIR}/lib/libhidapi.so"
+#    target_link_libraries(PGE_SDL2_static INTERFACE "${CMAKE_BINARY_DIR}/lib/libSDL2.so") #"${CMAKE_BINARY_DIR}/lib/libhidapi.so"
 
 elseif(SDL2_VIA_AUTOTOOLS)
     # ============================================================
@@ -165,6 +169,13 @@ else()
     # CMake build of SDL2 is a best choice for most of platforms
     # ============================================================
     message("== SDL2 shared: ${PGE_SHARED_SDLMIXER}")
+    set(SDL2_BUILD_SHARED OFF)
+    set(SDL2_DEBUG_SUFFIX ${PGE_LIBS_DEBUG_SUFFIX})
+    if(PGE_SHARED_SDLMIXER OR ANDROID)
+        set(SDL2_BUILD_SHARED ON)
+        set(SDL2_DEBUG_SUFFIX "")
+    endif()
+
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
@@ -177,13 +188,17 @@ else()
             "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
             "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
             "-DCMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}"
+            "-DCMAKE_DEBUG_POSTFIX=${SDL2_DEBUG_SUFFIX}"
             $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
-            -DSDL_SHARED=${PGE_SHARED_SDLMIXER}
+            -DSDL_SHARED=${SDL2_BUILD_SHARED}
             -DLIBC=ON
             # $<$<BOOL:WIN32>:-DWASAPI=OFF>  #For some experiment, enable WASAPI support
             $<$<BOOL:WIN32>:-DCMAKE_SHARED_LIBRARY_PREFIX="">
             $<$<BOOL:LINUX>:-DSNDIO=OFF>
             $<$<BOOL:LINUX>:-DVIDEO_WAYLAND_QT_TOUCH=OFF>
+            $<$<BOOL:ANDROID>:-DCMAKE_POSITION_INDEPENDENT_CODE=ON>
+            $<$<BOOL:ANDROID>:-DEXTRA_CFLAGS=-fPIC>
+            ${ANDROID_CMAKE_FLAGS}
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DEXTRA_CFLAGS=-s USE_PTHREADS=1>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS=ON>
             $<$<STREQUAL:${CMAKE_SYSTEM_NAME},Emscripten>:-DPTHREADS_SEM=ON>
@@ -233,7 +248,10 @@ endif()
 
 if(ANDROID)
     list(APPEND SDL2_DEPENDENT_LIBS
-        GLESv1_CM GLESv2 OpenSLES log dl hidapi android
+        GLESv1_CM GLESv2 OpenSLES log dl android
+    )
+    list(APPEND SDL2_SO_DEPENDENT_LIBS
+        log dl android
     )
 endif()
 
@@ -248,6 +266,14 @@ if(APPLE)
     list(APPEND SDL2_DEPENDENT_LIBS ${COREAUDIO_LIBRARY})
     find_library(COREVIDEO_LIBRARY CoreVideo)
     list(APPEND SDL2_DEPENDENT_LIBS ${COREVIDEO_LIBRARY})
+    find_library(COREHAPTICS_LIBRARY CoreHaptics)
+    if(COREHAPTICS_LIBRARY)
+        list(APPEND SDL2_DEPENDENT_LIBS ${COREHAPTICS_LIBRARY})
+    endif()
+    find_library(GAMECONTROLLER_LIBRARY GameController)
+    if(GAMECONTROLLER_LIBRARY)
+        list(APPEND SDL2_DEPENDENT_LIBS ${GAMECONTROLLER_LIBRARY})
+    endif()
     find_library(IOKIT_LIBRARY IOKit)
     list(APPEND SDL2_DEPENDENT_LIBS ${IOKIT_LIBRARY})
     find_library(CARBON_LIBRARY Carbon)

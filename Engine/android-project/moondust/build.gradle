@@ -7,16 +7,22 @@ else {
     apply plugin: 'com.android.library'
 }
 
+def release_store_password = System.env.RELEASE_STORE_PASSWORD
+def release_key_password = System.env.RELEASE_KEY_PASSWORD
+def release_key_alias = System.env.RELEASE_KEY_ALIAS
+def pin_alias = System.env.PIN_ALIAS
+def db_pass_alias = System.env.DB_PASS_ALIAS
+
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         if (buildAsApplication) {
             applicationId "ru.wohlsoft.moondust"
         }
         minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 1
+        targetSdkVersion 31
         versionName "0.3.2-alpha"
+        versionCode 2
         externalNativeBuild {
             // REPLACE THIS with CMAKE build, HOW TO:
             // https://stackoverflow.com/questions/47604628/use-externalproject-add-to-include-opus-in-android
@@ -33,16 +39,34 @@ android {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
     }
+
+    signingConfigs {
+        releaseci {
+            storeFile file("../release-key.jks")
+            storePassword = release_store_password
+            keyAlias = release_key_alias
+            keyPassword = release_key_password
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        releaseci {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "PIN_ALIAS", "\"$pin_alias\""
+            buildConfigField "String", "DB_PASS_ALIAS", "\"$db_pass_alias\""
+            signingConfig signingConfigs.releaseci
         }
         debug {
             applicationIdSuffix '.debug'
             versionNameSuffix '-DEVDEBUG'
         }
     }
+
     if (!project.hasProperty('EXCLUDE_NATIVE_LIBS')) {
         sourceSets {
             main {
@@ -52,6 +76,9 @@ android {
                 jniLibs.srcDirs += "jniLibs/debug"
             }
             release {
+                jniLibs.srcDirs += ["jniLibs/release", "jniLibs/minsizerel"]
+            }
+            releaseci {
                 jniLibs.srcDirs += ["jniLibs/release", "jniLibs/minsizerel"]
             }
         }
@@ -67,12 +94,12 @@ android {
         abortOnError false
     }
 
-    packagingOptions {
-        pickFirst 'lib/armeabi-v7a/libhidapi.so'
-        pickFirst 'lib/arm64-v8a/libhidapi.so'
-        pickFirst 'lib/x86/libhidapi.so'
-        pickFirst 'lib/x86_64/libhidapi.so'
-    }
+//    packagingOptions {
+//        pickFirst 'lib/armeabi-v7a/libhidapi.so'
+//        pickFirst 'lib/arm64-v8a/libhidapi.so'
+//        pickFirst 'lib/x86/libhidapi.so'
+//        pickFirst 'lib/x86_64/libhidapi.so'
+//    }
 
     if (buildAsLibrary) {
         libraryVariants.all { variant ->
