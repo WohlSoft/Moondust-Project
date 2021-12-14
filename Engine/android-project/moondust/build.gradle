@@ -94,13 +94,6 @@ android {
         abortOnError false
     }
 
-//    packagingOptions {
-//        pickFirst 'lib/armeabi-v7a/libhidapi.so'
-//        pickFirst 'lib/arm64-v8a/libhidapi.so'
-//        pickFirst 'lib/x86/libhidapi.so'
-//        pickFirst 'lib/x86_64/libhidapi.so'
-//    }
-
     if (buildAsLibrary) {
         libraryVariants.all { variant ->
             variant.outputs.each { output ->

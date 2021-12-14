@@ -6,13 +6,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 
 # Set debug postfix for everything
-set(CMAKE_DEBUG_POSTFIX "d")
+if(NOT ANDROID AND NOT CMAKE_DEBUG_POSTFIX)
+    set(CMAKE_DEBUG_POSTFIX "d")
+endif()
+
 if(WIN32)
     # Remove shared library "lib" prefix on Windows
     set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif()
 
-if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+if(NOT ANDROID AND CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     set(PGE_LIBS_DEBUG_SUFFIX "d")
 else()
     set(PGE_LIBS_DEBUG_SUFFIX "")

@@ -369,14 +369,14 @@ if(ANDROID)
     target_compile_options(pge_engine PRIVATE -fPIC)
 
     # Include own-built libraries into the APK
-    set(APK_PACK_LIBS ${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${CMAKE_BUILD_TYPE_LOWER}/${ANDROID_ABI})
-    add_custom_target(SDL_ApkPackLibs_makeDir ALL COMMAND ${CMAKE_COMMAND} -E make_directory "${APK_PACK_LIBS}")
-
-    add_custom_target(SDL_ApkPackLibs_sdl2 ALL
-            COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_SO_Lib}" "${APK_PACK_LIBS}/libSDL2.so"
-            DEPENDS SDL_ApkPackLibs_makeDir "${SDL2_SO_Lib}" SDL2_Local
-            )
-    add_dependencies(pge_engine SDL_ApkPackLibs_sdl2)
+#    set(APK_PACK_LIBS ${CMAKE_SOURCE_DIR}/Engine/android-project/moondust/jniLibs/${CMAKE_BUILD_TYPE_LOWER}/${ANDROID_ABI})
+#    add_custom_target(SDL_ApkPackLibs_makeDir ALL COMMAND ${CMAKE_COMMAND} -E make_directory "${APK_PACK_LIBS}")
+#
+#    add_custom_target(SDL_ApkPackLibs_sdl2 ALL
+#            COMMAND ${CMAKE_COMMAND} -E copy "${SDL2_SO_Lib}" "${APK_PACK_LIBS}/libSDL2.so"
+#            DEPENDS SDL_ApkPackLibs_makeDir "${SDL2_SO_Lib}" SDL2_Local
+#            )
+#    add_dependencies(pge_engine SDL_ApkPackLibs_sdl2)
 
 #    add_custom_target(SDL_ApkPackLibs_SDL2 ALL
 #        COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_BINARY_DIR}/lib/libSDL2.so" "${APK_PACK_LIBS}"

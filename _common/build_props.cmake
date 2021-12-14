@@ -63,7 +63,7 @@ if (CMAKE_BUILD_TYPE_LOWER STREQUAL "release")
     add_definitions(-DNDEBUG)
 endif()
 
-if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+if(NOT ANDROID AND CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     set(PGE_LIBS_DEBUG_SUFFIX "d")
 else()
     set(PGE_LIBS_DEBUG_SUFFIX "")

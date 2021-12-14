@@ -34,8 +34,6 @@ set(SDL2_main_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX
 
 if(WIN32)
     set(SDL2_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}.dll.a")
-elseif(ANDROID)
-    set(SDL2_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${CMAKE_SHARED_LIBRARY_SUFFIX}")
 else()
     set(SDL2_SO_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX}")
 endif()
@@ -43,8 +41,6 @@ endif()
 if(WIN32)
     # list(APPEND FOUND_LIBS "${_mixerx_SEARCH_PATHS}/libSDL2_mixer_ext-static${MIX_DEBUG_SUFFIX}.a")
     set(SDL2_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2-static${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
-elseif(ANDROID)
-    set(SDL2_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${CMAKE_STATIC_LIBRARY_SUFFIX}")
 else()
     set(SDL2_A_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 endif()
@@ -170,10 +166,8 @@ else()
     # ============================================================
     message("== SDL2 shared: ${PGE_SHARED_SDLMIXER}")
     set(SDL2_BUILD_SHARED OFF)
-    set(SDL2_DEBUG_SUFFIX ${PGE_LIBS_DEBUG_SUFFIX})
     if(PGE_SHARED_SDLMIXER OR ANDROID)
         set(SDL2_BUILD_SHARED ON)
-        set(SDL2_DEBUG_SUFFIX "")
     endif()
 
     ExternalProject_Add(
@@ -188,7 +182,8 @@ else()
             "-DCMAKE_INSTALL_PREFIX=${DEPENDENCIES_INSTALL_DIR}"
             "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}"
             "-DCMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}"
-            "-DCMAKE_DEBUG_POSTFIX=${SDL2_DEBUG_SUFFIX}"
+            "-DCMAKE_DEBUG_POSTFIX=${PGE_LIBS_DEBUG_SUFFIX}"
+            "-DSDL_CMAKE_DEBUG_POSTFIX=${PGE_LIBS_DEBUG_SUFFIX}"
             $<$<BOOL:APPLE>:-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}>
             -DSDL_SHARED=${SDL2_BUILD_SHARED}
             -DLIBC=ON
@@ -216,7 +211,21 @@ else()
         target_link_libraries(PGE_SDL2 INTERFACE ${SDL2_main_Lib})
         target_link_libraries(PGE_SDL2_static INTERFACE  ${SDL2_main_Lib})
     endif()
-    target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
+
+    if(ANDROID)
+        add_library(SDL2_local_so_lib SHARED IMPORTED)
+        set_target_properties(SDL2_local_so_lib PROPERTIES
+            IMPORTED_LOCATION "${SDL2_SO_Lib}"
+            OUTPUT_NAME "libSDL2"
+            DEBUG_POSTFIX ""
+        )
+    endif()
+
+    if(ANDROID)
+        target_link_libraries(PGE_SDL2 INTERFACE SDL2_local_so_lib)
+    else()
+        target_link_libraries(PGE_SDL2 INTERFACE "${SDL2_SO_Lib}")
+    endif()
     target_link_libraries(PGE_SDL2_static INTERFACE "${SDL2_A_Lib}")
 endif()
 
