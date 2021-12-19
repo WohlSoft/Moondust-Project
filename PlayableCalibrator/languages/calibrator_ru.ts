@@ -669,7 +669,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../main/calibration_file.cpp" line="638"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
-        <translation>Некоторые сгенерированные значения находятся за пределами диапазонов, SMBX-38A может сломаться. Файл останется незименным.</translation>
+        <translation>Некоторые сгенерированные значения находятся за пределами диапазонов, SMBX-38A может сломаться. Файл останется неизменным.</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="160"/>
