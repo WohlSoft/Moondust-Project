@@ -700,11 +700,11 @@ File path: %3</source>
     </message>
     <message>
         <source>Integrational configuration package is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Несумісний інтеграційний конфіг-пакет</translation>
     </message>
     <message>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цей інтеграційний конфіг-пакет старіше, ніж API версії 42, тому він вже не сумісний з цим набором розробки Moondust. Починаючи з API версії 42, інтеграційні конфіг-пакети повинні використовувати локальний файл налаштувань замість перезапису файла main.ini.</translation>
     </message>
 </context>
 <context>
@@ -3490,23 +3490,23 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     <message>
         <source>Change the executable name...</source>
         <comment>Open a dialog to choose the name for executable LunaTester will use.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Змінити ім&apos;я виконуваного файлу...</translation>
     </message>
     <message>
         <source>Select the name of executable for the LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть ім&apos;я виконуваного файлу LunaTester.</translation>
     </message>
     <message>
         <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Щоб змінити ім&apos;я виконуваного файла, вам потрібно зупинити запущену гру. Ви бажаєте зупинити LunaTester зараз?</translation>
     </message>
     <message>
         <source>Change the executable name</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити ім&apos;я виконуваного файлу</translation>
     </message>
     <message>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
-        <translation type="unfinished"></translation>
+        <translation>Будь ласка, вкажіть ім&apos;я виконуваного PE-файлу, який буде використаним LunaTester-ом (наприклад smbx.exe)</translation>
     </message>
 </context>
 <context>
@@ -6436,7 +6436,7 @@ See %2 for more information.</source>
     </message>
     <message>
         <source>&lt;no extra settings&gt;</source>
-        <translation>&lt;немає екстра налаштувань&gt;</translation>
+        <translation>&amp;lt;немає додаткових налаштувань&amp;gt;</translation>
     </message>
     <message>
         <source>Show camera grid</source>
@@ -8123,57 +8123,57 @@ Arguments: %2</source>
     <message>
         <source>Compatibility level</source>
         <comment>Choose the compatibility level used by the game</comment>
-        <translation type="unfinished"></translation>
+        <translation>Рівень сумісності</translation>
     </message>
     <message>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
-        <translation type="unfinished"></translation>
+        <translation>За замовчуванням</translation>
     </message>
     <message>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
-        <translation type="unfinished">Сучасний</translation>
+        <translation>Сучасний</translation>
     </message>
     <message>
         <source>X2</source>
         <comment>Disable all bugfixes and updates exceot these made at X2</comment>
-        <translation type="unfinished"></translation>
+        <translation>Х2</translation>
     </message>
     <message>
         <source>Strict SMBX 1.3</source>
         <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Суворий SMBX 1.3</translation>
     </message>
     <message>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Секундомір спідранерів</translation>
     </message>
     <message>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнено</translation>
     </message>
     <message>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Режим 1 (Сучасний)</translation>
     </message>
     <message>
         <source>Mode 3 (Strict SMBX 1.3)</source>
         <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Режим 3 (Суворий SMBX 1.3)</translation>
     </message>
     <message>
         <source>Semi-transparent stopwatch</source>
         <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Напівпрозорий секундомір</translation>
     </message>
     <message>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Режим 2 (Х2)</translation>
     </message>
 </context>
 <context>
