@@ -206,17 +206,17 @@
     <message>
         <location filename="../calibration_main.ui" line="662"/>
         <source>Scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутка</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="685"/>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутити вправо</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="696"/>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутити вгору</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="707"/>
@@ -229,27 +229,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - move grab offset if visible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Порада: є підтримка миші!
+
+Ліва кнопка - перемістити хітбокс
+
+Середня кнопка - прокрутка вгору
+
+Колесо - збільшити/зменшити
+
+Права кнопка - перемістити точку захвату, якщо видима.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="725"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Зменшити</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="736"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшити</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="747"/>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутити вліво</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="769"/>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутити вниз</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="780"/>
@@ -262,27 +270,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - Move the right-bottom crop edges.</source>
-        <translation type="unfinished"></translation>
+        <translation>Порада: є підтримка миші!
+
+Ліва кнопка - перемістити кадр або використати дії
+
+Середня кнопка - прокрутка навколо
+
+Колесо - збільшити/зменшити
+
+Права кнопка - перемістити межі відсікання правого й нижнього краю.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="812"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Вийти</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="830"/>
         <source>Copy calibration settings of the current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Скопіювати налаштування калібровки даного кадру</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="845"/>
         <source>Past calibration settings from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставити налаштування калібрування з буферу обміну</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="866"/>
         <source>Open the Wiki page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити Wiki-сторінку...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="900"/>
@@ -353,17 +369,17 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.ui" line="23"/>
         <source>Character Calibrator</source>
         <comment>The title for utility to edit playable character sprites and their settings</comment>
-        <translation type="unfinished"></translation>
+        <translation>Калібратор персонажа</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="58"/>
         <source>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати малюнок стіни, підлоги або стелі. Дозволяє побачити взаємодію ігрового персонажу з поверхнями.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="61"/>
         <source>Wall</source>
-        <translation type="unfinished"></translation>
+        <translation>Стіна</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="77"/>
@@ -378,24 +394,24 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="87"/>
         <source>Change background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити колір фону</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="90"/>
         <source>BG Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір фону</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="97"/>
         <source>Reset a scroll position into initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Скинути положення прокрути в початкове положення</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="100"/>
         <location filename="../calibration_main.ui" line="758"/>
         <location filename="../calibration_main.ui" line="921"/>
         <source>Reset scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>Скинути прокрутку</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="107"/>
@@ -410,47 +426,57 @@ Right button - Move the right-bottom crop edges.</source>
   &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - using the file as a storage of working data only (engine has the different format for calibrations).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір цільового двигуна для даної калібровки.&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Наступні режими підтримуються:&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Calibrator&lt;/b&gt; - створити або змінити калібрування за замовчуванням, які використовуються самим Калібратором, режим успадкування буде вимкнено, всі дані будуть збережені без відсікання.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Moondust&lt;/b&gt; - калібрування для двигуна Moondust, режим успадкування працює для всього.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;TheXTech&lt;/b&gt; - калібрування для TheXTech, режим успадкування працює для всього, своя анімація не підтримується грою.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX2&lt;/b&gt; - калібрування для Super Mario Bros. X2, режим успадкування працює тільки для анімацій, всі кадри будуть збережені, навіть якщо вони співпадають з оригіналом, будуть додані застарілі поля, своя анімація не підтримується грою.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - файл буде використаним у якості сховища робочих даних (двигун має свій формат калібрування, який вбудований у файли рівнів).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="150"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="165"/>
         <source>Import/Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Імпорт/Експорт</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="183"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="191"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Довідка</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="221"/>
         <source>Main toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Головна панель</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="265"/>
         <source>Select current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір даного кадру</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="284"/>
         <source>Show sprite map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати карту спрайта...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="355"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="627"/>
@@ -460,22 +486,22 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="909"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="926"/>
         <source>Open the srite directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити шлях до спрайту...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="963"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувач спрайтів</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="968"/>
         <source>Extrenal GFX editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зовнішній графічний редагувач…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="307"/>
@@ -625,12 +651,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../main/calibration_file.cpp" line="637"/>
         <source>Bad data generated</source>
-        <translation type="unfinished"></translation>
+        <translation>Згенеровані зіпсовані дані</translation>
     </message>
     <message>
         <location filename="../main/calibration_file.cpp" line="638"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
-        <translation type="unfinished"></translation>
+        <translation>Деякі згенеровані значення знаходяться за межами діапазонів, із-за яких SMBX-38A може зламатися. Файл залишиться незмінним.</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="160"/>
@@ -667,7 +693,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.cpp" line="671"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Колір фону</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="709"/>
@@ -724,13 +750,13 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="857"/>
         <location filename="../calibration_main.cpp" line="863"/>
         <source>Compat: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Сумісн.: %1</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="833"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Не вказано</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="887"/>
@@ -779,43 +805,43 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="390"/>
         <source>None</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Немає</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="393"/>
         <source>Floor</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Підлога</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="395"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Підлога + ліва стіна</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="397"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Підлога + права стіна</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="400"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Стеля</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="402"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Стеля + ліва стіна</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="404"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Стеля + права стіна</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="495"/>
@@ -825,18 +851,18 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../main/settings.cpp" line="79"/>
         <source>Graphical editor is not specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вказано графічний редагувач</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="80"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Не вказано зовнішнього графічного редагувача. Бажаєте вказати його зараз?</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="102"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть шлях до графічного редагувача</translation>
     </message>
 </context>
 <context>
@@ -883,166 +909,166 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="23"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувач спрайтів</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="52"/>
         <source>Drag the frame through entire sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити кадр через весь спрайт</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="55"/>
         <source>Drag mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим переміщення</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="76"/>
         <source>Select fragment and cut it, move it into necessary place and double-click to paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть фрагмент і виріжте його, перемістіть у потрібне положення, та двічі натисніть кнопку миші, щоб вставити</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="79"/>
         <source>Select and move</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати й перемістити</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="93"/>
         <source>Select fragment and copy it, move it into necessary place and double-click to paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть фрагмент і скопіюйте його, перемістіть у потрібне положення та двічі натисніть на кнопку миші, щоб вставити</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="96"/>
         <source>Select and copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибрати й скопіювати</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="110"/>
         <source>Pencil to draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Олівець для малювання</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="113"/>
         <source>Pencil</source>
-        <translation type="unfinished"></translation>
+        <translation>Олівець</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="127"/>
         <source>Pick a color</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть колір</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="130"/>
         <source>Color picker</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір кольору</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="144"/>
         <location filename="../image_calibration/image_calibrator.ui" line="147"/>
         <source>Rubber</source>
-        <translation type="unfinished"></translation>
+        <translation>Гумка</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="161"/>
         <source>Draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалювати лінію</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="164"/>
         <source>Draw lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Малювання ліній</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="178"/>
         <source>Draw a rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Намалювати прямокутник</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="181"/>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>Малювання прямокутників</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="202"/>
         <location filename="../image_calibration/image_calibrator.ui" line="205"/>
         <source>Undo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>Відмінити дію</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="219"/>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>
         <source>Redo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>Повторити дію</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="261"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Якщо ви використовуєте мишку для переміщення зображення, з ним буде також переміщуватись хітбокс. Користуйтесь цим, якщо ви бажаєте зрівняти кадр без спотворень налаштувань калібрування.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="264"/>
         <source>Hitbox move</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити хітбокс</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="286"/>
         <source>Drag offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміщення Х</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="293"/>
         <source>Show sprite map</source>
-        <translation type="unfinished"></translation>
+        <translation>Показати карту спрайта</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="303"/>
         <source>Clear</source>
         <comment>reference frame</comment>
-        <translation type="unfinished"></translation>
+        <translation>Очистити</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="325"/>
         <source>Drag frame offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити кадр:</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="353"/>
         <source>Referrence frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кадр-зразок:</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="386"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Прозорість</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="416"/>
         <source>Crop right</source>
-        <translation type="unfinished"></translation>
+        <translation>Зріз зправа</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="430"/>
         <source>Drag offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Зміщення Y</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="450"/>
         <source>Crop bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Зріз знизу</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="484"/>
         <source>Open frame in editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Відкрити кадр у редагувачі...</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="491"/>
         <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити всі кадри спрайту згідно з цим. Користуйтесь цим, щоб спростити загальну роботу по вирівнюванню.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="494"/>
         <source>Move all frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістити всі кадри</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="510"/>
@@ -1116,7 +1142,7 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
     <message>
         <location filename="../about/about.ui" line="17"/>
         <source>About Character Calibrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Про калібратор персонажів</translation>
     </message>
     <message>
         <location filename="../about/about.ui" line="63"/>
