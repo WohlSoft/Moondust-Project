@@ -645,7 +645,7 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
     <message>
         <location filename="../calibration_main.ui" line="968"/>
         <source>Extrenal GFX editor...</source>
-        <translation>Extrenal GFX editor...</translation>
+        <translation>External GFX editor…</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="142"/>
