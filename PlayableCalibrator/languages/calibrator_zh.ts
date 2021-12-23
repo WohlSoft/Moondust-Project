@@ -175,17 +175,17 @@
     <message>
         <location filename="../calibration_main.ui" line="662"/>
         <source>Scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>滚动</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="685"/>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>向右滚动</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="696"/>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>向上滚动</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="707"/>
@@ -198,27 +198,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - move grab offset if visible.</source>
-        <translation type="unfinished"></translation>
+        <translation>提示：支持鼠标！
+
+左键：移动判定框
+
+中键：移动图像位置
+
+滚轮：放大 / 缩小
+
+右键：移动拿起物品时偏差（如果显示）。</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="725"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>缩小</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="736"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>放大</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="747"/>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>向左滚动</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="769"/>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>向下滚动</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="780"/>
@@ -231,27 +239,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - Move the right-bottom crop edges.</source>
-        <translation type="unfinished"></translation>
+        <translation>提示：支持鼠标！
+
+左键：移动帧或使用动作
+
+中键：移动图像位置
+
+滚轮：放大 / 缩小
+
+右键：移动右下角裁切范围。</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="812"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>退出</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="830"/>
         <source>Copy calibration settings of the current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>复制当前帧校正设置</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="845"/>
         <source>Past calibration settings from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>从剪贴板粘贴校正设置</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="866"/>
         <source>Open the Wiki page...</source>
-        <translation type="unfinished"></translation>
+        <translation>打开百科页面……</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="900"/>
@@ -322,17 +338,17 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.ui" line="23"/>
         <source>Character Calibrator</source>
         <comment>The title for utility to edit playable character sprites and their settings</comment>
-        <translation type="unfinished"></translation>
+        <translation>人物校正</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="58"/>
         <source>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</source>
-        <translation type="unfinished"></translation>
+        <translation>新增墙面、地面和天花板的绘制，用于预览人物在表面中所受的影响。</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="61"/>
         <source>Wall</source>
-        <translation type="unfinished"></translation>
+        <translation>墙面</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="77"/>
@@ -347,24 +363,24 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="87"/>
         <source>Change background color</source>
-        <translation type="unfinished"></translation>
+        <translation>更改背景颜色</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="90"/>
         <source>BG Color</source>
-        <translation type="unfinished"></translation>
+        <translation>背景颜色</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="97"/>
         <source>Reset a scroll position into initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>重置卷轴位置至初始状态</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="100"/>
         <location filename="../calibration_main.ui" line="758"/>
         <location filename="../calibration_main.ui" line="921"/>
         <source>Reset scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>重置卷轴</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="107"/>
@@ -379,47 +395,57 @@ Right button - Move the right-bottom crop edges.</source>
   &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - using the file as a storage of working data only (engine has the different format for calibrations).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>选择人物校正器的适配引擎。&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;支持以下模式：&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;人物校正器&lt;/b&gt; - 新建或更改人物校正器默认配置，将禁用继承模式，并保存所有数据。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;月尘引擎&lt;/b&gt; - 月尘引擎配置，完美支持继承模式。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;TheXTech&lt;/b&gt; - TheXTech 配置，完美支持继承模式，不支持自定义动画。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX2&lt;/b&gt; - Super Mario Bros. X2 配置，在继承模式中只支持动画，保存所有帧，包含不推荐使用的字段，不支持自定义动画。&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - 仅保存数据（将校正数据嵌入至关卡文件）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="150"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>文件</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="165"/>
         <source>Import/Export</source>
-        <translation type="unfinished"></translation>
+        <translation>导入/导出</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="183"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="191"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>帮助</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="221"/>
         <source>Main toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>主工具栏</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="265"/>
         <source>Select current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>选择当前帧</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="284"/>
         <source>Show sprite map...</source>
-        <translation type="unfinished"></translation>
+        <translation>显示精灵地图……</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="355"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="627"/>
@@ -429,22 +455,22 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="909"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>保存</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="926"/>
         <source>Open the srite directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>打开精灵目录……</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="963"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>精灵编辑器</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="968"/>
         <source>Extrenal GFX editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>外部图像编辑器……</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="307"/>
@@ -594,12 +620,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../main/calibration_file.cpp" line="637"/>
         <source>Bad data generated</source>
-        <translation type="unfinished"></translation>
+        <translation>数据生成错误</translation>
     </message>
     <message>
         <location filename="../main/calibration_file.cpp" line="638"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
-        <translation type="unfinished"></translation>
+        <translation>某些生成的值超出范围，可能造成 SMBX-38A 异常，操作已中断。</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="160"/>
@@ -636,7 +662,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.cpp" line="671"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>背景颜色</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="709"/>
@@ -693,13 +719,13 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="857"/>
         <location filename="../calibration_main.cpp" line="863"/>
         <source>Compat: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>兼容性：%1</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="833"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>未设置</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="887"/>
@@ -748,43 +774,43 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="390"/>
         <source>None</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>无</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="393"/>
         <source>Floor</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>地面</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="395"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>地面 + 墙左面</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="397"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>地面 + 墙右面</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="400"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>天花板</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="402"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>天花板 + 墙左面</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="404"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>天花板 + 墙右面</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="495"/>
@@ -794,18 +820,18 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../main/settings.cpp" line="79"/>
         <source>Graphical editor is not specified</source>
-        <translation type="unfinished"></translation>
+        <translation>未设置图像编辑器</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="80"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
-        <translation type="unfinished"></translation>
+        <translation>未设置外部图像编辑器目录，您现在要设置吗？</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="102"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>选择图像编辑器所在的文件夹</translation>
     </message>
 </context>
 <context>
@@ -852,166 +878,166 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="23"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>精灵编辑器</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="52"/>
         <source>Drag the frame through entire sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>通过整个图像拖放帧</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="55"/>
         <source>Drag mode</source>
-        <translation type="unfinished"></translation>
+        <translation>拖放模式</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="76"/>
         <source>Select fragment and cut it, move it into necessary place and double-click to paste</source>
-        <translation type="unfinished"></translation>
+        <translation>选择图像范围并剪切，移动至重要位置，双击粘贴</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="79"/>
         <source>Select and move</source>
-        <translation type="unfinished"></translation>
+        <translation>选择并移动</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="93"/>
         <source>Select fragment and copy it, move it into necessary place and double-click to paste</source>
-        <translation type="unfinished"></translation>
+        <translation>选择图像范围并复制，移动至重要位置，双击粘贴</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="96"/>
         <source>Select and copy</source>
-        <translation type="unfinished"></translation>
+        <translation>选择并复制</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="110"/>
         <source>Pencil to draw</source>
-        <translation type="unfinished"></translation>
+        <translation>使用铅笔绘制</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="113"/>
         <source>Pencil</source>
-        <translation type="unfinished"></translation>
+        <translation>铅笔</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="127"/>
         <source>Pick a color</source>
-        <translation type="unfinished"></translation>
+        <translation>拾取颜色</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="130"/>
         <source>Color picker</source>
-        <translation type="unfinished"></translation>
+        <translation>拾色器</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="144"/>
         <location filename="../image_calibration/image_calibrator.ui" line="147"/>
         <source>Rubber</source>
-        <translation type="unfinished"></translation>
+        <translation>橡皮檫</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="161"/>
         <source>Draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制直线</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="164"/>
         <source>Draw lines</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制多个直线</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="178"/>
         <source>Draw a rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制三角形</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="181"/>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>绘制矩形</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="202"/>
         <location filename="../image_calibration/image_calibrator.ui" line="205"/>
         <source>Undo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>撤销</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="219"/>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>
         <source>Redo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>恢复</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="261"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>使用鼠标移动图像的同时移动判定框。如果您想要在不影响到校正设置的情况下对齐帧，请启用该选项。</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="264"/>
         <source>Hitbox move</source>
-        <translation type="unfinished"></translation>
+        <translation>移动判定框</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="286"/>
         <source>Drag offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>拿起时横向偏差</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="293"/>
         <source>Show sprite map</source>
-        <translation type="unfinished"></translation>
+        <translation>显示精灵地图</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="303"/>
         <source>Clear</source>
         <comment>reference frame</comment>
-        <translation type="unfinished"></translation>
+        <translation>清除</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="325"/>
         <source>Drag frame offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>拿起时偏差：</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="353"/>
         <source>Referrence frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>对照帧：</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="386"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>透明度</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="416"/>
         <source>Crop right</source>
-        <translation type="unfinished"></translation>
+        <translation>向右裁剪</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="430"/>
         <source>Drag offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>拿起时纵向偏差</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="450"/>
         <source>Crop bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>向下裁剪</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="484"/>
         <source>Open frame in editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>在编辑器中打开帧……</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="491"/>
         <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
-        <translation type="unfinished"></translation>
+        <translation>同步移动所有精灵中的帧至当前，使用此功能可简化对齐方式。</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="494"/>
         <source>Move all frames</source>
-        <translation type="unfinished"></translation>
+        <translation>移动所有帧</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="510"/>
@@ -1085,7 +1111,7 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
     <message>
         <location filename="../about/about.ui" line="17"/>
         <source>About Character Calibrator</source>
-        <translation type="unfinished"></translation>
+        <translation>关于人物校正器</translation>
     </message>
     <message>
         <location filename="../about/about.ui" line="63"/>
