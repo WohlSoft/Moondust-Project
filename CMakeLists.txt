@@ -188,6 +188,9 @@ if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
     pgeSetupQtDeploymet(${PGE_ENABLE_STATIC_QT} ${PGE_SHARED_SDLMIXER})
 endif()
 
+# Common changelog file
+InstallTextFile(FILE "${Moondust_SOURCE_DIR}/changelog.common.txt" RENAME "changelog.common.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
+
 # Append Project License file
 InstallTextFile(FILE "${Moondust_SOURCE_DIR}/LICENSE" RENAME "LICENSE.txt" DESTINATION "${PGE_INSTALL_DIRECTORY}")
 
