@@ -10,12 +10,6 @@
     <height>654</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
   <property name="windowTitle">
    <string comment="A title of the frame selection on the sprite dialog">Select a frame on the sprite</string>
   </property>
@@ -68,7 +62,6 @@ To choose a frame for edit, push to the button over a necessary frame.</string>
   <tabstop>SpriteMatrix</tabstop>
  </tabstops>
  <resources>
-  <include location="../_resources/images.qrc"/>
   <include location="../_resources/images.qrc"/>
  </resources>
  <connections/>

@@ -882,7 +882,8 @@ void CalibrationMain::on_actionAnimator_triggered()
 {
     m_animator->show();
     QRect g = this->frameGeometry();
-    m_animator->move(g.right(), g.top() - (g.height() - m_animator->height()));
+    QRect a = m_animator->frameGeometry();
+    m_animator->move(g.right(), g.bottom() -a.height());
     m_animator->update();
     m_animator->repaint();
 
