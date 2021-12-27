@@ -3371,7 +3371,7 @@ Do you want to continue the process?</source>
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
         <translation>- Вказаний невірний шлях LunaTester (або папка даних SMBX2). Будь ласка, перевірте налаштування шляху до LunaTester.
-- Можливе видалення файлів вашим антивірусом (помилкове спрацьовування або зараження файлу). Перевірте, будь ласка, карантин вашого антивірусу або звіт про нещодавно видалені загрози.
+- Можливе видалення файлів вашим антивірусом (помилкове спрацювання або зараження файлу). Перевірте, будь ласка, карантин вашого антивірусу або звіт про нещодавно видалені загрози.
 - Некоректне встановлення SMBX2, в результаті чого не вистачає деяких файлів. Будь ласка, перевстановіть SMBX2, щоб усунути проблему.</translation>
     </message>
     <message>
