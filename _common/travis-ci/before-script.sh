@@ -44,6 +44,7 @@ then
             libgtk-3-dev libgegl-dev \
             libxcursor-dev libxrender-dev libxrandr-dev libxext-dev libxi-dev \
             libxss-dev libxt-dev libxv-dev libxxf86vm-dev libxinerama-dev \
+            libxkbcommon-dev libxkbcommon-x11-dev \
             libxkbcommon-dev libfontconfig1-dev libasound2-dev libpulse-dev \
             libdbus-1-dev udev mtdev-tools webp libudev-dev libglm-dev \
             libwayland-dev libegl1-mesa-dev mesa-common-dev libgl1-mesa-dev \
