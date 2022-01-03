@@ -18,8 +18,8 @@ then
     QtCacheFolder=qtcache
 
     if [[ "${QT_VER}" == "" ]]; then
-        QtTarballName=qt-5.9.9-static-ubuntu-14-04-x64-gcc8.tar.bz2
-        QtStaticVersion=5.9.9_static
+        QtTarballName=qt-5.15.2-static-ubuntu-18-04-x64-gcc8.tar.bz2
+        QtStaticVersion=5.15.2_static
     fi
 
     if [[ ! -d /home/runner/Qt/$QtCacheFolder ]]; then
