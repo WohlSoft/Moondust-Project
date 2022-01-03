@@ -9,6 +9,8 @@ set(QT_FOUND_EXTRA_LIBS_PRE)
 # are may appear in any Qt build (static or shared)
 # if a target platform has no those libraries
 
+set(ENABLE_GTK_THEME_PLUGIN OFF)
+
 # Manually turn on static Qt deployment
 if(PGE_ENABLE_STATIC_QT)
 
@@ -120,12 +122,14 @@ if(PGE_ENABLE_STATIC_QT)
                 )
             endif()
 
-            find_package(PkgConfig)
-            pkg_check_modules(GTK "gtk+-3.0")
-            if(GTK_FOUND)
-                set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
-                    Q_IMPORT_PLUGIN(QGtk3ThemePlugin)"
-                )
+            if(ENABLE_GTK_THEME_PLUGIN)
+                find_package(PkgConfig)
+                pkg_check_modules(GTK "gtk+-3.0")
+                if(GTK_FOUND)
+                    set(QT_IMPORT_PLUGINS_MODULE "${QT_IMPORT_PLUGINS_MODULE}
+                        Q_IMPORT_PLUGIN(QGtk3ThemePlugin)"
+                    )
+                endif()
             endif()
         endif()
 
@@ -199,7 +203,7 @@ if(PGE_ENABLE_STATIC_QT)
 
         if("${CMAKE_SYSTEM}" MATCHES "Linux")
             # GTK3
-            if(GTK_FOUND)
+            if(GTK_FOUND AND ENABLE_GTK_THEME_PLUGIN)
                 find_library(QT_GTK3 qgtk3 PATHS "${CMAKE_PREFIX_PATH}/plugins/platformthemes" "${CMAKE_PREFIX_PATH}/share/qt5/plugins/platformthemes")
                 if(QT_GTK3)
                     list(APPEND QT_FOUND_EXTRA_LIBS_PRE ${QT_GTK3})
