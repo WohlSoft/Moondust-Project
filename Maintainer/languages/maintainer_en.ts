@@ -689,7 +689,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
         <source>Drop your masked GIFs files into this window for a quick porcessing</source>
-        <translation>Drop your masked GIFs files into this window for a quick porcessing</translation>
+        <translation>Drop your masked GIFs files into this window for a quick processing</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="58"/>
@@ -796,7 +796,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="166"/>
         <source>Processing has been termiated.</source>
-        <translation>Processing has been termiated.</translation>
+        <translation>Processing has been terminated.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="171"/>
@@ -1205,7 +1205,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
         <source>Processing has been termiated.</source>
-        <translation>Processing has been termiated.</translation>
+        <translation>Processing has been terminated.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
