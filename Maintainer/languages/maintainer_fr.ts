@@ -684,7 +684,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.ui" line="31"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Traiter les fichiers</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="47"/>
@@ -694,7 +694,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.ui" line="58"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Traitement par lots pour les niveaux/épisodes</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
@@ -704,7 +704,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne pas créer de sauvegarde pour les vieilles images</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
@@ -771,7 +771,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous devez indiquer un dossier source pour commencer le traitement.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="112"/>
@@ -796,7 +796,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="166"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le traitement est terminé.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="171"/>
@@ -806,7 +806,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="172"/>
         <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le traitement est terminé mais avec des erreurs. Veuillez consulter le journal de sortie pour des informations plus détaillées.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
@@ -881,7 +881,7 @@ Formats pris en charge :
     <message>
         <location filename="../main_window.ui" line="156"/>
         <source>Adjust graphics into a given palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajuster les graphismes avec une palette donnée</translation>
     </message>
     <message>
         <location filename="../main_window.ui" line="169"/>
@@ -1064,7 +1064,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.ui" line="17"/>
         <source>Palette filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtre de palette</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="27"/>
@@ -1075,7 +1075,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
         <source>This wizard will help you to automatically adjust given graphics with a specific palette by replacing colors into most closed to any color that is available on the specified palette.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cet outil va vous aider à ajuster automatiquement les graphismes donnés avec une palette spécifique en remplaçant les couleurs par celles qui sont les plus proches disponibles dans la palette spécifiée.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="47"/>
@@ -1090,17 +1090,17 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
         <source>Process files</source>
-        <translation type="unfinished"></translation>
+        <translation>Traiter les fichiers</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="131"/>
         <source>Drop your PNG files into this window for a quick porcessing</source>
-        <translation type="unfinished"></translation>
+        <translation>Déposez vos fichiers PNG dans cette fenêtre pour un traitement rapide</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="142"/>
         <source>Batch processing for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Traitement par lots pour les niveaux/épisodes</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="148"/>
@@ -1110,7 +1110,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
         <source>Don&apos;t create backup for old images</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne pas créer de sauvegarde pour les vieilles images</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="162"/>
@@ -1141,17 +1141,17 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.ui" line="210"/>
         <source>Target palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Palette cible</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="216"/>
         <source>Palette reference image:</source>
-        <translation type="unfinished"></translation>
+        <translation>Image de référence de la palette&#xa0;:</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="233"/>
         <source>This is the picture that should contain all colors of the palette you want to enforce to all images you want to process. This would be a grid of colors or just a hand-made picture with manually drawn colors of the palette. All processed images will be adjusted to have the same colors as this image has.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il s&apos;agit de l&apos;image qui doit contenir toutes les couleurs de la palette que vous voulez appliquer à toutes les images que vous voulez traiter. Il peut s&apos;agir d&apos;une grille de couleurs ou simplement d&apos;une image dessinée à la main avec les couleurs de la palette. Toutes les images traitées seront ajustées pour avoir les mêmes couleurs que cette image.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="65"/>
@@ -1175,12 +1175,12 @@ Formats pris en charge :
         <location filename="../Graphics/palette_filter.cpp" line="87"/>
         <location filename="../Graphics/palette_filter.cpp" line="116"/>
         <source>You should give a PNG image with a target palette reference to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous devez envoyer une image PNG avec la référence de la palette cible pour commencer le traitement.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="124"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vous devez indiquer un dossier source pour commencer le traitement.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="133"/>
@@ -1205,7 +1205,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le processus est terminé.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
@@ -1215,7 +1215,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="195"/>
         <source>Processing was been completed with errors. Please look the output log for more detailed information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le traitement est terminé mais avec des erreurs. Veuillez consulter le journal de sortie pour des informations plus détaillées.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
@@ -1225,7 +1225,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>
         <source>Select the PNG image as a palette</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner l&apos;image PNG en tant que palette</translation>
     </message>
 </context>
 <context>
