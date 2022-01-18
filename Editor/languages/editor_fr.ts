@@ -573,7 +573,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ici vous pouvez rapidement convertir vos musiques ou fichiers SFX qui &lt;br&gt;n&apos;ont pas été formatés correctement (mauvais taux d&apos;échantillonnage, mauvais codec, etc.).&lt;/p&gt;
-&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration&#x202f;: underline&#x202f;; color&#x202f;:#0000ff&#x202f;;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color :#0000ff ;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -762,7 +762,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Configuration name:</source>
-        <translation>Nom de la configuration&#x202f;:</translation>
+        <translation>Nom de la configuration :</translation>
     </message>
     <message>
         <source>Configuration path:</source>
@@ -1374,7 +1374,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation>Affiche divers chemins importants&#x202f;!</translation>
+        <translation>Affiche divers chemins importants !</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
@@ -2308,7 +2308,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation>Position&#x202f;: X, Y</translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
@@ -3819,19 +3819,19 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     <message>
         <source>Change the executable name...</source>
         <comment>Open a dialog to choose the name for executable LunaTester will use.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le nom de l&apos;exécutable…</translation>
     </message>
     <message>
         <source>Select the name of executable for the LunaTester.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez le nom de l&apos;exécutable pour LunaTester.</translation>
     </message>
     <message>
         <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Pour modifier le nom de l&apos;exécutable, vous devrez arrêter le jeu en cours. Souhaitez-vous arrêter LunaTester maintenant ?</translation>
     </message>
     <message>
         <source>Change the executable name</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifier le nom de l&apos;exécutable</translation>
     </message>
     <message>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
@@ -3854,7 +3854,7 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque&#x202f;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -6452,8 +6452,8 @@ Vous pouvez tester sans sauvegarder en utilisant l&apos;élément « Tester le n
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation type="unfinished">Bonjour ! Vous essayez de tester un niveau avec le moteur Moondust.
-Le moteur Moondust n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX. Utilisez les tests de Moondust pour les cas où vous souhaitez tester le moteur Moondust lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à Moondust.</translation>
+        <translation>Bonjour ! Vous essayez de tester un niveau avec le moteur Moondust.
+Le moteur Moondust n&apos;en n&apos;est encore qu&apos;à ses débuts, et il y a plusieurs fonctionnalités qui sont manquantes ou ne fonctionnent pas correctement. Si vous créez des niveaux ou des épisodes pour l&apos;ancien moteur SMBX et si vous souhaitez les tester avec un ensemble de fonctionnalités complet, veuillez les tester directement dans SMBX ou TheXTech. Utilisez les tests de Moondust pour les cas où vous souhaitez tester le moteur Moondust lui-même ou si vous souhaitez tester des niveaux avec des fonctionnalités spécifiques à Moondust.</translation>
     </message>
     <message>
         <source>Clonning of section...</source>
@@ -8402,27 +8402,27 @@ Arguments : %2</translation>
     <message>
         <source>Compatibility level</source>
         <comment>Choose the compatibility level used by the game</comment>
-        <translation type="unfinished"></translation>
+        <translation>Niveau de compatibilité</translation>
     </message>
     <message>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
-        <translation type="unfinished">Par défaut</translation>
+        <translation>Par défaut</translation>
     </message>
     <message>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
-        <translation type="unfinished">Moderne</translation>
+        <translation>Moderne</translation>
     </message>
     <message>
         <source>X2</source>
         <comment>Disable all bugfixes and updates exceot these made at X2</comment>
-        <translation type="unfinished"></translation>
+        <translation>X2</translation>
     </message>
     <message>
         <source>Strict SMBX 1.3</source>
         <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX 1.3 Strict</translation>
     </message>
     <message>
         <source>Speedruner&apos;s stopwatch</source>
@@ -8432,27 +8432,27 @@ Arguments : %2</translation>
     <message>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mode 1 (Moderne)</translation>
     </message>
     <message>
         <source>Mode 3 (Strict SMBX 1.3)</source>
         <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mode 3 (SMBX 1.3 Strict)</translation>
     </message>
     <message>
         <source>Semi-transparent stopwatch</source>
         <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Chronomètre translucide</translation>
     </message>
     <message>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Mode 2 (X2)</translation>
     </message>
 </context>
 <context>
