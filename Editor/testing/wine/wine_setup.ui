@@ -114,7 +114,7 @@
    <item row="2" column="0">
     <widget class="QGroupBox" name="wineCustomEnvGroup">
      <property name="enabled">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
      <property name="title">
       <string>Specify a custom environment (PlayOnLinux/Mac)</string>
@@ -245,22 +245,6 @@
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pathCustom</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>wineCustomEnvGroup</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>26</x>
-     <y>84</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>343</x>
-     <y>142</y>
     </hint>
    </hints>
   </connection>

@@ -297,52 +297,49 @@ QProcessEnvironment WineSetup::buildEnv(const WineSetupData &profile)
     prepareSetup(setup);
 
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
+    QString winePath = setup.wineRoot;
 
     if(!setup.enableWineDebug)
         env.insert("WINEDEBUG", "-all");
 
-    if(!setup.useCustom)
-        return env; // Use system-default
-
-    env.insert("WINEDIR", setup.wineRoot);
-
-    QString winePath = setup.wineRoot;
-    if(!winePath.isEmpty())
+    if(setup.useCustom && setup.useCustomEnv)
     {
-        if(!setup.metaWineLib64Dir.isEmpty())
-            env.insert("LD_LIBRARY_PATH",
-                       QString("%1:%2:%3")
-                       .arg(setup.metaWineLib64Dir)
-                       .arg(setup.metaWineLibDir)
-                       .arg(env.value("LD_LIBRARY_PATH")));
-        else
-            env.insert("LD_LIBRARY_PATH",
-                       QString("%1:%2")
-                       .arg(setup.metaWineLibDir)
-                       .arg(env.value("LD_LIBRARY_PATH")));
-    }
+        env.insert("WINEDIR", setup.wineRoot);
 
-    if(setup.useWinePrefix)
-    {
-        env.insert("WINEPREFIX", setup.winePrefix);
-        env.insert("PATH", QString("%1/bin:%2/drive_c/windows:%3")
-                            .arg(winePath)
-                            .arg(setup.winePrefix)
-                            .arg(env.value("PATH"))
-        );
-    }
-    else
-    {
+        if(!winePath.isEmpty())
+        {
+            if(!setup.metaWineLib64Dir.isEmpty())
+                env.insert("LD_LIBRARY_PATH",
+                           QString("%1:%2:%3")
+                           .arg(setup.metaWineLib64Dir)
+                           .arg(setup.metaWineLibDir)
+                           .arg(env.value("LD_LIBRARY_PATH")));
+            else
+                env.insert("LD_LIBRARY_PATH",
+                           QString("%1:%2")
+                           .arg(setup.metaWineLibDir)
+                           .arg(env.value("LD_LIBRARY_PATH")));
+        }
+
         env.insert("PATH", QString("%1/bin:%2")
                             .arg(winePath)
                             .arg(env.value("PATH"))
         );
+
+        env.insert("WINEDLLPATH", setup.metaWineDllDir);
+        env.insert("WINELOADER", setup.metaWine64Exec);
+        env.insert("WINESERVER", setup.metaWine64Exec);
+        // env.insert("WINEDLLOVERRIDES", "");
     }
 
-    env.insert("WINEDLLPATH", setup.metaWineDllDir);
-    env.insert("WINELOADER", setup.metaWine64Exec);
-    env.insert("WINESERVER", setup.metaWine64Exec);
-//    env.insert("WINEDLLOVERRIDES", "");
+    if(setup.useWinePrefix && setup.useCustomEnv)
+    {
+        env.insert("WINEPREFIX", setup.winePrefix);
+        env.insert("PATH", QString("%1/drive_c/windows:%2")
+                            .arg(setup.winePrefix)
+                            .arg(env.value("PATH"))
+        );
+    }
 
     return env;
 }
