@@ -5,6 +5,7 @@
 #include <QMimeData>
 #include <QSettings>
 #include <QMessageBox>
+#include <ctime>
 
 #include "multi_sfx_test.h"
 #include "multi_sfx_item.h"
@@ -27,7 +28,7 @@ MultiSfxTester::MultiSfxTester(QWidget* parent) :
                      &QTimer::timeout,
                      this,
                      &MultiSfxTester::playRandom);
-    qsrand((uint)time(nullptr));
+    qsrand((uint)std::time(nullptr));
 }
 
 MultiSfxTester::~MultiSfxTester()

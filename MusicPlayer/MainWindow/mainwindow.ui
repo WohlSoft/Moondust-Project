@@ -193,6 +193,23 @@ border-bottom-color: rgb(0, 120, 0);
           <property name="verticalSpacing">
            <number>0</number>
           </property>
+          <item row="0" column="3">
+           <widget class="QPushButton" name="trackNext">
+            <property name="text">
+             <string notr="true">&gt;</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QSpinBox" name="trackID">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="maximum">
+             <number>9999999</number>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_4">
             <property name="text">
@@ -201,12 +218,9 @@ border-bottom-color: rgb(0, 120, 0);
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QSpinBox" name="trackID">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="maximum">
-             <number>9999999</number>
+           <widget class="QPushButton" name="trackPrev">
+            <property name="text">
+             <string notr="true">&lt;</string>
             </property>
            </widget>
           </item>
@@ -237,6 +251,7 @@ border-bottom-color: rgb(0, 120, 0);
      <widget class="QLabel" name="label">
       <property name="font">
        <font>
+        <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
@@ -714,6 +729,7 @@ border-bottom-color: rgb(0, 120, 0);
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../_resources/musicplayer.qrc"/>
   <include location="../_resources/musicplayer.qrc"/>
  </resources>
  <connections/>

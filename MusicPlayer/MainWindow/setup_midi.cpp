@@ -39,6 +39,9 @@ SetupMidi::SetupMidi(QWidget *parent) :
         ui->adl_bankId->addItem(QString("%1 = %2").arg(i).arg(names[i]));
 #endif
 
+    m_numChipsAdlPrev = ui->adlNumChips->value();
+    m_numChipsOpnPrev = ui->opnNumChips->value();
+
     ui->adl_tremolo->setCheckState(Qt::PartiallyChecked);
     ui->adl_vibrato->setCheckState(Qt::PartiallyChecked);
     ui->adl_scalableModulation->setCheckState(Qt::PartiallyChecked);
@@ -74,6 +77,9 @@ void SetupMidi::loadSetup()
     ui->opn_use_custom->setChecked(setup.value("OPNMIDI-Bank-UseCustom", true).toBool());
     ui->timidityCfgPath->setText(setup.value("Timidity-Config-Path", QString()).toString());
     ui->fluidSynthSF2Paths->setText(setup.value("FluidSynth-SoundFonts", QString()).toString());
+
+    m_numChipsAdlPrev = ui->adlNumChips->value();
+    m_numChipsOpnPrev = ui->opnNumChips->value();
 
     sendSetup();
 #endif
@@ -387,9 +393,13 @@ void SetupMidi::on_adlNumChips_editingFinished()
 #ifdef SDL_MIXER_X
     if(m_setupLock)
         return;
-    Mix_ADLMIDI_setChipsCount(ui->adlNumChips->value());
-    restartForAdl();
-    updateAutoArgs();
+    if(m_numChipsAdlPrev != ui->adlNumChips->value())
+    {
+        m_numChipsAdlPrev = ui->adlNumChips->value();
+        Mix_ADLMIDI_setChipsCount(ui->adlNumChips->value());
+        restartForAdl();
+        updateAutoArgs();
+    }
 #endif
 }
 
@@ -399,9 +409,13 @@ void SetupMidi::on_opnNumChips_editingFinished()
 #ifdef SDL_MIXER_X
     if(m_setupLock)
         return;
-    Mix_OPNMIDI_setChipsCount(ui->opnNumChips->value());
-    restartForOpn();
-    updateAutoArgs();
+    if(m_numChipsOpnPrev != ui->opnNumChips->value())
+    {
+        m_numChipsOpnPrev = ui->opnNumChips->value();
+        Mix_OPNMIDI_setChipsCount(ui->opnNumChips->value());
+        restartForOpn();
+        updateAutoArgs();
+    }
 #endif
 }
 

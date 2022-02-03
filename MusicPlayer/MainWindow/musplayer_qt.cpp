@@ -496,6 +496,18 @@ void MusPlayer_Qt::on_trackID_editingFinished()
 #endif
 }
 
+void MusPlayer_Qt::on_trackPrev_clicked()
+{
+    ui->trackID->stepDown();
+    on_trackID_editingFinished();
+}
+
+void MusPlayer_Qt::on_trackNext_clicked()
+{
+    ui->trackID->stepUp();
+    on_trackID_editingFinished();
+}
+
 void MusPlayer_Qt::on_tempo_valueChanged(int tempo)
 {
 #ifdef SDL_MIXER_X

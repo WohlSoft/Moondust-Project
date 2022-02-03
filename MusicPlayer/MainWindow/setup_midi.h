@@ -76,6 +76,8 @@ private:
     void restartForTimidity();
     void restartForFluidSynth();
     bool m_setupLock = false;
+    int  m_numChipsAdlPrev = 0;
+    int  m_numChipsOpnPrev = 0;
 };
 
 #endif // SETUP_MIDI_H
