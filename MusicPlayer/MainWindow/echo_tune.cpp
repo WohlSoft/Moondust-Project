@@ -298,7 +298,7 @@ void EchoTune::on_copySetup_clicked()
     QApplication::clipboard()->setText(out);
 
     QString oldT = ui->copySetup->text();
-    QString newT = tr("Coiped!");
+    QString newT = tr("Copied!");
     ui->copySetup->setText(newT);
     if(oldT != newT)
     {
