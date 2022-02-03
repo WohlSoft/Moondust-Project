@@ -14,7 +14,9 @@ class SeekBar;
 class SfxTester;
 class SetupMidi;
 class EchoTune;
+class ReverbTune;
 class MultiMusicTest;
+class MultiSfxTester;
 class MusicFX;
 class TrackMuter;
 
@@ -62,6 +64,7 @@ public slots:
     //void playListNext();
 
 private slots:
+    void on_actionTuneReverb_triggered();
     void on_actionTuneEcho_triggered();
     void on_actionAudioSetup_triggered();
     void restartMusic();
@@ -94,6 +97,7 @@ private slots:
     void on_actionMidiSetup_triggered();
     void on_actionSfxTesting_triggered();
     void on_actionMultiMusicTesting_triggered();
+    void on_actionMultiSFXTesting_triggered();
     void on_actionMusicFX_triggered();
     void on_actionTracksMuter_triggered();
     void on_actionEnableReverb_triggered(bool checked);
@@ -123,7 +127,9 @@ private:
     SfxTester *m_sfxTester = nullptr;
     SetupMidi *m_setupMidi = nullptr;
     EchoTune  *m_echoTune = nullptr;
+    ReverbTune  *m_reverbTune = nullptr;
     MultiMusicTest *m_multiMusicTest = nullptr;
+    MultiSfxTester *m_multiSfxTest = nullptr;
     MusicFX *m_musicFx = nullptr;
     TrackMuter *m_trackMuter = nullptr;
 };

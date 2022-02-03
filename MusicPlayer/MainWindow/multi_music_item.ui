@@ -205,7 +205,6 @@
  </widget>
  <resources>
   <include location="../_resources/musicplayer.qrc"/>
-  <include location="../_resources/musicplayer.qrc"/>
  </resources>
  <connections/>
 </ui>

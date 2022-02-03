@@ -1,6 +1,9 @@
 #include "echo_tune.h"
 #include "ui_echo_tune.h"
 #include <QSettings>
+#include <QTimer>
+#include <QRegExp>
+#include <QClipboard>
 #include "../Player/mus_player.h"
 #include "../Effects/spc_echo.h"
 
@@ -269,5 +272,73 @@ void EchoTune::on_echo_fir7_sliderMoved(int arg1)
 void EchoTune::on_resetFir_clicked()
 {
     PGE_MusicPlayer::echoResetFir();
+    on_echo_reload_clicked();
+}
+
+void EchoTune::on_copySetup_clicked()
+{
+    QString out;
+    out += "fx = echo\n";
+    out += QString("echo-on = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_EON));
+    out += QString("delay = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_EDL));
+    out += QString("feedback = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_EFB));
+    out += QString("main-volume-left = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_MVOLL));
+    out += QString("main-volume-right = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_MVOLR));
+    out += QString("echo-volume-left = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_EVOLL));
+    out += QString("echo-volume-right = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_EVOLR));
+    out += QString("fir-0 = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_FIR0));
+    out += QString("fir-1 = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_FIR1));
+    out += QString("fir-2 = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_FIR2));
+    out += QString("fir-3 = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_FIR3));
+    out += QString("fir-4 = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_FIR4));
+    out += QString("fir-5 = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_FIR5));
+    out += QString("fir-6 = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_FIR6));
+    out += QString("fir-7 = %1\n").arg(PGE_MusicPlayer::echoGetReg(ECHO_FIR7));
+
+    QApplication::clipboard()->setText(out);
+
+    QString oldT = ui->copySetup->text();
+    QString newT = tr("Coiped!");
+    ui->copySetup->setText(newT);
+    if(oldT != newT)
+    {
+        auto *c = ui->copySetup;
+        QTimer::singleShot(1000, this, [c, oldT]()->void
+        {
+            c->setText(oldT);
+        });
+    }
+}
+
+static void textToReg(const QString &text, const QString &expr, int reg)
+{
+    QRegExp regex(expr);
+    if(regex.indexIn(text))
+        PGE_MusicPlayer::echoSetReg(reg, regex.cap(1).toInt());
+}
+
+void EchoTune::on_pasteSetup_clicked()
+{
+    const QString text = QApplication::clipboard()->text();
+    if(text.isEmpty())
+        return; // Nothing!
+
+    textToReg(text, "echo-on *= *(-?\\d+)", ECHO_EON);
+    textToReg(text, "delay *= *(-?\\d+)", ECHO_EDL);
+    textToReg(text, "feedback *= *(-?\\d+)", ECHO_EFB);
+    textToReg(text, "main-volume-left *= *(-?\\d+)", ECHO_MVOLL);
+    textToReg(text, "main-volume-right *= *(-?\\d+)", ECHO_MVOLR);
+    textToReg(text, "echo-volume-left *= *(-?\\d+)", ECHO_EVOLL);
+    textToReg(text, "echo-volume-right *= *(-?\\d+)", ECHO_EVOLR);
+    textToReg(text, "fir-0 *= *(-?\\d+)", ECHO_FIR0);
+    textToReg(text, "fir-1 *= *(-?\\d+)", ECHO_FIR1);
+    textToReg(text, "fir-2 *= *(-?\\d+)", ECHO_FIR2);
+    textToReg(text, "fir-3 *= *(-?\\d+)", ECHO_FIR3);
+    textToReg(text, "fir-4 *= *(-?\\d+)", ECHO_FIR4);
+    textToReg(text, "fir-5 *= *(-?\\d+)", ECHO_FIR5);
+    textToReg(text, "fir-6 *= *(-?\\d+)", ECHO_FIR6);
+    textToReg(text, "fir-7 *= *(-?\\d+)", ECHO_FIR7);
+
+    // Reload all values
     on_echo_reload_clicked();
 }

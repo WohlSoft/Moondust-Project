@@ -2,6 +2,10 @@
 * Added the music FX toolbox to set up the special effects for music such as 3D-position, distance, and panning using built-in features of the MixerX library
 * Added the multi-music test toolbox that allows to open multiple music files and play them independently from each other
 * Added the ability to enable/disable channels/tracks on the supported music (MIDI, Tracker, Chiptune, etc.)
+* Added the multi-SFX test toolbox that allows to open multiple SFX files and play them independently from each other, and additionally, run a random playing to use as an effects testing helper
+* Reworked the reverb effect (taken latest Freeverb3 sources instead of bisqwit's)
+* Added an ability to copy and paste effect settings
+* Polished the SPC Echo effect
 
 1.4.4
 - Fixed the incorrect working of the effects applying at the SFX tester

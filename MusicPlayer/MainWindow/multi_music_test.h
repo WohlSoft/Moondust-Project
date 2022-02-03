@@ -41,7 +41,6 @@ protected:
 private slots:
     void on_generalVolume_sliderMoved(int position);
 
-private slots:
     void on_stopAll_clicked();
     void on_playAll_clicked();
     void on_open_clicked();

@@ -540,6 +540,11 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
           <string>FluidSynth (SF2-based wavetable MIDI Synth)</string>
          </property>
         </item>
+        <item>
+         <property name="text">
+          <string>Emu De Midi (OPLL, PSG, SCC synth emulation)</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="1" column="0" colspan="2">

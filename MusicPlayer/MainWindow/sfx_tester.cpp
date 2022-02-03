@@ -32,6 +32,12 @@ SfxTester::~SfxTester()
     delete ui;
 }
 
+void SfxTester::reloadSfx()
+{
+    if(!m_recentSfxFile.isEmpty())
+        openSfx(m_recentSfxFile);
+}
+
 void SfxTester::dropEvent(QDropEvent *e)
 {
     this->raise();
@@ -80,7 +86,10 @@ void SfxTester::closeEvent(QCloseEvent *)
 
     QSettings setup;
     setup.setValue("RecentSfxDir", m_testSfxDir);
+    setup.setValue("RecentSfxFile", m_recentSfxFile);
     setup.sync();
+
+    m_recentSfxFile.clear();
 }
 
 void SfxTester::on_sfx_open_clicked()
@@ -111,6 +120,7 @@ void SfxTester::openSfx(const QString &path)
         QFileInfo f(path);
         m_testSfxDir = f.absoluteDir().absolutePath();
         ui->sfx_file->setText(f.fileName());
+        m_recentSfxFile = path;
     }
 }
 

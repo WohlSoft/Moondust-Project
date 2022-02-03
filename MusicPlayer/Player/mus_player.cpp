@@ -4,6 +4,7 @@
 #include <QSettings>
 #include "../MainWindow/musplayer_qt.h"
 #include "../Effects/spc_echo.h"
+#include "../Effects/reverb.h"
 
 #include "../wave_writer.h"
 
@@ -19,6 +20,7 @@ namespace PGE_MusicPlayer
     bool reverbEnabled = false;
     bool echoEnabled = false;
     SpcEcho *effectEcho = nullptr;
+    FxReverb *effectReverb = nullptr;
 
     static bool g_playlistMode = false;
     static int  g_loopsCount = -1;
@@ -194,6 +196,7 @@ namespace PGE_MusicPlayer
 #   endif
                    type == MUS_ADLMIDI ? "IMF/MUS/XMI" :
                    type == MUS_OPNMIDI ? "MUS/XMI(OPN)" :
+                   type == MUS_EDMIDI ? "MUS/XMI(ED)" :
                    type == MUS_FLUIDLITE ? "MUS/XMI(Fluid)" :
                    type == MUS_NATIVEMIDI ? "MUS/XMI(Native)" :
                    type == MUS_GME ? "GME Chiptune" :
@@ -504,5 +507,111 @@ namespace PGE_MusicPlayer
         if(!effectEcho)
             return 0;
         return echoEffectGetReg(effectEcho, (EchoSetup)key);
+    }
+
+
+    void reverbEabled(bool enabled)
+    {
+        if(enabled && !effectReverb)
+        {
+            effectReverb = reverbEffectInit(g_sample_rate, g_sample_format, g_channels);
+            Mix_RegisterEffect(MIX_CHANNEL_POST, reverbEffect, reverbEffectDone, effectReverb);
+        }
+        else if(!enabled && effectReverb)
+        {
+            Mix_UnregisterEffect(MIX_CHANNEL_POST, reverbEffect);
+            reverbEffectFree(effectReverb);
+            effectReverb = nullptr;
+        }
+    }
+
+    void reverbEffectDone(int, void *context)
+    {
+        FxReverb *out = reinterpret_cast<FxReverb *>(context);
+        if(out == effectReverb)
+        {
+            reverbEffectFree(effectReverb);
+            effectReverb = nullptr;
+        }
+    }
+
+    void reverbUpdateSetup(ReverbSetup *setup)
+    {
+        if(!effectReverb)
+            return;
+
+        SDL_LockAudio();
+        ::reverbUpdateSetup(effectReverb, *setup);
+        SDL_UnlockAudio();
+    }
+
+    void reverbGetSetup(ReverbSetup *setup)
+    {
+        if(!effectReverb)
+            return;
+
+        SDL_LockAudio();
+        ::reverbGetSetup(effectReverb, *setup);
+        SDL_UnlockAudio();
+    }
+
+    void reverbSetMode(int mode)
+    {
+        if(!effectReverb)
+            return;
+
+        SDL_LockAudio();
+        ::reverbUpdateMode(effectReverb, (float)mode);
+        SDL_UnlockAudio();
+    }
+
+    void reverbSetRoomSize(float val)
+    {
+        if(!effectReverb)
+            return;
+
+        SDL_LockAudio();
+        ::reverbUpdateRoomSize(effectReverb, val);
+        SDL_UnlockAudio();
+    }
+
+    void reverbSetDamping(float val)
+    {
+        if(!effectReverb)
+            return;
+
+        SDL_LockAudio();
+        ::reverbUpdateDamping(effectReverb, val);
+        SDL_UnlockAudio();
+    }
+
+    void reverbSetWet(float val)
+    {
+        if(!effectReverb)
+            return;
+
+        SDL_LockAudio();
+        ::reverbUpdateWetLevel(effectReverb, val);
+        SDL_UnlockAudio();
+    }
+
+    void reverbSetDry(float val)
+    {
+        if(!effectReverb)
+            return;
+
+        SDL_LockAudio();
+        ::reverbUpdateDryLevel(effectReverb, val);
+        SDL_UnlockAudio();
+    }
+
+    void reverbSetWidth(float val)
+    {
+        if(!effectReverb)
+            return;
+
+        SDL_LockAudio();
+        ::reverbUpdateWidth(effectReverb, val);
+        SDL_UnlockAudio();
     }
 }

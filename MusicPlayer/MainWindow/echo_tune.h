@@ -21,6 +21,8 @@ public:
 
 public slots:
     void on_echo_reload_clicked();
+
+private slots:
     void on_sendAll_clicked();
     void on_save_clicked();
     void on_reset_clicked();
@@ -41,6 +43,9 @@ public slots:
     void on_echo_fir6_sliderMoved(int arg1);
     void on_echo_fir7_sliderMoved(int arg1);
     void on_resetFir_clicked();
+
+    void on_pasteSetup_clicked();
+    void on_copySetup_clicked();
 
 private:
     Ui::EchoTune *ui;

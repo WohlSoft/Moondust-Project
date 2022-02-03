@@ -107,9 +107,7 @@ void MultiMusicTest::wannaClose(MultiMusicItem *item)
 void MultiMusicTest::on_playAll_clicked()
 {
     for(auto *it : m_items)
-    {
         it->on_playpause_clicked();
-    }
 }
 
 

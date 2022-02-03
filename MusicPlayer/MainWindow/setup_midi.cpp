@@ -582,6 +582,8 @@ void SetupMidi::updateAutoArgs()
         break;
     case 4:
         break;
+    case 5:
+        break;
     }
     ui->autoArguments->setText(args);
 }
@@ -607,6 +609,9 @@ void SetupMidi::on_mididevice_currentIndexChanged(int index)
         break;
     case 4:
         Mix_SetMidiPlayer(MIDI_Fluidsynth);
+        break;
+    case 5:
+        Mix_SetMidiPlayer(MIDI_EDMIDI);
         break;
     default:
         Mix_SetMidiPlayer(MIDI_ADLMIDI);

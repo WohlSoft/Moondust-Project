@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>284</width>
+    <width>292</width>
     <height>620</height>
    </rect>
   </property>
@@ -470,6 +470,20 @@
        <widget class="QPushButton" name="save">
         <property name="text">
          <string>Save</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="copySetup">
+        <property name="text">
+         <string>Copy setup</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pasteSetup">
+        <property name="text">
+         <string>Paste setup</string>
         </property>
        </widget>
       </item>

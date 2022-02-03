@@ -17,6 +17,9 @@ public:
     explicit SfxTester(QWidget *parent = nullptr);
     ~SfxTester();
 
+public slots:
+    void reloadSfx();
+
 private slots:
     void on_sfx_open_clicked();
     void openSfx(const QString &path);
@@ -48,6 +51,7 @@ private:
 
     Mix_Chunk *m_testSfx = nullptr;
     QString    m_testSfxDir;
+    QString    m_recentSfxFile;
     bool       m_sendPanning = false;
     int16_t    m_angle = 0;
     uint8_t    m_distance = 0;
