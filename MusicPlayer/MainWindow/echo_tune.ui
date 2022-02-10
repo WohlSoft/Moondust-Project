@@ -7,8 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>292</width>
-    <height>620</height>
+    <height>707</height>
    </rect>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>Echo tuner</string>
@@ -484,6 +487,13 @@
        <widget class="QPushButton" name="pasteSetup">
         <property name="text">
          <string>Paste setup</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="readFromSPC">
+        <property name="text">
+         <string>Extract from SPC</string>
         </property>
        </widget>
       </item>

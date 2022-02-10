@@ -44,6 +44,14 @@ list(APPEND SDLMixer_MusPlay_SRC
     SingleApplication/singleapplication.cpp
     main.cpp
     wave_writer.c
+
+    MainWindow/snes_spc/dsp.cpp
+    MainWindow/snes_spc/SNES_SPC.cpp
+    MainWindow/snes_spc/SNES_SPC_misc.cpp
+    MainWindow/snes_spc/SNES_SPC_state.cpp
+    MainWindow/snes_spc/spc.cpp
+    MainWindow/snes_spc/SPC_DSP.cpp
+    MainWindow/snes_spc/SPC_Filter.cpp
 )
 
 if(APPLE)

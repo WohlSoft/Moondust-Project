@@ -4,8 +4,18 @@
 #include <QTimer>
 #include <QRegExp>
 #include <QClipboard>
+#include <QFileDialog>
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
+#include <QtDebug>
 #include "../Player/mus_player.h"
 #include "../Effects/spc_echo.h"
+#include "snes_spc/spc.h"
+
+#include "qfile_dialogs_default_options.hpp"
+
+
 
 EchoTune::EchoTune(QWidget *parent) :
     QDialog(parent),
@@ -136,6 +146,110 @@ void EchoTune::sendAll()
     PGE_MusicPlayer::echoSetReg(ECHO_FIR5, ui->echo_fir5->value());
     PGE_MusicPlayer::echoSetReg(ECHO_FIR6, ui->echo_fir6->value());
     PGE_MusicPlayer::echoSetReg(ECHO_FIR7, ui->echo_fir7->value());
+}
+
+static void state_save(unsigned char** out, void* in, size_t size)
+{
+    memcpy(*out, in, size);
+    *out += size;
+}
+
+void EchoTune::loadSpcFile(const QString &file)
+{
+    SNES_SPC* snes_spc;
+    unsigned char state[spc_state_size];
+    unsigned char* out = state;
+
+    QFile in(file);
+
+    if(!in.open(QIODevice::ReadOnly))
+    {
+        qWarning() << "Can't open file" << file << "Because of error:" << in.errorString();
+        return;
+    }
+
+    if(in.size() > 70000)
+    {
+        qWarning() << "File" << file << "is too big";
+        return; // Too fat file
+    }
+
+    QByteArray inData = in.readAll();
+
+    snes_spc = spc_new();
+    if(!snes_spc)
+    {
+        qWarning() << "Out of memory";
+        return; // Out of memory
+    }
+
+    spc_err_t err = spc_load_spc(snes_spc, inData.data(), inData.size());
+    if(err) // whoops
+    {
+        qWarning() << "Failed to load SPC file" << file << ":" << err;
+        spc_delete(snes_spc);
+        return;
+    }
+
+    spc_clear_echo(snes_spc);
+
+    spc_skip(snes_spc, 10240 * 2);
+
+    spc_copy_state(snes_spc, &out, state_save);
+
+    // Global registers
+    enum {
+        r_mvoll = 0x0C, r_mvolr = 0x1C,
+        r_evoll = 0x2C, r_evolr = 0x3C,
+        r_kon   = 0x4C, r_koff  = 0x5C,
+        r_flg   = 0x6C, r_endx  = 0x7C,
+        r_efb   = 0x0D, r_pmon  = 0x2D,
+        r_non   = 0x3D, r_eon   = 0x4D,
+        r_dir   = 0x5D, r_esa   = 0x6D,
+        r_edl   = 0x7D,
+        r_fir   = 0x0F // 8 coefficients at 0x0F, 0x1F ... 0x7F
+    };
+
+    uint8_t *dspReg = state + 65568;
+    PGE_MusicPlayer::echoSetReg(ECHO_EON, dspReg[r_eon] != 0 ? 1 : 0);
+    PGE_MusicPlayer::echoSetReg(ECHO_EDL, (uint8_t)dspReg[r_edl]);
+    PGE_MusicPlayer::echoSetReg(ECHO_EFB, (int8_t)dspReg[r_efb]);
+
+    PGE_MusicPlayer::echoSetReg(ECHO_MVOLL, (int8_t)dspReg[r_mvoll]);
+    PGE_MusicPlayer::echoSetReg(ECHO_MVOLR, (int8_t)dspReg[r_mvolr]);
+    PGE_MusicPlayer::echoSetReg(ECHO_EVOLL, (int8_t)dspReg[r_evoll]);
+    PGE_MusicPlayer::echoSetReg(ECHO_EVOLR, (int8_t)dspReg[r_evolr]);
+
+    PGE_MusicPlayer::echoSetReg(ECHO_FIR0, (int8_t)dspReg[r_fir]);
+    PGE_MusicPlayer::echoSetReg(ECHO_FIR1, (int8_t)dspReg[r_fir + 0x10]);
+    PGE_MusicPlayer::echoSetReg(ECHO_FIR2, (int8_t)dspReg[r_fir + 0x20]);
+    PGE_MusicPlayer::echoSetReg(ECHO_FIR3, (int8_t)dspReg[r_fir + 0x30]);
+    PGE_MusicPlayer::echoSetReg(ECHO_FIR4, (int8_t)dspReg[r_fir + 0x40]);
+    PGE_MusicPlayer::echoSetReg(ECHO_FIR5, (int8_t)dspReg[r_fir + 0x50]);
+    PGE_MusicPlayer::echoSetReg(ECHO_FIR6, (int8_t)dspReg[r_fir + 0x60]);
+    PGE_MusicPlayer::echoSetReg(ECHO_FIR7, (int8_t)dspReg[r_fir + 0x70]);
+
+    spc_delete(snes_spc);
+
+    on_echo_reload_clicked();
+}
+
+void EchoTune::dropEvent(QDropEvent *e)
+{
+    this->raise();
+    this->setFocus(Qt::ActiveWindowFocusReason);
+
+    for(const QUrl& url : e->mimeData()->urls())
+    {
+        const QString& fileName = url.toLocalFile();
+        loadSpcFile(fileName);
+    }
+}
+
+void EchoTune::dragEnterEvent(QDragEnterEvent *e)
+{
+    if(e->mimeData()->hasUrls())
+        e->acceptProposedAction();
 }
 
 void EchoTune::on_save_clicked()
@@ -342,3 +456,14 @@ void EchoTune::on_pasteSetup_clicked()
     // Reload all values
     on_echo_reload_clicked();
 }
+
+void EchoTune::on_readFromSPC_clicked()
+{
+    QString in = QFileDialog::getOpenFileName(this,
+                                              tr("Import echo setup from SPC file"),
+                                              QString(), "SPC files (*.spc);;All files (*.*)",
+                                              nullptr, c_fileDialogOptions);
+    if(!in.isEmpty() && QFile::exists(in))
+        loadSpcFile(in);
+}
+

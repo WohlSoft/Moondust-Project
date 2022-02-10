@@ -19,6 +19,12 @@ public:
     void loadSetup();
     void sendAll();
 
+    void loadSpcFile(const QString &file);
+
+protected:
+    void dropEvent(QDropEvent* e);
+    void dragEnterEvent(QDragEnterEvent* e);
+
 public slots:
     void on_echo_reload_clicked();
 
@@ -46,6 +52,8 @@ private slots:
 
     void on_pasteSetup_clicked();
     void on_copySetup_clicked();
+
+    void on_readFromSPC_clicked();
 
 private:
     Ui::EchoTune *ui;
