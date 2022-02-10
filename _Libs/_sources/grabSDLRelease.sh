@@ -24,7 +24,7 @@ freshLatestSDL()
 freshLatestSDL
 echo "Previous version was $LatestSDL"
 
-SDLVER=2.0.18
+SDLVER=2.0.20
 
 wget --content-disposition https://github.com/libsdl-org/SDL/archive/release-${SDLVER}.tar.gz -O SDL-${SDLVER}-new.tar.gz
 
