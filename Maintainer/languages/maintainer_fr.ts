@@ -1205,7 +1205,7 @@ Formats pris en charge :
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="189"/>
         <source>Processing has been termiated.</source>
-        <translation type="unfinished">Le processus est terminé.</translation>
+        <translation>Le traitement est terminé.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="194"/>
