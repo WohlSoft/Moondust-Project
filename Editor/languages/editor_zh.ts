@@ -4266,15 +4266,15 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Z-Position</source>
-        <translation>Z 位置</translation>
+        <translation>叠放图层位置</translation>
     </message>
     <message>
         <source>Z-Offset:</source>
-        <translation>Z 偏差：</translation>
+        <translation>叠放次序：</translation>
     </message>
     <message>
         <source>Z-Layer:</source>
-        <translation>Z 图层：</translation>
+        <translation>叠放图层：</translation>
     </message>
     <message>
         <source>Background-2</source>

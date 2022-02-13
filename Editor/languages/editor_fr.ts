@@ -739,11 +739,11 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Integrational configuration package is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Le paquet de configuration d&apos;intégration est incompatible</translation>
     </message>
     <message>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ce paquet de configuration d&apos;intégration est plus ancien que la version 42 de l&apos;API et n&apos;est plus compatible avec cette version de Moondust Devkit. Depuis la version 42 de l&apos;API, les paquets de configuration d&apos;intégration doivent utiliser le fichier de paramètres locaux au lieu du fichier main.ini.</translation>
     </message>
 </context>
 <context>
@@ -3835,7 +3835,7 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     </message>
     <message>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
-        <translation type="unfinished"></translation>
+        <translation>Veuillez saisir le nom de l&apos;exécutable PE à utiliser avec LunaTester (par exemple, smbx.exe)</translation>
     </message>
 </context>
 <context>
@@ -8427,7 +8427,7 @@ Arguments : %2</translation>
     <message>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
-        <translation type="unfinished"></translation>
+        <translation>Chronomètre du speedruner</translation>
     </message>
     <message>
         <source>Disabled</source>
