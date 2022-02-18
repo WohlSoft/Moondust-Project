@@ -469,7 +469,23 @@ void MusPlayer_Qt::on_play_clicked()
 
 #ifdef SDL_MIXER_X
         if(PGE_MusicPlayer::type == MUS_GME)
+        {
             ui->gme_setup->setEnabled(true);
+
+            int echoDisabled = Mix_GME_GetSpcEchoDisabled(PGE_MusicPlayer::s_playMus);
+            ui->disableSpcEcho->setEnabled(echoDisabled >= 0);
+
+            switch(echoDisabled)
+            {
+            default:
+            case 0:
+                ui->disableSpcEcho->setChecked(false);
+                break;
+            case 1:
+                ui->disableSpcEcho->setChecked(true);
+                break;
+            }
+        }
 #endif
     }
     else
@@ -506,6 +522,11 @@ void MusPlayer_Qt::on_trackNext_clicked()
 {
     ui->trackID->stepUp();
     on_trackID_editingFinished();
+}
+
+void MusPlayer_Qt::on_disableSpcEcho_clicked(bool checked)
+{
+    Mix_GME_SetSpcEchoDisabled(PGE_MusicPlayer::s_playMus, checked ? 1 : 0);
 }
 
 void MusPlayer_Qt::on_tempo_valueChanged(int tempo)

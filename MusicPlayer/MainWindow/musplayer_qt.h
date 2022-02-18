@@ -78,6 +78,7 @@ private slots:
     void on_trackID_editingFinished();
     void on_trackPrev_clicked();
     void on_trackNext_clicked();
+    void on_disableSpcEcho_clicked(bool checked);
 
     void on_tempo_valueChanged(int tempo);
 
