@@ -25,6 +25,8 @@ public:
 
 protected:
     void changeEvent(QEvent *e);
+    void dropEvent(QDropEvent* e);
+    void dragEnterEvent(QDragEnterEvent* e);
 
 private slots:
     void on_opnEmulator_currentIndexChanged(int index);

@@ -10,6 +10,9 @@
     <height>803</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>MIDI Setup</string>
   </property>
@@ -562,6 +565,9 @@ Uncheck this if you want to use default bank and keep custom bank field be fille
    </item>
    <item row="2" column="0">
     <widget class="QGroupBox" name="groupBox">
+     <property name="acceptDrops">
+      <bool>false</bool>
+     </property>
      <property name="title">
       <string>FluidSynth Setup</string>
      </property>

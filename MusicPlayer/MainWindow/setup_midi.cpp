@@ -4,7 +4,11 @@
 
 #include "qfile_dialogs_default_options.hpp"
 
+#include <QDragEnterEvent>
+#include <QDropEvent>
+#include <QMimeData>
 #include <QSettings>
+
 
 static int tristateToInt(Qt::CheckState state)
 {
@@ -167,6 +171,57 @@ void SetupMidi::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void SetupMidi::dropEvent(QDropEvent *e)
+{
+    this->raise();
+    this->setFocus(Qt::ActiveWindowFocusReason);
+
+    QStringList sf2List;
+
+    for(const QUrl& url : e->mimeData()->urls())
+    {
+        const QString& fileName = url.toLocalFile();
+
+        if(fileName.endsWith(".sf2", Qt::CaseInsensitive) || fileName.endsWith(".sf3", Qt::CaseInsensitive))
+            sf2List.push_back(fileName);
+
+        else if(fileName.endsWith(".cfg", Qt::CaseInsensitive))
+        {
+            ui->timidityCfgPath->setText(fileName);
+            ui->timidityCfgPath->setModified(true);
+            on_timidityCfgPath_editingFinished();
+        }
+
+        else if(fileName.endsWith(".wopl", Qt::CaseInsensitive))
+        {
+            ui->adl_bank->setText(fileName);
+            ui->adl_bank->setModified(true);
+            on_adl_bank_editingFinished();
+        }
+
+        else if(fileName.endsWith(".wopn", Qt::CaseInsensitive))
+        {
+            ui->opn_bank->setText(fileName);
+            ui->opn_bank->setModified(true);
+            on_opn_bank_editingFinished();
+        }
+    }
+
+    if(!sf2List.isEmpty())
+    {
+        QString path = sf2List.join(';');
+        ui->fluidSynthSF2Paths->setText(path);
+        ui->fluidSynthSF2Paths->setModified(true);
+        on_fluidSynthSF2Paths_editingFinished();
+    }
+}
+
+void SetupMidi::dragEnterEvent(QDragEnterEvent *e)
+{
+    if(e->mimeData()->hasUrls())
+        e->acceptProposedAction();
 }
 
 #ifdef SDL_MIXER_X
@@ -490,7 +545,7 @@ void SetupMidi::on_fluidSynthSF2PathsBrowse_clicked()
     QString path = QFileDialog::getOpenFileName(this,
                    tr("Select SoundFont bank for FluidSynth"),
                    ui->fluidSynthSF2Paths->text(),
-                   "SoundFont files (*.sf2);;"
+                   "SoundFont files (*.sf2, *.sf3);;"
                    "All Files (*.*)", nullptr,
                    c_fileDialogOptions);
     if(!path.isEmpty())
