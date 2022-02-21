@@ -185,7 +185,7 @@
                 "name": "Chinese",
                 "people": [
                     {
-                        "nickname": "快乐爱的小精灵",
+                        "nickname": "迎春心情",
                         "email": "lovebodhi@yandex.com"
                     }
                 ]
@@ -235,7 +235,8 @@
             {
                 "people": [
                     {
-                        "nickname": "5438A38A"
+                        "nickname": "5438A38A",
+                        "description": "Providing the set of specifications for SMBX-38A file formats, help with physical engine algorithms, and the set of useful tips given"
                     },
                     {
                         "nickname": "Horikawa Otane",
@@ -244,7 +245,7 @@
                     },
                     {
                         "nickname": "Rednaxela",
-                        "description": "Help with LunaTester sub-module"
+                        "description": "Help with LunaTester sub-module, bug fixing, contribution of the camera grid support, giving useful tips"
                     },
                     {
                         "nickname": "bossedit8",
@@ -256,27 +257,35 @@
                         "nicknames": [
                             "Emral"
                         ],
-                        "description": "Help with suggestions to improve the classic events toolbox design to make it more convenient and other features",
+                        "description": "Help with suggestions to improve the classic events toolbox design to make it more convenient and other features. Contribution of the dark-blue palette theme and the initial kick to implement the UI palette switching system",
                         "avatar": "Enjl.png"
                     },
                     {
                         "nickname": "FanofSMBX",
-                        "description": "Contributing materials for the research help"
+                        "nicknames" : [
+                            "P-Tux7",
+                            "P-Star7"
+                        ],
+                        "description": "Contributing materials for the research help, and the testing"
+                    },
+                    {
+                        "nickname": "迎春心情",
+                        "description": "Resources contribution and testing"
                     },
                     {
                         "nickname": "Axiom",
                         "nicknames": [
                             "Luigifan2010"
                         ],
-                        "description": "Testing and for a initial help to produce of Linux builds"
+                        "description": "Testing and for a initial help to produce of Linux builds, and several contributions given"
                     },
                     {
-                        "nickname": "Natsu",
+                        "nickname": "Fuyu",
                         "description": "Help with old logo"
                     },
                     {
                         "nickname": "h2643",
-                        "description": "PGE Forums admin (2014-2016)",
+                        "description": "Wohlsoft Forum admin (2014-2016, 2020-present)",
                         "avatar": "h2643.png"
                     },
                     {
