@@ -186,7 +186,10 @@
                 "people": [
                     {
                         "nickname": "迎春心情",
-                        "email": "lovebodhi@yandex.com"
+                        "nicknames": [
+                            "Yingchun Soul"
+                        ],
+                        "email": "lovebodhi@foxmail.com"
                     }
                 ]
             },
@@ -270,6 +273,9 @@
                     },
                     {
                         "nickname": "迎春心情",
+                        "nicknames": [
+                            "Yingchun Soul"
+                        ],
                         "description": "Resources contribution and testing"
                     },
                     {
