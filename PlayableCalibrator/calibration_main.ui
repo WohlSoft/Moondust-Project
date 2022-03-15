@@ -39,7 +39,7 @@
         <height>34</height>
        </size>
       </property>
-      <layout class="QGridLayout" name="gridLayout_4" columnstretch="10000,0,0,0,0,0">
+      <layout class="QGridLayout" name="gridLayout_4" columnstretch="10000,0,0,0,0,0,0,0,0,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -52,26 +52,10 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item row="0" column="2">
-        <widget class="QPushButton" name="wallMenu">
-         <property name="toolTip">
-          <string>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</string>
-         </property>
-         <property name="text">
-          <string>Wall</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <widget class="QCheckBox" name="EnableFrame">
          <property name="enabled">
           <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>237</width>
-           <height>0</height>
-          </size>
          </property>
          <property name="toolTip">
           <string>Enabling this frame. If this frame disabled, it will not be saved into your config file.</string>
@@ -82,27 +66,7 @@
         </widget>
        </item>
        <item row="0" column="4">
-        <widget class="QPushButton" name="bgColor">
-         <property name="toolTip">
-          <string>Change background color</string>
-         </property>
-         <property name="text">
-          <string>BG Color</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QPushButton" name="resetScroll">
-         <property name="toolTip">
-          <string>Reset a scroll position into initial state</string>
-         </property>
-         <property name="text">
-          <string>Reset scroll</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="5">
-        <widget class="QPushButton" name="compatMode">
+        <widget class="QToolButton" name="compatMode">
          <property name="toolTip">
           <string>Select the target engine for this calibration.&lt;br&gt;
 &lt;br&gt;
@@ -119,9 +83,75 @@
          <property name="text">
           <string notr="true">&lt;Compatibility&gt;</string>
          </property>
+         <property name="popupMode">
+          <enum>QToolButton::InstantPopup</enum>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="6">
+       <item row="0" column="1">
+        <widget class="QToolButton" name="wallMenu">
+         <property name="toolTip">
+          <string>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</string>
+         </property>
+         <property name="text">
+          <string>Wall</string>
+         </property>
+         <property name="icon">
+          <iconset resource="_resources/images.qrc">
+           <normaloff>:/images/wall.png</normaloff>:/images/wall.png</iconset>
+         </property>
+         <property name="popupMode">
+          <enum>QToolButton::InstantPopup</enum>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QToolButton" name="resetScroll">
+         <property name="toolTip">
+          <string>Reset a scroll position into initial state</string>
+         </property>
+         <property name="text">
+          <string>Reset scroll</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../Editor/_resources/editor.qrc">
+           <normaloff>:/images/reset_pos.png</normaloff>:/images/reset_pos.png</iconset>
+         </property>
+         <property name="popupMode">
+          <enum>QToolButton::InstantPopup</enum>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QToolButton" name="bgColor">
+         <property name="toolTip">
+          <string>Change background color</string>
+         </property>
+         <property name="text">
+          <string>BG Color</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../Editor/_resources/editor.qrc">
+           <normaloff>:/images/section.png</normaloff>:/images/section.png</iconset>
+         </property>
+         <property name="popupMode">
+          <enum>QToolButton::InstantPopup</enum>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextBesideIcon</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="5">
         <widget class="FrameTuneScene" name="preview">
          <property name="frameShape">
           <enum>QFrame::WinPanel</enum>
@@ -255,12 +285,6 @@
    <addaction name="actionSpriteEditor"/>
   </widget>
   <widget class="QDockWidget" name="dockFrameSelect">
-   <property name="minimumSize">
-    <size>
-     <width>126</width>
-     <height>118</height>
-    </size>
-   </property>
    <property name="windowTitle">
     <string>Select current frame</string>
    </property>
@@ -350,6 +374,9 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="features">
+    <set>QDockWidget::AllDockWidgetFeatures</set>
    </property>
    <property name="windowTitle">
     <string>Settings</string>
@@ -509,7 +536,7 @@
           </property>
          </widget>
         </item>
-        <item row="7" column="1">
+        <item row="7" column="0" colspan="2">
          <widget class="QGroupBox" name="grabType">
           <property name="enabled">
            <bool>true</bool>
@@ -980,10 +1007,6 @@ Right button - Move the right-bottom crop edges.</string>
  </customwidgets>
  <tabstops>
   <tabstop>EnableFrame</tabstop>
-  <tabstop>wallMenu</tabstop>
-  <tabstop>resetScroll</tabstop>
-  <tabstop>bgColor</tabstop>
-  <tabstop>compatMode</tabstop>
   <tabstop>FrameX</tabstop>
   <tabstop>FrameY</tabstop>
   <tabstop>Matrix</tabstop>
