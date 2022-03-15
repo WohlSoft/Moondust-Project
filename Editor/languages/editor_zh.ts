@@ -781,7 +781,7 @@ File path: %3</source>
     </message>
     <message>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation>大地图：地形图块 (%1/%2)</translation>
+        <translation>大地图：地形 (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Scenery (%1/%2)</source>
@@ -1373,7 +1373,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Force vertical background tiling</source>
-        <translation>强制平铺纵向背景</translation>
+        <translation>强制纵向平铺大背景</translation>
     </message>
     <message>
         <source>Export current section to image</source>
@@ -3795,7 +3795,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
-        <translation>由于文件不支持，因此大地图启动失败。</translation>
+        <translation>由于大地图文件错误，因此地图启动失败。</translation>
     </message>
     <message>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
@@ -3803,7 +3803,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
-        <translation>由于保存的大地图文件是不支持的格式，因此无法打开大地图。请使用 SMBX64-WLD 格式保存。</translation>
+        <translation>由于保存的大地图文件是不支持的格式，因此无法打开地图。请使用 SMBX64-WLD 格式保存。</translation>
     </message>
     <message>
         <source>Change the executable name...</source>
@@ -4014,7 +4014,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Replace background to:</source>
-        <translation>改变大背景为：</translation>
+        <translation>更改大背景为：</translation>
     </message>
     <message>
         <source>Common</source>
@@ -4560,7 +4560,7 @@ Physical env. zones:	%6
 </source>
         <translation>玩家起点数量：	 %1
 砖块数量：	 %2
-背景物品数量：	 %3
+背景数量：	 %3
 NPC 数量：	 %4
 传送点数量：	 %5
 物理区域数量：	 %6
@@ -5347,7 +5347,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Palettes and tilesets</source>
-        <translation>调色板与图块</translation>
+        <translation>调色板与图块组</translation>
     </message>
     <message>
         <source>External tools</source>
@@ -6188,11 +6188,11 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Flip horizontal</source>
-        <translation>横向旋转</translation>
+        <translation>水平翻转</translation>
     </message>
     <message>
         <source>Flip vertical</source>
-        <translation>纵向旋转</translation>
+        <translation>垂直翻转</translation>
     </message>
     <message>
         <source>Align selected</source>
@@ -6304,19 +6304,19 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
-        <translation>已复制 %1 个砖块对象、%2 个背景物品对象、%3 个 NPC 对象和 %4 个水流对象到剪贴板</translation>
+        <translation>已复制 %1 个砖块对象、%2 个背景对象、%3 个 NPC 对象和 %4 个水流对象到剪贴板</translation>
     </message>
     <message>
         <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been copied to clipboard</source>
-        <translation>已复制 %1 个地形对象、%2 个背景装饰对象、%3 个路线对象、%4 个关卡对象和 %5 个音乐对象到剪贴板</translation>
+        <translation>已复制 %1 个地形对象、%2 个风景对象、%3 个路线对象、%4 个关卡对象和 %5 个音乐对象到剪贴板</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been moved to clipboard</source>
-        <translation>已移动 %1 个砖块对象、%2 个背景物品对象、%3 个 NPC 对象和 %4 个水流对象到剪贴板</translation>
+        <translation>已移动 %1 个砖块对象、%2 个背景对象、%3 个 NPC 对象和 %4 个水流对象到剪贴板</translation>
     </message>
     <message>
         <source>%1 tiles, %2 sceneries, %3 paths, %4 levels, %5 music boxes items have been moved to clipboard</source>
-        <translation>已移动 %1 个地形对象、%2 个背景装饰对象、%3 个路线对象、%4 个关卡对象和 %5 个音乐对象到剪贴板</translation>
+        <translation>已移动 %1 个地形对象、%2 个风景对象、%3 个路线对象、%4 个关卡对象和 %5 个音乐对象到剪贴板</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -7602,7 +7602,7 @@ Error description:
     </message>
     <message>
         <source>BGO Sorting Priority</source>
-        <translation>背景物品优先级</translation>
+        <translation>背景优先级</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -7949,11 +7949,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Loading Tilesets...</source>
-        <translation>加载图块中……</translation>
+        <translation>加载图块组中……</translation>
     </message>
     <message>
         <source>Loading Tileset groups...</source>
-        <translation>加载图块组中……</translation>
+        <translation>加载图块分组中……</translation>
     </message>
     <message>
         <source>Finishing loading...</source>
@@ -8231,11 +8231,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid file.</source>
-        <translation>由于文件不支持，因此大地图启动失败。</translation>
+        <translation>由于文件错误，因此地图启动失败。</translation>
     </message>
     <message>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
-        <translation>由于保存的大地图文件是不支持的格式，因此无法打开大地图。请使用 SMBX-38A 或 SMBX64-WLD 格式保存。</translation>
+        <translation>由于保存的大地图文件是不支持的格式，因此无法打开地图。请使用 SMBX-38A 或 SMBX64-WLD 格式保存。</translation>
     </message>
     <message>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
@@ -8824,7 +8824,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Scenery</source>
-        <translation>场景</translation>
+        <translation>风景</translation>
     </message>
     <message>
         <source>Path</source>
@@ -8872,7 +8872,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Delete this tileset</source>
-        <translation>删除此图块</translation>
+        <translation>删除此图块组</translation>
     </message>
     <message>
         <source>Show default only</source>
@@ -9034,7 +9034,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Tilesets list:</source>
-        <translation>图块列表：</translation>
+        <translation>图块组列表：</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -9058,7 +9058,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Select Tileset</source>
-        <translation>选择图块</translation>
+        <translation>选择图块组</translation>
     </message>
     <message>
         <source>There is already a file called &apos;%1&apos;!
@@ -9078,7 +9078,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Select Tileset Group</source>
-        <translation>选择图块组</translation>
+        <translation>选择图块分组</translation>
     </message>
     <message>
         <source>Failed to load tileset group!</source>
@@ -9526,11 +9526,11 @@ because object configurations are not loaded
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
-        <translation>1/%1 加载地形图块中</translation>
+        <translation>1/%1 加载地形中</translation>
     </message>
     <message>
         <source>2/%1 Applying Sceneries...</source>
-        <translation>2/%1 加载大地图装饰中……</translation>
+        <translation>2/%1 加载风景中……</translation>
     </message>
     <message>
         <source>3/%1 Applying Paths...</source>
@@ -9993,7 +9993,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
-        <translation>1/%1 加载地形图块中</translation>
+        <translation>1/%1 加载地形中</translation>
     </message>
     <message>
         <source>2/%1 Applying Sceneries...</source>
