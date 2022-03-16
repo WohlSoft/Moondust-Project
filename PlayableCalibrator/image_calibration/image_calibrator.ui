@@ -190,6 +190,26 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="toolQuickActions">
+        <property name="toolTip">
+         <string>Select fragment and cut it, move it into necessary place and double-click to paste</string>
+        </property>
+        <property name="text">
+         <string>Select and move</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../_resources/images.qrc">
+          <normaloff>:/edit/quick_actions.png</normaloff>:/edit/quick_actions.png</iconset>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="Line" name="line_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -270,6 +290,7 @@
         <property name="font">
          <font>
           <pointsize>11</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -314,6 +335,7 @@
         <property name="font">
          <font>
           <pointsize>11</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -340,6 +362,7 @@
         <property name="font">
          <font>
           <pointsize>11</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -546,6 +569,7 @@
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../_resources/images.qrc"/>
   <include location="../_resources/images.qrc"/>
  </resources>
  <connections/>

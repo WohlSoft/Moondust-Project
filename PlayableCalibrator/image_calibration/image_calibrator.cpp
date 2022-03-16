@@ -104,6 +104,9 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
                      this, &ImageCalibrator::historyUndo);
     QObject::connect(ui->toolRedo, &QToolButton::clicked,
                      this, &ImageCalibrator::historyRedo);
+
+    // TODO: Show this once it gets implemented
+    ui->toolQuickActions->setVisible(false);
 }
 
 ImageCalibrator::~ImageCalibrator()

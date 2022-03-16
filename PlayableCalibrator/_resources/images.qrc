@@ -42,5 +42,6 @@
         <file>edit/zoom_in.png</file>
         <file>edit/zoom_out.png</file>
         <file>images/picture.png</file>
+        <file>edit/quick_actions.png</file>
     </qresource>
 </RCC>

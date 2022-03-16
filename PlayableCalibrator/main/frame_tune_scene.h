@@ -134,6 +134,29 @@ public:
     void setMode(Mode mode);
     Mode mode() const;
 
+    /*!
+     * \brief Quick actions over current frame or over entire sprite
+     */
+    enum Actions
+    {
+        // blank action
+        ACTION_NOTHING = 0,
+        // Copy frame into built-in clipboard
+        ACTION_COPY_FRAME,
+        // Paste frame from the clipboard
+        ACTION_PASTE_FRAME,
+        // Flip current frame horizontally
+        ACTION_HFLIP_CUR_FRAME,
+        // Flip current frame vertically
+        ACTION_VFLIP_CUR_FRAME,
+        // Copy left side of the sprite into right side and mirror (including hitboxes)
+        ACTION_SMBX64_LEFT_TO_RIGHT,
+        // Copy right side of the sprite into left and mirror (including hitboxes)
+        ACTION_SMBX64_RIGHT_TO_LEFT,
+    };
+
+    void runAction(Actions action);
+
     virtual QSize sizeHint() const;
 
 protected:

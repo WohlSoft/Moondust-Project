@@ -679,6 +679,12 @@ FrameTuneScene::Mode FrameTuneScene::mode() const
     return (Mode)m_mode;
 }
 
+void FrameTuneScene::runAction(Actions action)
+{
+    Q_UNUSED(action)
+    // TODO: Implement me
+}
+
 QSize FrameTuneScene::sizeHint() const
 {
     return QSize(300, 300);
