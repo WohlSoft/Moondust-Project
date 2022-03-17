@@ -192,7 +192,7 @@
       <item>
        <widget class="QToolButton" name="toolQuickActions">
         <property name="toolTip">
-         <string>Select fragment and cut it, move it into necessary place and double-click to paste</string>
+         <string>Perform one of actions on a current frame or the whole sprite</string>
         </property>
         <property name="text">
          <string>Select and move</string>
