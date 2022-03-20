@@ -6,93 +6,23 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation>Exportează audio (SoX)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
-        <source>Don&apos;t change format</source>
-        <translation>Nu schimba format</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
-        <source>Files will be in same format</source>
-        <translation>Fişierele vor fi în acelaşi format</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
-        <source>Set bitrate</source>
-        <translation>Bitrate</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
-        <source>Files will be converted into MP3</source>
-        <translation>Fişierele vor fi exportate ca MP3</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
-        <source>Files will be converted into FLAC</source>
-        <translation>Fişierele vor fi exportate ca FLAC</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="488"/>
-        <source>Files will be converted into OGG</source>
-        <translation>Fişierele vor fi exportate ca OGG</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="504"/>
-        <source>Set quality</source>
-        <translation>Calitate</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="583"/>
-        <source>Files will be converted into WAV</source>
-        <translation>Fişierele vor fi exportate ca WAV</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
-        <source>FFMPEG binary path:</source>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="24"/>
+        <source>Resample to</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
         <location filename="../Music/audiocvt_sox_gui.ui" line="630"/>
         <source>Browse...</source>
-        <translation>Caută...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
-        <source>What do you want?</source>
-        <translation>Cu ce vă pot ajuta?</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
-        <source>Path to a level file to process</source>
-        <translation>Deschide nivel către proces</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="205"/>
-        <source>Convert all music files of specific episode</source>
-        <translation>Exportează fişiere audio de locaţie specifică</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="228"/>
-        <source>Convert music of specific level</source>
-        <translation>Exportează audio de un nivel specific</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="238"/>
-        <source>Convert specified files</source>
-        <translation>Exportează anumite fişiere</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="248"/>
-        <source>Path to an episode directory to process</source>
-        <translation>Direcţia folder-ul jocului pentru procesare</translation>
-    </message>
-    <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="24"/>
-        <source>Resample to</source>
-        <translation>Modifică către</translation>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="108"/>
+        <source>make backup</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="115"/>
@@ -100,16 +30,45 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert into new format
 (open necessary tab to choice target format)</source>
-        <translation>Exportează într-un nou fişier 
-(deschide o fereastră către fişier)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="108"/>
-        <source>make backup</source>
-        <translation>Salvează backup</translation>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
+        <source>What do you want?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
+        <source>Path to a level file to process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="205"/>
+        <source>Convert all music files of specific episode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="228"/>
+        <source>Convert music of specific level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="238"/>
+        <source>Convert specified files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="248"/>
+        <source>Path to an episode directory to process</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="287"/>
@@ -117,22 +76,62 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Music/audiocvt_sox_gui.ui" line="128"/>
-        <source>Close</source>
-        <translation type="unfinished">Închide</translation>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
+        <source>Don&apos;t change format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
+        <source>Files will be in same format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
+        <source>Set bitrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
+        <source>Files will be converted into MP3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
+        <source>Files will be converted into FLAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="488"/>
+        <source>Files will be converted into OGG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="504"/>
+        <source>Set quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="583"/>
+        <source>Files will be converted into WAV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
+        <source>FFMPEG binary path:</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="44"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="199"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>SoX error</source>
-        <translation>Eroare SoX</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
@@ -165,24 +164,23 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>Operation cancaled</source>
-        <translation>Operaţiune anulată</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="297"/>
         <source>SoX was crashed</source>
-        <translation>SoX s-a oprit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="307"/>
         <source>SoX returned non-zero code: %1
 %2</source>
-        <translation>SoX a adăugat cod zero %1
-%2</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="339"/>
         <source>All works completed</source>
-        <translation>Toate procesele au fost completate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="340"/>
@@ -191,21 +189,17 @@ Converted files: %1
 Overwritten levels: %2
 Overwritten worlds: %3
 %4</source>
-        <translation>Toate fişierele au fost exportate cu succes!
-Fişiere exportate: %1
-Niveluri rescrise: %2
-Mape rescrise: %3
-%4</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="488"/>
         <source>Tasks are not defined. Nothing to do.</source>
-        <translation>Nici un proces scris.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="549"/>
         <source>Open SoX binary path</source>
-        <translation>Alege SoX</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="566"/>
@@ -215,17 +209,17 @@ Mape rescrise: %3
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="579"/>
         <source>Add file to convert</source>
-        <translation>Deschide fişier pentru exportare</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="617"/>
         <source>Selecting a level file to convert custom music</source>
-        <translation>Deschizând un nivel pentru exportare a audio-ului</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="630"/>
         <source>Open episode path to convert entire music set</source>
-        <translation>Deschide jocul pentru a exporta tot audio-ul</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -233,113 +227,113 @@ Mape rescrise: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="14"/>
         <source>Case fixer of episode resources</source>
-        <translation>Mod reparare a jocului</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="31"/>
         <source>This wizard will help to fix an episode which works incorrectly because resource file names has a case missmatch. This shouldn&apos;t be a problem on the Windows and on the macOS with a case insensitive HFS+ mode. On Linux, xBSD and like systems with Ext4/3 or XFS file systems, and on the macOS with a case-sensitive HFS+ mode this come this comes into a big problem: files getting be missing up. To avoid any possible issues related to the case missmatch, all filenames should have the matched case with the requested filename.</source>
-        <translation>Acest program vă va ajuta să reparaţi jocul ce merge incorect fiindcă sistem resource este incorect. Asta nu este o problemă în Windows şi macOS cu un sistem HFS+ resource. În Linux, xBSD şi sisteme cu Ext4/3 sau sisteme XFS, este o problemă: fişierele nu există. Ca să ocoli problema, toate fişierele trebuie să aibă acest lucru.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="44"/>
         <source>What episode to fix?</source>
-        <translation>Ce joc să repar?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="50"/>
         <source>Path to an episode directory to process</source>
-        <translation>Direcţia folder-ul jocului pentru procesare</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="57"/>
         <location filename="../EpisodeCvt/case_fixer.ui" line="120"/>
         <source>Browse...</source>
-        <translation>Caută...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="67"/>
         <source>Choose the mode:</source>
-        <translation>Modul:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="73"/>
         <source>Match to file system state (don&apos;t rename files if possible)</source>
-        <translation>Asociază cu sistemul (nu va edita fişiere dacă posibil)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="83"/>
         <source>Match to level/world file content (don&apos;t modify levels and worlds)</source>
-        <translation>Asociază cu nivelurile/mapele (nu va edita nivelurile/mapele)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="90"/>
         <source>All to lower if possible</source>
-        <translation>Minimează dacă posibil</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="100"/>
         <source>What configuration package to use?</source>
-        <translation>Ce pachet de configurare va folosi?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="106"/>
         <source>It&apos;s needed to verify filenames of customized resources</source>
-        <translation>Este necesar de a verifica fişierele cu diferite sisteme resource</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="113"/>
         <source>Path to a configuration package</source>
-        <translation>Încarcă pachet de configurare</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="153"/>
         <source>Close</source>
-        <translation>Închide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="173"/>
         <source>Start</source>
-        <translation>Start</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
         <source>Episode path error</source>
-        <translation>Eroare de joc</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="279"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation>Locaţia jocului nu a fost descrisă. Adaugă joc mai întâi.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="308"/>
         <source>Worker error</source>
-        <translation>Eroare de program sistemic</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="309"/>
         <source>Can&apos;t initialize job because %1</source>
-        <translation>Nu se poate iniţializa fiindcă %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
         <source>Work finished</source>
-        <translation>Gata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="325"/>
         <source>Case sensitive fixing work has been converted!</source>
-        <translation>S-a reparat!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
         <source>Error occouped while work process</source>
-        <translation>Eroare în timpul reparării</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="329"/>
         <source>Case fixer was aborted with an error: %1</source>
-        <translation>Programul de reparare s-a oprit: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -347,27 +341,27 @@ Mape rescrise: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="77"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
-        <translation>Nu se poate &quot;%1&quot;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="81"/>
         <source>Initializing...</source>
-        <translation>Se iniţializează...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="88"/>
         <source>No files to scan</source>
-        <translation>Niciun fişier de scanat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="147"/>
         <source>Looking for levels and world maps...</source>
-        <translation>Se caută niveluri/mape...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="162"/>
         <source>Processing levels and world maps...</source>
-        <translation>Se procesează</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="173"/>
@@ -404,12 +398,12 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="48"/>
         <source>Path to an episode directory to process</source>
-        <translation type="unfinished">Direcţia folder-ul jocului pentru procesare</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
         <source>Browse...</source>
-        <translation type="unfinished">Caută...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
@@ -434,32 +428,32 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="122"/>
         <source>Close</source>
-        <translation type="unfinished">Închide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
         <source>Episode path error</source>
-        <translation type="unfinished">Eroare de joc</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="280"/>
         <source>Episode path wasn&apos;t declared. Please choice target episode path first.</source>
-        <translation type="unfinished">Locaţia jocului nu a fost descrisă. Adaugă joc mai întâi.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="305"/>
         <source>Worker error</source>
-        <translation type="unfinished">Eroare de program sistemic</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="306"/>
         <source>Can&apos;t initialize job because %1</source>
-        <translation type="unfinished">Nu se poate iniţializa fiindcă %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="316"/>
@@ -469,7 +463,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Work finished</source>
-        <translation type="unfinished">Gata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
@@ -479,7 +473,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="336"/>
         <source>Error occouped while work process</source>
-        <translation type="unfinished">Eroare în timpul reparării</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="337"/>
@@ -492,7 +486,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
-        <translation type="unfinished">Nu se poate &quot;%1&quot;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
@@ -505,12 +499,38 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="17"/>
         <source>Convert masked GIFs into PNG</source>
-        <translation>Exportează GIFuri în PNG</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="27"/>
+        <location filename="../Graphics/gifs2png.cpp" line="283"/>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="34"/>
+        <source>Output log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="68"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="75"/>
+        <source>This wizard will help you to convert graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask), into PNG with a true transparency.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/gifs2png.ui" line="98"/>
+        <source>What do you want?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
         <source>Convert files</source>
-        <translation>Exportează fişiere</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="125"/>
@@ -526,7 +546,7 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="142"/>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Browse...</source>
-        <translation type="unfinished">Caută...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="149"/>
@@ -562,32 +582,6 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="207"/>
         <source>Flags</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Graphics/gifs2png.ui" line="98"/>
-        <source>What do you want?</source>
-        <translation type="unfinished">Cu ce vă pot ajuta?</translation>
-    </message>
-    <message>
-        <location filename="../Graphics/gifs2png.ui" line="27"/>
-        <location filename="../Graphics/gifs2png.cpp" line="283"/>
-        <source>Start</source>
-        <translation type="unfinished">Start</translation>
-    </message>
-    <message>
-        <location filename="../Graphics/gifs2png.ui" line="75"/>
-        <source>This wizard will help you to convert graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask), into PNG with a true transparency.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Graphics/gifs2png.ui" line="34"/>
-        <source>Output log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Graphics/gifs2png.ui" line="68"/>
-        <source>Close</source>
-        <translation type="unfinished">Închide</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="71"/>
@@ -703,7 +697,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished">Caută...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
@@ -723,13 +717,13 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Cu ce vă pot ajuta?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
@@ -739,7 +733,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="167"/>
         <source>Close</source>
-        <translation type="unfinished">Închide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="174"/>
@@ -910,7 +904,7 @@ Supported formats:
     <message>
         <location filename="../main_window.cpp" line="18"/>
         <source>This feature is under construction, it doesn&apos;t work properly yet. It may damage some of your stuff you&apos;ll try to process. Therefore please, make a full backup of episode that you would to process by this thing.</source>
-        <translation>Această opţiune este experimentală, este recomandat făcând o copie a jocului înainte de a folosi această opţiune.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -918,12 +912,38 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="17"/>
         <source>Convert PNG into masked GIFs</source>
-        <translation>Exportează PNG în GIF</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/png2gifs.ui" line="27"/>
+        <location filename="../Graphics/png2gifs.cpp" line="187"/>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/png2gifs.ui" line="34"/>
+        <source>Output log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/png2gifs.ui" line="68"/>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/png2gifs.ui" line="75"/>
+        <source>This wizard will help you to convert PNG graphics with a true transparency into graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Graphics/png2gifs.ui" line="98"/>
+        <source>What do you want?</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="109"/>
         <source>Convert files</source>
-        <translation>Exportează fişiere</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="125"/>
@@ -948,7 +968,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="156"/>
         <source>Browse...</source>
-        <translation>Caută...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="163"/>
@@ -964,32 +984,6 @@ Supported formats:
         <location filename="../Graphics/png2gifs.ui" line="183"/>
         <source>Process all content of subdirectories</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Graphics/png2gifs.ui" line="98"/>
-        <source>What do you want?</source>
-        <translation>Cu ce vă pot ajuta?</translation>
-    </message>
-    <message>
-        <location filename="../Graphics/png2gifs.ui" line="27"/>
-        <location filename="../Graphics/png2gifs.cpp" line="187"/>
-        <source>Start</source>
-        <translation type="unfinished">Start</translation>
-    </message>
-    <message>
-        <location filename="../Graphics/png2gifs.ui" line="75"/>
-        <source>This wizard will help you to convert PNG graphics with a true transparency into graphics designed for SMBX 1.3 (in a GIF format with a using of bitmask).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Graphics/png2gifs.ui" line="34"/>
-        <source>Output log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../Graphics/png2gifs.ui" line="68"/>
-        <source>Close</source>
-        <translation type="unfinished">Închide</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="65"/>
@@ -1064,7 +1058,7 @@ Supported formats:
         <location filename="../Graphics/palette_filter.ui" line="27"/>
         <location filename="../Graphics/palette_filter.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished">Start</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
@@ -1079,7 +1073,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="81"/>
         <source>Close</source>
-        <translation type="unfinished">Închide</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="115"/>
@@ -1110,7 +1104,7 @@ Supported formats:
         <location filename="../Graphics/palette_filter.ui" line="162"/>
         <location filename="../Graphics/palette_filter.ui" line="226"/>
         <source>Browse...</source>
-        <translation type="unfinished">Caută...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
@@ -1130,7 +1124,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Cu ce vă pot ajuta?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="210"/>

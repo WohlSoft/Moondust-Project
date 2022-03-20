@@ -9,15 +9,31 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../animator/animation_edit.ui" line="65"/>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../animator/animation_edit.ui" line="95"/>
+        <source>Frame delay:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../animator/animation_edit.ui" line="111"/>
+        <location filename="../animator/animation_edit.ui" line="134"/>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../animator/animation_edit.ui" line="118"/>
+        <source>Framesets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../animator/animation_edit.ui" line="163"/>
         <location filename="../animator/animation_edit.ui" line="183"/>
         <location filename="../animator/animation_edit.ui" line="238"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../animator/animation_edit.ui" line="65"/>
-        <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -26,14 +42,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.ui" line="252"/>
-        <source>Play Left</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../animator/animation_edit.ui" line="111"/>
-        <location filename="../animator/animation_edit.ui" line="134"/>
-        <source>Set</source>
+        <location filename="../animator/animation_edit.ui" line="190"/>
+        <source>Frames (left)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -44,28 +54,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.ui" line="190"/>
-        <source>Frames (left)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../animator/animation_edit.ui" line="259"/>
-        <source>Frames (right)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../animator/animation_edit.ui" line="118"/>
-        <source>Framesets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../animator/animation_edit.ui" line="245"/>
         <source>Play Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../animator/animation_edit.ui" line="95"/>
-        <source>Frame delay:</source>
+        <location filename="../animator/animation_edit.ui" line="252"/>
+        <source>Play Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../animator/animation_edit.ui" line="259"/>
+        <source>Frames (right)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -97,48 +97,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../animator/animator.ui" line="102"/>
+        <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../animator/animator.ui" line="111"/>
+        <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../animator/animator.ui" line="121"/>
+        <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../animator/animator.ui" line="95"/>
-        <source>Edit animations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../animator/animator.ui" line="171"/>
+        <location filename="../animator/animator.ui" line="125"/>
         <source>Frame speed:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../animator/animator.ui" line="30"/>
+        <location filename="../animator/animator.ui" line="141"/>
         <source>Animation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../animator/animator.ui" line="160"/>
+        <source>Edit animations</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CalibrationMain</name>
-    <message>
-        <location filename="../calibration_main.ui" line="595"/>
-        <source>Vertical offset of hitbox relative to top side of frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="499"/>
-        <source>Offset relative to middle of player&apos;s height</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../calibration_main.ui" line="23"/>
         <source>Character Calibrator</source>
@@ -146,39 +136,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="58"/>
-        <source>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../calibration_main.ui" line="61"/>
-        <source>Wall</source>
+        <source>Enabling this frame. If this frame disabled, it will not be saved into your config file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="87"/>
-        <source>Change background color</source>
+        <location filename="../calibration_main.ui" line="64"/>
+        <source>Enable this frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="90"/>
-        <source>BG Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="97"/>
-        <source>Reset a scroll position into initial state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="100"/>
-        <location filename="../calibration_main.ui" line="758"/>
-        <location filename="../calibration_main.ui" line="921"/>
-        <source>Reset scroll</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="107"/>
+        <location filename="../calibration_main.ui" line="71"/>
         <source>Select the target engine for this calibration.&lt;br&gt;
 &lt;br&gt;
 &lt;b&gt;Next modes supported:&lt;/b&gt;
@@ -193,167 +161,266 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="150"/>
+        <location filename="../calibration_main.ui" line="97"/>
+        <source>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="100"/>
+        <source>Wall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="117"/>
+        <source>Reset a scroll position into initial state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="120"/>
+        <location filename="../calibration_main.ui" line="785"/>
+        <location filename="../calibration_main.ui" line="948"/>
+        <source>Reset scroll</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="137"/>
+        <source>Change background color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="140"/>
+        <source>BG Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="180"/>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="165"/>
+        <location filename="../calibration_main.ui" line="184"/>
+        <source>Save config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="195"/>
         <source>Import/Export</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="183"/>
+        <location filename="../calibration_main.ui" line="213"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="191"/>
+        <location filename="../calibration_main.ui" line="221"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="221"/>
+        <location filename="../calibration_main.ui" line="229"/>
+        <location filename="../calibration_main.ui" line="958"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="235"/>
+        <location filename="../calibration_main.ui" line="273"/>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="251"/>
         <source>Main toolbar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="265"/>
+        <location filename="../calibration_main.ui" line="289"/>
         <source>Select current frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="284"/>
+        <location filename="../calibration_main.ui" line="305"/>
+        <source>Interactive selection of frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="308"/>
         <source>Show sprite map...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="355"/>
-        <source>Settings</source>
+        <location filename="../calibration_main.ui" line="331"/>
+        <source>Frame Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="443"/>
-        <source>Duck height of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="518"/>
-        <source>Grab type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="527"/>
-        <source>Side</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="534"/>
-        <source>Top</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="553"/>
-        <source>GFX offsets of frame:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="624"/>
-        <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="627"/>
-        <source>Right direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="909"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="926"/>
-        <source>Open the srite directory...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="963"/>
-        <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="968"/>
-        <source>Extrenal GFX editor...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="562"/>
-        <source>Offset X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="77"/>
-        <source>Enabling this frame. If this frame disabled, it will not be saved into your config file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="80"/>
-        <source>Enable this frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="433"/>
-        <source>Height (duck)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="611"/>
-        <source>Apply duck height to this frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="614"/>
-        <source>Is duck frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="410"/>
-        <source>Height</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="489"/>
-        <source>Grab offset Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="473"/>
-        <source>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="327"/>
+        <location filename="../calibration_main.ui" line="351"/>
         <source>Frame X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="662"/>
+        <location filename="../calibration_main.ui" line="382"/>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="398"/>
+        <source>Hitbox setup:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="407"/>
+        <source>Global:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="414"/>
+        <source>Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="424"/>
+        <source>Width of player&apos;s collision box (hitbox)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="437"/>
+        <source>Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="447"/>
+        <source>Normal height of player&apos;s collision box (hitbox)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="460"/>
+        <source>Height (duck)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="470"/>
+        <source>Duck height of player&apos;s collision box (hitbox)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="490"/>
+        <source>Grab offset X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="500"/>
+        <source>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="516"/>
+        <source>Grab offset Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="526"/>
+        <source>Offset relative to middle of player&apos;s height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="545"/>
+        <source>Grab type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="554"/>
+        <source>Side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="561"/>
+        <source>Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="580"/>
+        <source>GFX offsets of frame:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="589"/>
+        <source>Offset X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="599"/>
+        <source>Horisontal offset of hitbox relative to left side of frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="612"/>
+        <source>Offset Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="622"/>
+        <source>Vertical offset of hitbox relative to top side of frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="638"/>
+        <source>Apply duck height to this frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="641"/>
+        <source>Is duck frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="651"/>
+        <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="654"/>
+        <source>Right direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="664"/>
+        <source>Enable displaying of grabbed item corner</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="667"/>
+        <source>Show carried item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="674"/>
+        <source>Mark this frame as a mount riding and show the mount example at background in the Calibrator.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="677"/>
+        <source>Mount riding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="689"/>
         <source>Scrolling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="685"/>
+        <location filename="../calibration_main.ui" line="712"/>
         <source>Scroll right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="696"/>
+        <location filename="../calibration_main.ui" line="723"/>
         <source>Scroll up</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="707"/>
+        <location filename="../calibration_main.ui" line="734"/>
         <source>Tip: Mouse is supported!
 
 Left button - move hitbox
@@ -366,27 +433,27 @@ Right button - move grab offset if visible.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="725"/>
+        <location filename="../calibration_main.ui" line="752"/>
         <source>Zoom out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="736"/>
+        <location filename="../calibration_main.ui" line="763"/>
         <source>Zoom in</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="747"/>
+        <location filename="../calibration_main.ui" line="774"/>
         <source>Scroll left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="769"/>
+        <location filename="../calibration_main.ui" line="796"/>
         <source>Scroll down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="780"/>
+        <location filename="../calibration_main.ui" line="807"/>
         <source>Tip: Mouse is supported!
 
 Left button: Move frame or use actions
@@ -399,150 +466,103 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="812"/>
-        <source>Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="830"/>
-        <source>Copy calibration settings of the current frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="845"/>
-        <source>Past calibration settings from the clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="866"/>
-        <source>Open the Wiki page...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="900"/>
-        <source>Useful for tests or sprites creation from the scratch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="897"/>
-        <source>Export a map of hitboxes as image...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="804"/>
+        <location filename="../calibration_main.ui" line="831"/>
         <source>Open sprite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="307"/>
-        <source>Frame Y</source>
+        <location filename="../calibration_main.ui" line="839"/>
+        <source>Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="281"/>
-        <source>Interactive selection of frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="387"/>
-        <source>Width</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="463"/>
-        <source>Grab offset X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="380"/>
-        <source>Global:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="637"/>
-        <source>Enable displaying of grabbed item corner</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="640"/>
-        <source>Show carried item</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="585"/>
-        <source>Offset Y</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="420"/>
-        <source>Normal height of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="397"/>
-        <source>Width of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="572"/>
-        <source>Horisontal offset of hitbox relative to left side of frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="154"/>
-        <source>Save config</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="853"/>
-        <source>Apply to all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="827"/>
+        <location filename="../calibration_main.ui" line="854"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="842"/>
+        <location filename="../calibration_main.ui" line="857"/>
+        <source>Copy calibration settings of the current frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="869"/>
         <source>Paste</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="954"/>
-        <source>Animator</source>
+        <location filename="../calibration_main.ui" line="872"/>
+        <source>Past calibration settings from the clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="858"/>
+        <location filename="../calibration_main.ui" line="880"/>
+        <source>Apply to all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="885"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="199"/>
-        <location filename="../calibration_main.ui" line="931"/>
-        <source>Language</source>
+        <location filename="../calibration_main.ui" line="893"/>
+        <source>Open the Wiki page...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="371"/>
-        <source>Hitbox setup:</source>
+        <location filename="../calibration_main.ui" line="898"/>
+        <source>Save in the same folder with image file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="647"/>
-        <source>Mark this frame as a mount riding and show the mount example at background in the Calibrator.</source>
+        <location filename="../calibration_main.ui" line="906"/>
+        <source>Save into custom place...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="650"/>
-        <source>Mount riding</source>
+        <location filename="../calibration_main.ui" line="914"/>
+        <source>Import data from SMBX-38A level...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.ui" line="205"/>
-        <location filename="../calibration_main.ui" line="243"/>
-        <source>Tools</source>
+        <location filename="../calibration_main.ui" line="919"/>
+        <source>Export data into SMBX-38A level...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="924"/>
+        <source>Export a map of hitboxes as image...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="927"/>
+        <source>Useful for tests or sprites creation from the scratch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="936"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="953"/>
+        <source>Open the srite directory...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="981"/>
+        <source>Animator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="990"/>
+        <source>Sprite editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.ui" line="995"/>
+        <source>Extrenal GFX editor...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -561,6 +581,57 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../main/settings.cpp" line="79"/>
+        <source>Graphical editor is not specified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main/settings.cpp" line="80"/>
+        <source>External graphics editor application is not specified. Do you want to select it now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main/settings.cpp" line="102"/>
+        <source>Select a path to the graphical editor executable</source>
+        <comment>File dialog title</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main/files_io.cpp" line="90"/>
+        <source>Open sprite file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main/files_io.cpp" line="91"/>
+        <source>GIF and PNG images</source>
+        <comment>Type of image file to open</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main/files_io.cpp" line="92"/>
+        <source>GIF images</source>
+        <comment>Type of image file to open</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main/files_io.cpp" line="93"/>
+        <source>PNG images</source>
+        <comment>Type of image file to open</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main/files_io.cpp" line="94"/>
+        <source>SMBX playble sprite</source>
+        <comment>Type of image file to open</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main/files_io.cpp" line="95"/>
+        <source>All Files</source>
+        <comment>Type of image file to open</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../main/files_io.cpp" line="142"/>
         <source>Save hitbox map as image</source>
         <translation type="unfinished"></translation>
@@ -568,6 +639,58 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../main/files_io.cpp" line="160"/>
         <source>Hitbox map has been saved!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="390"/>
+        <source>None</source>
+        <comment>Display wall</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="393"/>
+        <source>Floor</source>
+        <comment>Display wall</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="395"/>
+        <source>Floor + left wall</source>
+        <comment>Display wall</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="397"/>
+        <source>Floor + right wall</source>
+        <comment>Display wall</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="400"/>
+        <source>Ceiling</source>
+        <comment>Display wall</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="402"/>
+        <source>Ceiling + left wall</source>
+        <comment>Display wall</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="404"/>
+        <source>Ceiling + right wall</source>
+        <comment>Display wall</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="494"/>
+        <source>Calibration is not saved!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="495"/>
+        <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -623,6 +746,16 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../calibration_main.cpp" line="799"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calibration_main.cpp" line="800"/>
+        <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../calibration_main.cpp" line="833"/>
         <location filename="../calibration_main.cpp" line="839"/>
         <location filename="../calibration_main.cpp" line="845"/>
@@ -638,157 +771,9 @@ Right button - Move the right-bottom crop edges.</source>
         <comment>Unspecified compatibility mode</comment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../calibration_main.ui" line="871"/>
-        <source>Save in the same folder with image file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="879"/>
-        <source>Save into custom place...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="887"/>
-        <source>Import data from SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.ui" line="892"/>
-        <source>Export data into SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/files_io.cpp" line="90"/>
-        <source>Open sprite file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/files_io.cpp" line="91"/>
-        <source>GIF and PNG images</source>
-        <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/files_io.cpp" line="92"/>
-        <source>GIF images</source>
-        <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/files_io.cpp" line="93"/>
-        <source>PNG images</source>
-        <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/files_io.cpp" line="94"/>
-        <source>SMBX playble sprite</source>
-        <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/files_io.cpp" line="95"/>
-        <source>All Files</source>
-        <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="799"/>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="800"/>
-        <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="494"/>
-        <source>Calibration is not saved!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="390"/>
-        <source>None</source>
-        <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="393"/>
-        <source>Floor</source>
-        <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="395"/>
-        <source>Floor + left wall</source>
-        <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="397"/>
-        <source>Floor + right wall</source>
-        <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="400"/>
-        <source>Ceiling</source>
-        <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="402"/>
-        <source>Ceiling + left wall</source>
-        <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="404"/>
-        <source>Ceiling + right wall</source>
-        <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calibration_main.cpp" line="495"/>
-        <source>Configuration was modified and not saved. Do you want to save it?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/settings.cpp" line="79"/>
-        <source>Graphical editor is not specified</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/settings.cpp" line="80"/>
-        <source>External graphics editor application is not specified. Do you want to select it now?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main/settings.cpp" line="102"/>
-        <source>Select a path to the graphical editor executable</source>
-        <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ImageCalibrator</name>
-    <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="393"/>
-        <source>Frame X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="279"/>
-        <source>Current frame (10x10):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="477"/>
-        <source>Frame Y</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="23"/>
         <source>Sprite editor</source>
@@ -811,6 +796,7 @@ Right button - Move the right-bottom crop edges.</source>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="79"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="198"/>
         <source>Select and move</source>
         <translation type="unfinished"></translation>
     </message>
@@ -871,124 +857,144 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="202"/>
-        <location filename="../image_calibration/image_calibrator.ui" line="205"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="195"/>
+        <source>Perform one of actions on a current frame or the whole sprite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="222"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="225"/>
         <source>Undo a recent change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="219"/>
-        <location filename="../image_calibration/image_calibrator.ui" line="222"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="239"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="242"/>
         <source>Redo a recent change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="261"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="281"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="264"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="284"/>
         <source>Hitbox move</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="286"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="298"/>
+        <source>Current frame (10x10):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="305"/>
         <source>Drag offset X</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="293"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="312"/>
         <source>Show sprite map</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="303"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="322"/>
         <source>Clear</source>
         <comment>reference frame</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="325"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="343"/>
         <source>Drag frame offset:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="353"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="370"/>
         <source>Referrence frame:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="386"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="403"/>
         <source>Opacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="416"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="410"/>
+        <source>Frame X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="433"/>
         <source>Crop right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="430"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="447"/>
         <source>Drag offset Y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="450"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="467"/>
         <source>Crop bottom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="484"/>
-        <source>Open frame in editor...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="491"/>
-        <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
+        <location filename="../image_calibration/image_calibrator.ui" line="487"/>
+        <source>Reset calibration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="494"/>
+        <source>Frame Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="501"/>
+        <source>Open frame in editor...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="508"/>
+        <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../image_calibration/image_calibrator.ui" line="511"/>
         <source>Move all frames</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="510"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="527"/>
         <source>Save image</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="516"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="533"/>
         <source>Write PNG+GIFs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="523"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="540"/>
         <source>Write PNG</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="530"/>
+        <location filename="../image_calibration/image_calibrator.ui" line="547"/>
         <source>Write masked GIFs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../image_calibration/image_calibrator.ui" line="470"/>
-        <source>Reset calibration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Matrix</name>
     <message>
-        <location filename="../frame_matrix/matrix.ui" line="20"/>
+        <location filename="../frame_matrix/matrix.ui" line="14"/>
         <source>Select a frame on the sprite</source>
         <comment>A title of the frame selection on the sprite dialog</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.ui" line="36"/>
+        <location filename="../frame_matrix/matrix.ui" line="30"/>
         <source>Empty and unused frames must be unchecked.
 To choose a frame for edit, push to the button over a necessary frame.</source>
         <translation type="unfinished"></translation>

@@ -10860,41 +10860,41 @@ Data may be corrupted!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="375"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="372"/>
         <source>Select a Wine install prefix path</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="385"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="382"/>
         <source>Select a Wine home prefix path</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="436"/>
-        <location filename="../testing/wine/wine_setup.cpp" line="458"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="433"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="455"/>
         <source>Error</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="437"/>
-        <location filename="../testing/wine/wine_setup.cpp" line="459"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="434"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="456"/>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="525"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="522"/>
         <source>Not running</source>
         <comment>State of a test app</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="531"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="528"/>
         <source>Starting...</source>
         <comment>State of a test app</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="537"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="534"/>
         <source>Running...</source>
         <comment>State of a test app</comment>
         <translation></translation>

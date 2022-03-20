@@ -11118,41 +11118,41 @@ Data may be corrupted!</source>
         <translation>PlayOnLinux에서 설정 가져 오기</translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="375"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="372"/>
         <source>Select a Wine install prefix path</source>
         <translation>Wine 설치 접두사 경로 선택</translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="385"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="382"/>
         <source>Select a Wine home prefix path</source>
         <translation>Wine 홈 접두사 경로 선택</translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="436"/>
-        <location filename="../testing/wine/wine_setup.cpp" line="458"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="433"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="455"/>
         <source>Error</source>
         <translation>오류</translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="437"/>
-        <location filename="../testing/wine/wine_setup.cpp" line="459"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="434"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="456"/>
         <source>Can&apos;t start &quot;%1&quot; because of: %2</source>
         <translation>% 2 때문에 &quot;% 1&quot;을 (를) 시작할 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="525"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="522"/>
         <source>Not running</source>
         <comment>State of a test app</comment>
         <translation>실행되지 않음</translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="531"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="528"/>
         <source>Starting...</source>
         <comment>State of a test app</comment>
         <translation>시작하는 중 ...</translation>
     </message>
     <message>
-        <location filename="../testing/wine/wine_setup.cpp" line="537"/>
+        <location filename="../testing/wine/wine_setup.cpp" line="534"/>
         <source>Running...</source>
         <comment>State of a test app</comment>
         <translation>달리는...</translation>
