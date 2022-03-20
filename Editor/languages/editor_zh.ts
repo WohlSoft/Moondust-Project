@@ -3412,11 +3412,11 @@ Otherwise, it will be very limited.</source>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation>重置存档点</translation>
+        <translation>重置中继点</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation>重置所有存档点。</translation>
+        <translation>重置所有中继点。</translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
@@ -3518,7 +3518,7 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation>存档点已成功重置！</translation>
+        <translation>中继点已成功重置！</translation>
     </message>
     <message>
         <source>LunaTester error!</source>
@@ -8114,11 +8114,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation>重置存档点</translation>
+        <translation>重置中继点</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation>重置所有存档点。</translation>
+        <translation>重置所有中继点。</translation>
     </message>
     <message>
         <source>Enable magic hand</source>
@@ -8163,7 +8163,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation>存档点已成功重置！</translation>
+        <translation>中继点已成功重置！</translation>
     </message>
     <message>
         <source>Path to SMBX-38A</source>
