@@ -6,87 +6,87 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="20"/>
         <source>Animation editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor pentru animaţii</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="65"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Previzualizează</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="95"/>
         <source>Frame delay:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temporizare imagine:</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="111"/>
         <location filename="../animator/animation_edit.ui" line="134"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="118"/>
         <source>Framesets</source>
-        <translation type="unfinished"></translation>
+        <translation>Seturi de imagini</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="163"/>
         <location filename="../animator/animation_edit.ui" line="183"/>
         <location filename="../animator/animation_edit.ui" line="238"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Adaugă</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="170"/>
         <source>Animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Titlul animaţiei</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="190"/>
         <source>Frames (left)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagini (stânga)</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="206"/>
         <location filename="../animator/animation_edit.ui" line="222"/>
         <location filename="../animator/animation_edit.ui" line="272"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Şterge</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="245"/>
         <source>Play Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Redă din dreapta</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
         <source>Play Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Redă stânga</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="259"/>
         <source>Frames (right)</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagini (dreapta)</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Titlu animaţie liberă</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Animation name is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu există titlu pentru animaţie!</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="368"/>
         <source>Animation exist</source>
-        <translation type="unfinished"></translation>
+        <translation>Animaţie disponibilă</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Animaţie cu nume &apos;%1&apos; deja există!</translation>
     </message>
 </context>
 <context>
@@ -94,37 +94,37 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation>Animare</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Sens</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Stânga</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Dreapta</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="125"/>
         <source>Frame speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Viteza imaginii:</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="141"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animaţie</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="160"/>
         <source>Edit animations</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează animaţii</translation>
     </message>
 </context>
 <context>
@@ -133,17 +133,17 @@
         <location filename="../calibration_main.ui" line="23"/>
         <source>Character Calibrator</source>
         <comment>The title for utility to edit playable character sprites and their settings</comment>
-        <translation type="unfinished"></translation>
+        <translation>Calibrator personaj</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="61"/>
         <source>Enabling this frame. If this frame disabled, it will not be saved into your config file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Activând imaginea. Dacă imaginea este dezactivată, nu va fi salvată in fişierul configuraţional.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="64"/>
         <source>Enable this frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Activează imaginea</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="71"/>
@@ -158,266 +158,276 @@
   &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - using the file as a storage of working data only (engine has the different format for calibrations).&lt;/li&gt;
 &lt;/ul&gt;
 &lt;br&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectează engine-ul ţintă pentru această calibraţie.&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Următoarele moduri suportate:&lt;/b&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Calibrator&lt;/b&gt; - creează sau modifică calibraţii folosite prin calibrator, succesiunile fiind dezactivate, toate informaţiile dumneavoastră vor fi salvate.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;Moondust&lt;/b&gt; - calibraţii pentru Moondust, succesiunile vor fi activate.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;TheXTech&lt;/b&gt; - calibraţii pentru TheXTech, succesiunile vor fi activate, animaţiile nu vor funcţiona în timpul jocului.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX2&lt;/b&gt; - calibraţii pentru Super Mario Bros. X2, succesiunile vor fi activate numai pentru animaţii, toate imaginile vor fi stocate chiar dacă se potrivesc, spaţii depreciate fiind adăugate, animaţiile nu vor funcţiona în timpul jocului.&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;SMBX-38A&lt;/b&gt; - folosind fişierul ca stocare de date (îşi are propriul format pentru calibraţii fixate în nivel).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="97"/>
         <source>Add the drawing of wall, floor, or ceiling. Can be used as an indication of how playable character interacts with surfaces.</source>
-        <translation type="unfinished"></translation>
+        <translation>Adaugă desenul unui perete, podea, sau tavan. Poate fi folosit ca o previzualizare a cum poate interacţiona jucătorul faţă de suprafeţe.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="100"/>
         <source>Wall</source>
-        <translation type="unfinished"></translation>
+        <translation>Perete</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="117"/>
         <source>Reset a scroll position into initial state</source>
-        <translation type="unfinished"></translation>
+        <translation>Reiniţializează poziţia orientării la starea iniţială</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="120"/>
         <location filename="../calibration_main.ui" line="785"/>
         <location filename="../calibration_main.ui" line="948"/>
         <source>Reset scroll</source>
-        <translation type="unfinished"></translation>
+        <translation>Reiniţializează orientarea</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="137"/>
         <source>Change background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Schimbă culoarea fundalului</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="140"/>
         <source>BG Color</source>
-        <translation type="unfinished"></translation>
+        <translation>Culoarea fundalului</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="180"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Fişier</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="184"/>
         <source>Save config</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează configuraţie</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="195"/>
         <source>Import/Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Importă/Exportă</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="213"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editează</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="221"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajutor</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="229"/>
         <location filename="../calibration_main.ui" line="958"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Limbă</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="235"/>
         <location filename="../calibration_main.ui" line="273"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilităţi</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="251"/>
         <source>Main toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Principale utilităţi</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="289"/>
         <source>Select current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectează imaginea curentă</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="305"/>
         <source>Interactive selection of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecţie interactivă imaginii</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="308"/>
         <source>Show sprite map...</source>
-        <translation type="unfinished"></translation>
+        <translation>Arată mapă sprite-uri..</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="331"/>
         <source>Frame Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Imaginea Y</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="351"/>
         <source>Frame X</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagine X</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="382"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Setări</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="398"/>
         <source>Hitbox setup:</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează spaţiul de coliziune:</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="407"/>
         <source>Global:</source>
-        <translation type="unfinished"></translation>
+        <translation>Global:</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="414"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Lăţime</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="424"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>Lăţimea spaţiului de coliziune a jucătorului</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="437"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Înălţime</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="447"/>
         <source>Normal height of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>Înălţimea normală a spaţiului de coliziune a jucătorului</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="460"/>
         <source>Height (duck)</source>
-        <translation type="unfinished"></translation>
+        <translation>Înalţime (specific cufundării)</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="470"/>
         <source>Duck height of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>Înălţimea specifică cufundării (spaţiului de coliziune)</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="490"/>
         <source>Grab offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Preia offset X</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="500"/>
         <source>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</source>
-        <translation type="unfinished"></translation>
+        <translation>Setează offset către spatele jucătorului (nu uita să setezi direcţia ca să fie posibilă definirea sursei)</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="516"/>
         <source>Grab offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Preia offset pe Y</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="526"/>
         <source>Offset relative to middle of player&apos;s height</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset relativ în mijlocul înălţimii jucătorului</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="545"/>
         <source>Grab type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipul ridicării</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="554"/>
         <source>Side</source>
-        <translation type="unfinished"></translation>
+        <translation>Faţă</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="561"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Vârf</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="580"/>
         <source>GFX offsets of frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Offseturile graficelor imaginii:</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="589"/>
         <source>Offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset pe X</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="599"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset orizontal al spaţiului de coliziune relativ părţii stângi al imaginii</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="612"/>
         <source>Offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset pe Y</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="622"/>
         <source>Vertical offset of hitbox relative to top side of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Offset vertical al spaţiului de coliziune relativ părţii de sus a imaginii</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="638"/>
         <source>Apply duck height to this frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplică înălţimea cufunziunii către imagine</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="641"/>
         <source>Is duck frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Cufundare imagine</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="651"/>
         <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dacă această opţiune va fi activată, obiectul ridicat va fi relativ cu offsetul pe partea dreaptă a spaţiului de coliziune, sau obiectul ridicat va fi relativ cu offsetul a părţii drepte a spaţiului de coliziune.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="654"/>
         <source>Right direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direcţia stângă</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="664"/>
         <source>Enable displaying of grabbed item corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Activează previzualizarea colţului obiectului ridicat</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="667"/>
         <source>Show carried item</source>
-        <translation type="unfinished"></translation>
+        <translation>Arată obiectul cărat</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="674"/>
         <source>Mark this frame as a mount riding and show the mount example at background in the Calibrator.</source>
-        <translation type="unfinished"></translation>
+        <translation>Marchează această imagine ca montură şi previzualizează montura în fundal în Calibrator.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="677"/>
         <source>Mount riding</source>
-        <translation type="unfinished"></translation>
+        <translation>Montură</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="689"/>
         <source>Scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientare</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="712"/>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientează spre dreapta</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="723"/>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientează în sus</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="734"/>
@@ -430,27 +440,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - move grab offset if visible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sfat: Mouse-ul este suportat!
+
+Butonul din stânga - schimbă spaţiul de coliziune
+
+Butonul din mijloc - orientează oriunde
+
+Rotiţa - Micşorează faţă/spate
+
+Butonul din dreapta - schimbă offsetul dacă vizibil</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="752"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Micşorează în spate</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="763"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Micşorează în faţă</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="774"/>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Orienteză spre stânga</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="796"/>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientează jos</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="807"/>
@@ -463,297 +481,305 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - Move the right-bottom crop edges.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sfat: Mouse-ul este suportat!
+
+Butonul din stânga - Orientează imaginea sau accesează opţiuni
+
+Butonul din mijloc - orientează oriunde
+
+Rotiţă - Micşorează faţă/spate
+
+Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="831"/>
         <source>Open sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide sprite</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="839"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Ieşire</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="854"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiază</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="857"/>
         <source>Copy calibration settings of the current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiază setările calibratorului pentru imaginea curentă</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="869"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Lipeşte</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="872"/>
         <source>Past calibration settings from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Lipeşte setările calibratorului din clipboard</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="880"/>
         <source>Apply to all</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplică tuturor</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="885"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Despre</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="893"/>
         <source>Open the Wiki page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide pagina Wiki...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="898"/>
         <source>Save in the same folder with image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează în acelaşi director cu imaginea</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="906"/>
         <source>Save into custom place...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează într-un loc diferit…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="914"/>
         <source>Import data from SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
+        <translation>Importează date din nivel SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="919"/>
         <source>Export data into SMBX-38A level...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează date în nivel SMBX-38A...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="924"/>
         <source>Export a map of hitboxes as image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează spaţiile de coliziune ca imagine…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="927"/>
         <source>Useful for tests or sprites creation from the scratch</source>
-        <translation type="unfinished"></translation>
+        <translation>Folositor pentru testări sau pentru a crea sprite-uri din scratch</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="936"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="953"/>
         <source>Open the srite directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide directorul cu sprite...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="981"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation>Animator</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="990"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor sprite</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="995"/>
         <source>Extrenal GFX editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor grafic extern…</translation>
     </message>
     <message>
         <location filename="../main/calibration_file.cpp" line="334"/>
         <source>Configuration saved in file</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurare salvată pe fişier</translation>
     </message>
     <message>
         <location filename="../main/calibration_file.cpp" line="637"/>
         <source>Bad data generated</source>
-        <translation type="unfinished"></translation>
+        <translation>Date invalide generate</translation>
     </message>
     <message>
         <location filename="../main/calibration_file.cpp" line="638"/>
         <source>Some generated values are out of range, SMBX-38A may crash. File will not be patched.</source>
-        <translation type="unfinished"></translation>
+        <translation>Unele valori generate sunt în afara razei, SMBX-38A se poate închide. Acestui fişier nu vor fi aplicate schimbări.</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="79"/>
         <source>Graphical editor is not specified</source>
-        <translation type="unfinished"></translation>
+        <translation>Editorul grafic nu este specificat</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="80"/>
         <source>External graphics editor application is not specified. Do you want to select it now?</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor de grafică extern nu este specificat. Doreşti să selectezi chiar acum?</translation>
     </message>
     <message>
         <location filename="../main/settings.cpp" line="102"/>
         <source>Select a path to the graphical editor executable</source>
         <comment>File dialog title</comment>
-        <translation type="unfinished"></translation>
+        <translation>Alege o direcţie către fişierul executabil al editorului de grafic</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="90"/>
         <source>Open sprite file</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide fişier sprite</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="91"/>
         <source>GIF and PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tip de imagine pentru a deschide</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="92"/>
         <source>GIF images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Imagini GIF</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="93"/>
         <source>PNG images</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Imagini PNG</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="94"/>
         <source>SMBX playble sprite</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sprite SMBX jucabil</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="95"/>
         <source>All Files</source>
         <comment>Type of image file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toate fişierele</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="142"/>
         <source>Save hitbox map as image</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează mapă spaţiu de coliziune ca imagine</translation>
     </message>
     <message>
         <location filename="../main/files_io.cpp" line="160"/>
         <source>Hitbox map has been saved!</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapa cu spaţiul de coliziune s-a salvat!</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="390"/>
         <source>None</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Niciunul</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="393"/>
         <source>Floor</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Podea</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="395"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Podea + peretele din stânga</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="397"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Podea + peretele din dreapta</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="400"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tavan</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="402"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tavan + peretele din stânga</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="404"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tavan + peretele din dreapta</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="494"/>
         <source>Calibration is not saved!</source>
-        <translation type="unfinished"></translation>
+        <translation>Calibraţia nu este salvată!</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="495"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuraţia tocmai a fost modificată şi nu încă salvată. Doreşti să o salvezi?</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="671"/>
         <source>Background color</source>
-        <translation type="unfinished"></translation>
+        <translation>Culoarea fundalului</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="709"/>
         <source>Open SMBX-38A level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide nivel SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="711"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nivel SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="712"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
-        <translation type="unfinished"></translation>
+        <translation>Toate fişierele</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="722"/>
         <source>File opening error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare deschidere fişier</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="723"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate importa date de calibraţie din acest fişier: fişierul nu conţine date de calibrare, sau fişierul nu este un nivel SMBX-38A valid.</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="740"/>
         <source>Export calibration settings into SMBX-38A level file</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează date de calibrare în nivel SMBX-38A</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="751"/>
         <source>File saving error</source>
-        <translation type="unfinished"></translation>
+        <translation>Eroare salvare fişier</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="752"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nu se poate exporta date de calibrare în acest fişier: nu este un nivel SMBX-38A valid.</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="757"/>
         <source>The level file has been patched!</source>
-        <translation type="unfinished"></translation>
+        <translation>Setările acestui nivel tocmai au fost aplicate!</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="799"/>
         <source>Warning</source>
-        <translation type="unfinished"></translation>
+        <translation>Avertisment</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="800"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Această opţiune va copia setările spaţiului de coliziune pe toate imaginile. Setările celorlalte imagini vor fi scrise cu setările imaginii curente. Doreşti să continui?</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="833"/>
@@ -763,13 +789,13 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.cpp" line="857"/>
         <location filename="../calibration_main.cpp" line="863"/>
         <source>Compat: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Compatibilitate: %1</translation>
     </message>
     <message>
         <location filename="../calibration_main.cpp" line="833"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nespecificat</translation>
     </message>
 </context>
 <context>
@@ -777,84 +803,84 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="23"/>
         <source>Sprite editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editor sprite</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="52"/>
         <source>Drag the frame through entire sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Trage imaginea pe tot sprite-ul</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="55"/>
         <source>Drag mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modul de tragere</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="76"/>
         <source>Select fragment and cut it, move it into necessary place and double-click to paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectează fragment apoi taie-o, mutând-o într-un loc necesar apoi dublu clic pentru a lipi</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="79"/>
         <location filename="../image_calibration/image_calibrator.ui" line="198"/>
         <source>Select and move</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectează apoi mută</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="93"/>
         <source>Select fragment and copy it, move it into necessary place and double-click to paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectează fragment apoi copiaz-o, mutând-o într-un loc necesar apoi dublu clic pentru a lipi</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="96"/>
         <source>Select and copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectează apoi copiază</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="110"/>
         <source>Pencil to draw</source>
-        <translation type="unfinished"></translation>
+        <translation>Creion pentru a desena</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="113"/>
         <source>Pencil</source>
-        <translation type="unfinished"></translation>
+        <translation>Creion</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="127"/>
         <source>Pick a color</source>
-        <translation type="unfinished"></translation>
+        <translation>Alege o culoare</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="130"/>
         <source>Color picker</source>
-        <translation type="unfinished"></translation>
+        <translation>Alegătorul de culori</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="144"/>
         <location filename="../image_calibration/image_calibrator.ui" line="147"/>
         <source>Rubber</source>
-        <translation type="unfinished"></translation>
+        <translation>Radieră</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="161"/>
         <source>Draw a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenează o linie</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="164"/>
         <source>Draw lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenează linii</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="178"/>
         <source>Draw a rectangle</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenează un dreptunghi</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="181"/>
         <source>Draw rectangles</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenează dreptunghiuri</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="195"/>
@@ -886,7 +912,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="298"/>
         <source>Current frame (10x10):</source>
-        <translation type="unfinished"></translation>
+        <translation>Imaginea curentă (10x10):</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="305"/>
@@ -922,7 +948,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="410"/>
         <source>Frame X</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagine X</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="433"/>
@@ -947,7 +973,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="494"/>
         <source>Frame Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagine Y</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
