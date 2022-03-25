@@ -1016,7 +1016,7 @@ Do you want to continue?</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="195"/>
         <source>Perform one of actions on a current frame or the whole sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Perform one of actions on a current frame or the whole sprite</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>

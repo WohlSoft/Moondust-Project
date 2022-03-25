@@ -1016,7 +1016,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="195"/>
         <source>Perform one of actions on a current frame or the whole sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Выполнить одно из действий над текущим кадром или над всем спрайтом</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>
