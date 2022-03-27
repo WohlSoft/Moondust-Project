@@ -206,7 +206,7 @@ Right button - move grab offset if visible.</source>
 
 滚轮：放大 / 缩小
 
-右键：移动拿起物品时偏差（如果显示）。</translation>
+右键：移动搬运物品时的偏差（如果显示）。</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="752"/>
@@ -960,7 +960,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="195"/>
         <source>Perform one of actions on a current frame or the whole sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>在当前帧或整个图像中执行其中一个动作</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>
