@@ -393,6 +393,9 @@ void LvlScene::loadUserData(QProgressDialog &progress)
                 autoConf.gfxwidth = npcImgW;
                 autoConf.width = t_npc.setup.width;
                 autoConf.en_width = true;
+                // Keep the same grid setup as original
+                t_npc.setup.grid_offset_x_overriden = true;
+                t_npc.setup.grid_offset_y_overriden = true;
                 t_npc.setup.applyNPCtxt(&autoConf, t_npc.setup, npcImgW, npcImgH);
             }
         }
