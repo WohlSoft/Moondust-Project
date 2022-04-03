@@ -61,8 +61,10 @@ private slots:
     void on_WarpLock_clicked(bool checked);
     void on_WarpBombNeed_clicked(bool checked);
     void on_WarpSpecialStateOnly_clicked(bool checked);
+    void on_warpStoodReq_clicked(bool checked);
 
     void on_WarpType_currentIndexChanged(int index);
+    void on_transitEffect_currentIndexChanged(int index);
     void on_WarpNeedAStars_valueChanged(int arg1);
     void on_WarpNeedAStarsMsg_editingFinished();
     void on_WarpHideStars_clicked(bool checked);

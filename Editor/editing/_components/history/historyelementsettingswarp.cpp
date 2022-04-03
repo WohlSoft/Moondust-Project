@@ -84,12 +84,20 @@ void HistoryElementSettingsWarp::undo()
         doorp->special_state_required = !extraData.toBool();
     }
     else
+    if(subtype == HistorySettings::SETTING_W_STOOD_REQUIRED){
+        doorp->stood_state_required = !extraData.toBool();
+    }
+    else
     if(subtype == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE){
         doorp->hide_entering_scene = !extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_WARPTYPE){
         doorp->type = extraData.toList()[0].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_TRANSITTYPE){
+        doorp->transition_effect = extraData.toList()[0].toInt();
     }
     else
     if(subtype == HistorySettings::SETTING_NEEDASTAR){
@@ -212,12 +220,20 @@ void HistoryElementSettingsWarp::redo()
         doorp->special_state_required = extraData.toBool();
     }
     else
+    if(subtype == HistorySettings::SETTING_W_STOOD_REQUIRED){
+        doorp->stood_state_required = extraData.toBool();
+    }
+    else
     if(subtype == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE){
         doorp->hide_entering_scene = extraData.toBool();
     }
     else
     if(subtype == HistorySettings::SETTING_WARPTYPE){
         doorp->type = extraData.toList()[1].toInt();
+    }
+    else
+    if(subtype == HistorySettings::SETTING_TRANSITTYPE){
+        doorp->transition_effect = extraData.toList()[1].toInt();
     }
     else
     if(subtype == HistorySettings::SETTING_NEEDASTAR){

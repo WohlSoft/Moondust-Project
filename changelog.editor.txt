@@ -24,6 +24,7 @@
 - Added the compatibility mode and speedrunner's stopwatch settings for TheXTech tester
 - Fixed an unexpected grid offset changes at NPC with custom graphics but no custom configs
 - All BAK files will be removed when closing the Editor without the 4-second wait.
+- Added "Transltion type" and "Stood required" fields to the Warps and Doors toolbox
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings

@@ -98,8 +98,10 @@ public:
         SETTING_HIDE_STAR_NUMBER,   //extraData: bool [Activated?]
         SETTING_ENABLE_CANNON,      //extraData: bool [Activated?]
         SETTING_W_SPECIAL_STATE_REQUIRED,//extraData: bool [Activated?]
+        SETTING_W_STOOD_REQUIRED,//extraData: bool [Activated?]
         SETTING_HIDE_LEVEL_ENTER_SCENE,  //extraData: bool [Activated?]
         SETTING_WARPTYPE,           //extraData: QList<QVariant[int]> [Old warptype, New warptype]
+        SETTING_TRANSITTYPE,           //extraData: QList<QVariant[int]> [Old warptype, New warptype]
         SETTING_NEEDASTAR,          //extraData: QList<QVariant[int]> [Old stars, New stars]
         SETTING_NEEDASTAR_MSG,      //extraData: QList<QVariant[int]> [Old stars, New stars]
         SETTING_CANNON_SPEED,       //extraData: QList<QVariant[double]> [Old stars, New stars]
@@ -195,8 +197,10 @@ public:
         case SETTING_HIDE_STAR_NUMBER: return QObject::tr("Hide number of stars");
         case SETTING_ENABLE_CANNON: return QObject::tr("Enable cannon exit");
         case SETTING_W_SPECIAL_STATE_REQUIRED: return QObject::tr("Special state required");
+        case SETTING_W_STOOD_REQUIRED: return QObject::tr("Stood required");
         case SETTING_HIDE_LEVEL_ENTER_SCENE: return QObject::tr("Hide level entering scene");
         case SETTING_WARPTYPE: return QObject::tr("Warp Type");
+        case SETTING_TRANSITTYPE: return QObject::tr("Warp Transition Type");
         case SETTING_NEEDASTAR: return QObject::tr("Need Stars");
         case SETTING_NEEDASTAR_MSG: return QObject::tr("Need Stars message");
         case SETTING_CANNON_SPEED: return QObject::tr("Cannon exit projectile speed");

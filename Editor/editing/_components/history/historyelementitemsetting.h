@@ -102,6 +102,8 @@ public slots:
     void historyRedoSettingsEnCannonDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
     void historyUndoSettingsSpecialStateReqDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
     void historyRedoSettingsSpecialStateReqDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
+    void historyUndoSettingsStoodReqDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
+    void historyRedoSettingsStoodReqDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
     void historyUndoSettingsHideLvlEntSceneDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
     void historyRedoSettingsHideLvlEntSceneDoors(const LevelDoor &sourceDoors, QGraphicsItem *item);
     void historyUndoSettingsActivateGeneratorNPC(const LevelNPC &sourceNPC, QGraphicsItem *item);

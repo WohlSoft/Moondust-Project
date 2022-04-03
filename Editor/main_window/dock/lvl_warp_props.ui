@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
-    <height>663</height>
+    <width>326</width>
+    <height>767</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -56,8 +56,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>306</width>
-      <height>878</height>
+      <width>312</width>
+      <height>957</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,0,0,0,0,0,10000">
@@ -638,6 +638,16 @@ The special state is defined by the active configuration pack.</string>
             </widget>
            </item>
            <item>
+            <widget class="QCheckBox" name="warpStoodReq">
+             <property name="toolTip">
+              <string>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</string>
+             </property>
+             <property name="text">
+              <string>Stood required</string>
+             </property>
+            </widget>
+           </item>
+           <item>
             <spacer name="verticalSpacer_8">
              <property name="orientation">
               <enum>Qt::Vertical</enum>
@@ -747,7 +757,7 @@ The special state is defined by the active configuration pack.</string>
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>104</height>
+            <height>141</height>
            </size>
           </property>
           <property name="frameShadow">
@@ -775,7 +785,99 @@ The special state is defined by the active configuration pack.</string>
            <property name="verticalSpacing">
             <number>0</number>
            </property>
-           <item row="2" column="0" colspan="3">
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Need stars</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QLineEdit" name="WarpNeedAStarsMsg">
+             <property name="toolTip">
+              <string>Message which will be shown if the player
+does not have the required number of stars</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QSpinBox" name="WarpNeedAStars">
+             <property name="toolTip">
+              <string>Required number of stars
+to enter this warp</string>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLabel" name="WarpNeedAStarsMsg_label">
+             <property name="text">
+              <string>Need stars message</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="2">
+            <widget class="Line" name="line_3">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0" colspan="2">
+            <widget class="QCheckBox" name="WarpHideStars">
+             <property name="toolTip">
+              <string>If this setting is enabled, even if this warp leads to another level, the
+number of existing and collected stars in the level will not be shown.</string>
+             </property>
+             <property name="text">
+              <string>Don't show level completion amount</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0" colspan="2">
+            <widget class="QComboBox" name="transitEffect">
+             <item>
+              <property name="text">
+               <string comment="Transition effect type">None</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string comment="Transition effect type">Scroll</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string comment="Transition effect type">Fade</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string comment="Transition effect type">Circle fade</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string comment="Transition effect type">Flip horizontal</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string comment="Transition effect type">Flip vertical</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QLabel" name="transitEffectLabel">
+             <property name="text">
+              <string>Transition effect:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
             <widget class="QComboBox" name="WarpType">
              <property name="toolTip">
               <string>Defines the type of warp:
@@ -815,61 +917,10 @@ The special state is defined by the active configuration pack.</string>
              </item>
             </widget>
            </item>
-           <item row="5" column="1">
-            <widget class="QLineEdit" name="WarpNeedAStarsMsg">
-             <property name="toolTip">
-              <string>Message which will be shown if the player
-does not have the required number of stars</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QLabel" name="WarpNeedAStarsMsg_label">
-             <property name="text">
-              <string>Need stars message</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Need stars</string>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QSpinBox" name="WarpNeedAStars">
-             <property name="toolTip">
-              <string>Required number of stars
-to enter this warp</string>
-             </property>
-             <property name="maximum">
-              <number>10000</number>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0" colspan="3">
+           <item row="1" column="0" colspan="2">
             <widget class="QLabel" name="label_3">
              <property name="text">
               <string>Warp type</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0" colspan="2">
-            <widget class="QCheckBox" name="WarpHideStars">
-             <property name="toolTip">
-              <string>If this setting is enabled, even if this warp leads to another level, the
-number of existing and collected stars in the level will not be shown.</string>
-             </property>
-             <property name="text">
-              <string>Don't show level completion amount</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0" colspan="3">
-            <widget class="Line" name="line_3">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
              </property>
             </widget>
            </item>
@@ -1028,6 +1079,7 @@ If this flag is enabled, you can only place a warp exit.</string>
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../../_resources/editor.qrc"/>
   <include location="../../_resources/editor.qrc"/>
  </resources>
  <connections>

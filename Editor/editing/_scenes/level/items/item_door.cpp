@@ -146,6 +146,9 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *specialStReq =    itemMenu.addAction(tr("Required special state"));
     specialStReq->setCheckable(true);
     specialStReq->setChecked(m_data.special_state_required);
+    QAction *stoodStReq =    itemMenu.addAction(tr("Required stood state"));
+    stoodStReq->setCheckable(true);
+    stoodStReq->setChecked(m_data.stood_state_required);
 
     /*************Copy Preferences*******************/
     itemMenu.addSeparator();
@@ -322,6 +325,34 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
             }
         }
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(specialStReq->isChecked()));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+    }
+    else if(selected == stoodStReq)
+    {
+        LevelData modDoors;
+        for(QGraphicsItem *SelItem : m_scene->selectedItems())
+        {
+            if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") || (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
+            {
+                if(SelItem->data(ITEM_TYPE).toString() == "Door_exit")
+                {
+                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    door.isSetOut = true;
+                    door.isSetIn = false;
+                    modDoors.doors.push_back(door);
+                }
+                else if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                {
+                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    door.isSetOut = false;
+                    door.isSetIn = true;
+                    modDoors.doors.push_back(door);
+                }
+                ((ItemDoor *) SelItem)->m_data.stood_state_required = stoodStReq->isChecked();
+                ((ItemDoor *) SelItem)->arrayApply();
+            }
+        }
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_STOOD_REQUIRED, QVariant(stoodStReq->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else if(selected == copyPosXY)

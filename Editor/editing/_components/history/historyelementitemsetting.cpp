@@ -280,6 +280,11 @@ void HistoryElementItemSetting::processLevelUndo()
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUndoSettingsSpecialStateReqDoors(LevelDoor,QGraphicsItem*)));
     }
     else
+    if(m_modLevelSetting == HistorySettings::SETTING_W_STOOD_REQUIRED){
+        levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
+        connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUndoSettingsStoodReqDoors(LevelDoor,QGraphicsItem*)));
+    }
+    else
     if(m_modLevelSetting == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE){
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUndoSettingsHideLvlEntSceneDoors(LevelDoor,QGraphicsItem*)));
@@ -541,6 +546,11 @@ void HistoryElementItemSetting::processLevelRedo()
     if(m_modLevelSetting == HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED){
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsSpecialStateReqDoors(LevelDoor,QGraphicsItem*)));
+    }
+    else
+    if(m_modLevelSetting == HistorySettings::SETTING_W_STOOD_REQUIRED){
+        levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
+        connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsStoodReqDoors(LevelDoor,QGraphicsItem*)));
     }
     else
     if(m_modLevelSetting == HistorySettings::SETTING_HIDE_LEVEL_ENTER_SCENE){
@@ -1032,6 +1042,18 @@ void HistoryElementItemSetting::historyUndoSettingsSpecialStateReqDoors(const Le
 void HistoryElementItemSetting::historyRedoSettingsSpecialStateReqDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
 {
     ((ItemDoor*)item)->m_data.special_state_required = m_modData.toBool();
+    ((ItemDoor*)item)->arrayApply();
+}
+
+void HistoryElementItemSetting::historyUndoSettingsStoodReqDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
+{
+    ((ItemDoor*)item)->m_data.stood_state_required = !m_modData.toBool();
+    ((ItemDoor*)item)->arrayApply();
+}
+
+void HistoryElementItemSetting::historyRedoSettingsStoodReqDoors(const LevelDoor &/*sourceDoors*/, QGraphicsItem *item)
+{
+    ((ItemDoor*)item)->m_data.stood_state_required = m_modData.toBool();
     ((ItemDoor*)item)->arrayApply();
 }
 

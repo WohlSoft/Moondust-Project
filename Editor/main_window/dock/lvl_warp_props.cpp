@@ -156,6 +156,11 @@ void LvlWarpBox::setSMBX64Strict(bool en)
     }
 
     // Disable/Hide all non-supported in SMBX 1.3 parameters
+    ui->transitEffect->setEnabled(shown && (c.editor.supported_features.level_warp_transit_type == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->transitEffect->setHidden(c.editor.supported_features.level_warp_transit_type == EditorSetup::FeaturesSupport::F_HIDDEN);
+    ui->transitEffectLabel->setEnabled(ui->transitEffect->isEnabled());
+    ui->transitEffectLabel->setHidden(ui->transitEffect->isHidden());
+
     ui->WarpTwoWay->setEnabled(shown && (c.editor.supported_features.level_warp_two_way == EditorSetup::FeaturesSupport::F_ENABLED));
     ui->WarpTwoWay->setHidden(c.editor.supported_features.level_warp_two_way == EditorSetup::FeaturesSupport::F_HIDDEN);
     ui->WarpNeedAStarsMsg->setEnabled(shown && (c.editor.supported_features.level_warp_needstars_message == EditorSetup::FeaturesSupport::F_ENABLED));
@@ -173,6 +178,9 @@ void LvlWarpBox::setSMBX64Strict(bool en)
     ui->WarpAllowNPC_IL->setHidden(c.editor.supported_features.level_warp_allow_interlevel_npc == EditorSetup::FeaturesSupport::F_HIDDEN);
     ui->WarpSpecialStateOnly->setEnabled(shown && (c.editor.supported_features.level_warp_allow_sp_state_only == EditorSetup::FeaturesSupport::F_ENABLED));
     ui->WarpSpecialStateOnly->setHidden(c.editor.supported_features.level_warp_allow_sp_state_only == EditorSetup::FeaturesSupport::F_HIDDEN);
+
+    ui->warpStoodReq->setEnabled(shown && (c.editor.supported_features.level_warp_allow_stood_state_only == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->warpStoodReq->setHidden(c.editor.supported_features.level_warp_allow_stood_state_only == EditorSetup::FeaturesSupport::F_HIDDEN);
 
     ui->warpBoxCannon->setEnabled(shown && (c.editor.supported_features.level_warp_cannon_exit == EditorSetup::FeaturesSupport::F_ENABLED));
     ui->warpBoxCannon->setHidden(c.editor.supported_features.level_warp_cannon_exit == EditorSetup::FeaturesSupport::F_HIDDEN);
@@ -275,6 +283,7 @@ void LvlWarpBox::setDoorData(long index)
         ui->WarpLock->setChecked(door.locked);
         ui->WarpNoVehicles->setChecked(door.novehicles);
         ui->WarpType->setCurrentIndex(door.type);
+        ui->transitEffect->setCurrentIndex(door.transition_effect);
 
         ui->WarpEntrancePlaced->setChecked(door.isSetIn);
         ui->WarpExitPlaced->setChecked(door.isSetOut);
@@ -284,6 +293,7 @@ void LvlWarpBox::setDoorData(long index)
         ui->WarpHideStars->setChecked(door.star_num_hide);
         ui->WarpBombNeed->setChecked(door.need_a_bomb);
         ui->WarpSpecialStateOnly->setChecked(door.special_state_required);
+        ui->warpStoodReq->setChecked(door.stood_state_required);
 
         ui->WarpEntranceGrp->setEnabled(door.type == 1);
         ui->WarpExitGrp->setEnabled(door.type == 1);
@@ -683,6 +693,24 @@ void LvlWarpBox::on_WarpSpecialStateOnly_clicked(bool checked)
     edit->LvlData.meta.modified = true;
 }
 
+void LvlWarpBox::on_warpStoodReq_clicked(bool checked)
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    unsigned int warpId = getWarpId();
+
+    auto *w = findWarp(edit->LvlData, warpId);
+    if(w)
+        w->stood_state_required = checked;
+
+    edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
+            HistorySettings::SETTING_W_STOOD_REQUIRED,
+            QVariant(checked));
+    edit->scene->doorPointsSync(warpId);
+    edit->LvlData.meta.modified = true;
+}
 
 
 /////Door props
@@ -712,6 +740,33 @@ void LvlWarpBox::on_WarpType_currentIndexChanged(int index)
     edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
             HistorySettings::SETTING_WARPTYPE,
             QVariant(warpTypeData));
+    edit->scene->doorPointsSync(warpId);
+    edit->LvlData.meta.modified = true;
+}
+
+void LvlWarpBox::on_transitEffect_currentIndexChanged(int index)
+{
+    if(m_lockSettings)
+        return;
+
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    QList<QVariant> warpTransitTypeData;
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    unsigned int warpId = getWarpId();
+
+    auto *w = findWarp(edit->LvlData, warpId);
+    if(w)
+    {
+        warpTransitTypeData.push_back(w->transition_effect);
+        warpTransitTypeData.push_back(index);
+        w->transition_effect = index;
+    }
+
+    edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
+            HistorySettings::SETTING_TRANSITTYPE,
+            QVariant(warpTransitTypeData));
     edit->scene->doorPointsSync(warpId);
     edit->LvlData.meta.modified = true;
 }
