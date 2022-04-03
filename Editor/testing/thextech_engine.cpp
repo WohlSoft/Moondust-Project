@@ -520,7 +520,7 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
 
         stt = speedRunMode->addAction("semiTransparentTimer");
         stt->setCheckable(true);
-        c_v->setChecked(m_speedRunTimerST);
+        stt->setChecked(m_speedRunTimerST);
         m_menuItems[menuItemId++] = stt;
 
         QObject::connect(c_d,   &QAction::triggered,
@@ -555,8 +555,8 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         {
             c_d->setChecked(false);
             c_m->setChecked(false);
-            c_x->setChecked(true);
-            c_v->setChecked(false);
+            c_x->setChecked(false);
+            c_v->setChecked(true);
             m_speedRunMode = 2;
         });
         QObject::connect(stt,   &QAction::triggered,
