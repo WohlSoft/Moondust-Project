@@ -2262,7 +2262,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Required stood state</source>
-        <translation type="unfinished"></translation>
+        <translation>Требуется стоячее состояние</translation>
     </message>
 </context>
 <context>
@@ -6728,45 +6728,45 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
+        <translation>Данным проходом может воспользоваться игрок лишь при условии стояния на земле. Данная опция не влияет на проходы типов &quot;Мгновенный&quot; и &quot;Портал&quot;.</translation>
     </message>
     <message>
         <source>Stood required</source>
-        <translation type="unfinished"></translation>
+        <translation>Стоя на земле</translation>
     </message>
     <message>
         <source>None</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <source>Scroll</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутка</translation>
     </message>
     <message>
         <source>Fade</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Переход через чёрное</translation>
     </message>
     <message>
         <source>Circle fade</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Круговая обводка</translation>
     </message>
     <message>
         <source>Flip horizontal</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished">Переворот по горизонтали</translation>
+        <translation>Переворот по горизонтали</translation>
     </message>
     <message>
         <source>Flip vertical</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished">Переворот по вертикали</translation>
+        <translation>Переворот по вертикали</translation>
     </message>
     <message>
         <source>Transition effect:</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффект перехода:</translation>
     </message>
 </context>
 <context>
@@ -11490,11 +11490,11 @@ Reason: %1
     </message>
     <message>
         <source>Stood required</source>
-        <translation type="unfinished"></translation>
+        <translation>Стоя на земле</translation>
     </message>
     <message>
         <source>Warp Transition Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Эффект перехода</translation>
     </message>
 </context>
 <context>
