@@ -713,7 +713,7 @@ File path: %3</source>
     </message>
     <message>
         <source>Objects defined:</source>
-        <translation>已确定物品：</translation>
+        <translation>已确定的对象：</translation>
     </message>
     <message>
         <source>Configuration name:</source>
