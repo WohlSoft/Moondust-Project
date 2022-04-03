@@ -39,6 +39,7 @@
 #include <common_features/themes.h>
 #include <common_features/crashhandler.h>
 #include <common_features/main_window_ptr.h>
+#include <common_features/file_keeper.h>
 #include <SingleApplication/singleapplication.h>
 #include <SingleApplication/editor_application.h>
 
@@ -88,6 +89,9 @@ static void pgeInitFreeImage()
 
 static void pgeEditorQuit()
 {
+    // Remove all BAK files immediately
+    FileKeeper::removeAllBaks();
+
     if(initied_sdl)
     {
 #ifdef USE_SDL_MIXER
@@ -113,13 +117,16 @@ static void pgeEditorQuit()
         LogDebugNC("Deleting MainWindow...");
         delete MainWinConnect::pMainWin;
     }
+
     QApplication::quit();
     QApplication::exit();
+
     if(app)
     {
         LogDebugNC("Deleting Qt-Application...");
         delete app;
     }
+
     if(appSingle)
     {
         LogDebugNC("Deleting Single-Application...");

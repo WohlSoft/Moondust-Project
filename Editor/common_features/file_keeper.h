@@ -50,6 +50,11 @@ public:
      * \brief Restore file back
      */
     void restore();
+
+    /**
+     * @brief Remove all bak files immediately (call this when normally quit the Editor)
+     */
+    static void removeAllBaks();
 };
 
 
