@@ -2304,6 +2304,10 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Remove</source>
         <translation>Remove</translation>
     </message>
+    <message>
+        <source>Required stood state</source>
+        <translation>Required stood state</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -6764,6 +6768,48 @@ show the current playable character(s) and number of lives.</translation>
     <message>
         <source>Please save the file before selecting levels.</source>
         <translation>Please save the file before selecting levels.</translation>
+    </message>
+    <message>
+        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
+        <translation>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</translation>
+    </message>
+    <message>
+        <source>Stood required</source>
+        <translation>Stood required</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>Transition effect type</comment>
+        <translation>None</translation>
+    </message>
+    <message>
+        <source>Scroll</source>
+        <comment>Transition effect type</comment>
+        <translation>Scroll</translation>
+    </message>
+    <message>
+        <source>Fade</source>
+        <comment>Transition effect type</comment>
+        <translation>Fade</translation>
+    </message>
+    <message>
+        <source>Circle fade</source>
+        <comment>Transition effect type</comment>
+        <translation>Circle fade</translation>
+    </message>
+    <message>
+        <source>Flip horizontal</source>
+        <comment>Transition effect type</comment>
+        <translation>Flip horizontal</translation>
+    </message>
+    <message>
+        <source>Flip vertical</source>
+        <comment>Transition effect type</comment>
+        <translation>Flip vertical</translation>
+    </message>
+    <message>
+        <source>Transition effect:</source>
+        <translation>Transition effect:</translation>
     </message>
 </context>
 <context>
@@ -11456,6 +11502,14 @@ Reason: %1
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
         <translation>Dark blue</translation>
+    </message>
+    <message>
+        <source>Stood required</source>
+        <translation>Stood required</translation>
+    </message>
+    <message>
+        <source>Warp Transition Type</source>
+        <translation>Warp Transition Type</translation>
     </message>
 </context>
 <context>

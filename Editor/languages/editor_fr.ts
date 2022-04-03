@@ -2072,6 +2072,10 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
         <source>Preferences have been copied: %1</source>
         <translation>Les préférences ont été copiées : %1</translation>
     </message>
+    <message>
+        <source>Required stood state</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -5295,6 +5299,48 @@ show the current playable character(s) and number of lives.</source>
 Dans l&apos;écran de chargement de l&apos;ancien moteur, il y aurait autrement
 affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</translation>
     </message>
+    <message>
+        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stood required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fade</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle fade</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip horizontal</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished">Retourner horizontalement</translation>
+    </message>
+    <message>
+        <source>Flip vertical</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished">Retourner verticalement</translation>
+    </message>
+    <message>
+        <source>Transition effect:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -7899,6 +7945,14 @@ Motif : %1
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
         <translation>Bleu foncé</translation>
+    </message>
+    <message>
+        <source>Stood required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp Transition Type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

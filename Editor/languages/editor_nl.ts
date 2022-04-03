@@ -1753,7 +1753,7 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
 <context>
     <name>DataConfig</name>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="339"/>
+        <location filename="../data_configs/data_configs.cpp" line="342"/>
         <source>You have a legacy configuration package.
 &lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
 &lt;br&gt;
@@ -2803,39 +2803,44 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <translation>Vereist speciale toestand</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="152"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="149"/>
+        <source>Required stood state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="155"/>
         <source>Copy preferences</source>
         <translation>Instellingen kopiëren</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="153"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="156"/>
         <source>Position: X, Y</source>
         <translation>Positie: X, Y</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="154"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="157"/>
         <source>Position: X, Y, Width, Height</source>
         <translation>Positie X, Y, Breedte, Hoogte</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="155"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="158"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation>Positie: Links, Boven, Rechts, Onder</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="159"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="162"/>
         <source>Remove</source>
         <translation>Verwijderen</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="162"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="165"/>
         <source>Properties...</source>
         <translation>Instelllingen...</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="334"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="345"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="356"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="365"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="376"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="387"/>
         <source>Preferences have been copied: %1</source>
         <translation>Instellingen zijn gekopiëerd: %1</translation>
     </message>
@@ -5930,12 +5935,12 @@ Alle voorwerpen zullen verdwijnen!</translation>
         <translation>Aan het zoeken naar eigen NPC&apos;s %1</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="436"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="439"/>
         <source>Wrong custom images</source>
         <translation>Foute zelfgemaakte afbeeldingsbestanden</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="437"/>
+        <location filename="../editing/_scenes/level/data_manager/lvl_custom_gfx.cpp" line="440"/>
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
@@ -6470,17 +6475,68 @@ wanneer u vanuit dit portaal een niveau verlaat.</translation>
         <translation>Hoofd</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="662"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
+        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
+        <source>Stood required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="672"/>
         <source>Place exit point or quickly jump to existing warp</source>
         <translation>Plaats het uitgangspunt of spring naar het bestaande uitgangspunt</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="728"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="738"/>
         <source>Layer:</source>
         <translation>Laag:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="781"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="843"/>
+        <source>None</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="848"/>
+        <source>Scroll</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="853"/>
+        <source>Fade</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="858"/>
+        <source>Circle fade</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="863"/>
+        <source>Flip horizontal</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished">Horizontaal spiegelen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="868"/>
+        <source>Flip vertical</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished">Verticaal spiegelen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="876"/>
+        <source>Transition effect:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="883"/>
         <source>Defines the type of warp:
 0 - Instant, player will be teleported movement speed will be reset to 0.
 1 - Pipe, directional warp entrance and exit.
@@ -6493,33 +6549,33 @@ wanneer u vanuit dit portaal een niveau verlaat.</translation>
 3 - Portaal, de speler wordt geteleporteerd, maar met behoud van beweging (alleen PGE programma).</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="821"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="798"/>
         <source>Message which will be shown if the player
 does not have the required number of stars</source>
         <translation>Bericht dat getoond zal worden als
 de speler niet de nodige sterren bezit</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="843"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="806"/>
         <source>Required number of stars
 to enter this warp</source>
         <translation>Aantal sterren nodig
 om dit portaal te gebruiken</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="861"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="831"/>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
         <translation>Als deze instelling is ingeschakeld, zal zelfs als dit portaal naar een ander niveau leidt,
 het aantal bestaande en verzamelde sterren in het niveau niet worden weergegeven.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="865"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="835"/>
         <source>Don&apos;t show level completion amount</source>
         <translation>Toon geen voltooiingsstatus van het niveau</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="913"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="964"/>
         <source>Trigger event when he player enters this warp</source>
         <translation>Event triggeren bij het gebruiken van dit portaal</translation>
     </message>
@@ -6569,7 +6625,7 @@ In pixels per 1/65 van een seconde.</translation>
         <translation>De richting waarin de speler het portaal zal verlaten.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="665"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="675"/>
         <source>Set Exit</source>
         <translation>Uitgang Plaatsen</translation>
     </message>
@@ -6580,52 +6636,52 @@ In pixels per 1/65 van een seconde.</translation>
         <translation>Punt al geplaatst</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="798"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="900"/>
         <source>0 - Instant</source>
         <translation>0 - Onmiddelijk</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="803"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="905"/>
         <source>1 - Pipe</source>
         <translation>1 - Pijp</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="808"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="910"/>
         <source>2 - Door</source>
         <translation>2 - Deur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="813"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="915"/>
         <source>3 - Portal</source>
         <translation>3 - Portaal</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="829"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="817"/>
         <source>Need stars message</source>
         <translation>Onvoldoende sterren bericht</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="836"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="791"/>
         <source>Need stars</source>
         <translation>Nodige sterren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="854"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="923"/>
         <source>Warp type</source>
         <translation>Portaal type</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="688"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="698"/>
         <source>Place entrance point or quickly jump to already placed</source>
         <translation>Ingangspunt plaatsen of springen naar bestaande ingang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="691"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="701"/>
         <source>Set Entrance</source>
         <translation>Ingang plaatsen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="906"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="957"/>
         <source>On-Enter event:</source>
         <translation>Bij-Ingaan event:</translation>
     </message>
@@ -6747,14 +6803,14 @@ Elk portaal is deel van een paar en vereist een ingang.</translation>
         <translation>Afsluiten</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="979"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1030"/>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
         <translation>DIt portaal eindigt het niveau
 wanneer dit vlag is aangevinkt, kan je enkel een ingangsportaal plaatsen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="990"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1041"/>
         <source>Prevents any in-level warp to exit at this warp.
 Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</source>
@@ -6783,17 +6839,17 @@ Als deze vlag is aangevinkt, kan enkel een uitgang geplaatst worden.</translatio
         <translation>Plaatsen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="955"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1006"/>
         <source>Level door</source>
         <translation>Niveau deur</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="983"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1034"/>
         <source>To other level</source>
         <translation>Enkel uitgang</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="995"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1046"/>
         <source>From other level</source>
         <translation>Enkel ingang</translation>
     </message>
@@ -6846,12 +6902,12 @@ Deze status is definieerd door het actieve configuratiepakket.</translation>
         <translation>Huidig portaal verwijderen.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="979"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1034"/>
         <source>World map files not found</source>
         <translation>Wereldkaart bestanden niet gevonden</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="980"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1035"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -6860,34 +6916,34 @@ Gelieve een wereldkaart bestand te plaatsen of the maken in hetzelfde map as het
 Bestandspad: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="993"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1048"/>
         <source>Select world map file</source>
         <translation>Selecteer een wereldkaart bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="994"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1049"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>Meer dan één wereldkaartbestand gevonden.
 Selecteer de wereldkaart die u wilt gebruiken:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1011"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1066"/>
         <source>File open error</source>
         <translation>Fout bij openen van het bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1012"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1067"/>
         <source>Can&apos;t open the file!</source>
         <translation>Kan het niveau bestand niet openen!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1195"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1250"/>
         <source>Please save the file</source>
         <translation>Gelieve het bestand op te slaan</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1196"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1251"/>
         <source>Please save the file before selecting levels.</source>
         <translation>Gelieve het bestand op te slaan alvorens niveaus te selecteren.</translation>
     </message>
@@ -9251,526 +9307,536 @@ Foutbeschrijving:
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../defines.h" line="177"/>
+        <location filename="../defines.h" line="179"/>
         <source>Invizible</source>
         <translation>Onzichtbaar</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="178"/>
+        <location filename="../defines.h" line="180"/>
         <source>Slippery</source>
         <translation>Slibberig</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="179"/>
+        <location filename="../defines.h" line="181"/>
         <source>Z-Layer</source>
         <translation>Z-Laag</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="180"/>
+        <location filename="../defines.h" line="182"/>
         <source>Z-Offset</source>
         <translation>Z-Verspringing</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="181"/>
+        <location filename="../defines.h" line="183"/>
         <source>Friendly</source>
         <translation>Vriendelijk</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="182"/>
+        <location filename="../defines.h" line="184"/>
         <source>Boss</source>
         <translation>Baas</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="183"/>
+        <location filename="../defines.h" line="185"/>
         <source>Not Moveable</source>
         <translation>Niet beweegbaar</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="184"/>
-        <location filename="../defines.h" line="238"/>
+        <location filename="../defines.h" line="186"/>
+        <location filename="../defines.h" line="242"/>
         <source>Message</source>
         <translation>Bericht</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="185"/>
+        <location filename="../defines.h" line="187"/>
         <source>Direction</source>
         <translation>Richting</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="186"/>
+        <location filename="../defines.h" line="188"/>
         <source>Included NPC</source>
         <translation>Inhoud veranderen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="187"/>
+        <location filename="../defines.h" line="189"/>
         <source>Water Type</source>
         <translation>Omgsevingstype</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="188"/>
+        <location filename="../defines.h" line="190"/>
         <source>Layer</source>
         <translation>Laag</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="189"/>
+        <location filename="../defines.h" line="191"/>
         <source>No Vehicles</source>
         <translation>Vervoersmiddelen weigeren</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="190"/>
+        <location filename="../defines.h" line="192"/>
         <source>Two-way warp</source>
         <translation>Tweerichtingsportaal</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="191"/>
+        <location filename="../defines.h" line="193"/>
         <source>Allow NPC</source>
         <translation>Voorwerpen toestaan</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="192"/>
+        <location filename="../defines.h" line="194"/>
         <source>Allow NPC inter level</source>
         <translation>Voorwerpen doorheen niveaus toestaan</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="193"/>
+        <location filename="../defines.h" line="195"/>
         <source>Locked</source>
         <translation>Vergrendeld</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="194"/>
+        <location filename="../defines.h" line="196"/>
         <source>Need a bomb</source>
         <translation>Bom noodzakelijk</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="195"/>
+        <location filename="../defines.h" line="197"/>
         <source>Hide number of stars</source>
         <translation>Aantal sterren verbergen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="196"/>
+        <location filename="../defines.h" line="198"/>
         <source>Enable cannon exit</source>
         <translation>Kanonuitgang inschakelen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="197"/>
+        <location filename="../defines.h" line="199"/>
         <source>Special state required</source>
         <translation>Speciale toestand vereist</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="198"/>
+        <location filename="../defines.h" line="200"/>
+        <source>Stood required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="201"/>
         <source>Hide level entering scene</source>
         <translation>Niveau inkomscene verbergen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="199"/>
+        <location filename="../defines.h" line="202"/>
         <source>Warp Type</source>
         <translation>Type portaal</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="200"/>
+        <location filename="../defines.h" line="203"/>
+        <source>Warp Transition Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../defines.h" line="204"/>
         <source>Need Stars</source>
         <translation>Sterren nodig</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="201"/>
+        <location filename="../defines.h" line="205"/>
         <source>Need Stars message</source>
         <translation>Sterren nodig bericht</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="202"/>
+        <location filename="../defines.h" line="206"/>
         <source>Cannon exit projectile speed</source>
         <translation>Kanonuitgang projectielsnelheid</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="203"/>
+        <location filename="../defines.h" line="207"/>
         <source>Entrance Direction</source>
         <translation>Ingang richting</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="204"/>
+        <location filename="../defines.h" line="208"/>
         <source>Exit Direction</source>
         <translation>Uitgang richting</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="205"/>
+        <location filename="../defines.h" line="209"/>
         <source>Set Level Exit</source>
         <translation>Niveau-uitgang instellen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="206"/>
+        <location filename="../defines.h" line="210"/>
         <source>Set Level Entrance</source>
         <translation>Niveau-ingang instellen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="207"/>
+        <location filename="../defines.h" line="211"/>
         <source>Level Warp To</source>
         <translation>Naar een ander niveau teleporteren</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="208"/>
+        <location filename="../defines.h" line="212"/>
         <source>Activate Generator</source>
         <translation>Generator activeren</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="209"/>
+        <location filename="../defines.h" line="213"/>
         <source>Generator Type</source>
         <translation>Type generator</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="210"/>
+        <location filename="../defines.h" line="214"/>
         <source>Generator Direction</source>
         <translation>Generator richting</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="211"/>
+        <location filename="../defines.h" line="215"/>
         <source>Generator Time</source>
         <translation>Generator Interval</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="212"/>
+        <location filename="../defines.h" line="216"/>
         <source>Attach Layer</source>
         <translation>Laag Vastkoppelen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="213"/>
+        <location filename="../defines.h" line="217"/>
         <source>Event Block Destroyed</source>
         <translation>Event: Blok vernietigd</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="214"/>
+        <location filename="../defines.h" line="218"/>
         <source>Event Block Hited</source>
         <translation>Event: Blok botsing</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="215"/>
+        <location filename="../defines.h" line="219"/>
         <source>Event Layer Empty</source>
         <translation>Event: Lege laag</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="216"/>
+        <location filename="../defines.h" line="220"/>
         <source>Event NPC Activate</source>
         <translation>Event: NPC activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="217"/>
+        <location filename="../defines.h" line="221"/>
         <source>Event NPC Die</source>
         <translation>Event: NPC dood</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="218"/>
+        <location filename="../defines.h" line="222"/>
         <source>Event NPC Talk</source>
         <translation>Event: NPC dialoog</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="219"/>
+        <location filename="../defines.h" line="223"/>
         <source>Event Warp Enter</source>
         <translation>Event: Portaal betreden</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="220"/>
+        <location filename="../defines.h" line="224"/>
         <source>NPC Special Data</source>
         <translation>NPC extra data</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="221"/>
+        <location filename="../defines.h" line="225"/>
         <source>Autostart</source>
         <translation>Automatisch starten</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="222"/>
+        <location filename="../defines.h" line="226"/>
         <source>Layer Smoke Effect</source>
         <translation>Laag Rook Effect</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="223"/>
+        <location filename="../defines.h" line="227"/>
         <source>Add Hide Layer</source>
         <translation>Laag toevoegen aan verbergingslijst</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="224"/>
+        <location filename="../defines.h" line="228"/>
         <source>Remove Hide Layer</source>
         <translation>Laag verwijderen uit verbergingslijst</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="225"/>
+        <location filename="../defines.h" line="229"/>
         <source>Add Show Layer</source>
         <translation>Laag toevoegen aan weergevingslijst</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="226"/>
+        <location filename="../defines.h" line="230"/>
         <source>Remove Show Layer</source>
         <translation>Laag verwijderen uit weergevingslijst</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="227"/>
+        <location filename="../defines.h" line="231"/>
         <source>Add Toggle Layer</source>
         <translation>Laag toevoegen aan wisselingslijst</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="228"/>
+        <location filename="../defines.h" line="232"/>
         <source>Remove Toggle Layer</source>
         <translation>Laag verwijderen uit wisselingslijst</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="229"/>
+        <location filename="../defines.h" line="233"/>
         <source>Moving Layer</source>
         <translation>Laag bewegen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="230"/>
+        <location filename="../defines.h" line="234"/>
         <source>Layer Speed Horizontal</source>
         <translation>Horizontale Laagsnelheid</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="231"/>
+        <location filename="../defines.h" line="235"/>
         <source>Layer Speed Vertical</source>
         <translation>Vertikale Laagsnelheid</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="232"/>
+        <location filename="../defines.h" line="236"/>
         <source>Autoscroll Layer</source>
         <translation>Autoscrol Sectie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="233"/>
+        <location filename="../defines.h" line="237"/>
         <source>Autoscroll Layer Speed Horizontal</source>
         <translation>Horizontale Autoscrol Sectie Snelheid</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="234"/>
+        <location filename="../defines.h" line="238"/>
         <source>Autoscroll Layer Speed Vertical</source>
         <translation>Vertikale Autoscrol Sectie Snelheid</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="235"/>
+        <location filename="../defines.h" line="239"/>
         <source>Section Size</source>
         <translation>Sectie Grootte</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="236"/>
+        <location filename="../defines.h" line="240"/>
         <source>Section Music</source>
         <translation>Sectie Muziek</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="237"/>
+        <location filename="../defines.h" line="241"/>
         <source>Section Background</source>
         <translation>Sectie Achtergrond</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="239"/>
+        <location filename="../defines.h" line="243"/>
         <source>Sound</source>
         <translation>Geluid</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="240"/>
+        <location filename="../defines.h" line="244"/>
         <source>End Game</source>
         <translation>Spel Eindigen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="241"/>
+        <location filename="../defines.h" line="245"/>
         <source>Up Key Activate</source>
         <translation>Omhoogknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="242"/>
+        <location filename="../defines.h" line="246"/>
         <source>Down Key Activate</source>
         <translation>Benedenknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="243"/>
+        <location filename="../defines.h" line="247"/>
         <source>Left Key Activate</source>
         <translation>Linkerknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="244"/>
+        <location filename="../defines.h" line="248"/>
         <source>Right Key Activate</source>
         <translation>Rechterknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="245"/>
+        <location filename="../defines.h" line="249"/>
         <source>Run Key Activate</source>
         <translation>Loopknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="246"/>
+        <location filename="../defines.h" line="250"/>
         <source>Alt Run Key Activate</source>
         <translation>Alt Loopknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="247"/>
+        <location filename="../defines.h" line="251"/>
         <source>Jump Key Activate</source>
         <translation>Springknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="248"/>
+        <location filename="../defines.h" line="252"/>
         <source>Alt Jump Key Activate</source>
         <translation>Alt Springknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="249"/>
+        <location filename="../defines.h" line="253"/>
         <source>Drop Key Activate</source>
         <translation>Dropknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="250"/>
+        <location filename="../defines.h" line="254"/>
         <source>Start Key Activate</source>
         <translation>Startknop Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="251"/>
+        <location filename="../defines.h" line="255"/>
         <source>Trigger Activate</source>
         <translation>Trigger Activatie</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="252"/>
+        <location filename="../defines.h" line="256"/>
         <source>Trigger Delay</source>
         <translation>Trigger Vertraging</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="253"/>
+        <location filename="../defines.h" line="257"/>
         <source>Is Warp</source>
         <translation>Sectie sluit horizontaal aan</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="254"/>
+        <location filename="../defines.h" line="258"/>
         <source>No Back</source>
         <translation>Éénrichtingscamera (geen terugkering)</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="255"/>
+        <location filename="../defines.h" line="259"/>
         <source>Off Screen Exit</source>
         <translation>Schermgrens UItgang</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="256"/>
+        <location filename="../defines.h" line="260"/>
         <source>Underwater</source>
         <translation>Onderwater</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="257"/>
+        <location filename="../defines.h" line="261"/>
         <source>Background Image</source>
         <translation>Achtergrondsafbeelding</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="258"/>
+        <location filename="../defines.h" line="262"/>
         <source>Music</source>
         <translation>Muziek</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="259"/>
+        <location filename="../defines.h" line="263"/>
         <source>Custom Music</source>
         <translation>Eigen Muziek</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="260"/>
+        <location filename="../defines.h" line="264"/>
         <source>Level Settings</source>
         <translation>Niveau Instellingen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="261"/>
+        <location filename="../defines.h" line="265"/>
         <source>Section extra settings</source>
         <translation>Sectie extra instellingen</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="262"/>
+        <location filename="../defines.h" line="266"/>
         <source>BGO Sorting Priority</source>
         <translation>BGO Sorteerprioriteit</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="263"/>
-        <location filename="../defines.h" line="265"/>
-        <location filename="../defines.h" line="290"/>
-        <location filename="../defines.h" line="292"/>
+        <location filename="../defines.h" line="267"/>
+        <location filename="../defines.h" line="269"/>
+        <location filename="../defines.h" line="294"/>
+        <location filename="../defines.h" line="296"/>
         <source>Unknown</source>
         <translation>Onbekend</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="272"/>
+        <location filename="../defines.h" line="276"/>
         <source>Always Visible</source>
         <translation>Altijd Zichtbaar</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="273"/>
+        <location filename="../defines.h" line="277"/>
         <source>Big Path Background</source>
         <translation>Grote Pad Achtergrond</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="274"/>
+        <location filename="../defines.h" line="278"/>
         <source>Character</source>
         <translation>Personage</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="275"/>
+        <location filename="../defines.h" line="279"/>
         <source>Door ID</source>
         <translation>Deur ID</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="276"/>
+        <location filename="../defines.h" line="280"/>
         <source>Game start point</source>
         <translation>Spel startpunt</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="277"/>
+        <location filename="../defines.h" line="281"/>
         <source>Goto X</source>
         <translation>Ga naar (Goto) X</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="278"/>
+        <location filename="../defines.h" line="282"/>
         <source>Goto Y</source>
         <translation>Ga naar (Goto) Y</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="279"/>
+        <location filename="../defines.h" line="283"/>
         <source>Hub styled world</source>
         <translation>Hub-stijl wereld</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="280"/>
+        <location filename="../defines.h" line="284"/>
         <source>Intro Level</source>
         <translation>Intro niveau</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="281"/>
+        <location filename="../defines.h" line="285"/>
         <source>Level file</source>
         <translation>Niveaubestand</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="282"/>
+        <location filename="../defines.h" line="286"/>
         <source>Level title</source>
         <translation>Niveautitel</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="283"/>
+        <location filename="../defines.h" line="287"/>
         <source>Path Background</source>
         <translation>Achtergrond Pad</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="284"/>
+        <location filename="../defines.h" line="288"/>
         <source>Exit at bottom</source>
         <translation>Uitgang naar beneden</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="285"/>
+        <location filename="../defines.h" line="289"/>
         <source>Exit at left</source>
         <translation>Uitgang naar links</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="286"/>
+        <location filename="../defines.h" line="290"/>
         <source>Exit at right</source>
         <translation>Uitgang naar rechts</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="287"/>
+        <location filename="../defines.h" line="291"/>
         <source>Exit at top</source>
         <translation>Uitgang naar boven</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="288"/>
+        <location filename="../defines.h" line="292"/>
         <source>Restart after fail</source>
         <translation>Herstart huidige niveau bij dood</translation>
     </message>
     <message>
-        <location filename="../defines.h" line="289"/>
+        <location filename="../defines.h" line="293"/>
         <source>Total stars</source>
         <translation>Totaal aantal sterren</translation>
     </message>
@@ -10109,7 +10175,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <translation>Tegelset categoriën aan het initialiseren...</translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="670"/>
+        <location filename="../data_configs/data_configs.cpp" line="673"/>
         <source>Finishing loading...</source>
         <translation>Lading aan het finaliseren...</translation>
     </message>

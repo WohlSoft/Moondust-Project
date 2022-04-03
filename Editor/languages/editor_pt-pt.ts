@@ -2128,6 +2128,10 @@ Apenas 27 caracteres por linha</translation>
         <source>Preferences have been copied: %1</source>
         <translation type="unfinished">As preferências foram copiadas: %1</translation>
     </message>
+    <message>
+        <source>Required stood state</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -5465,6 +5469,48 @@ Escolha qual da lista quer utilizar:</translation>
         <source>Please save the file before selecting levels.</source>
         <translation></translation>
     </message>
+    <message>
+        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stood required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scroll</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fade</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle fade</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flip horizontal</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished">Inverter horizontalmente</translation>
+    </message>
+    <message>
+        <source>Flip vertical</source>
+        <comment>Transition effect type</comment>
+        <translation type="unfinished">Inverter verticalmente</translation>
+    </message>
+    <message>
+        <source>Transition effect:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -8576,6 +8622,14 @@ The maximum number of Music Boxes is %2.</source>
         <source>Dark blue</source>
         <comment>Name of pallete</comment>
         <translation></translation>
+    </message>
+    <message>
+        <source>Stood required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warp Transition Type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
