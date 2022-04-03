@@ -484,8 +484,8 @@ void TheXTechEngine::initMenu(QMenu *destmenu)
         {
             c_d->setChecked(false);
             c_m->setChecked(false);
-            c_x->setChecked(true);
-            c_v->setChecked(false);
+            c_x->setChecked(false);
+            c_v->setChecked(true);
             m_compatLevel = 2;
         });
     }
