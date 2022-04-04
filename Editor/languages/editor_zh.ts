@@ -5322,11 +5322,11 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
-        <translation type="unfinished">此传送点只能在玩家处于站立状态时进入（瞬移和传送门传送点除外）。</translation>
+        <translation>此传送点只能在玩家处于站立状态时进入（瞬移和传送门传送点除外）。</translation>
     </message>
     <message>
         <source>Needs floor</source>
-        <translation type="unfinished">需要站立</translation>
+        <translation>需要站立</translation>
     </message>
 </context>
 <context>
@@ -8007,7 +8007,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Needs floor</source>
-        <translation type="unfinished">需要站立</translation>
+        <translation>需要站立</translation>
     </message>
     <message>
         <source>Stood required</source>
@@ -8489,7 +8489,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
-        <translation>在战斗模式中测试关卡</translation>
+        <translation>在对战模式中测试关卡</translation>
     </message>
     <message>
         <source>Graphics type</source>
@@ -10519,6 +10519,47 @@ Please, check the application directory and make sure it is installed properly.<
 Right-click to remove!</source>
         <translation>拖放项目到此框。
 右击删除。</translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation>未找到月尘引擎管理器，无法启动：
+%1
+请选择月尘引擎管理器文件夹！</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
+原因：未处理异常
+
+请将错误报告发送给论坛管理员，以便于我们处理问题。
+
+论坛链接: wohlsoft.ru/forum（需要英文）</translation>
+    </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>终止进程</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
+原因：%1
+
+</translation>
     </message>
 </context>
 </TS>
