@@ -280,7 +280,7 @@ void HistoryElementItemSetting::processLevelUndo()
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUndoSettingsSpecialStateReqDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_W_STOOD_REQUIRED){
+    if(m_modLevelSetting == HistorySettings::SETTING_W_NEEDS_FLOOR){
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyUndoSettingsStoodReqDoors(LevelDoor,QGraphicsItem*)));
     }
@@ -548,7 +548,7 @@ void HistoryElementItemSetting::processLevelRedo()
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsSpecialStateReqDoors(LevelDoor,QGraphicsItem*)));
     }
     else
-    if(m_modLevelSetting == HistorySettings::SETTING_W_STOOD_REQUIRED){
+    if(m_modLevelSetting == HistorySettings::SETTING_W_NEEDS_FLOOR){
         levelSearcher.setFindFilter(ItemTypes::LVL_S_Door);
         connect(&levelSearcher, SIGNAL(foundDoor(LevelDoor,QGraphicsItem*)), this, SLOT(historyRedoSettingsStoodReqDoors(LevelDoor,QGraphicsItem*)));
     }

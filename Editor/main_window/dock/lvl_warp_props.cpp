@@ -179,8 +179,8 @@ void LvlWarpBox::setSMBX64Strict(bool en)
     ui->WarpSpecialStateOnly->setEnabled(shown && (c.editor.supported_features.level_warp_allow_sp_state_only == EditorSetup::FeaturesSupport::F_ENABLED));
     ui->WarpSpecialStateOnly->setHidden(c.editor.supported_features.level_warp_allow_sp_state_only == EditorSetup::FeaturesSupport::F_HIDDEN);
 
-    ui->warpStoodReq->setEnabled(shown && (c.editor.supported_features.level_warp_allow_stood_state_only == EditorSetup::FeaturesSupport::F_ENABLED));
-    ui->warpStoodReq->setHidden(c.editor.supported_features.level_warp_allow_stood_state_only == EditorSetup::FeaturesSupport::F_HIDDEN);
+    ui->warpNeedsFloor->setEnabled(shown && (c.editor.supported_features.level_warp_allow_needs_floor == EditorSetup::FeaturesSupport::F_ENABLED));
+    ui->warpNeedsFloor->setHidden(c.editor.supported_features.level_warp_allow_needs_floor == EditorSetup::FeaturesSupport::F_HIDDEN);
 
     ui->warpBoxCannon->setEnabled(shown && (c.editor.supported_features.level_warp_cannon_exit == EditorSetup::FeaturesSupport::F_ENABLED));
     ui->warpBoxCannon->setHidden(c.editor.supported_features.level_warp_cannon_exit == EditorSetup::FeaturesSupport::F_HIDDEN);
@@ -293,7 +293,7 @@ void LvlWarpBox::setDoorData(long index)
         ui->WarpHideStars->setChecked(door.star_num_hide);
         ui->WarpBombNeed->setChecked(door.need_a_bomb);
         ui->WarpSpecialStateOnly->setChecked(door.special_state_required);
-        ui->warpStoodReq->setChecked(door.stood_state_required);
+        ui->warpNeedsFloor->setChecked(door.stood_state_required);
 
         ui->WarpEntranceGrp->setEnabled(door.type == 1);
         ui->WarpExitGrp->setEnabled(door.type == 1);
@@ -693,7 +693,7 @@ void LvlWarpBox::on_WarpSpecialStateOnly_clicked(bool checked)
     edit->LvlData.meta.modified = true;
 }
 
-void LvlWarpBox::on_warpStoodReq_clicked(bool checked)
+void LvlWarpBox::on_warpNeedsFloor_clicked(bool checked)
 {
     if(mw()->activeChildWindow() != MainWindow::WND_Level)
         return;
@@ -706,7 +706,7 @@ void LvlWarpBox::on_warpStoodReq_clicked(bool checked)
         w->stood_state_required = checked;
 
     edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
-            HistorySettings::SETTING_W_STOOD_REQUIRED,
+            HistorySettings::SETTING_W_NEEDS_FLOOR,
             QVariant(checked));
     edit->scene->doorPointsSync(warpId);
     edit->LvlData.meta.modified = true;

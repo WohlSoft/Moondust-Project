@@ -84,7 +84,7 @@ void HistoryElementSettingsWarp::undo()
         doorp->special_state_required = !extraData.toBool();
     }
     else
-    if(subtype == HistorySettings::SETTING_W_STOOD_REQUIRED){
+    if(subtype == HistorySettings::SETTING_W_NEEDS_FLOOR){
         doorp->stood_state_required = !extraData.toBool();
     }
     else
@@ -220,7 +220,7 @@ void HistoryElementSettingsWarp::redo()
         doorp->special_state_required = extraData.toBool();
     }
     else
-    if(subtype == HistorySettings::SETTING_W_STOOD_REQUIRED){
+    if(subtype == HistorySettings::SETTING_W_NEEDS_FLOOR){
         doorp->stood_state_required = extraData.toBool();
     }
     else

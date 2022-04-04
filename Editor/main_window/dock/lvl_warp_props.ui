@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
+    <width>339</width>
     <height>767</height>
    </rect>
   </property>
@@ -56,7 +56,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>312</width>
+      <width>325</width>
       <height>957</height>
      </rect>
     </property>
@@ -638,12 +638,12 @@ The special state is defined by the active configuration pack.</string>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="warpStoodReq">
+            <widget class="QCheckBox" name="warpNeedsFloor">
              <property name="toolTip">
-              <string>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</string>
+              <string>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</string>
              </property>
              <property name="text">
-              <string>Stood required</string>
+              <string>Needs floor</string>
              </property>
             </widget>
            </item>
@@ -763,7 +763,7 @@ The special state is defined by the active configuration pack.</string>
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,60,0">
+          <layout class="QGridLayout" name="gridLayout_4" columnstretch="0,60">
            <property name="sizeConstraint">
             <enum>QLayout::SetMinimumSize</enum>
            </property>

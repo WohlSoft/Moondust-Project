@@ -171,7 +171,7 @@ struct EditorSetup
         State level_warp_portal = F_ENABLED;
         State level_warp_bomb_exit = F_ENABLED;
         State level_warp_allow_sp_state_only = F_ENABLED;
-        State level_warp_allow_stood_state_only = F_ENABLED;
+        State level_warp_allow_needs_floor = F_ENABLED;
         State level_warp_hide_interlevel_scene = F_ENABLED;
         State level_warp_allow_interlevel_npc = F_ENABLED;
         State level_warp_hide_stars = F_ENABLED;

@@ -352,7 +352,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_STOOD_REQUIRED, QVariant(stoodStReq->isChecked()));
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_NEEDS_FLOOR, QVariant(stoodStReq->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else if(selected == copyPosXY)

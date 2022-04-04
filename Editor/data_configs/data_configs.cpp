@@ -286,7 +286,7 @@ bool DataConfig::loadBasics()
         guiset.readEnum("level-warp-portal", editor.supported_features.level_warp_portal, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-bomb-exit", editor.supported_features.level_warp_bomb_exit, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-allow-special-state-only", editor.supported_features.level_warp_allow_sp_state_only, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
-        guiset.readEnum("level-warp-allow-stood-state-only", editor.supported_features.level_warp_allow_stood_state_only, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
+        guiset.readEnum("level-warp-allow-needs-floor", editor.supported_features.level_warp_allow_needs_floor, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-hide-interlevel-scene", editor.supported_features.level_warp_hide_interlevel_scene, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-allow-interlevel-npc", editor.supported_features.level_warp_allow_interlevel_npc, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
         guiset.readEnum("level-warp-hide-stars", editor.supported_features.level_warp_hide_stars, EditorSetup::FeaturesSupport::F_ENABLED, formatEnum);
