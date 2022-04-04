@@ -5807,16 +5807,6 @@ The special state is defined by the active configuration pack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
-        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
-        <source>Stood required</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="672"/>
         <source>Place exit point or quickly jump to existing warp</source>
         <translation type="unfinished"></translation>
@@ -5942,6 +5932,16 @@ to enter this warp</source>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="831"/>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
+        <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8611,7 +8611,7 @@ Reason: %1
     </message>
     <message>
         <location filename="../defines.h" line="200"/>
-        <source>Stood required</source>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

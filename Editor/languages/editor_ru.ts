@@ -6728,11 +6728,11 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation>Данным проходом может воспользоваться игрок лишь при условии стояния на земле. Данная опция не влияет на проходы типов &quot;Мгновенный&quot; и &quot;Портал&quot;.</translation>
+        <translation type="vanished">Данным проходом может воспользоваться игрок лишь при условии стояния на земле. Данная опция не влияет на проходы типов &quot;Мгновенный&quot; и &quot;Портал&quot;.</translation>
     </message>
     <message>
         <source>Stood required</source>
-        <translation>Стоя на земле</translation>
+        <translation type="vanished">Стоя на земле</translation>
     </message>
     <message>
         <source>None</source>
@@ -6767,6 +6767,14 @@ show the current playable character(s) and number of lives.</source>
     <message>
         <source>Transition effect:</source>
         <translation>Эффект перехода:</translation>
+    </message>
+    <message>
+        <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
+        <translation>Данным проходом может воспользоваться лишь тот игрок, который стоит на твёрдом полу. Данная опция не влияет на проходы типов &quot;Мгновенный&quot; и &quot;Портал&quot;.</translation>
+    </message>
+    <message>
+        <source>Needs floor</source>
+        <translation>Требуется пол</translation>
     </message>
 </context>
 <context>
@@ -11490,11 +11498,15 @@ Reason: %1
     </message>
     <message>
         <source>Stood required</source>
-        <translation>Стоя на земле</translation>
+        <translation type="vanished">Стоя на земле</translation>
     </message>
     <message>
         <source>Warp Transition Type</source>
         <translation>Эффект перехода</translation>
+    </message>
+    <message>
+        <source>Needs floor</source>
+        <translation>Требуется пол</translation>
     </message>
 </context>
 <context>

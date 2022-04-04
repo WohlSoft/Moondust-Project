@@ -6598,14 +6598,6 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <translation>Guarde el archivo antes de seleccionar los niveles.</translation>
     </message>
     <message>
-        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stood required</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>None</source>
         <comment>Transition effect type</comment>
         <translation type="unfinished"></translation>
@@ -6637,6 +6629,14 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
     </message>
     <message>
         <source>Transition effect:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11035,11 +11035,11 @@ El máximo es %2.</translation>
         <translation></translation>
     </message>
     <message>
-        <source>Stood required</source>
+        <source>Warp Transition Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warp Transition Type</source>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

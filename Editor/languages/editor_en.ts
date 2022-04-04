@@ -6771,11 +6771,11 @@ show the current playable character(s) and number of lives.</translation>
     </message>
     <message>
         <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</translation>
+        <translation type="vanished">This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</translation>
     </message>
     <message>
         <source>Stood required</source>
-        <translation>Stood required</translation>
+        <translation type="vanished">Stood required</translation>
     </message>
     <message>
         <source>None</source>
@@ -6810,6 +6810,14 @@ show the current playable character(s) and number of lives.</translation>
     <message>
         <source>Transition effect:</source>
         <translation>Transition effect:</translation>
+    </message>
+    <message>
+        <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
+        <translation>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</translation>
+    </message>
+    <message>
+        <source>Needs floor</source>
+        <translation>Needs floor</translation>
     </message>
 </context>
 <context>
@@ -11505,11 +11513,15 @@ Reason: %1
     </message>
     <message>
         <source>Stood required</source>
-        <translation>Stood required</translation>
+        <translation type="vanished">Stood required</translation>
     </message>
     <message>
         <source>Warp Transition Type</source>
         <translation>Warp Transition Type</translation>
+    </message>
+    <message>
+        <source>Needs floor</source>
+        <translation>Needs floor</translation>
     </message>
 </context>
 <context>

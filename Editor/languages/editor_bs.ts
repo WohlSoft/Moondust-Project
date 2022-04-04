@@ -5707,16 +5707,6 @@ when you exit from a level through this warp.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
-        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
-        <source>Stood required</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="672"/>
         <source>Place exit point or quickly jump to existing warp</source>
         <translation></translation>
@@ -5731,6 +5721,16 @@ when you exit from a level through this warp.</source>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="539"/>
         <source>Point already placed</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
+        <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
+        <source>Needs floor</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="738"/>
@@ -8599,7 +8599,7 @@ Reason: %1
     </message>
     <message>
         <location filename="../defines.h" line="200"/>
-        <source>Stood required</source>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

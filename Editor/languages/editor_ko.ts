@@ -5767,16 +5767,6 @@ Every warp point pair requires a warp entry.</source>
         <translation>출구</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
-        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
-        <source>Stood required</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="843"/>
         <source>None</source>
         <comment>Transition effect type</comment>
@@ -5885,6 +5875,16 @@ when you exit from a level through this warp.</source>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="507"/>
         <source>Main</source>
         <translation>메인</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
+        <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
+        <source>Needs floor</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="672"/>
@@ -8834,7 +8834,7 @@ Reason: %1
     </message>
     <message>
         <location filename="../defines.h" line="200"/>
-        <source>Stood required</source>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

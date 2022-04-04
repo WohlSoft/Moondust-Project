@@ -5482,14 +5482,6 @@ Proszę, wybierz jeden plik z listy:</translation>
         <translation>Proszę zapisz plik przed wyborem poziomów.</translation>
     </message>
     <message>
-        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stood required</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>None</source>
         <comment>Transition effect type</comment>
         <translation type="unfinished"></translation>
@@ -5521,6 +5513,14 @@ Proszę, wybierz jeden plik z listy:</translation>
     </message>
     <message>
         <source>Transition effect:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8553,11 +8553,11 @@ Maksymalny numer bloków muzyki to %2.</translation>
         <translation>Ciemny niebieski</translation>
     </message>
     <message>
-        <source>Stood required</source>
+        <source>Warp Transition Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Warp Transition Type</source>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -6475,16 +6475,6 @@ wanneer u vanuit dit portaal een niveau verlaat.</translation>
         <translation>Hoofd</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
-        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
-        <source>Stood required</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="672"/>
         <source>Place exit point or quickly jump to existing warp</source>
         <translation>Plaats het uitgangspunt of spring naar het bestaande uitgangspunt</translation>
@@ -6837,6 +6827,16 @@ Als deze vlag is aangevinkt, kan enkel een uitgang geplaatst worden.</translatio
         <location filename="../main_window/dock/lvl_warp_props.ui" line="127"/>
         <source>Set</source>
         <translation>Plaatsen</translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
+        <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
+        <source>Needs floor</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="1006"/>
@@ -9414,7 +9414,7 @@ Foutbeschrijving:
     </message>
     <message>
         <location filename="../defines.h" line="200"/>
-        <source>Stood required</source>
+        <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
