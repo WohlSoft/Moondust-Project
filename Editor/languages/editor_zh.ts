@@ -2037,7 +2037,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Required stood state</source>
-        <translation type="unfinished"></translation>
+        <translation>需要站立状态</translation>
     </message>
 </context>
 <context>
@@ -5304,45 +5304,45 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
+        <translation>此传送点只能在玩家处于站立状态时进入（瞬移和传送门传送点除外）。</translation>
     </message>
     <message>
         <source>Stood required</source>
-        <translation type="unfinished"></translation>
+        <translation>需要站立</translation>
     </message>
     <message>
         <source>None</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>无</translation>
     </message>
     <message>
         <source>Scroll</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>滚动</translation>
     </message>
     <message>
         <source>Fade</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>淡入淡出</translation>
     </message>
     <message>
         <source>Circle fade</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>圆形</translation>
     </message>
     <message>
         <source>Flip horizontal</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished">水平翻转</translation>
+        <translation>水平拆分</translation>
     </message>
     <message>
         <source>Flip vertical</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished">垂直翻转</translation>
+        <translation>垂直拆分</translation>
     </message>
     <message>
         <source>Transition effect:</source>
-        <translation type="unfinished"></translation>
+        <translation>过渡效果：</translation>
     </message>
 </context>
 <context>
@@ -8069,11 +8069,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Stood required</source>
-        <translation type="unfinished"></translation>
+        <translation>需要站立</translation>
     </message>
     <message>
         <source>Warp Transition Type</source>
-        <translation type="unfinished"></translation>
+        <translation>传送点过渡类别</translation>
     </message>
 </context>
 <context>
@@ -8586,7 +8586,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
-        <translation>最大帧数</translation>
+        <translation>禁用锁帧</translation>
     </message>
     <message>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
