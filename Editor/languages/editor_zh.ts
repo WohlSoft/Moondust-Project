@@ -882,16 +882,6 @@ Please save them before doing anything else.</source>
         <translation>在 Github 仓库中反馈问题（WohlSoft/Moondust-Project，需英文）</translation>
     </message>
     <message>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation>反馈问题时，请描述您遇到了什么异常错误。
-- 请您说明由于什么原因遇到了异常错误。
-- 若是编辑相关文件时异常终止，请在问题中将附件。
-- 您使用的是什么操作系统？</translation>
-    </message>
-    <message>
         <source>Copied!</source>
         <translation>已复制！</translation>
     </message>
@@ -3454,12 +3444,6 @@ Suggested to disable this feature on slow machines or if any troubles are happen
         <translation type="vanished">结束进程以允许你再测试关卡。</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>结束进程</translation>
-    </message>
-    <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>结束 LunaTester 进程，使引擎重新开始。</translation>
     </message>
@@ -5226,14 +5210,6 @@ If set to zero, the player will start at the pre-defined level start point.</sou
         <translation>浏览另一关卡文件</translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation>加载关卡时显示空白屏。
-如果此选项未选中，在加载关卡时你将会
-看到当前人物和剩余生命数。</translation>
-    </message>
-    <message>
         <source>Hide level enter screen</source>
         <translation>隐藏进入关卡时界面</translation>
     </message>
@@ -6551,14 +6527,6 @@ The configuration pack was loaded, but contains errors.</source>
         <translation>未找到引擎</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation>未找到引擎：
-%1
-请选择引擎！</translation>
-    </message>
-    <message>
         <source>Choose the Engine application</source>
         <translation>选择引擎</translation>
     </message>
@@ -6953,14 +6921,6 @@ Expected config pack ID: %4</source>
     <message>
         <source>Moondust Maintainer is not found</source>
         <translation>未找到月尘引擎管理器</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
-        <translation>由于月尘引擎管理器未找到，因此无法启动：
-%1
-请选择月尘引擎管理器目录！</translation>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
@@ -7736,16 +7696,6 @@ Error description:
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
-原因：内存溢出！
-
-为防止出现此现象，请关闭其他程序释放内存。</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -7793,16 +7743,6 @@ Forum link: wohlsoft.ru/forum</source>
     <message>
         <source>Interrupted! [SIGINT]</source>
         <translation>信号中断！[SIGINT]</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
-        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
-原因：%1
-
-</translation>
     </message>
     <message>
         <source>Cut top here</source>
@@ -8089,7 +8029,7 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Warp Transition Type</source>
-        <translation  type="vanished">传送点过渡类别</translation>
+        <translation type="vanished">传送点过渡类别</translation>
     </message>
 </context>
 <context>
