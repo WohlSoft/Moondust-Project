@@ -5,76 +5,76 @@
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
-        <translation></translation>
+        <translation>Тестването на световната карта чрез IPC не се поддържа</translation>
     </message>
     <message>
         <source>World map testing is not supported</source>
-        <translation></translation>
+        <translation>Тестването на световната карта не се поддържа</translation>
     </message>
     <message>
         <source>This feature is not implemented</source>
-        <translation></translation>
+        <translation>Тази функция не е реализирана</translation>
     </message>
 </context>
 <context>
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
-        <translation></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Main</source>
-        <translation></translation>
+        <translation>Основен</translation>
     </message>
     <message>
         <source>Window layout</source>
-        <translation></translation>
+        <translation>Оформление на прозореца</translation>
     </message>
     <message>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation></translation>
+        <translation>Отделни подпрозорци (класически стил)</translation>
     </message>
     <message>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation></translation>
+        <translation>Подпрозорци с таб (модерен стил)</translation>
     </message>
     <message>
         <source>Music player</source>
-        <translation></translation>
+        <translation>Музикален плейър</translation>
     </message>
     <message>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation></translation>
+        <translation>Музиката ще се възпроизвежда автоматично, когато отворите файл с ниво</translation>
     </message>
     <message>
         <source>Autoplay music after opening file</source>
-        <translation></translation>
+        <translation>Автоматично възпроизвеждане на музика след отваряне на файла</translation>
     </message>
     <message>
         <source>Performance</source>
-        <translation></translation>
+        <translation>Производителност</translation>
     </message>
     <message>
         <source>Animation</source>
-        <translation></translation>
+        <translation>Анимация</translation>
     </message>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation></translation>
+        <translation>Максимален брой елементи, които могат да бъдат анимирани във всеки един момент. Ако това ограничение бъде надхвърлено, анимацията ще бъде спряна, докато не увеличите ограничението или не премахнете излишните елементи.</translation>
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation></translation>
+        <translation>Ограничение на елементите за анимация</translation>
     </message>
     <message>
         <source>Collision detection</source>
-        <translation></translation>
+        <translation>Откриване на сблъсък</translation>
     </message>
     <message>
         <source>Files</source>
-        <translation></translation>
+        <translation>Файлове</translation>
     </message>
     <message>
         <source>Associate file extensions</source>
