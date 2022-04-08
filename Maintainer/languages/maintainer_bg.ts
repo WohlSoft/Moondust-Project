@@ -526,18 +526,18 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="136"/>
         <source>Batch conversion for level/episode</source>
-        <translation type="unfinished"></translation>
+        <translation>Пакетно преобразуване за ниво/епизод</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="142"/>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Прегледай…</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="149"/>
         <source>Remove source images after conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Премахни източникови изображения след преобразуване</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="163"/>
