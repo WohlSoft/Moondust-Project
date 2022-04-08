@@ -14,10 +14,6 @@
                 <langSet xml:lang="en"><tig><term>Level</term></tig></langSet>
                 <langSet xml:lang="bg"><tig><term>Ниво</term></tig></langSet>
             </termEntry>
-            <termEntry>
-                <langSet xml:lang="en"><tig><term>config pack</term></tig></langSet>
-                <langSet xml:lang="bg"><tig><term>конфиг. пак.</term></tig></langSet>
-            </termEntry>
         </body>
     </text>
 </martif>
