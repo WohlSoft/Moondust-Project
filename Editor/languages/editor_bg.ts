@@ -370,7 +370,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <name>AudioCvt_Sox_gui</name>
     <message>
         <source>Convert Audio (SoX)</source>
-        <translation></translation>
+        <translation>Преобразувай аудио (SoX)</translation>
     </message>
     <message>
         <source>SoX executable path:</source>
@@ -378,7 +378,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Browse...</source>
-        <translation></translation>
+        <translation>Прегледай...</translation>
     </message>
     <message>
         <source>Make backup</source>
@@ -386,15 +386,15 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Resample to</source>
-        <translation></translation>
+        <translation>Предискретизирай към</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation></translation>
+        <translation>Започни</translation>
     </message>
     <message>
         <source>SoX error</source>
-        <translation></translation>
+        <translation>SoX грешка</translation>
     </message>
     <message>
         <source>SoX executable path is not defined.
@@ -412,11 +412,11 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>No files to convert</source>
-        <translation></translation>
+        <translation>Няма файлове за преобразуване</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation></translation>
+        <translation>Спри</translation>
     </message>
     <message>
         <source>Operation canceled</source>
@@ -454,7 +454,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>What do you want?</source>
-        <translation></translation>
+        <translation>Какво искате?</translation>
     </message>
     <message>
         <source>Convert music of current level section</source>
@@ -466,7 +466,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Convert specified files</source>
-        <translation></translation>
+        <translation>Преобразувай уточнени файлове</translation>
     </message>
     <message>
         <source>Convert into new format
@@ -475,7 +475,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Don&apos;t change format</source>
-        <translation></translation>
+        <translation>Не променяй формат</translation>
     </message>
     <message>
         <source>The files&apos; format will not be changed</source>
@@ -483,27 +483,27 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Set bitrate</source>
-        <translation></translation>
+        <translation>Задай скорост на предаване</translation>
     </message>
     <message>
         <source>Files will be converted into MP3</source>
-        <translation></translation>
+        <translation>Файлове ще бъдат преобразувани в MP3</translation>
     </message>
     <message>
         <source>Files will be converted into FLAC</source>
-        <translation></translation>
+        <translation>Файлове ще бъдат преобразувани във FLAC</translation>
     </message>
     <message>
         <source>Files will be converted into OGG</source>
-        <translation></translation>
+        <translation>Файлове ще бъдат преобразувани в OGG</translation>
     </message>
     <message>
         <source>Set quality</source>
-        <translation></translation>
+        <translation>Задай качество</translation>
     </message>
     <message>
         <source>Files will be converted into WAV</source>
-        <translation></translation>
+        <translation>Файлове ще бъдат преобразувани в WAV</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
