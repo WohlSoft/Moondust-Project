@@ -511,17 +511,17 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="17"/>
         <source>Convert masked GIFs into PNG</source>
-        <translation>Преобразувай маскирани GIF</translation>
+        <translation>Преобразувай маскирани GIF в PNG</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
         <source>Convert files</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразувай файлове</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="125"/>
         <source>Drop your masked GIFs files into this window for a quick conversion</source>
-        <translation type="unfinished"></translation>
+        <translation>Пуснете ваши маскирани GIF файлове в този прозорец за бързо преобразуване</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="136"/>
