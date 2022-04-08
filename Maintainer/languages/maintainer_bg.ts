@@ -336,7 +336,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="328"/>
         <source>Error occouped while work process</source>
-        <translation>Възникна грешка при работния процес</translation>
+        <translation>Възникна грешка при работа на процес</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="329"/>
@@ -475,22 +475,22 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Work finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Работа завършена</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
         <source>Episode has been converted!</source>
-        <translation type="unfinished"></translation>
+        <translation>Епизод бе преобразуван!</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="336"/>
         <source>Error occouped while work process</source>
-        <translation type="unfinished"></translation>
+        <translation>Възникна грешка при работа на процес</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="337"/>
         <source>Episode conversion aborted with error: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразуване на епизод отменен с грешка: %1</translation>
     </message>
 </context>
 <context>
@@ -498,12 +498,12 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="44"/>
         <source>Can&apos;t resolve path &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Не може да се реши път &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Няма файлове да се преобразуват</translation>
     </message>
 </context>
 <context>
@@ -511,7 +511,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="17"/>
         <source>Convert masked GIFs into PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>Преобразувай маскирани GIF</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
