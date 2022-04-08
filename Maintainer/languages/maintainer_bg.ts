@@ -542,22 +542,22 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="163"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation type="unfinished"></translation>
+        <translation>Входна директория (например, корен на епизод или потребителска папка на ниво):</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="170"/>
         <source>Process all content of subdirectories</source>
-        <translation type="unfinished"></translation>
+        <translation>Обработи всичко съдържание на поддиректории</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="180"/>
         <source>Path to an input directory with a source data</source>
-        <translation type="unfinished"></translation>
+        <translation>Път към входна директория с източникови данни</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="187"/>
         <source>Path to a configuration package directory to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Път към директория на конфигурационен пакет да използва</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="194"/>
