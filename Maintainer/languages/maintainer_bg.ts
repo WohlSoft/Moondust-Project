@@ -470,7 +470,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="316"/>
         <source>Open target episode path</source>
-        <translation type="unfinished"></translation>
+        <translation>Отвори път на целеви епизод</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="333"/>
