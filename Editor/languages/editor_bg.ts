@@ -78,292 +78,292 @@
     </message>
     <message>
         <source>Associate file extensions</source>
-        <translation></translation>
+        <translation>Асоцииране на файлови разширения</translation>
     </message>
     <message>
         <source>Editor</source>
-        <translation></translation>
+        <translation>Редактор</translation>
     </message>
     <message>
         <source>Middle mouse button actions</source>
-        <translation></translation>
+        <translation>Действия със средния бутон на мишката</translation>
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation></translation>
+        <translation>Промяна на режима на поставяне на избрания елемент</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation></translation>
+        <translation>Превключване на плъзгането за превъртане, докато селекцията е празна</translation>
     </message>
     <message>
         <source>Placement mode</source>
-        <translation></translation>
+        <translation>Режим на поставяне</translation>
     </message>
     <message>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation></translation>
+        <translation>Полето за свойства няма да се показва автоматично, когато изберете елемент за поставяне.</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation></translation>
+        <translation>Не показвайте полето за свойства при поставяне на елементи</translation>
     </message>
     <message>
         <source>History</source>
-        <translation></translation>
+        <translation>История</translation>
     </message>
     <message>
         <source>Max history entries:</source>
-        <translation></translation>
+        <translation>Максимален брой записи в историята:</translation>
     </message>
     <message>
         <source>Maximum number of remembered history actions.</source>
-        <translation></translation>
+        <translation>Максимален размер на опашката за история.</translation>
     </message>
     <message>
         <source>Screen capture default size</source>
-        <translation></translation>
+        <translation>Размер по подразбиране за заснемане на екрана</translation>
     </message>
     <message>
         <source>Use custom:</source>
-        <translation></translation>
+        <translation>Използване по избор:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation></translation>
+        <translation>Широчина:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation></translation>
+        <translation>Височина:</translation>
     </message>
     <message>
         <source>Fit to window size</source>
-        <translation></translation>
+        <translation>Побиране в размера на прозореца</translation>
     </message>
     <message>
         <source>Defaults</source>
-        <translation></translation>
+        <translation>По подразбирания</translation>
     </message>
     <message>
         <source>Classic Events tabs to auto-expand</source>
-        <translation></translation>
+        <translation>Класическите раздели Събития да се разширяват автоматично</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation></translation>
+        <translation>Общи</translation>
     </message>
     <message>
         <source>Layer movement</source>
-        <translation></translation>
+        <translation>Движение на слоя</translation>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation></translation>
+        <translation>Задействане на събитие</translation>
     </message>
     <message>
         <source>Hold buttons</source>
-        <translation></translation>
+        <translation>Задържане на бутони</translation>
     </message>
     <message>
         <source>Extra</source>
-        <translation></translation>
+        <translation>Допълнително</translation>
     </message>
     <message>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation></translation>
+        <translation>Забележка: Някои настройки се прилагат само след рестартиране на редактора</translation>
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation></translation>
+        <translation>Разрешаване на автоматично мащабиране на монитори с висок DPI</translation>
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
-        <translation></translation>
+        <translation>Копиране на избрани елементи до позицията на курсора</translation>
     </message>
     <message>
         <source>Autoscroll section</source>
-        <translation></translation>
+        <translation>Секция за автоматично превъртане</translation>
     </message>
     <message>
         <source>Layer visibility</source>
-        <translation></translation>
+        <translation>Видимост на слоя</translation>
     </message>
     <message>
         <source>Section settings</source>
-        <translation></translation>
+        <translation>Настройки на секцията</translation>
     </message>
     <message>
         <source>NPC settings</source>
-        <translation></translation>
+        <translation>Настройки на NPC</translation>
     </message>
     <message>
         <source>Generator</source>
-        <translation></translation>
+        <translation>Генератор</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation></translation>
+        <translation>Тип:</translation>
     </message>
     <message>
         <source>Warp</source>
-        <translation></translation>
+        <translation>Проход</translation>
     </message>
     <message>
         <source>Projectile</source>
-        <translation></translation>
+        <translation>Снаряд</translation>
     </message>
     <message>
         <source>Delay (seconds):</source>
-        <translation></translation>
+        <translation>Забавяне (секунди):</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation></translation>
+        <translation>Посока</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation></translation>
+        <translation>Наляво</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation></translation>
+        <translation>Произволно</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation></translation>
+        <translation>Надясно</translation>
     </message>
     <message>
         <source>Warps and Doors</source>
-        <translation></translation>
+        <translation>Проходи и врати</translation>
     </message>
     <message>
         <source>Warp type:</source>
-        <translation></translation>
+        <translation>Тип проход:</translation>
     </message>
     <message>
         <source>0 - Instant</source>
-        <translation></translation>
+        <translation>0 - Незабавно</translation>
     </message>
     <message>
         <source>1 - Pipe</source>
-        <translation></translation>
+        <translation>1 - Тръба</translation>
     </message>
     <message>
         <source>2 - Door</source>
-        <translation></translation>
+        <translation>2 - Врата</translation>
     </message>
     <message>
         <source>3 - Portal</source>
-        <translation></translation>
+        <translation>3 - Портал</translation>
     </message>
     <message>
         <source>View</source>
-        <translation></translation>
+        <translation>Изглед</translation>
     </message>
     <message>
         <source>World Map Item toolbox</source>
-        <translation></translation>
+        <translation>Кутия с инструменти за елементи на световната карта</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
-        <translation></translation>
+        <translation>Показване на разделите хоризонтално</translation>
     </message>
     <message>
         <source>Display tabs vertically</source>
-        <translation></translation>
+        <translation>Показване на разделите вертикално</translation>
     </message>
     <message>
         <source>Level Item toolbox</source>
-        <translation></translation>
+        <translation>Кутия с инструменти за елементи на ниво</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation></translation>
+        <translation>Тема</translation>
     </message>
     <message>
         <source>Tileset Item toolbox</source>
-        <translation></translation>
+        <translation>Кутия с инструменти за елементи на набор от плочки</translation>
     </message>
     <message>
         <source>Logging</source>
-        <translation></translation>
+        <translation>Записване в дневник</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation></translation>
+        <translation>Ниво на дневника</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation></translation>
+        <translation>Преглед</translation>
     </message>
     <message>
         <source>Log file</source>
-        <translation></translation>
+        <translation>Файл на дневника</translation>
     </message>
     <message>
         <source>Environment</source>
-        <translation></translation>
+        <translation>Среда</translation>
     </message>
     <message>
         <source>Default zoom:</source>
-        <translation></translation>
+        <translation>Увеличение по подразбиране:</translation>
     </message>
     <message>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation></translation>
+        <translation>Увеличение по подразбиране, което ще се инсталира при отваряне или създаване на файл.</translation>
     </message>
     <message>
         <source>Font</source>
-        <translation></translation>
+        <translation>Шрифт</translation>
     </message>
     <message>
         <source>Font size</source>
-        <translation></translation>
+        <translation>Размер на шрифта</translation>
     </message>
     <message>
         <source>Use default</source>
-        <translation></translation>
+        <translation>Използване по подразбиране</translation>
     </message>
     <message>
         <source>Set log file</source>
-        <translation></translation>
+        <translation>Задаване на файл на дневника</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
-        <translation></translation>
+        <translation>Текстови файлове (*.txt *.log)</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation></translation>
+        <translation>Успех</translation>
     </message>
     <message>
         <source>All file associations have been set</source>
-        <translation></translation>
+        <translation>Всички файлови асоциации са зададени</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation></translation>
+        <translation>Грешка</translation>
     </message>
     <message>
         <source>Palette</source>
-        <translation></translation>
+        <translation>Палитра</translation>
     </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
     <message>
         <source>Calculating total star count in accessible levels</source>
-        <translation></translation>
+        <translation>Изчисляване на общия брой звезди в достъпни нива</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation></translation>
+        <translation>Прекратяване</translation>
     </message>
     <message>
         <source>Counting stars...</source>
-        <translation></translation>
+        <translation>Преброяване на звезди…</translation>
     </message>
 </context>
 <context>
@@ -374,7 +374,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>SoX executable path:</source>
-        <translation></translation>
+        <translation>Пътят за изпълнение на SoX:</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -382,7 +382,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Make backup</source>
-        <translation></translation>
+        <translation>Направи резервно копие</translation>
     </message>
     <message>
         <source>Resample to</source>
@@ -399,16 +399,18 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation></translation>
+        <translation>Път на SoX двоичен не е определен.
+Моля задайте път на SoX първо</translation>
     </message>
     <message>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation></translation>
+        <translation>Път на SoX двоичен не е определен.
+Моля задайте път на SoX първо</translation>
     </message>
     <message>
         <source>Nothing to do.</source>
-        <translation></translation>
+        <translation>Нищо за правене</translation>
     </message>
     <message>
         <source>No files to convert</source>
@@ -420,37 +422,39 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Operation canceled</source>
-        <translation></translation>
+        <translation>Операция отменена</translation>
     </message>
     <message>
         <source>Sorry, SoX has crashed</source>
-        <translation></translation>
+        <translation>За съжаление SoX се срина</translation>
     </message>
     <message>
         <source>SoX returned a non-zero exit code: %1
 %2</source>
-        <translation></translation>
+        <translation>SoX върна не-нулев код: %1
+%2</translation>
     </message>
     <message>
         <source>Operation complete</source>
-        <translation></translation>
+        <translation>Операцията е завършена</translation>
     </message>
     <message>
         <source>All files successfully converted!
 %1</source>
-        <translation></translation>
+        <translation>Всички файлове са успешно преобразувани!
+%1</translation>
     </message>
     <message>
         <source>No tasks defined. Nothing to do.</source>
-        <translation></translation>
+        <translation>Няма определени задачи. Нищо за правене.</translation>
     </message>
     <message>
         <source>Open SoX executable path</source>
-        <translation></translation>
+        <translation>Отвори пътят за изпълнение на SoX</translation>
     </message>
     <message>
         <source>Select file to convert</source>
-        <translation></translation>
+        <translation>Избор на файл за преобразуване</translation>
     </message>
     <message>
         <source>What do you want?</source>
@@ -458,11 +462,11 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>Convert music of current level section</source>
-        <translation></translation>
+        <translation>Преобразуване на музика от текущата секция на ниво</translation>
     </message>
     <message>
         <source>Convert all music files on current level</source>
-        <translation></translation>
+        <translation>Преобразуване на всички музикални файлове на текущото ниво</translation>
     </message>
     <message>
         <source>Convert specified files</source>
@@ -471,7 +475,8 @@ Please set SoX path first</source>
     <message>
         <source>Convert into new format
 (select a tab to choose target format)</source>
-        <translation></translation>
+        <translation>Преобразуване в нов формат
+(изберете раздел, за да изберете целеви формат)</translation>
     </message>
     <message>
         <source>Don&apos;t change format</source>
@@ -479,7 +484,7 @@ Please set SoX path first</source>
     </message>
     <message>
         <source>The files&apos; format will not be changed</source>
-        <translation></translation>
+        <translation>Форматът на файловете няма да бъде променен</translation>
     </message>
     <message>
         <source>Set bitrate</source>
@@ -508,121 +513,124 @@ Please set SoX path first</source>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Тук можете бързо да конвертирате вашите музикални или SFX файлове, които са били&lt;br&gt;форматирани неправилно (грешна честота на дискретизация, лош кодек и т.н.).&lt;/p&gt;
+&lt;p&gt;Тази функция използва &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; аудио преобразувател.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
 </context>
 <context>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation></translation>
+        <translation>Избор на WOPL файл банка</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation></translation>
+        <translation>Моля, изберете файла банка за WOPL инструменти, който искате да използвате</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation></translation>
+        <translation>Избор на WOPN файл банка</translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation></translation>
+        <translation>Моля, изберете файла банка за WOPN инструменти, който искате да използвате</translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation></translation>
+        <translation>Избор на SoundFont файл банка</translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation></translation>
+        <translation>Моля, изберете SoundFont файлът банка, който искате да добавите</translation>
     </message>
 </context>
 <context>
     <name>BlocksPerSecondDialog</name>
     <message>
         <source>Blocks per second calculator</source>
-        <translation></translation>
+        <translation>Калкулатор на блокове в секунда</translation>
     </message>
     <message>
         <source> blocks</source>
-        <translation></translation>
+        <translation> блокове</translation>
     </message>
     <message>
         <source>per </source>
-        <translation></translation>
+        <translation>в </translation>
     </message>
     <message>
         <source> second</source>
-        <translation></translation>
+        <translation> секунда</translation>
     </message>
     <message>
         <source>Move time:</source>
-        <translation></translation>
+        <translation>Време за преместване:</translation>
     </message>
     <message>
         <source>Distance:</source>
-        <translation></translation>
+        <translation>Разстояние:</translation>
     </message>
     <message>
         <source>Size of one block:</source>
-        <translation></translation>
+        <translation>Размер на един блок:</translation>
     </message>
 </context>
 <context>
     <name>BookmarksBox</name>
     <message>
         <source>Position bookmarks</source>
-        <translation></translation>
+        <translation>Позиции на отметки</translation>
     </message>
     <message>
         <source>Remove selected bookmark from list</source>
-        <translation></translation>
+        <translation>Премахване на избрана отметка от списъка</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remember current screen position on the level map or on the world map
 and store a bookmark.</source>
-        <translation></translation>
+        <translation>Запомняне на текущата позиция на екрана в нивото или в картата на света
+и запазване на отметка.</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation></translation>
+        <translation>Добавяне</translation>
     </message>
     <message>
         <source>Scroll to the saved position in the selected item.
 You also can double-click an item to scroll to its bookmarked position.</source>
-        <translation></translation>
+        <translation>Превъртете до запаметената позиция в избрания елемент.
+Можете също така да щракнете два пъти върху даден елемент, за да превъртите до запаметената му позиция.</translation>
     </message>
     <message>
         <source>Go To...</source>
-        <translation></translation>
+        <translation>Отиди на…</translation>
     </message>
     <message>
         <source>Rename Bookmark</source>
-        <translation></translation>
+        <translation>Преименуване на отметка</translation>
     </message>
 </context>
 <context>
     <name>ConfigManager</name>
     <message>
         <source>Configuration Manager</source>
-        <translation></translation>
+        <translation>Диспечер на конфигурацията</translation>
     </message>
     <message>
         <source>Please select the game configuration you want to start the Editor with</source>
-        <translation></translation>
+        <translation>Моля, изберете конфигурацията на играта, с която искате да стартирате редактора</translation>
     </message>
     <message>
         <source>Ask every startup</source>
-        <translation></translation>
+        <translation>Питай всяко стартиране</translation>
     </message>
     <message>
         <source>No config packs were found</source>
-        <translation></translation>
+        <translation>Не са намерени пакети с конфигурации</translation>
     </message>
     <message>
         <source>No configuration packages were found!&lt;br&gt;
@@ -631,263 +639,274 @@ Please download and install them into this directory&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
-        <translation></translation>
+        <translation>Не бяха открити пакети за конфигурация!&lt;br&gt;
+Моля, изтеглете ги и ги инсталирайте в тази директория&lt;br&gt;
+&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+Можете да използвате всеки конфигурационен пакет тук:&lt;br&gt;%2</translation>
     </message>
     <message>
         <source>Configuration package is not configured!</source>
-        <translation></translation>
+        <translation>Пакетът за конфигуриране не е конфигуриран!</translation>
     </message>
     <message>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
-        <translation></translation>
+        <translation>&quot;%1&quot; конфигурационен пакет все още не е конфигуриран.
+Искате ли да го конфигурирате?</translation>
     </message>
     <message>
         <source>Configuration script failed</source>
-        <translation></translation>
+        <translation>Скриптът за конфигуриране е неуспешен</translation>
     </message>
     <message>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
-        <translation></translation>
+        <translation>Инструментът за конфигуриране се натъкна на грешка: %1 на ред %2.
+Път към файла: %3</translation>
     </message>
     <message>
         <source>No configuration needed</source>
-        <translation></translation>
+        <translation>Не е необходима конфигурация</translation>
     </message>
     <message>
         <source>This config pack has no configuring tool.</source>
-        <translation></translation>
+        <translation>Този пакет за конфигуриране няма инструмент за конфигуриране.</translation>
     </message>
     <message>
         <source>Integrational configuration package is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Интеграционният конфигурационен пакет е несъвместим</translation>
     </message>
     <message>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation type="unfinished"></translation>
+        <translation>Този интеграционен конфигурационен пакет е по-стар от версия 42 на API и вече не е съвместим с тази версия на Moondust Devkit. От API 42 нататък интеграционните конфигурационни пакети трябва да използват локалния файл с настройки вместо презаписването на main.ini.</translation>
     </message>
 </context>
 <context>
     <name>ConfigStatus</name>
     <message>
         <source>Current configuration status</source>
-        <translation></translation>
+        <translation>Текущо състояние на конфигурацията</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation></translation>
+        <translation>Състояние</translation>
     </message>
     <message>
         <source>Objects defined:</source>
-        <translation></translation>
+        <translation>Дефинирани обекти:</translation>
     </message>
     <message>
         <source>Configuration name:</source>
-        <translation></translation>
+        <translation>Име на конфигурация:</translation>
     </message>
     <message>
         <source>Configuration path:</source>
-        <translation></translation>
+        <translation>Път на конфигурация:</translation>
     </message>
     <message>
         <source>Directories</source>
-        <translation></translation>
+        <translation>Директории</translation>
     </message>
     <message>
         <source>Configuration directories:</source>
-        <translation></translation>
+        <translation>Конфигурационни директории:</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation></translation>
+        <translation>Име</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation></translation>
+        <translation>Път</translation>
     </message>
     <message>
         <source>Errors</source>
-        <translation></translation>
+        <translation>Грешки</translation>
     </message>
     <message>
         <source>Configuration Loading Errors:</source>
-        <translation></translation>
+        <translation>Грешки при зареждане на конфигурацията:</translation>
     </message>
     <message>
         <source>Music (level) (%1/%2)</source>
-        <translation></translation>
+        <translation>Музика (ниво) (%1/%2)</translation>
     </message>
     <message>
         <source>Music (world map) (%1/%2)</source>
-        <translation></translation>
+        <translation>Музика (световна карта) (%1/%2)</translation>
     </message>
     <message>
         <source>Music (special) (%1/%2)</source>
-        <translation></translation>
+        <translation>Музика (специална) (%1/%2)</translation>
     </message>
     <message>
         <source>Sounds (%1/%2)</source>
-        <translation></translation>
+        <translation>Звуци (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Blocks (%1/%2)</source>
-        <translation></translation>
+        <translation>Ниво: Блокове (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Background objects (%1/%2)</source>
-        <translation></translation>
+        <translation>Ниво: Фонови обекти (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Background images (%1/%2)</source>
-        <translation></translation>
+        <translation>Ниво: Фонови изображения (%1/%2)</translation>
     </message>
     <message>
         <source>Level: NPCs (%1/%2)</source>
-        <translation></translation>
+        <translation>Ниво: NPCs (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation></translation>
+        <translation>Карта на света: Плочки на терена (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Scenery (%1/%2)</source>
-        <translation></translation>
+        <translation>Карта на света: Пейзаж (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation></translation>
+        <translation>Карта на света: Плочки на пътя (%1/%2)</translation>
     </message>
     <message>
         <source>World map: Level entrance tiles (%1/%2)</source>
-        <translation></translation>
+        <translation>Карта на света: Входни плочки за ниво (%1/%2)</translation>
     </message>
     <message>
         <source>Default rotation rules (%1)</source>
-        <translation></translation>
+        <translation>Правила за завъртане по подразбиране (%1)</translation>
     </message>
     <message>
         <source>Level data</source>
-        <translation></translation>
+        <translation>Данни за ниво</translation>
     </message>
     <message>
         <source>World map data</source>
-        <translation></translation>
+        <translation>Данни за картата на света</translation>
     </message>
     <message>
         <source>Characters</source>
-        <translation></translation>
+        <translation>Герои</translation>
     </message>
     <message>
         <source>Game worlds</source>
-        <translation></translation>
+        <translation>Игрални светове</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation></translation>
+        <translation>Музика</translation>
     </message>
     <message>
         <source>Sounds</source>
-        <translation></translation>
+        <translation>Звуци</translation>
     </message>
     <message>
         <source>Custom data</source>
-        <translation></translation>
+        <translation>Персонализирани данни</translation>
     </message>
     <message>
         <source>[Error list is empty, congratulations!]</source>
-        <translation></translation>
+        <translation>[Списъкът с грешки е празен, поздравления!]</translation>
     </message>
 </context>
 <context>
     <name>CrashHandler</name>
     <message>
         <source>Crash</source>
-        <translation></translation>
+        <translation>Срив</translation>
     </message>
     <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation></translation>
+        <translation>О-о, редакторът на Moondust се срина :(&lt;br&gt;Подробна информация за срива:</translation>
     </message>
     <message>
         <source>Exit from application</source>
-        <translation></translation>
+        <translation>Излизане от приложението</translation>
     </message>
     <message>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation></translation>
+        <translation>Възстановяване при срив</translation>
     </message>
     <message>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
-        <translation></translation>
+        <translation>След последния срив редакторът възстанови някои файлове.
+Моля, запазете ги, преди да правите каквото и да било друго.</translation>
     </message>
     <message>
         <source>You might want to report this data to developers:</source>
-        <translation></translation>
+        <translation>Бихте могли да съобщите на разработчиците за тези данни:</translation>
     </message>
     <message>
         <source>Copy report into clipboard</source>
-        <translation></translation>
+        <translation>Копиране на отчета в клипборда</translation>
     </message>
     <message>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation></translation>
+        <translation>Публикувайте доклад във форума на WohlSoft (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation></translation>
+        <translation>Съобщете проблем в хранилището на GitHub (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation></translation>
+        <translation>При подаването на доклад обяснете какво сте направили, за да предизвикате грешка, която предизвика срив.
+- Моля, дайте списък на действията, които сте извършили, за да предизвикате срив.
+- Ако сривът се е случил при редактиране на конкретен файл, моля, приложете го към доклада.
+- Каква операционна система използвате?</translation>
     </message>
     <message>
         <source>Copied!</source>
-        <translation></translation>
+        <translation>Копирано!</translation>
     </message>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation></translation>
+        <translation>Присъединете се към официалния Moondust Discord сървър за подаване на отчета</translation>
     </message>
 </context>
 <context>
     <name>CustomCounterGUI</name>
     <message>
         <source>Custom Counter</source>
-        <translation></translation>
+        <translation>Персонализиран брояч</translation>
     </message>
     <message>
         <source>Please add the Item IDs which will be in this custom group:</source>
-        <translation></translation>
+        <translation>Моля, добавете ИД на елементи, които ще бъдат в тази персонализирана група:</translation>
     </message>
     <message>
         <source>Item type:</source>
-        <translation></translation>
+        <translation>Тип елемент:</translation>
     </message>
     <message>
         <source>Counter name:</source>
-        <translation></translation>
+        <translation>Име на брояча:</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation></translation>
+        <translation>Добавяне</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation></translation>
+        <translation>Блок</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation></translation>
+        <translation>ФО</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -895,123 +914,123 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation></translation>
+        <translation>Плочка на терена</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation></translation>
+        <translation>Пейзажи</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation></translation>
+        <translation>Път</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation></translation>
+        <translation>Ниво</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation></translation>
+        <translation>Музика</translation>
     </message>
     <message>
         <source>Change item...</source>
-        <translation></translation>
+        <translation>Промяна на елемент...</translation>
     </message>
 </context>
 <context>
     <name>CustomMusicSetup</name>
     <message>
         <source>Music setup</source>
-        <translation></translation>
+        <translation>Настройка на музика</translation>
     </message>
     <message>
         <source>Play music</source>
-        <translation></translation>
+        <translation>Възпроизвеждане на музика</translation>
     </message>
     <message>
         <source>Synthesizer type:</source>
-        <translation></translation>
+        <translation>Тип на синтезатора:</translation>
     </message>
     <message>
         <source>Gain:</source>
-        <translation></translation>
+        <translation>Усилване:</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation></translation>
+        <translation>Нулиране</translation>
     </message>
     <message>
         <source>Tempo:</source>
-        <translation></translation>
+        <translation>Темпо:</translation>
     </message>
     <message>
         <source>Extra settings</source>
-        <translation></translation>
+        <translation>Допълнителни настройки</translation>
     </message>
     <message>
         <source>Custom bank:</source>
-        <translation></translation>
+        <translation>Персонализирана банка:</translation>
     </message>
     <message>
         <source>Volume model:</source>
-        <translation></translation>
+        <translation>Модел на силата на звука:</translation>
     </message>
     <message>
         <source>Deep vibrato</source>
-        <translation></translation>
+        <translation>Усилено вибрато</translation>
     </message>
     <message>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation></translation>
+        <translation>Банка:</translation>
     </message>
     <message>
         <source>Deep tremolo</source>
-        <translation></translation>
+        <translation>Усилено тремоло</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation></translation>
+        <translation>Преглед...</translation>
     </message>
     <message>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation></translation>
+        <translation>Тембърната банка определя звученето на MIDI музиката. Използвайте различни банки, за да сравните разликата в звученето.</translation>
     </message>
     <message>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation></translation>
+        <translation>Моделът на силата на звука указва как ще се мащабират силата на звука, скоростта на нотите и изразяването.</translation>
     </message>
     <message>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
-        <translation></translation>
+        <translation>Броят на емулираните чипове OPL3. Увеличете броя на чиповете, за да получите по-широка полифония (18 двуоператорни гласа на чип или 6 четириоператорни гласа на чип), или го намалете, ако имате накъсано възпроизвеждане на музика.</translation>
     </message>
     <message>
         <source>Chips number:</source>
-        <translation></translation>
+        <translation>Брой чипове:</translation>
     </message>
     <message>
         <source>Chiptune</source>
-        <translation></translation>
+        <translation>Чиптун</translation>
     </message>
     <message>
         <source>Track number</source>
-        <translation></translation>
+        <translation>Номер на пистата</translation>
     </message>
     <message>
         <source>To begin</source>
-        <translation></translation>
+        <translation>Да започне</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation></translation>
+        <translation>Предишна</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation></translation>
+        <translation>Следваща</translation>
     </message>
     <message>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation></translation>
+        <translation>Съвет: за да прегледате резултата от настройките, разрешете възпроизвеждането на музика. (Потърсете иконата на нота за възпроизвеждане/спиране в лентата с инструменти на основния прозорец).</translation>
     </message>
     <message>
         <source>MIDI</source>
@@ -1019,129 +1038,129 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation></translation>
+        <translation>libADLMIDI (емулация на OPL3 Synth)</translation>
     </message>
     <message>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation></translation>
+        <translation>libOPNMIDI (емулация на YM2612 Synth)</translation>
     </message>
     <message>
         <source>Timidity (needed a bank)</source>
-        <translation></translation>
+        <translation>Timidity (нужна банка)</translation>
     </message>
     <message>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation></translation>
+        <translation>Native MIDI (Не се препоръчва, бъгаво)</translation>
     </message>
     <message>
         <source>[Auto]</source>
-        <translation></translation>
+        <translation>[Авто]</translation>
     </message>
     <message>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation></translation>
+        <translation>Обща</translation>
     </message>
     <message>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation></translation>
+        <translation>Вградена OPL3</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation></translation>
+        <translation>Основни</translation>
     </message>
     <message>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation>Максимална полифония</translation>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation></translation>
+        <translation>Списък на SoundFont банките (може да се пренареди чрез плъзгане и пускане)</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation></translation>
+        <translation>Добавяне</translation>
     </message>
     <message>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation>Реверберация</translation>
     </message>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation>Размер на стаята</translation>
     </message>
     <message>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation>Заглушаване</translation>
     </message>
     <message>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation>Ширина</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation>Ниво</translation>
     </message>
     <message>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation>Хор</translation>
     </message>
     <message>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation>Ниво</translation>
     </message>
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation>Скорост</translation>
     </message>
     <message>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation>Дълбочина (мс)</translation>
     </message>
     <message>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation>Брой гласове (N)</translation>
     </message>
     <message>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation>Тип</translation>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation></translation>
+        <translation>FluidSynth (необходима е SF2 банка)</translation>
     </message>
     <message>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation></translation>
+        <translation>Вградена OPN2</translation>
     </message>
     <message>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation></translation>
+        <translation>Синусоидална вълна</translation>
     </message>
     <message>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation></translation>
+        <translation>Триъгълна вълна</translation>
     </message>
 </context>
 <context>
@@ -1155,254 +1174,261 @@ Please save them before doing anything else.</source>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation></translation>
+        <translation>Имате наследствен конфигурационен пакет.
+&lt;br&gt;Редакторът ще бъде стартиран, но може да срещнете проблеми с елементите или настройките.
+&lt;br&gt;
+&lt;br&gt;Моля, изтеглете и инсталирайте най-новата версия на вашия конфигурационен пакет:
+&lt;br&gt;
+&lt;br&gt;Изтегляне: %1
+&lt;br&gt;Забележка: повечето конфигурационни пакети се актуализират заедно с Moondust Engine,
+&lt;br&gt;затова можете да използвате същата връзка, за да получите актуализирана версия.</translation>
     </message>
 </context>
 <context>
     <name>DebuggerBox</name>
     <message>
         <source>Debugger</source>
-        <translation></translation>
+        <translation>Дебъгер</translation>
     </message>
     <message>
         <source>Mouse coordinates</source>
-        <translation></translation>
+        <translation>Координати на мишката</translation>
     </message>
     <message>
         <source>Go to point:</source>
-        <translation></translation>
+        <translation>Отидете на точка:</translation>
     </message>
     <message>
         <source>Go!</source>
-        <translation></translation>
+        <translation>Отидете!</translation>
     </message>
     <message>
         <source>Contents</source>
-        <translation></translation>
+        <translation>Съдържание</translation>
     </message>
     <message>
         <source>Custom counters</source>
-        <translation></translation>
+        <translation>Персонализирани броячи</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation></translation>
+        <translation>Добавяне</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation></translation>
+        <translation>Обновяване</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation></translation>
+        <translation>Редактиране</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
 </context>
 <context>
     <name>DevConsole</name>
     <message>
         <source>Developer Console</source>
-        <translation></translation>
+        <translation>Конзола за разработчици</translation>
     </message>
     <message>
         <source>Type commands here...</source>
-        <translation></translation>
+        <translation>Въведете команди тук...</translation>
     </message>
     <message>
         <source>Send Command</source>
-        <translation></translation>
+        <translation>Изпращане на команда</translation>
     </message>
     <message>
         <source>System</source>
-        <translation></translation>
+        <translation>Система</translation>
     </message>
     <message>
         <source>Clear System Log</source>
-        <translation></translation>
+        <translation>Изчистване на системния дневник</translation>
     </message>
     <message>
         <source>Clear All Logs</source>
-        <translation></translation>
+        <translation>Изчистване на всички дневници</translation>
     </message>
     <message>
         <source>Clear %1 Log</source>
-        <translation></translation>
+        <translation>Изчистване на дневника %1</translation>
     </message>
     <message>
         <source>Prints this help text</source>
-        <translation></translation>
+        <translation>Извежда този помощен текст</translation>
     </message>
     <message>
         <source>Prints a test command</source>
-        <translation></translation>
+        <translation>Извежда тестова команда</translation>
     </message>
     <message>
         <source>Prints the editor version</source>
-        <translation></translation>
+        <translation>Извежда версията на редактора</translation>
     </message>
     <message>
         <source>Quits the program</source>
-        <translation></translation>
+        <translation>Излиза от програмата</translation>
     </message>
     <message>
         <source>Saves the application settings</source>
-        <translation></translation>
+        <translation>Запазва настройките на приложението</translation>
     </message>
     <message>
         <source>Args: {SomeString} Calculates MD5 hash of string</source>
-        <translation></translation>
+        <translation>Аргументи: {НякакъвНиз} Изчислява MD5 хеш на низ</translation>
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation></translation>
+        <translation>Аргумент: {Масив от низове} потвърждава масива от низове PGE-X</translation>
     </message>
     <message>
         <source>Simulates crash signal</source>
-        <translation></translation>
+        <translation>Симулира сигнал за срив</translation>
     </message>
     <message>
         <source>Arg: {Path to file} tests if the file is in the PGE-X file format</source>
-        <translation></translation>
+        <translation>Аргумент: {Път към файла} изпробва дали файлът е във формат PGE-X</translation>
     </message>
     <message>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
-        <translation></translation>
+        <translation>Аргументи: {Тип на музиката (lvl wld spc), ID на музиката} Възпроизвеждане на музика по подразбиране по определен ID</translation>
     </message>
     <message>
         <source>Args: {engine commands} Send a command or message into the PGE Engine if it&apos;s running</source>
-        <translation></translation>
+        <translation>Аргументи: {команди на двигателя} Изпращане на команда или съобщение в двигателят Moondust , ако се изпълнява</translation>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation></translation>
+        <translation>Показва различни важни пътища!</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
-        <translation></translation>
+        <translation>Аргументи: {[Брой] Мегабайти} | Залива паметта с избраното количество данни (Внимавайте с това!)</translation>
     </message>
     <message>
         <source>Throws an unhandled exception to crash the editor</source>
-        <translation></translation>
+        <translation>Хвърля необработено изключение, за да срине редактора</translation>
     </message>
     <message>
         <source>Does a segmentation violation</source>
-        <translation></translation>
+        <translation>Предизвиква грешка в сегментацията, с цели за тестване на срив</translation>
     </message>
     <message>
         <source>Creates and deletes ItemSelectDialog to analyze memory leaking</source>
-        <translation></translation>
+        <translation>Създава и изтрива ItemSelectDialog, за да анализира изтичане на памет</translation>
     </message>
 </context>
 <context>
     <name>ExportToImage</name>
     <message>
         <source>Export to image</source>
-        <translation></translation>
+        <translation>Експортиране в изображение</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Това е &lt;span style=&quot;&quot;&gt;ширината&lt;/span&gt; на целевото изображение. Целевото изображение ще бъде мащабирано до тази ширина.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source> px</source>
-        <translation></translation>
+        <translation> пкс</translation>
     </message>
     <message>
         <source>Keep original aspect ratio</source>
-        <translation></translation>
+        <translation>Запазване на оригиналното съотношение на страните</translation>
     </message>
     <message>
         <source>Width</source>
-        <translation></translation>
+        <translation>Ширина</translation>
     </message>
     <message>
         <source>Force vertical background tiling</source>
-        <translation></translation>
+        <translation>Принудително вертикално облицоване на фона</translation>
     </message>
     <message>
         <source>Export current section to image</source>
-        <translation></translation>
+        <translation>Експортиране на текущата секция в изображение</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation></translation>
+        <translation>Височина</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Height&lt;/span&gt; of target image. Target image will be scaled to this height.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Това е &lt;span style=&quot;&quot;&gt;височината&lt;/span&gt; на целевото изображение. Целевото изображение ще бъде мащабирано до тази височина.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Когато е маркирано, това ще изчисли размера на противоположното измерение (височина или ширина), за да се създаде целево изображение с правилните пропорции.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
-        <translation></translation>
+        <translation>Моля, изберете целевия размер на изображението:</translation>
     </message>
     <message>
         <source>Hide warps and water markers (recommended)</source>
-        <translation></translation>
+        <translation>Скриване на маркери на проходи и вода (препоръчително)</translation>
     </message>
     <message>
         <source>Hide editor-only meta-signs pictures</source>
-        <translation></translation>
+        <translation>Скриване на снимки на мета-знаци за редактора</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
-        <translation></translation>
+        <translation>Скриване на мрежата (ако е показана)</translation>
     </message>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
-        <translation></translation>
+        <translation>Скриване на невидими блокове и метаобекти</translation>
     </message>
 </context>
 <context>
     <name>FileListBrowser</name>
     <message>
         <source>Files list</source>
-        <translation></translation>
+        <translation>Списък с файлове</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Това е списък на файловете на ниво, които се намират в същата папка като текущия файл.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source>Please select a file from the list:</source>
-        <translation></translation>
+        <translation>Моля, изберете файл от списъка:</translation>
     </message>
 </context>
 <context>
     <name>GreetingDialog</name>
     <message>
         <source>Welcome!</source>
-        <translation></translation>
+        <translation>Добре дошли!</translation>
     </message>
     <message>
         <source>Choose the workspace layout you want to use:</source>
-        <translation></translation>
+        <translation>Изберете оформлението на работното пространство, което искате да използвате:</translation>
     </message>
     <message>
         <source>Modern</source>
-        <translation></translation>
+        <translation>Модерно</translation>
     </message>
     <message>
         <source>Classic</source>
-        <translation></translation>
+        <translation>Класическо</translation>
     </message>
     <message>
         <source>Modern UI designed for convenience, works well on screens of various sizes.</source>
-        <translation></translation>
+        <translation>Модерен потребителски интерфейс, проектиран за удобство, който работи добре на екрани с различни размери.</translation>
     </message>
     <message>
         <source>A classic interface which will be familiar to long-time users of SMBX or the legacy editor.</source>
-        <translation></translation>
+        <translation>Класически интерфейс, който ще бъде познат на дългогодишните потребители на наследствения редактор на SMBX.</translation>
     </message>
     <message>
         <source>Welcome to PGE Editor!</source>
-        <translation></translation>
+        <translation>Добре дошли в редактора Moondust!</translation>
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Tip 1:&lt;/b&gt; You still be able to toggle UI via &lt;u&gt;Help&lt;/u&gt; menu or toggling toolboxes from &lt;u&gt;View&lt;/u&gt; menu and toggling
@@ -1412,144 +1438,149 @@ sub-windows and tabs mode in the &lt;u&gt;Window&lt;/u&gt; menu.&lt;br/&gt;
 as well as toolboxes in toolbars and menus. This editor also allows you to select multiple objects at once!&lt;br/&gt;
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
-        <translation></translation>
+        <translation>&lt;p&gt;&lt;b&gt;Съвет 1:&lt;/b&gt; Можете да променяте оформлението по всяко време от менюто &lt;u&gt;Помощ&lt;/u&gt;, от кутиите с инструменти в менюто &lt;u&gt;Преглед&lt;/u&gt; и от квадратчетата за отметка на оформление на прозорец в менюто &lt;u&gt;Прозорец&lt;/u&gt;.&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Съвет 2:&lt;/b&gt; За разлика от наследствения редактор, много функции могат да бъдат бързо достъпвани от контекстното меню (отваря се при щракване с десния бутон на мишката),
+както и от кутиите с инструменти в лентите с инструменти и менютата. Този редактор също така ви позволява да избирате няколко обекта наведнъж!&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;Съвет 3:&lt;/b&gt; Използвайте средния бутон на мишката, за да превключвате между поставяне на избрания обект или копиране на група от тях!&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementAddLayer</name>
     <message>
         <source>Add Layer</source>
-        <translation></translation>
+        <translation>Добавяне на слой</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementAddWarp</name>
     <message>
         <source>Add Warp</source>
-        <translation></translation>
+        <translation>Добавяне на запис за проход</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementChangeLayerVisibility</name>
     <message>
         <source>Toggle the visibility of a layer</source>
-        <translation></translation>
+        <translation>Превключване на видимостта на слой</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementChangedNewLayer</name>
     <message>
         <source>New Layer</source>
-        <translation></translation>
+        <translation>Нов слой</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementLayerChanged</name>
     <message>
         <source>Change Layer</source>
-        <translation></translation>
+        <translation>Промяна на слоя</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementMergeLayer</name>
     <message>
         <source>Merge Layer</source>
-        <translation></translation>
+        <translation>Обединяване на слоеве</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementModification</name>
     <message>
         <source>Simple Modification History</source>
-        <translation></translation>
+        <translation>История на простите модификации</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementModifyEvent</name>
     <message>
         <source>Remove Event</source>
-        <translation></translation>
+        <translation>Премахване на събитие</translation>
     </message>
     <message>
         <source>Add Event</source>
-        <translation></translation>
+        <translation>Добавяне на събитие</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementNewLayer</name>
     <message>
         <source>New Layer</source>
-        <translation></translation>
+        <translation>Нов слой</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementPlaceDoor</name>
     <message>
         <source>Place Door</source>
-        <translation></translation>
+        <translation>Поставяне на точка на врата</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRemoveLayer</name>
     <message>
         <source>Remove Layer</source>
-        <translation></translation>
+        <translation>Премахване на слой</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRemoveLayerAndSave</name>
     <message>
         <source>Remove Layer and keep items</source>
-        <translation></translation>
+        <translation>Премахване на слоя и запазване на елементите</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRemoveWarp</name>
     <message>
         <source>Remove Warp</source>
-        <translation></translation>
+        <translation>Премахване на запис за проход</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRenameEvent</name>
     <message>
         <source>Rename Event</source>
-        <translation></translation>
+        <translation>Преименуване на събитие</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementRenameLayer</name>
     <message>
         <source>Rename Layer</source>
-        <translation></translation>
+        <translation>Преименуване на слой</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementReplacePlayerPoint</name>
     <message>
         <source>Place Player Point</source>
-        <translation></translation>
+        <translation>Поставяне на точка на играч</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementResizeBlock</name>
     <message>
         <source>Resize Block</source>
-        <translation></translation>
+        <translation>Преоразмеряване на блок</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementResizeSection</name>
     <message>
         <source>Resize Section</source>
-        <translation></translation>
+        <translation>Преоразмеряване на секция</translation>
     </message>
 </context>
 <context>
     <name>HistoryElementResizeWater</name>
     <message>
         <source>Resize Water</source>
-        <translation></translation>
+        <translation>Преоразмеряване на водна площ</translation>
     </message>
 </context>
 <context>
@@ -1557,289 +1588,290 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation></translation>
+        <translation>Файл за ниво на Moondust</translation>
     </message>
     <message>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation></translation>
+        <translation>Световна карта на Moondust</translation>
     </message>
     <message>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
-        <translation></translation>
+        <translation>Файл с ниво на SMBX</translation>
     </message>
     <message>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
-        <translation></translation>
+        <translation>Световна карта на SMBX</translation>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation></translation>
+        <translation>Моля, изчакайте...</translation>
     </message>
 </context>
 <context>
     <name>ItemBGO</name>
     <message>
         <source>Layer: </source>
-        <translation></translation>
+        <translation>Слой: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation></translation>
+        <translation>Добавяне към нов слой...</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation></translation>
+        <translation>[скрит]</translation>
     </message>
     <message>
         <source>Change Z-Offset...</source>
-        <translation></translation>
+        <translation>Промяна на Z-изместване...</translation>
     </message>
     <message>
         <source>Z-Layer</source>
-        <translation></translation>
+        <translation>Z-слой</translation>
     </message>
     <message>
         <source>Background-2</source>
-        <translation></translation>
+        <translation>Фон-2</translation>
     </message>
     <message>
         <source>Background</source>
-        <translation></translation>
+        <translation>Фон</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation></translation>
+        <translation>По подразбиране</translation>
     </message>
     <message>
         <source>Foreground</source>
-        <translation></translation>
+        <translation>Преден план</translation>
     </message>
     <message>
         <source>Foreground-2</source>
-        <translation></translation>
+        <translation>Преден план-2</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation></translation>
+        <translation>Трансформиране в</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в тази секция в</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>BGO-ID: %1</source>
-        <translation></translation>
+        <translation>ИД на ФО: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation></translation>
+        <translation>Премахване на всички %1 в тази секция</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation></translation>
+        <translation>Премахване на всички %1</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation></translation>
+        <translation>Свойства...</translation>
     </message>
     <message>
         <source>Z-Offset</source>
-        <translation></translation>
+        <translation>Z-Изместване</translation>
     </message>
     <message>
         <source>Please enter the Z-value offset:</source>
-        <translation></translation>
+        <translation>Моля, въведете стойността на Z-отместване:</translation>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation></translation>
+        <translation>Граница на секция</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation></translation>
+        <translation>Моля, изберете на какво разстояние от границите на секцията (в пиксели) да премахнете елементите.</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation></translation>
+        <translation>Редактиране на необработени потребителски данни...</translation>
     </message>
 </context>
 <context>
     <name>ItemBlock</name>
     <message>
         <source>Layer: </source>
-        <translation></translation>
+        <translation>Слой: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation></translation>
+        <translation>Добавяне към нов слой...</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation></translation>
+        <translation>[скрит]</translation>
     </message>
     <message>
         <source>Invisible</source>
-        <translation></translation>
+        <translation>Невидим</translation>
     </message>
     <message>
         <source>Slippery</source>
-        <translation></translation>
+        <translation>Хлъзгав</translation>
     </message>
     <message>
         <source>Resize</source>
-        <translation></translation>
+        <translation>Преоразмеряване</translation>
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation></translation>
+        <translation>Промяна на съдържащите се NPC...</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation></translation>
+        <translation>Трансформиране в</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в тази секция в</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в</translation>
     </message>
     <message>
         <source>Make message box...</source>
-        <translation></translation>
+        <translation>Правене на кутия за съобщение...</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>Block-ID: %1</source>
-        <translation></translation>
+        <translation>ИД на блок: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation></translation>
+        <translation>Премахване на всички %1 в тази секция</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation></translation>
+        <translation>Премахване на всички %1</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation></translation>
+        <translation>Свойства...</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation></translation>
+        <translation>Граница на секция</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation></translation>
+        <translation>Моля, изберете на какво разстояние от границите на секцията (в пиксели) да премахнете елементите.</translation>
     </message>
     <message>
         <source>Event name</source>
-        <translation></translation>
+        <translation>Име на събитие</translation>
     </message>
     <message>
         <source>Please enter the name of event:</source>
-        <translation></translation>
+        <translation>Моля, въведете името на събитието:</translation>
     </message>
     <message>
         <source>Please enter the message which will be shown.
 (Max line length is 27 characters)</source>
-        <translation></translation>
+        <translation>Моля, въведете съобщението, което ще бъде показано.
+(Максималната дължина на реда е 27 знака)</translation>
     </message>
     <message>
         <source>Hit message text</source>
-        <translation></translation>
+        <translation>Текст на съобщението при удар</translation>
     </message>
     <message>
         <source>Event created</source>
-        <translation></translation>
+        <translation>Създадено събитие</translation>
     </message>
     <message>
         <source>Message event created!</source>
-        <translation></translation>
+        <translation>Създадено е събитие със съобщение!</translation>
     </message>
     <message>
         <source>&apos;Hit&apos; event slot is used</source>
-        <translation></translation>
+        <translation>Използва се слот за събитие &apos;Удар&apos;</translation>
     </message>
     <message>
         <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
-        <translation></translation>
+        <translation>Съжаляваме, но слотът за събитие &apos;Удар&apos; вече е използван от събитието: &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation></translation>
+        <translation>Редактиране на необработени потребителски данни...</translation>
     </message>
 </context>
 <context>
@@ -1847,218 +1879,219 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Search by Name</source>
         <comment>Element search criteria</comment>
-        <translation></translation>
+        <translation>Търсене по име</translation>
     </message>
     <message>
         <source>Search by ID</source>
         <comment>Element search criteria</comment>
-        <translation></translation>
+        <translation>Търсене по ИД</translation>
     </message>
     <message>
         <source>Search by ID (Contained)</source>
         <comment>Element search criteria</comment>
-        <translation></translation>
+        <translation>Търсене по ID (съдържащ)</translation>
     </message>
     <message>
         <source>Sort by</source>
         <comment>Search settings pop-up menu, sort submenu</comment>
-        <translation></translation>
+        <translation>Сортиране по</translation>
     </message>
     <message>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation></translation>
+        <translation>Име</translation>
     </message>
     <message>
         <source>ID</source>
         <comment>Sort by ID</comment>
-        <translation></translation>
+        <translation>ИД</translation>
     </message>
     <message>
         <source>Descending</source>
         <comment>Descending sorting order</comment>
-        <translation></translation>
+        <translation>Низходящо</translation>
     </message>
     <message>
         <source>Uniform item sizes view</source>
         <comment>Align elements inside of Item Box list in uniform view</comment>
-        <translation></translation>
+        <translation>Изглед на единни размери на елементите</translation>
     </message>
     <message>
         <source>Show custom elements</source>
         <comment>Show custom elements only in Item Box List</comment>
-        <translation></translation>
+        <translation>Показване на персонализирани елементи</translation>
     </message>
     <message>
         <source>Show standard elements</source>
         <comment>Show standard elements only in Item Box List</comment>
-        <translation></translation>
+        <translation>Показване на стандартни елементи</translation>
     </message>
 </context>
 <context>
     <name>ItemDoor</name>
     <message>
         <source>Open target level: %1</source>
-        <translation></translation>
+        <translation>Отваряне на целево ниво: %1</translation>
     </message>
     <message>
         <source>Layer: </source>
-        <translation></translation>
+        <translation>Слой: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation></translation>
+        <translation>Добавяне към нов слой...</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation></translation>
+        <translation>[скрита]</translation>
     </message>
     <message>
         <source>Jump to exit</source>
-        <translation></translation>
+        <translation>Скачане за изход</translation>
     </message>
     <message>
         <source>Jump to entrance</source>
-        <translation></translation>
+        <translation>Скачане за вход</translation>
     </message>
     <message>
         <source>No Vehicles</source>
-        <translation></translation>
+        <translation>Без монтирания</translation>
     </message>
     <message>
         <source>Allow NPC</source>
-        <translation></translation>
+        <translation>Разрешаване на елементи</translation>
     </message>
     <message>
         <source>Locked</source>
-        <translation></translation>
+        <translation>Заключена</translation>
     </message>
     <message>
         <source>Need a bomb</source>
-        <translation></translation>
+        <translation>Нуждае се от бомба</translation>
     </message>
     <message>
         <source>Required special state</source>
-        <translation></translation>
+        <translation>Изисква се специално състояние</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation></translation>
+        <translation>Свойства...</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
     <message>
         <source>Required stood state</source>
-        <translation type="unfinished"></translation>
+        <translation>Изисква изправено състояние</translation>
     </message>
 </context>
 <context>
     <name>ItemLevel</name>
     <message>
         <source>Open target file: %1</source>
-        <translation></translation>
+        <translation>Отваряне на целевия файл: %1</translation>
     </message>
     <message>
         <source>Path background</source>
-        <translation></translation>
+        <translation>Фонов път</translation>
     </message>
     <message>
         <source>Big Path background</source>
-        <translation></translation>
+        <translation>Голям фонов път</translation>
     </message>
     <message>
         <source>Always Visible</source>
-        <translation></translation>
+        <translation>Винаги видим</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>Level-ID: %1</source>
-        <translation></translation>
+        <translation>ИД на ниво: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation></translation>
+        <translation>Трансформиране в</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation></translation>
+        <translation>Премахване на всички %1</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation></translation>
+        <translation>Свойства...</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
 </context>
 <context>
     <name>ItemMsgBox</name>
     <message>
         <source>Set message box</source>
-        <translation></translation>
+        <translation>Задаване на текст на съобщението</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a message, what will be displayed if player will do talk with this NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt; All quotes and new-line characters will be removed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation></translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Това е съобщението, което ще се покаже, ако играчът разговаря с това NPC.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;Забележка:&lt;/span&gt; Всички кавички и знаци за нов ред ще бъдат премахнати.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source>Enter the NPC&apos;s dialog message:
 (Max length per line is 27 characters)</source>
-        <translation></translation>
+        <translation>Въведете диалоговото съобщение на NPC:
+(Максималната дължина на един ред е 27 знака)</translation>
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
