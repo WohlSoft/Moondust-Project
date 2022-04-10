@@ -248,7 +248,7 @@ Exit into:
 %1
 
 Entrance point: %2</source>
-        <translation>Изход от уорп
+        <translation>Изход от проход
 
 Изход в:
 %1
