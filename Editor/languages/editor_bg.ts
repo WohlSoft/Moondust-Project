@@ -2095,472 +2095,472 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
-        <translation></translation>
+        <translation>Приятелски (с неприятелски NPC не може да се разговаря)</translation>
     </message>
 </context>
 <context>
     <name>ItemMusic</name>
     <message>
         <source>&lt;Silence&gt;</source>
-        <translation></translation>
+        <translation>&amp;lt;Няма&amp;gt;</translation>
     </message>
     <message>
         <source>Play this</source>
-        <translation></translation>
+        <translation>Възпроизвеждане на това</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>World-Music-ID: %1</source>
-        <translation></translation>
+        <translation>ИД на музика на световна карта: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation></translation>
+        <translation>Трансформиране в</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation></translation>
+        <translation>Премахване на всички %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
 </context>
 <context>
     <name>ItemNPC</name>
     <message>
         <source>Layer: </source>
-        <translation></translation>
+        <translation>Слой: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation></translation>
+        <translation>Добавяне към нов слой...</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation></translation>
+        <translation>[скрит]</translation>
     </message>
     <message>
         <source>Edit NPC-Configuration</source>
-        <translation></translation>
+        <translation>Редактиране на конфигурацията на NPC</translation>
     </message>
     <message>
         <source>New NPC-Configuration</source>
-        <translation></translation>
+        <translation>Нова NPC-конфигурация</translation>
     </message>
     <message>
         <source>Set %1</source>
-        <translation></translation>
+        <translation>Задаване на %1</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation></translation>
+        <translation>Посока</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation></translation>
+        <translation>Наляво</translation>
     </message>
     <message>
         <source>Random</source>
-        <translation></translation>
+        <translation>Произволен</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation></translation>
+        <translation>Надясно</translation>
     </message>
     <message>
         <source>Friendly</source>
-        <translation></translation>
+        <translation>Приятелски</translation>
     </message>
     <message>
         <source>Doesn&apos;t move</source>
-        <translation></translation>
+        <translation>Не се движи</translation>
     </message>
     <message>
         <source>Set message...</source>
-        <translation></translation>
+        <translation>Задаване на съобщение...</translation>
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation></translation>
+        <translation>Задаване като бос</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation></translation>
+        <translation>Трансформиране в</translation>
     </message>
     <message>
         <source>Transform all %1 in this section into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в тази секция в</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в</translation>
     </message>
     <message>
         <source>Change included NPC...</source>
-        <translation></translation>
+        <translation>Промяна на съдържащ NPC...</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>NPC-ID: %1</source>
-        <translation></translation>
+        <translation>ИД на NPC: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remove all %1 in this section</source>
-        <translation></translation>
+        <translation>Премахване на всички %1 в тази секция</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation></translation>
+        <translation>Премахване на всички %1</translation>
     </message>
     <message>
         <source>Properties...</source>
-        <translation></translation>
+        <translation>Свойства...</translation>
     </message>
     <message>
         <source>Margin of section</source>
-        <translation></translation>
+        <translation>Граница на секция</translation>
     </message>
     <message>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation></translation>
+        <translation>Моля, изберете на какво разстояние от границите на секцията (в пиксели) да премахнете елементите.</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
     <message>
         <source>Edit raw user data...</source>
-        <translation></translation>
+        <translation>Редактиране на необработени потребителски данни...</translation>
     </message>
 </context>
 <context>
     <name>ItemPath</name>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>Path-ID: %1</source>
-        <translation></translation>
+        <translation>ИД на път: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation></translation>
+        <translation>Трансформиране в</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation></translation>
+        <translation>Премахване на всички %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
 </context>
 <context>
     <name>ItemPhysEnv</name>
     <message>
         <source>Layer: </source>
-        <translation></translation>
+        <translation>Слой: </translation>
     </message>
     <message>
         <source>Add to new layer...</source>
-        <translation></translation>
+        <translation>Добавяне към нов слой...</translation>
     </message>
     <message>
         <source>[hidden]</source>
-        <translation></translation>
+        <translation>[скрит]</translation>
     </message>
     <message>
         <source>Environment type</source>
-        <translation></translation>
+        <translation>Тип среда</translation>
     </message>
     <message>
         <source>Water</source>
-        <translation></translation>
+        <translation>Вода</translation>
     </message>
     <message>
         <source>Quicksand</source>
-        <translation></translation>
+        <translation>Движещи се пясъци</translation>
     </message>
     <message>
         <source>Custom liquid</source>
-        <translation></translation>
+        <translation>Персонализирана течност</translation>
     </message>
     <message>
         <source>Gravity Field</source>
-        <translation></translation>
+        <translation>Гравитационно поле</translation>
     </message>
     <message>
         <source>Touch Event (Once)</source>
-        <translation></translation>
+        <translation>Събитие при докосване (веднъж)</translation>
     </message>
     <message>
         <source>Touch Event (Every frame)</source>
-        <translation></translation>
+        <translation>Събитие при докосване (всеки кадър)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Once)</source>
-        <translation></translation>
+        <translation>Събитие при докосване на NPC (веднъж)</translation>
     </message>
     <message>
         <source>NPC Touch Event (Every frame)</source>
-        <translation></translation>
+        <translation>Събитие при докосване на NPC (всеки кадър)</translation>
     </message>
     <message>
         <source>Mouse click Event</source>
-        <translation></translation>
+        <translation>Събитие при щракване с мишката</translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Once)</source>
-        <translation></translation>
+        <translation>Събитие при докосване на NPC/играч (веднъж)</translation>
     </message>
     <message>
         <source>NPC/Player Touch Event (Every frame)</source>
-        <translation></translation>
+        <translation>Събитие при докосване на NPC/играч (всеки кадър)</translation>
     </message>
     <message>
         <source>Collision script</source>
-        <translation></translation>
+        <translation>Скрипт при сблъсък</translation>
     </message>
     <message>
         <source>Mouse click Script</source>
-        <translation></translation>
+        <translation>Скрипт при щракване с мишката</translation>
     </message>
     <message>
         <source>Collision Event</source>
-        <translation></translation>
+        <translation>Събитие при сблъсък</translation>
     </message>
     <message>
         <source>Air chamber</source>
-        <translation></translation>
+        <translation>Въздушна камера</translation>
     </message>
     <message>
         <source>NPC Hurting Field</source>
-        <translation></translation>
+        <translation>Наранително поле на NPC</translation>
     </message>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Resize</source>
-        <translation></translation>
+        <translation>Преоразмеряване</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
 </context>
 <context>
     <name>ItemPlayerPoint</name>
     <message>
         <source>Set %1</source>
-        <translation></translation>
+        <translation>Задаване на %1</translation>
     </message>
     <message>
         <source>Direction</source>
-        <translation></translation>
+        <translation>Посока</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation></translation>
+        <translation>Наляво</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation></translation>
+        <translation>Надясно</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
 </context>
 <context>
     <name>ItemScene</name>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>Scenery-ID: %1</source>
-        <translation></translation>
+        <translation>ИД на пейзаж: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation></translation>
+        <translation>Трансформиране в</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation></translation>
+        <translation>Премахване на всички %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
 </context>
 <context>
     <name>ItemSelectDialog</name>
     <message>
         <source>Select Item</source>
-        <translation></translation>
+        <translation>Изберете елемент</translation>
     </message>
     <message>
         <source>Blocks</source>
-        <translation></translation>
+        <translation>Блокове</translation>
     </message>
     <message>
         <source>Filter:</source>
-        <translation></translation>
+        <translation>Филтър:</translation>
     </message>
     <message>
         <source>Category:</source>
-        <translation></translation>
+        <translation>Категория:</translation>
     </message>
     <message>
         <source>Group:</source>
-        <translation></translation>
+        <translation>Група:</translation>
     </message>
     <message>
         <source>[all]</source>
-        <translation></translation>
+        <translation>[Всички]</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation></translation>
+        <translation>ФО</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -2568,174 +2568,174 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Terrain tile</source>
-        <translation></translation>
+        <translation>Плочка на терена</translation>
     </message>
     <message>
         <source>Scenery</source>
-        <translation></translation>
+        <translation>Пейзажи</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation></translation>
+        <translation>Път</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation></translation>
+        <translation>Ниво</translation>
     </message>
     <message>
         <source>Music</source>
-        <translation></translation>
+        <translation>Музика</translation>
     </message>
     <message>
         <source>Extra Data:</source>
-        <translation></translation>
+        <translation>Допълнителни данни:</translation>
     </message>
     <message>
         <source>[Empty]</source>
-        <translation></translation>
+        <translation>[Празно]</translation>
     </message>
     <message>
         <source>NPC from List</source>
-        <translation></translation>
+        <translation>NPC от списък</translation>
     </message>
     <message>
         <source>Coins</source>
-        <translation></translation>
+        <translation>Монети</translation>
     </message>
     <message>
         <source>Please, save file</source>
-        <translation></translation>
+        <translation>Моля, запазете файла</translation>
     </message>
     <message>
         <source>Please, save file first, if you want to select custom music file.</source>
-        <translation></translation>
+        <translation>Моля, запазете файла, за да използвате персонализирана музика.</translation>
     </message>
 </context>
 <context>
     <name>ItemTile</name>
     <message>
         <source>Copy preferences</source>
-        <translation></translation>
+        <translation>Копиране на предпочитания</translation>
     </message>
     <message>
         <source>Tile-ID: %1</source>
-        <translation></translation>
+        <translation>ID на плочка: %1</translation>
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation></translation>
+        <translation>Позиция: X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
-        <translation></translation>
+        <translation>Позиция: X, Y, Ширина, Височина</translation>
     </message>
     <message>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation></translation>
+        <translation>Позиция: Наляво, Отгоре, Надясно, Отдолу</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation></translation>
+        <translation>Копиране</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation></translation>
+        <translation>Изрязване</translation>
     </message>
     <message>
         <source>Transform into</source>
-        <translation></translation>
+        <translation>Трансформиране в</translation>
     </message>
     <message>
         <source>Transform all %1 into</source>
-        <translation></translation>
+        <translation>Трансформиране на всички %1 в</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation></translation>
+        <translation>Премахване</translation>
     </message>
     <message>
         <source>Remove all %1</source>
-        <translation></translation>
+        <translation>Премахване на всички %1</translation>
     </message>
     <message>
         <source>Preferences have been copied: %1</source>
-        <translation></translation>
+        <translation>Предпочитанията са копирани: %1</translation>
     </message>
 </context>
 <context>
     <name>JsonSettingsWidget</name>
     <message>
         <source>Browse</source>
-        <translation></translation>
+        <translation>Преглед</translation>
     </message>
     <message>
         <source>Play</source>
-        <translation></translation>
+        <translation>Възпроизвеждане</translation>
     </message>
     <message>
         <source>[empty]</source>
-        <translation></translation>
+        <translation>[празно]</translation>
     </message>
     <message>
         <source>W</source>
         <comment>Width, shortly</comment>
-        <translation></translation>
+        <translation>Ш</translation>
     </message>
     <message>
         <source>H</source>
         <comment>Height, shortly</comment>
-        <translation></translation>
+        <translation>В</translation>
     </message>
     <message>
         <source>%1 coins</source>
-        <translation></translation>
+        <translation>%1 монета(и)</translation>
     </message>
 </context>
 <context>
     <name>LevelEdit</name>
     <message>
         <source>Export current section to image</source>
-        <translation></translation>
+        <translation>Експортиране на текущата секция в изображение</translation>
     </message>
     <message>
         <source>PNG Image (*.png)</source>
-        <translation></translation>
+        <translation>PNG изображение (*.png)</translation>
     </message>
     <message>
         <source>Saving section image...</source>
-        <translation></translation>
+        <translation>Запазване на изображение на секция...</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation></translation>
+        <translation>Прекратяване</translation>
     </message>
     <message>
         <source>Please wait...</source>
-        <translation></translation>
+        <translation>Моля, изчакайте...</translation>
     </message>
     <message>
         <source>Untitled %1</source>
-        <translation></translation>
+        <translation>Неозаглавено %1</translation>
     </message>
     <message>
         <source>Please enter a level title for &apos;%1&apos;!</source>
-        <translation></translation>
+        <translation>Моля, въведете заглавие на ниво за &apos;%1&apos;!</translation>
     </message>
     <message>
         <source>Saving</source>
-        <translation></translation>
+        <translation>Запазване</translation>
     </message>
     <message>
         <source>Level title: </source>
-        <translation></translation>
+        <translation>Заглавие на ниво: </translation>
     </message>
     <message>
         <source>Make custom folder</source>
-        <translation></translation>
+        <translation>Създаване на потребителска папка</translation>
     </message>
     <message>
         <source>Save As</source>
-        <translation></translation>
+        <translation>Запазване като</translation>
     </message>
     <message>
         <source>Which version do you want to save as? (from 0 to 64)
@@ -2743,130 +2743,142 @@ List of known SMBX versions and format codes:
 %1
 (To allow level file work in specific SMBX version,
 version code must be less or equal specific code)</source>
-        <translation></translation>
+        <translation>Коя версия искате да запазите като? (от 0 до 64)
+Списък на известните версии на SMBX и кодове на форматите:
+%1
+(За да може файлът с ниво да работи в определена версия на SMBX,
+версията на файла трябва да е по-малка или равна на кода на тази версия на SMBX.)</translation>
     </message>
     <message>
         <source>Extension is not set</source>
-        <translation></translation>
+        <translation>Не е зададено разширение на файла</translation>
     </message>
     <message>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation></translation>
+        <translation>Разширението на файла не е зададено, моля, въведете валидно файлово разширение!</translation>
     </message>
     <message>
         <source>SMBX file version</source>
-        <translation></translation>
+        <translation>Версия на SMBX файла</translation>
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation></translation>
+        <translation>Ограничението за SMBX64 е надхвърлено</translation>
     </message>
     <message>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
-        <translation></translation>
+        <translation>Искате ли все пак да запазите файла?
+Превишаването на ограниченията за SMBX64 може да доведе до срив на SMBX с грешка &apos;Subscript out of range&apos;.
+
+Инсталирането на LunaLUA частично разширява тези ограничения.</translation>
     </message>
     <message>
         <source>File save error</source>
-        <translation></translation>
+        <translation>Грешка при записване на файл</translation>
     </message>
     <message>
         <source>Cannot save file %1:
 %2.</source>
-        <translation></translation>
+        <translation>Не може да се запази файл %1:
+%2.</translation>
     </message>
     <message>
         <source>File read error</source>
-        <translation></translation>
+        <translation>Грешка при четене на файл</translation>
     </message>
     <message>
         <source>Cannot read file %1:
 %2.</source>
-        <translation></translation>
+        <translation>Не може да се прочете файл %1:
+%2.</translation>
     </message>
     <message>
         <source>Loading level data</source>
-        <translation></translation>
+        <translation>Зареждане на данни за ниво</translation>
     </message>
     <message>
         <source>Incorrect custom configs</source>
-        <translation></translation>
+        <translation>Неправилни персонализирани конфигурации</translation>
     </message>
     <message>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation></translation>
+        <translation>Това ниво има някои неправилни конфигурационни файлове, които не могат да бъдат заредени. За да избегнете това съобщение следващия път, моля, поправете следните грешки във вашите конфигурационни файлове, които се намират в текущата и в потребителските папки:
+
+%1</translation>
     </message>
     <message>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
-        <translation></translation>
+        <translation>&apos;%1&apos; е променен.
+Искате ли да запазите промените?</translation>
     </message>
     <message>
         <source> not saved</source>
-        <translation></translation>
+        <translation> не е запазен</translation>
     </message>
     <message>
         <source>1/%1 Loading user data...</source>
-        <translation></translation>
+        <translation>1/%1 Зареждане на персонализирани данни...</translation>
     </message>
     <message>
         <source>1/%1 Loading Backgrounds...</source>
-        <translation></translation>
+        <translation>1/%1 Зареждане на фонове...</translation>
     </message>
     <message>
         <source>2/%1 Loading BGOs...</source>
-        <translation></translation>
+        <translation>2/%1 Зареждане на ФОи...</translation>
     </message>
     <message>
         <source>3/%1 Loading Blocks...</source>
-        <translation></translation>
+        <translation>3/%1 Зареждане на блокове...</translation>
     </message>
     <message>
         <source>4/%1 Loading NPCs...</source>
-        <translation></translation>
+        <translation>4/%1 Зареждане на NPC...</translation>
     </message>
     <message>
         <source>5/%1 Loading PhysEZ...</source>
         <comment>PhysEZ - Physical Environment Zone.</comment>
-        <translation></translation>
+        <translation>5/%1 Зареждане на PhysEZ...</translation>
     </message>
     <message>
         <source>6/%1 Loading Doors...</source>
-        <translation></translation>
+        <translation>6/%1 Зареждане на врати...</translation>
     </message>
 </context>
 <context>
     <name>LevelFileList</name>
     <message>
         <source>Level files list</source>
-        <translation></translation>
+        <translation>Списък с файлове на ниво</translation>
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
-        <translation></translation>
+        <translation>Моля, изберете файл на ниво от списъка, който да използвате:</translation>
     </message>
 </context>
 <context>
     <name>LevelItemBox</name>
     <message>
         <source>Blocks</source>
-        <translation></translation>
+        <translation>Блокове</translation>
     </message>
     <message>
         <source>Category:</source>
-        <translation></translation>
+        <translation>Категория:</translation>
     </message>
     <message>
         <source>Group:</source>
-        <translation></translation>
+        <translation>Група:</translation>
     </message>
     <message>
         <source>BGO</source>
-        <translation></translation>
+        <translation>ФО</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -2874,139 +2886,140 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Copy graphic to custom folder</source>
-        <translation></translation>
+        <translation>Копиране на графики в потребителска папка</translation>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
-        <translation></translation>
+        <translation>Копиране на графики в папка на епизод</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation></translation>
+        <translation>Търсене</translation>
     </message>
     <message>
         <source>&lt;Save file first&gt;</source>
-        <translation></translation>
+        <translation>&amp;lt;Първо запазете файла&amp;gt;</translation>
     </message>
     <message>
         <source>Level items browser</source>
-        <translation></translation>
+        <translation>Браузър за търсене</translation>
     </message>
 </context>
 <context>
     <name>LevelProps</name>
     <message>
         <source>Level Properties</source>
-        <translation></translation>
+        <translation>Свойства на ниво</translation>
     </message>
     <message>
         <source>Disable player controls</source>
-        <translation></translation>
+        <translation>Забраняване на контролите на играча</translation>
     </message>
     <message>
         <source>Drop</source>
-        <translation></translation>
+        <translation>Пускане</translation>
     </message>
     <message>
         <source>Jump</source>
-        <translation></translation>
+        <translation>Скачане</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation></translation>
+        <translation>Наляво</translation>
     </message>
     <message>
         <source>Alt-Jump</source>
-        <translation></translation>
+        <translation>Алт-скачане</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation></translation>
+        <translation>Надясно</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation></translation>
+        <translation>Започни</translation>
     </message>
     <message>
         <source>Alt-Run</source>
-        <translation></translation>
+        <translation>Алт-бягане</translation>
     </message>
     <message>
         <source>Run</source>
-        <translation></translation>
+        <translation>Бягане</translation>
     </message>
     <message>
         <source>Up</source>
-        <translation></translation>
+        <translation>Нагоре</translation>
     </message>
     <message>
         <source>Down</source>
-        <translation></translation>
+        <translation>Надолу</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation></translation>
+        <translation>Заглавие</translation>
     </message>
     <message>
         <source>Level name:</source>
-        <translation></translation>
+        <translation>Име на ниво:</translation>
     </message>
     <message>
         <source>Physics</source>
-        <translation></translation>
+        <translation>Физика</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation></translation>
+        <translation>По подразбиране</translation>
     </message>
     <message>
         <source>Physics type:</source>
-        <translation></translation>
+        <translation>Тип физика:</translation>
     </message>
     <message>
         <source>Timer</source>
-        <translation></translation>
+        <translation>Таймер</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation></translation>
+        <translation>Разрешаване</translation>
     </message>
     <message>
         <source> sec.</source>
-        <translation></translation>
+        <translation> сек.</translation>
     </message>
     <message>
         <source>Kill all players</source>
-        <translation></translation>
+        <translation>Убиване на всички играчи</translation>
     </message>
     <message>
         <source>Trigger event</source>
-        <translation></translation>
+        <translation>Задействане на събитие</translation>
     </message>
     <message>
         <source>Time limit:</source>
-        <translation></translation>
+        <translation>Ограничение на времето:</translation>
     </message>
     <message>
         <source>Timer type:</source>
-        <translation></translation>
+        <translation>Действие на таймера:</translation>
     </message>
     <message>
         <source>Event:</source>
-        <translation></translation>
+        <translation>Събитие:</translation>
     </message>
     <message>
         <source>General</source>
-        <translation></translation>
+        <translation>Основни</translation>
     </message>
     <message>
         <source>No settings available</source>
-        <translation></translation>
+        <translation>Няма налични настройки</translation>
     </message>
     <message>
         <source>Error in the file %1:
 %2</source>
-        <translation></translation>
+        <translation>Грешка във файла %1:
+%2</translation>
     </message>
 </context>
 <context>
@@ -3014,102 +3027,105 @@ Do you want to save your changes?</source>
     <message>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
-        <translation></translation>
+        <translation>Ниво на изпитване</translation>
     </message>
     <message>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
-        <translation></translation>
+        <translation>Започва тестване на нива в енджина SMBX.
+Тази функция изисква LunaLua .</translation>
     </message>
     <message>
         <source>Reset checkpoints</source>
-        <translation></translation>
+        <translation>Нулиране на контролни точки</translation>
     </message>
     <message>
         <source>Reset all checkpoint states to initial state.</source>
-        <translation></translation>
+        <translation>Нулиране на всички контролни точки.</translation>
     </message>
     <message>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
-        <translation></translation>
+        <translation>Забраняване на OpenGL</translation>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation></translation>
+        <translation>Забраняване на OpenGL рендиращ двигател и използвайте GDI вместо това. Полезно, ако вашата видео карта не поддържа OpenGL или LunaLua се срива на опита да го използвате. Това ще доведе до силно намалени функции.</translation>
     </message>
     <message>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation></translation>
+        <translation>Оставяне да се изпълнява на фон</translation>
     </message>
     <message>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation></translation>
+        <translation>Позволява бързо започване на тестване на нивото след първото пускане.
+Изисква мощен компютър, в противен случай двигателят може да замръзне при следващото тестово стартиране.
+Препоръчва се тази функция да се деактивира на бавни машини или ако възникнат проблеми при опит за тестване на ниво.</translation>
     </message>
     <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation></translation>
+        <translation>Прекратяване на работещ процес</translation>
     </message>
     <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation></translation>
+        <translation>Завършва процеса на LunaTester, за да може двигателят да бъде зареден от нулата.</translation>
     </message>
     <message>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
-        <translation></translation>
+        <translation>Започни игра</translation>
     </message>
     <message>
         <source>Launch LunaTester as a normal game.</source>
-        <translation></translation>
+        <translation>Стартиране на LunaTester като нормална игра.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation></translation>
+        <translation>Сигурни ли сте, че искате да затворите LunaTester? Ако тествате ниво, това веднага ще го прекрати!</translation>
     </message>
     <message>
         <source>LunaTester has been successfully closed.</source>
-        <translation></translation>
+        <translation>LunaTester беше успешно затворен.</translation>
     </message>
     <message>
         <source>LunaTester is not running.</source>
-        <translation></translation>
+        <translation>LunaTester не се изпълнява.</translation>
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
-        <translation></translation>
+        <translation>Моля, изберете пътя към LunaTester:</translation>
     </message>
     <message>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation></translation>
+        <translation>Използване по подразбиране</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
-        <translation></translation>
+        <translation>Потребителски</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation></translation>
+        <translation>Преглед...</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation></translation>
+        <translation>Запазете</translation>
     </message>
     <message>
         <source>Checkpoints successfully reseted!</source>
-        <translation></translation>
+        <translation>Контролните точки бяха нулирани успешно!</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
-        <translation></translation>
+        <translation>Тестерът LunaLua не е стартиран!</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
