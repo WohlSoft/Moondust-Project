@@ -2050,7 +2050,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Required stood state</source>
-        <translation type="unfinished"></translation>
+        <translation>Потрібен стоячий стан</translation>
     </message>
 </context>
 <context>
@@ -5013,44 +5013,44 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>None</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Нема</translation>
     </message>
     <message>
         <source>Scroll</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Прокрутка</translation>
     </message>
     <message>
         <source>Fade</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Затемнення</translation>
     </message>
     <message>
         <source>Circle fade</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished"></translation>
+        <translation>Кругове обведення</translation>
     </message>
     <message>
         <source>Flip horizontal</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished">Перевернути горизонтально</translation>
+        <translation>Перевернути горизонтально</translation>
     </message>
     <message>
         <source>Flip vertical</source>
         <comment>Transition effect type</comment>
-        <translation type="unfinished">Перевернути вертикально</translation>
+        <translation>Перевернути вертикально</translation>
     </message>
     <message>
         <source>Transition effect:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефект переходу:</translation>
     </message>
     <message>
         <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цим переходом гравець може скористуватися при умові, що він стоїть на твердій підлозі. Ця опція не впливає на проходи типу &quot;Миттєвий&quot; та &quot;Портал&quot;.</translation>
     </message>
     <message>
         <source>Needs floor</source>
-        <translation type="unfinished"></translation>
+        <translation>Необхідна підлога</translation>
     </message>
 </context>
 <context>
@@ -7643,11 +7643,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>Warp Transition Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефект переходу</translation>
     </message>
     <message>
         <source>Needs floor</source>
-        <translation type="unfinished"></translation>
+        <translation>Необхідна підлога</translation>
     </message>
 </context>
 <context>
