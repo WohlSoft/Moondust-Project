@@ -10525,20 +10525,6 @@ Right-click to remove!</source>
     <name></name>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
-原因：未处理异常
-
-请将错误报告发送给论坛管理员，以便于我们处理问题。
-
-论坛链接: wohlsoft.ru/forum（需要英文）</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: %1
 
 </source>
