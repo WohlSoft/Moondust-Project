@@ -991,7 +991,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="195"/>
         <source>Perform one of actions on a current frame or the whole sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Виповнити одну з дій над даним кадром або над цілим спрайтом</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>

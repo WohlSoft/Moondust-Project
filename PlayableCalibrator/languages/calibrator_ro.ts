@@ -885,29 +885,29 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="195"/>
         <source>Perform one of actions on a current frame or the whole sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Performează unele dintre acţiuni pe o imagine curentă sau tot sprite-ul</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="222"/>
         <location filename="../image_calibration/image_calibrator.ui" line="225"/>
         <source>Undo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>Anulează o schimbare recentă</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="239"/>
         <location filename="../image_calibration/image_calibrator.ui" line="242"/>
         <source>Redo a recent change</source>
-        <translation type="unfinished"></translation>
+        <translation>Refaceţi o schimbare recentă</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="281"/>
         <source>When using mouse to move the picture, also move hitbox too. Use this if you want to align the frame without breaking the calibration setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Folosind mouse-ul pentru a mişca imaginea, se va mişca spaţiul de coliziune la fel. Foloseşte asta dacă doreşti să aliniezi imaginea fără să strici setările calibrării.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="284"/>
         <source>Hitbox move</source>
-        <translation type="unfinished"></translation>
+        <translation>Mişcă spaţiu coliziune</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="298"/>
@@ -917,33 +917,33 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="305"/>
         <source>Drag offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Trage offset X</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="312"/>
         <source>Show sprite map</source>
-        <translation type="unfinished"></translation>
+        <translation>Previzualizează mapă sprite</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="322"/>
         <source>Clear</source>
         <comment>reference frame</comment>
-        <translation type="unfinished"></translation>
+        <translation>Eliberează</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="343"/>
         <source>Drag frame offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Trage offset imagine:</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="370"/>
         <source>Referrence frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>Imagine referenţă:</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="403"/>
         <source>Opacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Opacitate</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="410"/>
