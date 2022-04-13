@@ -10523,15 +10523,5 @@ Right-click to remove!</source>
 </context>
 <context>
     <name></name>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: %1
-
-</source>
-        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
-原因：%1
-
-</translation>
-    </message>
 </context>
 </TS>
