@@ -10523,13 +10523,5 @@ Right-click to remove!</source>
 </context>
 <context>
     <name></name>
-    <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
-show the current playable character(s) and number of lives.</source>
-        <translation>显示黑屏而非加载关卡时的界面。
-在 SMBX 1.3 引擎中，加载关卡时的界面将
-显示当前人物和剩余生命数。</translation>
-    </message>
 </context>
 </TS>
