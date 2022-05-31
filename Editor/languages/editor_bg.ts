@@ -3129,38 +3129,38 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
-        <translation></translation>
+        <translation>Засечен е ванила SMBX!</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation></translation>
+        <translation>Неуспешно изпращане на ниво в LunaLUA-SMBX!</translation>
     </message>
     <message>
         <source>LunaTester error</source>
-        <translation></translation>
+        <translation>Грешка в LunaTester</translation>
     </message>
     <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
-        <translation></translation>
+        <translation>Промяна на пътя към LunaTester...</translation>
     </message>
     <message>
         <source>Select the location of LunaTester.</source>
-        <translation></translation>
+        <translation>Изберете местоположението на LunaTester.</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
-        <translation></translation>
+        <translation>Път към LunaTester</translation>
     </message>
     <message>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
-        <translation></translation>
+        <translation>Изберете местоположение на LunaTester</translation>
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
-        <translation></translation>
+        <translation>Ограниченията на SMBX64 са надхвърлени!</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3168,17 +3168,21 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 , legacy engine may crash!
 Suggested to remove all excess elements.
 Do you want to continue the process?</source>
-        <translation></translation>
+        <translation>Установено е нарушение на стандарта SMBX64!
+%1
+, наследственият двигател може да се срине!
+Предложено е да се премахнат всички излишни елементи.
+Искате ли да продължите процеса?</translation>
     </message>
     <message>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
-        <translation></translation>
+        <translation>Неуспешна проверка на директорията на LunaTester</translation>
     </message>
     <message>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
-        <translation></translation>
+        <translation>Не може да стартира LunaTester, защото &quot;%1&quot; не е намерен! Това може да се случи поради някоя от следните причини:</translation>
     </message>
     <message>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
