@@ -10523,5 +10523,39 @@ Right-click to remove!</source>
 </context>
 <context>
     <name></name>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation>终止进程</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
+原因：内存溢出！
+
+为防止出现此现象，请关闭其他程序以释放内存。</translation>
+    </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation>发送报告之前，请简述您是如何操作造成的程序异常终止。
+- 请列出造成程序异常终止的行为。
+- 如果是编辑指定文件造成的异常终止，请附上相关文件。
+- 您使用的操作系统？</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation>未找到月尘引擎管理器，无法启动工具：
+%1
+请选择月尘引擎管理器文件夹！</translation>
+    </message>
 </context>
 </TS>
