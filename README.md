@@ -24,8 +24,8 @@ https://wohlsoft.ru/pgewiki/Building_Moondust_Project_from_sources
 
 
 ## Donate us
-[[![Donate to this project using YooMoney](https://img.shields.io/badge/yoomoney-donate-violet.svg)]](https://yoomoney.ru/to/410011104073392)
-[[![Donate to this project using Qiwi Wallet](https://img.shields.io/badge/QIWI-donate-orange.svg)]](https://my.qiwi.com/VYTALYY-NWjWmLlDuQ)
+[![Donate to this project using YooMoney](https://img.shields.io/badge/yoomoney-donate-violet.svg)](https://yoomoney.ru/to/410011104073392)
+[![Donate to this project using Qiwi Wallet](https://img.shields.io/badge/QIWI-donate-orange.svg)](https://my.qiwi.com/VYTALYY-NWjWmLlDuQ)
 
 <!--
 ### Currently doesn't work for me
