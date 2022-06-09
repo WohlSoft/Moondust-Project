@@ -10631,13 +10631,5 @@ Right-click to remove!</source>
 </context>
 <context>
     <name></name>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
-        <translation>未找到月尘引擎管理器，无法启动工具：
-%1
-请选择月尘引擎管理器文件夹！</translation>
-    </message>
 </context>
 </TS>
