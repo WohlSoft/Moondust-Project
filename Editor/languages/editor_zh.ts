@@ -10524,16 +10524,6 @@ Right-click to remove!</source>
 <context>
     <name></name>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
-原因：内存溢出！
-
-为防止出现此现象，请关闭其他程序以释放内存。</translation>
-    </message>
-    <message>
         <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
