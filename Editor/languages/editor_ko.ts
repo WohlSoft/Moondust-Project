@@ -27,416 +27,432 @@
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="71"/>
+        <location filename="../main_window/tools/app_settings.ui" line="69"/>
         <source>Main</source>
         <translation>메인(주요한)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="105"/>
+        <location filename="../main_window/tools/app_settings.ui" line="148"/>
         <source>Window layout</source>
         <translation>화면 레이아웃</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="120"/>
+        <location filename="../main_window/tools/app_settings.ui" line="162"/>
         <source>Separate Sub-windows (Classic style)</source>
         <translation>별도의 하위 창 (클래식 스타일)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="133"/>
+        <location filename="../main_window/tools/app_settings.ui" line="174"/>
         <source>Tabbed Sub-windows (Modern style)</source>
         <translation>탭이있는 하위 창 (모던 스타일)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="149"/>
+        <location filename="../main_window/tools/app_settings.ui" line="189"/>
         <source>Music player</source>
         <translation>음악플레이어</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="164"/>
+        <location filename="../main_window/tools/app_settings.ui" line="203"/>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
         <translation>레벨 파일을 열면 음악이 자동으로 재생됩니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="167"/>
+        <location filename="../main_window/tools/app_settings.ui" line="206"/>
         <source>Autoplay music after opening file</source>
         <translation>파일을 연 후 음악 자동 재생</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="183"/>
+        <location filename="../main_window/tools/app_settings.ui" line="239"/>
         <source>Performance</source>
         <translation>실행</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="198"/>
+        <location filename="../main_window/tools/app_settings.ui" line="286"/>
         <source>Animation</source>
         <translation>애니메이션</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="211"/>
+        <location filename="../main_window/tools/app_settings.ui" line="253"/>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
         <translation>주어진 시간에 애니메이션 할 수있는 최대 요소 수입니다. 이 제한을 초과하면 제한을 높이거나 초과 요소를 제거 할 때까지 애니메이션이 일시 중지됩니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="230"/>
+        <location filename="../main_window/tools/app_settings.ui" line="271"/>
         <source>Animation items limit</source>
         <translation>애니메이션 항목 제한</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="246"/>
+        <location filename="../main_window/tools/app_settings.ui" line="298"/>
         <source>Collision detection</source>
         <translation>충돌 감지</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="262"/>
+        <location filename="../main_window/tools/app_settings.ui" line="83"/>
         <source>Files</source>
         <translation>파일</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="277"/>
+        <location filename="../main_window/tools/app_settings.ui" line="97"/>
         <source>Associate file extensions</source>
         <translation>파일 확장자 연결</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="326"/>
+        <location filename="../main_window/tools/app_settings.ui" line="374"/>
         <source>Editor</source>
         <translation>편집자</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="335"/>
+        <location filename="../main_window/tools/app_settings.ui" line="383"/>
         <source>Middle mouse button actions</source>
         <translation>마우스 가운데 버튼 동작</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="341"/>
+        <location filename="../main_window/tools/app_settings.ui" line="389"/>
         <source>Copy selected items to cursor position</source>
         <translation>선택한 항목을 커서 위치로 복사</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="348"/>
+        <location filename="../main_window/tools/app_settings.ui" line="396"/>
         <source>Change the placement mode of the selected item</source>
         <translation>선택한 항목의 배치 모드 변경</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="355"/>
+        <location filename="../main_window/tools/app_settings.ui" line="403"/>
         <source>Toggle drag-to-scroll while selection is empty</source>
         <translation>선택 항목이 비어있는 동안 드래그하여 스크롤 전환</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="365"/>
+        <location filename="../main_window/tools/app_settings.ui" line="413"/>
         <source>Placement mode</source>
         <translation>배치 모드</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="371"/>
+        <location filename="../main_window/tools/app_settings.ui" line="419"/>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
         <translation>AppSettings 팝업 힌트 속성 상자는 항목 도구 상자 또는 타일셋 항목 상자에서 항목을 선택할 때와 같이 배치 할 항목을 선택할 표시되지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="375"/>
+        <location filename="../main_window/tools/app_settings.ui" line="423"/>
         <source>Don&apos;t show properties box when placing items</source>
         <translation>항목을 배치 할 때 속성 상자를 표시하지 않음</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="398"/>
+        <location filename="../main_window/tools/app_settings.ui" line="446"/>
         <source>History</source>
         <translation>기록</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="407"/>
+        <location filename="../main_window/tools/app_settings.ui" line="455"/>
         <source>Max history entries:</source>
         <translation>최대 기록 항목 :</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="414"/>
+        <location filename="../main_window/tools/app_settings.ui" line="462"/>
         <source>Maximum number of remembered history actions.</source>
         <translation>히스토리 큐의 최대 크기.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="433"/>
+        <location filename="../main_window/tools/app_settings.ui" line="481"/>
         <source>Screen capture default size</source>
         <translation>화면 캡처 기본 크기</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="439"/>
+        <location filename="../main_window/tools/app_settings.ui" line="487"/>
         <source>Use custom:</source>
         <translation>사용자 정의 사용 :</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="449"/>
+        <location filename="../main_window/tools/app_settings.ui" line="529"/>
         <source>Width:</source>
         <translation>폭:</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="475"/>
+        <location filename="../main_window/tools/app_settings.ui" line="539"/>
         <source>Height:</source>
         <translation>높이:</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="498"/>
+        <location filename="../main_window/tools/app_settings.ui" line="546"/>
         <source>Fit to window size</source>
         <translation>창 크기에 맞추기</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="511"/>
+        <location filename="../main_window/tools/app_settings.ui" line="572"/>
         <source>Environment</source>
         <translation>환경</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="517"/>
+        <location filename="../main_window/tools/app_settings.ui" line="578"/>
         <source>Default zoom:</source>
         <translation>기본 확대 / 축소 :</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="524"/>
+        <location filename="../main_window/tools/app_settings.ui" line="585"/>
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation>파일 열기 또는 파일 생성시 설치되는 기본 확대 / 축소.</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="547"/>
+        <location filename="../main_window/tools/app_settings.ui" line="608"/>
         <source>Defaults</source>
         <translation>기본값</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="556"/>
+        <location filename="../main_window/tools/app_settings.ui" line="617"/>
         <source>Classic Events tabs to auto-expand</source>
         <translation>자동 확장 할 클래식 이벤트 탭</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="562"/>
+        <location filename="../main_window/tools/app_settings.ui" line="651"/>
         <source>Autoscroll section</source>
         <translation>자동 스크롤 섹션</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="569"/>
+        <location filename="../main_window/tools/app_settings.ui" line="623"/>
         <source>Common</source>
         <translation>공통 이벤트 명령</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="576"/>
+        <location filename="../main_window/tools/app_settings.ui" line="637"/>
         <source>Layer visibility</source>
         <translation>레이어 가시성</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="583"/>
+        <location filename="../main_window/tools/app_settings.ui" line="644"/>
         <source>Layer movement</source>
         <translation>레이어 이동</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="590"/>
+        <location filename="../main_window/tools/app_settings.ui" line="658"/>
         <source>Trigger event</source>
         <translation>트리거 이벤트(명령 실행)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="597"/>
+        <location filename="../main_window/tools/app_settings.ui" line="665"/>
         <source>Hold buttons</source>
         <translation>보류(홀드) 버튼</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="604"/>
+        <location filename="../main_window/tools/app_settings.ui" line="630"/>
         <source>Section settings</source>
         <translation>섹션 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="627"/>
+        <location filename="../main_window/tools/app_settings.ui" line="321"/>
+        <source>Autosave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="327"/>
+        <source>Automatically save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="350"/>
+        <source>minutes</source>
+        <comment>Autosave interval units</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="701"/>
         <source>NPC settings</source>
         <translation>NPC 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="636"/>
+        <location filename="../main_window/tools/app_settings.ui" line="710"/>
         <source>Generator</source>
         <translation>생성 프로그램</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="658"/>
+        <location filename="../main_window/tools/app_settings.ui" line="719"/>
         <source>Type:</source>
         <translation>유형:</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="666"/>
+        <location filename="../main_window/tools/app_settings.ui" line="753"/>
         <source>Warp</source>
         <translation>경사</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="671"/>
+        <location filename="../main_window/tools/app_settings.ui" line="758"/>
         <source>Projectile</source>
         <translation>발사체</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="679"/>
+        <location filename="../main_window/tools/app_settings.ui" line="766"/>
         <source>Delay (seconds):</source>
         <translation>지연 (초) :</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="702"/>
+        <location filename="../main_window/tools/app_settings.ui" line="789"/>
         <source>Direction</source>
         <translation>Direction</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="714"/>
+        <location filename="../main_window/tools/app_settings.ui" line="801"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="721"/>
+        <location filename="../main_window/tools/app_settings.ui" line="808"/>
         <source>Random</source>
         <translation>무작위</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="728"/>
+        <location filename="../main_window/tools/app_settings.ui" line="815"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="741"/>
+        <location filename="../main_window/tools/app_settings.ui" line="828"/>
         <source>Warps and Doors</source>
         <translation>워프 및 문</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="747"/>
+        <location filename="../main_window/tools/app_settings.ui" line="834"/>
         <source>Warp type:</source>
         <translation>워프 유형:</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="755"/>
+        <location filename="../main_window/tools/app_settings.ui" line="842"/>
         <source>0 - Instant</source>
         <translation>0-즉시</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="760"/>
+        <location filename="../main_window/tools/app_settings.ui" line="847"/>
         <source>1 - Pipe</source>
         <translation>1-파이프</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="765"/>
+        <location filename="../main_window/tools/app_settings.ui" line="852"/>
         <source>2 - Door</source>
         <translation>2-문</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="770"/>
+        <location filename="../main_window/tools/app_settings.ui" line="857"/>
         <source>3 - Portal</source>
         <translation>3-포털</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="782"/>
+        <location filename="../main_window/tools/app_settings.ui" line="882"/>
         <source>View</source>
         <translation>전망</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="791"/>
+        <location filename="../main_window/tools/app_settings.ui" line="891"/>
         <source>Tileset Item toolbox</source>
         <translation>타일셋 항목 도구 상자</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="800"/>
-        <location filename="../main_window/tools/app_settings.ui" line="826"/>
-        <location filename="../main_window/tools/app_settings.ui" line="884"/>
+        <location filename="../main_window/tools/app_settings.ui" line="900"/>
+        <location filename="../main_window/tools/app_settings.ui" line="926"/>
+        <location filename="../main_window/tools/app_settings.ui" line="984"/>
         <source>Display tabs horizontally</source>
         <translation>가로로 탭 표시</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="807"/>
-        <location filename="../main_window/tools/app_settings.ui" line="833"/>
-        <location filename="../main_window/tools/app_settings.ui" line="891"/>
+        <location filename="../main_window/tools/app_settings.ui" line="907"/>
+        <location filename="../main_window/tools/app_settings.ui" line="933"/>
+        <location filename="../main_window/tools/app_settings.ui" line="991"/>
         <source>Display tabs vertically</source>
         <translation>탭을 세로로 표시</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="817"/>
+        <location filename="../main_window/tools/app_settings.ui" line="917"/>
         <source>World Map Item toolbox</source>
         <translation>세계지도 아이템 도구 상자</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="843"/>
-        <location filename="../main_window/tools/app_settings.ui" line="852"/>
+        <location filename="../main_window/tools/app_settings.ui" line="943"/>
+        <location filename="../main_window/tools/app_settings.ui" line="952"/>
         <source>Theme</source>
         <translation>테마</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="862"/>
+        <location filename="../main_window/tools/app_settings.ui" line="962"/>
         <source>Palette</source>
         <translation>팔레트</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="875"/>
+        <location filename="../main_window/tools/app_settings.ui" line="975"/>
         <source>Level Item toolbox</source>
         <translation>레벨 항목 도구 상자</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="914"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1014"/>
         <source>Font</source>
         <translation>폰트</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="933"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1033"/>
         <source>Font size</source>
         <translation>폰트 크기</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="953"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1053"/>
         <source>Use default</source>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="964"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1064"/>
         <source>Logging</source>
         <translation>벌채 반출</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="973"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1073"/>
         <source>Log level</source>
         <translation>로그 수준</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="983"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1083"/>
         <source>Browse</source>
         <translation>검색</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="990"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1090"/>
         <source>Log file</source>
         <translation>로그 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1014"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1114"/>
         <source>Extra</source>
         <translation>추가의</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1023"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1123"/>
         <source>Note: Some of those settings will take change on application restart</source>
         <translation>참고 : 일부 설정은 편집기를 다시 시작한 후에 만 변경 사항을 적용합니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1036"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1136"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
         <translation>높은 DPI 모니터에서 자동 확장 활성화</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="223"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="226"/>
         <source>Set log file</source>
         <translation>로그 파일 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="224"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="227"/>
         <source>Text files (*.txt *.log)</source>
         <translation>텍스트 파일 (* .txt * .log)</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="320"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="326"/>
         <source>Success</source>
         <translation>성공</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="320"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="326"/>
         <source>All file associations have been set</source>
         <translation>모든 파일 연결이 설정되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="322"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="328"/>
         <source>Error</source>
         <translation>에러</translation>
     </message>
@@ -3505,7 +3521,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="149"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="518"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
@@ -3531,7 +3547,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="121"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="610"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="664"/>
         <source>Level title: </source>
         <translation>레벨 타이틀: </translation>
     </message>
@@ -3576,29 +3592,29 @@ version code must be less or equal specific code)</source>
         <translation>파일 확장자가 설정되지 않았습니다, 유효한 확장자를 입력해주십시오!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="351"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="373"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="441"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="359"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="381"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="495"/>
         <source>File save error</source>
         <translation>파일 저장 에러</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="352"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="374"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="442"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="360"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="382"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="496"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>파일을 저장할 수 없음 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="405"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="420"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="459"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="474"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>SMBX64 한도가 초과됨</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="421"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="475"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
@@ -3609,30 +3625,30 @@ SMBX64 한도를 초과하면 &apos;Subscript out of range&apos;오류와 함께
 LunaLUA를 설치하면 이러한 한도가 부분적으로 확장됩니다.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="471"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="525"/>
         <source>File read error</source>
         <translation>파일 읽기 에러</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="472"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="526"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>파일을 읽을 수 없음 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="518"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="519"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="573"/>
         <source>Loading level data</source>
         <translation>레벨 데이터 불러오기</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="563"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="617"/>
         <source>Incorrect custom configs</source>
         <translation>옳지않은 커스텀 configs</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="564"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="618"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
@@ -3641,14 +3657,14 @@ LunaLUA를 설치하면 이러한 한도가 부분적으로 확장됩니다.</tr
 %1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="606"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="660"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
 변경 사항을 저장 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="608"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="662"/>
         <source> not saved</source>
         <translation> 저장되지 않았습니다</translation>
     </message>
@@ -8438,46 +8454,46 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <translation>시사</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="74"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="75"/>
         <source>Load file error</source>
         <translation>파일로드 오류</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="75"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="76"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>% 1 파일을 읽을 수 없습니다 :
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="126"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="127"/>
         <source>Save As</source>
         <translation>다른 이름으로 저장</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="130"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="131"/>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
         <translation>NPC 구성 파일 (npc-*. txt)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="154"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="155"/>
         <source>File save error</source>
         <translation>파일 저장 오류</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="155"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="156"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>% 1 파일을 저장할 수 없습니다 :
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="202"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="255"/>
         <source> not saved</source>
         <translation> 저장되지 않음</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="203"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="256"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
@@ -8565,7 +8581,7 @@ Error description:
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="322"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="328"/>
         <source>File association failed.</source>
         <translation>파일 연결에 실패했습니다.</translation>
     </message>
@@ -11718,7 +11734,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="127"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="417"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="472"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
@@ -11758,70 +11774,70 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>5 / % 1 오르골 적용 중 ...</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="48"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="49"/>
         <source>Untitled %1</source>
         <translation>제목 없음 % 1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="127"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="128"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation>&apos;% 1&apos;의 에피소드 제목을 입력하세요!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="128"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="129"/>
         <source>Saving</source>
         <translation>절약</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="131"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="132"/>
         <source>Episode Title: </source>
         <translation>세계 제목 : </translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="132"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="133"/>
         <source>Make custom folder</source>
         <translation>사용자 지정 폴더 만들기</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="133"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="134"/>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
         <translation>참고 : 레거시 SMBX 엔진에서는 사용자 지정 폴더가 지원되지 않습니다!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="194"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="195"/>
         <source>Save As</source>
         <translation>다른 이름으로 저장</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="221"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="260"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="222"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="261"/>
         <source>Extension is not set</source>
         <translation>확장이 설정되지 않았습니다</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="222"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="261"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="223"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="262"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation>파일 확장자가 정의되지 않았습니다. 파일 확장자를 입력하십시오!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="284"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
         <source>SMBX file version</source>
         <translation>SMBX 파일 버전</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="286"/>
         <source>Which version do you want to save as? (from 0 to 64)</source>
         <translation>어떤 버전으로 저장 하시겠습니까? (0에서 64까지)</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="297"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="305"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="298"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>SMBX64 제한이 초과되었습니다</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="307"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -11832,44 +11848,44 @@ SMBX64 제한을 초과하면 &apos;오버플로&apos;오류와 함께 SMBX가 �
 LunaLua를 설치하면 이러한 제한을 부분적으로 확장 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="317"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="335"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="318"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="336"/>
         <source>File save error</source>
         <translation>파일 저장 오류</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="318"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="336"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="319"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="337"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>% 1 파일을 저장할 수 없습니다 :
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="376"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="431"/>
         <source>File read error</source>
         <translation>파일 읽기 오류</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="377"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="432"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>% 1 파일을 읽을 수 없습니다 :
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="417"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="418"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="472"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="473"/>
         <source>Loading World map data</source>
         <translation>세계지도 데이터로드</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="455"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="510"/>
         <source>Incorrect custom configs</source>
         <translation>잘못된 사용자 지정 구성</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="456"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="511"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
@@ -11878,19 +11894,19 @@ LunaLua를 설치하면 이러한 제한을 부분적으로 확장 할 수 있�
 %1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="476"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="531"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
 변경 사항을 저장 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="478"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="533"/>
         <source> not saved</source>
         <translation> 저장되지 않음</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="480"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="535"/>
         <source>World title:</source>
         <translation>세계 제목 :</translation>
     </message>

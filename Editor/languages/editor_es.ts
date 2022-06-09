@@ -421,6 +421,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Palette</source>
         <translation type="unfinished">Paleta de color</translation>
     </message>
+    <message>
+        <source>Autosave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <comment>Autosave interval units</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>

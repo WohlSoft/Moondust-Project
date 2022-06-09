@@ -350,6 +350,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>Palette</source>
         <translation>Палитра</translation>
     </message>
+    <message>
+        <source>Autosave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <comment>Autosave interval units</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AsyncStarCounter</name>
@@ -7741,12 +7754,12 @@ Arguments: %2</source>
     <message>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">По подразбиране</translation>
     </message>
     <message>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Модерно</translation>
     </message>
     <message>
         <source>X2</source>
