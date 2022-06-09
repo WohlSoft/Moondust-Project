@@ -145,4 +145,49 @@ void MainWindow::on_actionSave_all_triggered()
     save_all();
 }
 
+void MainWindow::updateAutoSaver()
+{
+    m_autoSaveTimer.stop();
+    if(GlobalSettings::LvlOpts.autoSave_enable)
+    {
+        if(GlobalSettings::LvlOpts.autoSave_interval < 1)
+            GlobalSettings::LvlOpts.autoSave_interval = 1;
+        else if(GlobalSettings::LvlOpts.autoSave_interval > 30)
+            GlobalSettings::LvlOpts.autoSave_interval = 30;
 
+        m_autoSaveTimer.setInterval(GlobalSettings::LvlOpts.autoSave_interval * 60000);
+        m_autoSaveTimer.start();
+    }
+}
+
+void MainWindow::runAutoSave()
+{
+    QList<QMdiSubWindow *> listOfAllSubWindows = allEditWins();
+    for(QMdiSubWindow *subWin : listOfAllSubWindows)
+    {
+        if(activeChildWindow(subWin) == MainWindow::WND_Level)
+        {
+            LevelEdit *leveledit = activeLvlEditWin(subWin);
+
+            if(!leveledit)
+                continue;
+            leveledit->runAutoSave();
+        }
+        else if(activeChildWindow(subWin) == MainWindow::WND_NpcTxt)
+        {
+            NpcEdit *npcedit = activeNpcEditWin(subWin);
+
+            if(!npcedit)
+                continue;
+            npcedit->runAutoSave();
+        }
+        else if(activeChildWindow(subWin) == MainWindow::WND_World)
+        {
+            WorldEdit *worldedit = activeWldEditWin(subWin);
+
+            if(!worldedit)
+                continue;
+            worldedit->runAutoSave();
+        }
+    }
+}

@@ -64,6 +64,7 @@ public:
     bool trySave();
 
     bool saveFile(const QString &fileName, const bool addToRecent = true);
+    void runAutoSave();
 
     QString userFriendlyCurrentFile();
     QString currentFile()
@@ -79,6 +80,7 @@ public:
     void markForForceClose();
 
     QString curFile;
+    QString lastAutoSaveFile;
 
     QString customSavePath;
 

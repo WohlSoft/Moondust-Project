@@ -406,6 +406,8 @@ void MainWindow::setUiDefults()
     // Register hot key without adding into toolbar
     addAction(ui->actionNewFile);
 
+    QObject::connect(&m_autoSaveTimer, &QTimer::timeout, this, &MainWindow::runAutoSave);
+
     ui->menuWindow->menuAction()->setEnabled(true);
     ui->menuLevel->menuAction()->setEnabled(false);
     ui->menuWorld->menuAction()->setEnabled(false);

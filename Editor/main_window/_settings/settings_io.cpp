@@ -183,6 +183,13 @@ void MainWindow::loadSettings()
     }
     settings.endGroup();
 
+    settings.beginGroup("autosave");
+    {
+        GlobalSettings::LvlOpts.autoSave_enable = settings.value("enabled", true).toBool();
+        GlobalSettings::LvlOpts.autoSave_interval = settings.value("interval", 3).toInt();
+    }
+    settings.endGroup();
+
     settings.beginGroup("ext-tools");
     {
         GlobalSettings::tools_sox_bin_path = settings.value("sox-bin-path", GlobalSettings::tools_sox_bin_path).toString();
@@ -321,6 +328,13 @@ void MainWindow::saveSettings()
     }
     settings.endGroup();
 
+    settings.beginGroup("autosave");
+    {
+        settings.setValue("enabled", GlobalSettings::LvlOpts.autoSave_enable);
+        settings.setValue("interval", GlobalSettings::LvlOpts.autoSave_interval);
+    }
+    settings.endGroup();
+
     settings.beginGroup("ext-tools");
     {
         settings.setValue("sox-bin-path", GlobalSettings::tools_sox_bin_path);
@@ -434,4 +448,6 @@ void MainWindow::applySetup(bool startup)
     {
         qApp->setFont(*GlobalSettings::fontDefault);
     }
+
+    updateAutoSaver();
 }

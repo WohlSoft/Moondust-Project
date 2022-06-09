@@ -27,7 +27,7 @@
 struct EditingSettings
 {
     EditingSettings();
-    //Common
+    // Common
     bool animationEnabled = true;
     bool collisionsEnabled = true;
     bool grid_snap = true;
@@ -36,8 +36,11 @@ struct EditingSettings
     bool grid_show = false;
     bool camera_grid_show = false;
     unsigned int default_zoom = 100;
-    //World map only
+    // World map only
     bool semiTransparentPaths = false;
+    // Auto-saving
+    bool autoSave_enable = true;
+    int  autoSave_interval = 3; //!< Autosave interval in minutes
 };
 
 struct SETTINGS_ItemDefaults

@@ -28,6 +28,7 @@
 #include <common_features/util.h>
 #include <common_features/main_window_ptr.h>
 #include <common_features/file_keeper.h>
+#include <common_features/app_path.h>
 #include <editing/_scenes/world/wld_scene.h>
 #include <editing/_dialogs/savingnotificationdialog.h>
 #include <main_window/global_settings.h>
@@ -353,11 +354,65 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
 
     if(addToRecent)
     {
-        MainWinConnect::pMainWin->AddToRecentFiles(fileName);
-        MainWinConnect::pMainWin->SyncRecentFiles();
+        m_mw->AddToRecentFiles(fileName);
+        m_mw->SyncRecentFiles();
+
+        // Delete the autosave file as real file was been saved
+        if(!lastAutoSaveFile.isEmpty())
+        {
+            if(QFile::exists(lastAutoSaveFile))
+                QFile::remove(lastAutoSaveFile);
+            lastAutoSaveFile.clear();
+        }
     }
 
     return true;
+}
+
+void WorldEdit::runAutoSave()
+{
+    if(!WldData.meta.modified && !WldData.meta.untitled)
+        return; // Don't auto-save unmodified files
+
+    if(lastAutoSaveFile.isEmpty())
+    {
+        // Untitled file will be saved at the auto-generated directory
+        if(WldData.meta.untitled)
+        {
+            QDir crashSave;
+            crashSave.setCurrent(AppPathManager::userAppDir());
+
+            if(!crashSave.exists("__autosave"))
+                crashSave.mkdir("__autosave");
+            crashSave.cd("__autosave");
+
+            int counter = 0;
+            do // Find the suitable name and don't override existing files
+            {
+                lastAutoSaveFile = crashSave.absoluteFilePath(QString("Untitled-%1.wldx").arg(counter++));
+            }
+            while(QFile::exists(lastAutoSaveFile));
+        }
+        else
+        {
+            lastAutoSaveFile = WldData.meta.path + "/" + WldData.meta.filename + "_autosave.wldx";
+            int counter = 0;
+            // Find the suitable name and don't override existing files
+            while(QFile::exists(lastAutoSaveFile))
+            {
+                lastAutoSaveFile = WldData.meta.path + "/" + WldData.meta.filename + QString("_autosave-%1.wldx").arg(counter++);
+            }
+
+        }
+    }
+
+    auto data = WldData;
+
+    data.meta.configPackId = getMainWindow()->configs.configPackId;
+    data.meta.smbx64strict = false;
+    FileKeeper fileKeeper = FileKeeper(lastAutoSaveFile);
+    FileFormats::SaveWorldFile(data, fileKeeper.tempPath(), FileFormats::WLD_PGEX);
+    fileKeeper.restore();
 }
 
 

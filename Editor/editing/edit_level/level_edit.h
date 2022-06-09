@@ -67,6 +67,7 @@ public:
     bool savePGEXLVL(QString fileName, bool silent = false); //!< Saves a PGE Extended Level file format
     bool saveSMBX64LVL(QString fileName, bool silent = false, bool *out_WarningIsAborted = nullptr); //!< Saves a SMBX Level file format
     bool saveSMBX38aLVL(QString fileName, bool silent = false); //!< Saves SMBX38A Level file format
+    void runAutoSave();
     QString userFriendlyCurrentFile();
     QString currentFile()
     {
@@ -119,6 +120,7 @@ public:
     bool m_isUntitled = false;
 
     QString curFile;
+    QString lastAutoSaveFile;
 
     QTimer *updateTimer = nullptr;
     void setAutoUpdateTimer(int ms);

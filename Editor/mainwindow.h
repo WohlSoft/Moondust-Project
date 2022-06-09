@@ -326,6 +326,9 @@ public:
         QMenu *getPluginsMenu();
         QMenu *getHelpMenu();
 
+    private:
+        QTimer m_autoSaveTimer;
+
     private slots:
         /*!
          * \brief Open Developement Console
@@ -376,6 +379,16 @@ public:
          * \brief Save all unsaved files
          */
         void on_actionSave_all_triggered();
+
+        /*!
+         * \brief Synchronize autosave settings
+         */
+        void updateAutoSaver();
+
+        /*!
+         * \brief Run the auto-save itself
+         */
+        void runAutoSave();
 
         /*!
          * \brief Export current workspace into image file

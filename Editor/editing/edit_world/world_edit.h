@@ -65,6 +65,7 @@ public:
     bool save(bool savOptionsDialog = false);
     bool saveAs(bool savOptionsDialog = false);
     bool saveFile(const QString &fileName, const bool addToRecent = true);
+    void runAutoSave();
     QString userFriendlyCurrentFile();
     QString currentFile()
     {
@@ -111,6 +112,7 @@ public:
     bool m_isUntitled = false;
 
     QString curFile;
+    QString lastAutoSaveFile;
 
     QTimer *updateTimer = nullptr;
     void setAutoUpdateTimer(int ms);

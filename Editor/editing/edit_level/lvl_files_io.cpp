@@ -334,6 +334,14 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
     {
         m_mw->AddToRecentFiles(fileName);
         m_mw->SyncRecentFiles();
+
+        // Delete the autosave file as real file was been saved
+        if(!lastAutoSaveFile.isEmpty())
+        {
+            if(QFile::exists(lastAutoSaveFile))
+                QFile::remove(lastAutoSaveFile);
+            lastAutoSaveFile.clear();
+        }
     }
 
     //Refresh Strict SMBX64 flag
@@ -382,6 +390,52 @@ bool LevelEdit::saveSMBX38aLVL(QString fileName, bool silent)
     fileKeeper.restore();
 
     return true;
+}
+
+void LevelEdit::runAutoSave()
+{
+    if(!LvlData.meta.modified && !LvlData.meta.untitled)
+        return; // Don't auto-save unmodified files
+
+    if(lastAutoSaveFile.isEmpty())
+    {
+        // Untitled file will be saved at the auto-generated directory
+        if(LvlData.meta.untitled)
+        {
+            QDir crashSave;
+            crashSave.setCurrent(AppPathManager::userAppDir());
+
+            if(!crashSave.exists("__autosave"))
+                crashSave.mkdir("__autosave");
+            crashSave.cd("__autosave");
+
+            int counter = 0;
+            do // Find the suitable name and don't override existing files
+            {
+                lastAutoSaveFile = crashSave.absoluteFilePath(QString("Untitled-%1.lvlx").arg(counter++));
+            }
+            while(QFile::exists(lastAutoSaveFile));
+        }
+        else
+        {
+            lastAutoSaveFile = LvlData.meta.path + "/" + LvlData.meta.filename + "_autosave.lvlx";
+            int counter = 0;
+            // Find the suitable name and don't override existing files
+            while(QFile::exists(lastAutoSaveFile))
+            {
+                lastAutoSaveFile = LvlData.meta.path + "/" + LvlData.meta.filename + QString("_autosave-%1.lvlx").arg(counter++);
+            }
+
+        }
+    }
+
+    auto data = LvlData;
+
+    data.meta.configPackId = getMainWindow()->configs.configPackId;
+    data.meta.smbx64strict = false;
+    FileKeeper fileKeeper = FileKeeper(lastAutoSaveFile);
+    FileFormats::SaveLevelFile(data, fileKeeper.tempPath(), FileFormats::LVL_PGEX);
+    fileKeeper.restore();
 }
 
 

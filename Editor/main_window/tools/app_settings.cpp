@@ -122,6 +122,9 @@ void AppSettings::loadSettings()
 
     ui->defaultZoom->setValue(GlobalSettings::LvlOpts.default_zoom);
 
+    ui->autoSaveEnable->setChecked(GlobalSettings::LvlOpts.autoSave_enable);
+    ui->autoSaveInterval->setValue(GlobalSettings::LvlOpts.autoSave_interval);
+
     ui->screengrabFit->setChecked(GlobalSettings::screenGrab.sizeType == SETTINGS_ScreenGrabSettings::GRAB_Fit);
     ui->screengrabCustom->setChecked(GlobalSettings::screenGrab.sizeType == SETTINGS_ScreenGrabSettings::GRAB_Custom);
     ui->screengrabW->setValue(GlobalSettings::screenGrab.width);
@@ -240,6 +243,9 @@ void AppSettings::on_buttonBox_accepted()
 
     GlobalSettings::Placing_dontShowPropertiesBox = ui->Editor_placing_dontShowPropsBox->isChecked();
     GlobalSettings::historyLimit = ui->historyLimit->value();
+
+    GlobalSettings::LvlOpts.autoSave_enable = ui->autoSaveEnable->isChecked();
+    GlobalSettings::LvlOpts.autoSave_interval = ui->autoSaveInterval->value();
 
     GlobalSettings::LvlOpts.default_zoom = static_cast<unsigned int>(ui->defaultZoom->value());
 

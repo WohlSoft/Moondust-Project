@@ -18,6 +18,7 @@
 
 #include <common_features/main_window_ptr.h>
 #include <common_features/file_keeper.h>
+#include <common_features/app_path.h>
 #include <main_window/global_settings.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <PGE_File_Formats/pge_x.h>
@@ -185,11 +186,63 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
 
     if(addToRecent)
     {
-        MainWinConnect::pMainWin->AddToRecentFiles(fileName);
-        MainWinConnect::pMainWin->SyncRecentFiles();
+        m_mw->AddToRecentFiles(fileName);
+        m_mw->SyncRecentFiles();
+
+        // Delete the autosave file as real file was been saved
+        if(!lastAutoSaveFile.isEmpty())
+        {
+            if(QFile::exists(lastAutoSaveFile))
+                QFile::remove(lastAutoSaveFile);
+            lastAutoSaveFile.clear();
+        }
     }
 
     return true;
+}
+
+void NpcEdit::runAutoSave()
+{
+    if(!m_isModified && !m_isUntitled)
+        return; // Don't auto-save unmodified files
+
+    if(lastAutoSaveFile.isEmpty())
+    {
+        // Untitled file will be saved at the auto-generated directory
+        if(m_isUntitled)
+        {
+            QDir crashSave;
+            crashSave.setCurrent(AppPathManager::userAppDir());
+
+            if(!crashSave.exists("__autosave"))
+                crashSave.mkdir("__autosave");
+            crashSave.cd("__autosave");
+
+            int counter = 0;
+            do // Find the suitable name and don't override existing files
+            {
+                lastAutoSaveFile = crashSave.absoluteFilePath(QString("Untitled-%1.txt").arg(counter++));
+            }
+            while(QFile::exists(lastAutoSaveFile));
+        }
+        else
+        {
+            lastAutoSaveFile = curFile + "_autosave.txt";
+            int counter = 0;
+            // Find the suitable name and don't override existing files
+            while(QFile::exists(lastAutoSaveFile))
+            {
+                lastAutoSaveFile = curFile + QString("_autosave-%1.lvlx").arg(counter++);
+            }
+
+        }
+    }
+
+    auto data = NpcData;
+
+    FileKeeper fileKeeper = FileKeeper(lastAutoSaveFile);
+    FileFormats::WriteNPCTxtFileF(fileKeeper.tempPath(), data);
+    fileKeeper.restore();
 }
 
 
