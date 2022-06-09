@@ -2,6 +2,43 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
+    <name></name>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="vanished">终止进程</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="vanished">非常抱歉，月尘引擎编辑器遭到异常终止。
+原因：内存溢出！
+
+为防止出现此现象，请关闭其他程序以释放内存。</translation>
+    </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="vanished">发送报告之前，请简述您是如何操作造成的程序异常终止。
+- 请列出造成程序异常终止的行为。
+- 如果是编辑指定文件造成的异常终止，请附上相关文件。
+- 您使用的操作系统？</translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="vanished">未找到月尘引擎管理器，无法启动工具：
+%1
+请选择月尘引擎管理器文件夹！</translation>
+    </message>
+</context>
+<context>
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
@@ -364,6 +401,19 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Palette</source>
         <translation>调色板</translation>
+    </message>
+    <message>
+        <source>Autosave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minutes</source>
+        <comment>Autosave interval units</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -888,6 +938,16 @@ Please save them before doing anything else.</source>
     <message>
         <source>Join the official Moondust Discord server to submit the report</source>
         <translation>加入月尘 Discord 服务器以提交报告（仅限海外用户）</translation>
+    </message>
+    <message>
+        <source>While making a report, please explain what you did to cause a crash error.
+- Please give a list of actions you did to cause a crash. 
+- If a crash happened with editing a specific file, please attach it to the report.
+- What operating system you are using?</source>
+        <translation type="unfinished">发送报告之前，请简述您是如何操作造成的程序异常终止。
+- 请列出造成程序异常终止的行为。
+- 如果是编辑指定文件造成的异常终止，请附上相关文件。
+- 您使用的操作系统？</translation>
     </message>
 </context>
 <context>
@@ -3814,6 +3874,12 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation>输入 LunaTester 程序名称（例如 smbx.exe）</translation>
     </message>
+    <message>
+        <source>Terminate running process</source>
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+the background or foreground, so the engine can be loaded from scratch.</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LvlCloneSection</name>
@@ -5327,6 +5393,12 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Needs floor</source>
         <translation>需要站立</translation>
+    </message>
+    <message>
+        <source>Show a blank screen instead of loading screen.
+In the Legacy Engine level loading screen, it would otherwise 
+show the current playable character(s) and number of lives.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6942,6 +7014,20 @@ Expected config pack ID: %4</source>
         <source>Previous grid size</source>
         <translation>上一网格大小</translation>
     </message>
+    <message>
+        <source>Can&apos;t start testing, engine is not found: 
+%1
+Please, choose the engine application yourself!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+%1
+Please, choose the Moondust Maintainer application yourself!</source>
+        <translation type="unfinished">未找到月尘引擎管理器，无法启动工具：
+%1
+请选择月尘引擎管理器文件夹！</translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
@@ -8014,8 +8100,30 @@ The maximum number of Music Boxes is %2.</source>
         <translation type="vanished">需要站立</translation>
     </message>
     <message>
-        <source>Warp Transition Type</source>
-        <translation type="vanished">传送点过渡类别</translation>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Out of memory!
+
+To prevent this, try closing other uneccessary programs to free up more memory.</source>
+        <translation type="unfinished">非常抱歉，月尘引擎编辑器遭到异常终止。
+原因：内存溢出！
+
+为防止出现此现象，请关闭其他程序以释放内存。</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: Unhandled Exception
+
+Please inform our forum staff so we can try to fix this problem, Thank you
+
+Forum link: wohlsoft.ru/forum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but PGE Editor has crashed. 
+Reason: %1
+
+</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

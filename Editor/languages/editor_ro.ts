@@ -27,416 +27,432 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="71"/>
+        <location filename="../main_window/tools/app_settings.ui" line="69"/>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="105"/>
+        <location filename="../main_window/tools/app_settings.ui" line="148"/>
         <source>Window layout</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="120"/>
+        <location filename="../main_window/tools/app_settings.ui" line="162"/>
         <source>Separate Sub-windows (Classic style)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="133"/>
+        <location filename="../main_window/tools/app_settings.ui" line="174"/>
         <source>Tabbed Sub-windows (Modern style)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="149"/>
+        <location filename="../main_window/tools/app_settings.ui" line="189"/>
         <source>Music player</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="164"/>
+        <location filename="../main_window/tools/app_settings.ui" line="203"/>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="167"/>
+        <location filename="../main_window/tools/app_settings.ui" line="206"/>
         <source>Autoplay music after opening file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="183"/>
+        <location filename="../main_window/tools/app_settings.ui" line="239"/>
         <source>Performance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="198"/>
+        <location filename="../main_window/tools/app_settings.ui" line="286"/>
         <source>Animation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="211"/>
+        <location filename="../main_window/tools/app_settings.ui" line="253"/>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="230"/>
+        <location filename="../main_window/tools/app_settings.ui" line="271"/>
         <source>Animation items limit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="246"/>
+        <location filename="../main_window/tools/app_settings.ui" line="298"/>
         <source>Collision detection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="262"/>
+        <location filename="../main_window/tools/app_settings.ui" line="83"/>
         <source>Files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="277"/>
+        <location filename="../main_window/tools/app_settings.ui" line="97"/>
         <source>Associate file extensions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="326"/>
+        <location filename="../main_window/tools/app_settings.ui" line="374"/>
         <source>Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="335"/>
+        <location filename="../main_window/tools/app_settings.ui" line="383"/>
         <source>Middle mouse button actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="341"/>
+        <location filename="../main_window/tools/app_settings.ui" line="389"/>
         <source>Copy selected items to cursor position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="348"/>
+        <location filename="../main_window/tools/app_settings.ui" line="396"/>
         <source>Change the placement mode of the selected item</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="355"/>
+        <location filename="../main_window/tools/app_settings.ui" line="403"/>
         <source>Toggle drag-to-scroll while selection is empty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="365"/>
+        <location filename="../main_window/tools/app_settings.ui" line="413"/>
         <source>Placement mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="371"/>
+        <location filename="../main_window/tools/app_settings.ui" line="419"/>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="375"/>
+        <location filename="../main_window/tools/app_settings.ui" line="423"/>
         <source>Don&apos;t show properties box when placing items</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="398"/>
+        <location filename="../main_window/tools/app_settings.ui" line="446"/>
         <source>History</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="407"/>
+        <location filename="../main_window/tools/app_settings.ui" line="455"/>
         <source>Max history entries:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="414"/>
+        <location filename="../main_window/tools/app_settings.ui" line="462"/>
         <source>Maximum number of remembered history actions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="433"/>
+        <location filename="../main_window/tools/app_settings.ui" line="481"/>
         <source>Screen capture default size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="439"/>
+        <location filename="../main_window/tools/app_settings.ui" line="487"/>
         <source>Use custom:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="449"/>
+        <location filename="../main_window/tools/app_settings.ui" line="529"/>
         <source>Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="475"/>
+        <location filename="../main_window/tools/app_settings.ui" line="539"/>
         <source>Height:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="498"/>
+        <location filename="../main_window/tools/app_settings.ui" line="546"/>
         <source>Fit to window size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="511"/>
+        <location filename="../main_window/tools/app_settings.ui" line="572"/>
         <source>Environment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="517"/>
+        <location filename="../main_window/tools/app_settings.ui" line="578"/>
         <source>Default zoom:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="524"/>
+        <location filename="../main_window/tools/app_settings.ui" line="585"/>
         <source>Default zoom which will be installed on file opening or file creation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="547"/>
+        <location filename="../main_window/tools/app_settings.ui" line="608"/>
         <source>Defaults</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="556"/>
+        <location filename="../main_window/tools/app_settings.ui" line="617"/>
         <source>Classic Events tabs to auto-expand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="562"/>
+        <location filename="../main_window/tools/app_settings.ui" line="651"/>
         <source>Autoscroll section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="569"/>
+        <location filename="../main_window/tools/app_settings.ui" line="623"/>
         <source>Common</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="576"/>
+        <location filename="../main_window/tools/app_settings.ui" line="637"/>
         <source>Layer visibility</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="583"/>
+        <location filename="../main_window/tools/app_settings.ui" line="644"/>
         <source>Layer movement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="590"/>
+        <location filename="../main_window/tools/app_settings.ui" line="658"/>
         <source>Trigger event</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="597"/>
+        <location filename="../main_window/tools/app_settings.ui" line="665"/>
         <source>Hold buttons</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="604"/>
+        <location filename="../main_window/tools/app_settings.ui" line="630"/>
         <source>Section settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="627"/>
+        <location filename="../main_window/tools/app_settings.ui" line="321"/>
+        <source>Autosave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="327"/>
+        <source>Automatically save file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="350"/>
+        <source>minutes</source>
+        <comment>Autosave interval units</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/app_settings.ui" line="701"/>
         <source>NPC settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="636"/>
+        <location filename="../main_window/tools/app_settings.ui" line="710"/>
         <source>Generator</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="658"/>
+        <location filename="../main_window/tools/app_settings.ui" line="719"/>
         <source>Type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="666"/>
+        <location filename="../main_window/tools/app_settings.ui" line="753"/>
         <source>Warp</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="671"/>
+        <location filename="../main_window/tools/app_settings.ui" line="758"/>
         <source>Projectile</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="679"/>
+        <location filename="../main_window/tools/app_settings.ui" line="766"/>
         <source>Delay (seconds):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="702"/>
+        <location filename="../main_window/tools/app_settings.ui" line="789"/>
         <source>Direction</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="714"/>
+        <location filename="../main_window/tools/app_settings.ui" line="801"/>
         <source>Left</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="721"/>
+        <location filename="../main_window/tools/app_settings.ui" line="808"/>
         <source>Random</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="728"/>
+        <location filename="../main_window/tools/app_settings.ui" line="815"/>
         <source>Right</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="741"/>
+        <location filename="../main_window/tools/app_settings.ui" line="828"/>
         <source>Warps and Doors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="747"/>
+        <location filename="../main_window/tools/app_settings.ui" line="834"/>
         <source>Warp type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="755"/>
+        <location filename="../main_window/tools/app_settings.ui" line="842"/>
         <source>0 - Instant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="760"/>
+        <location filename="../main_window/tools/app_settings.ui" line="847"/>
         <source>1 - Pipe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="765"/>
+        <location filename="../main_window/tools/app_settings.ui" line="852"/>
         <source>2 - Door</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="770"/>
+        <location filename="../main_window/tools/app_settings.ui" line="857"/>
         <source>3 - Portal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="782"/>
+        <location filename="../main_window/tools/app_settings.ui" line="882"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="791"/>
+        <location filename="../main_window/tools/app_settings.ui" line="891"/>
         <source>Tileset Item toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="800"/>
-        <location filename="../main_window/tools/app_settings.ui" line="826"/>
-        <location filename="../main_window/tools/app_settings.ui" line="884"/>
+        <location filename="../main_window/tools/app_settings.ui" line="900"/>
+        <location filename="../main_window/tools/app_settings.ui" line="926"/>
+        <location filename="../main_window/tools/app_settings.ui" line="984"/>
         <source>Display tabs horizontally</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="807"/>
-        <location filename="../main_window/tools/app_settings.ui" line="833"/>
-        <location filename="../main_window/tools/app_settings.ui" line="891"/>
+        <location filename="../main_window/tools/app_settings.ui" line="907"/>
+        <location filename="../main_window/tools/app_settings.ui" line="933"/>
+        <location filename="../main_window/tools/app_settings.ui" line="991"/>
         <source>Display tabs vertically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="817"/>
+        <location filename="../main_window/tools/app_settings.ui" line="917"/>
         <source>World Map Item toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="843"/>
-        <location filename="../main_window/tools/app_settings.ui" line="852"/>
+        <location filename="../main_window/tools/app_settings.ui" line="943"/>
+        <location filename="../main_window/tools/app_settings.ui" line="952"/>
         <source>Theme</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="862"/>
+        <location filename="../main_window/tools/app_settings.ui" line="962"/>
         <source>Palette</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="875"/>
+        <location filename="../main_window/tools/app_settings.ui" line="975"/>
         <source>Level Item toolbox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="914"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1014"/>
         <source>Font</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="933"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1033"/>
         <source>Font size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="953"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1053"/>
         <source>Use default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="964"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1064"/>
         <source>Logging</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="973"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1073"/>
         <source>Log level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="983"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1083"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="990"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1090"/>
         <source>Log file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1014"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1114"/>
         <source>Extra</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1023"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1123"/>
         <source>Note: Some of those settings will take change on application restart</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.ui" line="1036"/>
+        <location filename="../main_window/tools/app_settings.ui" line="1136"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="223"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="226"/>
         <source>Set log file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="224"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="227"/>
         <source>Text files (*.txt *.log)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="320"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="326"/>
         <source>Success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="320"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="326"/>
         <source>All file associations have been set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="322"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="328"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3399,7 +3415,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="149"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="518"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3425,7 +3441,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="121"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="610"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="664"/>
         <source>Level title: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -3466,28 +3482,28 @@ version code must be less or equal specific code)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="351"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="373"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="441"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="359"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="381"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="495"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="352"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="374"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="442"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="360"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="382"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="496"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="405"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="420"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="459"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="474"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="421"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="475"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
@@ -3495,42 +3511,42 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="471"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="525"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="472"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="526"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="518"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="519"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="573"/>
         <source>Loading level data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="563"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="617"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="564"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="618"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="606"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="660"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="608"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="662"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8232,44 +8248,44 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="74"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="75"/>
         <source>Load file error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="75"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="76"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="126"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="127"/>
         <source>Save As</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="130"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="131"/>
         <source>SMBX custom NPC config file (npc-*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="154"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="155"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="155"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="156"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="202"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="255"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="203"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="256"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
@@ -8353,7 +8369,7 @@ Error description:
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../main_window/tools/app_settings.cpp" line="322"/>
+        <location filename="../main_window/tools/app_settings.cpp" line="328"/>
         <source>File association failed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11449,7 +11465,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="127"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="417"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="472"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11489,70 +11505,70 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="48"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="49"/>
         <source>Untitled %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="127"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="128"/>
         <source>Please enter a episode title for &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="128"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="129"/>
         <source>Saving</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="131"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="132"/>
         <source>Episode Title: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="132"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="133"/>
         <source>Make custom folder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="133"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="134"/>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="194"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="195"/>
         <source>Save As</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="221"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="260"/>
-        <source>Extension is not set</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="222"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="261"/>
+        <source>Extension is not set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="223"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="262"/>
         <source>File Extension isn&apos;t defined, please enter file extension!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="284"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
         <source>SMBX file version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="285"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="286"/>
         <source>Which version do you want to save as? (from 0 to 64)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="297"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="305"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="298"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="306"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="307"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -11560,60 +11576,60 @@ Installed LunaLUA partially extends than limits.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="317"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="335"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="318"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="336"/>
         <source>File save error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="318"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="336"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="319"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="337"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="376"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="431"/>
         <source>File read error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="377"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="432"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="417"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="418"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="472"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="473"/>
         <source>Loading World map data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="455"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="510"/>
         <source>Incorrect custom configs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="456"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="511"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="476"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="531"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="478"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="533"/>
         <source> not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="480"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="535"/>
         <source>World title:</source>
         <translation type="unfinished"></translation>
     </message>
