@@ -24,23 +24,27 @@ https://wohlsoft.ru/pgewiki/Building_Moondust_Project_from_sources
 
 
 ## Donate us
+[[![Donate to this project using YooMoney](https://img.shields.io/badge/yoomoney-donate-violet.svg)]](https://yoomoney.ru/to/410011104073392)
+[[![Donate to this project using Qiwi Wallet](https://img.shields.io/badge/QIWI-donate-orange.svg)]](https://my.qiwi.com/VYTALYY-NWjWmLlDuQ)
 
-[![Donate to this project using Flattr](https://img.shields.io/badge/flattr-donate-green.svg)](https://flattr.com/submit/auto?fid=lgdjjy&url=https%3A%2F%2Fgithub.com%2FWohlSoft%2FPGE-Project)
+<!--
+### Currently doesn't work for me
+[![Donate to this project using Flattr](https://img.shields.io/badge/flattr-donate-green.svg)](https://flattr.com/submit/auto?fid=lgdjjy&url=https%3A%2F%2Fgithub.com%2FWohlSoft%2FMoondust-Project)
 [![Donate to this project using Patreon](https://img.shields.io/badge/patreon-donate-orange.svg)](http://patreon.com/Wohlstand)
 [![Donate to this project using Paypal](https://img.shields.io/badge/paypal-donate-blue.svg)](http://wohlsoft.ru/paypal)
-
+-->
 
 ## CI Build status
 Linux | Mac OS X | Windows
 ------------ | ------------- | -------------
-[![Build Status](https://semaphoreci.com/api/v1/wohlstand/pge-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/pge-project) | [![Build Status](https://travis-ci.org/WohlSoft/Moondust-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/Moondust-Project) | [![Windows CI](https://github.com/WohlSoft/Moondust-Project/workflows/Windows%20CI/badge.svg?branch=master&event=push)](https://github.com/WohlSoft/Moondust-Project/actions?query=workflow%3A%22Windows+CI%22)
+[![Build Status](https://semaphoreci.com/api/v1/wohlstand/moondust-project/branches/master/shields_badge.svg)](https://semaphoreci.com/wohlstand/moondust-project) | [![Build Status](https://travis-ci.org/WohlSoft/Moondust-Project.svg?branch=master)](https://travis-ci.org/WohlSoft/Moondust-Project) | [![Windows CI](https://github.com/WohlSoft/Moondust-Project/workflows/Windows%20CI/badge.svg?branch=master&event=push)](https://github.com/WohlSoft/Moondust-Project/actions?query=workflow%3A%22Windows+CI%22)
 
 # Components
 A list of components are included with Moondust Project
 
 ## Moondust Engine
 
-![PGE Engine](https://github.com/WohlSoft/PGE-Project/blob/master/Engine/_resources/icon/cat_256.png)
+![Moondust Engine](https://github.com/WohlSoft/Moondust-Project/blob/master/Engine/_resources/icon/cat_256.png)
 
 The Moondust Engine is the main part of the Moondust Project, allowing users to play levels and episodes.
 
@@ -56,7 +60,7 @@ This is a set of tools used for creating levels and episodes for the Moondust En
 
 ### Editor
 
-![Moondust Editor](https://github.com/WohlSoft/PGE-Project/blob/master/Editor/_resources/images/cat_builder/cat_builder_256.png)
+![Moondust Editor](https://github.com/WohlSoft/Moondust-Project/blob/master/Editor/_resources/images/cat_builder/cat_builder_256.png)
 
 The PGE Editor is the main development tool, allowing the creation and editing of levels, world maps, and NPC configurations. Maintenance utilities are also provided.
 
@@ -66,7 +70,7 @@ Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (wh
 
 ### Playable Character Calibrator
 
-![Moondust Calibrator](https://github.com/WohlSoft/PGE-Project/blob/master/PlayableCalibrator/_resourses/icon/calibrator_256.png)
+![Moondust Calibrator](https://github.com/WohlSoft/Moondust-Project/blob/master/PlayableCalibrator/_resourses/icon/calibrator_256.png)
 
 The Playable Character Calibrator allows the developer to define a collision box for each respective frame of a playable character, and calibrate any incorrect positions of the frames in an SMBX64 playable character sprite.
 
@@ -75,7 +79,7 @@ The Playable Character Calibrator allows the developer to define a collision box
 
 ### Music Player
 
-![Moondust Music Player](https://github.com/WohlSoft/PGE-Project/blob/master/MusicPlayer/_resources/cat_musplay/cat_musplay_256x256.png)
+![Moondust Music Player](https://github.com/WohlSoft/Moondust-Project/blob/master/MusicPlayer/_resources/cat_musplay/cat_musplay_256x256.png)
 
 Music Player is a lightweight music player based on [SDL Mixer X audio library](http://wohlsoft.ru/pgewiki/SDL_Mixer_X) to test music files (include [OGG files with a loop tags](http://wohlsoft.ru/pgewiki/How_To:_Looping_music_files))
 
