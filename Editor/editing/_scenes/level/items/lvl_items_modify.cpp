@@ -577,7 +577,7 @@ void LvlScene::removeLvlItem(QGraphicsItem *item, bool globalHistory)
 ///
 /// Remove group of items
 ///
-void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
+void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory, bool forceInvis)
 {
     LevelData historyBuffer;
     bool deleted = false;
@@ -587,7 +587,8 @@ void LvlScene::removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory)
     {
         objType = (*it)->data(ITEM_TYPE).toString();
 
-        if(!(*it)->isVisible()) continue;  //Invisible items can't be deleted
+        if(!forceInvis && !(*it)->isVisible())
+            continue;  //Invisible items can't be deleted
 
         //remove data from main array before deletion item from scene
         if(objType == "Block")

@@ -329,7 +329,7 @@ public:
 
     void removeSelectedLvlItems();
     void removeItemUnderCursor();
-    void removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory = false);
+    void removeLvlItems(QList<QGraphicsItem * > items, bool globalHistory = false, bool forceInvis = false);
     void removeLvlItem(QGraphicsItem *item, bool globalHistory = false);
 
 

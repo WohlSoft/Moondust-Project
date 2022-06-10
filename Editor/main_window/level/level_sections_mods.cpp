@@ -22,9 +22,14 @@
 
 #include <editing/edit_level/lvl_clone_section.h>
 #include <PGE_File_Formats/file_formats.h>
+#include <editing/_scenes/level/items/item_block.h>
+#include <editing/_scenes/level/items/item_bgo.h>
+#include <editing/_scenes/level/items/item_npc.h>
+#include <editing/_scenes/level/items/item_water.h>
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>
+
 
 void MainWindow::on_actionCloneSectionTo_triggered()
 {
@@ -98,7 +103,7 @@ void MainWindow::on_actionCloneSectionTo_triggered()
                 y = aligned.y();
             }
 
-            //copy settings
+            //copy settingsPEZ
             dst->LvlData.sections[d_id] = src->LvlData.sections[s_id];
             dst->LvlData.sections[d_id].id = d_id;
 
@@ -127,27 +132,44 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
             src->scene->clearSelection();
 
-            foreach(QGraphicsItem *x, src->scene->items(zone))
+            LvlScene::PGE_ItemList itemsToClone;
+            src->scene->queryItems(zone, &itemsToClone);
+
+            LevelData buffer;
+
+            for(QGraphicsItem *x : itemsToClone)
             {
-                if(x->data(ITEM_TYPE) == "Block")
-                    x->setSelected(true);
-                else if(x->data(ITEM_TYPE) == "BGO")
-                    x->setSelected(true);
-                if(x->data(ITEM_TYPE) == "NPC")
-                    x->setSelected(true);
-                if(x->data(ITEM_TYPE) == "Water")
-                    x->setSelected(true);
+                QString t = x->data(ITEM_TYPE).toString();
+                if(t == "Block")
+                {
+                    ItemBlock *sourceBlock = (ItemBlock *)(x);
+                    buffer.blocks.push_back(sourceBlock->m_data);
+                }
+                else if(t == "BGO")
+                {
+                    ItemBGO *sourceBGO = (ItemBGO *)(x);
+                    buffer.bgo.push_back(sourceBGO->m_data);
+                }
+                else if(t == "NPC")
+                {
+                    ItemNPC *sourceNPC = (ItemNPC *)(x);
+                    buffer.npc.push_back(sourceNPC->m_data);
+                }
+                else if(t == "Water")
+                {
+                    ItemPhysEnv *sourcePEZ = (ItemPhysEnv *)(x);
+                    buffer.physez.push_back(sourcePEZ->m_data);
+                }
             }
 
-            if(!progress.wasCanceled()) progress.setValue(2);
+            if(!progress.wasCanceled())
+                progress.setValue(2);
             qApp->processEvents();
 
-            LevelData buffer = src->scene->copy();
-
-            src->scene->clearSelection();
             //paste into target
 
-            if(!progress.wasCanceled()) progress.setValue(3);
+            if(!progress.wasCanceled())
+                progress.setValue(3);
             qApp->processEvents();
 
             long baseX = 0, baseY = 0;
@@ -184,28 +206,31 @@ void MainWindow::on_actionCloneSectionTo_triggered()
 
             if(doCloneItems)
             {
-                foreach(LevelBlock block, buffer.blocks)
+                for(LevelBlock block : buffer.blocks)
                 {
                     if(block.x < baseX)
                         baseX = block.x;
                     if(block.y < baseY)
                         baseY = block.y;
                 }
-                foreach(LevelBGO bgo, buffer.bgo)
+
+                for(LevelBGO bgo : buffer.bgo)
                 {
                     if(bgo.x < baseX)
                         baseX = bgo.x;
                     if(bgo.y < baseY)
                         baseY = bgo.y;
                 }
-                foreach(LevelNPC npc, buffer.npc)
+
+                for(LevelNPC npc : buffer.npc)
                 {
                     if(npc.x < baseX)
                         baseX = npc.x;
                     if(npc.y < baseY)
                         baseY = npc.y;
                 }
-                foreach(LevelPhysEnv water, buffer.physez)
+
+                for(LevelPhysEnv water : buffer.physez)
                 {
                     if(water.x < baseX)
                         baseX = water.x;
@@ -240,6 +265,9 @@ void MainWindow::on_actionCloneSectionTo_triggered()
                 setCurrentLevelSection(d_id);
             else // Or just change current section of that level without refreshing of current view
                 dst->setCurrentSection(d_id);
+
+            // Refresh layer visibility after clonning items
+            dst->scene->applyLayersVisible();
 
             QMessageBox::StandardButton reply =  QMessageBox::information(this,
                                                  tr("Section has been clonned"),
@@ -318,15 +346,19 @@ void MainWindow::deleteLevelSection(LevelEdit *edit, int section, long margin)
     zone.setRight(edit->LvlData.sections[section].size_right + margin);
     zone.setBottom(edit->LvlData.sections[section].size_bottom + margin);
 
-    QList<QGraphicsItem *> itemsToRemove;
-    foreach(QGraphicsItem *x, edit->scene->items(zone))
+    LvlScene::PGE_ItemList itemsToRemove;
+    edit->scene->queryItems(zone, &itemsToRemove);
+
+    for(auto x = itemsToRemove.begin(); x != itemsToRemove.end(); )
     {
-        if(!x->data(ITEM_IS_ITEM).isNull())
-            itemsToRemove.push_back(x);
+        if((*x)->data(ITEM_IS_ITEM).isNull())
+            x = itemsToRemove.erase(x);
+        else
+            ++x;
     }
 
     //remove all items in the section
-    edit->scene->removeLvlItems(itemsToRemove);
+    edit->scene->removeLvlItems(itemsToRemove, false, true);
 
     id = edit->LvlData.sections[section].id;
     edit->LvlData.sections[section] = FileFormats::CreateLvlSection();
@@ -356,12 +388,18 @@ void MainWindow::on_actionSCT_RotateLeft_triggered()
         zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top - outOfSectionMargin);
         zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right + outOfSectionMargin);
         zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom + outOfSectionMargin);
-        QList<QGraphicsItem *> itemsToModify;
-        foreach(QGraphicsItem *x, edit->scene->items(zone))
+
+        LvlScene::PGE_ItemList itemsToModify;
+        edit->scene->queryItems(zone, &itemsToModify);
+
+        for(auto x = itemsToModify.begin(); x != itemsToModify.end(); )
         {
-            if(!x->data(ITEM_IS_ITEM).isNull())
-                itemsToModify.push_back(x);
+            if((*x)->data(ITEM_IS_ITEM).isNull())
+                x = itemsToModify.erase(x);
+            else
+                ++x;
         }
+
         edit->scene->rotateGroup(itemsToModify, false, true, true);
         edit->LvlData.meta.modified = true;
     }
@@ -384,12 +422,18 @@ void MainWindow::on_actionSCT_RotateRight_triggered()
         zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top - outOfSectionMargin);
         zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right + outOfSectionMargin);
         zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom + outOfSectionMargin);
-        QList<QGraphicsItem *> itemsToModify;
-        foreach(QGraphicsItem *x, edit->scene->items(zone))
+
+        LvlScene::PGE_ItemList itemsToModify;
+        edit->scene->queryItems(zone, &itemsToModify);
+
+        for(auto x = itemsToModify.begin(); x != itemsToModify.end(); )
         {
-            if(!x->data(ITEM_IS_ITEM).isNull())
-                itemsToModify.push_back(x);
+            if((*x)->data(ITEM_IS_ITEM).isNull())
+                x = itemsToModify.erase(x);
+            else
+                ++x;
         }
+
         edit->scene->rotateGroup(itemsToModify, true, true, true);
         edit->LvlData.meta.modified = true;
     }
@@ -412,12 +456,18 @@ void MainWindow::on_actionSCT_FlipHorizontal_triggered()
         zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top - outOfSectionMargin);
         zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right + outOfSectionMargin);
         zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom + outOfSectionMargin);
-        QList<QGraphicsItem *> itemsToModify;
-        foreach(QGraphicsItem *x, edit->scene->items(zone))
+
+        LvlScene::PGE_ItemList itemsToModify;
+        edit->scene->queryItems(zone, &itemsToModify);
+
+        for(auto x = itemsToModify.begin(); x != itemsToModify.end(); )
         {
-            if(!x->data(ITEM_IS_ITEM).isNull())
-                itemsToModify.push_back(x);
+            if((*x)->data(ITEM_IS_ITEM).isNull())
+                x = itemsToModify.erase(x);
+            else
+                ++x;
         }
+
         edit->scene->flipGroup(itemsToModify, false, true, true);
         edit->LvlData.meta.modified = true;
     }
@@ -440,12 +490,18 @@ void MainWindow::on_actionSCT_FlipVertical_triggered()
         zone.setTop(edit->LvlData.sections[edit->LvlData.CurSection].size_top - outOfSectionMargin);
         zone.setRight(edit->LvlData.sections[edit->LvlData.CurSection].size_right + outOfSectionMargin);
         zone.setBottom(edit->LvlData.sections[edit->LvlData.CurSection].size_bottom + outOfSectionMargin);
-        QList<QGraphicsItem *> itemsToModify;
-        foreach(QGraphicsItem *x, edit->scene->items(zone))
+
+        LvlScene::PGE_ItemList itemsToModify;
+        edit->scene->queryItems(zone, &itemsToModify);
+
+        for(auto x = itemsToModify.begin(); x != itemsToModify.end(); )
         {
-            if(!x->data(ITEM_IS_ITEM).isNull())
-                itemsToModify.push_back(x);
+            if((*x)->data(ITEM_IS_ITEM).isNull())
+                x = itemsToModify.erase(x);
+            else
+                ++x;
         }
+
         edit->scene->flipGroup(itemsToModify, true, true, true);
         edit->LvlData.meta.modified = true;
     }
