@@ -52,6 +52,7 @@ void MainWindow::on_action_openEpisodeFolder_triggered()
 {
     QString path;
     bool isUntitled = false;
+
     if(activeChildWindow() == WND_Level)
     {
         LevelEdit *e = activeLvlEditWin();
@@ -87,9 +88,7 @@ void MainWindow::on_action_openEpisodeFolder_triggered()
     }
 
     if(!path.isEmpty())
-    {
-        QDesktopServices::openUrl(QUrl("file:///" + path));
-    }
+        QDesktopServices::openUrl(QUrl("file://" + path));
 }
 
 void MainWindow::on_action_openCustomFolder_triggered()
@@ -103,6 +102,13 @@ void MainWindow::on_action_openCustomFolder_triggered()
         LevelEdit *e = activeLvlEditWin();
         if(e)
         {
+            if(!isUntitled)
+            {
+                QDir d(e->LvlData.meta.path);
+                if(!d.exists(e->LvlData.meta.filename))
+                    d.mkdir(e->LvlData.meta.filename);
+            }
+
             ci.setCurDir(e->LvlData.meta.path);
             path = e->LvlData.meta.path + "/" + ci.resolveDirCase(e->LvlData.meta.filename);
             isUntitled = e->isUntitled();
@@ -117,6 +123,13 @@ void MainWindow::on_action_openCustomFolder_triggered()
         WorldEdit *e = activeWldEditWin();
         if(e)
         {
+            if(!isUntitled)
+            {
+                QDir d(e->WldData.meta.path);
+                if(!d.exists(e->WldData.meta.filename))
+                    d.mkdir(e->WldData.meta.filename);
+            }
+
             ci.setCurDir(e->WldData.meta.path);
             path = e->WldData.meta.path + "/" + ci.resolveDirCase(e->WldData.meta.filename);
             isUntitled = e->isUntitled();
@@ -132,10 +145,9 @@ void MainWindow::on_action_openCustomFolder_triggered()
     if(!path.isEmpty())
     {
         if(!QFileInfo(path).dir().exists())
-        {
             QDir(path).mkpath(path);
-        }
-        QDesktopServices::openUrl(QUrl("file:///" + path));
+
+        QDesktopServices::openUrl(QUrl("file://" + path));
     }
 }
 
