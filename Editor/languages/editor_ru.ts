@@ -433,7 +433,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>minutes</source>
         <comment>Autosave interval units</comment>
-        <translation>минут(у/ы)</translation>
+        <translation>минут</translation>
     </message>
 </context>
 <context>
