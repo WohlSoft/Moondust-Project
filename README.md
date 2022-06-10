@@ -70,7 +70,7 @@ Provides a compatibility layer with the legacy game engine (SMBX Engine 1.3) (wh
 
 ### Playable Character Calibrator
 
-![Moondust Calibrator](https://github.com/WohlSoft/Moondust-Project/blob/master/PlayableCalibrator/_resourses/icon/calibrator_256.png)
+![Moondust Calibrator](https://github.com/WohlSoft/Moondust-Project/blob/master/PlayableCalibrator/_resources/icon/calibrator_256.png)
 
 The Playable Character Calibrator allows the developer to define a collision box for each respective frame of a playable character, and calibrate any incorrect positions of the frames in an SMBX64 playable character sprite.
 
