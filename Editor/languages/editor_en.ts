@@ -434,7 +434,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <source>minutes</source>
         <comment>Autosave interval units</comment>
         <translatorcomment>Fragment of the &quot;Automatically save file every X minute(s)&quot;</translatorcomment>
-        <translation>minute(s)</translation>
+        <translation>minutes</translation>
     </message>
 </context>
 <context>
