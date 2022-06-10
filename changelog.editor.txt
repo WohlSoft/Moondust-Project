@@ -26,8 +26,9 @@
 - All BAK files will be removed when closing the Editor without the 4-second wait
 - Added "Transltion type" and "Stood required" fields to the Warps and Doors toolbox
 - Added an autosave functionality
-- Fixed an appearence of a junk slash at begin of the opened directory path
-- The level/world data directory will be automatically created if it doesn't exist on attempt to open it via the "Open level directory" menu item
+- Fixed an appearance of a junk slash at begin of the opened directory path
+- The level/world data directory will be auto-created if it doesn't exist on an attempt to open it via the "Open level directory" menu item.
+- Fixed the problem where invisible objects get ignored when performing a section cloning/deleting/rotating operation using the "Level" menu
 
 ﻿Editor 0.3.2
 - Added support for an element (Block, BGO, NPC), section, and level-wide Extra Settings
