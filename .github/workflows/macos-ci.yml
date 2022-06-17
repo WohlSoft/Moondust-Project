@@ -23,7 +23,7 @@ jobs:
             extra_path: "/Users/StaticQt/5.14.2/bin",
             build_type: "Release",
             upload_directory: "www/macosx/",
-            qt_download: "http://wohlsoft.ru/docs/Software/QtBuilds/qt-5-14-2-static-macosx-10-14-6.tar.bz2", qt_install_dir: "/Users/StaticQt/",
+            qt_download: "https://wohlsoft.ru/docs/Software/QtBuilds/qt-5-14-2-static-macosx-10-14-6.tar.bz2", qt_install_dir: "/Users/StaticQt/",
             qt_ver: "5.14.2",
             qt_dir: "/Users/StaticQt/5.14.2/bin",
             qt_lib_dir: "/Users/StaticQt/5.14.2/lib"
