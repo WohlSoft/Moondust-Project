@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation>Включити режим прокрутки, коли немає виділення</translation>
+        <translation>Увімкнути режим прокрутки, коли немає виділення</translation>
     </message>
     <message>
         <source>Placement mode</source>
@@ -248,7 +248,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation>Включити автомасштабування на екранах з великим DPI</translation>
+        <translation>Увімкнути автомасштабування на екранах з великим DPI</translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
@@ -372,16 +372,16 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Autosave</source>
-        <translation type="unfinished"></translation>
+        <translation>Автозбереження</translation>
     </message>
     <message>
         <source>Automatically save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматично зберігати файл кожні</translation>
     </message>
     <message>
         <source>minutes</source>
         <comment>Autosave interval units</comment>
-        <translation type="unfinished"></translation>
+        <translation>хвилин</translation>
     </message>
 </context>
 <context>
@@ -677,7 +677,7 @@ Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
         <translation>Пакети конфігурації відсутні!&lt;br&gt;
-Будь ласка, завантажте й встановіть їх в цю папку&lt;br&gt;
+Будь ласка, завантажте й встановіть їх в цю теку&lt;br&gt;
 &lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
@@ -744,11 +744,11 @@ File path: %3</source>
     </message>
     <message>
         <source>Directories</source>
-        <translation>Папки</translation>
+        <translation>Теки</translation>
     </message>
     <message>
         <source>Configuration directories:</source>
-        <translation>Папки конфігурації:</translation>
+        <translation>Теки конфігурації:</translation>
     </message>
     <message>
         <source>Name</source>
@@ -1383,7 +1383,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Force vertical background tiling</source>
-        <translation>Примусово включити вертикальний повтор фону</translation>
+        <translation>Примусово увімкнути вертикальний повтор фону</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
@@ -2892,7 +2892,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <source>Make custom folder</source>
-        <translation>Створити корист. папку</translation>
+        <translation>Створити корист. теку</translation>
     </message>
     <message>
         <source>Save As</source>
@@ -2968,7 +2968,7 @@ Installed LunaLUA partially extends than limits.</source>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
-        <translation>Цей рівень має деякі невірні файли конфігурацій, які не можуть бути завантаженими. Щоб це повідомлення не з&apos;являлось наступного разу, будь ласка, виправте наступні помилки в ваших конфігураційних файлах в користувацьких папках:
+        <translation>Цей рівень має деякі невірні файли конфігурацій, які не можуть бути завантаженими. Щоб це повідомлення не з&apos;являлось наступного разу, будь ласка, виправте наступні помилки в ваших конфігураційних файлах в користувацьких теках:
 
 %1</translation>
     </message>
@@ -3047,11 +3047,11 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Copy graphic to custom folder</source>
-        <translation>Копіювати графіку в корист. папку</translation>
+        <translation>Копіювати графіку в корист. теку</translation>
     </message>
     <message>
         <source>Copy graphic to episode folder</source>
-        <translation>Копіювати графіку в папку епізоду</translation>
+        <translation>Копіювати графіку в теку епізоду</translation>
     </message>
     <message>
         <source>Search</source>
@@ -3150,7 +3150,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Включити</translation>
+        <translation>Увімкнути</translation>
     </message>
     <message>
         <source>Level name:</source>
@@ -3387,7 +3387,7 @@ Do you want to continue the process?</source>
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation>- Вказаний невірний шлях LunaTester (або папка даних SMBX2). Будь ласка, перевірте налаштування шляху до LunaTester.
+        <translation>- Вказаний невірний шлях LunaTester (або тека даних SMBX2). Будь ласка, перевірте налаштування шляху до LunaTester.
 - Можливе видалення файлів вашим антивірусом (помилкове спрацювання або зараження файлу). Перевірте, будь ласка, карантин вашого антивірусу або звіт про нещодавно видалені загрози.
 - Некоректне встановлення SMBX2, в результаті чого не вистачає деяких файлів. Будь ласка, перевстановіть SMBX2, щоб усунути проблему.</translation>
     </message>
@@ -3490,7 +3490,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
-        <translation>Неможливо запустити епізод за межами кореневої папки &quot;worlds&quot; в вибраній збірці LunaTester.</translation>
+        <translation>Неможливо запустити епізод за межами кореневої теки &quot;worlds&quot; в вибраній збірці LunaTester.</translation>
     </message>
     <message>
         <source>Impossible to launch an episode because of an invalid world file.</source>
@@ -4905,7 +4905,7 @@ when you exit from a level through this warp.</source>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
         <translation>Вхід в цей прохід завершить рівень.
-Якщо ця опція включена, можливе розміщення тільки однієї вхідної точки.</translation>
+Якщо ця опція ввімкнена, можливе розміщення тільки однієї вхідної точки.</translation>
     </message>
     <message>
         <source>To other level</source>
@@ -4915,9 +4915,9 @@ If this flag is enabled, you can only place a warp entrance.</source>
         <source>Prevents any in-level warp to exit at this warp.
 Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</source>
-        <translation>Відключає всі можливості увійти в цей прохід.
+        <translation>Вимикає всі можливості увійти в цей прохід.
 Використовуйте цю опцію, якщо бажаєте використати прохід в якості вхідної точки у рівень.
-Якщо ця опція включена, можливе розміщення тільки однієї вихідної точки.</translation>
+Якщо ця опція ввімкнена, можливе розміщення тільки однієї вихідної точки.</translation>
     </message>
     <message>
         <source>From other level</source>
@@ -5452,7 +5452,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Включити анімацію анімаційних об&apos;єктів&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Якщо на карті їх забагато, то рекомендується &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;відключити&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; цю опцію!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Увімкнути анімацію анімаційних об&apos;єктів&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;&quot;&gt;Якщо на карті їх забагато, то рекомендується &lt;/span&gt;&lt;span style=&quot;&quot;&gt;вимкнути&lt;/span&gt;&lt;span style=&quot;&quot;&gt; цю опцію!&lt;/span&gt;&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <source>Go to the left-top of the section</source>
@@ -5673,19 +5673,19 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Open folder of current file</source>
-        <translation>Відкрити папку епізоду</translation>
+        <translation>Відкрити теку епізоду</translation>
     </message>
     <message>
         <source>Open folder which contains currently opened file</source>
-        <translation>Відкрити папку епізоду, який має даний файл.</translation>
+        <translation>Відкрити теку епізоду, який має даний файл.</translation>
     </message>
     <message>
         <source>Open custom data folder</source>
-        <translation>Відкрити папку рівня</translation>
+        <translation>Відкрити теку рівня</translation>
     </message>
     <message>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
-        <translation>Відкрити папку даних рівня.</translation>
+        <translation>Відкрити теку даних рівня.</translation>
     </message>
     <message>
         <source>Wrap Vertically</source>
@@ -6273,7 +6273,7 @@ Do you want to clone another section?</source>
     </message>
     <message>
         <source>Select directory with custom data to import.</source>
-        <translation>Вкажіть папку з корист. файлами для імпорту.</translation>
+        <translation>Вкажіть теку з корист. файлами для імпорту.</translation>
     </message>
     <message>
         <source>File is untitled</source>
@@ -6983,7 +6983,7 @@ Error description:
     </message>
     <message>
         <source>Enable cannon exit</source>
-        <translation>Включити вихід-вистріл</translation>
+        <translation>Увімкнути вихід-вистріл</translation>
     </message>
     <message>
         <source>Special state required</source>
@@ -7735,7 +7735,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
-        <translation>Включити &quot;магічну руку&quot;</translation>
+        <translation>Увімкнути &quot;магічну руку&quot;</translation>
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
@@ -8125,7 +8125,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
-        <translation>Включити &quot;магічну руку&quot;</translation>
+        <translation>Увімкнути &quot;магічну руку&quot;</translation>
     </message>
     <message>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
@@ -8143,7 +8143,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
-        <translation>Включити захват всього</translation>
+        <translation>Увімкнути захват всього</translation>
     </message>
     <message>
         <source>Allow player to grab any NPCs in a game.</source>
@@ -9017,7 +9017,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Wine home prefix</source>
-        <translation>Домашня папка Wine</translation>
+        <translation>Домашня тека Wine</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -9037,7 +9037,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Enable Wine debug printing into &quot;WineDebug&quot; console</source>
-        <translation>Включити вивід відлагоджувача Wine у консоль &quot;WineDebug&quot;</translation>
+        <translation>Увімкнути вивід відлагоджувача Wine у консоль &quot;WineDebug&quot;</translation>
     </message>
     <message>
         <source>Import setup from PlayOnMac</source>
@@ -9053,7 +9053,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Select a Wine home prefix path</source>
-        <translation>Вибрати шлях до домашньої папки Wine</translation>
+        <translation>Вибрати шлях до домашньої теки Wine</translation>
     </message>
     <message>
         <source>Error</source>
@@ -9080,7 +9080,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>A user-local Wine prefix which contains settings, C-Drive root directory, and some other things.</source>
-        <translation>Локальна користувацька домашня папка Wine, яка містить налаштування, корінь диску C, та деякі інші речі.</translation>
+        <translation>Локальна користувацька домашня тека Wine, яка містить налаштування, корінь диску C, та деякі інші речі.</translation>
     </message>
     <message>
         <source>Use a system-wide installed Wine from a PATH environment.</source>
@@ -9088,7 +9088,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Specify a custom Wine install prefix (a directory which contains &quot;bin&quot;, &quot;lib&quot;, and &quot;share&quot; directories with a working Wine toolchain).</source>
-        <translation>Вказати інший шлях встановлення Wine (папка, в якій є папки &quot;bin&quot;, &quot;lib&quot;, &quot;share&quot;, які в собі містять робочий комплект Wine).</translation>
+        <translation>Вказати інший шлях встановлення Wine (тека, в якій є теки &quot;bin&quot;, &quot;lib&quot;, &quot;share&quot;, які в собі містять робочий комплект Wine).</translation>
     </message>
 </context>
 <context>
@@ -9508,11 +9508,11 @@ Music boxes:		%5
     </message>
     <message>
         <source>Make custom folder</source>
-        <translation>Створити корист. папку</translation>
+        <translation>Створити корист. теку</translation>
     </message>
     <message>
         <source>Note: Custom folders are not supported for legacy SMBX Engine!</source>
-        <translation>Примітка: корист. папки не підтримуються старим SMBX двигуном!</translation>
+        <translation>Примітка: корист. теки не підтримуються старим SMBX двигуном!</translation>
     </message>
     <message>
         <source>Extension is not set</source>
@@ -9556,7 +9556,7 @@ Installed LunaLUA partially extends than limits.</source>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
-        <translation>На цій карті світу є деякі невірні файли конфігурацій, які не можуть завантажитися. Щоб це повідомлення більше не з&apos;являлось наступного разу, будь ласка, виправте наступні помилки у ваших конфігураційних файлах в користувацьких папках:
+        <translation>На цій карті світу є деякі невірні файли конфігурацій, які не можуть завантажитися. Щоб це повідомлення більше не з&apos;являлось наступного разу, будь ласка, виправте наступні помилки у ваших конфігураційних файлах в користувацьких теках:
 
 %1</translation>
     </message>
