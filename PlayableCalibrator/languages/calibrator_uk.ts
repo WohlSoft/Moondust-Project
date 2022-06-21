@@ -384,12 +384,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="61"/>
         <source>Enabling this frame. If this frame disabled, it will not be saved into your config file.</source>
-        <translation>Включити цей кадр. Якщо кадр вимкнений, його налаштування не будуть збережені в конфігураційний файл.</translation>
+        <translation>Увімкнути цей кадр. Якщо кадр вимкнений, його налаштування не будуть збережені в конфігураційний файл.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="64"/>
         <source>Enable this frame</source>
-        <translation>Включити цей кадр</translation>
+        <translation>Увімкнути цей кадр</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="137"/>
@@ -525,7 +525,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="664"/>
         <source>Enable displaying of grabbed item corner</source>
-        <translation>Включити відображення кута захваченого предмета</translation>
+        <translation>Увімкнути відображення кута захваченого предмета</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="667"/>
