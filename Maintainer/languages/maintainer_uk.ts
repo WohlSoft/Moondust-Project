@@ -430,7 +430,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="105"/>
         <source>Look for subdirectories</source>
-        <translation>Шукати в підпапках</translation>
+        <translation>Шукати в підтеках</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="112"/>
@@ -542,7 +542,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="163"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation>Вхідна директорія (наприклад, корінь епізоду або корист. папка рівня):</translation>
+        <translation>Вхідна директорія (наприклад, корінь епізоду або корист. тека рівня):</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="170"/>
@@ -699,7 +699,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="64"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation>Вхідна директорія (наприклад, корінь епізоду або корист. папка рівня):</translation>
+        <translation>Вхідна директорія (наприклад, корінь епізоду або корист. тека рівня):</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="71"/>
@@ -724,7 +724,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="105"/>
         <source>Process all content of subdirectories</source>
-        <translation>Обробити дані всіх підпапок</translation>
+        <translation>Обробити дані всіх підтек</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
@@ -771,17 +771,17 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="103"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation>Вкажіть шлях до вхідної папки для початку конвертації.</translation>
+        <translation>Вкажіть шлях до вхідної теки для початку конвертації.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="112"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation>Заданий шлях до вхідної папки не існує.</translation>
+        <translation>Заданий шлях до вхідної теки не існує.</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="133"/>
         <source>Select an input directory</source>
-        <translation>Вкажіть вхідну папку</translation>
+        <translation>Вкажіть вхідну теку</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="155"/>
@@ -944,7 +944,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="142"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation>Вхідна директорія (наприклад, корінь епізоду або корист. папка рівня):</translation>
+        <translation>Вхідна директорія (наприклад, корінь епізоду або корист. тека рівня):</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="149"/>
@@ -1105,7 +1105,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="148"/>
         <source>Input directory (for example, an episode root or level custom folder):</source>
-        <translation>Вхідна папка (наприклад, корінь епізоду або корист. папка рівня):</translation>
+        <translation>Вхідна тека (наприклад, корінь епізоду або корист. тека рівня):</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="155"/>
@@ -1121,7 +1121,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
         <source>Path to an input directory with a source data</source>
-        <translation>Шлях до вхідної папки з вихідними даними</translation>
+        <translation>Шлях до вхідної теки з вихідними даними</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="182"/>
@@ -1131,7 +1131,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="189"/>
         <source>Process all content of subdirectories</source>
-        <translation>Обробити дані всіх підпапок</translation>
+        <translation>Обробити дані всіх підтек</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
@@ -1180,17 +1180,17 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="124"/>
         <source>You should give an input directory to start the processing.</source>
-        <translation>Вкажіть шлях до вхідної папки для початку обробки.</translation>
+        <translation>Вкажіть шлях до вхідної теки для початку обробки.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="133"/>
         <source>Given input directory path doesn&apos;t exist.</source>
-        <translation>Заданий шлях до вхідної папки не існує.</translation>
+        <translation>Заданий шлях до вхідної теки не існує.</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="156"/>
         <source>Select an input directory</source>
-        <translation>Вкажіть вхідну папку</translation>
+        <translation>Вкажіть вхідну теку</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="178"/>
