@@ -712,7 +712,7 @@ You can use any configuration package here:&lt;br&gt;%2</source>
 &lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
-您可以在这里使用任意一个配置包:&lt;br&gt;%2</translation>
+您可以使用下列任意一个配置包:&lt;br&gt;%2</translation>
     </message>
     <message>
         <source>Configuration package is not configured!</source>
@@ -2297,7 +2297,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation>设置为首脑</translation>
+        <translation>设置为 Boss</translation>
     </message>
     <message>
         <source>Transform into</source>
@@ -4096,7 +4096,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation>游戏通关：“击败最终首脑”</translation>
+        <translation>游戏通关：“击败最终 Boss”</translation>
     </message>
     <message>
         <source>Player Control hold keys</source>
@@ -4450,7 +4450,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation>设置为首脑</translation>
+        <translation>设置为 Boss</translation>
     </message>
     <message>
         <source>Block ID: %1, Array ID: %2</source>
@@ -4765,7 +4765,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Set as Boss</source>
-        <translation>设置为首脑</translation>
+        <translation>设置为 Boss</translation>
     </message>
     <message>
         <source>Contains Msg:</source>
@@ -7394,7 +7394,7 @@ Error description:
     </message>
     <message>
         <source>Boss</source>
-        <translation>首脑</translation>
+        <translation>Boss</translation>
     </message>
     <message>
         <source>Not Moveable</source>
@@ -10413,7 +10413,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Our project site</source>
-        <translation>我们的计划网站</translation>
+        <translation>我们的项目网站</translation>
     </message>
     <message>
         <source>This program is distributed under %1</source>
@@ -10421,7 +10421,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation>软件结构</translation>
+        <translation>软件架构</translation>
     </message>
 </context>
 <context>
@@ -10637,8 +10637,8 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation>拖放项目到此框。
-右击删除。</translation>
+        <translation>拖放物品到此框。
+右击以删除。</translation>
     </message>
 </context>
 </TS>
