@@ -12397,7 +12397,7 @@ Arguments: %2</translation>
     <message>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
-        <translation>Speedruner&apos;s stopwatch</translation>
+        <translation>Speedrunner&apos;s stopwatch</translation>
     </message>
     <message>
         <source>Disabled</source>
