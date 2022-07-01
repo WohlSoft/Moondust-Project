@@ -6,7 +6,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Audió Konvertálása (SoX)</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="24"/>
@@ -17,7 +17,7 @@
         <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
         <location filename="../Music/audiocvt_sox_gui.ui" line="630"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="108"/>
@@ -43,7 +43,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feladat kiválasztása:</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>
@@ -63,7 +63,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="238"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválasztott fájlok konvertálása</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="248"/>
@@ -78,7 +78,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="301"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formátumváltoztatás tiltása</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="307"/>
@@ -88,32 +88,32 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="330"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitráta beállítása</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="428"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok MP3 formátumba lesznek konvertálva</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="471"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok FLAC formátumba lesznek konvertálva</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="488"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok OGG formátumba lesznek konvertálva</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="504"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Minőség beállítása</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="583"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok WAV formátumba lesznek konvertálva</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="620"/>
@@ -124,14 +124,14 @@
         <location filename="../Music/audiocvt_sox_gui.cpp" line="44"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="199"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Indítás</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX hiba</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
@@ -154,12 +154,12 @@ Please set SoX path first</source>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="171"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs konvertálható fájl</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="175"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Megállítás</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
