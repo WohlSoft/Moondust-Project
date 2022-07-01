@@ -3479,7 +3479,7 @@ Otherwise, it will be very limited.</source>
     </message>
     <message>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation>如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，将改用 GDI 渲染。</translation>
+        <translation>如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，将改用 GDI 渲染，但会大量削弱特性。</translation>
     </message>
     <message>
         <source>Keep running in background</source>
@@ -3736,16 +3736,16 @@ Do you want to continue the process?</source>
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is NOT a default engine in a current config pack.</comment>
-        <translation>- LunaTester (或 SMBX2 根目录) 路径设置错误，请检查 LunaTester 路径是否正确。
+        <translation>- LunaTester 目录（或 SMBX2 根目录）设置错误，请检查 LunaTester 目录是否正确。
 - 可能由于杀毒软件误报而被移除，请检查您的杀毒软件中隔离区是否有对应文件。
-- 错误的 SMBX2 安装方式，请重装 SMBX2 以修复您的问题。</translation>
+- 错误的 SMBX2 安装方式造成文件丢失，请重新安装 SMBX2 以修复您的问题。</translation>
     </message>
     <message>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
         <translation>- 可能由于杀毒软件误报而被移除，请检查您的杀毒软件中隔离区是否有对应文件。
-- 错误的 SMBX2 安装方式，请重装 SMBX2 以修复您的问题。</translation>
+- 错误的 SMBX2 安装方式造成文件丢失，请重新安装 SMBX2 以修复您的问题。</translation>
     </message>
     <message>
         <source>&quot;%1&quot; not found!
@@ -3827,7 +3827,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
-        <translation>启动 LunaTester 失败，因为存在不兼容的 LunaDll.dll 于目录：%1</translation>
+        <translation>启动 LunaTester 失败，因为文件夹中存在不兼容的 LunaDll.dll：%1</translation>
     </message>
     <message>
         <source>Incompatible LunaLua</source>
@@ -3835,7 +3835,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
-        <translation>启动 LunaTester 失败，因为存在不兼容的 LunaLua 于目录：%1</translation>
+        <translation>启动 LunaTester 失败，因为文件夹中存在不兼容的 LunaLua：%1</translation>
     </message>
     <message>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
@@ -3878,7 +3878,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>终止进程</translation>
+        <translation>结束进程</translation>
     </message>
 </context>
 <context>
@@ -6645,7 +6645,7 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
     <message>
         <source>Hello! You are attempting to test a level in the PGE Engine.
 The PGE Engine is still at an early stage in development, and there are several features which are missing or do not work correctly. If you are making levels or episodes for the old SMBX Engine and you want to test them with a complete feature-set, please test them in SMBX directly. Use PGE Testing for cases when you want to test the PGE Engine itself or you want to test levels with PGE-specific features.</source>
-        <translation>您好！您正在试图使用月尘引擎测试关卡。
+        <translation>您好！您正在尝试使用月尘引擎测试关卡。
 月尘引擎目前处于内测阶段，因此很多功能都未完善。如果您的关卡或地图属于 SMBX 1.3 引擎，并且要测试的是它的完整性，请您直接在 SMBX 或 TheXTech 上测试，月尘引擎仅限于测试月尘引擎本身和带月尘引擎专属功能的关卡。</translation>
     </message>
     <message>
@@ -8652,7 +8652,7 @@ Reason: %1
     </message>
     <message>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
-        <translation>在没有垂直同步的情况下，游戏将以最大帧数运行。</translation>
+        <translation>在未启用垂直同步时，游戏将以最大帧数运行。</translation>
     </message>
     <message>
         <source>Enable grab all</source>
@@ -10421,7 +10421,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Architecture: %1</source>
-        <translation>软件架构</translation>
+        <translation>软件架构：%1</translation>
     </message>
 </context>
 <context>
@@ -10637,8 +10637,8 @@ Please, check the application directory and make sure it is installed properly.<
     <message>
         <source>Drag &amp; Drop items into this box!
 Right-click to remove!</source>
-        <translation>拖放物品到此框。
-右击以删除。</translation>
+        <translation>拖放对象到此框。
+右击删除。</translation>
     </message>
 </context>
 </TS>
