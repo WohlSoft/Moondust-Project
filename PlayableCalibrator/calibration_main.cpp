@@ -367,8 +367,18 @@ void CalibrationMain::windowDisable(bool d)
     ui->menuEdit->setEnabled(!d);
     ui->actionAnimator->setEnabled(!d);
     ui->actionSpriteEditor->setEnabled(!d);
+    ui->actionCopy_settings->setEnabled(!d);
+    ui->actionPaste_settings->setEnabled(!d);
+    ui->actionApplyToAll->setEnabled(!d);
+    ui->actionSaveMenu->setEnabled(!d);
+    ui->actionResetScroll->setEnabled(!d);
     ui->menuImport_Export->setEnabled(!d);
     ui->actionBrowseSpriteDirectory->setEnabled(!d);
+
+    ui->preview->setEnabled(!d);
+    ui->dockFrameSelect->setEnabled(!d);
+    ui->dockSettings->setEnabled(!d);
+    ui->dockScrolling->setEnabled(!d);
 }
 
 void CalibrationMain::frameSelected(int x, int y)
