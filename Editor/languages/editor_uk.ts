@@ -6649,7 +6649,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Disable Block collision</source>
-        <translation>Виключити колізії блоків</translation>
+        <translation>Вимкнути колізії блоків</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -9665,7 +9665,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Hub-styled world (without world map)</source>
-        <translation>Коридорний світ (виключити карту світу)</translation>
+        <translation>Коридорний світ (вимкнути карту світу)</translation>
     </message>
     <message>
         <source>Total stars:</source>
