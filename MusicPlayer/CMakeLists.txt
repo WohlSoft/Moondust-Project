@@ -169,7 +169,7 @@ endif()
 
 if(APPLE)
     set_target_properties(pge_musplay PROPERTIES
-        OUTPUT_NAME "PGE Music Player"
+        OUTPUT_NAME "Moondust Music Player"
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/musplay.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_musplay"
@@ -177,7 +177,7 @@ if(APPLE)
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${MUSPLAY_VERSION_1}.${MUSPLAY_VERSION_2}.${MUSPLAY_VERSION_3}"
         MACOSX_BUNDLE_LONG_VERSION_STRING "${MUSPLAY_VERSION_1}.${MUSPLAY_VERSION_2}.${MUSPLAY_VERSION_3}"
         MACOSX_BUNDLE_ICON_FILE "cat_musplay.icns"
-        CPACK_BUNDLE_NAME "PGE Music Player"
+        CPACK_BUNDLE_NAME "Moondust Music Player"
         MACOSX_BUNDLE_INFO_STRING "A simple looped music player working on SDL Mixer X"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat_musplay.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")

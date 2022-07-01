@@ -505,7 +505,7 @@ endif()
 
 if(APPLE)
     set_target_properties(pge_engine PROPERTIES
-        OUTPUT_NAME "PGE Engine"
+        OUTPUT_NAME "Moondust Engine"
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/pge_engine.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_engine"
@@ -513,7 +513,7 @@ if(APPLE)
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${ENGINE_VERSION_STRING}"
         MACOSX_BUNDLE_LONG_VERSION_STRING "${ENGINE_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "cat.icns"
-        CPACK_BUNDLE_NAME "PGE Engine"
+        CPACK_BUNDLE_NAME "Moondust Engine"
         MACOSX_BUNDLE_INFO_STRING "Moondust Engine Runtime"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")

@@ -208,7 +208,7 @@ endif()
 
 if(APPLE)
     set_target_properties(pge_calibrator PROPERTIES
-        OUTPUT_NAME "PGE Player Calibrator"
+        OUTPUT_NAME "Moondust Character Calibrator"
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/calibrator.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_calibrator"
@@ -216,8 +216,8 @@ if(APPLE)
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${CALIBRATOR_VERSION_STRING}"
         MACOSX_BUNDLE_LONG_VERSION_STRING "${CALIBRATOR_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "calibrator.icns"
-        CPACK_BUNDLE_NAME "PGE Player Calibrator"
-        MACOSX_BUNDLE_INFO_STRING "Calibrator of playable character hitbox preferences and animations for PGE Project"
+        CPACK_BUNDLE_NAME "Moondust Character Calibrator"
+        MACOSX_BUNDLE_INFO_STRING "Calibrator of playable character hitbox preferences and animations for Moondust Project"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/calibrator.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")

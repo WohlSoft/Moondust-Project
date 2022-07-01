@@ -41,9 +41,9 @@
 #define PGE_ENGINE_BUNLDE PGE_ENGINE_EXE
 #define PGE_ENGINE_BUNLDE_MASK PGE_ENGINE_EXE
 #elif defined(__APPLE__)
-#define PGE_ENGINE_BUNLDE "PGE Engine.app"
-#define PGE_ENGINE_BUNLDE_MASK "PGE Engine"
-#define PGE_ENGINE_EXECUTABLE "/Contents/MacOS/PGE Engine"
+#define PGE_ENGINE_BUNLDE "Moondust Engine.app"
+#define PGE_ENGINE_BUNLDE_MASK "Moondust Engine"
+#define PGE_ENGINE_EXECUTABLE "/Contents/MacOS/Moondust Engine"
 #define PGE_ENGINE_EXE PGE_ENGINE_BUNLDE PGE_ENGINE_EXECUTABLE
 #else
 #define PGE_ENGINE_EXE "pge_engine"

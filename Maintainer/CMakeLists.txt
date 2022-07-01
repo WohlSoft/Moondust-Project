@@ -207,7 +207,7 @@ endif()
 
 if(APPLE)
     set_target_properties(pge_maintainer PROPERTIES
-        OUTPUT_NAME "PGE Maintainer"
+        OUTPUT_NAME "Moondust Maintainer"
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.plist.in"
         MACOSX_BUNDLE_EXECUTABLE_NAME "pge_maintainer"
@@ -215,7 +215,7 @@ if(APPLE)
         MACOSX_BUNDLE_SHORT_VERSION_STRING "${MAINTAINER_VERSION_STRING}"
         MACOSX_BUNDLE_LONG_VERSION_STRING "${MAINTAINER_VERSION_STRING}"
         MACOSX_BUNDLE_ICON_FILE "maintainer.icns"
-        CPACK_BUNDLE_NAME "PGE Maintainer"
+        CPACK_BUNDLE_NAME "Moondust Maintainer"
         MACOSX_BUNDLE_INFO_STRING "Game data maintaining utility"
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
