@@ -116,7 +116,7 @@ therefore you can use same link to get updated version.</source>
     <message id="CRASH_OUT_OF_MEM_MSG">
         <location filename="../common_features/crash_handler.cpp" line="388"/>
         <source>Engine has crashed because out of memory! Try to close other applications and restart game.</source>
-        <translation>由于内存不足，因此引擎已停止运行！请关闭其他应用后重新启动游戏。</translation>
+        <translation>由于内存不足，因此引擎已停止运行！请关闭其他程序后重新启动游戏。</translation>
     </message>
     <message id="CRASH_TIMEOUT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="424"/>
@@ -251,13 +251,13 @@ and retry your recent actions to get more detailed information.</source>
         <location filename="../scenes/scene_world.cpp" line="557"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="309"/>
         <source>Invalid playable character ID</source>
-        <translation>错误的人物编号</translation>
+        <translation>无效人物编号</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_STATE">
         <location filename="../scenes/scene_world.cpp" line="566"/>
         <location filename="../scenes/level/lvl_scene_init.cpp" line="318"/>
         <source>Invalid playable character state ID</source>
-        <translation>错误的人物形态编号</translation>
+        <translation>无效人物形态编号</translation>
     </message>
     <message id="LVL_ERROR_NOSECTIONS">
         <location filename="../scenes/level/lvl_scene_init.cpp" line="447"/>
@@ -546,7 +546,7 @@ Entrance point: %2</source>
     <message id="VSYNC_ERROR_INFO">
         <location filename="../graphics/vsync_validator.cpp" line="77"/>
         <source>Detected framerate is too high. V-Sync will be disabled to prevent problematic results. Please enable V-Sync in your video driver.</source>
-        <translation>检测到帧率过高，为防止出现问题，垂直同步已关闭。请在你的显卡上开启垂直同步。</translation>
+        <translation>检测到帧率过高，为防止出现意外问题，垂直同步已关闭，请在你的显卡上开启垂直同步。</translation>
     </message>
     <message id="RENDERER_NO_OPENGL_ERROR">
         <location filename="../graphics/window.cpp" line="167"/>
