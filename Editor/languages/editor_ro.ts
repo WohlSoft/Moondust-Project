@@ -7408,7 +7408,7 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7493,7 +7493,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="68"/>
         <source>Please wait...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7567,8 +7567,8 @@ Do you want to save file or you want to run test of copy which is currently save
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="148"/>
-        <location filename="../main_window/file/file_open.cpp" line="270"/>
+        <location filename="../main_window/file/file_open.cpp" line="160"/>
+        <location filename="../main_window/file/file_open.cpp" line="282"/>
         <source>Configuration is loaded with errors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7596,35 +7596,35 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="85"/>
-        <location filename="../main_window/file/file_open.cpp" line="128"/>
+        <location filename="../main_window/file/file_open.cpp" line="86"/>
+        <location filename="../main_window/file/file_open.cpp" line="141"/>
         <source>Untitled file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="85"/>
-        <location filename="../main_window/file/file_open.cpp" line="128"/>
+        <location filename="../main_window/file/file_open.cpp" line="86"/>
+        <location filename="../main_window/file/file_open.cpp" line="141"/>
         <source>Please save file to the disk first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="149"/>
+        <location filename="../main_window/file/file_open.cpp" line="161"/>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="160"/>
+        <location filename="../main_window/file/file_open.cpp" line="172"/>
         <source>Open file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="214"/>
+        <location filename="../main_window/file/file_open.cpp" line="226"/>
         <source>Level is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="215"/>
+        <location filename="../main_window/file/file_open.cpp" line="227"/>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7633,12 +7633,12 @@ Expected config pack ID: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="240"/>
+        <location filename="../main_window/file/file_open.cpp" line="252"/>
         <source>World map is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="241"/>
+        <location filename="../main_window/file/file_open.cpp" line="253"/>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7647,57 +7647,57 @@ Expected config pack ID: %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="271"/>
+        <location filename="../main_window/file/file_open.cpp" line="283"/>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="290"/>
+        <location filename="../main_window/file/file_open.cpp" line="302"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="291"/>
+        <location filename="../main_window/file/file_open.cpp" line="303"/>
         <source>Can&apos;t open the file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="328"/>
+        <location filename="../main_window/file/file_open.cpp" line="340"/>
         <source>Level file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="378"/>
+        <location filename="../main_window/file/file_open.cpp" line="390"/>
         <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="395"/>
+        <location filename="../main_window/file/file_open.cpp" line="407"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="413"/>
+        <location filename="../main_window/file/file_open.cpp" line="425"/>
         <source>NPC Config loaded</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="509"/>
+        <location filename="../main_window/file/file_open.cpp" line="521"/>
         <source>Game save statistics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="516"/>
+        <location filename="../main_window/file/file_open.cpp" line="528"/>
         <source>Bad file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="517"/>
+        <location filename="../main_window/file/file_open.cpp" line="529"/>
         <source>This file have unknown extension</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7761,60 +7761,60 @@ File not exist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
         <source>Clonning of section...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="245"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="273"/>
         <source>Section has been clonned</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="246"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="274"/>
         <source>Section has been successfully cloned!
 Do you want to clone another section?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="263"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="291"/>
         <source>Remove section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="264"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="292"/>
         <source>Do you want to remove all objects of this section?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="268"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="349"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="377"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="405"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="433"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="296"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="381"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="415"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="449"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="483"/>
         <source>Margin of section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="269"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="297"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="304"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="332"/>
         <source>Section has been removed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="305"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="333"/>
         <source>Section %1 has been successfully deleted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="350"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="378"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="406"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="434"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="382"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="416"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="450"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="484"/>
         <source>Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9150,18 +9150,18 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="395"/>
+        <location filename="../main_window/file/file_open.cpp" line="407"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="402"/>
+        <location filename="../main_window/file/file_open.cpp" line="414"/>
         <source>Unknown values are presented</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="403"/>
+        <location filename="../main_window/file/file_open.cpp" line="415"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation type="unfinished"></translation>
@@ -11798,37 +11798,37 @@ Do you want to save your changes?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="80"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="83"/>
         <source>By Wohlstand</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="81"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="84"/>
         <source>Editor, version %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="82"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="85"/>
         <source>Architecture: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="85"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
         <source>Revision</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="91"/>
         <source>Build date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="94"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="97"/>
         <source>Our project site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="95"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="98"/>
         <source>This program is distributed under %1</source>
         <translation type="unfinished"></translation>
     </message>

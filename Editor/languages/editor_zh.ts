@@ -10641,7 +10641,4 @@ Right-click to remove!</source>
 右击删除。</translation>
     </message>
 </context>
-<context>
-    <name></name>
-</context>
 </TS>

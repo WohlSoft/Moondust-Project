@@ -704,24 +704,24 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>GIF images</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="709"/>
+        <location filename="../calibration_main.cpp" line="719"/>
         <source>Open SMBX-38A level file</source>
         <translation>Open SMBX-38A level file</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="711"/>
+        <location filename="../calibration_main.cpp" line="721"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
         <translation>SMBX-38A level files</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="712"/>
+        <location filename="../calibration_main.cpp" line="722"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
         <translation>All Files</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="722"/>
+        <location filename="../calibration_main.cpp" line="732"/>
         <source>File opening error</source>
         <translation>File opening error</translation>
     </message>
@@ -730,27 +730,27 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation type="vanished">Can&apos;t import calibration data from this file.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="723"/>
+        <location filename="../calibration_main.cpp" line="733"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
         <translation>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="740"/>
+        <location filename="../calibration_main.cpp" line="750"/>
         <source>Export calibration settings into SMBX-38A level file</source>
         <translation>Export calibration settings into SMBX-38A level file</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="751"/>
+        <location filename="../calibration_main.cpp" line="761"/>
         <source>File saving error</source>
         <translation>File saving error</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="752"/>
+        <location filename="../calibration_main.cpp" line="762"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
         <translation>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="757"/>
+        <location filename="../calibration_main.cpp" line="767"/>
         <source>The level file has been patched!</source>
         <translation>The level file has been patched!</translation>
     </message>
@@ -783,84 +783,84 @@ Else grabbed item will be offseted relative to right side of hitbix</source>
         <translation>All Files</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="799"/>
+        <location filename="../calibration_main.cpp" line="809"/>
         <source>Warning</source>
         <translation>Warning</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="800"/>
+        <location filename="../calibration_main.cpp" line="810"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with the current frame&apos;s settings. Do you want to continue?</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="494"/>
+        <location filename="../calibration_main.cpp" line="504"/>
         <source>Calibration is not saved!</source>
         <translation>Calibration is not saved!</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="390"/>
+        <location filename="../calibration_main.cpp" line="400"/>
         <source>None</source>
         <comment>Display wall</comment>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="393"/>
+        <location filename="../calibration_main.cpp" line="403"/>
         <source>Floor</source>
         <comment>Display wall</comment>
         <translation>Floor</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="395"/>
+        <location filename="../calibration_main.cpp" line="405"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
         <translation>Floor + left wall</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="397"/>
+        <location filename="../calibration_main.cpp" line="407"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
         <translation>Floor + right wall</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="400"/>
+        <location filename="../calibration_main.cpp" line="410"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
         <translation>Ceiling</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="402"/>
+        <location filename="../calibration_main.cpp" line="412"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
         <translation>Ceiling + left wall</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="404"/>
+        <location filename="../calibration_main.cpp" line="414"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
         <translation>Ceiling + right wall</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="495"/>
+        <location filename="../calibration_main.cpp" line="505"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation>Configuration was modified and not saved. Do you want to save it?</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="671"/>
+        <location filename="../calibration_main.cpp" line="681"/>
         <source>Background color</source>
         <translation>Background color</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="833"/>
-        <location filename="../calibration_main.cpp" line="839"/>
-        <location filename="../calibration_main.cpp" line="845"/>
-        <location filename="../calibration_main.cpp" line="851"/>
-        <location filename="../calibration_main.cpp" line="857"/>
-        <location filename="../calibration_main.cpp" line="863"/>
+        <location filename="../calibration_main.cpp" line="843"/>
+        <location filename="../calibration_main.cpp" line="849"/>
+        <location filename="../calibration_main.cpp" line="855"/>
+        <location filename="../calibration_main.cpp" line="861"/>
+        <location filename="../calibration_main.cpp" line="867"/>
+        <location filename="../calibration_main.cpp" line="873"/>
         <source>Compat: %1</source>
         <translation>Compat: %1</translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="833"/>
+        <location filename="../calibration_main.cpp" line="843"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
         <translation>Unspecified</translation>

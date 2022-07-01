@@ -7594,7 +7594,7 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
@@ -7681,7 +7681,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="377"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="63"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="68"/>
         <source>Please wait...</source>
         <translation>잠시만 기다려주세요 ...</translation>
     </message>
@@ -7757,8 +7757,8 @@ Do you want to save file or you want to run test of copy which is currently save
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="148"/>
-        <location filename="../main_window/file/file_open.cpp" line="270"/>
+        <location filename="../main_window/file/file_open.cpp" line="160"/>
+        <location filename="../main_window/file/file_open.cpp" line="282"/>
         <source>Configuration is loaded with errors</source>
         <translation>구성 팩에 오류가 있습니다</translation>
     </message>
@@ -7789,36 +7789,36 @@ The configuration pack was loaded, but contains errors.</source>
 구성 팩에 오류가 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="85"/>
-        <location filename="../main_window/file/file_open.cpp" line="128"/>
+        <location filename="../main_window/file/file_open.cpp" line="86"/>
+        <location filename="../main_window/file/file_open.cpp" line="141"/>
         <source>Untitled file</source>
         <translation>제목없는 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="85"/>
-        <location filename="../main_window/file/file_open.cpp" line="128"/>
+        <location filename="../main_window/file/file_open.cpp" line="86"/>
+        <location filename="../main_window/file/file_open.cpp" line="141"/>
         <source>Please save file to the disk first.</source>
         <translation>먼저 파일을 디스크에 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="149"/>
+        <location filename="../main_window/file/file_open.cpp" line="161"/>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation>편집기가 일부 파일을 열 수 없습니다.
 구성 팩이로드되었지만 오류가 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="160"/>
+        <location filename="../main_window/file/file_open.cpp" line="172"/>
         <source>Open file</source>
         <translation>파일 열기</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="214"/>
+        <location filename="../main_window/file/file_open.cpp" line="226"/>
         <source>Level is incompatible</source>
         <translation>레벨이 호환되지 않습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="215"/>
+        <location filename="../main_window/file/file_open.cpp" line="227"/>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7831,12 +7831,12 @@ Expected config pack ID: %4</source>
 예상 구성 팩 ID : % 4</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="240"/>
+        <location filename="../main_window/file/file_open.cpp" line="252"/>
         <source>World map is incompatible</source>
         <translation>세계지도가 호환되지 않습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="241"/>
+        <location filename="../main_window/file/file_open.cpp" line="253"/>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7849,58 +7849,58 @@ Expected config pack ID: %4</source>
 예상 구성 팩 ID : % 4</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="271"/>
+        <location filename="../main_window/file/file_open.cpp" line="283"/>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>편집기가 파일을 열 수 없습니다 :
 구성 팩이로드되었지만 오류가 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="290"/>
+        <location filename="../main_window/file/file_open.cpp" line="302"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
         <source>File open error</source>
         <translation>파일 열기 오류</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="291"/>
+        <location filename="../main_window/file/file_open.cpp" line="303"/>
         <source>Can&apos;t open the file: %1</source>
         <translation>파일을 열 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="328"/>
+        <location filename="../main_window/file/file_open.cpp" line="340"/>
         <source>Level file loaded</source>
         <translation>로드 된 레벨 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="378"/>
+        <location filename="../main_window/file/file_open.cpp" line="390"/>
         <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation>로드 된 세계지도 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="395"/>
+        <location filename="../main_window/file/file_open.cpp" line="407"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation>파일을 읽을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="413"/>
+        <location filename="../main_window/file/file_open.cpp" line="425"/>
         <source>NPC Config loaded</source>
         <translation>NPC 구성로드 됨</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="509"/>
+        <location filename="../main_window/file/file_open.cpp" line="521"/>
         <source>Game save statistics</source>
         <translation>게임 저장 통계</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="516"/>
+        <location filename="../main_window/file/file_open.cpp" line="528"/>
         <source>Bad file</source>
         <translation>잘못된 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="517"/>
+        <location filename="../main_window/file/file_open.cpp" line="529"/>
         <source>This file have unknown extension</source>
         <translation>이 파일에는 알 수없는 확장자가 있습니다</translation>
     </message>
@@ -7965,61 +7965,61 @@ File not exist.</source>
         <translation>NPC 구성이 다시로드되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="62"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
         <source>Clonning of section...</source>
         <translation>섹션 복제 중 ...</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="245"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="273"/>
         <source>Section has been clonned</source>
         <translation>섹션이 복제되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="246"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="274"/>
         <source>Section has been successfully cloned!
 Do you want to clone another section?</source>
         <translation>섹션이 성공적으로 복제되었습니다!
 다른 섹션을 복제 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="263"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="291"/>
         <source>Remove section</source>
         <translation>섹션 제거</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="264"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="292"/>
         <source>Do you want to remove all objects of this section?</source>
         <translation>이 섹션에서 모든 개체를 제거 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="268"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="349"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="377"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="405"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="433"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="296"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="381"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="415"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="449"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="483"/>
         <source>Margin of section</source>
         <translation>섹션 여백</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="269"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="297"/>
         <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>항목을 제거하려면 섹션 경계에서 얼마나 멀리 떨어져 있는지 (픽셀 단위) 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="304"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="332"/>
         <source>Section has been removed</source>
         <translation>섹션이 제거되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="305"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="333"/>
         <source>Section %1 has been successfully deleted!</source>
         <translation>% 1 섹션이 성공적으로 삭제되었습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="350"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="378"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="406"/>
-        <location filename="../main_window/level/level_sections_mods.cpp" line="434"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="382"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="416"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="450"/>
+        <location filename="../main_window/level/level_sections_mods.cpp" line="484"/>
         <source>Please select how far items can rotate beyond the section boundaries (in pixels) before they are removed.</source>
         <translation>항목이 제거되기 전에 섹션 경계 (픽셀)를 넘어 회전 할 수있는 거리를 선택하십시오.</translation>
     </message>
@@ -9374,18 +9374,18 @@ File: %1</source>
         <translation>줄 데이터 : % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="395"/>
+        <location filename="../main_window/file/file_open.cpp" line="407"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation>파일 열기 오류</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="402"/>
+        <location filename="../main_window/file/file_open.cpp" line="414"/>
         <source>Unknown values are presented</source>
         <translation>알 수없는 데이터 값이 감지되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="403"/>
+        <location filename="../main_window/file/file_open.cpp" line="415"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>파일에 제거 될 알 수없는 데이터가 있습니다.
@@ -12075,37 +12075,37 @@ Do you want to save your changes?</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="80"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="83"/>
         <source>By Wohlstand</source>
         <translation>Wohlstand 제작</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="81"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="84"/>
         <source>Editor, version %1</source>
         <translation>편집자, 버전 % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="82"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="85"/>
         <source>Architecture: %1</source>
         <translation>아키텍처 : % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="85"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
         <source>Revision</source>
         <translation>개정</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="88"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="91"/>
         <source>Build date</source>
         <translation>빌드 날짜</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="94"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="97"/>
         <source>Our project site</source>
         <translation>프로젝트 사이트</translation>
     </message>
     <message>
-        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="95"/>
+        <location filename="../main_window/about_dialog/aboutdialog.cpp" line="98"/>
         <source>This program is distributed under %1</source>
         <translation>이 프로그램은 % 1에 배포됩니다</translation>
     </message>

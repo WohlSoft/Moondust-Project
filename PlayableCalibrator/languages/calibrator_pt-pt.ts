@@ -629,69 +629,69 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="671"/>
+        <location filename="../calibration_main.cpp" line="681"/>
         <source>Background color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="709"/>
+        <location filename="../calibration_main.cpp" line="719"/>
         <source>Open SMBX-38A level file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="711"/>
+        <location filename="../calibration_main.cpp" line="721"/>
         <source>SMBX-38A level files</source>
         <comment>Type of file to open</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="712"/>
+        <location filename="../calibration_main.cpp" line="722"/>
         <source>All Files</source>
         <comment>Type of file to open</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="722"/>
+        <location filename="../calibration_main.cpp" line="732"/>
         <source>File opening error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="723"/>
+        <location filename="../calibration_main.cpp" line="733"/>
         <source>Can&apos;t import calibration data from this file: the file doesn&apos;t contain calibration settings, or this file is not a valid SMBX-38A level file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="740"/>
+        <location filename="../calibration_main.cpp" line="750"/>
         <source>Export calibration settings into SMBX-38A level file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="751"/>
+        <location filename="../calibration_main.cpp" line="761"/>
         <source>File saving error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="752"/>
+        <location filename="../calibration_main.cpp" line="762"/>
         <source>Can&apos;t export calibration data into this file: this is not a valid SMBX-38A level file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="757"/>
+        <location filename="../calibration_main.cpp" line="767"/>
         <source>The level file has been patched!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="833"/>
-        <location filename="../calibration_main.cpp" line="839"/>
-        <location filename="../calibration_main.cpp" line="845"/>
-        <location filename="../calibration_main.cpp" line="851"/>
-        <location filename="../calibration_main.cpp" line="857"/>
-        <location filename="../calibration_main.cpp" line="863"/>
+        <location filename="../calibration_main.cpp" line="843"/>
+        <location filename="../calibration_main.cpp" line="849"/>
+        <location filename="../calibration_main.cpp" line="855"/>
+        <location filename="../calibration_main.cpp" line="861"/>
+        <location filename="../calibration_main.cpp" line="867"/>
+        <location filename="../calibration_main.cpp" line="873"/>
         <source>Compat: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="833"/>
+        <location filename="../calibration_main.cpp" line="843"/>
         <source>Unspecified</source>
         <comment>Unspecified compatibility mode</comment>
         <translation type="unfinished"></translation>
@@ -725,64 +725,64 @@ Right button - Move the right-bottom crop edges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="799"/>
+        <location filename="../calibration_main.cpp" line="809"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="800"/>
+        <location filename="../calibration_main.cpp" line="810"/>
         <source>This action will copy settings of current hitbox to all other frames. Settings of all other frames will be overriden with settings of a current frame. Do you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="494"/>
+        <location filename="../calibration_main.cpp" line="504"/>
         <source>Calibration is not saved!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="390"/>
+        <location filename="../calibration_main.cpp" line="400"/>
         <source>None</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="393"/>
+        <location filename="../calibration_main.cpp" line="403"/>
         <source>Floor</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="395"/>
+        <location filename="../calibration_main.cpp" line="405"/>
         <source>Floor + left wall</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="397"/>
+        <location filename="../calibration_main.cpp" line="407"/>
         <source>Floor + right wall</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="400"/>
+        <location filename="../calibration_main.cpp" line="410"/>
         <source>Ceiling</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="402"/>
+        <location filename="../calibration_main.cpp" line="412"/>
         <source>Ceiling + left wall</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="404"/>
+        <location filename="../calibration_main.cpp" line="414"/>
         <source>Ceiling + right wall</source>
         <comment>Display wall</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calibration_main.cpp" line="495"/>
+        <location filename="../calibration_main.cpp" line="505"/>
         <source>Configuration was modified and not saved. Do you want to save it?</source>
         <translation type="unfinished"></translation>
     </message>
