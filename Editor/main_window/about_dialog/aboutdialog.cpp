@@ -29,6 +29,9 @@
 
 #include "../../version.h"
 
+#define MOONDUST_HOMEPAGE "https://wohlsoft.ru/projects/Moondust/"
+
+
 aboutDialog::aboutDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::aboutDialog)
@@ -72,11 +75,11 @@ aboutDialog::aboutDialog(QWidget *parent) :
         "%5<br>"
         "<br>"
         "%6:<br>"
-        "<a href=\"http://wohlsoft.ru/PGE/\">http://wohlsoft.ru/PGE/</a><br>"
+        "<a href=\"" MOONDUST_HOMEPAGE "\">" MOONDUST_HOMEPAGE "</a><br>"
         "<br>"
         "%7"
         "</div>")
-        .arg("Moondust")
+        .arg("Moondust Project")
         .arg(tr("By Wohlstand"))
         .arg(tr("Editor, version %1").arg(V_FILE_VERSION V_FILE_RELEASE))
         .arg(tr("Architecture: %1").arg(FILE_CPU))
@@ -97,14 +100,14 @@ aboutDialog::aboutDialog(QWidget *parent) :
 /*
     <p align="center"><img src=":/images/cat_builder/cat_builder_128_logo.png" /></p>
 
-    <b>Platformer Game Engine</b><br>
+    <b>Moondust Project</b><br>
     <u>By Wohlstand</u><br>
     <i>Editor, version %1%2</i>
     <i>Architecture: %3</i>
     <i>%4</i>
 
     Our project site:
-    <a href="http://wohlsoft.ru/PGE/">http://wohlsoft.ru/PGE/</a>
+    <a href="https://wohlsoft.ru/projects/Moondust/">https://wohlsoft.ru/projects/Moondust/</a>
 
     This program is distributed under <a href="http://www.gnu.org/licenses/gpl.html">GNU GPLv3</a>.
 */
