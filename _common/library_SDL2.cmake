@@ -22,13 +22,13 @@ if(USE_SYSTEM_SDL2)
     set(SDL2_USE_SYSTEM 1)
 endif()
 
-if(WIN32)
-    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-main.zip")
-else()
-    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-main.tar.gz")
-endif()
+#if(WIN32)
+#    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-main.zip")
+#else()
+#    set(SDL2_SOURCE_TARBALL "${CMAKE_SOURCE_DIR}/_Libs/_sources/SDL-main.tar.gz")
+#endif()
 
-file(SHA256 ${SDL2_SOURCE_TARBALL} SDL2_SOURCE_TARBALL_HASH)
+#file(SHA256 ${SDL2_SOURCE_TARBALL} SDL2_SOURCE_TARBALL_HASH)
 
 set(SDL2_main_Lib "${DEPENDENCIES_INSTALL_DIR}/lib/${CMAKE_STATIC_LIBRARY_PREFIX}SDL2main${PGE_LIBS_DEBUG_SUFFIX}${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
@@ -128,8 +128,10 @@ elseif(SDL2_VIA_AUTOTOOLS)
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2-AM
-        URL ${SDL2_SOURCE_TARBALL}
-        URL_HASH SHA256=${SDL2_SOURCE_TARBALL_HASH}
+#        URL ${SDL2_SOURCE_TARBALL}
+#        URL_HASH SHA256=${SDL2_SOURCE_TARBALL_HASH}
+        DOWNLOAD_COMMAND ""
+        SOURCE_DIR ${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/SDL2
         BUILD_IN_SOURCE 1
         PATCH_COMMAND sed -i "s/-version-info [^ ]\\+/-avoid-version /g" "Makefile.in"
               COMMAND sed -i "s/libSDL2-2\\.0\\.so\\.0/libSDL2\\.so/g" "SDL2.spec.in"
@@ -173,8 +175,10 @@ else()
     ExternalProject_Add(
         SDL2_Local
         PREFIX ${CMAKE_BINARY_DIR}/external/SDL2
-        URL ${SDL2_SOURCE_TARBALL}
-        URL_HASH SHA256=${SDL2_SOURCE_TARBALL_HASH}
+#        URL ${SDL2_SOURCE_TARBALL}
+#        URL_HASH SHA256=${SDL2_SOURCE_TARBALL_HASH}
+        DOWNLOAD_COMMAND ""
+        SOURCE_DIR ${CMAKE_SOURCE_DIR}/_Libs/AudioCodecs/SDL2
         # This issue has been fixed. Kept commented as example for future neccerity to patch futher SDL2 updates
         # PATCH_COMMAND ${PATCH_CMD} -p1 "<" "${CMAKE_SOURCE_DIR}/_Libs/_sources/patches/SDL2_remove_lib_prefix_on_windows.patch"
         CMAKE_ARGS
