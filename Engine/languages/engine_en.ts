@@ -467,7 +467,7 @@ Please download and install latest version of a configuration package:
 
 Download: %1
 
-Note: Most of config packs are updates bundled with PGE,
+Note: Most of config packs are updates bundled with Moondust,
 therefore you can use same link to get an updated version.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
