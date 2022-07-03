@@ -155,7 +155,7 @@ therefore you can use same link to get updated version.</source>
 
 Завантажити: %1
 
-Примітка: більшість конфіг-пакетів оновлюються разом з комплектом PGE,
+Примітка: більшість конфіг-пакетів оновлюються разом з комплектом Moondust,
 тому ви можете використовувати те ж саме посилання, щоб отримати оновлену версію.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
