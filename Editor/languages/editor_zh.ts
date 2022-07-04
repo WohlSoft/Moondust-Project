@@ -142,7 +142,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Change the placement mode of the selected item</source>
-        <translation>更改所选物品放置模式</translation>
+        <translation>更改所选对象的放置模式</translation>
     </message>
     <message>
         <source>Toggle drag-to-scroll while selection is empty</source>
@@ -156,11 +156,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>当选中物品时将不自动显示属性。</translation>
+        <translation>当选中对象时将不自动显示属性。</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation>放置物品时不显示属性</translation>
+        <translation>放置对象时不显示属性</translation>
     </message>
     <message>
         <source>History</source>
@@ -232,7 +232,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
-        <translation>复制所选物品到光标位置</translation>
+        <translation>复制所选对象到光标位置</translation>
     </message>
     <message>
         <source>Autoscroll section</source>
@@ -716,12 +716,12 @@ You can use any configuration package here:&lt;br&gt;%2</source>
     </message>
     <message>
         <source>Configuration package is not configured!</source>
-        <translation>配置包没有配置！</translation>
+        <translation>配置包未配置！</translation>
     </message>
     <message>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
-        <translation>配置包 &quot;%1&quot; 没有进行配置。
+        <translation>配置包 &quot;%1&quot; 未进行配置。
 你现在想配置它吗？</translation>
     </message>
     <message>
@@ -748,7 +748,7 @@ File path: %3</source>
     </message>
     <message>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation>此集成配置包 API 版本低于 42，造成不兼容当前版本的月尘引擎开发工具包。从 API 42 版本起，集成配置包必须使用独立配置文件而非覆盖 main.ini。</translation>
+        <translation>此集成配置包的 API 版本低于 42，无法兼容当前版本的月尘开发工具包。从 API 42 版本起，集成配置包必须使用独立配置文件，而非覆盖 main.ini。</translation>
     </message>
 </context>
 <context>
@@ -962,7 +962,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Item type:</source>
-        <translation>物品类型：</translation>
+        <translation>对象类型：</translation>
     </message>
     <message>
         <source>Counter name:</source>
@@ -1011,7 +1011,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Change item...</source>
-        <translation>更换物品……</translation>
+        <translation>更换对象……</translation>
     </message>
 </context>
 <context>
@@ -1520,12 +1520,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 &lt;br/&gt;
 &lt;b&gt;Tip 3:&lt;/b&gt; Use middle mouse button to toggle placing of selected element or duplicate group!&lt;/p&gt;</source>
         <translatorcomment>不知道怎么翻译……</translatorcomment>
-        <translation>&lt;p&gt;&lt;b&gt;提示1：&lt;/b&gt; 您可以从&lt;u&gt;帮助&lt;/u&gt; 菜单、&lt;u&gt;查看&lt;/u&gt;菜单中的工具箱和&lt;u&gt;窗口&lt;/u&gt;菜单中的下拉菜单项随时更换界面样式。&lt;br/&gt;
-&lt;br/&gt;
+        <translation>&lt;p&gt;&lt;b&gt;提示1：&lt;/b&gt; 您可以从&lt;u&gt;帮助&lt;/u&gt; 菜单、&lt;u&gt;查看&lt;/u&gt;菜单中的工具箱和&lt;u&gt;窗口&lt;/u&gt;菜单中的下拉菜单项随时更换界面样式。&lt;br&gt;
+&lt;br&gt;
 &lt;b&gt;提示2:&lt;/b&gt; 此编辑器不像原版 SMBX1.3 那样，许多功能可以在鼠标右击时弹出菜单后打开，
-也可以从工具栏和菜单里打开，使用此编辑器还可以一次选择多个对象！&lt;br/&gt;
-&lt;br/&gt;
-&lt;b&gt;提示3:&lt;/b&gt; 使用鼠标中键可以在放置物品和复制物品之间切换！&lt;/p&gt;</translation>
+也可以从工具栏和菜单里打开，使用此编辑器还可以一次选择多个对象！&lt;br&gt;
+&lt;br&gt;
+&lt;b&gt;提示3:&lt;/b&gt; 使用鼠标中键可以在放置对象和复制对象之间切换！&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -5024,7 +5024,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>Place exit point or quickly jump to existing warp</source>
-        <translation>放置出口或跳转到已设置的出口地点</translation>
+        <translation>放置出口或跳转到已设置的出口点</translation>
     </message>
     <message>
         <source>Point already placed</source>
@@ -5094,7 +5094,7 @@ number of existing and collected stars in the level will not be shown.</source>
     </message>
     <message>
         <source>Place entrance point or quickly jump to already placed</source>
-        <translation>放置入口或跳转到已设置的入口地点</translation>
+        <translation>放置入口或跳转到已设置的入口点</translation>
     </message>
     <message>
         <source>Set Entrance</source>
@@ -5120,7 +5120,7 @@ finishes the level or lose a life.</source>
     </message>
     <message>
         <source>Player can carry items and NPCs through this warp.</source>
-        <translation>玩家可在通过此传送点时携带物品。</translation>
+        <translation>玩家可在通过此传送点时携带对象。</translation>
     </message>
     <message>
         <source>Entrance closed with a lock. Need a key to open it.</source>
@@ -5286,7 +5286,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
     </message>
     <message>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
-        <translation>可在传送到目标关卡时携带物品。</translation>
+        <translation>可在传送到目标关卡时携带对象。</translation>
     </message>
     <message>
         <source>Allow inter-level NPC</source>
@@ -6504,7 +6504,7 @@ File not exist.</source>
     </message>
     <message>
         <source>Configuration is loaded with errors</source>
-        <translation>配置包含错误</translation>
+        <translation>配置包有错误</translation>
     </message>
     <message>
         <source>Cannot create NPC config file:
@@ -6786,7 +6786,7 @@ See %1 for more information.</source>
     </message>
     <message>
         <source>Configuration package is loaded with errors.</source>
-        <translation>配置包已加载，但有错误。</translation>
+        <translation>配置包已加载，但发生错误。</translation>
     </message>
     <message>
         <source>Open</source>
@@ -6958,7 +6958,7 @@ See %2 for more information.</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation>这是一个使用无法识别的配置包制作的关卡文件。这是因为该关卡使用的是另一个引擎而非 %1，因此可能使部分砖块、NPC、脚本或其他的对象不兼容，且您可能会遇到未如预期的结果或错误。
+        <translation>该关卡文件使用无法识别的配置包创建。这是因为该关卡使用的是另一个引擎而非 %1，因此可能造成部分砖块、NPC、脚本或其他的对象不兼容，且您可能会遇到未如预期的结果或错误。
 
 文件名：%2
 关卡配置包编号：%3
@@ -6974,7 +6974,7 @@ Expected config pack ID: %4</source>
 Filename: %2
 Level&apos;s config pack ID: %3
 Expected config pack ID: %4</source>
-        <translation>这是一个使用无法识别的配置包制作的大地图文件。这是因为该大地图使用的是另一个引擎而非 %1，因此可能使部分地形、关卡、脚本或其他的对象不兼容，且您可能会遇到未如预期的结果或错误。
+        <translation>该大地图文件使用无法识别的配置包创建。这是因为该大地图使用的是另一个引擎而非 %1，因此可能造成部分地形、关卡、脚本或其他的对象不兼容，且您可能会遇到未如预期的结果或错误。
 
 文件名：%2
 关卡配置包编号：%3
@@ -9043,7 +9043,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation>要清除图块组并新建吗？未保存的数据将会丢失。</translation>
+        <translation>要清除并新建图块组吗？未保存的数据将会丢失。</translation>
     </message>
     <message>
         <source>Please enter a filename!</source>
@@ -9090,11 +9090,11 @@ If you wish to create level/world specific tilesets with using of custom graphic
 %1
 它们可以作为此配置包的全局图块组使用。
 
-如果你要创建的是包含自定义素材的关卡或大地图图块组，请使用打开工具箱，然后找到“自定义”标签中的“新图块组”。</translation>
+如果你要创建的是包含自定义素材的关卡或大地图图块组，请使用打开工具箱，然后找到“自定义”标签中的“新增图块组”。</translation>
     </message>
     <message>
         <source>Remove tileset</source>
-        <translation>移除图块组</translation>
+        <translation>删除图块组</translation>
     </message>
     <message>
         <source>Do you want to remove this tileset?</source>
@@ -9572,7 +9572,7 @@ Data may be corrupted!</source>
     <name>WLD_SetPoint</name>
     <message>
         <source>Selecting point on the world map</source>
-        <translation>大地图坐标选择中</translation>
+        <translation>选定大地图位置</translation>
     </message>
     <message>
         <source>Note: Use the mousewheel to scroll on the map. You can scroll horizontally by holding down the CTRL key.</source>
@@ -9580,7 +9580,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Current Point:</source>
-        <translation>当前坐标：</translation>
+        <translation>当前位置：</translation>
     </message>
     <message>
         <source>You will change current position to the last selected point. If point is not set, position will not be changed.</source>
@@ -9588,11 +9588,11 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Go to point</source>
-        <translation>跳转到坐标</translation>
+        <translation>跳转到位置</translation>
     </message>
     <message>
         <source>Start and stop animation of placed on the map items.</source>
-        <translation>开始和停止在大地图上所放置物品的动画。</translation>
+        <translation>开始和停止在大地图中放置对象的动画。</translation>
     </message>
     <message>
         <source>Animation</source>
@@ -9600,7 +9600,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>You will return to the x0-y0 position of the map.</source>
-        <translation>返回大地图坐标到 (0,0)。</translation>
+        <translation>返回大地图位置到 (0,0)。</translation>
     </message>
     <message>
         <source>Reset position</source>
@@ -9638,7 +9638,7 @@ because object configurations are not loaded
     </message>
     <message>
         <source>1/%1 Loading user data</source>
-        <translation>1/%1 自定义数据加载中</translation>
+        <translation>1/%1 加载自定义数据中</translation>
     </message>
     <message>
         <source>1/%1 Applying Tiles</source>
@@ -9662,11 +9662,11 @@ because object configurations are not loaded
     </message>
     <message>
         <source>Point is not selected</source>
-        <translation>未选择坐标</translation>
+        <translation>未选择位置</translation>
     </message>
     <message>
         <source>Select the point on the world map first.</source>
-        <translation>请先选择大地图的坐标。</translation>
+        <translation>请先选定大地图的位置。</translation>
     </message>
     <message>
         <source>Configuration package has errors</source>
