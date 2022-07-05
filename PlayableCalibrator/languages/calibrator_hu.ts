@@ -6,12 +6,12 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="20"/>
         <source>Animation editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Animációszerkesztő</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="65"/>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
+        <translation>Előnézet</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="95"/>
@@ -22,7 +22,7 @@
         <location filename="../animator/animation_edit.ui" line="111"/>
         <location filename="../animator/animation_edit.ui" line="134"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállít</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="118"/>
@@ -34,24 +34,24 @@
         <location filename="../animator/animation_edit.ui" line="183"/>
         <location filename="../animator/animation_edit.ui" line="238"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="170"/>
         <source>Animation name</source>
-        <translation type="unfinished"></translation>
+        <translation>Animáció neve</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="190"/>
         <source>Frames (left)</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkockák (balra)</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="206"/>
         <location filename="../animator/animation_edit.ui" line="222"/>
         <location filename="../animator/animation_edit.ui" line="272"/>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Töröl</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="245"/>
@@ -61,12 +61,12 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
         <source>Play Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Lejátszás Balra</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="259"/>
         <source>Frames (right)</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkockák (jobbra)</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
