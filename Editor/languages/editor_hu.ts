@@ -824,12 +824,12 @@ Itt bármely konfigurációs csomagot használhatod:&lt;br&gt;%2</translation>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="515"/>
         <source>Integrational configuration package is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Az integrált konfigurációs csomag nem kompatibilis</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="516"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az integrált konfigurációs csomag API verziója régebbi, mint 42, ezért nem kompatibilis a Moondust szerkesztő jelenlegi verziójával mert a 42-es verziótól az integráét konfigurációs csomagok a helyi beállítófájlt használják a main.ini helyett.</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="526"/>
@@ -863,7 +863,7 @@ Fájl útvonala: %3</translation>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="591"/>
         <source>This config pack has no configuring tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ennek a csomagnak nincs beállítóeszköze.</translation>
     </message>
 </context>
 <context>
@@ -871,132 +871,132 @@ Fájl útvonala: %3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="20"/>
         <source>Current configuration status</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelenlegi konfigurációs állapot</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="37"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Állapot</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="49"/>
         <source>Objects defined:</source>
-        <translation type="unfinished"></translation>
+        <translation>Definiált objektumok:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="76"/>
         <source>Configuration name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció neve:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="89"/>
         <source>Configuration path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció útvonala:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="128"/>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvtárak</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="140"/>
         <source>Configuration directories:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurációs könytárak:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="196"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="201"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Útvonal</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="210"/>
         <source>Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibák</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="223"/>
         <source>Configuration Loading Errors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció Betöltési Hibái:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="109"/>
         <source>Level: Blocks (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: Blokkok (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="111"/>
         <source>Level: Background objects (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: Háttérobjektumok (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="113"/>
         <source>Level: Background images (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: Háttérképek (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="115"/>
         <source>Level: NPCs (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: NJKk (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="117"/>
         <source>Music (level) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene (pálya) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="118"/>
         <source>Music (world map) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene (világtérkép) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="119"/>
         <source>Music (special) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene (speciális) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="121"/>
         <source>Sounds (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangok (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="123"/>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérkép: Domborzatcsempék (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="125"/>
         <source>World map: Scenery (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérkép: Díszletek (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="127"/>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtéekép: Útvonalcsempék (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="129"/>
         <source>World map: Level entrance tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérkép: Pályabejáratcsempék (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="131"/>
         <source>Default rotation rules (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett forgatási szabályok (%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="135"/>
         <source>Level data</source>
-        <translation type="unfinished"></translation>
+        <translation>Pályaadatok</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="136"/>
         <source>World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérképadatok</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="137"/>
@@ -1006,27 +1006,27 @@ Fájl útvonala: %3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="138"/>
         <source>Game worlds</source>
-        <translation type="unfinished"></translation>
+        <translation>Játék világai</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="139"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="140"/>
         <source>Sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangok</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="141"/>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyéni adatok</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="149"/>
         <source>[Error list is empty, congratulations!]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Gratulálunk, nincs hiba!]</translation>
     </message>
 </context>
 <context>
@@ -1034,32 +1034,32 @@ Fájl útvonala: %3</translation>
     <message>
         <location filename="../common_features/crashhandler.ui" line="14"/>
         <source>Crash</source>
-        <translation type="unfinished"></translation>
+        <translation>Összeomlás</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelentés közzététele a WohlSoft fórumon (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibajelentés tétele a GitHub tárolóban (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="57"/>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehet, hogy szeretnéd jelenteni ezeket az adatokat a fejlesztőknek:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ó, jajj! A szerkesztő összeomlott :( &lt;br&gt; Részletes összeomlás-információ:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="74"/>
         <source>Copy report into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelentés másolása a vágólapra</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="94"/>
@@ -1067,34 +1067,38 @@ Fájl útvonala: %3</translation>
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikor jelentést készítesz, kérjük írd le hogy mi okozhatta az összeomlást.
+- Kérjük írj listát az összeomlást megelőző műveleteidről.
+- Ha az összeomlás egy adott fájl szerkesztése közben történt, kérjük csatold azt a jelentésedhez.
+- És térj ki arra is, hogy milyen operációs rendszert használtál.</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="107"/>
         <source>Exit from application</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilépés a programból</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="127"/>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation>Csatlakozz a projekt hovatalos Discord szerveréhez, hogy jelentést tegyél</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="438"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Összeomlás helyreállítása</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="439"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az utolsó összeomlás óta a szerkesztő helyreállított néhány fájlt.
+Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="473"/>
         <source>Copied!</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolva!</translation>
     </message>
 </context>
 <context>
@@ -1102,7 +1106,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="20"/>
         <source>Custom Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyéni Számláló</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
