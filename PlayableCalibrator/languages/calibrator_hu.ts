@@ -16,7 +16,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="95"/>
         <source>Frame delay:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Képkockák közti várakozás:</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="111"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="245"/>
         <source>Play Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Lejátszás Jobbra</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
@@ -71,22 +71,22 @@
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animáció nevének ürítése</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Animation name is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Az animáció neve üres!</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="368"/>
         <source>Animation exist</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az animáció már létezik</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Egy animáció a(z) „%1”néven már létezik!</translation>
     </message>
 </context>
 <context>
@@ -94,37 +94,37 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation>Animátor</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Irány</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Bal</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Jobb</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="125"/>
         <source>Frame speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkockasebesség:</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="141"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animáció</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="160"/>
         <source>Edit animations</source>
-        <translation type="unfinished"></translation>
+        <translation>Animációk szerkesztése</translation>
     </message>
 </context>
 <context>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../calibration_main.ui" line="437"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Magasság</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="447"/>
