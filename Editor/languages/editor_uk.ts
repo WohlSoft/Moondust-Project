@@ -8215,7 +8215,7 @@ Arguments: %2</source>
     <message>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
-        <translation>Секундомір спідранерів</translation>
+        <translation>Секундомір для спідранерів</translation>
     </message>
     <message>
         <source>Disabled</source>

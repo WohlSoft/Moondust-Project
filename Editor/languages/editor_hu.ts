@@ -6,17 +6,17 @@
     <message>
         <location filename="../testing/abstract_engine.cpp" line="87"/>
         <source>World map testing via IPC is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>A világtérkép tesztelés IPC-n keresztül nem támogatott</translation>
     </message>
     <message>
         <location filename="../testing/abstract_engine.cpp" line="94"/>
         <source>World map testing is not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérkép tesztelése nem támogatott</translation>
     </message>
     <message>
         <location filename="../testing/abstract_engine.cpp" line="100"/>
         <source>This feature is not implemented</source>
-        <translation type="unfinished"></translation>
+        <translation>Ez a funkció nem elérhető</translation>
     </message>
 </context>
 <context>
@@ -24,7 +24,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="20"/>
         <source>Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="69"/>
@@ -34,242 +34,242 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="83"/>
         <source>Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlok</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="97"/>
         <source>Associate file extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Fájlkiterjesztések társítása</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="148"/>
         <source>Window layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Ablakelrendezés</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="162"/>
         <source>Separate Sub-windows (Classic style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Különálló mellékablakok (klasszikus)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="174"/>
         <source>Tabbed Sub-windows (Modern style)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fülekre rendezett mellékablakok (modern)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="189"/>
         <source>Music player</source>
-        <translation type="unfinished"></translation>
+        <translation>Zenelejátszó</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="203"/>
         <source>Music will automatically play when you open a level file</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>A zene automatikusan elindul pálya betöltésekor</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="206"/>
         <source>Autoplay music after opening file</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene elindítása automatikusan pálya megnyitásakor</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="239"/>
         <source>Performance</source>
-        <translation type="unfinished"></translation>
+        <translation>Teljesítmény</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="253"/>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az egyidőben animálható elemek maximuma. Ennek a korlátnak az elérése esetén az animáció megáll amíg a korlát megemelésre nem kerül vagy az elemek száma a korlát alá csökken.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="271"/>
         <source>Animation items limit</source>
-        <translation type="unfinished"></translation>
+        <translation>Animált elemek korlátja</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="286"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animáció</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="298"/>
         <source>Collision detection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ütközésérzékelés</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="321"/>
         <source>Autosave</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatikus mentés</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="327"/>
         <source>Automatically save file</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájl elmentése minden</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="350"/>
         <source>minutes</source>
         <comment>Autosave interval units</comment>
-        <translation type="unfinished"></translation>
+        <translation>percben</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="374"/>
         <source>Editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerkesztő</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="383"/>
         <source>Middle mouse button actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Középső egérgombos műveletek</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="389"/>
         <source>Copy selected items to cursor position</source>
-        <translation type="unfinished"></translation>
+        <translation>A kiválasztott elemek másolása a kurzorhoz</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="396"/>
         <source>Change the placement mode of the selected item</source>
-        <translation type="unfinished"></translation>
+        <translation>A kiválasztott elem lehelyezési módjának megváltoztatása</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="403"/>
         <source>Toggle drag-to-scroll while selection is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>A húzd-a-görgetéshez funkció átkapcsolása, amikor kijelölés aktív</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="413"/>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehelyezési mód</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="419"/>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation type="unfinished"></translation>
+        <translation>Az információs panel automatikus mutatásának kikapcsolása, amikor a kijelölés aktív.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="423"/>
         <source>Don&apos;t show properties box when placing items</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne mutassa az információs panelt elemek lehelyezésekor</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="446"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Előzmények</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="455"/>
         <source>Max history entries:</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximális előzménylistahossz:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="462"/>
         <source>Maximum number of remembered history actions.</source>
-        <translation type="unfinished"></translation>
+        <translation>A megjegyzett előzmények maximális száma.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="481"/>
         <source>Screen capture default size</source>
-        <translation type="unfinished"></translation>
+        <translation>Képernyőkép alapértelmezett mérete</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="487"/>
         <source>Use custom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyéni használata:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="529"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szélesség:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="539"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>Magasság:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="546"/>
         <source>Fit to window size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ablak méretéhez igazítás</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="572"/>
         <source>Environment</source>
-        <translation type="unfinished"></translation>
+        <translation>Környezet</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="578"/>
         <source>Default zoom:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett nagyítás:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="585"/>
         <source>Default zoom which will be installed on file opening or file creation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett nagyítás fájl megnyitásakor vagy létrehozásakor.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="608"/>
         <source>Defaults</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alapértelmezett</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="617"/>
         <source>Classic Events tabs to auto-expand</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatikusan kinyitandó Klasszikus Eseménypanelek</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="623"/>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>Általános</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="630"/>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Szakasz beállításai</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="637"/>
         <source>Layer visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Rétegek láthatósága</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="644"/>
         <source>Layer movement</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rétegek Mozgása</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="651"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automatikus görgetéses szakasz</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="658"/>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Esemény Indítása</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="665"/>
         <source>Hold buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Lenyomott Gombok</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="701"/>
         <source>NPC settings</source>
-        <translation type="unfinished"></translation>
+        <translation>NJK Beállítások</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="710"/>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation>Generátor</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="719"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Típus:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="753"/>
@@ -279,32 +279,32 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="758"/>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation>Lövedék</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="766"/>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation>Várakozás (másodperc):</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="789"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Irány</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="801"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Bal</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="808"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation>Véletlen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="815"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Jobb</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="828"/>
@@ -319,92 +319,92 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="842"/>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation>0 - Azonnali</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="847"/>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation>1 - Cső</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="852"/>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation>2 - Ajtó</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="857"/>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation>3 - Portál</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="882"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Nézet</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="891"/>
         <source>Tileset Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kombinált Eszköztár</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="900"/>
         <location filename="../main_window/tools/app_settings.ui" line="926"/>
         <location filename="../main_window/tools/app_settings.ui" line="984"/>
         <source>Display tabs horizontally</source>
-        <translation type="unfinished"></translation>
+        <translation>Fülek megjelenítése vízszintesen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="907"/>
         <location filename="../main_window/tools/app_settings.ui" line="933"/>
         <location filename="../main_window/tools/app_settings.ui" line="991"/>
         <source>Display tabs vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Fülek megjelenítése függőlegesen</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="917"/>
         <source>World Map Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérképelem Eszköztár</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="943"/>
         <location filename="../main_window/tools/app_settings.ui" line="952"/>
         <source>Theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Téma</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="962"/>
         <source>Palette</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paletta</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="975"/>
         <source>Level Item toolbox</source>
-        <translation type="unfinished"></translation>
+        <translation>Pályaelem Eszköztár</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1014"/>
         <source>Font</source>
-        <translation type="unfinished"></translation>
+        <translation>Betűtípus</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1033"/>
         <source>Font size</source>
-        <translation type="unfinished"></translation>
+        <translation>Betűméret</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1053"/>
         <source>Use default</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett használata</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1064"/>
         <source>Logging</source>
-        <translation type="unfinished"></translation>
+        <translation>Naplózás</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1073"/>
         <source>Log level</source>
-        <translation type="unfinished"></translation>
+        <translation>Naplózás szintje</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1083"/>
@@ -414,47 +414,47 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1090"/>
         <source>Log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Naplófájl</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1114"/>
         <source>Extra</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">További</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1123"/>
         <source>Note: Some of those settings will take change on application restart</source>
-        <translation type="unfinished"></translation>
+        <translation>Jegyzet: Néhány beállítás csak a szerkesztő újraindítása után kerül alkalmazásra</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1136"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automatikus széthúzás engedélyezése nagy felbontású monitorokon</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="226"/>
         <source>Set log file</source>
-        <translation type="unfinished"></translation>
+        <translation>Naplófájl beállítása</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="227"/>
         <source>Text files (*.txt *.log)</source>
-        <translation type="unfinished"></translation>
+        <translation>Szövegfájlok (*.txt *.log)</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="326"/>
         <source>Success</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Siker</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="326"/>
         <source>All file associations have been set</source>
-        <translation type="unfinished"></translation>
+        <translation>Összes fájlhozzárendelés beállítva</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="328"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
 </context>
 <context>
@@ -462,17 +462,17 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A teljes csillagszám kiszámítása az összes elérhető pálya alapján</translation>
     </message>
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation>Megszakítás</translation>
     </message>
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="46"/>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation>Csillagok megszámolása…</translation>
     </message>
 </context>
 <context>
@@ -480,22 +480,22 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="14"/>
         <source>Convert Audio (SoX)</source>
-        <translation type="unfinished"></translation>
+        <translation>Audió Konvertálása (SoX)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="24"/>
         <source>SoX executable path:</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX futtatható fájl útvonala:</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="31"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="45"/>
         <source>Make backup</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztonsági mentés létrehozása</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="52"/>
@@ -505,80 +505,82 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feladat kiválasztása:</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="132"/>
         <source>Convert music of current level section</source>
-        <translation type="unfinished"></translation>
+        <translation>A jelenlegi pályaszakasz zenéjének konvertálása</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="142"/>
         <source>Convert all music files on current level</source>
-        <translation type="unfinished"></translation>
+        <translation>A jelenlegi pálya összes zenéjének konvertálása</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="149"/>
         <source>Convert specified files</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiválasztott fájlok konvertálása</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="202"/>
         <source>Don&apos;t change format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formátumváltoztatás tiltása</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="208"/>
         <source>The files&apos; format will not be changed</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok formátuma nem fog megváltozni</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="231"/>
         <source>Set bitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitráta beállítása</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="329"/>
         <source>Files will be converted into MP3</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok MP3 formátumba lesznek konvertálva</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="372"/>
         <source>Files will be converted into FLAC</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok FLAC formátumba lesznek konvertálva</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="389"/>
         <source>Files will be converted into OGG</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok OGG formátumba lesznek konvertálva</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="405"/>
         <source>Set quality</source>
-        <translation type="unfinished"></translation>
+        <translation>Minőség beállítása</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="484"/>
         <source>Files will be converted into WAV</source>
-        <translation type="unfinished"></translation>
+        <translation>A fájlok WAV formátumba lesznek konvertálva</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="505"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;lt;html&amp;gt;&amp;lt;body&amp;gt;&lt;p&gt;Itt gyorsan át tudod konvertálni a hangfájljaidat, amik&lt;br&gt;hibásan lettek formázva (rossz mintasebesség, hibás kodek, stb.).&lt;/p&gt;
+&lt;p&gt;Ez a funkció a &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; hangkonvertert használja.&lt;/p&gt;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="538"/>
         <source>Convert into new format
 (select a tab to choose target format)</source>
-        <translation type="unfinished"></translation>
+        <translation>Új formátumba konvertálás
+(válassza ki a füleken a megfelelő formátumot)</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="25"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="173"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Indítás</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="123"/>
@@ -587,77 +589,81 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="221"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="236"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX hiba</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="124"/>
         <source>SoX executable path is not defined.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>A SoX futtatható fájl útvonala nincs meghatározva.
+Kérjük először állítsa be a SoX fájl útvonalát</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="132"/>
         <source>SoX executable path is invalid.
 Please set SoX path first</source>
-        <translation type="unfinished"></translation>
+        <translation>A SoX futtatható fájl útvonala hibás.
+Kérjük állítsa be helyesen a SoX fájl útvonalát</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="155"/>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="421"/>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs több feladat.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="156"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs konvertálható fájl</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="160"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation>Megállítás</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="209"/>
         <source>Operation canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Művelet megszakítva</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="222"/>
         <source>Sorry, SoX has crashed</source>
-        <translation type="unfinished"></translation>
+        <translation>Elnézést, a SoX összeomlott</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="237"/>
         <source>SoX returned a non-zero exit code: %1
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>A SoX nem nulla értékkel tért vissza: %1
+%2</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="296"/>
         <source>Operation complete</source>
-        <translation type="unfinished"></translation>
+        <translation>Művelet bevejezve</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="297"/>
         <source>All files successfully converted!
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Az összes fájl konvertálása sikeres!
+%1</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="422"/>
         <source>No tasks defined. Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs feladat definiálva. Nincs több feladat.</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="458"/>
         <source>Open SoX executable path</source>
-        <translation type="unfinished"></translation>
+        <translation>A SoX futtatható fájl útvonalának megnyitása</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="471"/>
         <source>Select file to convert</source>
-        <translation type="unfinished"></translation>
+        <translation>A konvertálandó fájl kiválasztása</translation>
     </message>
 </context>
 <context>
@@ -665,32 +671,32 @@ Please set SoX path first</source>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>Üres WOPL fájl kiválasztása</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="36"/>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Válaszd ki a használandó WOPL bankfájlt</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="41"/>
         <source>Select WOPN bank file</source>
-        <translation type="unfinished"></translation>
+        <translation>WOPN bankfájl kiválasztása</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="42"/>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Válaszd ki a használandó WOPN eszközbankfájlt</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A SoundFont bankfájl kiválasztása</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="48"/>
         <source>Please select the SoundFont bank file to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérjük válaszd ki a hozzáadni kívánt SoundFont bankfájlt</translation>
     </message>
 </context>
 <context>
@@ -698,37 +704,37 @@ Please set SoX path first</source>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="14"/>
         <source>Blocks per second calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokk/másodperc számító</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="34"/>
         <source>Move time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mozgásidő:</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="41"/>
         <source>Distance:</source>
-        <translation type="unfinished"></translation>
+        <translation>Távolság:</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="61"/>
         <source> blocks</source>
-        <translation type="unfinished"></translation>
+        <translation> blokk</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="80"/>
         <source>Size of one block:</source>
-        <translation type="unfinished"></translation>
+        <translation>Egy blokk mérete:</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="97"/>
         <source>per </source>
-        <translation type="unfinished"></translation>
+        <translation>/ </translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="100"/>
         <source> second</source>
-        <translation type="unfinished"></translation>
+        <translation> másodperc</translation>
     </message>
 </context>
 <context>
@@ -736,44 +742,46 @@ Please set SoX path first</source>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="29"/>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozíciókönyvjelzők</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="60"/>
         <source>Remove selected bookmark from list</source>
-        <translation type="unfinished"></translation>
+        <translation>A kiválasztott könyvjelző törlése</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="63"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="76"/>
         <source>Remember current screen position on the level map or on the world map
 and store a bookmark.</source>
-        <translation type="unfinished"></translation>
+        <translation>A jelenlegi képernyőpozíció megjegyzése a pályán vagy világtérképen
+és egy könyvjelző lézrehozása.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="80"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="93"/>
         <source>Scroll to the saved position in the selected item.
 You also can double-click an item to scroll to its bookmarked position.</source>
-        <translation type="unfinished"></translation>
+        <translation>A mentett pozícióra görgetés a kiválasztott elemben
+Egy elemre való duplakattintással annak könyvjelzőzött pozíciójára ugorhatsz.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="97"/>
         <source>Go To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás…</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.cpp" line="247"/>
         <source>Rename Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvjelző Átnevezése</translation>
     </message>
 </context>
 <context>
@@ -781,22 +789,22 @@ You also can double-click an item to scroll to its bookmarked position.</source>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="14"/>
         <source>Configuration Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurációkezekő</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="82"/>
         <source>Please select the game configuration you want to start the Editor with</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérjük válassza ki azt a játékkonfigurációt, amellyel a szerkesztőt indítani szeretné</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.ui" line="111"/>
         <source>Ask every startup</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérdezze meg minden indításkor</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="358"/>
         <source>No config packs were found</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem találhatók konfigurációs csomagok</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="364"/>
@@ -806,49 +814,56 @@ Please download and install them into this directory&lt;br&gt;
 %1&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem találhatók konfigurációs csomagok!&lt;br&gt;
+Kérjük töltsd le és másold azokat ebbe a könyvtárba&lt;br&gt;
+&lt;br&gt;
+%1&lt;br&gt;
+&lt;br&gt;
+Itt bármely konfigurációs csomagot használhatod:&lt;br&gt;%2</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="515"/>
         <source>Integrational configuration package is incompatible</source>
-        <translation type="unfinished"></translation>
+        <translation>Az integrált konfigurációs csomag nem kompatibilis</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="516"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az integrált konfigurációs csomag API verziója régebbi, mint 42, ezért nem kompatibilis a Moondust szerkesztő jelenlegi verziójával mert a 42-es verziótól az integráét konfigurációs csomagok a helyi beállítófájlt használják a main.ini helyett.</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="526"/>
         <source>Configuration package is not configured!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nincs beállítva konfigurációs csomag!</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="527"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;%1&quot; nincs beállítva konfigurációs csomag.
+Szeretnéd beállítani?</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="577"/>
         <source>Configuration script failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Konfigurációs szkript hiba</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="578"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>A konfigurációs eszköz hibával tért vissza: %1 a %2 sorban.
+Fájl útvonala: %3</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="590"/>
         <source>No configuration needed</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció nem szükséges</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="591"/>
         <source>This config pack has no configuring tool.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ennek a csomagnak nincs beállítóeszköze.</translation>
     </message>
 </context>
 <context>
@@ -856,132 +871,132 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="20"/>
         <source>Current configuration status</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelenlegi konfigurációs állapot</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="37"/>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Állapot</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="49"/>
         <source>Objects defined:</source>
-        <translation type="unfinished"></translation>
+        <translation>Definiált objektumok:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="76"/>
         <source>Configuration name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció neve:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="89"/>
         <source>Configuration path:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció útvonala:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="128"/>
         <source>Directories</source>
-        <translation type="unfinished"></translation>
+        <translation>Könyvtárak</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="140"/>
         <source>Configuration directories:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfigurációs könytárak:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="196"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="201"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation>Útvonal</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="210"/>
         <source>Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibák</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="223"/>
         <source>Configuration Loading Errors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció Betöltési Hibái:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="109"/>
         <source>Level: Blocks (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: Blokkok (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="111"/>
         <source>Level: Background objects (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: Háttérobjektumok (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="113"/>
         <source>Level: Background images (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: Háttérképek (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="115"/>
         <source>Level: NPCs (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya: NJKk (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="117"/>
         <source>Music (level) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene (pálya) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="118"/>
         <source>Music (world map) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene (világtérkép) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="119"/>
         <source>Music (special) (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene (speciális) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="121"/>
         <source>Sounds (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangok (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="123"/>
         <source>World map: Terrain tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérkép: Domborzatcsempék (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="125"/>
         <source>World map: Scenery (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérkép: Díszletek (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="127"/>
         <source>World map: Path tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtéekép: Útvonalcsempék (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="129"/>
         <source>World map: Level entrance tiles (%1/%2)</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérkép: Pályabejáratcsempék (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="131"/>
         <source>Default rotation rules (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett forgatási szabályok (%1)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="135"/>
         <source>Level data</source>
-        <translation type="unfinished"></translation>
+        <translation>Pályaadatok</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="136"/>
         <source>World map data</source>
-        <translation type="unfinished"></translation>
+        <translation>Világtérképadatok</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="137"/>
@@ -991,27 +1006,27 @@ File path: %3</source>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="138"/>
         <source>Game worlds</source>
-        <translation type="unfinished"></translation>
+        <translation>Játék világai</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="139"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="140"/>
         <source>Sounds</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangok</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="141"/>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyéni adatok</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="149"/>
         <source>[Error list is empty, congratulations!]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Gratulálunk, nincs hiba!]</translation>
     </message>
 </context>
 <context>
@@ -1019,32 +1034,32 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="14"/>
         <source>Crash</source>
-        <translation type="unfinished"></translation>
+        <translation>Összeomlás</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="24"/>
         <source>Post a report at PGE Forum (wohlsoft.ru/forum/)</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelentés közzététele a WohlSoft fórumon (wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="41"/>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibajelentés tétele a GitHub tárolóban (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="57"/>
         <source>You might want to report this data to developers:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehet, hogy szeretnéd jelenteni ezeket az adatokat a fejlesztőknek:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ó, jajj! A szerkesztő összeomlott :( &lt;br&gt; Részletes összeomlás-információ:</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="74"/>
         <source>Copy report into clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelentés másolása a vágólapra</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="94"/>
@@ -1052,34 +1067,38 @@ File path: %3</source>
 - Please give a list of actions you did to cause a crash. 
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikor jelentést készítesz, kérjük írd le hogy mi okozhatta az összeomlást.
+- Kérjük írj listát az összeomlást megelőző műveleteidről.
+- Ha az összeomlás egy adott fájl szerkesztése közben történt, kérjük csatold azt a jelentésedhez.
+- És térj ki arra is, hogy milyen operációs rendszert használtál.</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="107"/>
         <source>Exit from application</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilépés a programból</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="127"/>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation type="unfinished"></translation>
+        <translation>Csatlakozz a projekt hovatalos Discord szerveréhez, hogy jelentést tegyél</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="438"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Összeomlás helyreállítása</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="439"/>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
-        <translation type="unfinished"></translation>
+        <translation>Az utolsó összeomlás óta a szerkesztő helyreállított néhány fájlt.
+Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="473"/>
         <source>Copied!</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolva!</translation>
     </message>
 </context>
 <context>
@@ -1087,7 +1106,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="20"/>
         <source>Custom Counter</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyéni Számláló</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>

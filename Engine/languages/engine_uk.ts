@@ -123,13 +123,13 @@ and retry your recent actions to get more detailed information.</source>
     <message id="ERR_CONFIG_ERROR_DATADIR_TTL">
         <location filename="../data_configs/config_manager.cpp" line="152"/>
         <source>Missing config pack data directory</source>
-        <translation type="unfinished">Відсутня тека з даними в конфіг-пакеті</translation>
+        <translation>Відсутня тека з даними в конфіг-пакеті</translation>
     </message>
     <message id="ERR_CONFIG_ERROR_DATADIR_MSG">
         <location filename="../data_configs/config_manager.cpp" line="154"/>
         <source>Config pack data path not exists:
 %1</source>
-        <translation type="unfinished">Тека з даними конфіг-пакету відсутня:
+        <translation>Тека з даними конфіг-пакету відсутня:
 %1</translation>
     </message>
     <message id="WARNING_LEGACY_CONFIG_PACK_TTL">
@@ -155,7 +155,7 @@ therefore you can use same link to get updated version.</source>
 
 Завантажити: %1
 
-Примітка: більшість конфіг-пакетів оновлюються разом з комплектом PGE,
+Примітка: більшість конфіг-пакетів оновлюються разом з комплектом Moondust,
 тому ви можете використовувати те ж саме посилання, щоб отримати оновлену версію.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
