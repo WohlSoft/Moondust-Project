@@ -156,7 +156,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <source>Properties box will not be shown atomatically when you select an item to place,
 like when choosing an item from the item toolbox or from the tileset item box.</source>
         <comment>Pop-up hint</comment>
-        <translation>当选中对象时将不自动显示属性。</translation>
+        <translation>当选中对象时，将不自动显示属性。</translation>
     </message>
     <message>
         <source>Don&apos;t show properties box when placing items</source>
@@ -228,7 +228,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation>启用高分辨率自动缩放</translation>
+        <translation>启用高分辨率显示器自动缩放</translation>
     </message>
     <message>
         <source>Copy selected items to cursor position</source>
@@ -4187,7 +4187,7 @@ Do you want to continue?</source>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>旧版的强制卷轴场景设置，用于老旧的 SMBX64 关卡文件或从旧版格式转换为现代格式。请在使用 SMBX64 或更早的引擎制作的关卡文件中使用这些设置。这些设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。如果您的关卡中使用现代强制卷轴模式，则旧版的强制卷轴场景设置会被忽略。如果您保存为 SMBX-38A 格式，则这些设置将会丢失。可在“场景设置”中找到“强制卷轴场景”。</translation>
+        <translation>旧版的强制卷轴场景设置，用于老旧的 SMBX64 关卡文件，或从旧版格式转换为现代格式。请在面向 SMBX64 或更早的引擎制作的关卡文件使用这些设置。这些设置同样适用于现代引擎（例如 TheXTech、月尘引擎等）。如果您的关卡中使用现代强制卷轴模式，旧版的强制卷轴场景设置将被忽略。如果您保存为 SMBX-38A 格式，则这些设置将会丢失。可在“场景设置”中找到“强制卷轴场景”。</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
