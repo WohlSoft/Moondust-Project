@@ -3072,7 +3072,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Group:</source>
-        <translation>组：</translation>
+        <translation>分组：</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -9243,7 +9243,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Group:</source>
-        <translation>组：</translation>
+        <translation>分组：</translation>
     </message>
 </context>
 <context>
