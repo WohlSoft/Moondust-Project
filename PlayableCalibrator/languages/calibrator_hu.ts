@@ -16,7 +16,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="95"/>
         <source>Frame delay:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Képkockák közti várakozás:</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="111"/>
@@ -56,7 +56,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="245"/>
         <source>Play Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Lejátszás Jobbra</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="252"/>
@@ -71,22 +71,22 @@
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animáció nevének ürítése</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
         <source>Animation name is empty!</source>
-        <translation type="unfinished"></translation>
+        <translation>Az animáció neve üres!</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="368"/>
         <source>Animation exist</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Az animáció már létezik</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
         <source>Animation with &apos;%1&apos; name already exist!</source>
-        <translation type="unfinished"></translation>
+        <translation>Egy animáció a(z) „%1”néven már létezik!</translation>
     </message>
 </context>
 <context>
@@ -94,37 +94,37 @@
     <message>
         <location filename="../animator/animator.ui" line="14"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation>Animátor</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="24"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Irány</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="33"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Bal</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="43"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Jobb</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="125"/>
         <source>Frame speed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkockasebesség:</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="141"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation>Animáció</translation>
     </message>
     <message>
         <location filename="../animator/animator.ui" line="160"/>
         <source>Edit animations</source>
-        <translation type="unfinished"></translation>
+        <translation>Animációk szerkesztése</translation>
     </message>
 </context>
 <context>
@@ -138,12 +138,12 @@
     <message>
         <location filename="../calibration_main.ui" line="61"/>
         <source>Enabling this frame. If this frame disabled, it will not be saved into your config file.</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkocka engedélyezése. Ha ez a képkocka le van tiltva, nem kerül mentésre a beállítófájlban.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="64"/>
         <source>Enable this frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkocka engedélyezése</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="71"/>
@@ -200,7 +200,7 @@
     <message>
         <location filename="../calibration_main.ui" line="184"/>
         <source>Save config</source>
-        <translation type="unfinished"></translation>
+        <translation>Konfiguráció mentése</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="195"/>
@@ -210,7 +210,7 @@
     <message>
         <location filename="../calibration_main.ui" line="213"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerkesztés</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="221"/>
@@ -221,13 +221,13 @@
         <location filename="../calibration_main.ui" line="229"/>
         <location filename="../calibration_main.ui" line="958"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Nyelv</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="235"/>
         <location filename="../calibration_main.ui" line="273"/>
         <source>Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Eszközök</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="251"/>
@@ -242,7 +242,7 @@
     <message>
         <location filename="../calibration_main.ui" line="305"/>
         <source>Interactive selection of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkockák interaktív kiválasztása</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="308"/>
@@ -272,12 +272,12 @@
     <message>
         <location filename="../calibration_main.ui" line="407"/>
         <source>Global:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Központi:</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="414"/>
         <source>Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Szélesség</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="424"/>
@@ -287,7 +287,7 @@
     <message>
         <location filename="../calibration_main.ui" line="437"/>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Magasság</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="447"/>
@@ -297,7 +297,7 @@
     <message>
         <location filename="../calibration_main.ui" line="460"/>
         <source>Height (duck)</source>
-        <translation type="unfinished"></translation>
+        <translation>Guggolási magasság</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="470"/>
@@ -367,12 +367,12 @@
     <message>
         <location filename="../calibration_main.ui" line="638"/>
         <source>Apply duck height to this frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Guggolási magasság alkalmazása erre a képkockára</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="641"/>
         <source>Is duck frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Guggolási képkockák listázása</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="651"/>
@@ -382,17 +382,17 @@
     <message>
         <location filename="../calibration_main.ui" line="654"/>
         <source>Right direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jó irány</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="664"/>
         <source>Enable displaying of grabbed item corner</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartott elem szélének kijelzése</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="667"/>
         <source>Show carried item</source>
-        <translation type="unfinished"></translation>
+        <translation>Taertott elem mutatása</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="674"/>
@@ -407,17 +407,17 @@
     <message>
         <location filename="../calibration_main.ui" line="689"/>
         <source>Scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>Görgetés</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="712"/>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Görgetés jobbra</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="723"/>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Görgetés fel</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="734"/>
@@ -435,22 +435,22 @@ Right button - move grab offset if visible.</source>
     <message>
         <location filename="../calibration_main.ui" line="752"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Kicsinyítés</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="763"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Nagyítás</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="774"/>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Görgetés balra</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="796"/>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Görgetés le</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="807"/>
@@ -468,22 +468,22 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="831"/>
         <source>Open sprite</source>
-        <translation type="unfinished"></translation>
+        <translation>Szereplő megnyitása</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="839"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="854"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolás</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="857"/>
         <source>Copy calibration settings of the current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>A jelenlegi képkocka kalibrációs beállításainak másolása</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="869"/>
@@ -493,12 +493,12 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="872"/>
         <source>Past calibration settings from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalibrációs beállítások betöltése a vágólaptól</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="880"/>
         <source>Apply to all</source>
-        <translation type="unfinished"></translation>
+        <translation>Alkalmazás mindre</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="885"/>
@@ -508,7 +508,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="893"/>
         <source>Open the Wiki page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiki-oldal megnyitása...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="898"/>
@@ -538,7 +538,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="927"/>
         <source>Useful for tests or sprites creation from the scratch</source>
-        <translation type="unfinished"></translation>
+        <translation>Hasznos tesztek vagy szereplők az alapoktól való felépítéséhez</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="936"/>
