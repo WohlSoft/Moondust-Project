@@ -114,7 +114,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>单关卡中最多的动画对象数量，超上限则会暂停。</translation>
+        <translation>单关卡中最多的动画对象数量，若超出上限，将会暂停。</translation>
     </message>
     <message>
         <source>Animation items limit</source>
