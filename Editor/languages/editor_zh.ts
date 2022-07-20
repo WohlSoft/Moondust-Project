@@ -1407,7 +1407,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Arg: {String array} validates the PGE-X string array</source>
-        <translation>Arg: {String array} 确定是 PGE-X 字符串排列</translation>
+        <translation>Arg: {String array} 确认是 PGE-X 字符串数组</translation>
     </message>
     <message>
         <source>Simulates crash signal</source>
@@ -4408,8 +4408,8 @@ Do you want to continue?</source>
     <message>
         <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
 This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation>设置叠放次序，使用此功能可使 BGO 在前景出现（-1 为默认值）。
-此功能不会保存到 LVL 文件，因此你每当打开此文件时需要重新设置。</translation>
+        <translation>设置叠放次序，使用此功能可将背景对象设置为前景（-1 为默认值）。
+此设置不会保存到 LVL 文件，因此你每当打开此文件时需要重新设置。</translation>
     </message>
     <message>
         <source>NPC</source>
@@ -4501,7 +4501,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>Block ID: %1, Array ID: %2</source>
-        <translation>砖块编号：%1，排列编号：%2</translation>
+        <translation>砖块编号：%1，数组编号：%2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
@@ -4517,11 +4517,11 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     </message>
     <message>
         <source>BGO ID: %1, Array ID: %2</source>
-        <translation>背景编号：%1，排列编号：%2</translation>
+        <translation>背景编号：%1，数组编号：%2</translation>
     </message>
     <message>
         <source>NPC ID: %1, Array ID: %2</source>
-        <translation>NPC 编号：%1，排列编号：%2</translation>
+        <translation>NPC 编号：%1，数组编号：%2</translation>
     </message>
     <message>
         <source>[none]</source>
@@ -9548,7 +9548,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Level ID: %1, Array ID: %2</source>
-        <translation>关卡编号：%1，排列编号：%2</translation>
+        <translation>关卡编号：%1，数组编号：%2</translation>
     </message>
     <message>
         <source>Position: [%1, %2]</source>
