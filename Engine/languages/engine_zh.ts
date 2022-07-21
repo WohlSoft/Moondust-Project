@@ -245,7 +245,7 @@ and retry your recent actions to get more detailed information.</source>
     <message id="LVL_MENU_PAUSE_REPLAY">
         <location filename="../scenes/level/lvl_scene_pausemenu.cpp" line="97"/>
         <source>Replay level</source>
-        <translation>重新开始关卡</translation>
+        <translation>重玩本关</translation>
     </message>
     <message id="ERROR_LVL_UNKNOWN_PL_CHARACTER">
         <location filename="../scenes/scene_world.cpp" line="557"/>
