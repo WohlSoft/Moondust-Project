@@ -25,6 +25,8 @@
 #include "custom_music_setup.h"
 #include "ui_custom_music_setup.h"
 
+static void setCurrentData(QComboBox*b, int d);
+static Qt::CheckState intToCheckstate(int v);
 
 
 CustomMusicSetup::MusicType CustomMusicSetup::detectType(const QString &music)
@@ -76,9 +78,10 @@ void CustomMusicSetup::initSetup()
 
     ui->gmeTrackNumber->setValue(0);
 
-    ui->midiExAdlBank->setCurrentIndex(adlDefaultBank);
+    setCurrentData(ui->midiExAdlBank, adlDefaultBank);
     ui->midiExAdlCustomBank->clear();
-    ui->midiExAdlVolumeModel->setCurrentIndex(adlDefaultVolumeModel);
+    setCurrentData(ui->midiExAdlVolumeModel, adlDefaultVolumeModel);
+    setCurrentData(ui->midiExAdlChanAlloc, adlDefaultChanAlloc);
     if(adlDefaultChips > 0)
         ui->midiExAdlChips->setValue(adlDefaultChips);
     ui->midiExAdlChipsEn->setChecked(adlDefaultChips > 0);
@@ -87,7 +90,8 @@ void CustomMusicSetup::initSetup()
     ui->midiExAdlDeepVibrato->setCheckState(Qt::PartiallyChecked);
 
     ui->midiExOpnCustomBank->clear();
-    ui->midiExOpnVolumeModel->setCurrentIndex(opnDefaultVolumeModel);
+    setCurrentData(ui->midiExOpnVolumeModel, opnDefaultVolumeModel);
+    setCurrentData(ui->midiExOpnChanAlloc, opnDefaultChanAlloc);
     if(opnDefaultChips > 0)
         ui->midiExOpnChips->setValue(opnDefaultChips);
     ui->midiExOpnChipsEn->setChecked(opnDefaultChips > 0);
@@ -319,6 +323,12 @@ void CustomMusicSetup::parseSettings()
                     case 'v':
                         ui->midiExAdlDeepVibrato->setCheckState(intToCheckstate(value));
                         break;
+                    case 'j':
+                        if(ui->midiSynth->currentData().toInt() == MIDI_ADLMIDI)
+                            ui->midiExAdlAutoArpeggio ->setCheckState(intToCheckstate(value));
+                        else if(ui->midiSynth->currentData().toInt() == MIDI_OPNMIDI)
+                            ui->midiExOpnAutoArpeggio ->setCheckState(intToCheckstate(value));
+                        break;
                     case 'a':
                         /* Deprecated and useless */
                         break;
@@ -327,6 +337,12 @@ void CustomMusicSetup::parseSettings()
                             setCurrentData(ui->midiExAdlVolumeModel, value);
                         else if(ui->midiSynth->currentData().toInt() == MIDI_OPNMIDI)
                             setCurrentData(ui->midiExOpnVolumeModel, value);
+                        break;
+                    case 'o':
+                        if(ui->midiSynth->currentData().toInt() == MIDI_ADLMIDI)
+                            setCurrentData(ui->midiExAdlChanAlloc, value);
+                        else if(ui->midiSynth->currentData().toInt() == MIDI_OPNMIDI)
+                            setCurrentData(ui->midiExOpnChanAlloc, value);
                         break;
                     case 'r':
                         // setup->full_brightness_range = value;
@@ -457,6 +473,10 @@ void CustomMusicSetup::buildSettings()
             if(v != adlDefaultVolumeModel)
                 m_musicArgs += QString("l%1;").arg(v);
 
+            v = ui->midiExAdlChanAlloc->currentData().toInt();
+            if(v != adlDefaultChanAlloc)
+                m_musicArgs += QString("o%1;").arg(v);
+
             v = checkboxToInt(ui->midiExAdlDeepTremolo);
             if(v >= 0)
                 m_musicArgs += QString("t%1;").arg(v);
@@ -465,12 +485,20 @@ void CustomMusicSetup::buildSettings()
             if(v >= 0)
                 m_musicArgs += QString("v%1;").arg(v);
 
+            v = checkboxToInt(ui->midiExAdlAutoArpeggio);
+            if(v >= 0)
+                m_musicArgs += QString("j%1;").arg(v);
+
             break;
 
         case MIDI_OPNMIDI:
             v = ui->midiExOpnVolumeModel->currentData().toInt();
             if(v != opnDefaultVolumeModel)
                 m_musicArgs += QString("l%1;").arg(v);
+
+            v = ui->midiExOpnChanAlloc->currentData().toInt();
+            if(v != opnDefaultChanAlloc)
+                m_musicArgs += QString("o%1;").arg(v);
 
             v = ui->midiExOpnChips->value();
             if(ui->midiExOpnChipsEn->isChecked())
@@ -479,6 +507,10 @@ void CustomMusicSetup::buildSettings()
             b = ui->midiExOpnCustomBank->text();
             if(!b.isEmpty())
                 m_musicArgs += QString("x={e}%1;").arg(b);
+
+            v = checkboxToInt(ui->midiExOpnAutoArpeggio);
+            if(v >= 0)
+                m_musicArgs += QString("j%1;").arg(v);
 
             break;
 
@@ -553,11 +585,17 @@ void CustomMusicSetup::buildSettings()
     }
     else if(m_type == GME)
     {
+        int v;
+
         if(int(ui->gmeTempoAbs->value() * 100) != 100)
             m_musicArgs += ";t=" + QString::number(ui->gmeTempoAbs->value());
 
         if(int(ui->gmeGainAbs->value() * 100) != 100)
             m_musicArgs += ";g=" + QString::number(ui->gmeGainAbs->value());
+
+        v = checkboxToInt(ui->gmeDisableSpcEcho);
+        if(v >= 0)
+            m_musicArgs += QString(";e%1").arg(v);
 
         if(ui->gmeTrackNumber->value() != 0 || !m_musicArgs.isEmpty())
             m_musicArgs.insert(0, QString::number(ui->gmeTrackNumber->value()));
@@ -793,6 +831,22 @@ void CustomMusicSetup::retranslateLists()
     ui->midiSynth->addItem(tr("FluidSynth (needed an SF2-bank)"), MIDI_Fluidsynth);
     ui->midiSynth->setCurrentIndex(cache);
 
+    cache = ui->midiExAdlChanAlloc->currentIndex();
+    ui->midiExAdlChanAlloc->clear();
+    ui->midiExAdlChanAlloc->addItem(tr("[Auto]"), -1);
+    ui->midiExAdlChanAlloc->addItem(tr("Sounding off delay based", "Channel allocation mode"), 0);
+    ui->midiExAdlChanAlloc->addItem(tr("Same instrument", "Channel allocation mode"), 1);
+    ui->midiExAdlChanAlloc->addItem(tr("Any free released", "Channel allocation mode"), 2);
+    ui->midiExAdlChanAlloc->setCurrentIndex(cache);
+
+    cache = ui->midiExOpnChanAlloc->currentIndex();
+    ui->midiExOpnChanAlloc->clear();
+    ui->midiExOpnChanAlloc->addItem(tr("[Auto]"), -1);
+    ui->midiExOpnChanAlloc->addItem(tr("Sounding off delay based", "Channel allocation mode"), 0);
+    ui->midiExOpnChanAlloc->addItem(tr("Same instrument", "Channel allocation mode"), 1);
+    ui->midiExOpnChanAlloc->addItem(tr("Any free released", "Channel allocation mode"), 2);
+    ui->midiExOpnChanAlloc->setCurrentIndex(cache);
+
     cache = ui->midiExAdlVolumeModel->currentIndex();
     ui->midiExAdlVolumeModel->clear();
     ui->midiExAdlVolumeModel->addItem(tr("[Auto]"), ADLMIDI_VM_AUTO);
@@ -913,6 +967,18 @@ void CustomMusicSetup::on_midiExAdlVolumeModel_currentIndexChanged(int)
     emit updateSongPlay();
 }
 
+void CustomMusicSetup::on_midiExAdlChanAlloc_currentIndexChanged(int)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExAdlAutoArpeggio_clicked(bool)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
 void CustomMusicSetup::on_midiExAdlChipsEn_clicked()
 {
     if(!signalsBlocked())
@@ -955,6 +1021,18 @@ void CustomMusicSetup::on_midiExOpnCustomBank_editingFinished()
 }
 
 void CustomMusicSetup::on_midiExOpnVolumeModel_currentIndexChanged(int)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExOpnChanAlloc_currentIndexChanged(int)
+{
+    buildSettings();
+    emit updateSongPlay();
+}
+
+void CustomMusicSetup::on_midiExOpnAutoArpeggio_clicked(bool)
 {
     buildSettings();
     emit updateSongPlay();
@@ -1033,6 +1111,12 @@ void CustomMusicSetup::on_gmeTempoReset_clicked()
     if(!signalsBlocked())
         buildSettings();
     emit updateSongTempo(ui->gmeTempoAbs->value());
+}
+
+void CustomMusicSetup::on_gmeDisableSpcEcho_clicked(bool)
+{
+    buildSettings();
+    emit updateSongPlay();
 }
 
 void CustomMusicSetup::on_playMusicProxy_clicked(bool checked)
