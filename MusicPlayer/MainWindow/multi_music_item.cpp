@@ -179,7 +179,7 @@ void MultiMusicItem::openMusic()
         ui->playingTimeLabel->setText("--:--:--");
         ui->playingTimeLenghtLabel->setText("/ --:--:--");
 
-        double total = Mix_GetMusicTotalTime(m_curMus);
+        double total = Mix_MusicDuration(m_curMus);
         double curPos = Mix_GetMusicPosition(m_curMus);
 
         double loopStart = Mix_GetMusicLoopStartTime(m_curMus);
@@ -249,7 +249,7 @@ void MultiMusicItem::on_playpause_clicked()
             return;
         }
 
-        double total = Mix_GetMusicTotalTime(m_curMus);
+        double total = Mix_MusicDuration(m_curMus);
         double curPos = Mix_GetMusicPosition(m_curMus);
         if(total > 0.0 && curPos >= 0.0)
             m_positionWatcher.start(128);
@@ -333,7 +333,7 @@ void MultiMusicItem::on_playFadeIn_clicked()
 
     if(!Mix_PlayingMusicStream(m_curMus))
     {
-        double total = Mix_GetMusicTotalTime(m_curMus);
+        double total = Mix_MusicDuration(m_curMus);
         double curPos = Mix_GetMusicPosition(m_curMus);
         if(total > 0.0 && curPos >= 0.0)
             m_positionWatcher.start(128);

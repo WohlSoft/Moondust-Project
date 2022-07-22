@@ -31,6 +31,7 @@ protected:
 private slots:
     void on_opnEmulator_currentIndexChanged(int index);
     void on_opnVolumeModel_currentIndexChanged(int index);
+    void on_opnChanAlloc_currentIndexChanged(int index);
     void on_opn_bank_browse_clicked();
     void on_opn_bank_editingFinished();
 
@@ -40,6 +41,7 @@ private slots:
 
     void on_adlEmulator_currentIndexChanged(int index);
     void on_adlVolumeModel_currentIndexChanged(int index);
+    void on_adlChanAlloc_currentIndexChanged(int index);
 
     void on_adl_tremolo_clicked();
     void on_adl_vibrato_clicked();
