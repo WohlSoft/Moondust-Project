@@ -1243,15 +1243,15 @@ Please save them before doing anything else.</source>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>当芯片的空闲信道不足时，部分和弦将压缩为琶音并只使用单信道输出，但可能会听到未如预期的声音，请慎重考虑。</translation>
     </message>
     <message>
         <source>Automatic arpeggio</source>
-        <translation type="unfinished"></translation>
+        <translation>自动琶音模式</translation>
     </message>
     <message>
         <source>Channel allocation mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>信道分配模式：</translation>
     </message>
     <message>
         <source>Select one of the channel allocation algorithms:
@@ -1260,31 +1260,35 @@ Please save them before doing anything else.</source>
 - Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
 - Any first released: Any first released channel will be taken without bothering about properties.</source>
         <comment>Tooltip for the &quot;Channel allocation mode&quot; combo box</comment>
-        <translation type="unfinished"></translation>
+        <translation>选择信道分配模式：
+- [自动]：根据当前音色组或当前音乐格式自动选择。
+- 基于音符关延迟：将根据信道中剩余的音符关延迟长度进行分配（短剩余延迟为高优先级）。
+- 相同乐器：将使用首个任意释放信道中相同的乐器（或无其他使用相同乐器的信道）。
+- 首个任意释放信道：将使用首个任意空闲信道，无视其他属性。</translation>
     </message>
     <message>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
-        <translation type="unfinished"></translation>
+        <translation>播放 SPC 音乐时禁用回音效果</translation>
     </message>
     <message>
         <source>Disable SPC echo</source>
-        <translation type="unfinished"></translation>
+        <translation>禁用 SPC 回音效果</translation>
     </message>
     <message>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>基于音符关延迟</translation>
     </message>
     <message>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>相同乐器</translation>
     </message>
     <message>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>首个任意释放信道</translation>
     </message>
 </context>
 <context>
