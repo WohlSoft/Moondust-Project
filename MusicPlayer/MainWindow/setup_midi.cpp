@@ -64,6 +64,7 @@ void SetupMidi::loadSetup()
     ui->mididevice->setCurrentIndex(setup.value("MIDI-Device", 0).toInt());
     ui->adl_bankId->setCurrentIndex(setup.value("ADLMIDI-Bank-ID", 58).toInt());
     ui->adlVolumeModel->setCurrentIndex(setup.value("ADLMIDI-VolumeModel", 0).toInt());
+    ui->adlChanAlloc->setCurrentIndex(setup.value("ADLMIDI-ChanAlloc", 0).toInt());
     ui->adlEmulator->setCurrentIndex(setup.value("ADLMIDI-Emulator", 0).toInt());
     ui->adlNumChips->setValue(setup.value("ADLMIDI-NumChips", 4).toInt());
     ui->adl_tremolo->setCheckState((Qt::CheckState)setup.value("ADLMIDI-Tremolo", Qt::PartiallyChecked).toInt());
@@ -76,6 +77,7 @@ void SetupMidi::loadSetup()
     ui->opnEmulator->setCurrentIndex(setup.value("OPNMIDI-Emulator", 0).toInt());
     ui->opnNumChips->setValue(setup.value("OPNMIDI-NumChips", 8).toInt());
     ui->opnVolumeModel->setCurrentIndex(setup.value("OPNMIDI-VolumeModel", 0).toInt());
+    ui->opnChanAlloc->setCurrentIndex(setup.value("OPNMIDI-ChanAlloc", 0).toInt());
     ui->opn_autoArpeggio->setCheckState((Qt::CheckState)setup.value("OPNMIDI-AutoArpeggio", Qt::Checked).toInt());
     ui->opn_bank->setText(setup.value("OPNMIDI-Bank", QString()).toString());
     ui->opn_use_custom->setChecked(setup.value("OPNMIDI-Bank-UseCustom", true).toBool());
@@ -100,6 +102,7 @@ void SetupMidi::saveSetup()
     setup.setValue("ADLMIDI-Emulator", ui->adlEmulator->currentIndex());
     setup.setValue("ADLMIDI-NumChips", ui->adlNumChips->value());
     setup.setValue("ADLMIDI-VolumeModel", ui->adlVolumeModel->currentIndex());
+    setup.setValue("ADLMIDI-ChanAlloc", ui->adlChanAlloc->currentIndex());
     setup.setValue("ADLMIDI-Tremolo", ui->adl_tremolo->checkState());
     setup.setValue("ADLMIDI-Vibrato", ui->adl_vibrato->checkState());
     setup.setValue("ADLMIDI-Scalable-Modulation", ui->adl_scalableModulation->checkState());
@@ -111,6 +114,7 @@ void SetupMidi::saveSetup()
     setup.setValue("OPNMIDI-Emulator", ui->opnEmulator->currentIndex());
     setup.setValue("OPNMIDI-NumChips", ui->opnNumChips->value());
     setup.setValue("OPNMIDI-VolumeModel", ui->opnVolumeModel->currentIndex());
+    setup.setValue("OPNMIDI-ChanAlloc", ui->opnChanAlloc->currentIndex());
     setup.setValue("OPNMIDI-AutoArpeggio", ui->opn_autoArpeggio->checkState());
 
     setup.setValue("OPNMIDI-Bank", ui->opn_bank->text());
@@ -129,6 +133,7 @@ void SetupMidi::sendSetup()
     on_mididevice_currentIndexChanged(ui->mididevice->currentIndex());
     Mix_ADLMIDI_setBankID(ui->adl_bankId->currentIndex());
     Mix_ADLMIDI_setVolumeModel(ui->adlVolumeModel->currentIndex());
+    Mix_ADLMIDI_setChannelAllocMode(ui->adlChanAlloc->currentIndex() - 1);
     Mix_ADLMIDI_setEmulator(ui->adlEmulator->currentIndex());
     Mix_ADLMIDI_setChipsCount(ui->adlNumChips->value());
     Mix_ADLMIDI_setTremolo(tristateToInt(ui->adl_tremolo->checkState()));
@@ -142,6 +147,7 @@ void SetupMidi::sendSetup()
     Mix_OPNMIDI_setEmulator(ui->opnEmulator->currentIndex());
     Mix_OPNMIDI_setChipsCount(ui->opnNumChips->value());
     Mix_OPNMIDI_setVolumeModel(ui->opnVolumeModel->currentIndex());
+    Mix_OPNMIDI_setChannelAllocMode(ui->opnChanAlloc->currentIndex() - 1);
     Mix_OPNMIDI_setAutoArpeggio(tristateToInt(ui->opn_autoArpeggio->checkState()));
 
     ui->opn_bank->setModified(true);
@@ -280,6 +286,19 @@ void SetupMidi::on_opnVolumeModel_currentIndexChanged(int index)
 #endif
 }
 
+void SetupMidi::on_opnChanAlloc_currentIndexChanged(int index)
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_OPNMIDI_setChannelAllocMode(index - 1);
+    restartForOpn();
+    updateAutoArgs();
+#else
+    Q_UNUSED(index);
+#endif
+}
+
 void SetupMidi::on_opn_use_custom_clicked(bool checked)
 {
     ui->opn_bank->setModified(true);
@@ -410,6 +429,19 @@ void SetupMidi::on_adlVolumeModel_currentIndexChanged(int index)
     updateAutoArgs();
 #else
     Q_UNUSED(index);    
+#endif
+}
+
+void SetupMidi::on_adlChanAlloc_currentIndexChanged(int index)
+{
+#ifdef SDL_MIXER_X
+    if(m_setupLock)
+        return;
+    Mix_ADLMIDI_setChannelAllocMode(index - 1);
+    restartForAdl();
+    updateAutoArgs();
+#else
+    Q_UNUSED(index);
 #endif
 }
 
@@ -634,6 +666,8 @@ void SetupMidi::updateAutoArgs()
             args += QString("m%1;").arg(tristateToInt(ui->adl_scalableModulation->checkState()));
         if(ui->adlVolumeModel->currentIndex() != 0)
             args += QString("l%1;").arg(ui->adlVolumeModel->currentIndex());
+        if(ui->adlChanAlloc->currentIndex() != 0)
+            args += QString("o%1;").arg(ui->adlChanAlloc->currentIndex() - 1);
         if(ui->adl_autoArpeggio->checkState() != Qt::Checked)
             args += QString("j%1;").arg(tristateToInt(ui->adl_autoArpeggio->checkState()));
         break;
@@ -648,6 +682,8 @@ void SetupMidi::updateAutoArgs()
             args += QString("c%1;").arg(ui->opnNumChips->value());
         if(ui->opn_autoArpeggio->checkState() != Qt::Checked)
             args += QString("j%1;").arg(tristateToInt(ui->opn_autoArpeggio->checkState()));
+        if(ui->opnChanAlloc->currentIndex() != 0)
+            args += QString("o%1;").arg(ui->opnChanAlloc->currentIndex() - 1);
         break;
     case 4:
         break;

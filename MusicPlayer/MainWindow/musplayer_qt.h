@@ -81,6 +81,9 @@ private slots:
     void on_disableSpcEcho_clicked(bool checked);
 
     void on_tempo_valueChanged(int tempo);
+    void on_speed_valueChanged(int speed);
+    void on_pitch_valueChanged(int pitch);
+    void on_volumeGeneral_valueChanged(int position);
 
     void on_recordWav_clicked(bool checked);
 

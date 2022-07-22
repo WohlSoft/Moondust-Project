@@ -1376,6 +1376,57 @@ Please save them first before doing anything else.</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation>Треугольная волна</translation>
     </message>
+    <message>
+        <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
+        <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
+        <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
+        <translation>Когда не будет достаточно свободных каналов чипа, некоторые аккорды сожмутся в арпеджио, которое будет использовать лишь один канал. Однако, такой метод может сильно испортить звучание мелодии. Так что, используйте опцию на свой страх и риск.</translation>
+    </message>
+    <message>
+        <source>Automatic arpeggio</source>
+        <translation>Авто-арпеджио</translation>
+    </message>
+    <message>
+        <source>Channel allocation mode:</source>
+        <translation>Режим выбора каналов:</translation>
+    </message>
+    <message>
+        <source>Select one of the channel allocation algorithms:
+- [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
+- Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
+- Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
+- Any first released: Any first released channel will be taken without bothering about properties.</source>
+        <comment>Tooltip for the &quot;Channel allocation mode&quot; combo box</comment>
+        <translation>Выберите один из алгоритмов выбора канала:
+- [Авто]: Алгоритм будет определён автоматически в зависимости от банка или играющей мелодии.
+- Остаточное звучание: Канал будет автоматически выбран в зависимости от оставшейся длительности звучания затухающей ноты (Канал с самым коротким остаточным звучанием имеет высший приоритет).
+- Тот же инструмент: Будет выбран первый освободившийся канал, где играл тот же инструмент (иначе любой освободившийся, если не было каналов с тем же инструментом)
+- Любой свободный: Будет выбран первый освободившийся канал не взирая на свойства.</translation>
+    </message>
+    <message>
+        <source>Disable the echo effect while playing files of SPC format</source>
+        <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
+        <translation>Отключить эффект эхо во время воспроизведения файлов SPC</translation>
+    </message>
+    <message>
+        <source>Disable SPC echo</source>
+        <translation>Отключить SPC-Эхо</translation>
+    </message>
+    <message>
+        <source>Sounding off delay based</source>
+        <comment>Channel allocation mode</comment>
+        <translation>Остаточное звучание</translation>
+    </message>
+    <message>
+        <source>Same instrument</source>
+        <comment>Channel allocation mode</comment>
+        <translation>Тот же инструмент</translation>
+    </message>
+    <message>
+        <source>Any free released</source>
+        <comment>Channel allocation mode</comment>
+        <translation>Любой свободный</translation>
+    </message>
 </context>
 <context>
     <name>DataConfig</name>

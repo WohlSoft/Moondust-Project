@@ -553,7 +553,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="981"/>
         <source>Animator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animátor</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="990"/>

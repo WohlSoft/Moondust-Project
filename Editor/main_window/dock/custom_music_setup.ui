@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>433</width>
-    <height>1123</height>
+    <height>1215</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -70,60 +70,10 @@
           <property name="sizeConstraint">
            <enum>QLayout::SetMinimumSize</enum>
           </property>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Custom bank:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Volume model:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="midiExAdlDeepVibrato">
-            <property name="text">
-             <string>Deep vibrato</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-            <property name="tristate">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_3">
             <property name="text">
              <string comment="The OPL3 timbre/instruments bank to change the MIDI music sounding.">Bank:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QCheckBox" name="midiExAdlDeepTremolo">
-            <property name="text">
-             <string>Deep tremolo</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-            <property name="tristate">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="midiExAdlCustomBank">
-            <property name="enabled">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -137,6 +87,13 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="midiExAdlCustomBank">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1" colspan="2">
            <widget class="QComboBox" name="midiExAdlBank">
             <property name="toolTip">
@@ -144,6 +101,29 @@
             </property>
             <property name="maxVisibleItems">
              <number>50</number>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="QCheckBox" name="midiExAdlDeepVibrato">
+            <property name="text">
+             <string>Deep vibrato</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <property name="tristate">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Custom bank:</string>
             </property>
            </widget>
           </item>
@@ -176,10 +156,58 @@
             </property>
            </widget>
           </item>
+          <item row="5" column="0" colspan="3">
+           <widget class="QCheckBox" name="midiExAdlAutoArpeggio">
+            <property name="toolTip">
+             <string comment="Tool tip for the &quot;Automatic arpeggio&quot; checkbox" extracomment="There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.">When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</string>
+            </property>
+            <property name="text">
+             <string>Automatic arpeggio</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0" colspan="2">
+           <widget class="QCheckBox" name="midiExAdlDeepTremolo">
+            <property name="text">
+             <string>Deep tremolo</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <property name="tristate">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="0">
            <widget class="QCheckBox" name="midiExAdlChipsEn">
             <property name="text">
              <string>Chips number:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Volume model:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>Channel allocation mode:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1" colspan="2">
+           <widget class="QComboBox" name="midiExAdlChanAlloc">
+            <property name="toolTip">
+             <string comment="Tooltip for the &quot;Channel allocation mode&quot; combo box">Select one of the channel allocation algorithms:
+- [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
+- Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
+- Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
+- Any first released: Any first released channel will be taken without bothering about properties.</string>
             </property>
            </widget>
           </item>
@@ -280,13 +308,30 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="midiExOpnCustomBank">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_10">
             <property name="enabled">
              <bool>true</bool>
             </property>
             <property name="text">
-             <string notr="true"/>
+             <string>Custom bank:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="midiExOpnChipsEn">
+            <property name="text">
+             <string>Chips number:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="3">
+           <widget class="QCheckBox" name="midiExOpnAutoArpeggio">
+            <property name="toolTip">
+             <string comment="Tool tip for the &quot;Automatic arpeggio&quot; checkbox" extracomment="There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.">When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</string>
+            </property>
+            <property name="text">
+             <string>Automatic arpeggio</string>
             </property>
            </widget>
           </item>
@@ -313,20 +358,31 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_10">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="midiExOpnCustomBank">
             <property name="enabled">
              <bool>true</bool>
             </property>
             <property name="text">
-             <string>Custom bank:</string>
+             <string notr="true"/>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="midiExOpnChipsEn">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_22">
             <property name="text">
-             <string>Chips number:</string>
+             <string>Channel allocation mode:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="2">
+           <widget class="QComboBox" name="midiExOpnChanAlloc">
+            <property name="toolTip">
+             <string comment="Tooltip for the &quot;Channel allocation mode&quot; combo box">Select one of the channel allocation algorithms:
+- [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
+- Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
+- Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
+- Any first released: Any first released channel will be taken without bothering about properties.</string>
             </property>
            </widget>
           </item>
@@ -686,26 +742,6 @@
        <property name="sizeConstraint">
         <enum>QLayout::SetMinimumSize</enum>
        </property>
-       <item row="3" column="5">
-        <widget class="QPushButton" name="gmeGainReset">
-         <property name="text">
-          <string>Reset</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="3" colspan="2">
-        <widget class="QDoubleSpinBox" name="gmeGainAbs">
-         <property name="maximum">
-          <double>100.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.100000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
        <item row="4" column="3" colspan="2">
         <widget class="QDoubleSpinBox" name="gmeTempoAbs">
          <property name="minimum">
@@ -722,43 +758,17 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="5">
-        <widget class="QPushButton" name="gmeTempoReset">
-         <property name="text">
-          <string>Reset</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Tempo:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1" colspan="2">
-        <widget class="QSlider" name="gmeGain">
-         <property name="maximum">
-          <number>400</number>
-         </property>
-         <property name="value">
-          <number>100</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="tickPosition">
-          <enum>QSlider::TicksAbove</enum>
-         </property>
-         <property name="tickInterval">
-          <number>50</number>
-         </property>
-        </widget>
-       </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
           <string>Gain:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="5">
+        <widget class="QPushButton" name="gmeGainReset">
+         <property name="text">
+          <string>Reset</string>
          </property>
         </widget>
        </item>
@@ -830,7 +840,63 @@
          </layout>
         </widget>
        </item>
-       <item row="5" column="0" colspan="6">
+       <item row="4" column="5">
+        <widget class="QPushButton" name="gmeTempoReset">
+         <property name="text">
+          <string>Reset</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="6">
+        <widget class="QCheckBox" name="gmeDisableSpcEcho">
+         <property name="toolTip">
+          <string comment="Tooltip for the &quot;Disable SPC echo&quot; checkbox">Disable the echo effect while playing files of SPC format</string>
+         </property>
+         <property name="text">
+          <string>Disable SPC echo</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Tempo:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3" colspan="2">
+        <widget class="QDoubleSpinBox" name="gmeGainAbs">
+         <property name="maximum">
+          <double>100.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1" colspan="2">
+        <widget class="QSlider" name="gmeGain">
+         <property name="maximum">
+          <number>400</number>
+         </property>
+         <property name="value">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksAbove</enum>
+         </property>
+         <property name="tickInterval">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="6">
         <spacer name="verticalSpacer_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -842,6 +908,13 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="5" column="0" colspan="6">
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

@@ -41,9 +41,11 @@ class CustomMusicSetup : public QDialog
     int     adlDefaultBank = -1;
     int     adlDefaultChips = -1;
     int     adlDefaultVolumeModel = -1;
+    int     adlDefaultChanAlloc = -1;
 
     int     opnDefaultChips = -1;
     int     opnDefaultVolumeModel = -1;
+    int     opnDefaultChanAlloc = -1;
 
     int     fluidDefaultPolyphony = 256;
 
@@ -116,6 +118,8 @@ private slots:
     void on_midiExAdlCustomBank_editingFinished();
     void on_midiExAdlBank_currentIndexChanged(int index);
     void on_midiExAdlVolumeModel_currentIndexChanged(int index);
+    void on_midiExAdlChanAlloc_currentIndexChanged(int index);
+    void on_midiExAdlAutoArpeggio_clicked(bool checked);
     void on_midiExAdlChipsEn_clicked();
     void on_midiExAdlChips_valueChanged(int arg1);
     void on_midiExAdlDeepTremolo_clicked(bool checked);
@@ -124,6 +128,8 @@ private slots:
     void on_midiExOpnBrowsebank_clicked();
     void on_midiExOpnCustomBank_editingFinished();
     void on_midiExOpnVolumeModel_currentIndexChanged(int index);
+    void on_midiExOpnChanAlloc_currentIndexChanged(int index);
+    void on_midiExOpnAutoArpeggio_clicked(bool checked);
     void on_midiExOpnChipsEn_clicked();
     void on_midiExOpnChips_valueChanged(int arg1);
 
@@ -139,6 +145,7 @@ private slots:
     void on_gmeTempo_valueChanged(int value);
     void on_gmeTempoAbs_valueChanged(double arg1);
     void on_gmeTempoReset_clicked();
+    void on_gmeDisableSpcEcho_clicked(bool checked);
 
     void on_playMusicProxy_clicked(bool checked);
 

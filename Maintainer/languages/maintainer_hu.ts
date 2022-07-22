@@ -248,7 +248,7 @@ Overwritten worlds: %3
         <location filename="../EpisodeCvt/case_fixer.ui" line="57"/>
         <location filename="../EpisodeCvt/case_fixer.ui" line="120"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="67"/>
@@ -293,7 +293,7 @@ Overwritten worlds: %3
     <message>
         <location filename="../EpisodeCvt/case_fixer.ui" line="173"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/case_fixer.cpp" line="278"/>
@@ -403,7 +403,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="55"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="62"/>
@@ -433,7 +433,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.ui" line="129"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="279"/>
@@ -491,7 +491,7 @@ Supported formats:
     <message>
         <location filename="../EpisodeCvt/episode_converter.cpp" line="52"/>
         <source>No files to convert</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nincs konvertálható fájl</translation>
     </message>
 </context>
 <context>
@@ -505,7 +505,7 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="27"/>
         <location filename="../Graphics/gifs2png.cpp" line="283"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="34"/>
@@ -525,7 +525,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.ui" line="98"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feladat kiválasztása:</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="109"/>
@@ -546,7 +546,7 @@ Supported formats:
         <location filename="../Graphics/gifs2png.ui" line="142"/>
         <location filename="../Graphics/gifs2png.ui" line="156"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../Graphics/gifs2png.ui" line="149"/>
@@ -659,7 +659,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/gifs2png.cpp" line="281"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megállítás</translation>
     </message>
 </context>
 <context>
@@ -697,7 +697,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="78"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="85"/>
@@ -717,13 +717,13 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.ui" line="119"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feladat kiválasztása:</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="126"/>
         <location filename="../Graphics/lazyfix.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <location filename="../Graphics/lazyfix.ui" line="133"/>
@@ -799,7 +799,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/lazyfix.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megállítás</translation>
     </message>
 </context>
 <context>
@@ -918,7 +918,7 @@ Supported formats:
         <location filename="../Graphics/png2gifs.ui" line="27"/>
         <location filename="../Graphics/png2gifs.cpp" line="187"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="34"/>
@@ -938,7 +938,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="98"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feladat kiválasztása:</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="109"/>
@@ -968,7 +968,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.ui" line="156"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../Graphics/png2gifs.ui" line="163"/>
@@ -1044,7 +1044,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/png2gifs.cpp" line="185"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megállítás</translation>
     </message>
 </context>
 <context>
@@ -1058,7 +1058,7 @@ Supported formats:
         <location filename="../Graphics/palette_filter.ui" line="27"/>
         <location filename="../Graphics/palette_filter.cpp" line="210"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="34"/>
@@ -1104,7 +1104,7 @@ Supported formats:
         <location filename="../Graphics/palette_filter.ui" line="162"/>
         <location filename="../Graphics/palette_filter.ui" line="226"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="169"/>
@@ -1124,7 +1124,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.ui" line="203"/>
         <source>What do you want?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Feladat kiválasztása:</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.ui" line="210"/>
@@ -1208,7 +1208,7 @@ Supported formats:
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="208"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megállítás</translation>
     </message>
     <message>
         <location filename="../Graphics/palette_filter.cpp" line="217"/>
