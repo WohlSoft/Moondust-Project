@@ -1447,7 +1447,7 @@ Please save them before doing anything else.</translation>
         <comment>Tooltip for the &quot;Channel allocation mode&quot; combo box</comment>
         <translation>Select one of the channel allocation algorithms:
 - [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
-- Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
+- Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaining delay will have the highest priority).
 - Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
 - Any first released: Any first released channel will be taken without bothering about properties.</translation>
     </message>
@@ -1473,7 +1473,7 @@ Please save them before doing anything else.</translation>
     <message>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
-        <translation>Any free released</translation>
+        <translation>Any first released</translation>
     </message>
 </context>
 <context>
