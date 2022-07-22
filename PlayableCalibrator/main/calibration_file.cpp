@@ -441,7 +441,7 @@ struct RelSize38A
 
 bool CalibrationMain::importFrom38A(Calibration &dst, QString imageName, QString fileName)
 {
-    QRegExp fileNameReg("(\\w+)-(\\d).png");
+    QRegExp fileNameReg("(\\w+)-(\\d+).png");
     if(!fileNameReg.exactMatch(imageName))
         return false; // Unknown character
 
@@ -537,7 +537,7 @@ bool CalibrationMain::importFrom38A(Calibration &dst, QString imageName, QString
 
 bool CalibrationMain::exportTo38A(Calibration &src, QString imageName, QString fileName)
 {
-    QRegExp fileNameReg("(\\w+)-(\\d).png");
+    QRegExp fileNameReg("(\\w+)-(\\d+).png");
     if(!fileNameReg.exactMatch(imageName))
         return false; // Unknown character
 
