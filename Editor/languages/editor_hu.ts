@@ -1126,13 +1126,13 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hozzáadás</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="129"/>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="254"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="50"/>
@@ -1162,7 +1162,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="60"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Útvonal</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="61"/>
@@ -1172,7 +1172,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="62"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zene</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="253"/>
@@ -1194,280 +1194,345 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="67"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="257"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="391"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="285"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="447"/>
         <source>Extra settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="79"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="322"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="126"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="317"/>
         <source>Custom bank:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="86"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="312"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="192"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="357"/>
         <source>Volume model:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="93"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="110"/>
         <source>Deep vibrato</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="106"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="76"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="113"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="172"/>
         <source>Deep tremolo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="136"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="269"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="86"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="297"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="143"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="100"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="153"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="276"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="133"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="304"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="166"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="296"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="146"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="341"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="182"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="329"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="162"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="331"/>
+        <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
+        <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
+        <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="165"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="334"/>
+        <source>Automatic arpeggio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="185"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="324"/>
         <source>Chips number:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="192"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="199"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="374"/>
+        <source>Channel allocation mode:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="206"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="381"/>
+        <source>Select one of the channel allocation algorithms:
+- [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
+- Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
+- Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
+- Any first released: Any first released channel will be taken without bothering about properties.</source>
+        <comment>Tooltip for the &quot;Channel allocation mode&quot; combo box</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="220"/>
         <source>Synthesizer type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="199"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="250"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="692"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="728"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="227"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="278"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="771"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="846"/>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="377"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="761"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="433"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="764"/>
         <source>Gain:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="384"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="735"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="440"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="863"/>
         <source>Tempo:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="400"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="407"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="463"/>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="413"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="469"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="512"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="466"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="522"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hozzáadás</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="486"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="542"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="498"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="554"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="518"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="574"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="525"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="558"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="614"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="637"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="593"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="649"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="600"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="656"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="636"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="692"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="643"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="699"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="666"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="722"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="683"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="583"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="739"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="621"/>
         <source>Chiptune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="796"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="806"/>
         <source>Track number</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="805"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="815"/>
         <source>To begin</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="819"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="829"/>
         <source>Previous</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="826"/>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="836"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="853"/>
+        <source>Disable the echo effect while playing files of SPC format</source>
+        <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="856"/>
+        <source>Disable SPC echo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.ui" line="926"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="581"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="619"/>
         <source>MIDI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="789"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="827"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="790"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="828"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="791"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="829"/>
         <source>Timidity (needed a bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="792"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="830"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="793"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="831"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="798"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="814"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="836"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="844"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="852"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="868"/>
         <source>[Auto]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="799"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="815"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="837"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="845"/>
+        <source>Sounding off delay based</source>
+        <comment>Channel allocation mode</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="838"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="846"/>
+        <source>Same instrument</source>
+        <comment>Channel allocation mode</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="839"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="847"/>
+        <source>Any free released</source>
+        <comment>Channel allocation mode</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="853"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="869"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="800"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="854"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="816"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="870"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="824"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="878"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="825"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="879"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation type="unfinished"></translation>
@@ -1528,7 +1593,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="307"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hozzáadás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="484"/>
@@ -1538,7 +1603,7 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
 </context>
 <context>
@@ -2102,7 +2167,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="144"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="145"/>
@@ -2251,7 +2316,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="145"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_block.cpp" line="146"/>
@@ -2365,7 +2430,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/dock/itembox_list_model.cpp" line="43"/>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Név</translation>
     </message>
     <message>
         <location filename="../main_window/dock/itembox_list_model.cpp" line="47"/>
@@ -2483,7 +2548,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="162"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_door.cpp" line="165"/>
@@ -2568,7 +2633,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="111"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_level.cpp" line="112"/>
@@ -2674,7 +2739,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="110"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_music.cpp" line="111"/>
@@ -2725,22 +2790,22 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="151"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Irány</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="152"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bal</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="156"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Véletlen</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="161"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jobb</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="167"/>
@@ -2820,7 +2885,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="206"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_npc.cpp" line="207"/>
@@ -2913,7 +2978,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="80"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_path.cpp" line="81"/>
@@ -3064,7 +3129,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="161"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_water.cpp" line="184"/>
@@ -3083,22 +3148,22 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Irány</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="91"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bal</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="95"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jobb</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="101"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
 </context>
 <context>
@@ -3151,7 +3216,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="93"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_scene.cpp" line="94"/>
@@ -3258,7 +3323,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="577"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Útvonal</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="708"/>
@@ -3268,7 +3333,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="848"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zene</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/itemselectdialog.ui" line="956"/>
@@ -3351,7 +3416,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="80"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/items/item_tile.cpp" line="81"/>
@@ -3436,7 +3501,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../main_window/file/lvl_export_image.cpp" line="149"/>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megszakítás</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="150"/>
@@ -3734,7 +3799,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="178"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bal</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="185"/>
@@ -3744,12 +3809,12 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="192"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jobb</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="199"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="206"/>
@@ -3794,7 +3859,7 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="269"/>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Esemény Indítása</translation>
     </message>
     <message>
         <location filename="../editing/edit_level/levelprops.ui" line="277"/>
@@ -4038,7 +4103,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <location filename="../testing/luna_tester_engine.cpp" line="1153"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alapértelmezett használata</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1156"/>
@@ -4049,7 +4114,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1160"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="1184"/>
@@ -4364,7 +4429,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="768"/>
         <source>Section settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szakasz beállításai</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="796"/>
@@ -4393,14 +4458,14 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="890"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1442"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="903"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="906"/>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1456"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jobb</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="919"/>
@@ -4455,7 +4520,7 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1094"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Típus:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
@@ -4477,7 +4542,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1249"/>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Általános</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1283"/>
@@ -4547,7 +4612,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1477"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Indítás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1484"/>
@@ -4557,7 +4622,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1501"/>
         <source>Trigger event</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Esemény Indítása</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1526"/>
@@ -4583,7 +4648,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="579"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Automatikus görgetéses szakasz</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1128"/>
@@ -4617,7 +4682,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="69"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/lvl_history_manager.cpp" line="83"/>
@@ -4713,12 +4778,12 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="297"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szélesség:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="317"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magasság:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="346"/>
@@ -4826,7 +4891,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.ui" line="778"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="899"/>
         <source>Generator</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Generátor</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="800"/>
@@ -4846,12 +4911,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="917"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Típus:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="924"/>
         <source>Delay (seconds):</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Várakozás (másodperc):</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="935"/>
@@ -4861,14 +4926,14 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="940"/>
         <source>Projectile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lövedék</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="961"/>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1033"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="604"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Irány</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1013"/>
@@ -4884,19 +4949,19 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1045"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="605"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1052"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="607"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Véletlen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1059"/>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="608"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jobb</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="1101"/>
@@ -4912,13 +4977,13 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="186"/>
         <source>Left</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="187"/>
         <source>Right</source>
         <comment>Throwing direction of NPC, spawned via Generator object.</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jobb</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.cpp" line="188"/>
@@ -5017,12 +5082,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="63"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="73"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hozzáadás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_layers_box.ui" line="83"/>
@@ -5274,7 +5339,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/lvl_search_box.ui" line="307"/>
         <location filename="../main_window/dock/lvl_search_box.ui" line="636"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Típus:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="277"/>
@@ -5362,22 +5427,22 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="746"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Irány</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="770"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="780"/>
         <source>Random</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Véletlen</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="790"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jobb</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_search_box.ui" line="800"/>
@@ -5496,7 +5561,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="315"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zene</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="330"/>
@@ -5512,7 +5577,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="398"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_sctc_props.ui" line="411"/>
@@ -5962,22 +6027,22 @@ number of existing and collected stars in the level will not be shown.</source>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="900"/>
         <source>0 - Instant</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">0 - Azonnali</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="905"/>
         <source>1 - Pipe</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">1 - Cső</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="910"/>
         <source>2 - Door</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">2 - Ajtó</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="915"/>
         <source>3 - Portal</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">3 - Portál</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="923"/>
@@ -6026,13 +6091,13 @@ If this flag is enabled, you can only place a warp exit.</source>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="119"/>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jobb</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="120"/>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
@@ -6140,7 +6205,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="253"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nézet</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="284"/>
@@ -6165,7 +6230,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="312"/>
         <source>Custom data</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Egyéni adatok</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="334"/>
@@ -6651,7 +6716,7 @@ Please, select necessary world map in a list:</source>
     <message>
         <location filename="../mainwindow.ui" line="1794"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animáció</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1797"/>
@@ -6988,7 +7053,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <location filename="../mainwindow.ui" line="2549"/>
         <source>Position bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pozíciókönyvjelzők</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2552"/>
@@ -7429,7 +7494,7 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <location filename="../main_window/file/file_save.cpp" line="80"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megszakítás</translation>
     </message>
     <message>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="117"/>
@@ -7498,7 +7563,7 @@ To start using the new configuration pack, you need to restart the Editor. Do yo
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="369"/>
         <source>Nothing to do.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nincs több feladat.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="370"/>
@@ -8582,7 +8647,7 @@ Reason: %1
     <message>
         <location filename="../defines.h" line="187"/>
         <source>Direction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Irány</translation>
     </message>
     <message>
         <location filename="../defines.h" line="188"/>
@@ -8952,7 +9017,7 @@ Reason: %1
     <message>
         <location filename="../defines.h" line="262"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zene</translation>
     </message>
     <message>
         <location filename="../defines.h" line="263"/>
@@ -9401,7 +9466,7 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../testing/38a_engine.cpp" line="577"/>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alapértelmezett használata</translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="580"/>
@@ -9412,7 +9477,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../testing/38a_engine.cpp" line="584"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../testing/38a_engine.cpp" line="608"/>
@@ -9743,7 +9808,7 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../testing/thextech_engine.cpp" line="174"/>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alapértelmezett használata</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="177"/>
@@ -9754,7 +9819,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="181"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="205"/>
@@ -9996,7 +10061,7 @@ Arguments: %2</source>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="171"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Típus:</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="179"/>
@@ -10026,7 +10091,7 @@ Arguments: %2</source>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="204"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Útvonal</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="209"/>
@@ -10036,7 +10101,7 @@ Arguments: %2</source>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="217"/>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Szélesség:</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="227"/>
@@ -10056,7 +10121,7 @@ Arguments: %2</source>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="277"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Magasság:</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tileset_editor.ui" line="284"/>
@@ -10096,7 +10161,7 @@ Arguments: %2</source>
         <location filename="../tools/tilesets/tileset_editor.cpp" line="124"/>
         <source>Name</source>
         <comment>Sort by name</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Név</translation>
     </message>
     <message>
         <location filename="../tools/tilesets/tileset_editor.cpp" line="128"/>
@@ -10563,12 +10628,12 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/variables_box.ui" line="93"/>
         <source>Add</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hozzáadás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/variables_box.ui" line="100"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
 </context>
 <context>
@@ -10745,7 +10810,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
         <source>Placement mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lehelyezési mód</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_item_props.cpp" line="643"/>
@@ -10788,7 +10853,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.ui" line="113"/>
         <source>Animation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Animáció</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.ui" line="127"/>
@@ -10819,7 +10884,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="174"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megszakítás</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="223"/>
@@ -10918,7 +10983,7 @@ Data may be corrupted!</source>
         <location filename="../testing/wine/wine_setup.ui" line="152"/>
         <location filename="../testing/wine/wine_setup.ui" line="201"/>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.ui" line="162"/>
@@ -10974,7 +11039,7 @@ Data may be corrupted!</source>
         <location filename="../testing/wine/wine_setup.cpp" line="433"/>
         <location filename="../testing/wine/wine_setup.cpp" line="455"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hiba</translation>
     </message>
     <message>
         <location filename="../testing/wine/wine_setup.cpp" line="434"/>
@@ -11006,7 +11071,7 @@ Data may be corrupted!</source>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="52"/>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/world/wld_history_manager.cpp" line="67"/>
@@ -11210,7 +11275,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/dock/wld_search_box.ui" line="506"/>
         <location filename="../main_window/dock/wld_search_box.ui" line="733"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Típus:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="114"/>
@@ -11305,7 +11370,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="287"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Útvonal</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_search_box.ui" line="328"/>
@@ -11486,7 +11551,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <location filename="../main_window/file/wld_export_image.cpp" line="127"/>
         <location filename="../editing/edit_world/wld_files_io.cpp" line="472"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megszakítás</translation>
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="128"/>
@@ -11791,17 +11856,17 @@ Do you want to save your changes?</source>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="558"/>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A teljes csillagszám kiszámítása az összes elérhető pálya alapján</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
         <source>Abort</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Megszakítás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.cpp" line="563"/>
         <source>Counting stars...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Csillagok megszámolása…</translation>
     </message>
 </context>
 <context>
