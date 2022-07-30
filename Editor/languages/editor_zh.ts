@@ -1243,7 +1243,7 @@ Please save them before doing anything else.</source>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
-        <translation>当芯片的空闲信道不足时，部分和弦将压缩为琶音并只使用单信道输出，但可能会听到未如预期的声音，请慎重考虑。</translation>
+        <translation>当芯片的空闲信道不足时，部分和弦将压缩为琶音，并且仅通过单个信道输出，但可能会听到未如预期的声音，请慎重考虑。</translation>
     </message>
     <message>
         <source>Automatic arpeggio</source>
