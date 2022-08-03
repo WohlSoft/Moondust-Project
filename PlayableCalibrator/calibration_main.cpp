@@ -235,7 +235,7 @@ CalibrationMain::CalibrationMain(QWidget *parent) :
         m_wasModified = true;
     });
 
-    m_matrix = new Matrix(&m_calibration, this, this);
+    m_matrix = new Matrix(&m_calibration, this, Matrix::LabelNormal, this);
     m_matrix->setModal(false);
     m_matrix->changeGridSize(m_calibration.matrixWidth, m_calibration.matrixHeight);
 

@@ -50,7 +50,15 @@ class Matrix : public QDialog
     void rebuildGrid();
 
 public:
-    explicit Matrix(Calibration *conf, QWidget *mw, QWidget *parent = nullptr);
+    enum LabelType
+    {
+        LabelNormal,
+        LabelSpriteEditor,
+        LabelSelectorAdd,
+        LabelSelectorChange,
+    };
+
+    explicit Matrix(Calibration *conf, QWidget *mw, LabelType lt, QWidget *parent = nullptr);
     ~Matrix();
 
     void changeGridSize(int w, int h);

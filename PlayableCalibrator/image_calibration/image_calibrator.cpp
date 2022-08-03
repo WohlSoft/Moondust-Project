@@ -58,7 +58,7 @@ ImageCalibrator::ImageCalibrator(Calibration *conf, QWidget *parent) :
             frameEdited();
     });
 
-    m_matrix = new Matrix(conf, m_mw, this);
+    m_matrix = new Matrix(conf, m_mw, Matrix::LabelSpriteEditor, this);
     m_matrix->setModal(false);
     m_matrix->setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
     m_matrix->allowEnableDisable(false);

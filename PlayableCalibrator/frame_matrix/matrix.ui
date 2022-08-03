@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>619</width>
-    <height>654</height>
+    <width>622</width>
+    <height>643</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,12 +23,11 @@
   <property name="modal">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="0,1000">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,1000,0">
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>Empty and unused frames must be unchecked.
-To choose a frame for edit, push to the button over a necessary frame.</string>
+      <string notr="true">&lt;see matrix.cpp for the content of this label&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -40,11 +39,27 @@ To choose a frame for edit, push to the button over a necessary frame.</string>
    </item>
    <item row="1" column="0">
     <widget class="MatrixWidget" name="SpriteMatrix" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>31</height>
+      </size>
+     </property>
      <property name="lineWidth" stdset="0">
       <number>0</number>
      </property>
      <property name="midLineWidth" stdset="0">
       <number>0</number>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="tip">
+     <property name="text">
+      <string>&lt;span style=&quot; font-weight: bold;&quot;&gt;Tip:&lt;/span&gt; if you see some frames marked with the &lt;img src=&quot;:/images/warn.png&quot;/&gt; exclamation sign, that means frame is not valid 2x pixel art (misaligned on odd pixels or contain 2x2 sectors with different colour). You should align it and fix invalid 2x2 sectors using the sprite editor or external graphical editor.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -58,9 +73,6 @@ To choose a frame for edit, push to the button over a necessary frame.</string>
    <container>1</container>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>SpriteMatrix</tabstop>
- </tabstops>
  <resources>
   <include location="../_resources/images.qrc"/>
  </resources>
