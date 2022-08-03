@@ -1152,10 +1152,14 @@ Do you want to continue?</translation>
         <translation>Select a frame on the sprite</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.ui" line="30"/>
+        <location filename="../frame_matrix/matrix.ui" line="59"/>
+        <source>&lt;span style=&quot; font-weight: bold;&quot;&gt;Tip:&lt;/span&gt; if you see some frames marked with the &lt;img src=&quot;:/images/warn.png&quot;/&gt; exclamation sign, that means frame is not valid 2x pixel art (misaligned on odd pixels or contain 2x2 sectors with different colour). You should align it and fix invalid 2x2 sectors using the sprite editor or external graphical editor.</source>
+        <translation>&lt;span style=&quot; font-weight: bold;&quot;&gt;Tip:&lt;/span&gt; if you see some frames marked with the &lt;img src=&quot;:/images/warn.png&quot;/&gt; exclamation sign, that means frame is not valid 2x pixel art (misaligned on odd pixels or contain 2x2 sectors with different colour). You should align it and fix invalid 2x2 sectors using the sprite editor or external graphical editor.</translation>
+    </message>
+    <message>
         <source>Empty and unused frames must be unchecked.
 To choose a frame for edit, push to the button over a necessary frame.</source>
-        <translation>Empty and unused frames must be unchecked.
+        <translation type="vanished">Empty and unused frames must be unchecked.
 To choose a frame for edit, push to the button over a necessary frame.</translation>
     </message>
     <message>
@@ -1165,6 +1169,30 @@ To choose a frame for edit, push to the button over a necessary frame.</translat
     <message>
         <source>Select the %1 x %1 frame</source>
         <translation type="vanished">Select the %1 x %1 frame</translation>
+    </message>
+    <message>
+        <location filename="../frame_matrix/matrix.cpp" line="48"/>
+        <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file.</source>
+        <comment>Frame selector&apos;s label, normal version</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../frame_matrix/matrix.cpp" line="55"/>
+        <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file. Use the middle mouse button to pick up the frame as a reference on the scene.</source>
+        <comment>Frame selector&apos;s label, sprite editor version</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../frame_matrix/matrix.cpp" line="63"/>
+        <source>Click a frame by the left mouse button to add it to the list.</source>
+        <comment>Frame selector&apos;s label, animation editor, add action</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../frame_matrix/matrix.cpp" line="68"/>
+        <source>Click a frame by the left mouse button to take it to the list instead of selected.</source>
+        <comment>Frame selector&apos;s label, animation editor, change action</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

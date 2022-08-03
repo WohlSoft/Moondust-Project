@@ -8211,7 +8211,7 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
-        <location filename="../main_window/file/file_save.cpp" line="80"/>
+        <location filename="../main_window/file/file_save.cpp" line="84"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
@@ -8249,7 +8249,7 @@ Als u het nieuwe configuratiepakket wilt gebruiken, moet u het bewerkingsprogram
         <translation>Configuratie gewijzigd</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="302"/>
+        <location filename="../main_window/file/file_open.cpp" line="304"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
         <source>File open error</source>
@@ -8327,31 +8327,31 @@ Bestand bestaat niet.</translation>
         <translation>[Geen]</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="86"/>
-        <location filename="../main_window/file/file_open.cpp" line="141"/>
+        <location filename="../main_window/file/file_open.cpp" line="88"/>
+        <location filename="../main_window/file/file_open.cpp" line="143"/>
         <source>Untitled file</source>
         <translation>Naamloos bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="86"/>
-        <location filename="../main_window/file/file_open.cpp" line="141"/>
+        <location filename="../main_window/file/file_open.cpp" line="88"/>
+        <location filename="../main_window/file/file_open.cpp" line="143"/>
         <source>Please save file to the disk first.</source>
         <translation>Gelieve eerst het bestand op te slaan op de schijf.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="161"/>
+        <location filename="../main_window/file/file_open.cpp" line="163"/>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation>Het bewerkingsprogramma kon bepaalde bestanden niet openen:
 Het configuratiepakket was geladen, maar bevat fouten.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="226"/>
+        <location filename="../main_window/file/file_open.cpp" line="228"/>
         <source>Level is incompatible</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="227"/>
+        <location filename="../main_window/file/file_open.cpp" line="229"/>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -8360,12 +8360,12 @@ Expected config pack ID: %4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="252"/>
+        <location filename="../main_window/file/file_open.cpp" line="254"/>
         <source>World map is incompatible</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="253"/>
+        <location filename="../main_window/file/file_open.cpp" line="255"/>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -8374,51 +8374,51 @@ Expected config pack ID: %4</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="283"/>
+        <location filename="../main_window/file/file_open.cpp" line="285"/>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>Het bewerkingsprogramma kon het bestand niet openen:
 Het configuratiepakket was geladen, maar bevat fouten.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="303"/>
+        <location filename="../main_window/file/file_open.cpp" line="305"/>
         <source>Can&apos;t open the file: %1</source>
         <translation>Kan het bestand niet openen: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="340"/>
+        <location filename="../main_window/file/file_open.cpp" line="342"/>
         <source>Level file loaded</source>
         <translation>Niveau bestand geladen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="390"/>
+        <location filename="../main_window/file/file_open.cpp" line="392"/>
         <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation>Wereldkaart bestand geladen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="407"/>
+        <location filename="../main_window/file/file_open.cpp" line="409"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation>Kan het bestand niet lezen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="425"/>
+        <location filename="../main_window/file/file_open.cpp" line="427"/>
         <source>NPC Config loaded</source>
         <translation>NPC-configuratie geladen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="521"/>
+        <location filename="../main_window/file/file_open.cpp" line="523"/>
         <source>Game save statistics</source>
         <translation>Savegame bestand statistieken</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="528"/>
+        <location filename="../main_window/file/file_open.cpp" line="530"/>
         <source>Bad file</source>
         <translation>Slecht bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="529"/>
+        <location filename="../main_window/file/file_open.cpp" line="531"/>
         <source>This file have unknown extension</source>
         <translation>Dit bestand heeft een onbekende extensie</translation>
     </message>
@@ -8429,23 +8429,23 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_save.cpp" line="36"/>
-        <location filename="../main_window/file/file_save.cpp" line="82"/>
+        <location filename="../main_window/file/file_save.cpp" line="86"/>
         <source>Saving</source>
         <translation>Aan het opslagen</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_save.cpp" line="55"/>
-        <location filename="../main_window/file/file_save.cpp" line="74"/>
+        <location filename="../main_window/file/file_save.cpp" line="76"/>
         <source>File saved</source>
         <translation>Bestand opgeslagen</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="80"/>
+        <location filename="../main_window/file/file_save.cpp" line="84"/>
         <source>Saving of files...</source>
         <translation>Bestanden aan het opslaan...</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="172"/>
+        <location filename="../main_window/file/file_open.cpp" line="174"/>
         <source>Open file</source>
         <translation>Bestand openen</translation>
     </message>
@@ -8488,8 +8488,8 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="160"/>
-        <location filename="../main_window/file/file_open.cpp" line="282"/>
+        <location filename="../main_window/file/file_open.cpp" line="162"/>
+        <location filename="../main_window/file/file_open.cpp" line="284"/>
         <source>Configuration is loaded with errors</source>
         <translation>Configuratiepakket bevat fouten</translation>
     </message>
@@ -10106,18 +10106,18 @@ Bestand: %1</translation>
         <translation>Regel Data: %1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="407"/>
+        <location filename="../main_window/file/file_open.cpp" line="409"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation>Fout bij openen bestand</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="414"/>
+        <location filename="../main_window/file/file_open.cpp" line="416"/>
         <source>Unknown values are presented</source>
         <translation>Onbekende data waarden ondekt</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="415"/>
+        <location filename="../main_window/file/file_open.cpp" line="417"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>Uw bestand bevat onbekende data dat verwijderd zal worden

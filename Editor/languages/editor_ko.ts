@@ -7658,7 +7658,7 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <location filename="../main_window/tools/data_configs_mgr.cpp" line="113"/>
         <location filename="../main_window/tools/main_tool_cdata_lazyfix.cpp" line="376"/>
         <location filename="../main_window/file/file_save.cpp" line="35"/>
-        <location filename="../main_window/file/file_save.cpp" line="80"/>
+        <location filename="../main_window/file/file_save.cpp" line="84"/>
         <location filename="../main_window/level/level_sections_mods.cpp" line="67"/>
         <source>Abort</source>
         <translation>중단</translation>
@@ -7822,8 +7822,8 @@ Do you want to save file or you want to run test of copy which is currently save
         <location filename="../main_window/file/file_new.cpp" line="43"/>
         <location filename="../main_window/file/file_new.cpp" line="72"/>
         <location filename="../main_window/file/file_new.cpp" line="108"/>
-        <location filename="../main_window/file/file_open.cpp" line="160"/>
-        <location filename="../main_window/file/file_open.cpp" line="282"/>
+        <location filename="../main_window/file/file_open.cpp" line="162"/>
+        <location filename="../main_window/file/file_open.cpp" line="284"/>
         <source>Configuration is loaded with errors</source>
         <translation>구성 팩에 오류가 있습니다</translation>
     </message>
@@ -7854,36 +7854,36 @@ The configuration pack was loaded, but contains errors.</source>
 구성 팩에 오류가 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="86"/>
-        <location filename="../main_window/file/file_open.cpp" line="141"/>
+        <location filename="../main_window/file/file_open.cpp" line="88"/>
+        <location filename="../main_window/file/file_open.cpp" line="143"/>
         <source>Untitled file</source>
         <translation>제목없는 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="86"/>
-        <location filename="../main_window/file/file_open.cpp" line="141"/>
+        <location filename="../main_window/file/file_open.cpp" line="88"/>
+        <location filename="../main_window/file/file_open.cpp" line="143"/>
         <source>Please save file to the disk first.</source>
         <translation>먼저 파일을 디스크에 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="161"/>
+        <location filename="../main_window/file/file_open.cpp" line="163"/>
         <source>Editor cannot open files:
 Configuration package is loaded with errors.</source>
         <translation>편집기가 일부 파일을 열 수 없습니다.
 구성 팩이로드되었지만 오류가 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="172"/>
+        <location filename="../main_window/file/file_open.cpp" line="174"/>
         <source>Open file</source>
         <translation>파일 열기</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="226"/>
+        <location filename="../main_window/file/file_open.cpp" line="228"/>
         <source>Level is incompatible</source>
         <translation>레벨이 호환되지 않습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="227"/>
+        <location filename="../main_window/file/file_open.cpp" line="229"/>
         <source>This level file was created in an editor that was using an unrecognized config pack. This most likely means this level was designed to be used with a different engine rather than %1. It is likely that some blocks/NPCs/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7896,12 +7896,12 @@ Expected config pack ID: %4</source>
 예상 구성 팩 ID : % 4</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="252"/>
+        <location filename="../main_window/file/file_open.cpp" line="254"/>
         <source>World map is incompatible</source>
         <translation>세계지도가 호환되지 않습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="253"/>
+        <location filename="../main_window/file/file_open.cpp" line="255"/>
         <source>This world map file was created in an editor that was using an unrecognized config pack. This most likely means this world map was designed to be used with a different engine rather than %1. It is likely that some terrain/levels/scripts/etc will not be compatible, and may cause unexpected gameplay results or errors.
 
 Filename: %2
@@ -7914,58 +7914,58 @@ Expected config pack ID: %4</source>
 예상 구성 팩 ID : % 4</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="283"/>
+        <location filename="../main_window/file/file_open.cpp" line="285"/>
         <source>Cannot open file:
 The configuration pack was loaded, but contains errors.</source>
         <translation>편집기가 파일을 열 수 없습니다 :
 구성 팩이로드되었지만 오류가 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="302"/>
+        <location filename="../main_window/file/file_open.cpp" line="304"/>
         <location filename="../main_window/file/file_reload.cpp" line="62"/>
         <location filename="../main_window/file/file_reload.cpp" line="229"/>
         <source>File open error</source>
         <translation>파일 열기 오류</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="303"/>
+        <location filename="../main_window/file/file_open.cpp" line="305"/>
         <source>Can&apos;t open the file: %1</source>
         <translation>파일을 열 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="340"/>
+        <location filename="../main_window/file/file_open.cpp" line="342"/>
         <source>Level file loaded</source>
         <translation>로드 된 레벨 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="390"/>
+        <location filename="../main_window/file/file_open.cpp" line="392"/>
         <location filename="../main_window/file/file_reload.cpp" line="285"/>
         <source>World map file loaded</source>
         <translation>로드 된 세계지도 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="407"/>
+        <location filename="../main_window/file/file_open.cpp" line="409"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>Can&apos;t read the file</source>
         <translation>파일을 읽을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="425"/>
+        <location filename="../main_window/file/file_open.cpp" line="427"/>
         <source>NPC Config loaded</source>
         <translation>NPC 구성로드 됨</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="521"/>
+        <location filename="../main_window/file/file_open.cpp" line="523"/>
         <source>Game save statistics</source>
         <translation>게임 저장 통계</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="528"/>
+        <location filename="../main_window/file/file_open.cpp" line="530"/>
         <source>Bad file</source>
         <translation>잘못된 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="529"/>
+        <location filename="../main_window/file/file_open.cpp" line="531"/>
         <source>This file have unknown extension</source>
         <translation>이 파일에는 알 수없는 확장자가 있습니다</translation>
     </message>
@@ -7976,18 +7976,18 @@ The configuration pack was loaded, but contains errors.</source>
     </message>
     <message>
         <location filename="../main_window/file/file_save.cpp" line="36"/>
-        <location filename="../main_window/file/file_save.cpp" line="82"/>
+        <location filename="../main_window/file/file_save.cpp" line="86"/>
         <source>Saving</source>
         <translation>절약</translation>
     </message>
     <message>
         <location filename="../main_window/file/file_save.cpp" line="55"/>
-        <location filename="../main_window/file/file_save.cpp" line="74"/>
+        <location filename="../main_window/file/file_save.cpp" line="76"/>
         <source>File saved</source>
         <translation>저장된 파일</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_save.cpp" line="80"/>
+        <location filename="../main_window/file/file_save.cpp" line="84"/>
         <source>Saving of files...</source>
         <translation>파일 저장 중 ...</translation>
     </message>
@@ -9439,18 +9439,18 @@ File: %1</source>
         <translation>줄 데이터 : % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="407"/>
+        <location filename="../main_window/file/file_open.cpp" line="409"/>
         <location filename="../main_window/file/file_reload.cpp" line="189"/>
         <source>File open error</source>
         <translation>파일 열기 오류</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="414"/>
+        <location filename="../main_window/file/file_open.cpp" line="416"/>
         <source>Unknown values are presented</source>
         <translation>알 수없는 데이터 값이 감지되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/file/file_open.cpp" line="415"/>
+        <location filename="../main_window/file/file_open.cpp" line="417"/>
         <source>Your file have an unknown values which will be removed
  when you will save file</source>
         <translation>파일에 제거 될 알 수없는 데이터가 있습니다.
