@@ -46,6 +46,8 @@ void MainWindow::openFilesByArgs(QStringList args, int startAt)
         if(QFile::exists(args[i]))
             OpenFile(args[i]);
     }
+
+    saveSettings();
 }
 
 void MainWindow::on_action_openEpisodeFolder_triggered()

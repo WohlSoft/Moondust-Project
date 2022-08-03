@@ -53,6 +53,8 @@ void MainWindow::save()
 
         if(saved)
             statusBar()->showMessage(tr("File saved"), 2000);
+
+        saveSettings();
     }
 }
 
@@ -72,6 +74,8 @@ void MainWindow::save_as()
 
         if(saved)
             statusBar()->showMessage(tr("File saved"), 2000);
+
+        saveSettings();
     }
 }
 
@@ -118,7 +122,7 @@ void MainWindow::save_all()
     }
 
     progress.close();
-
+    saveSettings();
 }
 
 
