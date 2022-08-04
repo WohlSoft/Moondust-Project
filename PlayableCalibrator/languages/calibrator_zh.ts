@@ -165,12 +165,12 @@
     <message>
         <location filename="../calibration_main.ui" line="580"/>
         <source>GFX offsets of frame:</source>
-        <translation>帧偏差：</translation>
+        <translation>帧偏移：</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="651"/>
         <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
-        <translation>若启用此选项，则搬运物品时图像判定位置为左偏差位置，反之为右偏差位置。</translation>
+        <translation>若启用此选项，则搬运物品时图像判定位置为左偏移位置，反之为右偏移位置。</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="689"/>
@@ -286,7 +286,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="490"/>
         <source>Grab offset X</source>
-        <translation>搬运物品横向偏差</translation>
+        <translation>搬运物品横向偏移</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="407"/>
@@ -338,7 +338,7 @@ Right button - Move the right-bottom crop edges.</source>
         <location filename="../calibration_main.ui" line="23"/>
         <source>Character Calibrator</source>
         <comment>The title for utility to edit playable character sprites and their settings</comment>
-        <translation>人物校正</translation>
+        <translation>人物校正器</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="97"/>
@@ -524,17 +524,17 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="589"/>
         <source>Offset X</source>
-        <translation>偏差 X</translation>
+        <translation>横向偏移</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="622"/>
         <source>Vertical offset of hitbox relative to top side of frame</source>
-        <translation>判定与图像的纵向偏差</translation>
+        <translation>判定范围与图像的纵向偏移</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="599"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
-        <translation>判定范围与图像的横向偏差</translation>
+        <translation>判定范围与图像的横向偏移</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="351"/>
@@ -544,7 +544,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="612"/>
         <source>Offset Y</source>
-        <translation>偏差 Y</translation>
+        <translation>纵向偏移</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="460"/>
@@ -554,7 +554,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="526"/>
         <source>Offset relative to middle of player&apos;s height</source>
-        <translation>从中间部分确定玩家高度偏差</translation>
+        <translation>从中间部分确定玩家高度偏移</translation>
     </message>
     <message>
         <source>Copy this frame into internal clipboard</source>
@@ -987,7 +987,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="305"/>
         <source>Drag offset X</source>
-        <translation>拿起时横向偏差</translation>
+        <translation>拿起时横向偏移</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="312"/>
@@ -1003,7 +1003,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="343"/>
         <source>Drag frame offset:</source>
-        <translation>拿起时偏差：</translation>
+        <translation>拿起时偏移：</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="370"/>
@@ -1023,7 +1023,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="447"/>
         <source>Drag offset Y</source>
-        <translation>拿起时纵向偏差</translation>
+        <translation>拿起时纵向偏移</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="467"/>
@@ -1094,7 +1094,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../frame_matrix/matrix.ui" line="59"/>
         <source>&lt;span style=&quot; font-weight: bold;&quot;&gt;Tip:&lt;/span&gt; if you see some frames marked with the &lt;img src=&quot;:/images/warn.png&quot;/&gt; exclamation sign, that means frame is not valid 2x pixel art (misaligned on odd pixels or contain 2x2 sectors with different colour). You should align it and fix invalid 2x2 sectors using the sprite editor or external graphical editor.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span style=&quot; font-weight: bold;&quot;&gt;提示：&lt;/span&gt; 如果您看到部分帧被标记 &lt;img src=&quot;:/images/warn.png&quot;/&gt; 警告符号，则说明该帧是一个无效的 2x 像素画（错误地在奇数帧对齐，或包含不同颜色的 2x2 选区）。您应该使用精灵编辑器或使用外部图片编辑器对齐并修复无效的 2x2 选区。</translation>
     </message>
     <message>
         <source>Empty and unused frames must be unchecked.
@@ -1106,25 +1106,25 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
         <location filename="../frame_matrix/matrix.cpp" line="48"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file.</source>
         <comment>Frame selector&apos;s label, normal version</comment>
-        <translation type="unfinished"></translation>
+        <translation>单击以选择帧，右击以选择或取消选择帧。未选择的帧不会保存到人物校正文件。</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.cpp" line="55"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file. Use the middle mouse button to pick up the frame as a reference on the scene.</source>
         <comment>Frame selector&apos;s label, sprite editor version</comment>
-        <translation type="unfinished"></translation>
+        <translation>单击以选择帧，右击以选择或取消选择帧。未选择的帧不会保存到人物校正文件。点击鼠标中键以在画布中显示用于对照的帧。</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.cpp" line="63"/>
         <source>Click a frame by the left mouse button to add it to the list.</source>
         <comment>Frame selector&apos;s label, animation editor, add action</comment>
-        <translation type="unfinished"></translation>
+        <translation>单击以添加帧到列表。</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.cpp" line="68"/>
         <source>Click a frame by the left mouse button to take it to the list instead of selected.</source>
         <comment>Frame selector&apos;s label, animation editor, change action</comment>
-        <translation type="unfinished"></translation>
+        <translation>单击以设置所选的帧。</translation>
     </message>
 </context>
 <context>
