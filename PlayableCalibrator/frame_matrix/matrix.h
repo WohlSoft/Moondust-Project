@@ -80,6 +80,8 @@ signals:
     void currentFrameSwitched(bool enabled);
 
 private:
+    LabelType m_labelType = LabelNormal;
+    void retranslateLabel();
     Ui::Matrix *ui;
 };
 

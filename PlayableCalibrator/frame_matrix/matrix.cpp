@@ -42,33 +42,8 @@ Matrix::Matrix(Calibration *conf, QWidget *mw, LabelType lt, QWidget *parent) :
     m_frameX = 0;
     m_frameY = 0;
 
-    switch(lt)
-    {
-    case LabelNormal:
-        ui->label->setText(tr("Click a frame by the left mouse button to choose it. "
-                              "Use the right mouse button to set or unset check on a frame. "
-                              "The settings of each unchecked frame will not be saved into the calibration file.",
-                              "Frame selector's label, normal version"));
-        break;
-
-    case LabelSpriteEditor:
-        ui->label->setText(tr("Click a frame by the left mouse button to choose it. "
-                              "Use the right mouse button to set or unset check on a frame. "
-                              "The settings of each unchecked frame will not be saved into the calibration file. "
-                              "Use the middle mouse button to pick up the frame as a reference on the scene.",
-                              "Frame selector's label, sprite editor version"));
-        break;
-
-    case LabelSelectorAdd:
-        ui->label->setText(tr("Click a frame by the left mouse button to add it to the list.",
-                              "Frame selector's label, animation editor, add action"));
-        break;
-
-    case LabelSelectorChange:
-        ui->label->setText(tr("Click a frame by the left mouse button to take it to the list instead of selected.",
-                              "Frame selector's label, animation editor, change action"));
-        break;
-    }
+    m_labelType = lt;
+    retranslateLabel();
 
     QObject::connect(ui->SpriteMatrix, &MatrixWidget::cellClicked, [this](int x, int y)->void
     {
@@ -141,4 +116,36 @@ void Matrix::setFrame(int x, int y)
 void Matrix::languageSwitched()
 {
     ui->retranslateUi(this);
+    retranslateLabel();
+}
+
+void Matrix::retranslateLabel()
+{
+    switch(m_labelType)
+    {
+    case LabelNormal:
+        ui->label->setText(tr("Click a frame by the left mouse button to choose it. "
+                              "Use the right mouse button to set or unset check on a frame. "
+                              "The settings of each unchecked frame will not be saved into the calibration file.",
+                              "Frame selector's label, normal version"));
+        break;
+
+    case LabelSpriteEditor:
+        ui->label->setText(tr("Click a frame by the left mouse button to choose it. "
+                              "Use the right mouse button to set or unset check on a frame. "
+                              "The settings of each unchecked frame will not be saved into the calibration file. "
+                              "Use the middle mouse button to pick up the frame as a reference on the scene.",
+                              "Frame selector's label, sprite editor version"));
+        break;
+
+    case LabelSelectorAdd:
+        ui->label->setText(tr("Click a frame by the left mouse button to add it to the list.",
+                              "Frame selector's label, animation editor, add action"));
+        break;
+
+    case LabelSelectorChange:
+        ui->label->setText(tr("Click a frame by the left mouse button to take it to the list instead of selected.",
+                              "Frame selector's label, animation editor, change action"));
+        break;
+    }
 }
