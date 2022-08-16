@@ -18,15 +18,18 @@ TestingSettings::TestingSettings(QWidget *parent) :
         QList<obj_player>& plr = mw->configs.main_characters;
         ui->p1_character->clear();
         ui->p2_character->clear();
+
         for(obj_player& p : plr)
         {
             ui->p1_character->addItem(p.name);
             ui->p2_character->addItem(p.name);
         }
+
         reloadStates1(0);
         reloadStates2(0);
-        connect(ui->p1_character, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &TestingSettings::reloadStates1 );
-        connect(ui->p2_character, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &TestingSettings::reloadStates2 );
+
+        QObject::connect(ui->p1_character, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &TestingSettings::reloadStates1 );
+        QObject::connect(ui->p2_character, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &TestingSettings::reloadStates2 );
     }
 
     ui->ex_god->setChecked(GlobalSettings::testing.xtra_god);
@@ -45,12 +48,53 @@ TestingSettings::TestingSettings(QWidget *parent) :
     ui->p2_state->setCurrentIndex(GlobalSettings::testing.p2_state-1);
     ui->p2_vehicleID->setCurrentIndex(GlobalSettings::testing.p2_vehicleID);
     ui->p2_vehicleType->setCurrentIndex(GlobalSettings::testing.p2_vehicleType);
+
     switch(GlobalSettings::testing.numOfPlayers)
     {
         case 1:default:
         ui->np_1p->setChecked(true);break;
         case 2:
         ui->np_2p->setChecked(true);break;
+    }
+
+
+    // Hide features are not supported by testing engine if default one enforced
+    bool noDefault = ConfStatus::hideNonDefaultEngines;
+    auto defEngine = ConfStatus::defaultTestEngine;
+
+    if(noDefault)
+    {
+        switch(defEngine)
+        {
+        default:
+        case ConfStatus::ENGINE_MOONDUST:
+            ui->initialState->setVisible(false); // Not implemented at Moondust Engine yet
+            break;
+
+        case ConfStatus::ENGINE_THEXTECH:
+            ui->ex_freedom ->setVisible(false);
+            ui->ex_chuck ->setVisible(false);
+            ui->ex_flyup ->setVisible(false);
+            ui->ex_debug ->setVisible(false);
+            ui->ex_physdebug ->setVisible(false);
+            break;
+
+        case ConfStatus::ENGINE_LUNA:
+            ui->initialState->setVisible(false);
+            ui->ex_freedom ->setVisible(false);
+            ui->ex_chuck ->setVisible(false);
+            ui->ex_flyup ->setVisible(false);
+            ui->ex_debug ->setVisible(false);
+            ui->ex_physdebug ->setVisible(false);
+            break;
+
+        case ConfStatus::ENGINE_38A:
+            ui->extraSettings->setVisible(false);
+            ui->initialState->setVisible(false);
+            ui->cheats->setVisible(false);
+            ui->debug->setVisible(false);
+            break;
+        }
     }
 }
 
