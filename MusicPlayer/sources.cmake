@@ -1,5 +1,5 @@
 qt5_wrap_ui(UIS_HDRS
-    MainWindow/mainwindow.ui
+    MainWindow/player_main.ui
     MainWindow/multi_music_test.ui
     MainWindow/multi_music_item.ui
     MainWindow/multi_sfx_test.ui

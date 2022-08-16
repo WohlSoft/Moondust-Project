@@ -214,6 +214,12 @@ namespace PGE_MusicPlayer
         return QString(musicTypeC());
     }
 
+    Mix_MusicType musicTypeI()
+    {
+        return type;
+    }
+
+
     /*!
      * \brief Spawn warning message box with specific text
      * \param msg text to spawn in message box

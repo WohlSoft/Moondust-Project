@@ -21,7 +21,7 @@ class MusicFX;
 class TrackMuter;
 
 namespace Ui {
-class MainWindow;
+class MusPlayerQt;
 }
 
 struct Mix_Chunk;
@@ -125,7 +125,7 @@ private:
     QTimer m_positionWatcher;
     bool   m_positionWatcherLock = false;
     //! UI form class pointer
-    Ui::MainWindow *ui;
+    Ui::MusPlayerQt *ui = nullptr;
 
     QPoint    m_oldWindowPos;
 

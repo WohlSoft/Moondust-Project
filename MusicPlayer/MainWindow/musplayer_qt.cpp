@@ -12,7 +12,7 @@
 #include <QToolTip>
 #include <cmath>
 
-#include "ui_mainwindow.h"
+#include "ui_player_main.h"
 #include "musplayer_qt.h"
 #include "multi_music_test.h"
 #include "multi_sfx_test.h"
@@ -35,7 +35,7 @@
 
 MusPlayer_Qt::MusPlayer_Qt(QWidget *parent) : QMainWindow(parent),
     MusPlayerBase(),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MusPlayerQt)
 {
     ui->setupUi(this);
     PGE_MusicPlayer::setMainWindow(this);
@@ -613,10 +613,92 @@ void MusPlayer_Qt::on_recordWav_clicked(bool checked)
         QFileInfo twav(m_currentMusic);
         PGE_MusicPlayer::stopWavRecording();
         QString wavPathBase = twav.absoluteDir().absolutePath() + "/" + twav.baseName();
-        QString wavPath = wavPathBase + ".wav";
+        QString fileSuffix = twav.suffix();
+
+        switch(PGE_MusicPlayer::musicTypeI())
+        {
+        case MUS_GME:
+            fileSuffix += QString("-t%1").arg(ui->trackID->value());
+            break;
+
+        case MUS_MID:
+            {
+                int synth = Mix_GetMidiPlayer();
+                fileSuffix += QString("-s%1").arg(synth);
+
+                if(synth == MIDI_ADLMIDI)
+                {
+                    int t = Mix_ADLMIDI_getTremolo();
+                    int v = Mix_ADLMIDI_getVibrato();
+                    int m = Mix_ADLMIDI_getScaleMod();
+                    int l = Mix_ADLMIDI_getVolumeModel();
+                    int e = Mix_ADLMIDI_getEmulator();
+                    int c = Mix_ADLMIDI_getChipsCount();
+                    int o = Mix_ADLMIDI_getChannelAllocMode();
+                    fileSuffix += QString("-b%1").arg(Mix_ADLMIDI_getBankID());
+
+                    if(t >= 0)
+                        fileSuffix += QString("-t%1").arg(t);
+
+                    if(v >= 0)
+                        fileSuffix += QString("-v%1").arg(v);
+
+                    if(m >= 0)
+                        fileSuffix += QString("-m%1").arg(m);
+
+                    if(l > 0)
+                        fileSuffix += QString("-l%1").arg(l);
+
+                    if(o > 0)
+                        fileSuffix += QString("-o%1").arg(o);
+
+                    fileSuffix += QString("-e%1").arg(e);
+                    fileSuffix += QString("-c%1").arg(c);
+                }
+
+                if(synth == MIDI_OPNMIDI)
+                {
+                    int l = Mix_OPNMIDI_getVolumeModel();
+                    int e = Mix_OPNMIDI_getEmulator();
+                    int c = Mix_OPNMIDI_getChipsCount();
+                    int o = Mix_OPNMIDI_getChannelAllocMode();
+
+                    if(l > 0)
+                        fileSuffix += QString("-l%1").arg(l);
+
+                    if(o > 0)
+                        fileSuffix += QString("-o%1").arg(o);
+
+                    fileSuffix += QString("-e%1").arg(e);
+                    fileSuffix += QString("-c%1").arg(c);
+                }
+            }
+            break;
+
+        case MUS_ADLMIDI:
+            fileSuffix += "-s0";
+            break;
+        case MUS_OPNMIDI:
+            fileSuffix += "-s3";
+            break;
+        case MUS_EDMIDI:
+            fileSuffix += "-s5";
+            break;
+        case MUS_FLUIDLITE:
+            fileSuffix += "-s4";
+            break;
+        case MUS_NATIVEMIDI:
+            fileSuffix += "-s2";
+            break;
+        default:
+            break; // Do Nothing
+        }
+
+        QString wavPath = wavPathBase + "-" + fileSuffix + ".wav";
+
         int count = 1;
         while(QFile::exists(wavPath))
-            wavPath = wavPathBase + QString("-%1.wav").arg(count++);
+            wavPath = wavPathBase + "-" + fileSuffix + QString("-%1.wav").arg(count++);
         PGE_MusicPlayer::startWavRecording(wavPath);
         on_play_clicked();
         ui->open->setEnabled(false);

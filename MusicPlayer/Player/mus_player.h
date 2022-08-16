@@ -93,6 +93,8 @@ namespace PGE_MusicPlayer
 
     extern QString musicType();
 
+    extern Mix_MusicType musicTypeI();
+
     /*!
      * \brief Stop music playing
      */
