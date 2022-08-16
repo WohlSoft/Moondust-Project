@@ -482,7 +482,7 @@ void MainWindow::setUiDefults()
     ui->actionVariables->setVisible(false);
     ui->actionScriptEditor->setVisible(false);
     ui->actionSprite_editor->setVisible(false);
-    ui->separatorSpriteEditor->setVisible(false);
+    // ui->separatorSpriteEditor->setVisible(false);
 #endif
     /**************************************************************/
 
