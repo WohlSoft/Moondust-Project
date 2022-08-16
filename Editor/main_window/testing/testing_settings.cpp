@@ -32,6 +32,22 @@ TestingSettings::TestingSettings(QWidget *parent) :
         QObject::connect(ui->p2_character, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &TestingSettings::reloadStates2 );
     }
 
+    refreshVehicleID();
+
+    QObject::connect(ui->p1_vehicleID, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+        [this](int)->void
+        {
+            refreshVehicleTypes();
+        }
+    );
+
+    QObject::connect(ui->p2_vehicleID, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+        [this](int)->void
+        {
+            refreshVehicleTypes();
+        }
+    );
+
     ui->ex_god->setChecked(GlobalSettings::testing.xtra_god);
     ui->ex_flyup->setChecked(GlobalSettings::testing.xtra_flyup);
     ui->ex_chuck->setChecked(GlobalSettings::testing.xtra_chuck);
@@ -177,4 +193,66 @@ void TestingSettings::showEvent(QShowEvent *event)
     QDialog::showEvent(event);
     qApp->processEvents();
     emit windowShown();
+}
+
+void TestingSettings::refreshVehicleID()
+{
+    MainWindow* mw = qobject_cast<MainWindow*>(this->parent());
+    if(!mw)
+        return;
+
+    auto& veh = mw->configs.main_vehicles;
+
+    ui->p1_vehicleID->clear();
+    ui->p2_vehicleID->clear();
+
+    ui->p1_vehicleID->addItem(tr("[No vehicle]"));
+    ui->p2_vehicleID->addItem(tr("[No vehicle]"));
+
+    for(auto &v : veh)
+    {
+        ui->p1_vehicleID->addItem(v.name);
+        ui->p2_vehicleID->addItem(v.name);
+    }
+
+    refreshVehicleTypes();
+}
+
+void TestingSettings::refreshVehicleTypes()
+{
+    MainWindow* mw = qobject_cast<MainWindow*>(this->parent());
+    if(!mw)
+        return;
+
+    auto& veh = mw->configs.main_vehicles;
+
+    int p1_sel = ui->p1_vehicleID->currentIndex();
+    int p2_sel = ui->p2_vehicleID->currentIndex();
+
+    int p1_sel_backup = ui->p1_vehicleType->currentIndex();
+    int p2_sel_backup = ui->p2_vehicleType->currentIndex();
+
+    ui->p1_vehicleType->clear();
+    ui->p2_vehicleType->clear();
+
+    ui->p1_vehicleType->addItem(tr("[Unknown type]"));
+    ui->p2_vehicleType->addItem(tr("[Unknown type]"));
+
+    if(p1_sel > 0 && p1_sel <= veh.size())
+    {
+        for(auto &t : veh[p1_sel - 1].type_names)
+            ui->p1_vehicleType->addItem(t);
+    }
+
+    if(p2_sel > 0 && p2_sel <= veh.size())
+    {
+        for(auto &t : veh[p2_sel - 1].type_names)
+            ui->p2_vehicleType->addItem(t);
+    }
+
+    if(p1_sel_backup <= ui->p1_vehicleType->count())
+        ui->p1_vehicleType->setCurrentIndex(p1_sel_backup);
+
+    if(p2_sel_backup <= ui->p2_vehicleType->count())
+        ui->p2_vehicleType->setCurrentIndex(p2_sel_backup);
 }

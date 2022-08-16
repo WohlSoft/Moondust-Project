@@ -273,6 +273,9 @@ public:
     //Playable Characters
     QList<obj_player > main_characters;
 
+    //Vehicles list
+    QList<obj_vehicle > main_vehicles;
+
     //Level map items
     //! Global level background image types setup
     PGE_DataArray<obj_BG > main_bg;
@@ -432,6 +435,7 @@ private:
     ResourceFolder folderWldLevelPoints;
 
     void loadPlayers();
+    void loadVehicles();
 
     void loadLevelBGO();
     void loadLevelBlocks();

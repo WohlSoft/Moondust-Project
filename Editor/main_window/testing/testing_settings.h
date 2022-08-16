@@ -28,6 +28,9 @@ protected:
 
 private:
     Ui::TestingSettings *ui;
+
+    void refreshVehicleID();
+    void refreshVehicleTypes();
 };
 
 #endif // TESTING_SETTINGS_H

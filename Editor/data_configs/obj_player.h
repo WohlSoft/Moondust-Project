@@ -67,4 +67,10 @@ struct obj_player
     QList<obj_player_state> states;
 };
 
+struct obj_vehicle
+{
+    QString name;
+    QList<QString> type_names;
+};
+
 #endif // OBJ_PLAYER_H

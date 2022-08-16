@@ -624,6 +624,8 @@ bool DataConfig::loadFullConfig()
     ///////////////////////////////////////Level items////////////////////////////////////////////
     LogDebug("Loading of lvl_characters.ini...");
     loadPlayers();
+    LogDebug("Loading of vehicles.ini...");
+    loadVehicles();
     LogDebug("Loading of lvl_bkgrd.ini...");
     loadLevelBackgrounds();
     LogDebug("Loading of lvl_bgo.ini...");

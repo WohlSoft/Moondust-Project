@@ -101,3 +101,52 @@ void DataConfig::loadPlayers()
 
 }
 
+void DataConfig::loadVehicles()
+{
+    main_vehicles.clear();
+
+    uint64_t i;
+    uint64_t vehicles_total = 0;
+
+    QString vehicles_ini = getFullIniPath("vehicles.ini");
+    if(vehicles_ini.isEmpty())
+        return;
+
+    IniProcessing setup(vehicles_ini);
+
+    if(!openSection(&setup, "main-vehicles"))
+        return;
+    {
+        setup.read("total", vehicles_total, 0u);
+    }
+    closeSection(&setup);
+
+    if(vehicles_total > 0)
+        main_vehicles.reserve(static_cast<int>(vehicles_total));
+
+    for(i = 1; i <= vehicles_total; ++i)
+    {
+        obj_vehicle vehicle;
+        uint64_t types, j;
+
+        openSection(&setup, QString("vehicle-%1").arg(i).toStdString());
+        setup.read("name", vehicle.name, QString("Vehicle %1").arg(i));
+        setup.read("total-types", types, 0u);
+        closeSection(&setup);
+
+        if(types > 0)
+            vehicle.type_names.reserve(types);
+
+        for(j = 1; j <= types; ++j)
+        {
+            QString name;
+            openSection(&setup, QString("vehicle-%1-type-%2").arg(i).arg(j).toStdString());
+            setup.read("name", name, QString("Type %1").arg(j));
+            closeSection(&setup);
+            vehicle.type_names.push_back(name);
+        }
+
+        main_vehicles.push_back(vehicle);
+    }
+}
+
