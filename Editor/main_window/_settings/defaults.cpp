@@ -481,6 +481,8 @@ void MainWindow::setUiDefults()
 #ifndef DEBUG_BUILD
     ui->actionVariables->setVisible(false);
     ui->actionScriptEditor->setVisible(false);
+    ui->actionSprite_editor->setVisible(false);
+    ui->separatorSpriteEditor->setVisible(false);
 #endif
     /**************************************************************/
 
