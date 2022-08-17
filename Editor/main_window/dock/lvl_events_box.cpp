@@ -570,13 +570,14 @@ void LvlEventsBox::setSMBX64Strict(bool en)
 {
     DataConfig &c = mw()->configs;
     bool enabled = !en;
+    bool useLegacy = c.editor.supported_features.level_event_new_autoscroll != EditorSetup::FeaturesSupport::F_ENABLED || en;
 
     ui->sectionAutoscroll->setToolTip(en ? tr("Disabled by the strict SMBX64 mode") : QString());
     ui->sectionAutoscroll->setEnabled(enabled && (c.editor.supported_features.level_event_new_autoscroll == EditorSetup::FeaturesSupport::F_ENABLED));
     ui->sectionAutoscroll->setHidden(c.editor.supported_features.level_event_new_autoscroll == EditorSetup::FeaturesSupport::F_HIDDEN);
 
-    ui->sectionAutoscrollLegacyNote->setVisible(!en);
-    ui->AutoscrollSection_toggleBox->setText(en ? tr("Autoscroll section") : tr("Autoscroll section (Legacy)"));
+    ui->sectionAutoscrollLegacyNote->setVisible(!useLegacy);
+    ui->AutoscrollSection_toggleBox->setText(useLegacy ? tr("Autoscroll section") : tr("Autoscroll section (Legacy)"));
 }
 
 
