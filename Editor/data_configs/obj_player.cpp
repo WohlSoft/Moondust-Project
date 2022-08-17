@@ -16,9 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFile>
+
 #include "obj_player.h"
 #include "data_configs.h"
 #include <main_window/global_settings.h>
+
 
 void DataConfig::loadPlayers()
 {
@@ -103,16 +106,32 @@ void DataConfig::loadPlayers()
 
 void DataConfig::loadVehicles()
 {
-    main_vehicles.clear();
-
     uint64_t i;
     uint64_t vehicles_total = 0;
 
-    QString vehicles_ini = getFullIniPath("vehicles.ini");
-    if(vehicles_ini.isEmpty())
+    QString vehicles_ini = config_dir + "vehicles.ini";
+
+    if(!QFile::exists(vehicles_ini))
+    {
+        LogWarning("Vehicles list wasn't load: vehicles.ini does not exist. Vehicles will display default data.");
+
+        // Fill with default data to maintain backward compatibility
+        int maxTypes[] = {3, 0, 8};
+        for(int t = 1; t <= 3; ++t)
+        {
+            obj_vehicle vehicle;
+            vehicle.name = QString("Vehicle %1").arg(t);
+
+            for(int s = 1; s <= maxTypes[t - 1]; ++s)
+                vehicle.type_names.push_back(QString("Type %1").arg(s));
+
+            main_vehicles.push_back(vehicle);
+        }
         return;
+    }
 
     IniProcessing setup(vehicles_ini);
+    main_vehicles.clear();
 
     if(!openSection(&setup, "main-vehicles"))
         return;
@@ -149,4 +168,3 @@ void DataConfig::loadVehicles()
         main_vehicles.push_back(vehicle);
     }
 }
-
