@@ -83,6 +83,8 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     DirListCIQt ci;
     QString dstLevelPath;
     QString dstLevelName;
+    DataConfig &c = *(m_scene->m_configs);
+    bool shown = !m_scene->m_data->meta.smbx64strict;
 
     if(!m_data.lname.isEmpty())
     {
@@ -143,12 +145,18 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     QAction *bombNeed =        itemMenu.addAction(tr("Need a bomb"));
     bombNeed->setCheckable(true);
     bombNeed->setChecked(m_data.need_a_bomb);
+    bombNeed->setEnabled(shown && (c.editor.supported_features.level_warp_bomb_exit == EditorSetup::FeaturesSupport::F_ENABLED));
+    bombNeed->setVisible(c.editor.supported_features.level_warp_bomb_exit != EditorSetup::FeaturesSupport::F_HIDDEN);
     QAction *specialStReq =    itemMenu.addAction(tr("Required special state"));
     specialStReq->setCheckable(true);
     specialStReq->setChecked(m_data.special_state_required);
-    QAction *stoodStReq =    itemMenu.addAction(tr("Required stood state"));
-    stoodStReq->setCheckable(true);
-    stoodStReq->setChecked(m_data.stood_state_required);
+    specialStReq->setEnabled(shown && (c.editor.supported_features.level_warp_allow_sp_state_only == EditorSetup::FeaturesSupport::F_ENABLED));
+    specialStReq->setVisible(c.editor.supported_features.level_warp_allow_sp_state_only != EditorSetup::FeaturesSupport::F_HIDDEN);
+    QAction *floorReq =    itemMenu.addAction(tr("Required stood state"));
+    floorReq->setCheckable(true);
+    floorReq->setChecked(m_data.stood_state_required);
+    floorReq->setEnabled(shown && (c.editor.supported_features.level_warp_allow_needs_floor == EditorSetup::FeaturesSupport::F_ENABLED));
+    floorReq->setVisible(c.editor.supported_features.level_warp_allow_needs_floor != EditorSetup::FeaturesSupport::F_HIDDEN);
 
     /*************Copy Preferences*******************/
     itemMenu.addSeparator();
@@ -327,7 +335,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(specialStReq->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
-    else if(selected == stoodStReq)
+    else if(selected == floorReq)
     {
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
@@ -348,11 +356,11 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.stood_state_required = stoodStReq->isChecked();
+                ((ItemDoor *) SelItem)->m_data.stood_state_required = floorReq->isChecked();
                 ((ItemDoor *) SelItem)->arrayApply();
             }
         }
-        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_NEEDS_FLOOR, QVariant(stoodStReq->isChecked()));
+        m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_NEEDS_FLOOR, QVariant(floorReq->isChecked()));
         m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else if(selected == copyPosXY)
