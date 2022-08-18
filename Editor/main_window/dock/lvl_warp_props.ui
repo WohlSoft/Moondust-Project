@@ -55,7 +55,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>0</y>
+      <y>-199</y>
       <width>325</width>
       <height>947</height>
      </rect>
@@ -202,6 +202,9 @@ If set to zero, the player will start at the pre-defined level start point.</str
         </item>
         <item row="3" column="0" colspan="3">
          <widget class="QCheckBox" name="WarpHideLevelEnterScreen">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="toolTip">
            <string>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
@@ -224,6 +227,9 @@ show the current playable character(s) and number of lives.</string>
         </item>
         <item row="4" column="0" colspan="3">
          <widget class="QCheckBox" name="WarpAllowNPC_IL">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="toolTip">
            <string>Brings the player's held item to the target level of this warp.</string>
           </property>
@@ -608,6 +614,9 @@ Every warp point pair requires a warp entry.</string>
            </property>
            <item>
             <widget class="QCheckBox" name="WarpNoVehicles">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>Any mounted vehicles will be removed
 when player passes through this warp.
@@ -621,6 +630,9 @@ finishes the level or lose a life.</string>
            </item>
            <item>
             <widget class="QCheckBox" name="WarpAllowNPC">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>Player can carry items and NPCs through this warp.</string>
              </property>
@@ -631,6 +643,9 @@ finishes the level or lose a life.</string>
            </item>
            <item>
             <widget class="QCheckBox" name="WarpLock">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>Entrance closed with a lock. Need a key to open it.</string>
              </property>
@@ -641,6 +656,9 @@ finishes the level or lose a life.</string>
            </item>
            <item>
             <widget class="QCheckBox" name="WarpBombNeed">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>Entrance closed with a lock. Need to blow up the lock to open it.</string>
              </property>
@@ -651,6 +669,9 @@ finishes the level or lose a life.</string>
            </item>
            <item>
             <widget class="QCheckBox" name="WarpSpecialStateOnly">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>The player can only enter this warp under a special state.
 The special state is defined by the active configuration pack.</string>
@@ -662,6 +683,9 @@ The special state is defined by the active configuration pack.</string>
            </item>
            <item>
             <widget class="QCheckBox" name="warpNeedsFloor">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</string>
              </property>
@@ -817,6 +841,9 @@ The special state is defined by the active configuration pack.</string>
            </item>
            <item row="8" column="1">
             <widget class="QLineEdit" name="WarpNeedAStarsMsg">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>Message which will be shown if the player
 does not have the required number of stars</string>
@@ -850,6 +877,9 @@ to enter this warp</string>
            </item>
            <item row="9" column="0" colspan="2">
             <widget class="QCheckBox" name="WarpHideStars">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</string>
@@ -983,6 +1013,9 @@ number of existing and collected stars in the level will not be shown.</string>
            </item>
            <item>
             <widget class="QComboBox" name="WarpEnterEvent">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <property name="toolTip">
               <string>Trigger event when he player enters this warp</string>
              </property>

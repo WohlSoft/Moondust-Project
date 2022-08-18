@@ -67,6 +67,7 @@ private slots:
 
     void on_WarpType_currentIndexChanged(int index);
     void on_transitEffect_currentIndexChanged(int index);
+    void on_transitEffect_customContextMenuRequested(const QPoint &p);
     void on_WarpNeedAStars_valueChanged(int arg1);
     void on_WarpNeedAStarsMsg_editingFinished();
     void on_WarpHideStars_clicked(bool checked);

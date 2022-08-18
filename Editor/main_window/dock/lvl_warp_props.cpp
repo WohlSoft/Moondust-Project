@@ -800,6 +800,49 @@ void LvlWarpBox::on_transitEffect_currentIndexChanged(int index)
     edit->LvlData.meta.modified = true;
 }
 
+void LvlWarpBox::on_transitEffect_customContextMenuRequested(const QPoint &p)
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+
+    QMenu m;
+    QAction *applyToAll = m.addAction(tr("Apply to all"));
+
+    QAction *answer = m.exec(ui->transitEffect->mapToGlobal(p));
+
+    unsigned int warpId = getWarpId();
+    auto *w = findWarp(edit->LvlData, warpId);
+    Q_ASSERT(w);
+
+    if(answer == applyToAll)
+    {
+        int ret = QMessageBox::question(this,
+                                        tr("Apply to all entries"),
+                                        tr("Do you really want to apply this setting to all objects?"),
+                                        QMessageBox::Yes|QMessageBox::No);
+        if(ret != QMessageBox::Yes)
+            return;
+
+        int transition_effect = w->transition_effect;
+        for(auto &d : edit->LvlData.doors)
+        {
+            QList<QVariant> warpTransitTypeData;
+            warpTransitTypeData.push_back(d.transition_effect);
+            warpTransitTypeData.push_back(transition_effect);
+
+            d.transition_effect = transition_effect;
+
+            edit->scene->m_history->addChangeWarpSettings(static_cast<int>(warpId),
+                    HistorySettings::SETTING_TRANSITTYPE,
+                    QVariant(warpTransitTypeData));
+            edit->scene->doorPointsSync(d.meta.array_id);
+        }
+        edit->LvlData.meta.modified = true;
+    }
+}
+
 void LvlWarpBox::on_WarpNeedAStars_valueChanged(int arg1)
 {
     if(m_lockSettings)
