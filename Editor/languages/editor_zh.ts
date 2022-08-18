@@ -3012,7 +3012,7 @@ version code must be less or equal specific code)</source>
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation>超出 SMBX 1.3 数量限制</translation>
+        <translation>已到达 SMBX64 上限</translation>
     </message>
     <message>
         <source>Do you want to save file anyway?
@@ -3020,7 +3020,7 @@ Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos;
 
 Installed LunaLUA partially extends than limits.</source>
         <translation>你想保存为此格式吗？
-超出 SMBX 1.3 的数量上限可能会使 SMBX 发生错误 9 。
+超出 SMBX64 上限可能会使 SMBX 发生错误“下标越界”。
 
 安装 LunaLua 可增加部分对象的上限。</translation>
     </message>
@@ -3782,7 +3782,7 @@ To use LunaTester you should have right Integration configuration package!</sour
     </message>
     <message>
         <source>SMBX64 limits are exceeded!</source>
-        <translation>SMBX64 上限到达！</translation>
+        <translation>已到达 SMBX64 上限！</translation>
     </message>
     <message>
         <source>Violation of SMBX64 standard has been found!
@@ -3793,7 +3793,7 @@ Do you want to continue the process?</source>
         <translation>已超出 SMBX64 标准！
 %1
 , SMBX 1.3 引擎可能异常终止！
-建议移除所有超出范围的对象。
+建议移除所有超出部分的对象。
 您要继续吗？</translation>
     </message>
     <message>
@@ -4289,7 +4289,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation>在 SMBX64 模式中被禁用</translation>
+        <translation>在严格兼容的 SMBX64 模式中已被禁用</translation>
     </message>
 </context>
 <context>
@@ -10276,7 +10276,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <source>The SMBX64 limit has been exceeded</source>
-        <translation>超出 SMBX 1.3 数量限制</translation>
+        <translation>已到达 SMBX64 上限</translation>
     </message>
     <message>
         <source>Do you want to save file anyway?
@@ -10284,7 +10284,7 @@ Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
 Installed LunaLUA partially extends than limits.</source>
         <translation>你想保存为此格式吗？
-超出 SMBX 1.3 的数量上限可能会使 SMBX 发生错误 6。
+超出 SMBX64 上限可能会使 SMBX 发生错误“溢出”。
 
 安装 LunaLua 可增加部分对象的上限。</translation>
     </message>
