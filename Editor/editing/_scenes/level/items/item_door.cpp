@@ -119,17 +119,93 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     itemMenu.addSeparator();
     /*************Layers*end***************/
 
+    bool isEnter = this->data(ITEM_TYPE).toString() == "Door_enter";
+    bool isExit = this->data(ITEM_TYPE).toString() == "Door_exit";
+
     QAction *jumpTo = nullptr;
-    if(this->data(ITEM_TYPE).toString() == "Door_enter")
+    if(isEnter)
     {
         jumpTo =                itemMenu.addAction(tr("Jump to exit"));
         jumpTo->setVisible((m_data.isSetIn) && (m_data.isSetOut));
     }
-    else if(this->data(ITEM_TYPE).toString() == "Door_exit")
+    else if(isExit)
     {
         jumpTo =                itemMenu.addAction(tr("Jump to entrance"));
         jumpTo->setVisible((m_data.isSetIn) && (m_data.isSetOut));
     }
+
+    QAction *dirLeft = nullptr;
+    QAction *dirUp = nullptr;
+    QAction *dirRight = nullptr;
+    QAction *dirDown = nullptr;
+
+    if(m_data.type == LevelDoor::WARP_PIPE)
+    {
+        itemMenu.addSeparator();
+        QMenu *dir = itemMenu.addMenu(tr("Direction"));
+
+        dirLeft = dir->addAction(tr("Left", "Direction of pipe"));
+        dirLeft->setCheckable(true);
+        dirLeft->setIcon(QIcon(isEnter ? ":/arrows/arrows/red_left.png" : ":/arrows/arrows/green_left.png"));
+
+        dirUp = dir->addAction(tr("Up", "Direction of pipe"));
+        dirUp->setCheckable(true);
+        dirUp->setIcon(QIcon(isEnter ? ":/arrows/arrows/red_up.png" : ":/arrows/arrows/green_up.png"));
+
+        dirRight = dir->addAction(tr("Right", "Direction of pipe"));
+        dirRight->setCheckable(true);
+        dirRight->setIcon(QIcon(isEnter ? ":/arrows/arrows/red_right.png" : ":/arrows/arrows/green_right.png"));
+
+        dirDown = dir->addAction(tr("Down", "Direction of pipe"));
+        dirDown->setCheckable(true);
+        dirDown->setIcon(QIcon(isEnter ? ":/arrows/arrows/red_down.png" : ":/arrows/arrows/green_down.png"));
+
+        if(isEnter)
+        {
+            switch(m_data.idirect)
+            {
+            case LevelDoor::ENTRANCE_LEFT:
+                dirLeft->setChecked(true);
+                dir->setIcon(QIcon(":/arrows/arrows/red_left.png"));
+                break;
+            case LevelDoor::ENTRANCE_UP:
+                dirUp->setChecked(true);
+                dir->setIcon(QIcon(":/arrows/arrows/red_up.png"));
+                break;
+            case LevelDoor::ENTRANCE_RIGHT:
+                dirRight->setChecked(true);
+                dir->setIcon(QIcon(":/arrows/arrows/red_right.png"));
+                break;
+            case LevelDoor::ENTRANCE_DOWN:
+                dirDown->setChecked(true);
+                dir->setIcon(QIcon(":/arrows/arrows/red_down.png"));
+                break;
+            }
+        }
+        else
+        {
+            switch(m_data.odirect)
+            {
+            case LevelDoor::EXIT_LEFT:
+                dirLeft->setChecked(true);
+                dir->setIcon(QIcon(":/arrows/arrows/green_left.png"));
+                break;
+            case LevelDoor::EXIT_UP:
+                dirUp->setChecked(true);
+                dir->setIcon(QIcon(":/arrows/arrows/green_up.png"));
+                break;
+            case LevelDoor::EXIT_RIGHT:
+                dirRight->setChecked(true);
+                dir->setIcon(QIcon(":/arrows/arrows/green_right.png"));
+                break;
+            case LevelDoor::EXIT_DOWN:
+                dirDown->setChecked(true);
+                dir->setIcon(QIcon(":/arrows/arrows/green_down.png"));
+                break;
+            }
+        }
+    }
+
     itemMenu.addSeparator();
     QAction *NoTransport =     itemMenu.addAction(tr("No Vehicles"));
     NoTransport->setCheckable(true);
@@ -184,40 +260,215 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     else if(selected == jumpTo)
     {
         //scene->doCopy = true ;
-        if(this->data(ITEM_TYPE).toString() == "Door_enter")
+        if(isEnter)
         {
             if(m_data.isSetOut)
                 m_scene->m_mw->activeLvlEditWin()->goTo(m_data.ox, m_data.oy, true, QPoint(0, 0), true);
         }
-        else if(this->data(ITEM_TYPE).toString() == "Door_exit")
+        else if(isExit)
         {
             if(m_data.isSetIn)
                 m_scene->m_mw->activeLvlEditWin()->goTo(m_data.ix, m_data.iy, true, QPoint(0, 0), true);
         }
+    }
+    else if(dirLeft && selected == dirLeft)
+    {
+        LevelData modDoors;
+        for(QGraphicsItem *SelItem : m_scene->selectedItems())
+        {
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if((isEnter && sIsEnter) || (isExit && sIsExit))
+            {
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
+                {
+                    LevelDoor door = d->m_data;
+                    door.isSetOut = true;
+                    door.isSetIn = false;
+                    modDoors.doors.push_back(door);
+                }
+                else if(sIsEnter)
+                {
+                    LevelDoor door = d->m_data;
+                    door.isSetOut = false;
+                    door.isSetIn = true;
+                    modDoors.doors.push_back(door);
+                }
+
+                if(sIsEnter)
+                    d->m_data.idirect = LevelDoor::ENTRANCE_LEFT;
+                else
+                    d->m_data.odirect = LevelDoor::EXIT_LEFT;
+                d->arrayApply();
+                d->refreshArrows();
+            }
+        }
+
+        m_scene->m_history->addChangeSettings(modDoors,
+                                              isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
+                                              QVariant(isEnter ? (int)LevelDoor::ENTRANCE_LEFT : (int)LevelDoor::EXIT_LEFT));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+    }
+    else if(dirUp && selected == dirUp)
+    {
+        LevelData modDoors;
+        for(QGraphicsItem *SelItem : m_scene->selectedItems())
+        {
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if((isEnter && sIsEnter) || (isExit && sIsExit))
+            {
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
+                {
+                    LevelDoor door = d->m_data;
+                    door.isSetOut = true;
+                    door.isSetIn = false;
+                    modDoors.doors.push_back(door);
+                }
+                else if(sIsEnter)
+                {
+                    LevelDoor door = d->m_data;
+                    door.isSetOut = false;
+                    door.isSetIn = true;
+                    modDoors.doors.push_back(door);
+                }
+
+                if(sIsEnter)
+                    d->m_data.idirect = LevelDoor::ENTRANCE_UP;
+                else
+                    d->m_data.odirect = LevelDoor::EXIT_UP;
+                d->arrayApply();
+                d->refreshArrows();
+            }
+        }
+
+        m_scene->m_history->addChangeSettings(modDoors,
+                                              isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
+                                              QVariant(isEnter ? (int)LevelDoor::ENTRANCE_UP : (int)LevelDoor::EXIT_UP));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+    }
+    else if(dirRight && selected == dirRight)
+    {
+        LevelData modDoors;
+        for(QGraphicsItem *SelItem : m_scene->selectedItems())
+        {
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if((isEnter && sIsEnter) || (isExit && sIsExit))
+            {
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
+                {
+                    LevelDoor door = d->m_data;
+                    door.isSetOut = true;
+                    door.isSetIn = false;
+                    modDoors.doors.push_back(door);
+                }
+                else if(sIsEnter)
+                {
+                    LevelDoor door = d->m_data;
+                    door.isSetOut = false;
+                    door.isSetIn = true;
+                    modDoors.doors.push_back(door);
+                }
+
+                if(sIsEnter)
+                    d->m_data.idirect = LevelDoor::ENTRANCE_RIGHT;
+                else
+                    d->m_data.odirect = LevelDoor::EXIT_RIGHT;
+                d->arrayApply();
+                d->refreshArrows();
+            }
+        }
+
+        m_scene->m_history->addChangeSettings(modDoors,
+                                              isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
+                                              QVariant(isEnter ? (int)LevelDoor::ENTRANCE_RIGHT : (int)LevelDoor::EXIT_RIGHT));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+    }
+    else if(dirDown && selected == dirDown)
+    {
+        LevelData modDoors;
+        for(QGraphicsItem *SelItem : m_scene->selectedItems())
+        {
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if((isEnter && sIsEnter) || (isExit && sIsExit))
+            {
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
+                {
+                    LevelDoor door = d->m_data;
+                    door.isSetOut = true;
+                    door.isSetIn = false;
+                    modDoors.doors.push_back(door);
+                }
+                else if(sIsEnter)
+                {
+                    LevelDoor door = d->m_data;
+                    door.isSetOut = false;
+                    door.isSetIn = true;
+                    modDoors.doors.push_back(door);
+                }
+
+                if(sIsEnter)
+                    d->m_data.idirect = LevelDoor::ENTRANCE_DOWN;
+                else
+                    d->m_data.odirect = LevelDoor::EXIT_DOWN;
+                d->arrayApply();
+                d->refreshArrows();
+            }
+        }
+
+        m_scene->m_history->addChangeSettings(modDoors,
+                                              isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
+                                              QVariant(isEnter ? (int)LevelDoor::ENTRANCE_DOWN : (int)LevelDoor::EXIT_DOWN));
+        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
     }
     else if(selected == NoTransport)
     {
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") || (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if(sIsEnter || sIsExit)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Door_exit")
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = true;
                     door.isSetIn = false;
                     modDoors.doors.push_back(door);
                 }
-                else if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                else if(sIsEnter)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = false;
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.novehicles = NoTransport->isChecked();
-                ((ItemDoor *) SelItem)->arrayApply();
+
+                d->m_data.novehicles = NoTransport->isChecked();
+                d->arrayApply();
             }
         }
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_NOVEHICLE, QVariant(NoTransport->isChecked()));
@@ -228,24 +479,31 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") || (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if(sIsEnter || sIsExit)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Door_exit")
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = true;
                     door.isSetIn = false;
                     modDoors.doors.push_back(door);
                 }
-                else if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                else if(sIsEnter)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = false;
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.allownpc = allowNPC->isChecked();
-                ((ItemDoor *) SelItem)->arrayApply();
+
+                d->m_data.allownpc = allowNPC->isChecked();
+                d->arrayApply();
             }
         }
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_ALLOWNPC, QVariant(allowNPC->isChecked()));
@@ -256,24 +514,31 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") || (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if(sIsEnter || sIsExit)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Door_exit")
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = true;
                     door.isSetIn = false;
                     modDoors.doors.push_back(door);
                 }
-                else if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                else if(sIsEnter)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = false;
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.locked = locked->isChecked();
-                ((ItemDoor *) SelItem)->arrayApply();
+
+                d->m_data.locked = locked->isChecked();
+                d->arrayApply();
             }
         }
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_LOCKED, QVariant(locked->isChecked()));
@@ -284,24 +549,31 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") || (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if(sIsEnter || sIsExit)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Door_exit")
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = true;
                     door.isSetIn = false;
                     modDoors.doors.push_back(door);
                 }
-                else if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                else if(sIsEnter)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = false;
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.need_a_bomb = bombNeed->isChecked();
-                ((ItemDoor *) SelItem)->arrayApply();
+
+                d->m_data.need_a_bomb = bombNeed->isChecked();
+                d->arrayApply();
             }
         }
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_NEED_A_BOMB, QVariant(bombNeed->isChecked()));
@@ -312,24 +584,31 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") || (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if(sIsEnter || sIsExit)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Door_exit")
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = true;
                     door.isSetIn = false;
                     modDoors.doors.push_back(door);
                 }
-                else if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                else if(sIsEnter)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = false;
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.special_state_required = specialStReq->isChecked();
-                ((ItemDoor *) SelItem)->arrayApply();
+
+                d->m_data.special_state_required = specialStReq->isChecked();
+                d->arrayApply();
             }
         }
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_SPECIAL_STATE_REQUIRED, QVariant(specialStReq->isChecked()));
@@ -340,24 +619,31 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
         LevelData modDoors;
         for(QGraphicsItem *SelItem : m_scene->selectedItems())
         {
-            if((SelItem->data(ITEM_TYPE).toString() == "Door_exit") || (SelItem->data(ITEM_TYPE).toString() == "Door_enter"))
+            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
+
+            if(sIsEnter || sIsExit)
             {
-                if(SelItem->data(ITEM_TYPE).toString() == "Door_exit")
+                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+                Q_ASSERT(d);
+
+                if(sIsExit)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = true;
                     door.isSetIn = false;
                     modDoors.doors.push_back(door);
                 }
-                else if(SelItem->data(ITEM_TYPE).toString() == "Door_enter")
+                else if(sIsEnter)
                 {
-                    LevelDoor door = ((ItemDoor *) SelItem)->m_data;
+                    LevelDoor door = d->m_data;
                     door.isSetOut = false;
                     door.isSetIn = true;
                     modDoors.doors.push_back(door);
                 }
-                ((ItemDoor *) SelItem)->m_data.stood_state_required = floorReq->isChecked();
-                ((ItemDoor *) SelItem)->arrayApply();
+
+                d->m_data.stood_state_required = floorReq->isChecked();
+                d->arrayApply();
             }
         }
         m_scene->m_history->addChangeSettings(modDoors, HistorySettings::SETTING_W_NEEDS_FLOOR, QVariant(floorReq->isChecked()));
@@ -406,7 +692,7 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     else
     {
         //Fetch layers menu
-        foreach(QAction *lItem, layerItems)
+        for(QAction *lItem : layerItems)
         {
             if(selected == lItem)
             {
@@ -615,24 +901,23 @@ void ItemDoor::arrayApply()
         //directlry
         m_scene->m_data->doors[m_data.meta.index] = m_data; //apply current bgoData
     }
-    else
-        for(int i = 0; i < m_scene->m_data->doors.size(); i++)
+    else for(int i = 0; i < m_scene->m_data->doors.size(); i++)
+    {
+        //after find it into array
+        if(m_scene->m_data->doors[i].meta.array_id == m_data.meta.array_id)
         {
-            //after find it into array
-            if(m_scene->m_data->doors[i].meta.array_id == m_data.meta.array_id)
-            {
-                m_data.meta.index = i;
-                m_scene->m_data->doors[i] = m_data;
-                break;
-            }
+            m_data.meta.index = i;
+            m_scene->m_data->doors[i] = m_data;
+            break;
         }
+    }
 
     //Sync data to his pair door item
     if(m_pointSide == D_Entrance)
     {
         if(m_data.isSetOut)
         {
-            foreach(QGraphicsItem *door, m_scene->items())
+            for(QGraphicsItem *door : m_scene->items())
             {
                 if((door->data(ITEM_TYPE).toString() == "Door_exit") && ((unsigned int)door->data(ITEM_ARRAY_ID).toInt() == m_data.meta.array_id))
                 {
@@ -648,7 +933,7 @@ void ItemDoor::arrayApply()
     {
         if(m_data.isSetIn)
         {
-            foreach(QGraphicsItem *door, m_scene->items())
+            for(QGraphicsItem *door : m_scene->items())
             {
                 if((door->data(ITEM_TYPE).toString() == "Door_enter") && ((unsigned int)door->data(ITEM_ARRAY_ID).toInt() == m_data.meta.array_id))
                 {

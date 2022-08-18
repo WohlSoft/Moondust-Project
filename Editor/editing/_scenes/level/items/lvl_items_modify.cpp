@@ -100,7 +100,7 @@ void LvlScene::doorPointsSync(long arrayID, bool remove)
     //get ItemList
     QList<QGraphicsItem * > items = this->items();
 
-    foreach(QGraphicsItem *item, items)
+    for(QGraphicsItem *item : items)
     {
         if((!m_data->doors[i].isSetIn) && (!m_data->doors[i].isSetOut)) break;   //Don't sync door points if not placed
 
