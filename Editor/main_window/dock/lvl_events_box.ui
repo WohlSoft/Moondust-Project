@@ -183,9 +183,9 @@
      <property name="geometry">
       <rect>
        <x>0</x>
-       <y>-1845</y>
+       <y>-300</y>
        <width>269</width>
-       <height>2724</height>
+       <height>2316</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -253,7 +253,6 @@
           <widget class="QLabel" name="label_15">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -283,6 +282,9 @@
            <property name="focusPolicy">
             <enum>Qt::ClickFocus</enum>
            </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
+           </property>
           </widget>
          </item>
          <item row="0" column="0" colspan="2">
@@ -292,6 +294,9 @@
            </property>
            <property name="verticalScrollBarPolicy">
             <enum>Qt::ScrollBarAlwaysOn</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
            </property>
           </widget>
          </item>
@@ -312,7 +317,6 @@
           <widget class="QLabel" name="label_16">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -325,7 +329,6 @@
           <widget class="QLabel" name="label_17">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -338,6 +341,9 @@
           <widget class="QListWidget" name="LVLEvent_Layer_ToggleList">
            <property name="focusPolicy">
             <enum>Qt::ClickFocus</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
            </property>
           </widget>
          </item>
@@ -361,6 +367,9 @@
            </property>
            <property name="focusPolicy">
             <enum>Qt::ClickFocus</enum>
+           </property>
+           <property name="sizeAdjustPolicy">
+            <enum>QAbstractScrollArea::AdjustToContents</enum>
            </property>
           </widget>
          </item>
@@ -788,7 +797,6 @@
           <widget class="QLabel" name="label_28">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -1275,7 +1283,6 @@
           <widget class="QLabel" name="label_23">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -1295,7 +1302,6 @@
           <widget class="QLabel" name="label_24">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -1308,7 +1314,6 @@
           <widget class="QLabel" name="label_25">
            <property name="font">
             <font>
-             <weight>75</weight>
              <bold>true</bold>
             </font>
            </property>
@@ -1583,7 +1588,6 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
   <include location="../../_resources/editor.qrc"/>
  </resources>
  <connections>
