@@ -1103,25 +1103,25 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
 要选择编辑的帧，请在需要的帧按下按钮。</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="48"/>
+        <location filename="../frame_matrix/matrix.cpp" line="127"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file.</source>
         <comment>Frame selector&apos;s label, normal version</comment>
         <translation>单击以选择帧，右击以选择或取消选择帧。未选择的帧不会保存到人物校正文件。</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="55"/>
+        <location filename="../frame_matrix/matrix.cpp" line="134"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file. Use the middle mouse button to pick up the frame as a reference on the scene.</source>
         <comment>Frame selector&apos;s label, sprite editor version</comment>
         <translation>单击以选择帧，右击以选择或取消选择帧。未选择的帧不会保存到人物校正文件。点击鼠标中键以在画布中显示用于对照的帧。</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="63"/>
+        <location filename="../frame_matrix/matrix.cpp" line="142"/>
         <source>Click a frame by the left mouse button to add it to the list.</source>
         <comment>Frame selector&apos;s label, animation editor, add action</comment>
         <translation>单击以添加帧到列表。</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="68"/>
+        <location filename="../frame_matrix/matrix.cpp" line="147"/>
         <source>Click a frame by the left mouse button to take it to the list instead of selected.</source>
         <comment>Frame selector&apos;s label, animation editor, change action</comment>
         <translation>单击以设置所选的帧。</translation>

@@ -2374,6 +2374,30 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Required stood state</source>
         <translation>Required stood state</translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation>Direction</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation>Left</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation>Up</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation>Right</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation>Down</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -12244,6 +12268,14 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <source>Player settings</source>
         <translation>Player settings</translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation>[No vehicle]</translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation>[Unknown type]</translation>
     </message>
 </context>
 <context>

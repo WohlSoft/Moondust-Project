@@ -2136,6 +2136,30 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
         <source>Required stood state</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished">Direction</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Gauche</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Haut</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Droite</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Bas</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -8354,6 +8378,14 @@ Motif : %1
     <message>
         <source>Player settings</source>
         <translation>Paramètres du joueur</translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

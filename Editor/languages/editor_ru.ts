@@ -2328,6 +2328,30 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Required stood state</source>
         <translation>Требуется стоячее состояние</translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation>Направление</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation>Налево</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation>Вверх</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation>Направо</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation>Вниз</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -12229,6 +12253,14 @@ Those preferences will makes no effect on a testing process before it will be fi
     <message>
         <source>Player settings</source>
         <translation>Настройки игроков</translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation>[Без транспорта]</translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation>[Неизвестный тип]</translation>
     </message>
 </context>
 <context>

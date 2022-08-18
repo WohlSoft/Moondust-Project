@@ -2331,6 +2331,30 @@ Maximal 27 Zeichen pro Zeile</translation>
         <source>Required stood state</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished">Richtung</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Links</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Oben</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Rechts</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Unten</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -11007,6 +11031,14 @@ Datei: %1
     <message>
         <source>Player settings</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -1171,25 +1171,25 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
         <translation type="vanished">Выбрать кадр %1 x %1</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="48"/>
+        <location filename="../frame_matrix/matrix.cpp" line="127"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file.</source>
         <comment>Frame selector&apos;s label, normal version</comment>
         <translation>Чтобы выбрать кадр, нажмите на него левой кнопкой мыши. Левой кнопкой мыши можно поставить/снять галочку на кадре. Настройки каждого неотмеченного кадра не будут сохранены в файл калибровки.</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="55"/>
+        <location filename="../frame_matrix/matrix.cpp" line="134"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file. Use the middle mouse button to pick up the frame as a reference on the scene.</source>
         <comment>Frame selector&apos;s label, sprite editor version</comment>
         <translation>Чтобы выбрать кадр, нажмите на него левой кнопкой мыши. Левой кнопкой мыши можно поставить/снять галочку на кадре. Настройки каждого неотмеченного кадра не будут сохранены в файл калибровки. Средней кнопкой мыши можно взять кадр как образец на сцену.</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="63"/>
+        <location filename="../frame_matrix/matrix.cpp" line="142"/>
         <source>Click a frame by the left mouse button to add it to the list.</source>
         <comment>Frame selector&apos;s label, animation editor, add action</comment>
         <translation>Чтобы добавить кадр в список, нажмите на него левой кнопкой мыши.</translation>
     </message>
     <message>
-        <location filename="../frame_matrix/matrix.cpp" line="68"/>
+        <location filename="../frame_matrix/matrix.cpp" line="147"/>
         <source>Click a frame by the left mouse button to take it to the list instead of selected.</source>
         <comment>Frame selector&apos;s label, animation editor, change action</comment>
         <translation>Чтобы выбрать кадр на замену выбранному, нажмите на него левовой кнопкой мыши.</translation>

@@ -2451,99 +2451,128 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
 <context>
     <name>ItemDoor</name>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="94"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="133"/>
         <source>Open target level: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="99"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="138"/>
         <source>Layer: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="103"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="142"/>
         <source>Add to new layer...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="110"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="149"/>
         <source>[hidden]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="123"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="165"/>
         <source>Jump to exit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="128"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="170"/>
         <source>Jump to entrance</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="132"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="182"/>
+        <source>Direction</source>
+        <translation type="unfinished">Varighet</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="184"/>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Venstre</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="188"/>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="192"/>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Høyre</translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="196"/>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="247"/>
         <source>No Vehicles</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="136"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="251"/>
         <source>Allow NPC</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="140"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="255"/>
         <source>Locked</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="143"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="258"/>
         <source>Need a bomb</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="146"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="263"/>
         <source>Required special state</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="149"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="268"/>
         <source>Required stood state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="155"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="276"/>
         <source>Copy preferences</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="156"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="277"/>
         <source>Position: X, Y</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="157"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="278"/>
         <source>Position: X, Y, Width, Height</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="158"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="279"/>
         <source>Position: Left, Top, Right, Bottom</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="162"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="283"/>
         <source>Remove</source>
         <translation type="unfinished">Fjern</translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="165"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="286"/>
         <source>Properties...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="365"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="376"/>
-        <location filename="../editing/_scenes/level/items/item_door.cpp" line="387"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="544"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="555"/>
+        <location filename="../editing/_scenes/level/items/item_door.cpp" line="566"/>
         <source>Preferences have been copied: %1</source>
         <translation></translation>
     </message>
@@ -4405,7 +4434,7 @@ Do you want to continue?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="579"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="580"/>
         <source>Autoscroll section</source>
         <translation></translation>
     </message>
@@ -4571,7 +4600,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="628"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="579"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="580"/>
         <source>Autoscroll section (Legacy)</source>
         <translation></translation>
     </message>
@@ -4637,37 +4666,37 @@ Do you want to continue?</source>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="386"/>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2257"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2258"/>
         <source>[none]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="574"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="575"/>
         <source>Disabled by the strict SMBX64 mode</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1128"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1129"/>
         <source>New Event %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1180"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1181"/>
         <source>Copyed Event %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1921"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1922"/>
         <source>Get section size</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="1922"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="1923"/>
         <source>Please, set current section to %1 for capture data for this event</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.cpp" line="2247"/>
+        <location filename="../main_window/dock/lvl_events_box.cpp" line="2248"/>
         <source>Please, enter message
 (Max line length is 27 characters)</source>
         <translation></translation>
@@ -9047,7 +9076,7 @@ File: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../data_configs/data_configs.cpp" line="673"/>
+        <location filename="../data_configs/data_configs.cpp" line="675"/>
         <source>Finishing loading...</source>
         <translation></translation>
     </message>
@@ -9785,6 +9814,18 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../main_window/testing/testing_settings.ui" line="237"/>
         <source>1 Player settings</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="209"/>
+        <location filename="../main_window/testing/testing_settings.cpp" line="210"/>
+        <source>[No vehicle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/testing/testing_settings.cpp" line="238"/>
+        <location filename="../main_window/testing/testing_settings.cpp" line="239"/>
+        <source>[Unknown type]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

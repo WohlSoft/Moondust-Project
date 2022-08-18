@@ -2112,6 +2112,30 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Required stood state</source>
         <translation>Потрібен стоячий стан</translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished">Напрям</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Вліво</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Вгору</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Вправо</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Вниз</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -8093,6 +8117,14 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Player settings</source>
         <translation>Налаштування гравців</translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

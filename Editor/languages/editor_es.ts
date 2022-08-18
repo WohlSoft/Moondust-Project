@@ -2355,6 +2355,30 @@ Límites: longitud máxima de 27 caracteres</translation>
         <source>Required stood state</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished">Dirección</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Izquierda</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Arriba</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Derecha</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Abajo</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -11984,6 +12008,14 @@ Esas preferencias no van a tener efecto en un proceso de prueba hasta que se ter
     <message>
         <source>Player settings</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

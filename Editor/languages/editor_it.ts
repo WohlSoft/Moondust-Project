@@ -2127,6 +2127,30 @@ come le tavolozze in barre e menu. Questo editor ti permette anche di selezionar
         <source>Required stood state</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Su</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Giù</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -9400,6 +9424,14 @@ file: %1</translation>
     <message>
         <source>Player settings</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

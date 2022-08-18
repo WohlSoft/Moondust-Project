@@ -2147,6 +2147,30 @@ Limity wiadomości: maksymalna długość linii to 27 znaków</translation>
         <source>Required stood state</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished">Kierunek</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Lewo</translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Góra</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Prawo</translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished">Dół</translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -9080,6 +9104,14 @@ Ustawienia nie będą miały efektu na testowaniu, dopóki nie zostanie skończo
     <message>
         <source>Player settings</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

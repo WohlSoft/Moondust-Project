@@ -2140,6 +2140,30 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <source>Required stood state</source>
         <translation>需要站立状态</translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished">方向</translation>
+    </message>
+    <message>
+        <source>Left</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Down</source>
+        <comment>Direction of pipe</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ItemLevel</name>
@@ -8606,6 +8630,14 @@ Reason: %1
     <message>
         <source>Player settings</source>
         <translation>玩家设置</translation>
+    </message>
+    <message>
+        <source>[No vehicle]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Unknown type]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
