@@ -216,6 +216,9 @@ void CustomMusicSetup::parseSettings()
                             ui->gmeGain->setValue(gain * 100);
                         }
                         break;
+                    case 'e':
+                        ui->gmeDisableSpcEcho->setChecked((int)value);
+                        break;
                     case '\0':
                         break;
                     default:
