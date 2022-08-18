@@ -57,7 +57,7 @@
       <x>0</x>
       <y>0</y>
       <width>325</width>
-      <height>957</height>
+      <height>947</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,0,0,0,0,0,10000">
@@ -308,7 +308,7 @@ Measured in pixels per 1/65 seconds.</string>
        <property name="lineWidth">
         <number>0</number>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0">
+       <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0">
         <property name="leftMargin">
          <number>0</number>
         </property>
@@ -328,9 +328,6 @@ Measured in pixels per 1/65 seconds.</string>
           </property>
           <property name="maxVisibleItems">
            <number>50</number>
-          </property>
-          <property name="sizeAdjustPolicy">
-           <enum>QComboBox::AdjustToMinimumContentsLength</enum>
           </property>
          </widget>
         </item>
@@ -376,6 +373,32 @@ Every warp point pair requires a warp entry.</string>
           </property>
           <property name="text">
            <string notr="true">-</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="entryClone">
+          <property name="minimumSize">
+           <size>
+            <width>25</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>Create the duplicate warp entry with same settings (except for already placed points)</string>
+          </property>
+          <property name="text">
+           <string notr="true">Duplicate</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../_resources/editor.qrc">
+            <normaloff>:/images/copy_16x16.png</normaloff>:/images/copy_16x16.png</iconset>
           </property>
          </widget>
         </item>
@@ -838,6 +861,9 @@ number of existing and collected stars in the level will not be shown.</string>
            </item>
            <item row="5" column="0" colspan="2">
             <widget class="QComboBox" name="transitEffect">
+             <property name="contextMenuPolicy">
+              <enum>Qt::CustomContextMenu</enum>
+             </property>
              <item>
               <property name="text">
                <string comment="Transition effect type">None</string>
@@ -888,9 +914,6 @@ number of existing and collected stars in the level will not be shown.</string>
              </property>
              <property name="maxVisibleItems">
               <number>20</number>
-             </property>
-             <property name="sizeAdjustPolicy">
-              <enum>QComboBox::AdjustToMinimumContentsLength</enum>
              </property>
              <property name="minimumContentsLength">
               <number>10</number>
@@ -1079,7 +1102,6 @@ If this flag is enabled, you can only place a warp exit.</string>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
   <include location="../../_resources/editor.qrc"/>
  </resources>
  <connections>

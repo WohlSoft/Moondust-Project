@@ -50,6 +50,8 @@ private slots:
     void on_WarpEnterEvent_currentIndexChanged(const QString &arg1);
     void addWarpEntry();
     void removeWarpEntry();
+    void duplicateWarpEntry();
+
 
     void on_WarpSetEntrance_clicked();
     void on_WarpSetExit_clicked();

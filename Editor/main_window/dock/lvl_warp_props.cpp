@@ -100,6 +100,7 @@ LvlWarpBox::LvlWarpBox(QWidget *parent) :
 
     connect(ui->entryAdd, SIGNAL(clicked()), this, SLOT(addWarpEntry()));
     connect(ui->entryRemove, SIGNAL(clicked()), this, SLOT(removeWarpEntry()));
+    connect(ui->entryClone, SIGNAL(clicked()), this, SLOT(duplicateWarpEntry()));
 
     connect(mw(), SIGNAL(setSMBX64Strict(bool)),
             this, SLOT(setSMBX64Strict(bool)));
@@ -407,6 +408,34 @@ void LvlWarpBox::removeWarpEntry()
         setWarpRemoveButtonEnabled(false);
 
     edit->LvlData.meta.modified = true;
+}
+
+void LvlWarpBox::duplicateWarpEntry()
+{
+    if(mw()->activeChildWindow() != MainWindow::WND_Level)
+        return;
+
+    LevelEdit *edit = mw()->activeLvlEditWin();
+    unsigned int warpId = getWarpId();
+    auto *w = findWarp(edit->LvlData, warpId);
+    Q_ASSERT(w);
+
+    LevelDoor newDoor = *w;
+    newDoor.meta.array_id = edit->LvlData.doors_array_id++;
+    newDoor.meta.index = static_cast<unsigned int>(edit->LvlData.doors.size());
+    newDoor.isSetIn = false;
+    newDoor.isSetOut = false;
+
+    edit->LvlData.doors.push_back(newDoor);
+    edit->LvlData.meta.modified = true;
+
+    edit->scene->m_history->addAddWarp(static_cast<int>(newDoor.meta.array_id),
+                                       ui->warpsList->count(),
+                                       static_cast<int>(newDoor.meta.index));
+
+    ui->warpsList->addItem(doorTitle(newDoor), newDoor.meta.array_id);
+    ui->warpsList->setCurrentIndex(ui->warpsList->count() - 1);
+    ui->entryRemove->setEnabled(true);
 }
 
 void LvlWarpBox::on_WarpSetEntrance_clicked()
