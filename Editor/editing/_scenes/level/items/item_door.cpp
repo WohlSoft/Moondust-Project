@@ -65,7 +65,44 @@ ItemDoor::~ItemDoor()
     m_scene->unregisterElement(this);
 }
 
+static void updateWarpDirection(LvlScene *m_scene, bool isEnter, bool isExit, int enterDir, int exitDir)
+{
+    for(QGraphicsItem *SelItem : m_scene->selectedItems())
+    {
+        bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
+        bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
 
+        if((isEnter && sIsEnter) || (isExit && sIsExit))
+        {
+            QList<QVariant> dirData;
+
+            auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
+            Q_ASSERT(d);
+
+            if(sIsExit)
+            {
+                dirData.push_back(d->m_data.odirect);
+                dirData.push_back(exitDir);
+                d->m_data.odirect = exitDir;
+            }
+            else if(sIsEnter)
+            {
+                dirData.push_back(d->m_data.idirect);
+                dirData.push_back(enterDir);
+                d->m_data.idirect = enterDir;
+            }
+
+            m_scene->m_history->addChangeWarpSettings(static_cast<int>(d->m_data.meta.array_id),
+                                                      isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
+                                                      QVariant(dirData));
+
+            d->arrayApply();
+            d->refreshArrows();
+        }
+    }
+
+    m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+}
 
 void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
 {
@@ -273,171 +310,19 @@ void ItemDoor::contextMenu(QGraphicsSceneMouseEvent *mouseEvent)
     }
     else if(dirLeft && selected == dirLeft)
     {
-        LevelData modDoors;
-        for(QGraphicsItem *SelItem : m_scene->selectedItems())
-        {
-            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
-            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
-
-            if((isEnter && sIsEnter) || (isExit && sIsExit))
-            {
-                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
-                Q_ASSERT(d);
-
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
-
-                if(sIsEnter)
-                    d->m_data.idirect = LevelDoor::ENTRANCE_LEFT;
-                else
-                    d->m_data.odirect = LevelDoor::EXIT_LEFT;
-                d->arrayApply();
-                d->refreshArrows();
-            }
-        }
-
-        m_scene->m_history->addChangeSettings(modDoors,
-                                              isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
-                                              QVariant(isEnter ? (int)LevelDoor::ENTRANCE_LEFT : (int)LevelDoor::EXIT_LEFT));
-        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+        updateWarpDirection(m_scene, isEnter, isExit, LevelDoor::ENTRANCE_LEFT, LevelDoor::EXIT_LEFT);
     }
     else if(dirUp && selected == dirUp)
     {
-        LevelData modDoors;
-        for(QGraphicsItem *SelItem : m_scene->selectedItems())
-        {
-            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
-            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
-
-            if((isEnter && sIsEnter) || (isExit && sIsExit))
-            {
-                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
-                Q_ASSERT(d);
-
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
-
-                if(sIsEnter)
-                    d->m_data.idirect = LevelDoor::ENTRANCE_UP;
-                else
-                    d->m_data.odirect = LevelDoor::EXIT_UP;
-                d->arrayApply();
-                d->refreshArrows();
-            }
-        }
-
-        m_scene->m_history->addChangeSettings(modDoors,
-                                              isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
-                                              QVariant(isEnter ? (int)LevelDoor::ENTRANCE_UP : (int)LevelDoor::EXIT_UP));
-        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+        updateWarpDirection(m_scene, isEnter, isExit, LevelDoor::ENTRANCE_UP, LevelDoor::EXIT_UP);
     }
     else if(dirRight && selected == dirRight)
     {
-        LevelData modDoors;
-        for(QGraphicsItem *SelItem : m_scene->selectedItems())
-        {
-            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
-            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
-
-            if((isEnter && sIsEnter) || (isExit && sIsExit))
-            {
-                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
-                Q_ASSERT(d);
-
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
-
-                if(sIsEnter)
-                    d->m_data.idirect = LevelDoor::ENTRANCE_RIGHT;
-                else
-                    d->m_data.odirect = LevelDoor::EXIT_RIGHT;
-                d->arrayApply();
-                d->refreshArrows();
-            }
-        }
-
-        m_scene->m_history->addChangeSettings(modDoors,
-                                              isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
-                                              QVariant(isEnter ? (int)LevelDoor::ENTRANCE_RIGHT : (int)LevelDoor::EXIT_RIGHT));
-        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+        updateWarpDirection(m_scene, isEnter, isExit, LevelDoor::ENTRANCE_RIGHT, LevelDoor::EXIT_RIGHT);
     }
     else if(dirDown && selected == dirDown)
     {
-        LevelData modDoors;
-        for(QGraphicsItem *SelItem : m_scene->selectedItems())
-        {
-            bool sIsEnter = SelItem->data(ITEM_TYPE).toString() == "Door_enter";
-            bool sIsExit = SelItem->data(ITEM_TYPE).toString() == "Door_exit";
-
-            if((isEnter && sIsEnter) || (isExit && sIsExit))
-            {
-                auto d = qgraphicsitem_cast<ItemDoor *>(SelItem);
-                Q_ASSERT(d);
-
-                if(sIsExit)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = true;
-                    door.isSetIn = false;
-                    modDoors.doors.push_back(door);
-                }
-                else if(sIsEnter)
-                {
-                    LevelDoor door = d->m_data;
-                    door.isSetOut = false;
-                    door.isSetIn = true;
-                    modDoors.doors.push_back(door);
-                }
-
-                if(sIsEnter)
-                    d->m_data.idirect = LevelDoor::ENTRANCE_DOWN;
-                else
-                    d->m_data.odirect = LevelDoor::EXIT_DOWN;
-                d->arrayApply();
-                d->refreshArrows();
-            }
-        }
-
-        m_scene->m_history->addChangeSettings(modDoors,
-                                              isEnter ? HistorySettings::SETTING_ENTRDIR : HistorySettings::SETTING_EXITDIR,
-                                              QVariant(isEnter ? (int)LevelDoor::ENTRANCE_DOWN : (int)LevelDoor::EXIT_DOWN));
-        m_scene->m_mw->dock_LvlWarpProps->setDoorData(-2);
+        updateWarpDirection(m_scene, isEnter, isExit, LevelDoor::ENTRANCE_DOWN, LevelDoor::EXIT_DOWN);
     }
     else if(selected == NoTransport)
     {
