@@ -2142,27 +2142,27 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished">方向</translation>
+        <translation>方向</translation>
     </message>
     <message>
         <source>Left</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation>左</translation>
     </message>
     <message>
         <source>Up</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation>上</translation>
     </message>
     <message>
         <source>Right</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation>右</translation>
     </message>
     <message>
         <source>Down</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished"></translation>
+        <translation>下</translation>
     </message>
 </context>
 <context>
@@ -5374,8 +5374,8 @@ If set to zero, the player will start at the pre-defined level start point.</sou
     <message>
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
-        <translation>新建传送记录。
-每对传送点需要一个传送记录。</translation>
+        <translation>新增传送点。
+每对传送点需要一个传送入口。</translation>
     </message>
     <message>
         <source>Remove current warp entry with all placed points.</source>
@@ -8653,11 +8653,11 @@ Reason: %1
     </message>
     <message>
         <source>[No vehicle]</source>
-        <translation type="unfinished"></translation>
+        <translation>[无坐骑]</translation>
     </message>
     <message>
         <source>[Unknown type]</source>
-        <translation type="unfinished"></translation>
+        <translation>[未知类型]</translation>
     </message>
 </context>
 <context>
