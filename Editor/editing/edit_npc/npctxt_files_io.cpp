@@ -227,7 +227,7 @@ void NpcEdit::runAutoSave()
             // Find the suitable name and don't override existing files
             while(QFile::exists(lastAutoSaveFile))
             {
-                lastAutoSaveFile = curFile + QString("_autosave-%1.lvlx").arg(counter++);
+                lastAutoSaveFile = curFile + QString("_autosave-%1.txt").arg(counter++);
             }
 
         }
