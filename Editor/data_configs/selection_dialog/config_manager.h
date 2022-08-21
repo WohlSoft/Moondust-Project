@@ -97,6 +97,7 @@ private:
      * @return true if non-configurable config pack or successfully configured
      */
     bool checkForConfigureTool();
+    void checkIsIntegrational();
 
     Ui::ConfigManager *ui;
 };

@@ -104,4 +104,28 @@ void DataConfig::loadSound()
             break;
         }
     }
+
+
+    // Override music setup by taking config's INI values instead of local
+    if(ConfStatus::configIsIntegrational)
+    {
+        QString subSoundIni = data_dir + "sounds.ini";
+        if(!QFile::exists(subSoundIni))
+            return; // If not exists - do nothing
+
+        IniProcessing subSound(subSoundIni);
+
+        for(i = 1; i <= sound_total; i++)
+        {
+            auto key = QString("sound-%1").arg(i).toStdString();
+            if(!subSound.contains(key))
+                continue; // Do nothing if key doesn't exist
+
+            auto &sfx = main_sound[i];
+            subSound.beginGroup(key);
+            subSound.read("name", sfx.name, sfx.name);
+            subSound.read("file", sfx.file, sfx.file);
+            subSound.endGroup();
+        }
+    }
 }

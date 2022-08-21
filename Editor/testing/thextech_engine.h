@@ -44,6 +44,8 @@ class TheXTechEngine : public AbstractRuntimeEngine
     QAction *m_menuItems[m_menuItemsSize];
 
     /************** Settings **************/
+    //! Default executable filename
+    QString m_defaultEngineName;
     //! Path to custom TheXTech executable
     QString m_customEnginePath;
     //! Enable magic-hand functionality (IPC mode only)

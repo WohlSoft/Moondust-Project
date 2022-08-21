@@ -27,6 +27,7 @@
 #include <common_features/app_path.h>
 #include <common_features/util.h>
 #include <common_features/graphics_funcs.h>
+#include <main_window/global_settings.h>
 
 #include "config_manager.h"
 #include <ui_config_manager.h>
@@ -391,8 +392,8 @@ QString ConfigManager::loadConfigs()
     QSettings settings(inifile, QSettings::IniFormat);
 
     settings.beginGroup("Main");
-    QString configPath  = settings.value("current-config", "").toString();
-    QString saved_theme = settings.value("current-theme", "").toString();
+    QString configPath  = settings.value("current-config", QString()).toString();
+    QString saved_theme = settings.value("current-theme", QString()).toString();
     m_doAskAgain        = settings.value("ask-config-again", false).toBool();
     settings.endGroup();
 
@@ -402,42 +403,42 @@ QString ConfigManager::loadConfigs()
     if(!saved_theme.isEmpty())
         m_themePackName = saved_theme;
 
-    QList<QListWidgetItem *> AvailableConfigs = ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
+    auto availableConfigs = ui->configList->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
 
-    //Automatically choice config pack if alone detected
-    if(AvailableConfigs.size() == 1)
+    // Automatically choice a config pack if only one detected
+    if(availableConfigs.size() == 1)
     {
-        m_currentConfig       = AvailableConfigs[0]->data(CP_NAME_ROLE).toString();
-        m_currentConfigPath   = AvailableConfigs[0]->data(CP_FULLDIR_ROLE).toString();
-        AvailableConfigs[0]->setSelected(true);
-        ui->configList->scrollToItem(AvailableConfigs[0]);
+        m_currentConfig       = availableConfigs[0]->data(CP_NAME_ROLE).toString();
+        m_currentConfigPath   = availableConfigs[0]->data(CP_FULLDIR_ROLE).toString();
+        availableConfigs[0]->setSelected(true);
+        ui->configList->scrollToItem(availableConfigs[0]);
     }
-    else
-
-        //check exists of config in list
-        for(QListWidgetItem *it : AvailableConfigs)
+    else for(QListWidgetItem *it : availableConfigs) //check exists of config in list
+    {
+        if(configPath.isEmpty())
         {
-            if(configPath.isEmpty())
-            {
-                m_currentConfig = "";
-                break;
-            }
-
-            //If full config pack path is same
-            if(it->data(CP_FULLDIR_ROLE).toString() == configPath)
-            {
-                m_currentConfig     = it->data(CP_NAME_ROLE).toString();
-                m_currentConfigPath = it->data(CP_FULLDIR_ROLE).toString();
-                it->setSelected(true);
-                ui->configList->scrollToItem(it);
-                break;
-            }
+            m_currentConfig.clear();
+            break;
         }
+
+        //If full config pack path is same
+        if(it->data(CP_FULLDIR_ROLE).toString() == configPath)
+        {
+            m_currentConfig     = it->data(CP_NAME_ROLE).toString();
+            m_currentConfigPath = it->data(CP_FULLDIR_ROLE).toString();
+            it->setSelected(true);
+            ui->configList->scrollToItem(it);
+            break;
+        }
+    }
+
     ui->AskAgain->setChecked(m_doAskAgain);
 
     //Don't spawn dialog on load if alone config pack detected
-    if(AvailableConfigs.size() == 1)
+    if(availableConfigs.size() == 1)
         m_doAskAgain = false;
+
+    checkIsIntegrational();
 
     if((!m_currentConfigPath.isEmpty()) && (!m_doAskAgain))
     {
@@ -458,7 +459,7 @@ void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
 {
     m_currentConfig       = item->data(CP_NAME_ROLE).toString();
     m_currentConfigPath   = item->data(CP_FULLDIR_ROLE).toString();
-    m_doAskAgain            = ui->AskAgain->isChecked();
+    m_doAskAgain          = ui->AskAgain->isChecked();
 
     if(checkForConfigureTool())
         this->accept();
@@ -504,10 +505,8 @@ bool ConfigManager::isIntegrationCompatible()
 
 bool ConfigManager::checkForConfigureTool()
 {
-    QString configureToolApp = m_currentConfigPath + CONFIGURE_TOOL_NAME;
-
     //If configure tool has been detected
-    if(QFile::exists(configureToolApp) && (!isConfigured()))
+    if(ConfStatus::configIsIntegrational && (!isConfigured()))
     {
         if(!isIntegrationCompatible())
         {
@@ -537,15 +536,19 @@ bool ConfigManager::checkForConfigureTool()
     return true;
 }
 
+void ConfigManager::checkIsIntegrational()
+{
+    ConfStatus::configConfigureTool = m_currentConfigPath + CONFIGURE_TOOL_NAME;
+    ConfStatus::configIsIntegrational = QFile::exists(ConfStatus::configConfigureTool);
+}
 
 bool ConfigManager::runConfigureTool()
 {
-    QString configureToolApp = m_currentConfigPath + CONFIGURE_TOOL_NAME;
     QWidget *parentW = qobject_cast<QWidget *>(parent());
     if(!parentW || isVisible())
         parentW = this;
 
-    if(QFile::exists(configureToolApp))
+    if(ConfStatus::configIsIntegrational)
     {
         PGE_JsEngine js;
         QString cpDirName = QDir(m_currentConfigPath).dirName();
@@ -556,7 +559,7 @@ bool ConfigManager::runConfigureTool()
         js.bindProxy(new PGE_JS_INI(parentW), "INI");
 
         bool successfulLoaded = false;
-        js.loadFileByExpcetedResult<void>(configureToolApp, &successfulLoaded);
+        js.loadFileByExpcetedResult<void>(ConfStatus::configConfigureTool, &successfulLoaded);
 
         if(successfulLoaded)
         {
@@ -579,7 +582,7 @@ bool ConfigManager::runConfigureTool()
                                      "File path: %3")
                                   .arg(js.getLastError())
                                   .arg(js.getLastErrorLine())
-                                  .arg(configureToolApp),
+                                  .arg(ConfStatus::configConfigureTool),
                                   QMessageBox::Ok);
             return false;
         }

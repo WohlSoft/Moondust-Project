@@ -51,9 +51,9 @@ void DataConfig::loadMusic()
     obj_music smusic_wld;
     obj_music smusic_spc;
 
-    unsigned long music_lvl_total=0;
-    unsigned long music_wld_total=0;
-    unsigned long music_spc_total=0;
+    unsigned long music_lvl_total = 0;
+    unsigned long music_wld_total = 0;
+    unsigned long music_spc_total = 0;
 
     QString music_ini = getFullIniPath("music.ini");
     if(music_ini.isEmpty())
@@ -90,23 +90,20 @@ void DataConfig::loadMusic()
 
     //////////////////////////////
 
-    if(ConfStatus::total_music_lvl==0)
-    {
+    if(ConfStatus::total_music_lvl == 0)
         addError(QString("ERROR LOADING music.ini: number of Level Music items not define, or empty config"), PGE_LogLevel::Critical);
-    }
-    if(ConfStatus::total_music_wld==0)
-    {
+
+    if(ConfStatus::total_music_wld == 0)
         addError(QString("ERROR LOADING music.ini: number of World Music items not define, or empty config"), PGE_LogLevel::Critical);
-    }
-    if(ConfStatus::total_music_spc==0)
-    {
+
+    if(ConfStatus::total_music_spc == 0)
         addError(QString("ERROR LOADING music.ini: number of Special Music items not define, or empty config"), PGE_LogLevel::Critical);
-    }
+
 
     main_music_wld.allocateSlots(int(music_wld_total));
 
     //World music
-    for(i=1; i<=music_wld_total; i++)
+    for(i = 1; i <= music_wld_total; i++)
     {
         bool valid=true;
         emit progressValue(int(i));
@@ -205,7 +202,7 @@ void DataConfig::loadMusic()
         }
         closeSection(&musicset);
 
-        if( musicset.lastError() != IniProcessing::ERR_OK )
+        if(musicset.lastError() != IniProcessing::ERR_OK)
         {
             addError(QString("ERROR LOADING music.ini N:%1 (level-music %2)").arg(musicset.lastError()).arg(i), PGE_LogLevel::Critical);
             break;
@@ -213,4 +210,52 @@ void DataConfig::loadMusic()
     }
 
 
+    // Override music setup by taking config's INI values instead of local
+    if(ConfStatus::configIsIntegrational)
+    {
+        QString subMusicIni = data_dir + "music.ini";
+        if(!QFile::exists(subMusicIni))
+            return; // If not exists - do nothing
+
+        IniProcessing subMusic(subMusicIni);
+
+        for(i = 1; i <= music_wld_total; i++)
+        {
+            auto key = QString("world-music-%1").arg(i).toStdString();
+            if(!subMusic.contains(key))
+                continue; // Do nothing if key doesn't exist
+
+            auto &mus = main_music_wld[i];
+            subMusic.beginGroup(key);
+            subMusic.read("name", mus.name, mus.name);
+            subMusic.read("file", mus.file, mus.file);
+            subMusic.endGroup();
+        }
+
+        for(i = 1; i <= music_spc_total; i++)
+        {
+            auto key = QString("special-music-%1").arg(i).toStdString();
+            if(!subMusic.contains(key))
+                continue; // Do nothing if key doesn't exist
+
+            auto &mus = main_music_spc[i];
+            subMusic.beginGroup(key);
+            subMusic.read("name", mus.name, mus.name);
+            subMusic.read("file", mus.file, mus.file);
+            subMusic.endGroup();
+        }
+
+        for(i = 1; i <= music_lvl_total; i++)
+        {
+            auto key = QString("level-music-%1").arg(i).toStdString();
+            if(!subMusic.contains(key))
+                continue; // Do nothing if key doesn't exist
+
+            auto &mus = main_music_lvl[i];
+            subMusic.beginGroup(key);
+            subMusic.read("name", mus.name, mus.name);
+            subMusic.read("file", mus.file, mus.file);
+            subMusic.endGroup();
+        }
+    }
 }

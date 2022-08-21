@@ -101,6 +101,11 @@ void SanBaEiRuntimeEngine::init()
     QObject::connect(this, &SanBaEiRuntimeEngine::testFinished,
                      m_w, &MainWindow::testingFinished);
 
+    QObject::connect(m_w, &MainWindow::configPackReloadBegin,
+                     this, &SanBaEiRuntimeEngine::saveSetup);
+    QObject::connect(m_w, &MainWindow::configPackReloaded,
+                     this, &SanBaEiRuntimeEngine::loadSetup);
+
     m_interface.init(&m_testingProc);
     loadSetup();
 }

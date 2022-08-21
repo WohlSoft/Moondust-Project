@@ -47,10 +47,10 @@
 #endif
 
 
-static QString getDefaultEnginePath()
+static QString getDefaultEnginePath(const QString &executableName)
 {
-    QString pathConfig = ConfStatus::configDataPath + "/" + THEXTECH_EXE;
-    QString pathApp = ApplicationPath + "/" + THEXTECH_EXE;
+    QString pathConfig = ConfStatus::configDataPath + executableName;
+    QString pathApp = ApplicationPath + "/" + executableName;
 
     if(QFile::exists(pathConfig))
         return pathConfig;
@@ -61,13 +61,19 @@ static QString getDefaultEnginePath()
 QString TheXTechEngine::getEnginePath()
 {
     return m_customEnginePath.isEmpty() ?
-           getDefaultEnginePath() :
+           getDefaultEnginePath(m_defaultEngineName) :
            m_customEnginePath;
 }
 
 void TheXTechEngine::loadSetup()
 {
     QSettings settings(ConfStatus::configLocalSettingsFile, QSettings::IniFormat);
+
+    settings.beginGroup("main");
+    {
+        m_defaultEngineName = settings.value("executable-name", THEXTECH_EXE).toString();
+    }
+    settings.endGroup();
 
     settings.beginGroup("TheXTech");
     {
@@ -192,7 +198,7 @@ void TheXTechEngine::chooseEnginePath()
     if(m_customEnginePath.isEmpty())
     {
         useDefault->setChecked(true);
-        c->setText(getDefaultEnginePath());
+        c->setText(getDefaultEnginePath(m_defaultEngineName));
         c->setEnabled(false);
     }
     else
@@ -284,6 +290,11 @@ void TheXTechEngine::init()
                      m_w, &MainWindow::stopMusicForTesting);
     QObject::connect(this, &TheXTechEngine::testFinished,
                      m_w, &MainWindow::testingFinished);
+
+    QObject::connect(m_w, &MainWindow::configPackReloadBegin,
+                     this, &TheXTechEngine::saveSetup);
+    QObject::connect(m_w, &MainWindow::configPackReloaded,
+                     this, &TheXTechEngine::loadSetup);
 
     m_interface.init(&m_engineProc);
 

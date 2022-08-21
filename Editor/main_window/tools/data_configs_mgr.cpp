@@ -100,7 +100,7 @@ void MainWindow::on_actionLoad_configs_triggered()
             return; // Do Nothing
     }
 
-
+    emit configPackReloadBegin();
 
     //    //Disable all animations to take speed-up
     //    foreach( QMdiSubWindow *window, ui->centralWidget->subWindowList() )
@@ -184,6 +184,7 @@ void MainWindow::on_actionLoad_configs_triggered()
 
     if(isOk.result())
     {
+        emit configPackReloaded();
         QMessageBox::information(this, tr("Reloading configuration"),
                                  tr("Configuration successfully reloaded!"),
                                  QMessageBox::Ok);
@@ -206,7 +207,16 @@ void MainWindow::on_actionReConfigure_triggered()
     //Config manager
     ConfigManager cmanager(this);
     cmanager.m_currentConfigPath = currentConfigDir;
-    cmanager.runConfigureTool();
+
+    if(cmanager.runConfigureTool())
+    {
+        int ret = QMessageBox::question(this,
+                                        tr("Configuration changed"),
+                                        tr("The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?"),
+                                        QMessageBox::Yes|QMessageBox::No);
+        if(ret == QMessageBox::Yes)
+            on_actionLoad_configs_triggered();
+    }
 }
 
 void MainWindow::on_actionCurConfig_triggered()

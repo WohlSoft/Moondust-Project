@@ -812,6 +812,9 @@ public:
     private:
         QString currentConfigDir;
         bool askConfigAgain;
+    signals:
+        void configPackReloadBegin();
+        void configPackReloaded();
 // ////////////////////////////////////////////////////////
 
 // //////////////////External tools////////////////////////

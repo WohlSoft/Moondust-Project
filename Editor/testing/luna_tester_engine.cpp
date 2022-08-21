@@ -236,6 +236,11 @@ void LunaTesterEngine::init()
     QObject::connect(this, &LunaTesterEngine::testFinished,
                      m_w, &MainWindow::testingFinished);
 
+    QObject::connect(m_w, &MainWindow::configPackReloadBegin,
+                     this, &LunaTesterEngine::saveSetup);
+    QObject::connect(m_w, &MainWindow::configPackReloaded,
+                     this, &LunaTesterEngine::loadSetup);
+
     loadSetup();
 }
 
