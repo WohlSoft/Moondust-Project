@@ -66,6 +66,7 @@ public:
     bool saveAs(bool savOptionsDialog = false);
     bool saveFile(const QString &fileName, const bool addToRecent = true);
     void runAutoSave();
+    void clearAutoSave();
     QString userFriendlyCurrentFile();
     QString currentFile()
     {

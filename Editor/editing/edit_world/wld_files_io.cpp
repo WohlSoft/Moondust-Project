@@ -358,12 +358,7 @@ bool WorldEdit::saveFile(const QString &fileName, const bool addToRecent)
         m_mw->SyncRecentFiles();
 
         // Delete the autosave file as real file was been saved
-        if(!lastAutoSaveFile.isEmpty())
-        {
-            if(QFile::exists(lastAutoSaveFile))
-                QFile::remove(lastAutoSaveFile);
-            lastAutoSaveFile.clear();
-        }
+        clearAutoSave();
     }
 
     return true;
@@ -413,6 +408,16 @@ void WorldEdit::runAutoSave()
     FileKeeper fileKeeper = FileKeeper(lastAutoSaveFile);
     FileFormats::SaveWorldFile(data, fileKeeper.tempPath(), FileFormats::WLD_PGEX);
     fileKeeper.restore();
+}
+
+void WorldEdit::clearAutoSave()
+{
+    if(!lastAutoSaveFile.isEmpty())
+    {
+        if(QFile::exists(lastAutoSaveFile))
+            QFile::remove(lastAutoSaveFile);
+        lastAutoSaveFile.clear();
+    }
 }
 
 
@@ -548,6 +553,8 @@ bool WorldEdit::maybeSave()
                 return save();
             else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE)
                 return false;
+            else
+                clearAutoSave(); // Remove auto-save when changes got explicitly discarted
         }
         else
             return false;

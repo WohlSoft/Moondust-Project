@@ -336,12 +336,7 @@ bool LevelEdit::saveFile(const QString &fileName, const bool addToRecent, bool *
         m_mw->SyncRecentFiles();
 
         // Delete the autosave file as real file was been saved
-        if(!lastAutoSaveFile.isEmpty())
-        {
-            if(QFile::exists(lastAutoSaveFile))
-                QFile::remove(lastAutoSaveFile);
-            lastAutoSaveFile.clear();
-        }
+        clearAutoSave();
     }
 
     //Refresh Strict SMBX64 flag
@@ -436,6 +431,16 @@ void LevelEdit::runAutoSave()
     FileKeeper fileKeeper = FileKeeper(lastAutoSaveFile);
     FileFormats::SaveLevelFile(data, fileKeeper.tempPath(), FileFormats::LVL_PGEX);
     fileKeeper.restore();
+}
+
+void LevelEdit::clearAutoSave()
+{
+    if(!lastAutoSaveFile.isEmpty())
+    {
+        if(QFile::exists(lastAutoSaveFile))
+            QFile::remove(lastAutoSaveFile);
+        lastAutoSaveFile.clear();
+    }
 }
 
 
@@ -677,6 +682,8 @@ bool LevelEdit::maybeSave()
                 return save(false);
             else if(sav->savemode == SavingNotificationDialog::SAVE_CANCLE)
                 return false;
+            else
+                clearAutoSave(); // Remove auto-save when changes got explicitly discarted
         }
         else
             return false;

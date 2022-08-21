@@ -190,12 +190,7 @@ bool NpcEdit::saveFile(const QString &fileName, const bool addToRecent)
         m_mw->SyncRecentFiles();
 
         // Delete the autosave file as real file was been saved
-        if(!lastAutoSaveFile.isEmpty())
-        {
-            if(QFile::exists(lastAutoSaveFile))
-                QFile::remove(lastAutoSaveFile);
-            lastAutoSaveFile.clear();
-        }
+        clearAutoSave();
     }
 
     return true;
@@ -245,6 +240,16 @@ void NpcEdit::runAutoSave()
     fileKeeper.restore();
 }
 
+void NpcEdit::clearAutoSave()
+{
+    if(!lastAutoSaveFile.isEmpty())
+    {
+        if(QFile::exists(lastAutoSaveFile))
+            QFile::remove(lastAutoSaveFile);
+        lastAutoSaveFile.clear();
+    }
+}
+
 
 
 bool NpcEdit::maybeSave()
@@ -262,6 +267,8 @@ bool NpcEdit::maybeSave()
             return save();
         else if(ret == QMessageBox::Cancel)
             return false;
+        else
+            clearAutoSave(); // Remove auto-save when changes got explicitly discarted
     }
 
     return true;

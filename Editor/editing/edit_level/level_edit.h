@@ -68,6 +68,7 @@ public:
     bool saveSMBX64LVL(QString fileName, bool silent = false, bool *out_WarningIsAborted = nullptr); //!< Saves a SMBX Level file format
     bool saveSMBX38aLVL(QString fileName, bool silent = false); //!< Saves SMBX38A Level file format
     void runAutoSave();
+    void clearAutoSave();
     QString userFriendlyCurrentFile();
     QString currentFile()
     {
