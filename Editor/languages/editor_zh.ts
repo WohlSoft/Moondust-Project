@@ -5479,19 +5479,19 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
-        <translation type="unfinished"></translation>
+        <translation>使用当前设置新建传送点（已放置的地点除外）</translation>
     </message>
     <message>
         <source>Apply to all</source>
-        <translation type="unfinished"></translation>
+        <translation>应用到所有</translation>
     </message>
     <message>
         <source>Apply to all entries</source>
-        <translation type="unfinished"></translation>
+        <translation>应用到所有传送点</translation>
     </message>
     <message>
         <source>Do you really want to apply this setting to all objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>您要应用此设置到所有传送点吗？</translation>
     </message>
 </context>
 <context>
@@ -7125,7 +7125,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
-        <translation type="unfinished"></translation>
+        <translation>当前配置包需要刷新以应用最近的更改，您要继续吗？</translation>
     </message>
 </context>
 <context>
