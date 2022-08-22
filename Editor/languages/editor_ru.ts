@@ -6866,19 +6866,19 @@ show the current playable character(s) and number of lives.</source>
     </message>
     <message>
         <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
-        <translation type="unfinished"></translation>
+        <translation>Создать копию записи прохода с теми же настройками (кроме уже размещённых точек)</translation>
     </message>
     <message>
         <source>Apply to all</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить ко всем</translation>
     </message>
     <message>
         <source>Apply to all entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Применить ко всем записям</translation>
     </message>
     <message>
         <source>Do you really want to apply this setting to all objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите применить эту настройку ко всем объектам?</translation>
     </message>
 </context>
 <context>
@@ -10230,7 +10230,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Для применения недавних изменений, конфгурационный пакет требует перезагрузки. Сделать это сейчас?</translation>
     </message>
 </context>
 <context>
