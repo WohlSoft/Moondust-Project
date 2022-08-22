@@ -90,7 +90,7 @@ void MainWindow::on_action_openEpisodeFolder_triggered()
     }
 
     if(!path.isEmpty())
-        QDesktopServices::openUrl(QUrl("file://" + path));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 }
 
 void MainWindow::on_action_openCustomFolder_triggered()
@@ -149,7 +149,7 @@ void MainWindow::on_action_openCustomFolder_triggered()
         if(!QFileInfo(path).dir().exists())
             QDir(path).mkpath(path);
 
-        QDesktopServices::openUrl(QUrl("file://" + path));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
     }
 }
 

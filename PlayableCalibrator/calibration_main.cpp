@@ -883,7 +883,7 @@ void CalibrationMain::on_actionBrowseSpriteDirectory_triggered()
         QFileInfo i(m_currentFile);
         auto d = i.absoluteDir();
         if(d.exists())
-            QDesktopServices::openUrl(QUrl("file:///" + d.absolutePath()));
+            QDesktopServices::openUrl(QUrl::fromLocalFile(d.absolutePath()));
     }
 }
 
