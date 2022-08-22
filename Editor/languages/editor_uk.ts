@@ -5136,6 +5136,22 @@ Please, select necessary world map in a list:</source>
         <source>Needs floor</source>
         <translation>Необхідна підлога</translation>
     </message>
+    <message>
+        <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply to all entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to apply this setting to all objects?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -6647,6 +6663,10 @@ Please, choose the Moondust Maintainer application yourself!</source>
     <message>
         <source>Previous grid size</source>
         <translation>Попередній розмір сітки</translation>
+    </message>
+    <message>
+        <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

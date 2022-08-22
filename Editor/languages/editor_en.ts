@@ -6909,6 +6909,22 @@ show the current playable character(s) and number of lives.</translation>
         <source>Needs floor</source>
         <translation>Needs floor</translation>
     </message>
+    <message>
+        <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
+        <translation>Create the duplicate warp entry with same settings (except for already placed points)</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translation>Apply to all</translation>
+    </message>
+    <message>
+        <source>Apply to all entries</source>
+        <translation>Apply to all entries</translation>
+    </message>
+    <message>
+        <source>Do you really want to apply this setting to all objects?</source>
+        <translation>Do you really want to apply this setting to all objects?</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -10224,6 +10240,10 @@ Please, choose the Moondust Maintainer application yourself!</translation>
     <message>
         <source>Previous grid size</source>
         <translation>Previous grid size</translation>
+    </message>
+    <message>
+        <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
+        <translation>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</translation>
     </message>
 </context>
 <context>

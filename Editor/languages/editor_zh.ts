@@ -5477,6 +5477,22 @@ show the current playable character(s) and number of lives.</source>
 在老旧的 SMBX 1.3 引擎中，加载关卡时的界面将
 显示当前人物和剩余生命数。</translation>
     </message>
+    <message>
+        <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply to all entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you really want to apply this setting to all objects?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -7106,6 +7122,10 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <translation>未找到月尘引擎管理器，无法启动工具：
 %1
 请选择月尘引擎管理器文件夹！</translation>
+    </message>
+    <message>
+        <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

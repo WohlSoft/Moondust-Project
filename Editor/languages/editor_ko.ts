@@ -802,12 +802,12 @@ You also can double-click an item to scroll to its bookmarked position.</source>
         <translation>모든 스타트 업에게 물어보세요</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="358"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="359"/>
         <source>No config packs were found</source>
         <translation>구성 팩을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="364"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="365"/>
         <source>No configuration packages were found!&lt;br&gt;
 Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
@@ -821,46 +821,46 @@ You can use any configuration package here:&lt;br&gt;%2</source>
  여기에서 구성 패키지를 사용할 수 있습니다. &lt;br&gt; % 2</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="515"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="514"/>
         <source>Integrational configuration package is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="516"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="515"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="526"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="525"/>
         <source>Configuration package is not configured!</source>
         <translation>구성 패키지가 구성되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="527"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="526"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>&quot;% 1&quot;구성 패키지가 아직 구성되지 않았습니다.
 구성 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="577"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="580"/>
         <source>Configuration script failed</source>
         <translation>구성 스크립트 실패</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="578"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="581"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>구성 도구에서 오류가 발생했습니다 : % 2 줄에 % 1.
 파일 경로 : % 3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="590"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="593"/>
         <source>No configuration needed</source>
         <translation>구성이 필요하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="591"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="594"/>
         <source>This config pack has no configuring tool.</source>
         <translation>이 구성 팩에는 구성 도구가 없습니다.</translation>
     </message>
@@ -1406,7 +1406,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="739"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="621"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="624"/>
         <source>Chiptune</source>
         <translation>칩툰</translation>
     </message>
@@ -1447,91 +1447,91 @@ Please save them before doing anything else.</source>
         <translation>팁 : 설정 결과를 미리 보려면 음악 재생을 활성화하십시오. (메인 창 도구 모음에서 노트 재생 / 중지 아이콘을 찾으십시오).</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="619"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="622"/>
         <source>MIDI</source>
         <translation>엠아이디아이</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="827"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="830"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation>libADLMIDI (OPL3 합성 에뮬레이션)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="828"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="831"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation>libOPNMIDI (YM2612 합성 에뮬레이션)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="829"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="832"/>
         <source>Timidity (needed a bank)</source>
         <translation>소심함 (은행 필요)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="830"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="833"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation>네이티브 MIDI (권장되지 않음, 버그가 있음)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="831"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="834"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="836"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="844"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="852"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="868"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="839"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="847"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="855"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="871"/>
         <source>[Auto]</source>
         <translation>[자동]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="837"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="845"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="840"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="848"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="838"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="846"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="841"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="849"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="839"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="847"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="842"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="850"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="853"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="869"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="856"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="872"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>일반적인</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="854"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="857"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>네이티브 OPL3</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="870"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="873"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="878"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="881"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="879"/>
+        <location filename="../main_window/dock/custom_music_setup.cpp" line="882"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation></translation>
@@ -3615,7 +3615,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="149"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="577"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
@@ -3641,7 +3641,7 @@ Please, check the application directory and make sure it is installed properly.<
     </message>
     <message>
         <location filename="../editing/edit_level/lvl_files_io.cpp" line="121"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="664"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="669"/>
         <source>Level title: </source>
         <translation>레벨 타이틀: </translation>
     </message>
@@ -3686,29 +3686,29 @@ version code must be less or equal specific code)</source>
         <translation>파일 확장자가 설정되지 않았습니다, 유효한 확장자를 입력해주십시오!</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="359"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="381"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="495"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="354"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="376"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="500"/>
         <source>File save error</source>
         <translation>파일 저장 에러</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="360"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="382"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="496"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="355"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="377"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="501"/>
         <source>Cannot save file %1:
 %2.</source>
         <translation>파일을 저장할 수 없음 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="459"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="474"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="464"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="479"/>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>SMBX64 한도가 초과됨</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="475"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="480"/>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;Subscript out of range&apos; error.
 
@@ -3719,30 +3719,30 @@ SMBX64 한도를 초과하면 &apos;Subscript out of range&apos;오류와 함께
 LunaLUA를 설치하면 이러한 한도가 부분적으로 확장됩니다.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="525"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="530"/>
         <source>File read error</source>
         <translation>파일 읽기 에러</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="526"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="531"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>파일을 읽을 수 없음 %1:
 %2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="572"/>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="573"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="577"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="578"/>
         <source>Loading level data</source>
         <translation>레벨 데이터 불러오기</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="617"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="622"/>
         <source>Incorrect custom configs</source>
         <translation>옳지않은 커스텀 configs</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="618"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="623"/>
         <source>This level has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the the current and in the custom folders:
 
 %1</source>
@@ -3751,14 +3751,14 @@ LunaLUA를 설치하면 이러한 한도가 부분적으로 확장됩니다.</tr
 %1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="660"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="665"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
 변경 사항을 저장 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_level/lvl_files_io.cpp" line="662"/>
+        <location filename="../editing/edit_level/lvl_files_io.cpp" line="667"/>
         <source> not saved</source>
         <translation> 저장되지 않았습니다</translation>
     </message>
@@ -4025,13 +4025,13 @@ Do you want to save your changes?</source>
 <context>
     <name>LunaTesterEngine</name>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="392"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="397"/>
         <source>Test level</source>
         <comment>Run the LunaTester based level testing.</comment>
         <translation>테스트 레벨</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="394"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="399"/>
         <source>Starts level testing in the legacy engine.
 To have this feature work, latest LunaLUA must be installed.
 Otherwise, it will be very limited.</source>
@@ -4039,40 +4039,40 @@ Otherwise, it will be very limited.</source>
 이 기능을 사용하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="400"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="405"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in LunaTester from disk.</comment>
         <translation>저장된 레벨 / 세계 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="405"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="410"/>
         <source>Reset checkpoints</source>
         <translation>체크포인트 초기화</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="406"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="411"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation>모든 체크포인트 초기화.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="410"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="415"/>
         <source>Disable OpenGL</source>
         <comment>Disable OpenGL on LunaTester side</comment>
         <translation>OpenGL 비활성화</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="411"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="416"/>
         <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
         <translation>OpenGL 렌더링 엔진을 비활성화하고 대신 GDI를 사용하십시오. 비디오 카드가 OpenGL을 지원하지 않거나 사용하려고 할 때 LunaLua가 충돌하는 경우 유용합니다. 이로 인해 기능이 크게 감소합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="417"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="422"/>
         <source>Keep running in background</source>
         <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
         <translation>백그라운드에서 계속 실행</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="419"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="424"/>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
@@ -4081,223 +4081,223 @@ Suggested to disable this feature on slow machines or if any troubles are happen
 느린 시스템에서 또는 레벨 테스트를 시도하는 동안 문제가 발생하는 경우이 기능을 비활성화하는 것이 좋습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="425"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="430"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>실행중인 프로세스 종료</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="428"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="433"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>LunaTester 프로세스를 종료하여 엔진을 처음부터로드 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="432"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="437"/>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
         <translation>LunaTest로 경로를 변경...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="434"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="439"/>
         <source>Select the location of LunaTester.</source>
         <translation>LunaTester 위치 선택.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="438"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="443"/>
         <source>Change the executable name...</source>
         <comment>Open a dialog to choose the name for executable LunaTester will use.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="440"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="445"/>
         <source>Select the name of executable for the LunaTester.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="445"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="450"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation>Wine 설정 ...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="447"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="452"/>
         <source>Select a Wine toolchain for use.</source>
         <translation>사용할 Wine 툴모음을 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="452"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="457"/>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
         <translation>게임 시작</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="454"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="459"/>
         <source>Launch LunaTester as a normal game.</source>
         <translation>LunaTester를 일반 게임으로 실행.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="461"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="504"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1214"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="466"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="509"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1219"/>
         <source>LunaTester error</source>
         <translation>LunaTester 에러</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="466"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="471"/>
         <source>Failed to start: %1</source>
         <translation>시작 실패:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="469"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="474"/>
         <source>Crashed: %1</source>
         <translation>충돌:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="472"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="477"/>
         <source>Timed out: %1</source>
         <translation>시간 초과:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="475"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="480"/>
         <source>Write error: %1</source>
         <translation>쓰기 에러:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="478"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="483"/>
         <source>Read error: %1</source>
         <translation>읽기 에러:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="482"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="487"/>
         <source>Unknown error: %1</source>
         <translation>알려지지 않은 에러:%1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="505"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="510"/>
         <source>Failed to send level into LunaLUA-SMBX!</source>
         <translation>LunaLUA-SMBX로 레벨을 보내지 못했습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="658"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="663"/>
         <source>Error has occured: (Error %1) %2</source>
         <translation>에러가 발생했습니다:(에러%1)%2</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="728"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="733"/>
         <source>Checkpoints successfully reseted!</source>
         <translation>체크 포인트가 성공적으로 재설정되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1088"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1093"/>
         <source>LunaLUA tester is not started!</source>
         <translation>LunaLua 테스터가 시작되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1101"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1106"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation>LunaTester를 종료 하시겠습니까? 레벨을 테스트하는 중이라면, 즉시 종료됩니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1109"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1114"/>
         <source>LunaTester has been successfully closed.</source>
         <translation>LunaTester가 성공적으로 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1117"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1122"/>
         <source>LunaTester is not running.</source>
         <translation>LunaTester가 실행되고 있지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1127"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1226"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1267"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1132"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1231"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1272"/>
         <source>LunaTester is still active</source>
         <translation>LunaTester는 여전히 활성 상태입니다</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1128"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1133"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation>LunaTester의 경로를 변경하려면 현재 실행중인 게임을 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1137"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1142"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
         <translation>LunaTester 경로</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1144"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1149"/>
         <source>Please select a path to LunaTester:</source>
         <translation>LunaTester의 경로를 선택하십시오 :</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1153"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1158"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1156"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1161"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1160"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1165"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1184"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1189"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1197"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1202"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
         <translation>LunaTester 위치 선택</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1215"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1220"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
         <translation>선택한 LunaLua 경로의 기능을 인식하지 못하여, 게임이 작동하지 않을 수 있습니다. 다른 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1227"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1232"/>
         <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1248"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1253"/>
         <source>Change the executable name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1249"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1254"/>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1268"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1273"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
         <translation>Wine 설정을 변경하려면 현재 작동중인 LunaTester를 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1470"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1475"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation>LunaTester 디렉터리 체크 실패</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1472"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1477"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 LunaTester를 시작할 수 없습니다! 다음 이유 중 하나로 인해 발생할 수 있습니다:</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1476"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1481"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -4307,7 +4307,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1483"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1488"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
@@ -4315,12 +4315,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1520"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1525"/>
         <source>Vanilla SMBX detected!</source>
         <translation>바닐라 SMBX가 감지되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1521"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1526"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
@@ -4329,32 +4329,32 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
 즉, LunaTester로 레벨 테스트를 시작할 수 없습니다. SMBX Engine으로 레벨 테스트를 실행하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1534"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1539"/>
         <source>Incompatible LunaDll found</source>
         <translation>호환되지 않는 LunaDll 발견</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1535"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1540"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation>경로에서 발견 된 호환되지 않는 LunaDll.dll 모듈로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1544"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1549"/>
         <source>Incompatible LunaLua</source>
         <translation>호환되지 않는 LunaLua</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1545"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1550"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation>경로에 호환되지 않는 LunaLua로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1614"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1619"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation>SMBX64 한도 초과!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1615"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1620"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -4367,17 +4367,17 @@ Do you want to continue the process?</source>
 프로세스를 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1747"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1752"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation>잘못된 월드 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1756"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1761"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1791"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1796"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation>LunaTester 월드 루트에서 에피소드를 시작할 수 없습니다.</translation>
     </message>
@@ -4503,51 +4503,51 @@ Do you want to continue?</source>
         <translation>스모크 전환 비활성화</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="261"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="260"/>
         <source>Hide</source>
         <translation>숨김</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="320"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="324"/>
         <source>Show</source>
         <translation>보여주기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="333"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="336"/>
         <source>Toggle</source>
         <translation>토글</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="492"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="501"/>
         <source>Layers movement</source>
         <translation>레이어 이동</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="520"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="722"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1136"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="529"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="731"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1144"/>
         <source>Horisontal speed:</source>
         <translation>수평 속도 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="546"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="555"/>
         <source>Set moving layer</source>
         <translation>움직이는 레이어 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="585"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="708"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1169"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="594"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="717"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1177"/>
         <source>Vertical speed:</source>
         <translation>수직 속도:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="598"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="611"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="663"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="715"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1162"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1195"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="607"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="620"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="672"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="724"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1170"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1203"/>
         <source>bps</source>
         <translation>bps</translation>
     </message>
@@ -4557,223 +4557,223 @@ Do you want to continue?</source>
         <translation>자동 스크롤 섹션</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="628"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="637"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="580"/>
         <source>Autoscroll section (Legacy)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="656"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="665"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="372"/>
         <source>Section</source>
         <translation>섹션</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="745"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="754"/>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="768"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="777"/>
         <source>Section settings</source>
         <translation>섹션 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="796"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="804"/>
         <source>Current section:</source>
         <translation>섹션 설정 변경:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="813"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="821"/>
         <source>Set size and position</source>
         <translation>크기 및 위치 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="855"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="858"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="863"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="866"/>
         <source>Top</source>
         <translation>위</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="871"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="874"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="879"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="882"/>
         <source>Bottom</source>
         <translation>아래</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="887"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="890"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1442"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="895"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="898"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1447"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="903"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="906"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1456"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="911"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="914"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1461"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="919"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="927"/>
         <source>Capture...</source>
         <translation>캡처...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="944"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="980"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1051"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="952"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="988"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1059"/>
         <source>Don&apos;t change</source>
         <translation>변경하지 않음</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="951"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="987"/>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1058"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="959"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="995"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1066"/>
         <source>Reset to default</source>
         <translation>기본값으로 재설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="958"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="966"/>
         <source>Define new:</source>
         <translation>새로 정의:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="971"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="979"/>
         <source>Set music</source>
         <translation>음악 변경</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="994"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1002"/>
         <source>Replace music to:</source>
         <translation>다음으로 음악 변경:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1042"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1050"/>
         <source>Set background</source>
         <translation>배경 변경</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1065"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1073"/>
         <source>Replace background to:</source>
         <translation>다음으로 배경 변경:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1085"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1093"/>
         <source>Change the autoscroll speed</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1094"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1110"/>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1107"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1115"/>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1223"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1231"/>
         <source>Not implemented yet, sorry</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1249"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1257"/>
         <source>Common</source>
         <translation>공통</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1283"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1290"/>
         <source>Display message:</source>
         <translation>메시지 출력:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1303"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1309"/>
         <source>Play sound:</source>
         <translation>플레이 사운드:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1316"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1321"/>
         <source>Do end game:</source>
         <translation>게임 종료 트리거:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1333"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1338"/>
         <source>Nothing</source>
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1338"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1343"/>
         <source>Game end &quot;Bowser defeat&quot;</source>
         <translation>게임 종료:&quot;최종 보스 제거&quot;</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1376"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1381"/>
         <source>Test</source>
         <translation>테스트</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1393"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1398"/>
         <source>Player Control hold keys</source>
         <translation>자동-고정 플레이어 컨트롤</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1421"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1426"/>
         <source>Up</source>
         <translation>위</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1428"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1433"/>
         <source>Run</source>
         <translation>달리기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1435"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1440"/>
         <source>Down</source>
         <translation>아래</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1449"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1454"/>
         <source>Jump</source>
         <translation>점프</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1463"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1468"/>
         <source>Alt-jump</source>
         <translation>Alt-점프</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1470"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1475"/>
         <source>Alt-run</source>
         <translation>Alt-달리기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1477"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1482"/>
         <source>Start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1484"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1489"/>
         <source>Drop</source>
         <translation>드롭</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1501"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1506"/>
         <source>Trigger event</source>
         <translation>트리거 이벤트</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_events_box.ui" line="1526"/>
+        <location filename="../main_window/dock/lvl_events_box.ui" line="1531"/>
         <source>Delay</source>
         <translation>지연</translation>
     </message>
@@ -5845,97 +5845,102 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>워프와 문</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="327"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="333"/>
         <source>Choose a warp entry to edit</source>
         <translation>편집 할 워프 항목 선택</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="352"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="355"/>
         <source>Create a new warp entry.
 Every warp point pair requires a warp entry.</source>
         <translation>새 워프 항목을 만듭니다.
 모든 워프 포인트 쌍에는 워프 입구가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="375"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="378"/>
         <source>Remove current warp entry with all placed points.</source>
         <translation>현재 워프 삭제.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="394"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="400"/>
+        <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="423"/>
         <source>Pipe direction</source>
         <translation>파이프 방향</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="418"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="447"/>
         <source>Entrance</source>
         <translation>입구</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="464"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="493"/>
         <source>Exit</source>
         <translation>출구</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="843"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="899"/>
         <source>None</source>
         <comment>Transition effect type</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="848"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="904"/>
         <source>Scroll</source>
         <comment>Transition effect type</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="853"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="909"/>
         <source>Fade</source>
         <comment>Transition effect type</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="858"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="914"/>
         <source>Circle fade</source>
         <comment>Transition effect type</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="863"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="919"/>
         <source>Flip horizontal</source>
         <comment>Transition effect type</comment>
         <translation type="unfinished">수평으로 뒤집기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="868"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="924"/>
         <source>Flip vertical</source>
         <comment>Transition effect type</comment>
         <translation type="unfinished">수직으로 뒤집기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="876"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="932"/>
         <source>Transition effect:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1006"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1062"/>
         <source>Level door</source>
         <translation>레벨 문</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1030"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1086"/>
         <source>Entering this warp ends the current level
 If this flag is enabled, you can only place a warp entrance.</source>
         <translation>이 워프를 들어가면 현재 레벨이 종료됩니다.
 이 플래그가 활성화되면, 워프 입구 만 배치 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1034"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1090"/>
         <source>To other level</source>
         <translation>다른 레벨로</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1041"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1097"/>
         <source>Prevents any in-level warp to exit at this warp.
 Used for creating a warp from another level.
 If this flag is enabled, you can only place a warp exit.</source>
@@ -5944,7 +5949,7 @@ If this flag is enabled, you can only place a warp exit.</source>
 이 플래그가 활성화되면 워프 출구만 배치 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="1046"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1102"/>
         <source>From other level</source>
         <translation>다른 레벨에서</translation>
     </message>
@@ -5982,43 +5987,43 @@ when you exit from a level through this warp.</source>
         <translation>설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="507"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="536"/>
         <source>Main</source>
         <translation>메인</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="643"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="690"/>
         <source>This warp can be entered in only condition when a player stands on the floor. This option does not affects Instant and Portal warp types.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="646"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="693"/>
         <source>Needs floor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="672"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="719"/>
         <source>Place exit point or quickly jump to existing warp</source>
         <translation>출구 지점을 배치하거나 기존 출구 지점으로 빠르게 이동</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="675"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="722"/>
         <source>Set Exit</source>
         <translation>출구 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="519"/>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="539"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="548"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="568"/>
         <source>Point already placed</source>
         <translation>이미 배치 된 포인트</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="738"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="785"/>
         <source>Layer:</source>
         <translation>레이어:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="883"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="939"/>
         <source>Defines the type of warp:
 0 - Instant, player will be teleported movement speed will be reset to 0.
 1 - Pipe, directional warp entrance and exit.
@@ -6031,88 +6036,88 @@ when you exit from a level through this warp.</source>
 3-포탈, 플레이어가 순간 이동되지만 이동 속도는 유지됩니다 (PGE 엔진 만 해당).</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="900"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="953"/>
         <source>0 - Instant</source>
         <translation>0-즉시</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="905"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="958"/>
         <source>1 - Pipe</source>
         <translation>1-파이프</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="910"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="963"/>
         <source>2 - Door</source>
         <translation>2-문</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="915"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="968"/>
         <source>3 - Portal</source>
         <translation>3-포탈</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="798"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="848"/>
         <source>Message which will be shown if the player
 does not have the required number of stars</source>
         <translation>플레이어의 별 수가 부족하다면
 출력될 메시지</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="817"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="867"/>
         <source>Need stars message</source>
         <translation>별 필요 메시지</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="791"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="838"/>
         <source>Need stars</source>
         <translation>별이 필요함</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="806"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="856"/>
         <source>Required number of stars
 to enter this warp</source>
         <translation>워프에 들어가기 위해
 필요한 별의 개수</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="923"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="976"/>
         <source>Warp type</source>
         <translation>워프 유형</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="831"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="884"/>
         <source>If this setting is enabled, even if this warp leads to another level, the
 number of existing and collected stars in the level will not be shown.</source>
         <translation>이 설정이 활성화되면이 워프가 다른 레벨로 연결 되더라도
 레벨에있는 기존 및 수집 된 별의 수는 표시되지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="835"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="888"/>
         <source>Don&apos;t show level completion amount</source>
         <translation>레벨 완료 수량 표시 안함</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="698"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="745"/>
         <source>Place entrance point or quickly jump to already placed</source>
         <translation>입구 지점을 배치하거나 기존 입구로 빠르게 점프</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="701"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="748"/>
         <source>Set Entrance</source>
         <translation>입구 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="957"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1010"/>
         <source>On-Enter event:</source>
         <translation>입구 이벤트:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="964"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="1020"/>
         <source>Trigger event when he player enters this warp</source>
         <translation>플레이어가 이 워프에 들어갈 때 이벤트를 발생합니다</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="589"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="621"/>
         <source>Any mounted vehicles will be removed
 when player passes through this warp.
 They will be given back when player
@@ -6123,61 +6128,61 @@ finishes the level or lose a life.</source>
 다시 주어집니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="595"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="627"/>
         <source>No Vehicles</source>
         <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
         <translation>마운트 없음</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="602"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="637"/>
         <source>Player can carry items and NPCs through this warp.</source>
         <translation>플레이어는이 워프를 통해 아이템과 NPC를 운반 할 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="605"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="640"/>
         <source>Allow NPC</source>
         <comment>Please, translate as &quot;Allow items&quot;</comment>
         <translation>아이템 허용</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="612"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="650"/>
         <source>Entrance closed with a lock. Need a key to open it.</source>
         <translation>자물쇠로 입구가 닫혔습니다. 열려면 열쇠가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="615"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="653"/>
         <source>Locked</source>
         <translation>잠김</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="622"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="663"/>
         <source>Entrance closed with a lock. Need to blow up the lock to open it.</source>
         <translation>자물쇠로 입구가 닫혔습니다. 그것을 열려면 자물쇠를 날려야합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="625"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="666"/>
         <source>Bomb needed</source>
         <translation>폭파 필요</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="632"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="676"/>
         <source>The player can only enter this warp under a special state.
 The special state is defined by the active configuration pack.</source>
         <translation>플레이어는 특별한 상태에서만이 워프에 들어갈 수 있습니다.
 특수 상태는 활성화된 구성 팩에 의해 정의됩니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="636"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="680"/>
         <source>Sp. State only</source>
         <translation>Sp.상태만</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="549"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="578"/>
         <source>Allow entering from both sides of this warp.</source>
         <translation>이 워프의 양쪽에서 들어가도록 허용합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="552"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="581"/>
         <source>Two-way warp</source>
         <translation>양방향 워프</translation>
     </message>
@@ -6204,7 +6209,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
 0으로 설정하면 플레이어는 미리 정의 된 레벨 시작 지점에서 시작합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="206"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="209"/>
         <source>Show a blank screen instead of loading screen.
 In the Legacy Engine level loading screen, it would otherwise 
 show the current playable character(s) and number of lives.</source>
@@ -6213,89 +6218,104 @@ show the current playable character(s) and number of lives.</source>
 현재 플레이 가능한 캐릭터와 생명 수를 보여줍니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="211"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="214"/>
         <source>Hide level enter screen</source>
         <translation>레벨 입구 스크린 숨김</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="218"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="221"/>
         <source>Warp #</source>
         <comment>Translate as &quot;Door #&quot;</comment>
         <translation># 워프로 입장</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="228"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="234"/>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
         <translation>플레이어의 보유 아이템을 이 워프의 목표 레벨로 가져옵니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="231"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="237"/>
         <source>Allow inter-level NPC</source>
         <translation>레벨 간 NPC 허용</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="238"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="244"/>
         <source>Browse for another level file</source>
         <translation>다른 레벨 파일 탐색</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="251"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="257"/>
         <source>Cannon shoot exit</source>
         <translation>대포 발사 출구</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="260"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="266"/>
         <source>Projectile speed:</source>
         <translation>발사체 속도 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="267"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="273"/>
         <source>The speed at which the player will exit the warp.
 Measured in pixels per 1/65 seconds.</source>
         <translation>플레이어가 워프를 종료하는 속도입니다.
 1/65 초당 픽셀로 측정됩니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="284"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="290"/>
         <source>The direction in which the player will exit the warp.</source>
         <translation>플레이어가 워프에서 나가는 방향입니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="287"/>
+        <location filename="../main_window/dock/lvl_warp_props.ui" line="293"/>
         <source>Cannon exit</source>
         <translation>캐논 출구</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="119"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="120"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="125"/>
         <source>Right</source>
         <translation>오른쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="120"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="124"/>
         <source>Left</source>
         <translation>왼쪽</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="121"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="126"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="127"/>
         <source>Down</source>
         <translation>아래</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="122"/>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="125"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="123"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="126"/>
         <source>Up</source>
         <translation>위</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1034"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="811"/>
+        <source>Apply to all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="822"/>
+        <source>Apply to all entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="823"/>
+        <source>Do you really want to apply this setting to all objects?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1106"/>
         <source>World map files not found</source>
         <translation>월드맵 파일 탐색 실패</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1035"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1107"/>
         <source>You haven&apos;t available world map files with this level file.
 Please, put this level file with a world map, or create new world map in the same fomder with this level file.
 File path: %1</source>
@@ -6304,34 +6324,34 @@ File path: %1</source>
 파일 경로 : % 1</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1048"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1120"/>
         <source>Select world map file</source>
         <translation>월드맵 파일 선택</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1049"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1121"/>
         <source>Found more than one world map files.
 Please, select necessary world map in a list:</source>
         <translation>둘 이상의 세계지도 파일을 찾았습니다.
 사용할지도를 선택하세요 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1066"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1138"/>
         <source>File open error</source>
         <translation>파일 열기 오류</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1067"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1139"/>
         <source>Can&apos;t open the file!</source>
         <translation>파일을 열 수 없습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1250"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1322"/>
         <source>Please save the file</source>
         <translation>파일을 저장해주십시오</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1251"/>
+        <location filename="../main_window/dock/lvl_warp_props.cpp" line="1323"/>
         <source>Please save the file before selecting levels.</source>
         <translation>레벨을 선택하기 전에 파일을 저장하십시오.</translation>
     </message>
@@ -7577,13 +7597,13 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
         <location filename="../mainwindow.cpp" line="225"/>
         <location filename="../mainwindow.cpp" line="269"/>
         <location filename="../mainwindow.cpp" line="284"/>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="195"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="196"/>
         <source>Configuration error</source>
         <translation>구성 오류</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="226"/>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="196"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="197"/>
         <source>Configuration package is loaded with errors.</source>
         <translation>로드 완료 중 ...</translation>
     </message>
@@ -7698,22 +7718,28 @@ This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation>구성 팩 다시로드</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="187"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="188"/>
         <source>Reloading configuration</source>
         <translation>구성 다시로드</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="188"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="189"/>
         <source>Configuration successfully reloaded!</source>
         <translation>구성이 성공적으로 다시로드되었습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="230"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="214"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="240"/>
         <source>Configuration changed</source>
         <translation>구성이 변경되었습니다</translation>
     </message>
     <message>
-        <location filename="../main_window/tools/data_configs_mgr.cpp" line="231"/>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="215"/>
+        <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../main_window/tools/data_configs_mgr.cpp" line="241"/>
         <source>The configuration pack has changed!
 To start using the new configuration pack, you need to restart the Editor. Do you want to continue?</source>
         <translation>구성 팩이 변경되었습니다!
@@ -8582,12 +8608,12 @@ Please, choose the Moondust Maintainer application yourself!</source>
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="255"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="260"/>
         <source> not saved</source>
         <translation> 저장되지 않음</translation>
     </message>
     <message>
-        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="256"/>
+        <location filename="../editing/edit_npc/npctxt_files_io.cpp" line="261"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
@@ -9623,185 +9649,185 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>SanBaEiRuntimeEngine</name>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="265"/>
+        <location filename="../testing/38a_engine.cpp" line="270"/>
         <source>Test level</source>
         <comment>Run the testing of current file in SMBX-38A via interprocessing tunnel.</comment>
         <translation>테스트 수준</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="270"/>
+        <location filename="../testing/38a_engine.cpp" line="275"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in SMBX-38A via interprocessing tunnel.</comment>
         <translation>전투 모드의 테스트 레벨</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="275"/>
+        <location filename="../testing/38a_engine.cpp" line="280"/>
         <source>Test saved level/world</source>
         <comment>Run the testing of current file in SMBX-38A from disk.</comment>
         <translation>저장된 레벨 / 세계 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="282"/>
+        <location filename="../testing/38a_engine.cpp" line="287"/>
         <source>Reset checkpoints</source>
         <translation>체크 포인트 재설정</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="283"/>
+        <location filename="../testing/38a_engine.cpp" line="288"/>
         <source>Reset all checkpoint states to initial state.</source>
         <translation>모든 체크 포인트를 재설정합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="289"/>
+        <location filename="../testing/38a_engine.cpp" line="294"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation>마법의 손 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="291"/>
+        <location filename="../testing/38a_engine.cpp" line="296"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation>실시간 편집 가능 : 레벨 씬에서 요소 선택, 새 요소 배치, 편집기에서 선택한 후 지우기. 저장된 파일의 테스트를 실행할 때 작동하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="297"/>
+        <location filename="../testing/38a_engine.cpp" line="302"/>
         <source>Don&apos;t auto-suspend game</source>
         <comment>Don&apos;t pause game when it&apos;s window is unfocused</comment>
         <translation>게임을 자동 일시 중단하지 마십시오</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="299"/>
+        <location filename="../testing/38a_engine.cpp" line="304"/>
         <source>Game will always run and it will never suspend while window is unfocused.</source>
         <translation>게임은 항상 실행되며 창이 초점이 맞지 않는 동안에는 일시 중단되지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="303"/>
+        <location filename="../testing/38a_engine.cpp" line="308"/>
         <source>Change the path to SMBX-38A...</source>
         <comment>Select the path to SMBX-38A executable.</comment>
         <translation>SMBX-38A로 경로 변경 ...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="305"/>
+        <location filename="../testing/38a_engine.cpp" line="310"/>
         <source>Select the path to SMBX-38A executable.</source>
         <translation>SMBX-38A 실행 파일의 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="311"/>
+        <location filename="../testing/38a_engine.cpp" line="316"/>
         <source>Wine settings...</source>
         <comment>Open Wine settings to choose which Wine toolchain use</comment>
         <translation>와인 설정 ...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="313"/>
+        <location filename="../testing/38a_engine.cpp" line="318"/>
         <source>Select a Wine toolchain for use.</source>
         <translation>사용할 Wine 도구 모음을 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="319"/>
+        <location filename="../testing/38a_engine.cpp" line="324"/>
         <source>Start Game</source>
         <comment>Launch SMBX-38A as a normal game</comment>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="549"/>
+        <location filename="../testing/38a_engine.cpp" line="554"/>
         <source>Checkpoints successfully reseted!</source>
         <translation>체크 포인트가 성공적으로 재설정되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="561"/>
+        <location filename="../testing/38a_engine.cpp" line="566"/>
         <source>Path to SMBX-38A</source>
         <comment>Title of dialog</comment>
         <translation>SMBX-38A 경로</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="568"/>
+        <location filename="../testing/38a_engine.cpp" line="573"/>
         <source>Please select a path to SMBX-38A executable:</source>
         <translation>SMBX-38A 실행 파일의 경로를 선택하십시오:</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="577"/>
+        <location filename="../testing/38a_engine.cpp" line="582"/>
         <source>Use default</source>
         <comment>Using default SMBX-38A path, specified by an applcation path of Editor</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="580"/>
+        <location filename="../testing/38a_engine.cpp" line="585"/>
         <source>Custom</source>
         <comment>Using a user selected SMBX-38A path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="584"/>
+        <location filename="../testing/38a_engine.cpp" line="589"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="608"/>
+        <location filename="../testing/38a_engine.cpp" line="613"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="622"/>
+        <location filename="../testing/38a_engine.cpp" line="627"/>
         <source>Select a path to SMBX-38A executable</source>
         <comment>File dialog title</comment>
         <translation>SMBX-38A 실행 파일 경로 선택</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="648"/>
+        <location filename="../testing/38a_engine.cpp" line="653"/>
         <source>SMBX-38A is still active</source>
         <translation>SMBX-38A는 여전히 활성 상태입니다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="649"/>
+        <location filename="../testing/38a_engine.cpp" line="654"/>
         <source>To change a setup of Wine, you will need to shut down a currently working SMBX-38A. Do you want to shut down the SMBX-38A now?</source>
         <translation>Wine 설정을 변경하려면 현재 작동중인 SMBX-38A를 종료해야합니다. 지금 SMBX-38A를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="798"/>
+        <location filename="../testing/38a_engine.cpp" line="803"/>
         <source>Executable not found</source>
         <translation>실행 파일을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="799"/>
+        <location filename="../testing/38a_engine.cpp" line="804"/>
         <source>Can&apos;t start SMBX-38A game because &quot;%1&quot; is not found. That might happen because of incorrect path to SMBX-38A executable was specified, please check the SMBX-38A path setup.</source>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 SMBX-38A 게임을 시작할 수 없습니다. SMBX-38A 실행 파일에 대한 잘못된 경로가 지정 되었기 때문에 발생할 수 있습니다. SMBX-38A 경로 설정을 확인하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="825"/>
+        <location filename="../testing/38a_engine.cpp" line="830"/>
         <source>Impossible to prepare a temp file for a test run.</source>
         <translation>테스트 실행을 위해 임시 파일을 준비 할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="887"/>
+        <location filename="../testing/38a_engine.cpp" line="892"/>
         <source>Impossible to launch a level because of an invalid file.</source>
         <translation>잘못된 파일로 인해 레벨을 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="897"/>
+        <location filename="../testing/38a_engine.cpp" line="902"/>
         <source>Cannot launch the level because the level file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-LVL format.</source>
         <translation>레벨 파일이 지원되지 않는 형식으로 저장되어있어 레벨을 시작할 수 없습니다. 레벨을 SMBX-38A 또는 SMBX64-LVL 형식으로 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="906"/>
-        <location filename="../testing/38a_engine.cpp" line="971"/>
+        <location filename="../testing/38a_engine.cpp" line="911"/>
+        <location filename="../testing/38a_engine.cpp" line="976"/>
         <source>Caution</source>
         <translation>주의</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="907"/>
+        <location filename="../testing/38a_engine.cpp" line="912"/>
         <source>Your level is not in SMBX-38A format. That means, the game WILL automatically convert it into SMBX-38A format. Your level will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation>레벨이 SMBX-38A 형식이 아닙니다. 즉, 게임이 자동으로 SMBX-38A 형식으로 변환합니다. 레벨은 클래식 SMBX와 호환되지 않습니다. 계속해서 위험을 감수 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="952"/>
+        <location filename="../testing/38a_engine.cpp" line="957"/>
         <source>Impossible to launch an episode because of an invalid file.</source>
         <translation>잘못된 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="962"/>
+        <location filename="../testing/38a_engine.cpp" line="967"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the level in the SMBX-38A or the SMBX64-WLD format.</source>
         <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX-38A 또는 SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/38a_engine.cpp" line="972"/>
+        <location filename="../testing/38a_engine.cpp" line="977"/>
         <source>Your world map is not in SMBX-38A format. That means, the game will automatically convert it into SMBX-38A format. Your episode will become incompatible with a Classic SMBX. Do you want to continue on your own risk?</source>
         <translation>세계지도가 SMBX-38A 형식이 아닙니다. 즉, 게임이 자동으로 SMBX-38A 형식으로 변환합니다. 에피소드는 클래식 SMBX와 호환되지 않습니다. 계속해서 위험을 감수 하시겠습니까?</translation>
     </message>
@@ -10060,225 +10086,225 @@ The maximum number of Music Boxes is %2.</source>
 <context>
     <name>TheXTechEngine</name>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="158"/>
+        <location filename="../testing/thextech_engine.cpp" line="164"/>
         <source>Path to TheXTech</source>
         <comment>Title of dialog</comment>
         <translation>TheXTech로가는 길</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="165"/>
+        <location filename="../testing/thextech_engine.cpp" line="171"/>
         <source>Please select a path to TheXTech executable:</source>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오 :</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="174"/>
+        <location filename="../testing/thextech_engine.cpp" line="180"/>
         <source>Use default</source>
         <comment>Using default TheXTech path, specified by an applcation path of Editor</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="177"/>
+        <location filename="../testing/thextech_engine.cpp" line="183"/>
         <source>Custom</source>
         <comment>Using a user selected TheXTech path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="181"/>
+        <location filename="../testing/thextech_engine.cpp" line="187"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="205"/>
+        <location filename="../testing/thextech_engine.cpp" line="211"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="218"/>
+        <location filename="../testing/thextech_engine.cpp" line="224"/>
         <source>Select a path to TheXTech executable</source>
         <comment>File dialog title</comment>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="637"/>
+        <location filename="../testing/thextech_engine.cpp" line="648"/>
         <source>Test level</source>
         <comment>Run the testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation>테스트 수준</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="642"/>
+        <location filename="../testing/thextech_engine.cpp" line="653"/>
         <source>Test level in battle mode</source>
         <comment>Run a battle testing of current file in TheXTech via interprocessing tunnel.</comment>
         <translation>전투 모드의 테스트 레벨</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="647"/>
+        <location filename="../testing/thextech_engine.cpp" line="658"/>
         <source>Test saved level</source>
         <comment>Run the testing of current file in TheXTech from disk.</comment>
         <translation>저장된 레벨 테스트</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="653"/>
+        <location filename="../testing/thextech_engine.cpp" line="664"/>
         <source>Graphics type</source>
         <comment>Choose a rendering system: software or accelerated</comment>
         <translation>그래픽 유형</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="658"/>
+        <location filename="../testing/thextech_engine.cpp" line="669"/>
         <source>Default</source>
         <comment>Automatically selected rendering engine</comment>
         <translation>기본</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="663"/>
+        <location filename="../testing/thextech_engine.cpp" line="674"/>
         <source>Software</source>
         <comment>Software rendering</comment>
         <translation>소프트웨어 렌더링</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="668"/>
+        <location filename="../testing/thextech_engine.cpp" line="679"/>
         <source>Accelerated</source>
         <comment>Hardware accelerated rendering</comment>
         <translation>가속</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="673"/>
+        <location filename="../testing/thextech_engine.cpp" line="684"/>
         <source>Accelerated with V-Sync</source>
         <comment>Hardware accelerated rendering with vertical synchronization support</comment>
         <translation>V-Sync로 가속화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="680"/>
+        <location filename="../testing/thextech_engine.cpp" line="691"/>
         <source>Compatibility level</source>
         <comment>Choose the compatibility level used by the game</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="685"/>
+        <location filename="../testing/thextech_engine.cpp" line="696"/>
         <source>Default</source>
         <comment>Use preferred compatibility level</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="690"/>
+        <location filename="../testing/thextech_engine.cpp" line="701"/>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
         <translation type="unfinished">현대</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="695"/>
+        <location filename="../testing/thextech_engine.cpp" line="706"/>
         <source>X2</source>
         <comment>Disable all bugfixes and updates exceot these made at X2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="700"/>
+        <location filename="../testing/thextech_engine.cpp" line="711"/>
         <source>Strict SMBX 1.3</source>
         <comment>Strict compatibility mode, all bugfixes and updates will be disabled to prepresent an old behaviour.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="707"/>
+        <location filename="../testing/thextech_engine.cpp" line="718"/>
         <source>Speedruner&apos;s stopwatch</source>
         <comment>Speedrun mode menu</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="712"/>
+        <location filename="../testing/thextech_engine.cpp" line="723"/>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="717"/>
+        <location filename="../testing/thextech_engine.cpp" line="728"/>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="722"/>
+        <location filename="../testing/thextech_engine.cpp" line="733"/>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="727"/>
+        <location filename="../testing/thextech_engine.cpp" line="738"/>
         <source>Mode 3 (Strict SMBX 1.3)</source>
         <comment>Enable speedrun with mode 3 (strict SMBX 1.3 compatibility level)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="732"/>
+        <location filename="../testing/thextech_engine.cpp" line="743"/>
         <source>Semi-transparent stopwatch</source>
         <comment>Show the speedrun stopwatch with a semi-transparent font.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="739"/>
+        <location filename="../testing/thextech_engine.cpp" line="750"/>
         <source>Enable magic hand</source>
         <comment>Allow real-time picking-up of elements while playing a level test.</comment>
         <translation>마법의 손 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="741"/>
+        <location filename="../testing/thextech_engine.cpp" line="752"/>
         <source>Allows real-time editing: picking-up elements from a level scene, placing new elements, selected at back in the editor, and erasing. Doesn&apos;t works when running a test of a saved file.</source>
         <translation>실시간 편집 가능 : 레벨 씬에서 요소 선택, 새 요소 배치, 편집기에서 선택한 후 지우기. 저장된 파일의 테스트를 실행할 때 작동하지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="747"/>
+        <location filename="../testing/thextech_engine.cpp" line="758"/>
         <source>Enable max FPS</source>
         <comment>When running non-vsync, run game with a maximum possible frame-rate</comment>
         <translation>최대 FPS 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="749"/>
+        <location filename="../testing/thextech_engine.cpp" line="760"/>
         <source>When playing a game without V-Sync, run a game with a maximum possible frame-rate.</source>
         <translation>V-Sync없이 게임을 할 때는 가능한 최대 프레임 속도로 게임을 실행하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="753"/>
+        <location filename="../testing/thextech_engine.cpp" line="764"/>
         <source>Enable grab all</source>
         <comment>Allow player to grab absolutely any NPCs in a game.</comment>
         <translation>모두 가져 오기 활성화</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="755"/>
+        <location filename="../testing/thextech_engine.cpp" line="766"/>
         <source>Allow player to grab any NPCs in a game.</source>
         <translation>플레이어가 게임에서 NPC를 잡을 수 있도록합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="762"/>
+        <location filename="../testing/thextech_engine.cpp" line="773"/>
         <source>Change the path to TheXTech...</source>
         <comment>Select the path to TheXTech executable.</comment>
         <translation>TheXTech로 경로 변경 ...</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="764"/>
+        <location filename="../testing/thextech_engine.cpp" line="775"/>
         <source>Select the path to TheXTech executable.</source>
         <translation>TheXTech 실행 파일의 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="768"/>
+        <location filename="../testing/thextech_engine.cpp" line="779"/>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="777"/>
+        <location filename="../testing/thextech_engine.cpp" line="788"/>
         <source>Executable not found</source>
         <translation>실행 파일을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="778"/>
+        <location filename="../testing/thextech_engine.cpp" line="789"/>
         <source>Can&apos;t start TheXTech game because &quot;%1&quot; is not found. That might happen because of incorrect path to TheXTech executable was specified, please check the TheXTech path setup.</source>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 TheXTech 게임을 시작할 수 없습니다. TheXTech 실행 파일에 대한 잘못된 경로가 지정 되었기 때문에 발생할 수 있습니다. TheXTech 경로 설정을 확인하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="787"/>
+        <location filename="../testing/thextech_engine.cpp" line="798"/>
         <source>TheXtech start failed</source>
         <translation>TheXtech 시작 실패</translation>
     </message>
     <message>
-        <location filename="../testing/thextech_engine.cpp" line="788"/>
+        <location filename="../testing/thextech_engine.cpp" line="799"/>
         <source>Can&apos;t start TheXTech because of following reason:
 %3.
 
@@ -11840,7 +11866,7 @@ Please, reconvert your images to valid format and try to reload this level.</sou
     </message>
     <message>
         <location filename="../main_window/file/wld_export_image.cpp" line="127"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="472"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
@@ -11968,30 +11994,30 @@ LunaLua를 설치하면 이러한 제한을 부분적으로 확장 할 수 있�
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="431"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="436"/>
         <source>File read error</source>
         <translation>파일 읽기 오류</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="432"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="437"/>
         <source>Cannot read file %1:
 %2.</source>
         <translation>% 1 파일을 읽을 수 없습니다 :
 % 2.</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="472"/>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="473"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="477"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="478"/>
         <source>Loading World map data</source>
         <translation>세계지도 데이터로드</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="510"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="515"/>
         <source>Incorrect custom configs</source>
         <translation>잘못된 사용자 지정 구성</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="511"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="516"/>
         <source>This world map has some incorrect config files which are can&apos;t be loaded. To avoid this message box in next time, please fix next errors in your config files in the current and in the custom folders:
 
 %1</source>
@@ -12000,19 +12026,19 @@ LunaLua를 설치하면 이러한 제한을 부분적으로 확장 할 수 있�
 %1</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="531"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="536"/>
         <source>&apos;%1&apos; has been modified.
 Do you want to save your changes?</source>
         <translation>&apos;% 1&apos;이 (가) 수정되었습니다.
 변경 사항을 저장 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="533"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="538"/>
         <source> not saved</source>
         <translation> 저장되지 않음</translation>
     </message>
     <message>
-        <location filename="../editing/edit_world/wld_files_io.cpp" line="535"/>
+        <location filename="../editing/edit_world/wld_files_io.cpp" line="540"/>
         <source>World title:</source>
         <translation>세계 제목 :</translation>
     </message>
