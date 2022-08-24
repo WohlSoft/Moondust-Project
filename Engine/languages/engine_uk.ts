@@ -84,7 +84,7 @@
 Run debugging with a built in debug mode application
 and retry your recent actions to get more detailed information.</source>
         <translation>Двигун аварійно завершився у зв&apos;язку з помилкою сегментування.
-Для отримання більш детальної інформації, перекомпілюйте двигун
+Для отримання детальнішої інформації, перекомпілюйте двигун
 у режимі налагодження й запустіть відлагоджувач, потім повторіть ті дії,
 які спровокували цю помилку.</translation>
     </message>
