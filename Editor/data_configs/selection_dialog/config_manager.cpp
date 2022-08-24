@@ -461,6 +461,8 @@ void ConfigManager::on_configList_itemDoubleClicked(QListWidgetItem *item)
     m_currentConfigPath   = item->data(CP_FULLDIR_ROLE).toString();
     m_doAskAgain          = ui->AskAgain->isChecked();
 
+    checkIsIntegrational();
+
     if(checkForConfigureTool())
         this->accept();
 }
@@ -471,6 +473,8 @@ void ConfigManager::on_buttonBox_accepted()
     m_currentConfig = ui->configList->selectedItems().first()->data(CP_NAME_ROLE).toString();
     m_currentConfigPath = ui->configList->selectedItems().first()->data(CP_FULLDIR_ROLE).toString();
     m_doAskAgain = ui->AskAgain->isChecked();
+
+    checkIsIntegrational();
 
     if(checkForConfigureTool())
         this->accept();
