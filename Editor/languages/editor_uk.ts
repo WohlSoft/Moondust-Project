@@ -1219,7 +1219,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>Channel allocation mode:</source>
-        <translation type="unfinished"></translation>
+        <translation>Порядок розподілу каналів:</translation>
     </message>
     <message>
         <source>Select one of the channel allocation algorithms:
@@ -3942,7 +3942,7 @@ Do you want to continue?</source>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation>Дані налаштування автопрокрутки секції є застарілими. Вони використовувались в старих SMBX64-рівнях, або в рівнях, які були раніше конвертовані зі старого формату в більш сучасний. Використовуйте дані налаштування тільки коли ви збираєтесь запускати рівень у SMBX64-двигуні або старіших двигунах. Дані налаштування також можуть працювати і в нових двигунах, такі як TheXTech та Moondust. Однак, якщо у вашому рівні використовуються сучасні налаштування автопрокрутки, старі будуть повністю проігноровані. Також, якщо рівень збережено у форматі SMBX-38A, дані налаштування зникнуть. Сучасні налаштування автопрокрутки можна знайти у блоці &quot;Налаштування секції&quot;.</translation>
+        <translation>Дані налаштування автопрокрутки секції є застарілими. Вони використовувались в старих SMBX64-рівнях, або в рівнях, які були раніше конвертовані зі старого формату в сучасніший. Використовуйте дані налаштування тільки коли ви збираєтесь запускати рівень у SMBX64-двигуні або старіших двигунах. Дані налаштування також можуть працювати і в нових двигунах, такі як TheXTech та Moondust. Однак, якщо у вашому рівні використовуються сучасні налаштування автопрокрутки, старі будуть повністю проігноровані. Також, якщо рівень збережено у форматі SMBX-38A, дані налаштування зникнуть. Сучасні налаштування автопрокрутки можна знайти у блоці &quot;Налаштування секції&quot;.</translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -6406,7 +6406,7 @@ Please reload current file to apply result.</source>
         <source>Configuration can&apos;t be loaded.
 See %1 for more information.</source>
         <translation>Конфігурація не може бути завантажена.
-Дивіться %1 для більш детальної інформації.</translation>
+Дивіться %1 для детальнішої інформації.</translation>
     </message>
     <message>
         <source>Loading theme...</source>
