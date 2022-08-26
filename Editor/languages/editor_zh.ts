@@ -6519,7 +6519,7 @@ Objects will not be able to be placed on top of each other, and attempting to do
     </message>
     <message>
         <source>Configuration is busy</source>
-        <translation>配置正在忙</translation>
+        <translation>配置正在使用</translation>
     </message>
     <message>
         <source>To reload configuration you should close all opened files first.</source>
