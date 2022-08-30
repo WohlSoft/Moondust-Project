@@ -1125,7 +1125,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../frame_matrix/matrix.ui" line="59"/>
         <source>&lt;span style=&quot; font-weight: bold;&quot;&gt;Tip:&lt;/span&gt; if you see some frames marked with the &lt;img src=&quot;:/images/warn.png&quot;/&gt; exclamation sign, that means frame is not valid 2x pixel art (misaligned on odd pixels or contain 2x2 sectors with different colour). You should align it and fix invalid 2x2 sectors using the sprite editor or external graphical editor.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;span style=&quot; font-weight: bold;&quot;&gt;Порада:&lt;/span&gt; Якщо ви бачите кадр, помічений &lt;img src=&quot;:/images/warn.png&quot;/&gt; знаком оклику, це означає, що кадр не відповідає стандарту &quot;2x-піксельарт&quot; (не правильно вирівняно по сітці або 2x2-сектори мають різні кольори). Треба вирівняти або виправити 2x2-сектори у редагувачі спрайта або у зовнішньому графічному редагувачі.</translation>
     </message>
     <message>
         <source>Empty and unused frames must be unchecked.
@@ -1137,25 +1137,25 @@ To choose a frame for edit, push to the button over a necessary frame.</source>
         <location filename="../frame_matrix/matrix.cpp" line="127"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file.</source>
         <comment>Frame selector&apos;s label, normal version</comment>
-        <translation type="unfinished"></translation>
+        <translation>Натисніть лівою кнопкою миші, щоб вибрати кадр. Відмітити або зняти позначку з кадру можна правою кнопкою миші. Налаштування кожного непозначеного кадру не будуть збережені у файл калібрування.</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.cpp" line="134"/>
         <source>Click a frame by the left mouse button to choose it. Use the right mouse button to set or unset check on a frame. The settings of each unchecked frame will not be saved into the calibration file. Use the middle mouse button to pick up the frame as a reference on the scene.</source>
         <comment>Frame selector&apos;s label, sprite editor version</comment>
-        <translation type="unfinished"></translation>
+        <translation>Натисніть лівою кнопкою миші, щоб вибрати кадр. Відмітити або зняти позначку з кадру можна правою кнопкою миші. Налаштування кожного непозначеного кадру не будуть збережені у файл калібрування. Середньою кнопкою миші можна задати кадр зразком на сцені.</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.cpp" line="142"/>
         <source>Click a frame by the left mouse button to add it to the list.</source>
         <comment>Frame selector&apos;s label, animation editor, add action</comment>
-        <translation type="unfinished"></translation>
+        <translation>Натисніть лівою кнопкою миші, щоб додати кадр у список.</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.cpp" line="147"/>
         <source>Click a frame by the left mouse button to take it to the list instead of selected.</source>
         <comment>Frame selector&apos;s label, animation editor, change action</comment>
-        <translation type="unfinished"></translation>
+        <translation>Натисніть лівою кнопкою миші, щоб вибрати кадр для заміни вибраного.</translation>
     </message>
 </context>
 <context>
