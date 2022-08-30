@@ -1211,11 +1211,11 @@ Please save them before doing anything else.</source>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Коли не буде вистачати вільних голосових каналів чіпу, деякі акорди стиснуться в арпеджіо, які будуть використовувати лише один канал. Однак, такий метод може різко зіпсувати звучання мелодії. Використовуйте опцію на свій страх та ризик.</translation>
     </message>
     <message>
         <source>Automatic arpeggio</source>
-        <translation type="unfinished"></translation>
+        <translation>Авто-арпеджіо</translation>
     </message>
     <message>
         <source>Channel allocation mode:</source>
@@ -1228,31 +1228,35 @@ Please save them before doing anything else.</source>
 - Same instrument: Any first released channel of the same instrument will be taken (or any if no channels of the same instrument played before)
 - Any first released: Any first released channel will be taken without bothering about properties.</source>
         <comment>Tooltip for the &quot;Channel allocation mode&quot; combo box</comment>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть один із алгоритмів вибору каналу:
+- [Авто]: Алгоритм буде визначено автоматично в залежності від банку або програваємої мелодії.
+- Остаточне звучання: Канал буде вибрано автоматично в залежності від кінечної тривалості звучання згасаючої ноти (канал з найкоротшим кінцевим звучанням має найвищий пріорітет).
+- Той же інструмент: Буде вибрано перший звільнившийся канал, де грав той же інструмент (інакше будь-який звільнившийся, якщо не було каналів з тим же інструментом)
+- Будь-який вільний: Буде вибрано перший звільнившийся канал не зважаючи на властивості.</translation>
     </message>
     <message>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнути ефект ехо під час програвання файлів SPC</translation>
     </message>
     <message>
         <source>Disable SPC echo</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнути SPC-ехо</translation>
     </message>
     <message>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Остаточне звучання</translation>
     </message>
     <message>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Той же інструмент</translation>
     </message>
     <message>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Будь-який вільний</translation>
     </message>
 </context>
 <context>
@@ -2114,27 +2118,27 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Direction</source>
-        <translation type="unfinished">Напрям</translation>
+        <translation>Напрямок</translation>
     </message>
     <message>
         <source>Left</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Вліво</translation>
+        <translation>Вліво</translation>
     </message>
     <message>
         <source>Up</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Вгору</translation>
+        <translation>Вгору</translation>
     </message>
     <message>
         <source>Right</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Вправо</translation>
+        <translation>Вправо</translation>
     </message>
     <message>
         <source>Down</source>
         <comment>Direction of pipe</comment>
-        <translation type="unfinished">Вниз</translation>
+        <translation>Вниз</translation>
     </message>
 </context>
 <context>
@@ -5138,19 +5142,19 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Create the duplicate warp entry with same settings (except for already placed points)</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити дублікат проходу з тими ж налаштуваннями (крім вже розміщених точок)</translation>
     </message>
     <message>
         <source>Apply to all</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати до всіх</translation>
     </message>
     <message>
         <source>Apply to all entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати до всіх записів</translation>
     </message>
     <message>
         <source>Do you really want to apply this setting to all objects?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви справді бажаєте застосувати це налаштування до всіх об&apos;єктів?</translation>
     </message>
 </context>
 <context>
@@ -6666,7 +6670,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Для застосування нещодавніх змін, конфігураційний пакет потрібно перезавантажити. Зробити це зараз?</translation>
     </message>
 </context>
 <context>
@@ -8140,11 +8144,11 @@ The maximum number of Music Boxes is %2.</source>
     </message>
     <message>
         <source>[No vehicle]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Без транспорту]</translation>
     </message>
     <message>
         <source>[Unknown type]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Невідомий тип]</translation>
     </message>
 </context>
 <context>
