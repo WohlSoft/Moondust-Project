@@ -206,17 +206,17 @@
     <message>
         <location filename="../calibration_main.ui" line="689"/>
         <source>Scrolling</source>
-        <translation type="unfinished"></translation>
+        <translation>Przewijanie</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="712"/>
         <source>Scroll right</source>
-        <translation type="unfinished"></translation>
+        <translation>Przewiń w prawo</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="723"/>
         <source>Scroll up</source>
-        <translation type="unfinished"></translation>
+        <translation>Przewiń w górę</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="734"/>
@@ -229,27 +229,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - move grab offset if visible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskazówka: Mysz jest wspierana!
+
+Lewy przycisk - porusz obszarem uderzenia
+
+Środkowy przycisk - przewiń dookoła
+
+Przewijanie - Przybliż/Oddal
+
+Prawy przycisk - porusz równoważnik chwytania, jeśli jest widoczny.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="752"/>
         <source>Zoom out</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddalanie</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="763"/>
         <source>Zoom in</source>
-        <translation type="unfinished"></translation>
+        <translation>Zbliżanie</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="774"/>
         <source>Scroll left</source>
-        <translation type="unfinished"></translation>
+        <translation>Przewiń w lewo</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="796"/>
         <source>Scroll down</source>
-        <translation type="unfinished"></translation>
+        <translation>Przewiń w dół</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="807"/>
@@ -262,27 +270,35 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - Move the right-bottom crop edges.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wskazówka: Mysz jest wspierana!
+
+Lewy przycisk: Przesuń ramkę lub użyj akcji.
+
+Środkowy przycisk - przybliż dookoła
+
+Przewijanie - Przbliżenie/Oddalenie
+
+Prawy przycisk - Przesuń prawe, dolne krawędzie przycięcia.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="839"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Zakończ</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="857"/>
         <source>Copy calibration settings of the current frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiuj ustawienia kalibracji obecnej klatki</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="872"/>
         <source>Past calibration settings from the clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Wklej ustawienia kalibracji ze schowka</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="893"/>
         <source>Open the Wiki page...</source>
-        <translation type="unfinished"></translation>
+        <translation>Otwórz stronę Wiki...</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="927"/>
@@ -425,7 +441,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="213"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Edycja</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="221"/>
