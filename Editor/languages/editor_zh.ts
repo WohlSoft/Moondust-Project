@@ -7219,7 +7219,7 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Graphics</source>
-        <translation>素材</translation>
+        <translation>图像</translation>
     </message>
     <message>
         <source>Alignment in the editor:</source>
@@ -10040,7 +10040,7 @@ Music boxes:		%5
         <source>This level have a wrong custom graphics files.
 You will see &apos;ghosties&apos; or other dummy images instead custom GFX of items, what used broken images. It occurred because, for example, the BMP format with GIF extension was used.
 Please, reconvert your images to valid format and try to reload this level.</source>
-        <translation>本大地图中含有错误的自定义素材文件。
+        <translation>本关卡含有错误的自定义素材文件。
 你将看到的是“幽灵”或空白图像而不是自定义素材，这是由于进行错误的转换所造成的问题，例如将扩展名从 BMP 重命名为 GIF。
 请重新转换为支持的格式并重新加载此关卡。</translation>
     </message>
