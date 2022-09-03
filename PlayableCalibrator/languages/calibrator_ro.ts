@@ -953,17 +953,17 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="433"/>
         <source>Crop right</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionează la dreapta</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="447"/>
         <source>Drag offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Trage offset Y</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="467"/>
         <source>Crop bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionează jos</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="487"/>
@@ -978,7 +978,7 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide imaginea în editor...</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>
