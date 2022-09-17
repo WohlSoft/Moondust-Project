@@ -2707,7 +2707,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
     <message>
         <source>Category:</source>
-        <translation>目录：</translation>
+        <translation>分类：</translation>
     </message>
     <message>
         <source>Group:</source>
@@ -9237,7 +9237,7 @@ If you wish to create level/world specific tilesets with using of custom graphic
     </message>
     <message>
         <source>Category:</source>
-        <translation>目录：</translation>
+        <translation>分类：</translation>
     </message>
     <message>
         <source>Defines the custom order priority. If weight values are equal between of different tileset group or equal to -1, tileset groups will be ordered alphabetically.</source>
@@ -9319,7 +9319,7 @@ Data may be corrupted!</source>
     </message>
     <message>
         <source>Category order weight</source>
-        <translation>目录排序宽度</translation>
+        <translation>分类顺序</translation>
     </message>
 </context>
 <context>
