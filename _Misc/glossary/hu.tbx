@@ -1,10 +1,31 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE martif PUBLIC "ISO 12200:1999A//DTD MARTIF core (DXFcdV04)//EN" "TBXcdv04.dtd">
-<martif type="TBX">
-<martifHeader>
-<fileDesc>
-<sourceDesc><p>Translate Toolkit</p></sourceDesc>
-</fileDesc>
-</martifHeader>
-<text><body></body></text>
+<martif type="TBX" xml:lang="en">
+    <martifHeader>
+        <fileDesc>
+            <sourceDesc>
+                <p>Translate Toolkit</p>
+            </sourceDesc>
+        </fileDesc>
+    </martifHeader>
+    <text>
+        <body>
+            <termEntry id="1">
+                <langSet xml:lang="en"><tig><term>warp</term></tig></langSet>
+                <langSet xml:lang="hu"><tig><term>ugrás</term></tig></langSet>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>offset</term></tig></langSet>
+                <langSet xml:lang="hu"><tig><term>küszöbérték</term></tig></langSet>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>warp</term></tig></langSet>
+                <langSet xml:lang="hu"><tig><term>ugrás</term></tig></langSet>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>frame</term></tig></langSet>
+                <langSet xml:lang="hu"><tig><term>képkocka</term></tig></langSet>
+            </termEntry>
+        </body>
+    </text>
 </martif>
