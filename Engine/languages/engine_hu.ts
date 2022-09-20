@@ -31,17 +31,17 @@
     <message id="CRASH_TIMEOUT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="426"/>
         <source>Engine has abourted because alarm() time out!</source>
-        <translation type="unfinished">A motor összeomlott, mert az alarm() időtúllépési hibával kilépett!</translation>
+        <translation>A motor összeomlott, mert az alarm() időtúllépési hibával kilépett!</translation>
     </message>
     <message id="CRASH_BUS_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="471"/>
         <source>Physical memory address error!</source>
-        <translation type="unfinished">Fizikális memóriacím hiba!</translation>
+        <translation>Fizikális memóriacím hiba!</translation>
     </message>
     <message id="CRASH_BUS_MSG">
         <location filename="../common_features/crash_handler.cpp" line="473"/>
         <source>Engine has crashed because a physical memory address error</source>
-        <translation type="unfinished">A motor összeomlott egy fizikális memóriacím hiba miatt</translation>
+        <translation>A motor összeomlott egy fizikális memóriacím hiba miatt</translation>
     </message>
     <message id="CRASH_ILL_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="490"/>
@@ -90,12 +90,12 @@ Kérjük futtasson hibakeresést a beépített hibakeresőalkalmazással
     <message id="CRASH_INT_TITLE">
         <location filename="../common_features/crash_handler.cpp" line="621"/>
         <source>Interrupt</source>
-        <translation type="unfinished">Megszakítás</translation>
+        <translation>Megszakítás</translation>
     </message>
     <message id="CRASH_INT_MSG">
         <location filename="../common_features/crash_handler.cpp" line="623"/>
         <source>Engine has been interrupted</source>
-        <translation type="unfinished"></translation>
+        <translation>A motor működése megszakadt</translation>
     </message>
     <message id="ERR_CONFIG_DIR_MISSING_TTL">
         <location filename="../data_configs/config_manager.cpp" line="117"/>
@@ -147,14 +147,14 @@ Download: %1
 
 Note: most of config packs are updates togeter with PGE,
 therefore you can use same link to get updated version.</source>
-        <translation type="unfinished">Van egy örökölt konfigurációs csomag.
+        <translation>Van egy örökölt konfigurációs csomag.
 A játék elindul, de játék közben felmerülhetnek problémák.
 
 Kérjül tölts le és installálj egyet a legfrissebb konfigurációs csomagok közül:
 
 Letöltés: %1
 
-Megjegyzés: A legtöbb konfigurációs csomag együtt frissül a PGE-vel,
+Megjegyzés: A legtöbb konfigurációs csomag együtt frissül a Moondust-tal,
 ezért használhatod ugyanazt a linket egy frissebb verzió letöltéséhez.</translation>
     </message>
     <message id="ERROR_CONFIG_MAININI_FAILED_TTL">
@@ -226,7 +226,12 @@ Exit into:
 %1
 
 Entrance point: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás helye
+
+Kilépés ide:
+%1
+
+Belépési pont #: %2</translation>
     </message>
     <message id="LVL_ERROR_LVLCLOSED">
         <location filename="../main.cpp" line="649"/>
@@ -547,7 +552,7 @@ Szoftvermegjelenítő lesz elindítva.</translation>
     <message id="RENDERER_CONTEXT_INIT_ERROR">
         <location filename="../graphics/window.cpp" line="296"/>
         <source>Unable to initialize renderer context!</source>
-        <translation type="unfinished">Nem lehet initializálni a megjelenítőkontextust!</translation>
+        <translation>Nem lehet initializálni a megjelenítőkontextust!</translation>
     </message>
     <message id="VSYNC_ERROR_INFO">
         <location filename="../graphics/vsync_validator.cpp" line="77"/>
