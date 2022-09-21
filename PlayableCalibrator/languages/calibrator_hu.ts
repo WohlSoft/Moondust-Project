@@ -16,7 +16,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="95"/>
         <source>Frame delay:</source>
-        <translation type="unfinished">Képkockák közti várakozás:</translation>
+        <translation>Képkocka késleltetés:</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="111"/>
@@ -27,7 +27,7 @@
     <message>
         <location filename="../animator/animation_edit.ui" line="118"/>
         <source>Framesets</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkockacsoportok</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.ui" line="163"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../animator/animation_edit.cpp" line="357"/>
         <source>Empty animation name</source>
-        <translation type="unfinished">Animáció nevének ürítése</translation>
+        <translation>Animáció nevének ürítése</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="358"/>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../animator/animation_edit.cpp" line="368"/>
         <source>Animation exist</source>
-        <translation type="unfinished">Az animáció már létezik</translation>
+        <translation>Az animáció már létezik</translation>
     </message>
     <message>
         <location filename="../animator/animation_edit.cpp" line="369"/>
@@ -252,12 +252,12 @@
     <message>
         <location filename="../calibration_main.ui" line="331"/>
         <source>Frame Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkocka Y</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="351"/>
         <source>Frame X</source>
-        <translation type="unfinished"></translation>
+        <translation>Képkocka X</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="382"/>
@@ -267,12 +267,12 @@
     <message>
         <location filename="../calibration_main.ui" line="398"/>
         <source>Hitbox setup:</source>
-        <translation type="unfinished"></translation>
+        <translation>Befoglaló doboz beállítások:</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="407"/>
         <source>Global:</source>
-        <translation type="unfinished">Központi:</translation>
+        <translation>Központi:</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="414"/>
@@ -282,7 +282,7 @@
     <message>
         <location filename="../calibration_main.ui" line="424"/>
         <source>Width of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>A játékos befoglaló dobozának (hitbox) szélessége</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="437"/>
@@ -292,7 +292,7 @@
     <message>
         <location filename="../calibration_main.ui" line="447"/>
         <source>Normal height of player&apos;s collision box (hitbox)</source>
-        <translation type="unfinished"></translation>
+        <translation>A játékos befoglaló dobozának alapvető magassága</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="460"/>
@@ -307,17 +307,17 @@
     <message>
         <location filename="../calibration_main.ui" line="490"/>
         <source>Grab offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Eltolási küszöbérték X</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="500"/>
         <source>Offset relative to player&apos;s back (don&apos;t forget to set left or right direction to define source side)</source>
-        <translation type="unfinished"></translation>
+        <translation>Relatív küszöbérték a játékos hátuljához (ne felejtsd el beállítani a játékos irányát jobbra vagy balra, hogy meghatározd a hátulját)</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="516"/>
         <source>Grab offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y eltolás küszöbérték</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="526"/>
@@ -342,27 +342,27 @@
     <message>
         <location filename="../calibration_main.ui" line="580"/>
         <source>GFX offsets of frame:</source>
-        <translation type="unfinished"></translation>
+        <translation>A képkocka grafika küszöbértékei:</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="589"/>
         <source>Offset X</source>
-        <translation type="unfinished"></translation>
+        <translation>Küszöbérték X</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="599"/>
         <source>Horisontal offset of hitbox relative to left side of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>A befoglaló doboz a képkocka bal oldalához mért szélességi küszöbértéke</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="612"/>
         <source>Offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Küszöbérték Y</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="622"/>
         <source>Vertical offset of hitbox relative to top side of frame</source>
-        <translation type="unfinished"></translation>
+        <translation>A befoglaló doboz a képkocka felső részéhez mért magassági küszöbértéke</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="638"/>
@@ -377,12 +377,12 @@
     <message>
         <location filename="../calibration_main.ui" line="651"/>
         <source>If this flag enabled, grabbed item will be offset relative to the left side of the hitbox. Else grabbed item will be offset relative to the right side of the hitbox.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ha ez a jelölő aktív, a hordozott tárgy hely küszöbértéke a játékos befoglaló dobozának bal széléhez lesz mérve. Egyébként a küszöbérték a játékos dobozának jobb szélétől számolódik.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="654"/>
         <source>Right direction</source>
-        <translation type="unfinished">Jó irány</translation>
+        <translation>Jó irány</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="664"/>
@@ -430,7 +430,15 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - move grab offset if visible.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipp: Egér használat támogatott!
+
+Bal gomb - doboz mozgatása
+
+Középső gomb - görgetés/mozgás
+
+Görgő - Zoomolás ki-be
+
+Jobb gomb - eltolási küszöbérték mozgatása ha állandó.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="752"/>
@@ -463,7 +471,15 @@ Middle button - scroll around
 Wheel - Zoom in/out
 
 Right button - Move the right-bottom crop edges.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipp: Egér használat támogatott!
+
+Bal gomb - Képkocka mozgatása vagy művelet végrehajtása
+
+Középső gomb - görgetés/mozgás
+
+Görgő - Zoomolás ki-be
+
+Jobb gomb - mozgasd a jobb alsó satkat a levágáshoz.</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="831"/>
@@ -503,7 +519,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="885"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Információ</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="893"/>
@@ -533,7 +549,7 @@ Right button - Move the right-bottom crop edges.</source>
     <message>
         <location filename="../calibration_main.ui" line="924"/>
         <source>Export a map of hitboxes as image...</source>
-        <translation type="unfinished"></translation>
+        <translation>Befoglaló dobozok térképének exportálása képként…</translation>
     </message>
     <message>
         <location filename="../calibration_main.ui" line="927"/>
