@@ -11,7 +11,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="24"/>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>Átmintázás erre</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="78"/>
@@ -43,7 +43,7 @@
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="150"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Feladat kiválasztása:</translation>
+        <translation>Mit szeretnél?</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.ui" line="191"/>

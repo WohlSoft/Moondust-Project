@@ -29,7 +29,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="69"/>
         <source>Main</source>
-        <translation type="unfinished"></translation>
+        <translation>Alap</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="83"/>
@@ -96,7 +96,7 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="298"/>
         <source>Collision detection</source>
-        <translation type="unfinished">Ütközésérzékelés</translation>
+        <translation>Ütközésérzékelés</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="321"/>
@@ -214,7 +214,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="608"/>
         <source>Defaults</source>
-        <translation type="unfinished">Alapértelmezett</translation>
+        <translation>Alapértelmezett</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="617"/>
@@ -239,17 +239,17 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="644"/>
         <source>Layer movement</source>
-        <translation type="unfinished">Rétegek Mozgása</translation>
+        <translation>Rétegek Mozgása</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="651"/>
         <source>Autoscroll section</source>
-        <translation type="unfinished">Automatikus görgetéses szakasz</translation>
+        <translation>Automatikus görgetés szakasz</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="658"/>
         <source>Trigger event</source>
-        <translation type="unfinished">Esemény Indítása</translation>
+        <translation>Esemény Indítása</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="665"/>
@@ -274,7 +274,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="753"/>
         <source>Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="758"/>
@@ -309,12 +309,12 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="828"/>
         <source>Warps and Doors</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrások és ajtók</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="834"/>
         <source>Warp type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugrás típusa:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="842"/>
@@ -344,7 +344,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="891"/>
         <source>Tileset Item toolbox</source>
-        <translation type="unfinished">Kombinált Eszköztár</translation>
+        <translation>Kombinált Eszköztár</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="900"/>
@@ -374,7 +374,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="962"/>
         <source>Palette</source>
-        <translation type="unfinished">Paletta</translation>
+        <translation>Paletta</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="975"/>
@@ -409,7 +409,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1083"/>
         <source>Browse</source>
-        <translation type="unfinished"></translation>
+        <translation>Böngészés</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1090"/>
@@ -419,7 +419,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1114"/>
         <source>Extra</source>
-        <translation type="unfinished">További</translation>
+        <translation>További</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1123"/>
@@ -429,7 +429,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="1136"/>
         <source>Enable auto-scaling on the High-DPI screens</source>
-        <translation type="unfinished">Automatikus széthúzás engedélyezése nagy felbontású monitorokon</translation>
+        <translation>Automatikus széthúzás engedélyezése nagy képpontsűrűségű monitorokon</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="226"/>
@@ -444,7 +444,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="326"/>
         <source>Success</source>
-        <translation type="unfinished">Siker</translation>
+        <translation>Siker</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.cpp" line="326"/>
@@ -462,7 +462,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
         <source>Calculating total star count in accessible levels</source>
-        <translation type="unfinished">A teljes csillagszám kiszámítása az összes elérhető pálya alapján</translation>
+        <translation>A teljes csillagszám kiszámítása az összes elérhető pálya alapján</translation>
     </message>
     <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
@@ -500,12 +500,12 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="52"/>
         <source>Resample to</source>
-        <translation type="unfinished"></translation>
+        <translation>Átmintázás erre</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
         <source>What do you want?</source>
-        <translation type="unfinished">Feladat kiválasztása:</translation>
+        <translation>Mit szeretnél?</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="132"/>
@@ -691,7 +691,7 @@ Kérjük állítsa be helyesen a SoX fájl útvonalát</translation>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
-        <translation type="unfinished">A SoundFont bankfájl kiválasztása</translation>
+        <translation>A SoundFont bankfájl kiválasztása</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/bankfilelist.cpp" line="48"/>
@@ -846,7 +846,7 @@ Szeretnéd beállítani?</translation>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="580"/>
         <source>Configuration script failed</source>
-        <translation type="unfinished">Konfigurációs szkript hiba</translation>
+        <translation>Konfigurációs szkript hiba</translation>
     </message>
     <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="581"/>
@@ -1001,7 +1001,7 @@ Fájl útvonala: %3</translation>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="137"/>
         <source>Characters</source>
-        <translation type="unfinished"></translation>
+        <translation>Karakterek</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="138"/>
@@ -1086,7 +1086,7 @@ Fájl útvonala: %3</translation>
         <location filename="../common_features/crashhandler.cpp" line="438"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
-        <translation type="unfinished">Összeomlás helyreállítása</translation>
+        <translation>Összeomlás helyreállítás</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="439"/>
@@ -1111,73 +1111,73 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
         <source>Please add the Item IDs which will be in this custom group:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérlek add meg, hogy mely azonosítójú tárgyak kerüljelek ebbe az egyéni csoportba:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="71"/>
         <source>Item type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tárgy típus:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="91"/>
         <source>Counter name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Számláló neve:</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="122"/>
         <source>Add</source>
-        <translation type="unfinished">Hozzáadás</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="129"/>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="254"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="50"/>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokk</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="51"/>
         <source>BGO</source>
-        <translation type="unfinished"></translation>
+        <translation>Háttérelem</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="52"/>
         <source>NPC</source>
-        <translation type="unfinished"></translation>
+        <translation>NJK</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="58"/>
         <source>Terrain tile</source>
-        <translation type="unfinished"></translation>
+        <translation>Domborzatcsempe</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="59"/>
         <source>Scenery</source>
-        <translation type="unfinished"></translation>
+        <translation>Környezet</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="60"/>
         <source>Path</source>
-        <translation type="unfinished">Útvonal</translation>
+        <translation>Útvonal</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="61"/>
         <source>Level</source>
-        <translation type="unfinished"></translation>
+        <translation>Pálya</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="62"/>
         <source>Music</source>
-        <translation type="unfinished">Zene</translation>
+        <translation>Zene</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.cpp" line="253"/>
         <source>Change item...</source>
-        <translation type="unfinished"></translation>
+        <translation>Elem szerkesztése...</translation>
     </message>
 </context>
 <context>
@@ -1185,64 +1185,64 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="14"/>
         <source>Music setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene beállítása</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="34"/>
         <source>Play music</source>
-        <translation type="unfinished"></translation>
+        <translation>Zene lejátszása</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="67"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="285"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="447"/>
         <source>Extra settings</source>
-        <translation type="unfinished"></translation>
+        <translation>További beállítások</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="126"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="317"/>
         <source>Custom bank:</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyedi tár:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="192"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="357"/>
         <source>Volume model:</source>
-        <translation type="unfinished"></translation>
+        <translation>Hangmodell:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="110"/>
         <source>Deep vibrato</source>
-        <translation type="unfinished"></translation>
+        <translation>Mély Vibrato</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="76"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
-        <translation type="unfinished"></translation>
+        <translation>Tár:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="172"/>
         <source>Deep tremolo</source>
-        <translation type="unfinished"></translation>
+        <translation>Mély Tremolo</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="86"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="297"/>
         <source>Browse...</source>
-        <translation type="unfinished">Kiválasztás...</translation>
+        <translation>Kiválasztás...</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="100"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
-        <translation type="unfinished"></translation>
+        <translation>A timbre tár definiálja a MIDI zene hangzását. Használj külömböző tárakat a hangzások összehasonlításához.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="133"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="304"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
-        <translation type="unfinished"></translation>
+        <translation>A hangmodell határozza meg, hogy a zene hangerői, hang sebességei és megszólalása hogyan lesz definiálva.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="146"/>
@@ -1290,7 +1290,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="220"/>
         <source>Synthesizer type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szintetizátor típusa:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="227"/>
@@ -1298,7 +1298,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="771"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="846"/>
         <source>Reset</source>
-        <translation type="unfinished"></translation>
+        <translation>Visszaállítás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="433"/>
@@ -1310,24 +1310,24 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="440"/>
         <location filename="../main_window/dock/custom_music_setup.ui" line="863"/>
         <source>Tempo:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tempó:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="463"/>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation type="unfinished"></translation>
+        <translation>Központi</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="469"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Maximális polifónia</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="512"/>
@@ -1337,7 +1337,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="522"/>
         <source>Add</source>
-        <translation type="unfinished">Hozzáadás</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="542"/>
@@ -1349,7 +1349,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="554"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szoba mérete</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="574"/>
@@ -1361,13 +1361,13 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szélesség</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="614"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szint</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="637"/>
@@ -1379,13 +1379,13 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="649"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Szint</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="656"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Sebesség</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="692"/>
@@ -1403,7 +1403,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <location filename="../main_window/dock/custom_music_setup.ui" line="722"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation type="unfinished"></translation>
+        <translation>Típus</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="739"/>
@@ -1424,12 +1424,12 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="829"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Előző</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="836"/>
         <source>Next</source>
-        <translation type="unfinished"></translation>
+        <translation>Következő</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="853"/>
@@ -1445,37 +1445,37 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
     <message>
         <location filename="../main_window/dock/custom_music_setup.ui" line="926"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipp: hogy halkd a beállítás eredményét engedélyezd a zenelejátszást. (Keresd meg az indítás/megállítás ikont a központi ablak eszköztárán).</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="622"/>
         <source>MIDI</source>
-        <translation type="unfinished"></translation>
+        <translation>MIDI</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="830"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libADLMIDI (OPL3 Synth emuláció)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="831"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
-        <translation type="unfinished"></translation>
+        <translation>libOPNMIDI (YM2612 Synth emuláció)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="832"/>
         <source>Timidity (needed a bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>Timidity (bank szükséges)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="833"/>
         <source>Native MIDI (Not recommended, buggy)</source>
-        <translation type="unfinished"></translation>
+        <translation>Natív MIDI (Nem ajánlott, hibás)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="834"/>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation type="unfinished"></translation>
+        <translation>FluidSynth (SF2 bank szükséges)</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="839"/>
@@ -1483,7 +1483,7 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="855"/>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="871"/>
         <source>[Auto]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Automatikus]</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="840"/>
@@ -1511,19 +1511,19 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="872"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Generikus</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="857"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Natív OPL3</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="873"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation type="unfinished"></translation>
+        <translation>Natív OPN2</translation>
     </message>
     <message>
         <location filename="../main_window/dock/custom_music_setup.cpp" line="881"/>
@@ -1550,7 +1550,14 @@ Kérjük mentsd el azokat, mielőtt bármi másba fognál.</translation>
 &lt;br&gt;Download: %1
 &lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
 therefore you can use same link to get updated version</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelenleg alapértelmezett konfigurációs csomagot használsz.
+&lt;br&gt;A szerkesztő elindul, de lehetnek problémák az elemekkel vagy beállításokkal.
+&lt;br&gt;
+&lt;br&gt;Kérjük töltsd le és telepítsd a jegújabb verziót a konfigurációs csomagból:
+&lt;br&gt;
+&lt;br&gt;Letöltés: %1
+&lt;br&gt;Megjegyzés: a legtöbb konfigurációs csomag együtt frissül a Moondust Projekttel,
+&lt;br&gt;ezért használhatod ugyanazt a linket, hogy egy újabb verzióhoz juss.</translation>
     </message>
 </context>
 <context>
@@ -1558,52 +1565,52 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="33"/>
         <source>Debugger</source>
-        <translation type="unfinished"></translation>
+        <translation>Hibakereső</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="49"/>
         <source>Mouse coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Egérkoordináták</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="107"/>
         <source>Go to point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Menj pontra:</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="156"/>
         <source>Go!</source>
-        <translation type="unfinished"></translation>
+        <translation>Menj!</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="172"/>
         <source>Contents</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartalmak</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="246"/>
         <source>Custom counters</source>
-        <translation type="unfinished"></translation>
+        <translation>Egyedi számlálók</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="283"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Újratöltés</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.ui" line="307"/>
         <source>Add</source>
-        <translation type="unfinished">Hozzáadás</translation>
+        <translation>Hozzáadás</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="484"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Szerkesztés</translation>
     </message>
     <message>
         <location filename="../main_window/dock/debugger.cpp" line="485"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
 </context>
 <context>
@@ -1611,62 +1618,62 @@ therefore you can use same link to get updated version</source>
     <message>
         <location filename="../dev_console/devconsole.ui" line="14"/>
         <source>Developer Console</source>
-        <translation type="unfinished"></translation>
+        <translation>Fejlesztői parancssor</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="47"/>
         <source>Type commands here...</source>
-        <translation type="unfinished"></translation>
+        <translation>Írd ide a parancsot...</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="59"/>
         <source>Send Command</source>
-        <translation type="unfinished"></translation>
+        <translation>Parancs küldése</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="78"/>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendszer</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="153"/>
         <source>Clear All Logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Összes naplófájl ürítése</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.ui" line="176"/>
         <source>Clear System Log</source>
-        <translation type="unfinished"></translation>
+        <translation>Rendszernapló ürítése</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="200"/>
         <source>Clear %1 Log</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 napló ürítése</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="278"/>
         <source>Prints this help text</source>
-        <translation type="unfinished"></translation>
+        <translation>Segítség szöveget ír ki</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="279"/>
         <source>Prints a test command</source>
-        <translation type="unfinished"></translation>
+        <translation>Tesztparancsot ír ki</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="280"/>
         <source>Prints the editor version</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiírja a szerkesztő verziószámát</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="281"/>
         <source>Quits the program</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilép a programból</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="282"/>
         <source>Saves the application settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Menti az alkalmazás beállításait</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="283"/>

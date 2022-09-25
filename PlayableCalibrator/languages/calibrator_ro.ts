@@ -953,22 +953,22 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="433"/>
         <source>Crop right</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionează la dreapta</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="447"/>
         <source>Drag offset Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Trage offset Y</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="467"/>
         <source>Crop bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Redimensionează jos</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="487"/>
         <source>Reset calibration</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaureaza calibrare</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="494"/>
@@ -978,37 +978,37 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>
         <source>Open frame in editor...</source>
-        <translation type="unfinished"></translation>
+        <translation>Deschide imaginea în editor...</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="508"/>
         <source>Move all frames of the sprite synchroniously with current. Use this to simplify the general re-aligning work.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mută toate imaginile acestui sprite sincronizat cu sprite-ul curent. Simplifică re-aducerea coordonatelor.</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="511"/>
         <source>Move all frames</source>
-        <translation type="unfinished"></translation>
+        <translation>Mută toate imaginile</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="527"/>
         <source>Save image</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvează imaginea</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="533"/>
         <source>Write PNG+GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează PNG+GIF</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="540"/>
         <source>Write PNG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportează PNG</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="547"/>
         <source>Write masked GIFs</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporteaza GIF (cu mască)</translation>
     </message>
 </context>
 <context>
@@ -1017,7 +1017,7 @@ Butonul din dreapta - Orientează colţurile din dreapta-jos</translation>
         <location filename="../frame_matrix/matrix.ui" line="14"/>
         <source>Select a frame on the sprite</source>
         <comment>A title of the frame selection on the sprite dialog</comment>
-        <translation type="unfinished"></translation>
+        <translation>Selectează o anume imagine dintr-un sprite</translation>
     </message>
     <message>
         <location filename="../frame_matrix/matrix.ui" line="59"/>
