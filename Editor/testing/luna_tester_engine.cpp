@@ -1343,7 +1343,7 @@ bool LunaTesterEngine::sendLevelData(LevelData &lvl)
     }
     else
     {
-        QString levelPath = QString("%1/%2.%3").arg(lvl.meta.path).arg(lvl.meta.filename).arg(x);
+        QString levelPath = QString("%1/%2.lvl%3").arg(lvl.meta.path).arg(lvl.meta.filename).arg(x);
         levelPathOut = pathUnixToWine(levelPath);
         JSONparams["filename"] = levelPathOut;
     }
