@@ -26,6 +26,18 @@
                 <langSet xml:lang="en"><tig><term>frame</term></tig></langSet>
                 <langSet xml:lang="hu"><tig><term>képkocka</term></tig></langSet>
             </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>tile</term></tig></langSet>
+                <langSet xml:lang="hu"><tig><term>csempe</term></tig></langSet>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>BGO</term></tig></langSet>
+                <langSet xml:lang="hu"><tig><term>háttérelem</term></tig></langSet>
+            </termEntry>
+            <termEntry>
+                <langSet xml:lang="en"><tig><term>NPC</term></tig></langSet>
+                <langSet xml:lang="hu"><tig><term>NJK</term></tig></langSet>
+            </termEntry>
         </body>
     </text>
 </martif>
