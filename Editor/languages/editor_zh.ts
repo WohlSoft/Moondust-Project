@@ -3190,7 +3190,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <source>Drop</source>
-        <translation>Drop 键</translation>
+        <translation>取出道具键</translation>
     </message>
     <message>
         <source>Jump</source>
@@ -4191,7 +4191,7 @@ Do you want to continue?</source>
     </message>
     <message>
         <source>Drop</source>
-        <translation>Drop 键</translation>
+        <translation>取出道具键</translation>
     </message>
     <message>
         <source>Alt-run</source>
@@ -7753,7 +7753,7 @@ Error description:
     </message>
     <message>
         <source>Drop Key Activate</source>
-        <translation>激活 Drop 键</translation>
+        <translation>激活取出道具键</translation>
     </message>
     <message>
         <source>Start Key Activate</source>
