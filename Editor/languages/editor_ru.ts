@@ -10234,11 +10234,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
-        <translation type="unfinished"></translation>
+        <translation>Подогнать цвета картинок под палитру (PalleteFilter)...</translation>
     </message>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
-        <translation type="unfinished"></translation>
+        <translation>Массовое преобр./восстановл. уровней и миров...</translation>
     </message>
 </context>
 <context>
