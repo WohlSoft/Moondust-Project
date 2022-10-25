@@ -305,7 +305,10 @@
      <addaction name="actionLazyFixTool"/>
      <addaction name="actionGIFs2PNG"/>
      <addaction name="actionPNG2GIFs"/>
+     <addaction name="actionExternalPalleteFilter"/>
+     <addaction name="separator"/>
      <addaction name="actionAudioCvt"/>
+     <addaction name="actionExternalLevelWorldConverter"/>
     </widget>
     <widget class="QMenu" name="menuCustom_data">
      <property name="title">
@@ -2982,6 +2985,16 @@ Objects will not be able to be placed on top of each other, and attempting to do
    </property>
    <property name="text">
     <string>&lt;no extra settings&gt;</string>
+   </property>
+  </action>
+  <action name="actionExternalPalleteFilter">
+   <property name="text">
+    <string>Adjust pictures colors to pallete (PalleteFilter)...</string>
+   </property>
+  </action>
+  <action name="actionExternalLevelWorldConverter">
+   <property name="text">
+    <string>Bulk convert and repair of level and world files...</string>
    </property>
   </action>
  </widget>

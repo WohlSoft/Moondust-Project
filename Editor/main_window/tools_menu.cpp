@@ -194,8 +194,21 @@ void MainWindow::on_actionAudioCvt_triggered()
         dock_LvlSectionProps->refreshFileData();
 }
 
+void MainWindow::on_actionExternalPalleteFilter_triggered()
+{
+    QString command;
+    if(!findMaintainer(this, command))
+        return;
+    QProcess::startDetached(command, {"palettefilter"});
+}
 
-
+void MainWindow::on_actionExternalLevelWorldConverter_triggered()
+{
+    QString command;
+    if(!findMaintainer(this, command))
+        return;
+    QProcess::startDetached(command, {"filecvt"});
+}
 
 void MainWindow::on_actionSprite_editor_triggered()
 {
