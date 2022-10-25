@@ -7129,11 +7129,11 @@ Please, choose the Moondust Maintainer application yourself!</source>
     </message>
     <message>
         <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
-        <translation type="unfinished"></translation>
+        <translation>更改图片颜色（调色板过滤器）……</translation>
     </message>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
-        <translation type="unfinished"></translation>
+        <translation>批量转换并修复关卡和大地图文件……</translation>
     </message>
 </context>
 <context>
