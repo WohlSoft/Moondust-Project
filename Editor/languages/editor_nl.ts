@@ -1040,41 +1040,41 @@ Gelieve er te downloaden en instaleren in deze map&lt;br&gt;
 Je kan de volgende pakketten gebruiken:&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="514"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="518"/>
         <source>Integrational configuration package is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="515"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="519"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="525"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="529"/>
         <source>Configuration package is not configured!</source>
         <translation>Configuratiepakket is niet geconfigureerd!</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="526"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="530"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>Het &quot;%1&quot; configuratiepakket is nog niet geconfigureerd.
 Wilt u het nu configureren?</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="580"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="584"/>
         <source>Configuration script failed</source>
         <translation>Het configuratiescript is mislukt</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="581"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="585"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>Het configuratieprogramma heeft een fout aangetroffen: %1 op regel %2.
 Bestandspad: %3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="593"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="597"/>
         <source>No configuration needed</source>
         <translation>Geen configuratie nodig</translation>
     </message>
@@ -1093,7 +1093,7 @@ Bestandspad:%3</translation>
         <translation type="vanished">Configureren niet nodig</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="594"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="598"/>
         <source>This config pack has no configuring tool.</source>
         <translation>Dit configuratiepakket heeft geen configuratieprogramma.</translation>
     </message>
@@ -7131,113 +7131,113 @@ Selecteer de wereldkaart die u wilt gebruiken:</translation>
         <translation>Gereedschap</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="334"/>
+        <location filename="../mainwindow.ui" line="337"/>
         <source>Edit</source>
         <translation>Bewerken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="449"/>
+        <location filename="../mainwindow.ui" line="452"/>
         <source>General</source>
         <translation>Algemeen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="477"/>
+        <location filename="../mainwindow.ui" line="480"/>
         <source>CommonEdit Bar</source>
         <translation>Bewerken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="506"/>
+        <location filename="../mainwindow.ui" line="509"/>
         <source>EditingTools</source>
         <translation>Gereedschap</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="541"/>
+        <location filename="../mainwindow.ui" line="544"/>
         <source>LevelObj Tools</source>
         <translation>Niveau</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="608"/>
+        <location filename="../mainwindow.ui" line="611"/>
         <source>Level Sections Switch</source>
         <translation>Van niveau-sectie veranderen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1445"/>
+        <location filename="../mainwindow.ui" line="1448"/>
         <source>Level items browser</source>
         <translation>Niveau voorwerpendoos Browser</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1448"/>
-        <location filename="../mainwindow.ui" line="1466"/>
+        <location filename="../mainwindow.ui" line="1451"/>
+        <location filename="../mainwindow.ui" line="1469"/>
         <source>Items browser with a search</source>
         <translation>Browser van beschikbare items via zoekopdrachten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1463"/>
+        <location filename="../mainwindow.ui" line="1466"/>
         <source>World map items browser</source>
         <translation>Wereldkaart voorwerpendoos Browser</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1529"/>
+        <location filename="../mainwindow.ui" line="1532"/>
         <source>Section Settings</source>
         <translation>Sectie-Instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1381"/>
+        <location filename="../mainwindow.ui" line="1384"/>
         <source>Underwater</source>
         <translation>Onderwater</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2304"/>
+        <location filename="../mainwindow.ui" line="2307"/>
         <source>Apply</source>
         <translation>Doorvoeren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2319"/>
+        <location filename="../mainwindow.ui" line="2322"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2102"/>
+        <location filename="../mainwindow.ui" line="2105"/>
         <source>Events</source>
         <translation>Events</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2000"/>
+        <location filename="../mainwindow.ui" line="2003"/>
         <source>Layers</source>
         <translation>Lagen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="372"/>
+        <location filename="../mainwindow.ui" line="375"/>
         <source>Test</source>
         <translation>Test</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="656"/>
+        <location filename="../mainwindow.ui" line="659"/>
         <source>Placing</source>
         <translation>Plaatsen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="680"/>
+        <location filename="../mainwindow.ui" line="683"/>
         <source>Resizing</source>
         <translation>Vergroten/kleinen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1425"/>
+        <location filename="../mainwindow.ui" line="1428"/>
         <source>Restart level after fail</source>
         <translation>Niveau herstarten na dood</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1797"/>
+        <location filename="../mainwindow.ui" line="1800"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Schakel animaties in voor voorwerpen&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;Als de map te veel voorwerpen bezit, is het aanbevolen om deze optie &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;uit te schakelen&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; !&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2113"/>
+        <location filename="../mainwindow.ui" line="2116"/>
         <source>Current configuration status...</source>
         <translation>Huidige configuratiestatus...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1779"/>
+        <location filename="../mainwindow.ui" line="1782"/>
         <source>Warps and Doors</source>
         <translation>Portalen en Deuren</translation>
     </message>
@@ -7247,7 +7247,7 @@ Selecteer de wereldkaart die u wilt gebruiken:</translation>
         <translation>Externe werktuigen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="575"/>
+        <location filename="../mainwindow.ui" line="578"/>
         <source>World map Toolbar</source>
         <translation>Wereldkaart werkbalk</translation>
     </message>
@@ -7266,84 +7266,84 @@ Selecteer de wereldkaart die u wilt gebruiken:</translation>
         <translation>Paletten en tegelsets</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="312"/>
+        <location filename="../mainwindow.ui" line="315"/>
         <source>Custom data</source>
         <translation>Eigen data</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="387"/>
+        <location filename="../mainwindow.ui" line="390"/>
         <source>Script</source>
         <translation>Script</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1543"/>
+        <location filename="../mainwindow.ui" line="1546"/>
         <source>Reload configuration pack</source>
         <translation>Configuratiepakket herladen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1561"/>
+        <location filename="../mainwindow.ui" line="1564"/>
         <source>Go to left-bottom of the section</source>
         <translation>Ga naar de linkeronderhoek van de sectie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1564"/>
+        <location filename="../mainwindow.ui" line="1567"/>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
         <translation>Keer terug naar linkeronderhoek van de niveau-sectie, of op punt (0,0) van de wereldkaart</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1936"/>
+        <location filename="../mainwindow.ui" line="1939"/>
         <source>Prevent overlap</source>
         <translation>Overlapping voorkomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1939"/>
+        <location filename="../mainwindow.ui" line="1942"/>
         <source>Prevents similar items from overlapping each other.
 Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
         <translation>Hiermee voorkomt u dat soortgelijke voorwerpen elkaar overlappen.
 Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden dat het geselecteerde object terugkeert naar zijn oorspronkelijke positie. Als deze vlag is uitgevinkt, kunt u elementen zonder beperking op elkaar plaatsen. Objecten kunnen nooit overlappen bij het plaatsen van nieuwe objecten, tenzij u van het klembord dupliceert of plakt, waar overlappingen altijd mogelijk is.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2087"/>
+        <location filename="../mainwindow.ui" line="2090"/>
         <source>Go to the left-top of the section</source>
         <translation>ga naa de linkerbovenhoek van de sectie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2090"/>
+        <location filename="../mainwindow.ui" line="2093"/>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
         <translation>Keer terug naar de linkerbovenhoek van de niveau-sectie, of op punt (0,0) van de wereldkaart</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2226"/>
+        <location filename="../mainwindow.ui" line="2229"/>
         <source>Lock Scenery tiles</source>
         <translation>Achtergrondsvoorwerpen vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2277"/>
+        <location filename="../mainwindow.ui" line="2280"/>
         <source>Rectangular fill</source>
         <translation>Rechthoek vulling</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2280"/>
+        <location filename="../mainwindow.ui" line="2283"/>
         <source>Rectangular Fill (Shift+S)</source>
         <translation>Rechthoek Gereedschap (Shift+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2416"/>
+        <location filename="../mainwindow.ui" line="2419"/>
         <source>Tileset Item Box</source>
         <translation>Voorwerpen Gereedschapskist</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2428"/>
+        <location filename="../mainwindow.ui" line="2431"/>
         <source>Debugger</source>
         <translation>Debugger</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2549"/>
+        <location filename="../mainwindow.ui" line="2552"/>
         <source>Position bookmarks</source>
         <translation>Bladwijzerposities</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="706"/>
+        <location filename="../mainwindow.ui" line="709"/>
         <source>Open...</source>
         <translation>Openen...</translation>
     </message>
@@ -7353,631 +7353,641 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation>Help</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="338"/>
+        <location filename="../mainwindow.ui" line="341"/>
         <source>Set align grid size</source>
         <translation>Rastergrootte instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="391"/>
+        <location filename="../mainwindow.ui" line="394"/>
         <source>LunaLUA scripts</source>
         <translation>LunaLua scripts</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="409"/>
+        <location filename="../mainwindow.ui" line="412"/>
         <source>Configuration</source>
         <translation>Configuratie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="419"/>
+        <location filename="../mainwindow.ui" line="422"/>
         <source>Plugins</source>
         <translation>Plugins</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="709"/>
+        <location filename="../mainwindow.ui" line="712"/>
         <source>Open (Ctrl+O)</source>
         <translation>Openen (Ctrl+O)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="723"/>
+        <location filename="../mainwindow.ui" line="726"/>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <extracomment>Exit from the editor</extracomment>
         <translation>Afsluiten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="738"/>
+        <location filename="../mainwindow.ui" line="741"/>
         <source>Level...</source>
         <translation>Niveau...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="750"/>
+        <location filename="../mainwindow.ui" line="753"/>
         <source>World map...</source>
         <translation>Wereldkaart...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="762"/>
+        <location filename="../mainwindow.ui" line="765"/>
         <source>NPC config...</source>
         <translation>NPC configuratie...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="777"/>
+        <location filename="../mainwindow.ui" line="780"/>
         <location filename="../main_window/windows_extras.cpp" line="21"/>
         <source>Save</source>
         <translation>Opslaan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="780"/>
+        <location filename="../mainwindow.ui" line="783"/>
         <source>Save (Ctrl+S)</source>
         <translation>Opslaan (Ctrl+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="801"/>
+        <location filename="../mainwindow.ui" line="804"/>
         <source>Save as...</source>
         <translation>Opslaan als...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="804"/>
+        <location filename="../mainwindow.ui" line="807"/>
         <source>Save as (Ctrl+Shift+S)</source>
         <translation>Opslaan als (Ctrl+Shift+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="821"/>
+        <location filename="../mainwindow.ui" line="824"/>
         <source>Close</source>
         <translation>Sluiten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="829"/>
+        <location filename="../mainwindow.ui" line="832"/>
         <source>Save all</source>
         <translation>Alles opslaan</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="832"/>
+        <location filename="../mainwindow.ui" line="835"/>
         <source>Save all (Ctrl+Alt+S)</source>
         <translation>Alles opslaan (Ctrl+Alt+S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="840"/>
+        <location filename="../mainwindow.ui" line="843"/>
         <source>About</source>
         <translation>Over</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="854"/>
+        <location filename="../mainwindow.ui" line="857"/>
         <source>Contents</source>
         <translation>Inhoud</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="857"/>
+        <location filename="../mainwindow.ui" line="860"/>
         <source>Contents (F1)</source>
         <translation>Inhoud (F1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="879"/>
         <location filename="../mainwindow.ui" line="882"/>
+        <location filename="../mainwindow.ui" line="885"/>
         <source>Section 0</source>
         <translation>Sectie 0</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="901"/>
         <location filename="../mainwindow.ui" line="904"/>
+        <location filename="../mainwindow.ui" line="907"/>
         <source>Section 1</source>
         <translation>Sectie 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="923"/>
         <location filename="../mainwindow.ui" line="926"/>
+        <location filename="../mainwindow.ui" line="929"/>
         <source>Section 2</source>
         <translation>Sectie 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="945"/>
         <location filename="../mainwindow.ui" line="948"/>
+        <location filename="../mainwindow.ui" line="951"/>
         <source>Section 3</source>
         <translation>Sectie 3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="967"/>
         <location filename="../mainwindow.ui" line="970"/>
+        <location filename="../mainwindow.ui" line="973"/>
         <source>Section 4</source>
         <translation>Sectie 4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="989"/>
         <location filename="../mainwindow.ui" line="992"/>
+        <location filename="../mainwindow.ui" line="995"/>
         <source>Section 5</source>
         <translation>Sectie 5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1011"/>
         <location filename="../mainwindow.ui" line="1014"/>
+        <location filename="../mainwindow.ui" line="1017"/>
         <source>Section 6</source>
         <translation>Sectie 6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1033"/>
         <location filename="../mainwindow.ui" line="1036"/>
+        <location filename="../mainwindow.ui" line="1039"/>
         <source>Section 7</source>
         <translation>Sectie 7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1055"/>
         <location filename="../mainwindow.ui" line="1058"/>
+        <location filename="../mainwindow.ui" line="1061"/>
         <source>Section 8</source>
         <translation>Sectie 8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1077"/>
         <location filename="../mainwindow.ui" line="1080"/>
+        <location filename="../mainwindow.ui" line="1083"/>
         <source>Section 9</source>
         <translation>Sectie 9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1099"/>
         <location filename="../mainwindow.ui" line="1102"/>
+        <location filename="../mainwindow.ui" line="1105"/>
         <source>Section 10</source>
         <translation>Sectie 10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1121"/>
         <location filename="../mainwindow.ui" line="1124"/>
+        <location filename="../mainwindow.ui" line="1127"/>
         <source>Section 11</source>
         <translation>Sectie 11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1143"/>
         <location filename="../mainwindow.ui" line="1146"/>
+        <location filename="../mainwindow.ui" line="1149"/>
         <source>Section 12</source>
         <translation>Sectie 12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1165"/>
         <location filename="../mainwindow.ui" line="1168"/>
+        <location filename="../mainwindow.ui" line="1171"/>
         <source>Section 13</source>
         <translation>Sectie 13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1187"/>
         <location filename="../mainwindow.ui" line="1190"/>
+        <location filename="../mainwindow.ui" line="1193"/>
         <source>Section 14</source>
         <translation>Sectie 14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1209"/>
         <location filename="../mainwindow.ui" line="1212"/>
+        <location filename="../mainwindow.ui" line="1215"/>
         <source>Section 15</source>
         <translation>Sectie 15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1231"/>
         <location filename="../mainwindow.ui" line="1234"/>
+        <location filename="../mainwindow.ui" line="1237"/>
         <source>Section 16</source>
         <translation>Sectie 16</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1253"/>
         <location filename="../mainwindow.ui" line="1256"/>
+        <location filename="../mainwindow.ui" line="1259"/>
         <source>Section 17</source>
         <translation>Sectie 17</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1275"/>
         <location filename="../mainwindow.ui" line="1278"/>
+        <location filename="../mainwindow.ui" line="1281"/>
         <source>Section 18</source>
         <translation>Sectie 18</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1297"/>
         <location filename="../mainwindow.ui" line="1300"/>
+        <location filename="../mainwindow.ui" line="1303"/>
         <source>Section 19</source>
         <translation>Sectie 19</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1319"/>
         <location filename="../mainwindow.ui" line="1322"/>
+        <location filename="../mainwindow.ui" line="1325"/>
         <source>Section 20</source>
         <translation>Sectie 20</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1336"/>
+        <location filename="../mainwindow.ui" line="1339"/>
         <source>Wrap Horizontally</source>
         <translation>Scherm horizontaal aansluiten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1353"/>
+        <location filename="../mainwindow.ui" line="1356"/>
         <source>Offscreen exit</source>
         <translation>Schermgrens uitgang</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1367"/>
+        <location filename="../mainwindow.ui" line="1370"/>
         <source>No turn back</source>
         <translation>Eenrichtingscamera</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1392"/>
+        <location filename="../mainwindow.ui" line="1395"/>
         <source>Export to image...</source>
         <translation>Exporteer naar afbeelding...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1395"/>
+        <location filename="../mainwindow.ui" line="1398"/>
         <source>Export current section to image (F12)</source>
         <translation>Exporteer huidige sectie naar afbeelding (F12)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1406"/>
-        <location filename="../mainwindow.ui" line="1430"/>
+        <location filename="../mainwindow.ui" line="1409"/>
+        <location filename="../mainwindow.ui" line="1433"/>
         <source>Properties...</source>
         <translation>Instelllingen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1417"/>
+        <location filename="../mainwindow.ui" line="1420"/>
         <source>Disable world map</source>
         <translation>Wereldkaart uitschakelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1487"/>
+        <location filename="../mainwindow.ui" line="1490"/>
         <source>Select and Move</source>
         <translation>Selecteren en verplaatsen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1490"/>
+        <location filename="../mainwindow.ui" line="1493"/>
         <source>Select (S)</source>
         <translation>Selecteren (S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1511"/>
+        <location filename="../mainwindow.ui" line="1514"/>
         <source>Eriser</source>
         <translation>Wisser</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1514"/>
+        <location filename="../mainwindow.ui" line="1517"/>
         <source>Eriser (E)</source>
         <translation>Wisser (E)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1579"/>
+        <location filename="../mainwindow.ui" line="1582"/>
         <source>Attach to grid</source>
         <translation>Uitlijnen op raster</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1595"/>
+        <location filename="../mainwindow.ui" line="1598"/>
         <source>Lock all Blocks</source>
         <translation>Alle blokken vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1608"/>
+        <location filename="../mainwindow.ui" line="1611"/>
         <source>Lock all BGO</source>
         <translation>Alle BGO&apos;s vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1621"/>
+        <location filename="../mainwindow.ui" line="1624"/>
         <source>Lock all NPC</source>
         <translation>Alle NPC&apos;s vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1634"/>
+        <location filename="../mainwindow.ui" line="1637"/>
         <source>Lock all door objects</source>
         <translation>Alle deuren en portalen vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1647"/>
+        <location filename="../mainwindow.ui" line="1650"/>
         <source>Lock all water squares</source>
         <translation>Water/drijfzand vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1659"/>
+        <location filename="../mainwindow.ui" line="1662"/>
         <source>Set first player position</source>
         <translation>Speler 1 positie instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1662"/>
+        <location filename="../mainwindow.ui" line="1665"/>
         <source>Set first player start point</source>
         <translation>Startpunt voor speler 1 instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1674"/>
+        <location filename="../mainwindow.ui" line="1677"/>
         <source>Set second player position</source>
         <translation>Speler 2 positie instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1677"/>
+        <location filename="../mainwindow.ui" line="1680"/>
         <source>Set second player start point</source>
         <translation>Startpunt van speler 2 instellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1689"/>
+        <location filename="../mainwindow.ui" line="1692"/>
         <source>Play music</source>
         <translation>Muziek afspelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1692"/>
+        <location filename="../mainwindow.ui" line="1695"/>
         <source>Play music (F11)</source>
         <translation>Muziek afspelen (F11)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1707"/>
+        <location filename="../mainwindow.ui" line="1710"/>
         <source>Reload file data</source>
         <translation>Huidig bestand opnieuw laden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1710"/>
+        <location filename="../mainwindow.ui" line="1713"/>
         <source>Reload current file data</source>
         <translation>Huidig bestand opnieuw laden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1731"/>
+        <location filename="../mainwindow.ui" line="1734"/>
         <source>Scroll hand</source>
         <translation>Cursor scrollen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1734"/>
+        <location filename="../mainwindow.ui" line="1737"/>
         <source>Scrolling (D)</source>
         <translation>Camera verplaatsen (D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1749"/>
+        <location filename="../mainwindow.ui" line="1752"/>
         <source>Undo</source>
         <translation>Ongedaan maken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1764"/>
+        <location filename="../mainwindow.ui" line="1767"/>
         <source>Redo</source>
         <translation>Herhalen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1794"/>
+        <location filename="../mainwindow.ui" line="1797"/>
         <source>Animation</source>
         <translation>Animatie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1808"/>
-        <location filename="../mainwindow.ui" line="1819"/>
-        <location filename="../mainwindow.ui" line="1830"/>
-        <location filename="../mainwindow.ui" line="1841"/>
-        <location filename="../mainwindow.ui" line="1852"/>
-        <location filename="../mainwindow.ui" line="1863"/>
-        <location filename="../mainwindow.ui" line="1874"/>
-        <location filename="../mainwindow.ui" line="1885"/>
-        <location filename="../mainwindow.ui" line="1896"/>
-        <location filename="../mainwindow.ui" line="1907"/>
+        <location filename="../mainwindow.ui" line="1811"/>
+        <location filename="../mainwindow.ui" line="1822"/>
+        <location filename="../mainwindow.ui" line="1833"/>
+        <location filename="../mainwindow.ui" line="1844"/>
+        <location filename="../mainwindow.ui" line="1855"/>
+        <location filename="../mainwindow.ui" line="1866"/>
+        <location filename="../mainwindow.ui" line="1877"/>
+        <location filename="../mainwindow.ui" line="1888"/>
+        <location filename="../mainwindow.ui" line="1899"/>
+        <location filename="../mainwindow.ui" line="1910"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;leeg&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1922"/>
+        <location filename="../mainwindow.ui" line="1925"/>
         <source>Copy</source>
         <translation>Kopiëren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1925"/>
+        <location filename="../mainwindow.ui" line="1928"/>
         <source>Copy selected items</source>
         <translation>Geselecteerde items kopiëren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1955"/>
+        <location filename="../mainwindow.ui" line="1958"/>
         <source>Draw Water zone</source>
         <translation>Waterzone tekenen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1958"/>
+        <location filename="../mainwindow.ui" line="1961"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
         <translation>Klik en sleep de cursor over het gebied dat u met water wilt vullen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1970"/>
+        <location filename="../mainwindow.ui" line="1973"/>
         <source>Draw QuickSand zone</source>
         <translation>Drijfzand zone tekenen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1973"/>
+        <location filename="../mainwindow.ui" line="1976"/>
         <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
         <translation>Klik en sleep de cursor over het gebied dat u wilt vullen met drijfzand</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1985"/>
+        <location filename="../mainwindow.ui" line="1988"/>
         <source>Paste</source>
         <translation>Plakken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2011"/>
+        <location filename="../mainwindow.ui" line="2014"/>
         <source>[No opened files]</source>
         <translation>[Geen geopende bestanden]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2029"/>
+        <location filename="../mainwindow.ui" line="2032"/>
         <source>Cut</source>
         <translation>Knippen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2061"/>
+        <location filename="../mainwindow.ui" line="2064"/>
         <source>Select only</source>
         <translation>Alleen selecteren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2069"/>
+        <location filename="../mainwindow.ui" line="2072"/>
         <source>Application settings</source>
         <translation>Applicatie instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2128"/>
+        <location filename="../mainwindow.ui" line="2131"/>
         <source>Level Search</source>
         <translation>Zoeken naar voorwerpen in het niveau</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2131"/>
+        <location filename="../mainwindow.ui" line="2134"/>
         <source>Search for an Item on the Level</source>
         <translation>Zoekt naar voorwerpen in dit niveau</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2139"/>
+        <location filename="../mainwindow.ui" line="2142"/>
         <source>Refresh menus</source>
         <translation>Menu&apos;s herladen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2150"/>
+        <location filename="../mainwindow.ui" line="2153"/>
         <source>Fullscreen</source>
         <translation>Fullscreen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2158"/>
+        <location filename="../mainwindow.ui" line="2161"/>
         <source>Tilesets Editor</source>
         <translation>Tegelset Bewerker</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2166"/>
+        <location filename="../mainwindow.ui" line="2169"/>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
         <translation>Herstel slordige graphics (LazyFixTool)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2174"/>
+        <location filename="../mainwindow.ui" line="2177"/>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
         <translation>Converteer gif met masker tot PNG (GIFs2PNG)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2182"/>
+        <location filename="../mainwindow.ui" line="2185"/>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
         <translation>Converteer PNG tot gif met masker (PNG2GIFs)...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2197"/>
+        <location filename="../mainwindow.ui" line="2200"/>
         <source>World settings</source>
         <translation>Wereld instellingen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2213"/>
+        <location filename="../mainwindow.ui" line="2216"/>
         <source>Lock Terrain tiles</source>
         <translation>Terreintegels vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2239"/>
+        <location filename="../mainwindow.ui" line="2242"/>
         <source>Lock Paths</source>
         <translation>Alle paden vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2252"/>
+        <location filename="../mainwindow.ui" line="2255"/>
         <source>Lock Levels</source>
         <translation>Alle niveaus vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2265"/>
+        <location filename="../mainwindow.ui" line="2268"/>
         <source>Lock Music Boxes</source>
         <translation>Alle muziekdozen vergrendelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2363"/>
+        <location filename="../mainwindow.ui" line="2366"/>
         <source>Show Developer Console</source>
         <translation>Ontwikkelaarsconsole weergeven</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2433"/>
+        <location filename="../mainwindow.ui" line="2436"/>
         <source>Change configuration pack...</source>
         <translation>Van configuratiepakket veranderen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2833"/>
+        <location filename="../mainwindow.ui" line="2836"/>
         <source>Show camera grid</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2942"/>
+        <location filename="../mainwindow.ui" line="2945"/>
         <source>Test world map</source>
         <translation>Wereldkaart Testen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2984"/>
+        <location filename="../mainwindow.ui" line="2987"/>
         <source>&lt;no extra settings&gt;</source>
         <translation>&lt;geen extra instellingen&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2992"/>
+        <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2997"/>
+        <source>Bulk convert and repair of level and world files...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Test level (Alpha)</source>
         <translation type="vanished">Niveau testen (Alpha)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2471"/>
         <location filename="../mainwindow.ui" line="2474"/>
+        <location filename="../mainwindow.ui" line="2477"/>
         <source>Testing options...</source>
         <translation>Testopties....</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2552"/>
+        <location filename="../mainwindow.ui" line="2555"/>
         <source>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</source>
         <translation>Sla specifieke camera posities als bladwijzer op. U kunt dan deze bladwijzers gebruiken om snel naar belangrijke posities terug te keren op grote mappen.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2711"/>
+        <location filename="../mainwindow.ui" line="2714"/>
         <source>Convert Audio files...</source>
         <translation>Audio bestanden converteren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2749"/>
+        <location filename="../mainwindow.ui" line="2752"/>
         <source>Start Game</source>
         <translation>Spel Starten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2771"/>
+        <location filename="../mainwindow.ui" line="2774"/>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
         <translation>Opent het datamapje van dit niveau.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2794"/>
+        <location filename="../mainwindow.ui" line="2797"/>
         <source>Circular fill</source>
         <translation>Circulair vullen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2797"/>
+        <location filename="../mainwindow.ui" line="2800"/>
         <source>Circular fill (Shift+C)</source>
         <translation>Elips gereedschap (Shift+C)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2815"/>
+        <location filename="../mainwindow.ui" line="2818"/>
         <source>Show grid</source>
         <translation>Raster weergeven</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2841"/>
+        <location filename="../mainwindow.ui" line="2844"/>
         <source>Modern GUI</source>
         <translation>Moderne GUI</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2852"/>
+        <location filename="../mainwindow.ui" line="2855"/>
         <source>Variables</source>
         <translation>Variabelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2864"/>
+        <location filename="../mainwindow.ui" line="2867"/>
         <source>Go to top-right of the section</source>
         <translation>Ga naar de rechterbovenhoek van de sectie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2876"/>
+        <location filename="../mainwindow.ui" line="2879"/>
         <source>Go to right-bottom of the section</source>
         <translation>Ga naar de rechteronderhoek van de sectie</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2881"/>
+        <location filename="../mainwindow.ui" line="2884"/>
         <source>Script Editor</source>
         <translation>Script bewerken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2889"/>
+        <location filename="../mainwindow.ui" line="2892"/>
         <source>Run configure tool...</source>
         <translation>Configuratieprogramma uitvoeren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2894"/>
+        <location filename="../mainwindow.ui" line="2897"/>
         <source>Open local script</source>
         <translation>Locale script openen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2897"/>
+        <location filename="../mainwindow.ui" line="2900"/>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
         <translation>Opent het locale niveau / wereldkaart script. Als het niet bestaat, wordt een bestand aangemaakt.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2905"/>
+        <location filename="../mainwindow.ui" line="2908"/>
         <source>Open the episode common script. If it does not exist, a file will be created.</source>
         <translation>Opent het gemeenschappelijk episode script. Als het niet bestaat, wordt een bestand aangemaakt.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2934"/>
+        <location filename="../mainwindow.ui" line="2937"/>
         <source>Welcome dialog</source>
         <translation>Welkom dialoog</translation>
     </message>
@@ -7986,239 +7996,239 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation type="vanished">Test wereldkaart (Alpha)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2960"/>
+        <location filename="../mainwindow.ui" line="2963"/>
         <source>Music change points</source>
         <translation>Muziek wijzingspunten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2902"/>
+        <location filename="../mainwindow.ui" line="2905"/>
         <source>Open episode script</source>
         <translation>Open episode script</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2910"/>
+        <location filename="../mainwindow.ui" line="2913"/>
         <source>Level local (%1)</source>
         <translation>Niveau-lokaal (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2913"/>
+        <location filename="../mainwindow.ui" line="2916"/>
         <source>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</source>
         <translation>Lokale niveau script voor het huidige niveau. Nieuwe script bestandsnaam om het oude &quot;lunadll.lua&quot; te vervangen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2918"/>
+        <location filename="../mainwindow.ui" line="2921"/>
         <source>Level global (%1)</source>
         <translation>Niveau-globaal (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2921"/>
+        <location filename="../mainwindow.ui" line="2924"/>
         <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
         <translation>globale niveau script voor het hele episode. Nieuwe script bestandsnaam om het oude &quot;lunadll.lua&quot; te vervangen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2926"/>
+        <location filename="../mainwindow.ui" line="2929"/>
         <source>World map script (%1)</source>
         <translation>Wereldkaart script (%1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2929"/>
+        <location filename="../mainwindow.ui" line="2932"/>
         <source>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</source>
         <translation>Globale wereldkaart script. Nieuwe script bestandsnaam om het oude &quot;lunaoverworld.lua&quot; te vervangen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2295"/>
+        <location filename="../mainwindow.ui" line="2298"/>
         <source>Overwrite mode</source>
         <translation>Overschrijf modus</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2307"/>
+        <location filename="../mainwindow.ui" line="2310"/>
         <source>Apply (Enter)</source>
         <translation>Doorvoeren (Enter)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2322"/>
+        <location filename="../mainwindow.ui" line="2325"/>
         <source>Cancel (Esc)</source>
         <translation>Annuleren (Esc)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2337"/>
+        <location filename="../mainwindow.ui" line="2340"/>
         <source>Line</source>
         <translation>Lijn Gereedschap</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2340"/>
+        <location filename="../mainwindow.ui" line="2343"/>
         <source>Line (Shift+D)</source>
         <translation>Lijn (Shift+D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2355"/>
+        <location filename="../mainwindow.ui" line="2358"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
         <translation>Zoeken op wereldkaart</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2371"/>
+        <location filename="../mainwindow.ui" line="2374"/>
         <source>Tileset Groups Editor</source>
         <translation>Tegelgroep Bewerker</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2383"/>
+        <location filename="../mainwindow.ui" line="2386"/>
         <source>Zoom In</source>
         <translation>Inzoomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2392"/>
+        <location filename="../mainwindow.ui" line="2395"/>
         <source>Zoom Out</source>
         <translation>Uitzoomen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2401"/>
+        <location filename="../mainwindow.ui" line="2404"/>
         <source>Reset Zoom</source>
         <translation>Standaard Zoom</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2444"/>
+        <location filename="../mainwindow.ui" line="2447"/>
         <source>Semi-transparent paths</source>
         <translation>Semi-transparante paden</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2449"/>
+        <location filename="../mainwindow.ui" line="2452"/>
         <source>Export section to image...</source>
         <translation>Exporteer sectie naar afbeelding....</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2452"/>
+        <location filename="../mainwindow.ui" line="2455"/>
         <source>Export whole level section to image</source>
         <translation>Exporteer het hele niveau sectie naar afbeelding</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2457"/>
+        <location filename="../mainwindow.ui" line="2460"/>
         <source>Test level</source>
         <translation>Niveau Testen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2489"/>
+        <location filename="../mainwindow.ui" line="2492"/>
         <source>Fill</source>
         <translation>Opvul gereedschap</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2497"/>
+        <location filename="../mainwindow.ui" line="2500"/>
         <source>Clear unused data</source>
         <translation>Ongebruikte gegevens wissen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2512"/>
+        <location filename="../mainwindow.ui" line="2515"/>
         <source>Show properties</source>
         <translation>Eigenschappen weergeven</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2515"/>
+        <location filename="../mainwindow.ui" line="2518"/>
         <source>Show properties of item</source>
         <translation>Eigenschappen van voorwerp weergeven</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2523"/>
+        <location filename="../mainwindow.ui" line="2526"/>
         <source>Sprite Editor</source>
         <translation>Sprite Bewerken</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2531"/>
+        <location filename="../mainwindow.ui" line="2534"/>
         <source>Import...</source>
         <translation>Importeren...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2534"/>
+        <location filename="../mainwindow.ui" line="2537"/>
         <source>Import</source>
         <translation>Importeren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2560"/>
+        <location filename="../mainwindow.ui" line="2563"/>
         <source>Clone section to...</source>
         <translation>Sectie klonen naar ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2571"/>
-        <location filename="../mainwindow.ui" line="2620"/>
+        <location filename="../mainwindow.ui" line="2574"/>
+        <location filename="../mainwindow.ui" line="2623"/>
         <source>Rotate left</source>
         <translation>Linksom draaien</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2579"/>
-        <location filename="../mainwindow.ui" line="2628"/>
+        <location filename="../mainwindow.ui" line="2582"/>
+        <location filename="../mainwindow.ui" line="2631"/>
         <source>Rotate right</source>
         <translation>Rechtsom roteren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2590"/>
-        <location filename="../mainwindow.ui" line="2636"/>
+        <location filename="../mainwindow.ui" line="2593"/>
+        <location filename="../mainwindow.ui" line="2639"/>
         <source>Flip horizontal</source>
         <translation>Horizontaal spiegelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2601"/>
-        <location filename="../mainwindow.ui" line="2644"/>
+        <location filename="../mainwindow.ui" line="2604"/>
+        <location filename="../mainwindow.ui" line="2647"/>
         <source>Flip vertical</source>
         <translation>Verticaal spiegelen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2612"/>
+        <location filename="../mainwindow.ui" line="2615"/>
         <source>Align selected</source>
         <translation>Selectie aligneren</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2649"/>
+        <location filename="../mainwindow.ui" line="2652"/>
         <source>Fix wrong masks</source>
         <translation>Slechte maskers herstellen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2652"/>
+        <location filename="../mainwindow.ui" line="2655"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
         <translation>Dit werktuig herstelt visuele bugs veroorzaakt door afbeeldingen met slechte maskers</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2663"/>
+        <location filename="../mainwindow.ui" line="2666"/>
         <source>Delete section</source>
         <translation>Sectie verwijderen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2674"/>
+        <location filename="../mainwindow.ui" line="2677"/>
         <source>Don&apos;t fill out of section</source>
         <translation>Niet buiten de sectie vullen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2679"/>
+        <location filename="../mainwindow.ui" line="2682"/>
         <source>SMBX-like GUI</source>
         <translation>Oorspronkelijke GUI</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2687"/>
-        <location filename="../mainwindow.ui" line="2976"/>
+        <location filename="../mainwindow.ui" line="2690"/>
+        <location filename="../mainwindow.ui" line="2979"/>
         <source>Run testing of saved file</source>
         <translation>Een opgeslagen bestand testen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2695"/>
+        <location filename="../mainwindow.ui" line="2698"/>
         <source>Change log</source>
         <translation>Wijzigingenlogboek</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2703"/>
+        <location filename="../mainwindow.ui" line="2706"/>
         <source>Check for updates...</source>
         <translation>Controleer of er updates zijn....</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2719"/>
+        <location filename="../mainwindow.ui" line="2722"/>
         <source>Clear NPC garbadge...</source>
         <translation>NPC&apos;s opruimen...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2730"/>
-        <location filename="../mainwindow.ui" line="2736"/>
+        <location filename="../mainwindow.ui" line="2733"/>
+        <location filename="../mainwindow.ui" line="2739"/>
         <source>More sections...</source>
         <translation>Meer secties...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2741"/>
+        <location filename="../mainwindow.ui" line="2744"/>
         <source>Tip of the day...</source>
         <translation>Tip van de dag...</translation>
     </message>
@@ -8227,27 +8237,27 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation type="vanished">Programma Opstarten</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2752"/>
+        <location filename="../mainwindow.ui" line="2755"/>
         <source>Launch game engine application.</source>
         <translation>Spel engine applicatie opstarten.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2760"/>
+        <location filename="../mainwindow.ui" line="2763"/>
         <source>Open folder of current file</source>
         <translation>Open het episodemapje</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2763"/>
+        <location filename="../mainwindow.ui" line="2766"/>
         <source>Open folder which contains currently opened file</source>
         <translation>Opent het episodemapje van het huidig bestand.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2768"/>
+        <location filename="../mainwindow.ui" line="2771"/>
         <source>Open custom data folder</source>
         <translation>Episodemapje openen</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2779"/>
+        <location filename="../mainwindow.ui" line="2782"/>
         <source>Wrap Vertically</source>
         <translation>Scherm verticaal aansluiten</translation>
     </message>

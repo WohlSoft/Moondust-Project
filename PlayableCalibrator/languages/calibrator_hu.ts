@@ -938,7 +938,7 @@ Jobb gomb - mozgasd a jobb alsó satkat a levágáshoz.</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="410"/>
         <source>Frame X</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Képkocka X</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="433"/>
@@ -963,7 +963,7 @@ Jobb gomb - mozgasd a jobb alsó satkat a levágáshoz.</translation>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="494"/>
         <source>Frame Y</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Képkocka Y</translation>
     </message>
     <message>
         <location filename="../image_calibration/image_calibrator.ui" line="501"/>

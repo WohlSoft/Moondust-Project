@@ -6672,6 +6672,14 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
         <translation>Для застосування нещодавніх змін, конфігураційний пакет потрібно перезавантажити. Зробити це зараз?</translation>
     </message>
+    <message>
+        <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulk convert and repair of level and world files...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>

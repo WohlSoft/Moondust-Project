@@ -821,46 +821,46 @@ You can use any configuration package here:&lt;br&gt;%2</source>
  여기에서 구성 패키지를 사용할 수 있습니다. &lt;br&gt; % 2</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="514"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="518"/>
         <source>Integrational configuration package is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="515"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="519"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="525"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="529"/>
         <source>Configuration package is not configured!</source>
         <translation>구성 패키지가 구성되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="526"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="530"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>&quot;% 1&quot;구성 패키지가 아직 구성되지 않았습니다.
 구성 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="580"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="584"/>
         <source>Configuration script failed</source>
         <translation>구성 스크립트 실패</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="581"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="585"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>구성 도구에서 오류가 발생했습니다 : % 2 줄에 % 1.
 파일 경로 : % 3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="593"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="597"/>
         <source>No configuration needed</source>
         <translation>구성이 필요하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="594"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="598"/>
         <source>This config pack has no configuring tool.</source>
         <translation>이 구성 팩에는 구성 도구가 없습니다.</translation>
     </message>
@@ -6433,1089 +6433,1099 @@ Please, select necessary world map in a list:</source>
         <translation>외부 도구</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="312"/>
+        <location filename="../mainwindow.ui" line="315"/>
         <source>Custom data</source>
         <translation>커스텀 데이터</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="334"/>
+        <location filename="../mainwindow.ui" line="337"/>
         <source>Edit</source>
         <translation>편집</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="338"/>
+        <location filename="../mainwindow.ui" line="341"/>
         <source>Set align grid size</source>
         <translation>그리드 사이즈 정렬</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="372"/>
+        <location filename="../mainwindow.ui" line="375"/>
         <source>Test</source>
         <translation>테스트</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="387"/>
+        <location filename="../mainwindow.ui" line="390"/>
         <source>Script</source>
         <translation>스크립트</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="391"/>
+        <location filename="../mainwindow.ui" line="394"/>
         <source>LunaLUA scripts</source>
         <translation>LunaLua 스크립트</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="409"/>
+        <location filename="../mainwindow.ui" line="412"/>
         <source>Configuration</source>
         <translation>구성</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="419"/>
+        <location filename="../mainwindow.ui" line="422"/>
         <source>Plugins</source>
         <translation>플러그인</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="449"/>
+        <location filename="../mainwindow.ui" line="452"/>
         <source>General</source>
         <translation>일반</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="477"/>
+        <location filename="../mainwindow.ui" line="480"/>
         <source>CommonEdit Bar</source>
         <translation>편집</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="506"/>
+        <location filename="../mainwindow.ui" line="509"/>
         <source>EditingTools</source>
         <translation>편집 도구</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="541"/>
+        <location filename="../mainwindow.ui" line="544"/>
         <source>LevelObj Tools</source>
         <translation>레벨</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="575"/>
+        <location filename="../mainwindow.ui" line="578"/>
         <source>World map Toolbar</source>
         <translation>세계지도 도구 모음</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="608"/>
+        <location filename="../mainwindow.ui" line="611"/>
         <source>Level Sections Switch</source>
         <translation>레벨 섹션 교체</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="656"/>
+        <location filename="../mainwindow.ui" line="659"/>
         <source>Placing</source>
         <translation>놓기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="680"/>
+        <location filename="../mainwindow.ui" line="683"/>
         <source>Resizing</source>
         <translation>크기 재설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="706"/>
+        <location filename="../mainwindow.ui" line="709"/>
         <source>Open...</source>
         <translation>열기...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="709"/>
+        <location filename="../mainwindow.ui" line="712"/>
         <source>Open (Ctrl+O)</source>
         <translation>열기(Ctrl+O)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="723"/>
+        <location filename="../mainwindow.ui" line="726"/>
         <source>Exit</source>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <extracomment>Exit from the editor</extracomment>
         <translation>에디터 닫기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="738"/>
+        <location filename="../mainwindow.ui" line="741"/>
         <source>Level...</source>
         <translation>레벨...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="750"/>
+        <location filename="../mainwindow.ui" line="753"/>
         <source>World map...</source>
         <translation>월드 맵...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="762"/>
+        <location filename="../mainwindow.ui" line="765"/>
         <source>NPC config...</source>
         <translation>NPC 구성...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="777"/>
+        <location filename="../mainwindow.ui" line="780"/>
         <location filename="../main_window/windows_extras.cpp" line="21"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="780"/>
+        <location filename="../mainwindow.ui" line="783"/>
         <source>Save (Ctrl+S)</source>
         <translation>저장 (Ctrl + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="801"/>
+        <location filename="../mainwindow.ui" line="804"/>
         <source>Save as...</source>
         <translation>다른 이름으로 저장...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="804"/>
+        <location filename="../mainwindow.ui" line="807"/>
         <source>Save as (Ctrl+Shift+S)</source>
         <translation>다른 이름으로 저장 (Ctrl + Shift + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="821"/>
+        <location filename="../mainwindow.ui" line="824"/>
         <source>Close</source>
         <translation>닫기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="829"/>
+        <location filename="../mainwindow.ui" line="832"/>
         <source>Save all</source>
         <translation>모두 저장</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="832"/>
+        <location filename="../mainwindow.ui" line="835"/>
         <source>Save all (Ctrl+Alt+S)</source>
         <translation>모두 저장 (Ctrl + Alt + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="840"/>
+        <location filename="../mainwindow.ui" line="843"/>
         <source>About</source>
         <translation>약</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="854"/>
+        <location filename="../mainwindow.ui" line="857"/>
         <source>Contents</source>
         <translation>내용</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="857"/>
+        <location filename="../mainwindow.ui" line="860"/>
         <source>Contents (F1)</source>
         <translation>목차 (F1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="879"/>
         <location filename="../mainwindow.ui" line="882"/>
+        <location filename="../mainwindow.ui" line="885"/>
         <source>Section 0</source>
         <translation>섹션 0</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="901"/>
         <location filename="../mainwindow.ui" line="904"/>
+        <location filename="../mainwindow.ui" line="907"/>
         <source>Section 1</source>
         <translation>섹션 1</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="923"/>
         <location filename="../mainwindow.ui" line="926"/>
+        <location filename="../mainwindow.ui" line="929"/>
         <source>Section 2</source>
         <translation>섹션 2</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="945"/>
         <location filename="../mainwindow.ui" line="948"/>
+        <location filename="../mainwindow.ui" line="951"/>
         <source>Section 3</source>
         <translation>섹션 3</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="967"/>
         <location filename="../mainwindow.ui" line="970"/>
+        <location filename="../mainwindow.ui" line="973"/>
         <source>Section 4</source>
         <translation>섹션 4</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="989"/>
         <location filename="../mainwindow.ui" line="992"/>
+        <location filename="../mainwindow.ui" line="995"/>
         <source>Section 5</source>
         <translation>섹션 5</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1011"/>
         <location filename="../mainwindow.ui" line="1014"/>
+        <location filename="../mainwindow.ui" line="1017"/>
         <source>Section 6</source>
         <translation>섹션 6</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1033"/>
         <location filename="../mainwindow.ui" line="1036"/>
+        <location filename="../mainwindow.ui" line="1039"/>
         <source>Section 7</source>
         <translation>섹션 7</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1055"/>
         <location filename="../mainwindow.ui" line="1058"/>
+        <location filename="../mainwindow.ui" line="1061"/>
         <source>Section 8</source>
         <translation>섹션 8</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1077"/>
         <location filename="../mainwindow.ui" line="1080"/>
+        <location filename="../mainwindow.ui" line="1083"/>
         <source>Section 9</source>
         <translation>섹션 9</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1099"/>
         <location filename="../mainwindow.ui" line="1102"/>
+        <location filename="../mainwindow.ui" line="1105"/>
         <source>Section 10</source>
         <translation>섹션 10</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1121"/>
         <location filename="../mainwindow.ui" line="1124"/>
+        <location filename="../mainwindow.ui" line="1127"/>
         <source>Section 11</source>
         <translation>섹션 11</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1143"/>
         <location filename="../mainwindow.ui" line="1146"/>
+        <location filename="../mainwindow.ui" line="1149"/>
         <source>Section 12</source>
         <translation>섹션 12</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1165"/>
         <location filename="../mainwindow.ui" line="1168"/>
+        <location filename="../mainwindow.ui" line="1171"/>
         <source>Section 13</source>
         <translation>섹션 13</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1187"/>
         <location filename="../mainwindow.ui" line="1190"/>
+        <location filename="../mainwindow.ui" line="1193"/>
         <source>Section 14</source>
         <translation>섹션 14</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1209"/>
         <location filename="../mainwindow.ui" line="1212"/>
+        <location filename="../mainwindow.ui" line="1215"/>
         <source>Section 15</source>
         <translation>섹션 15</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1231"/>
         <location filename="../mainwindow.ui" line="1234"/>
+        <location filename="../mainwindow.ui" line="1237"/>
         <source>Section 16</source>
         <translation>섹션 16</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1253"/>
         <location filename="../mainwindow.ui" line="1256"/>
+        <location filename="../mainwindow.ui" line="1259"/>
         <source>Section 17</source>
         <translation>섹션 17</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1275"/>
         <location filename="../mainwindow.ui" line="1278"/>
+        <location filename="../mainwindow.ui" line="1281"/>
         <source>Section 18</source>
         <translation>섹션 18</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1297"/>
         <location filename="../mainwindow.ui" line="1300"/>
+        <location filename="../mainwindow.ui" line="1303"/>
         <source>Section 19</source>
         <translation>섹션 19</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1319"/>
         <location filename="../mainwindow.ui" line="1322"/>
+        <location filename="../mainwindow.ui" line="1325"/>
         <source>Section 20</source>
         <translation>섹션 20</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1336"/>
+        <location filename="../mainwindow.ui" line="1339"/>
         <source>Wrap Horizontally</source>
         <translation>가로로 감싸기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1353"/>
+        <location filename="../mainwindow.ui" line="1356"/>
         <source>Offscreen exit</source>
         <translation>오프 스크린 종료</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1367"/>
+        <location filename="../mainwindow.ui" line="1370"/>
         <source>No turn back</source>
         <translation>단방향 스크롤</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1381"/>
+        <location filename="../mainwindow.ui" line="1384"/>
         <source>Underwater</source>
         <translation>수중</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1392"/>
+        <location filename="../mainwindow.ui" line="1395"/>
         <source>Export to image...</source>
         <translation>이미지로 내보내기 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1395"/>
+        <location filename="../mainwindow.ui" line="1398"/>
         <source>Export current section to image (F12)</source>
         <translation>현재 섹션을 이미지로 내보내기 (F12)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1406"/>
-        <location filename="../mainwindow.ui" line="1430"/>
+        <location filename="../mainwindow.ui" line="1409"/>
+        <location filename="../mainwindow.ui" line="1433"/>
         <source>Properties...</source>
         <translation>속성 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1417"/>
+        <location filename="../mainwindow.ui" line="1420"/>
         <source>Disable world map</source>
         <translation>세계지도 비활성화</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1425"/>
+        <location filename="../mainwindow.ui" line="1428"/>
         <source>Restart level after fail</source>
         <translation>사망 후 레벨 다시 시작</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1445"/>
+        <location filename="../mainwindow.ui" line="1448"/>
         <source>Level items browser</source>
         <translation>레벨 아이템 세트 브라우저</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1448"/>
-        <location filename="../mainwindow.ui" line="1466"/>
+        <location filename="../mainwindow.ui" line="1451"/>
+        <location filename="../mainwindow.ui" line="1469"/>
         <source>Items browser with a search</source>
         <translation>검색과 함께 사용 가능한 항목의 브라우저</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1463"/>
+        <location filename="../mainwindow.ui" line="1466"/>
         <source>World map items browser</source>
         <translation>세계지도 아이템 세트 브라우저</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1487"/>
+        <location filename="../mainwindow.ui" line="1490"/>
         <source>Select and Move</source>
         <translation>선택 및 이동</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1490"/>
+        <location filename="../mainwindow.ui" line="1493"/>
         <source>Select (S)</source>
         <translation>선택 (S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1511"/>
+        <location filename="../mainwindow.ui" line="1514"/>
         <source>Eriser</source>
         <translation>지우개</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1514"/>
+        <location filename="../mainwindow.ui" line="1517"/>
         <source>Eriser (E)</source>
         <translation>지우개 (E)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1529"/>
+        <location filename="../mainwindow.ui" line="1532"/>
         <source>Section Settings</source>
         <translation>섹션 설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1543"/>
+        <location filename="../mainwindow.ui" line="1546"/>
         <source>Reload configuration pack</source>
         <translation>구성 팩 다시로드</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1561"/>
+        <location filename="../mainwindow.ui" line="1564"/>
         <source>Go to left-bottom of the section</source>
         <translation>섹션의 왼쪽 하단으로 이동</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1564"/>
+        <location filename="../mainwindow.ui" line="1567"/>
         <source>Return to the left-bottom of the Level Section or x=0:y=0 coordinate on the World map</source>
         <translation>레벨 섹션의 왼쪽 하단 또는 월드 맵의 x = 0 : y = 0 좌표로 돌아갑니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1579"/>
+        <location filename="../mainwindow.ui" line="1582"/>
         <source>Attach to grid</source>
         <translation>그리드에 맞추기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1595"/>
+        <location filename="../mainwindow.ui" line="1598"/>
         <source>Lock all Blocks</source>
         <translation>모든 블록 잠금</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1608"/>
+        <location filename="../mainwindow.ui" line="1611"/>
         <source>Lock all BGO</source>
         <translation>모든 BGO 잠금</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1621"/>
+        <location filename="../mainwindow.ui" line="1624"/>
         <source>Lock all NPC</source>
         <translation>모든 NPC 잠금</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1634"/>
+        <location filename="../mainwindow.ui" line="1637"/>
         <source>Lock all door objects</source>
         <translation>모든 날실과 문 잠그기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1647"/>
+        <location filename="../mainwindow.ui" line="1650"/>
         <source>Lock all water squares</source>
         <translation>물 / 빠른 잠그기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1659"/>
+        <location filename="../mainwindow.ui" line="1662"/>
         <source>Set first player position</source>
         <translation>선수 1 위치 설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1662"/>
+        <location filename="../mainwindow.ui" line="1665"/>
         <source>Set first player start point</source>
         <translation>플레이어 1 시작 지점 설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1674"/>
+        <location filename="../mainwindow.ui" line="1677"/>
         <source>Set second player position</source>
         <translation>선수 2 위치 설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1677"/>
+        <location filename="../mainwindow.ui" line="1680"/>
         <source>Set second player start point</source>
         <translation>플레이어 2 시작 지점 설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1689"/>
+        <location filename="../mainwindow.ui" line="1692"/>
         <source>Play music</source>
         <translation>음악을 재생</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1692"/>
+        <location filename="../mainwindow.ui" line="1695"/>
         <source>Play music (F11)</source>
         <translation>음악 재생 (F11)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1707"/>
+        <location filename="../mainwindow.ui" line="1710"/>
         <source>Reload file data</source>
         <translation>현재 파일 다시로드</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1710"/>
+        <location filename="../mainwindow.ui" line="1713"/>
         <source>Reload current file data</source>
         <translation>현재 파일 다시로드</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1731"/>
+        <location filename="../mainwindow.ui" line="1734"/>
         <source>Scroll hand</source>
         <translation>스크롤 커서</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1734"/>
+        <location filename="../mainwindow.ui" line="1737"/>
         <source>Scrolling (D)</source>
         <translation>카메라 이동 (D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1749"/>
+        <location filename="../mainwindow.ui" line="1752"/>
         <source>Undo</source>
         <translation>실행 취소</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1764"/>
+        <location filename="../mainwindow.ui" line="1767"/>
         <source>Redo</source>
         <translation>다시 하다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1779"/>
+        <location filename="../mainwindow.ui" line="1782"/>
         <source>Warps and Doors</source>
         <translation>워프 및 문</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1794"/>
+        <location filename="../mainwindow.ui" line="1797"/>
         <source>Animation</source>
         <translation>생기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1797"/>
+        <location filename="../mainwindow.ui" line="1800"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Enable animation on animated objects&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;If the map has too many objects, it&apos;s recommended to &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;disable&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; this option!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;애니메이션 개체에 애니메이션 활성화&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt;지도에 개체가 너무 많으면 다음을 수행하는 것이 좋습니다. &lt;/span&gt;&lt;span style=&quot; font-weight:600; font-style:italic; color:#aa0000;&quot;&gt;비활성화&lt;/span&gt;&lt;span style=&quot; font-style:italic; color:#aa0000;&quot;&gt; 이 옵션!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1808"/>
-        <location filename="../mainwindow.ui" line="1819"/>
-        <location filename="../mainwindow.ui" line="1830"/>
-        <location filename="../mainwindow.ui" line="1841"/>
-        <location filename="../mainwindow.ui" line="1852"/>
-        <location filename="../mainwindow.ui" line="1863"/>
-        <location filename="../mainwindow.ui" line="1874"/>
-        <location filename="../mainwindow.ui" line="1885"/>
-        <location filename="../mainwindow.ui" line="1896"/>
-        <location filename="../mainwindow.ui" line="1907"/>
+        <location filename="../mainwindow.ui" line="1811"/>
+        <location filename="../mainwindow.ui" line="1822"/>
+        <location filename="../mainwindow.ui" line="1833"/>
+        <location filename="../mainwindow.ui" line="1844"/>
+        <location filename="../mainwindow.ui" line="1855"/>
+        <location filename="../mainwindow.ui" line="1866"/>
+        <location filename="../mainwindow.ui" line="1877"/>
+        <location filename="../mainwindow.ui" line="1888"/>
+        <location filename="../mainwindow.ui" line="1899"/>
+        <location filename="../mainwindow.ui" line="1910"/>
         <source>&lt;empty&gt;</source>
         <translation>&lt;비어 있음&gt;</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1922"/>
+        <location filename="../mainwindow.ui" line="1925"/>
         <source>Copy</source>
         <translation>부</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1925"/>
+        <location filename="../mainwindow.ui" line="1928"/>
         <source>Copy selected items</source>
         <translation>선택한 항목 복사</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1936"/>
+        <location filename="../mainwindow.ui" line="1939"/>
         <source>Prevent overlap</source>
         <translation>겹침 방지</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1939"/>
+        <location filename="../mainwindow.ui" line="1942"/>
         <source>Prevents similar items from overlapping each other.
 Objects will not be able to be placed on top of each other, and attempting to do so will result in the selected object returning to its original position. If this flag is disabled, you will be able to move elements over each other with no limitation. Objects will never be allowed to overlap when placing new objects, unless you are duplicating or pasting from the clipboard, which will always allow overlapping.</source>
         <translation>유사한 항목이 서로 겹치는 것을 방지합니다.
 개체를 서로 위에 놓을 수 없으며 이렇게하면 선택한 개체가 원래 위치로 돌아갑니다. 이 플래그가 비활성화되면 제한없이 요소를 서로 이동할 수 있습니다. 클립 보드에서 복제하거나 붙여 넣지 않는 한 새 개체를 배치 할 때 개체가 겹치지 않도록하여 항상 겹침을 허용합니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1955"/>
+        <location filename="../mainwindow.ui" line="1958"/>
         <source>Draw Water zone</source>
         <translation>물 구역 그리기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1958"/>
+        <location filename="../mainwindow.ui" line="1961"/>
         <source>Hold mouse button on map and move mouse for draw water zone</source>
         <translation>물로 채우려는 영역 위로 커서를 클릭하고 끕니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1970"/>
+        <location filename="../mainwindow.ui" line="1973"/>
         <source>Draw QuickSand zone</source>
         <translation>Quicksand 영역 그리기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1973"/>
+        <location filename="../mainwindow.ui" line="1976"/>
         <source>Hold mouse button on map and move mouse for draw quicksand zone</source>
         <translation>퀵 샌드로 채우려는 영역 위로 커서를 클릭하고 끕니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="1985"/>
+        <location filename="../mainwindow.ui" line="1988"/>
         <source>Paste</source>
         <translation>풀</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2000"/>
+        <location filename="../mainwindow.ui" line="2003"/>
         <source>Layers</source>
         <translation>레이어</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2011"/>
+        <location filename="../mainwindow.ui" line="2014"/>
         <source>[No opened files]</source>
         <translation>[열린 파일 없음]</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2029"/>
+        <location filename="../mainwindow.ui" line="2032"/>
         <source>Cut</source>
         <translation>절단</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2061"/>
+        <location filename="../mainwindow.ui" line="2064"/>
         <source>Select only</source>
         <translation>선택 만</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2069"/>
+        <location filename="../mainwindow.ui" line="2072"/>
         <source>Application settings</source>
         <translation>어플리케이션 설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2087"/>
+        <location filename="../mainwindow.ui" line="2090"/>
         <source>Go to the left-top of the section</source>
         <translation>섹션의 왼쪽 상단으로 이동</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2090"/>
+        <location filename="../mainwindow.ui" line="2093"/>
         <source>Return to the left-top of the Level Section or x=0:y=0 coordinate on the World map</source>
         <translation>레벨 섹션의 왼쪽 상단 또는 세계지도에서 x = 0 : y = 0 좌표로 돌아갑니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2102"/>
+        <location filename="../mainwindow.ui" line="2105"/>
         <source>Events</source>
         <translation>이벤트</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2113"/>
+        <location filename="../mainwindow.ui" line="2116"/>
         <source>Current configuration status...</source>
         <translation>현재 구성 상태 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2128"/>
+        <location filename="../mainwindow.ui" line="2131"/>
         <source>Level Search</source>
         <translation>레벨의 검색 항목</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2131"/>
+        <location filename="../mainwindow.ui" line="2134"/>
         <source>Search for an Item on the Level</source>
         <translation>레벨에서 아이템 검색</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2139"/>
+        <location filename="../mainwindow.ui" line="2142"/>
         <source>Refresh menus</source>
         <translation>메뉴 새로 고침</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2150"/>
+        <location filename="../mainwindow.ui" line="2153"/>
         <source>Fullscreen</source>
         <translation>전체 화면</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2158"/>
+        <location filename="../mainwindow.ui" line="2161"/>
         <source>Tilesets Editor</source>
         <translation>타일셋 편집기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2166"/>
+        <location filename="../mainwindow.ui" line="2169"/>
         <source>Fix Lazily-made graphics (LazyFixTool)...</source>
         <translation>게으른 그래픽 수정 (LazyFixTool) ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2174"/>
+        <location filename="../mainwindow.ui" line="2177"/>
         <source>Convert GIF with mask to PNG (GIFs2PNG)...</source>
         <translation>마스크가있는 GIF를 PNG로 변환 (GIFs2PNG) ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2182"/>
+        <location filename="../mainwindow.ui" line="2185"/>
         <source>Convert PNG to GIF with mask (PNG2GIFs)...</source>
         <translation>마스크를 사용하여 PNG를 GIF로 변환 (PNG2GIF) ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2197"/>
+        <location filename="../mainwindow.ui" line="2200"/>
         <source>World settings</source>
         <translation>세계 설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2213"/>
+        <location filename="../mainwindow.ui" line="2216"/>
         <source>Lock Terrain tiles</source>
         <translation>지형 타일 잠금</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2226"/>
+        <location filename="../mainwindow.ui" line="2229"/>
         <source>Lock Scenery tiles</source>
         <translation>풍경 타일 잠금</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2239"/>
+        <location filename="../mainwindow.ui" line="2242"/>
         <source>Lock Paths</source>
         <translation>모든 경로 잠금</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2252"/>
+        <location filename="../mainwindow.ui" line="2255"/>
         <source>Lock Levels</source>
         <translation>모든 레벨 잠금</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2265"/>
+        <location filename="../mainwindow.ui" line="2268"/>
         <source>Lock Music Boxes</source>
         <translation>모든 오르골 잠금</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2277"/>
+        <location filename="../mainwindow.ui" line="2280"/>
         <source>Rectangular fill</source>
         <translation>직사각형 채우기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2280"/>
+        <location filename="../mainwindow.ui" line="2283"/>
         <source>Rectangular Fill (Shift+S)</source>
         <translation>직사각형 도구 (Shift + S)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2295"/>
+        <location filename="../mainwindow.ui" line="2298"/>
         <source>Overwrite mode</source>
         <translation>덮어 쓰기 모드</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2304"/>
+        <location filename="../mainwindow.ui" line="2307"/>
         <source>Apply</source>
         <translation>적용</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2307"/>
+        <location filename="../mainwindow.ui" line="2310"/>
         <source>Apply (Enter)</source>
         <translation>신청 (Enter)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2319"/>
+        <location filename="../mainwindow.ui" line="2322"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2322"/>
+        <location filename="../mainwindow.ui" line="2325"/>
         <source>Cancel (Esc)</source>
         <translation>취소 (Esc)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2337"/>
+        <location filename="../mainwindow.ui" line="2340"/>
         <source>Line</source>
         <translation>선 도구</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2340"/>
+        <location filename="../mainwindow.ui" line="2343"/>
         <source>Line (Shift+D)</source>
         <translation>선 (Shift + D)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2355"/>
+        <location filename="../mainwindow.ui" line="2358"/>
         <source>World map Search</source>
         <comment>Must be like &quot;Search on the world map&quot;</comment>
         <translation>세계지도에서 검색</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2363"/>
+        <location filename="../mainwindow.ui" line="2366"/>
         <source>Show Developer Console</source>
         <translation>개발자 콘솔 표시</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2371"/>
+        <location filename="../mainwindow.ui" line="2374"/>
         <source>Tileset Groups Editor</source>
         <translation>타일셋 그룹 편집기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2383"/>
+        <location filename="../mainwindow.ui" line="2386"/>
         <source>Zoom In</source>
         <translation>확대</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2392"/>
+        <location filename="../mainwindow.ui" line="2395"/>
         <source>Zoom Out</source>
         <translation>축소</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2401"/>
+        <location filename="../mainwindow.ui" line="2404"/>
         <source>Reset Zoom</source>
         <translation>줌 재설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2416"/>
+        <location filename="../mainwindow.ui" line="2419"/>
         <source>Tileset Item Box</source>
         <translation>타일모음 아이템 박스</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2428"/>
+        <location filename="../mainwindow.ui" line="2431"/>
         <source>Debugger</source>
         <translation>디버거</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2433"/>
+        <location filename="../mainwindow.ui" line="2436"/>
         <source>Change configuration pack...</source>
         <translation>구성 팩 변경 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2444"/>
+        <location filename="../mainwindow.ui" line="2447"/>
         <source>Semi-transparent paths</source>
         <translation>반투명 경로</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2449"/>
+        <location filename="../mainwindow.ui" line="2452"/>
         <source>Export section to image...</source>
         <translation>섹션을 이미지로 내보내기 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2452"/>
+        <location filename="../mainwindow.ui" line="2455"/>
         <source>Export whole level section to image</source>
         <translation>전체 레벨 섹션을 이미지로 내보내기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2457"/>
+        <location filename="../mainwindow.ui" line="2460"/>
         <source>Test level</source>
         <translation>테스트 수준</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2471"/>
         <location filename="../mainwindow.ui" line="2474"/>
+        <location filename="../mainwindow.ui" line="2477"/>
         <source>Testing options...</source>
         <translation>테스트 옵션 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2489"/>
+        <location filename="../mainwindow.ui" line="2492"/>
         <source>Fill</source>
         <translation>채우기 도구</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2497"/>
+        <location filename="../mainwindow.ui" line="2500"/>
         <source>Clear unused data</source>
         <translation>사용하지 않는 데이터 지우기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2512"/>
+        <location filename="../mainwindow.ui" line="2515"/>
         <source>Show properties</source>
         <translation>속성 표시</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2515"/>
+        <location filename="../mainwindow.ui" line="2518"/>
         <source>Show properties of item</source>
         <translation>항목 속성 표시</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2523"/>
+        <location filename="../mainwindow.ui" line="2526"/>
         <source>Sprite Editor</source>
         <translation>스프라이트 편집기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2531"/>
+        <location filename="../mainwindow.ui" line="2534"/>
         <source>Import...</source>
         <translation>수입...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2534"/>
+        <location filename="../mainwindow.ui" line="2537"/>
         <source>Import</source>
         <translation>수입</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2549"/>
+        <location filename="../mainwindow.ui" line="2552"/>
         <source>Position bookmarks</source>
         <translation>북마크 위치설정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2552"/>
+        <location filename="../mainwindow.ui" line="2555"/>
         <source>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</source>
         <translation>특정 카메라 위치를 북마크합니다. 이러한 북마크를 사용하여 큰지도의 중요한 장소로 쉽게 돌아갈 수 있습니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2560"/>
+        <location filename="../mainwindow.ui" line="2563"/>
         <source>Clone section to...</source>
         <translation>섹션 복제 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2571"/>
-        <location filename="../mainwindow.ui" line="2620"/>
+        <location filename="../mainwindow.ui" line="2574"/>
+        <location filename="../mainwindow.ui" line="2623"/>
         <source>Rotate left</source>
         <translation>왼쪽으로 회전</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2579"/>
-        <location filename="../mainwindow.ui" line="2628"/>
+        <location filename="../mainwindow.ui" line="2582"/>
+        <location filename="../mainwindow.ui" line="2631"/>
         <source>Rotate right</source>
         <translation>오른쪽으로 회전</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2590"/>
-        <location filename="../mainwindow.ui" line="2636"/>
+        <location filename="../mainwindow.ui" line="2593"/>
+        <location filename="../mainwindow.ui" line="2639"/>
         <source>Flip horizontal</source>
         <translation>수평으로 뒤집기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2601"/>
-        <location filename="../mainwindow.ui" line="2644"/>
+        <location filename="../mainwindow.ui" line="2604"/>
+        <location filename="../mainwindow.ui" line="2647"/>
         <source>Flip vertical</source>
         <translation>수직으로 뒤집기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2612"/>
+        <location filename="../mainwindow.ui" line="2615"/>
         <source>Align selected</source>
         <translation>선택 항목 정렬</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2649"/>
+        <location filename="../mainwindow.ui" line="2652"/>
         <source>Fix wrong masks</source>
         <translation>잘못된 마스크 수정</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2652"/>
+        <location filename="../mainwindow.ui" line="2655"/>
         <source>This tool will fix all wrong masks of images which causing display bugs</source>
         <translation>이 도구는 마스크가 잘못된 이미지로 인한 시각적 버그를 수정합니다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2663"/>
+        <location filename="../mainwindow.ui" line="2666"/>
         <source>Delete section</source>
         <translation>섹션 삭제</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2674"/>
+        <location filename="../mainwindow.ui" line="2677"/>
         <source>Don&apos;t fill out of section</source>
         <translation>섹션 외부를 채우지 마십시오</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2679"/>
+        <location filename="../mainwindow.ui" line="2682"/>
         <source>SMBX-like GUI</source>
         <translation>레거시 GUI</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2687"/>
-        <location filename="../mainwindow.ui" line="2976"/>
+        <location filename="../mainwindow.ui" line="2690"/>
+        <location filename="../mainwindow.ui" line="2979"/>
         <source>Run testing of saved file</source>
         <translation>저장된 파일 테스트</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2695"/>
+        <location filename="../mainwindow.ui" line="2698"/>
         <source>Change log</source>
         <translation>변경 로그</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2703"/>
+        <location filename="../mainwindow.ui" line="2706"/>
         <source>Check for updates...</source>
         <translation>업데이트 확인...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2711"/>
+        <location filename="../mainwindow.ui" line="2714"/>
         <source>Convert Audio files...</source>
         <translation>오디오 파일 변환 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2719"/>
+        <location filename="../mainwindow.ui" line="2722"/>
         <source>Clear NPC garbadge...</source>
         <translation>NPC 정리 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2730"/>
-        <location filename="../mainwindow.ui" line="2736"/>
+        <location filename="../mainwindow.ui" line="2733"/>
+        <location filename="../mainwindow.ui" line="2739"/>
         <source>More sections...</source>
         <translation>더 많은 섹션 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2741"/>
+        <location filename="../mainwindow.ui" line="2744"/>
         <source>Tip of the day...</source>
         <translation>오늘의 팁...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2749"/>
+        <location filename="../mainwindow.ui" line="2752"/>
         <source>Start Game</source>
         <translation>게임을 시작하다</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2752"/>
+        <location filename="../mainwindow.ui" line="2755"/>
         <source>Launch game engine application.</source>
         <translation>게임 엔진 응용 프로그램을 시작합니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2760"/>
+        <location filename="../mainwindow.ui" line="2763"/>
         <source>Open folder of current file</source>
         <translation>에피소드 폴더 열기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2763"/>
+        <location filename="../mainwindow.ui" line="2766"/>
         <source>Open folder which contains currently opened file</source>
         <translation>현재 파일의 에피소드 폴더를 엽니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2768"/>
+        <location filename="../mainwindow.ui" line="2771"/>
         <source>Open custom data folder</source>
         <translation>레벨 폴더 열기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2771"/>
+        <location filename="../mainwindow.ui" line="2774"/>
         <source>Open a custom folder: a folder with a name equal to the basen ame of the currently opened file.</source>
         <translation>레벨 데이터 폴더를 엽니 다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2779"/>
+        <location filename="../mainwindow.ui" line="2782"/>
         <source>Wrap Vertically</source>
         <translation>세로로 감싸기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2794"/>
+        <location filename="../mainwindow.ui" line="2797"/>
         <source>Circular fill</source>
         <translation>원형 채우기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2797"/>
+        <location filename="../mainwindow.ui" line="2800"/>
         <source>Circular fill (Shift+C)</source>
         <translation>타원 도구 (Shift + C)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2815"/>
+        <location filename="../mainwindow.ui" line="2818"/>
         <source>Show grid</source>
         <translation>그리드 표시</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2833"/>
+        <location filename="../mainwindow.ui" line="2836"/>
         <source>Show camera grid</source>
         <translation>카메라 그리드 표시</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2841"/>
+        <location filename="../mainwindow.ui" line="2844"/>
         <source>Modern GUI</source>
         <translation>최신 GUI</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2852"/>
+        <location filename="../mainwindow.ui" line="2855"/>
         <source>Variables</source>
         <translation>변수</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2864"/>
+        <location filename="../mainwindow.ui" line="2867"/>
         <source>Go to top-right of the section</source>
         <translation>섹션의 오른쪽 상단으로 이동</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2876"/>
+        <location filename="../mainwindow.ui" line="2879"/>
         <source>Go to right-bottom of the section</source>
         <translation>섹션의 오른쪽 하단으로 이동</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2881"/>
+        <location filename="../mainwindow.ui" line="2884"/>
         <source>Script Editor</source>
         <translation>스크립트 편집기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2889"/>
+        <location filename="../mainwindow.ui" line="2892"/>
         <source>Run configure tool...</source>
         <translation>구성 도구 실행 ...</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2894"/>
+        <location filename="../mainwindow.ui" line="2897"/>
         <source>Open local script</source>
         <translation>로컬 스크립트 열기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2897"/>
+        <location filename="../mainwindow.ui" line="2900"/>
         <source>Open the level / world map local script. If it does not exist, a file will be created.</source>
         <translation>레벨 / 월드 맵 로컬 스크립트를 엽니 다. 존재하지 않는 경우 파일이 생성됩니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2902"/>
+        <location filename="../mainwindow.ui" line="2905"/>
         <source>Open episode script</source>
         <translation>에피소드 스크립트 열기</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2905"/>
+        <location filename="../mainwindow.ui" line="2908"/>
         <source>Open the episode common script. If it does not exist, a file will be created.</source>
         <translation>에피소드 공통 스크립트를 엽니 다. 존재하지 않는 경우 파일이 생성됩니다.</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2910"/>
+        <location filename="../mainwindow.ui" line="2913"/>
         <source>Level local (%1)</source>
         <translation>레벨 로컬 (% 1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2913"/>
+        <location filename="../mainwindow.ui" line="2916"/>
         <source>Local level script for current level. New script file name to replace old &quot;lunadll.lua&quot;</source>
         <translation>현재 레벨에 대한 로컬 레벨 스크립트. 이전 &quot;lunadll.lua&quot;를 대체 할 새 스크립트 파일 이름</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2918"/>
+        <location filename="../mainwindow.ui" line="2921"/>
         <source>Level global (%1)</source>
         <translation>레벨 글로벌 (% 1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2921"/>
+        <location filename="../mainwindow.ui" line="2924"/>
         <source>Global level script for entire episode. New script file name to replace old &quot;lunaworld.lua&quot;</source>
         <translation>전체 에피소드에 대한 글로벌 레벨 스크립트. 이전 &quot;lunaworld.lua&quot;를 대체 할 새 스크립트 파일 이름</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2926"/>
+        <location filename="../mainwindow.ui" line="2929"/>
         <source>World map script (%1)</source>
         <translation>세계지도 스크립트 (% 1)</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2929"/>
+        <location filename="../mainwindow.ui" line="2932"/>
         <source>Global world map script. New script file name to replace old &quot;lunaoverworld.lua&quot;</source>
         <translation>글로벌 세계지도 스크립트. 이전 &quot;lunaoverworld.lua&quot;를 대체 할 새 스크립트 파일 이름</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2934"/>
+        <location filename="../mainwindow.ui" line="2937"/>
         <source>Welcome dialog</source>
         <translation>환영 대화</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2942"/>
+        <location filename="../mainwindow.ui" line="2945"/>
         <source>Test world map</source>
         <translation>세계지도 테스트</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2960"/>
+        <location filename="../mainwindow.ui" line="2963"/>
         <source>Music change points</source>
         <translation>음악 변화 지점</translation>
     </message>
     <message>
-        <location filename="../mainwindow.ui" line="2984"/>
+        <location filename="../mainwindow.ui" line="2987"/>
         <source>&lt;no extra settings&gt;</source>
         <translation>&lt;추가 설정 없음&gt;</translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2992"/>
+        <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../mainwindow.ui" line="2997"/>
+        <source>Bulk convert and repair of level and world files...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="69"/>

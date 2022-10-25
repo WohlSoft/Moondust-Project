@@ -10245,6 +10245,14 @@ Please, choose the Moondust Maintainer application yourself!</translation>
         <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
         <translation>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</translation>
     </message>
+    <message>
+        <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulk convert and repair of level and world files...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MusicFileList</name>
