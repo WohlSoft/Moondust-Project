@@ -10247,7 +10247,7 @@ Please, choose the Moondust Maintainer application yourself!</translation>
     </message>
     <message>
         <source>Adjust pictures colors to pallete (PalleteFilter)...</source>
-        <translation>Adjust pictures colors to pallete (PalleteFilter)...</translation>
+        <translation>Adjust pictures colors to pallete (PaletteFilter)...</translation>
     </message>
     <message>
         <source>Bulk convert and repair of level and world files...</source>
