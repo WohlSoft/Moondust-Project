@@ -101,18 +101,18 @@
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="321"/>
         <source>Autosave</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre automatisk</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="327"/>
         <source>Automatically save file</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre automatisk hvert</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="350"/>
         <source>minutes</source>
         <comment>Autosave interval units</comment>
-        <translation type="unfinished"></translation>
+        <translation>minutt</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="374"/>
@@ -9861,7 +9861,7 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../main_window/testing/testing_settings.cpp" line="238"/>
         <location filename="../main_window/testing/testing_settings.cpp" line="239"/>
         <source>[Unknown type]</source>
-        <translation type="unfinished"></translation>
+        <translation>[Ukjent type]</translation>
     </message>
 </context>
 <context>
@@ -9969,7 +9969,7 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../testing/thextech_engine.cpp" line="701"/>
         <source>Modern</source>
         <comment>Prefer all updates and bugfixes enabled</comment>
-        <translation type="unfinished"></translation>
+        <translation>Moderne</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="706"/>
@@ -9993,13 +9993,13 @@ The maximum number of Music Boxes is %2.</source>
         <location filename="../testing/thextech_engine.cpp" line="723"/>
         <source>Disabled</source>
         <comment>Speedrun mode disabled</comment>
-        <translation type="unfinished"></translation>
+        <translation>Avskrudd</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="728"/>
         <source>Mode 1 (Modern)</source>
         <comment>Enable speedrun with mode 1 (modern compatibility level)</comment>
-        <translation type="unfinished"></translation>
+        <translation>Modus 1 (moderne)</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="733"/>
