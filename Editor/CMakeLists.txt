@@ -445,6 +445,73 @@ list(APPEND PGE_EDITOR_SRCS
     tools/tilesets/tilesetitembutton.cpp
 )
 
+file(GLOB MOONDUST_EDITOR_HEADS_SRC
+    *.h
+    common_features/*.h
+    common_features/resizer/*.h
+    tools/*.h
+    tools/math/*.h
+    tools/smart_import/*.h
+    tools/debugger/*.h
+    tools/tilesets/*.h
+    tools/async/*.h
+    tools/external_tools/*.h
+    data_configs/*.h
+    data_configs/config_status/*.h
+    data_configs/selection_dialog/*.h
+    testing/*.h
+    testing/ipc/*.h
+    testing/bridges/*.h
+    testing/bridges/LunaLoader/*.h
+    testing/wine/*.h
+    audio/*.h
+    dev_console/*.h
+    SingleApplication/*.h
+    main_window/*.h
+    main_window/view/*.h
+    main_window/greeting_dialog/*.h
+    main_window/tools/*.h
+    main_window/dock/*.h
+    main_window/world/*.h
+    main_window/testing/*.h
+    main_window/file/*.h
+    main_window/plugins/*.h
+    main_window/level/*.h
+    main_window/edit/*.h
+    main_window/tip_of_day/*.h
+    main_window/about_dialog/*.h
+    main_window/script/*.h
+    main_window/updater/*.h
+    main_window/_settings/*.h
+    _includes/*.h
+    js_engine/*.h
+    js_engine/proxies/*.h
+    networking/*.h
+    editing/*.h
+    editing/edit_world/*.h
+    editing/edit_level/*.h
+    editing/_components/*.h
+    editing/_components/history/*.h
+    editing/_components/history/settings/*.h
+    editing/_dialogs/*.h
+    editing/_dialogs/_WIP/*.h
+    editing/_scenes/*.h
+    editing/_scenes/common/*.h
+    editing/_scenes/world/*.h
+    editing/_scenes/world/edit_modes/*.h
+    editing/_scenes/world/data_manager/*.h
+    editing/_scenes/world/resizers/*.h
+    editing/_scenes/world/items/*.h
+    editing/_scenes/level/*.h
+    editing/_scenes/level/edit_modes/*.h
+    editing/_scenes/level/data_manager/*.h
+    editing/_scenes/level/resizers/*.h
+    editing/_scenes/level/items/*.h
+    editing/edit_npc/*.h
+)
+
+list(APPEND PGE_EDITOR_SRCS ${MOONDUST_EDITOR_HEADS_SRC})
+
 if(NOT WIN32) # Wine setup dialog
     list(APPEND PGE_EDITOR_SRCS
         testing/wine/wine_setup.cpp
