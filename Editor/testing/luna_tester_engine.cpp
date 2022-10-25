@@ -863,14 +863,19 @@ QString LunaTesterEngine::getEnginePath()
                 m_customLunaPath + "/";
 }
 
+static QString s_extExe(const QString &in)
+{
+    return in + (!in.endsWith(".exe", Qt::CaseInsensitive) ? ".exe" : QString());
+}
+
 QString LunaTesterEngine::getExeName()
 {
     if(ConfStatus::defaultTestEngine == ConfStatus::ENGINE_LUNA)
-        return ConfStatus::SmbxEXE_Name; // Ignore custom name
+        return s_extExe(ConfStatus::SmbxEXE_Name); // Ignore custom name
 
-    return m_customExeName.isEmpty() ?
-                ConfStatus::SmbxEXE_Name :
-                m_customExeName;
+    return s_extExe(m_customExeName.isEmpty() ?
+                    ConfStatus::SmbxEXE_Name :
+                    m_customExeName);
 }
 
 QString LunaTesterEngine::getBridgePath()
