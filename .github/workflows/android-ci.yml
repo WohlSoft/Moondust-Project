@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build release-apk
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set output
         id: vars
@@ -64,7 +64,7 @@ jobs:
 
       - name: Upload APK
         if: success()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: thextech-android-${{ steps.vars.outputs.short_ref }}
           path: Engine/android-project/moondust-engine-android-${{ steps.vars.outputs.short_ref }}.apk

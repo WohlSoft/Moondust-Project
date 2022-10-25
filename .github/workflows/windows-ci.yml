@@ -49,14 +49,14 @@ jobs:
           }
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 3
         submodules: recursive
 
     - name: Download MinGW
       if: matrix.config.mingw_download
-      uses: carlosperate/download-file-action@v1.0.3
+      uses: carlosperate/download-file-action@v2
       with:
         file-url: "${{ matrix.config.mingw_download }}"
         file-name: mingw.7z
@@ -69,7 +69,7 @@ jobs:
 
     - name: Download Qt
       if: matrix.config.qt_download
-      uses: carlosperate/download-file-action@v1.0.3
+      uses: carlosperate/download-file-action@v2
       with:
         file-url: "${{ matrix.config.qt_download }}"
         file-name: qt.7z
@@ -82,7 +82,7 @@ jobs:
 
     - name: Download Ninja
       if: matrix.config.ninja_download
-      uses: carlosperate/download-file-action@v1.0.3
+      uses: carlosperate/download-file-action@v2
       with:
         file-url: "${{ matrix.config.ninja_download }}"
         file-name: ninja.zip
@@ -95,7 +95,7 @@ jobs:
 
     - name: Download LFTP
       if: matrix.config.lftp_download
-      uses: carlosperate/download-file-action@v1.0.3
+      uses: carlosperate/download-file-action@v2
       with:
         file-url: "${{ matrix.config.lftp_download }}"
         file-name: lftp.7z
