@@ -463,7 +463,6 @@ file(GLOB MOONDUST_EDITOR_HEADS_SRC
     testing/ipc/*.h
     testing/bridges/*.h
     testing/bridges/LunaLoader/*.h
-    testing/wine/*.h
     audio/*.h
     dev_console/*.h
     SingleApplication/*.h
@@ -515,10 +514,10 @@ list(APPEND PGE_EDITOR_SRCS ${MOONDUST_EDITOR_HEADS_SRC})
 if(NOT WIN32) # Wine setup dialog
     list(APPEND PGE_EDITOR_SRCS
         testing/wine/wine_setup.cpp
+        testing/wine/wine_setup.h
+        testing/wine/wine_setup_cfg.h
     )
-    list(APPEND PGE_EDITOR_UI
-        testing/wine/wine_setup.ui
-    )
+    list(APPEND PGE_EDITOR_UI testing/wine/wine_setup.ui)
 endif()
 
 if(APPLE)
