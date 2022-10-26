@@ -455,44 +455,34 @@ void MusPlayer_Qt::on_play_clicked()
 
     if(playSuccess)
     {
-        double total = Mix_MusicDuration(PGE_MusicPlayer::s_playMus);
-        double curPos = Mix_GetMusicPosition(PGE_MusicPlayer::s_playMus);
-
-        double loopStart = Mix_GetMusicLoopStartTime(PGE_MusicPlayer::s_playMus);
-        double loopEnd = Mix_GetMusicLoopEndTime(PGE_MusicPlayer::s_playMus);
-
-        m_seekBar->clearLoopPoints();
-        m_seekBar->setEnabled(false);
-
-        if(total > 0.0 && curPos >= 0.0)
-        {
-            m_seekBar->setEnabled(true);
-            m_seekBar->setLength(total);
-            m_seekBar->setPosition(0.0);
-            m_seekBar->setLoopPoints(loopStart, loopEnd);
-            ui->playingTimeLenghtLabel->setText(QDateTime::fromTime_t((uint)std::floor(total)).toUTC().toString("/ hh:mm:ss"));
-            m_positionWatcher.start(128);
-        }
-        // ui->musicPosition->setVisible(ui->musicPosition->isEnabled());
-
-        if(loopStart >= 0.0)
-            ui->isLooping->setVisible(true);
-
-        ui->musTitle->setText(PGE_MusicPlayer::getMusTitle());
-        ui->musArtist->setText(PGE_MusicPlayer::getMusArtist());
-        ui->musAlbum->setText(PGE_MusicPlayer::getMusAlbum());
-        ui->musCopyright->setText(PGE_MusicPlayer::getMusCopy());
+        refreshMetaData();
 
         ui->gme_setup->setEnabled(false);
+        ui->trackID->setEnabled(false);
+        ui->trackNext->setEnabled(false);
+        ui->trackPrev->setEnabled(false);
+        ui->disableSpcEcho->setEnabled(false);
+        ui->trackID->setValue(0);
+        m_prevTrackID = 0;
 
         ui->smallInfo->setText(PGE_MusicPlayer::musicType());
         ui->gridLayout->update();
 
 #ifdef SDL_MIXER_X
+        int songsNum = Mix_GetNumTracks(PGE_MusicPlayer::s_playMus);
+        if(songsNum > 1)
+        {
+            ui->gme_setup->setEnabled(true);
+            ui->trackID->setEnabled(true);
+            ui->trackID->setMaximum(songsNum - 1);
+            ui->trackNext->setEnabled(true);
+            ui->trackPrev->setEnabled(true);
+        }
+
         if(PGE_MusicPlayer::type == MUS_GME)
         {
             ui->gme_setup->setEnabled(true);
-
+            ui->disableSpcEcho->setEnabled(true);
             int echoDisabled = Mix_GME_GetSpcEchoDisabled(PGE_MusicPlayer::s_playMus);
             ui->disableSpcEcho->setEnabled(echoDisabled >= 0);
 
@@ -523,14 +513,47 @@ void MusPlayer_Qt::on_trackID_editingFinished()
 #ifdef SDL_MIXER_X
     if(Mix_PlayingMusicStream(PGE_MusicPlayer::s_playMus))
     {
-        if((PGE_MusicPlayer::type == MUS_GME) && (m_prevTrackID != ui->trackID->value()))
+        if(m_prevTrackID != ui->trackID->value())
         {
-            PGE_MusicPlayer::stopMusic();
-            qApp->processEvents();
-            on_play_clicked();
+            Mix_StartTrack(PGE_MusicPlayer::s_playMus, ui->trackID->value());
+            m_prevTrackID = ui->trackID->value();
+            refreshMetaData();
         }
     }
 #endif
+}
+
+void MusPlayer_Qt::refreshMetaData()
+{
+    double total = Mix_MusicDuration(PGE_MusicPlayer::s_playMus);
+    double curPos = Mix_GetMusicPosition(PGE_MusicPlayer::s_playMus);
+
+    double loopStart = Mix_GetMusicLoopStartTime(PGE_MusicPlayer::s_playMus);
+    double loopEnd = Mix_GetMusicLoopEndTime(PGE_MusicPlayer::s_playMus);
+
+    m_seekBar->clearLoopPoints();
+    m_seekBar->setEnabled(false);
+
+    if(total > 0.0 && curPos >= 0.0)
+    {
+        m_seekBar->setEnabled(true);
+        m_seekBar->setLength(total);
+        m_seekBar->setPosition(0.0);
+        m_seekBar->setLoopPoints(loopStart, loopEnd);
+        ui->playingTimeLenghtLabel->setText(QDateTime::fromTime_t((uint)std::floor(total)).toUTC().toString("/ hh:mm:ss"));
+        m_positionWatcher.start(128);
+    }
+    // ui->musicPosition->setVisible(ui->musicPosition->isEnabled());
+
+    if(loopStart >= 0.0)
+        ui->isLooping->setVisible(true);
+
+    ui->musTitle->setText(PGE_MusicPlayer::getMusTitle());
+    ui->musArtist->setText(PGE_MusicPlayer::getMusArtist());
+    ui->musAlbum->setText(PGE_MusicPlayer::getMusAlbum());
+    ui->musCopyright->setText(PGE_MusicPlayer::getMusCopy());
+
+    ui->gridLayout->update();
 }
 
 void MusPlayer_Qt::on_trackPrev_clicked()

@@ -117,6 +117,8 @@ private slots:
     void on_actionPlay2Times_triggered();
     void on_actionPlay3Times_triggered();
 
+    void refreshMetaData();
+
 private:
     bool playListMode = false;
     //PlayListModel playList;
