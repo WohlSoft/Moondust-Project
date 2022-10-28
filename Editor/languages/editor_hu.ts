@@ -1960,7 +1960,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementplacedoor.cpp" line="22"/>
         <source>Place Door</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajtópont elhelyezése</translation>
     </message>
 </context>
 <context>
@@ -1968,7 +1968,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementremovelayer.cpp" line="24"/>
         <source>Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Réteg törlése</translation>
     </message>
 </context>
 <context>
@@ -1976,7 +1976,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementremovelayerandsave.cpp" line="26"/>
         <source>Remove Layer and keep items</source>
-        <translation type="unfinished"></translation>
+        <translation>Réteg törlése elemeinek megtartása mellett</translation>
     </message>
 </context>
 <context>
@@ -1984,7 +1984,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementremovewarp.cpp" line="37"/>
         <source>Remove Warp</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugráselem törlése</translation>
     </message>
 </context>
 <context>
@@ -1992,7 +1992,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementrenameevent.cpp" line="19"/>
         <source>Rename Event</source>
-        <translation type="unfinished"></translation>
+        <translation>Esemény átnevezése</translation>
     </message>
 </context>
 <context>
@@ -2000,7 +2000,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementrenamelayer.cpp" line="19"/>
         <source>Rename Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Réteg átnevezése</translation>
     </message>
 </context>
 <context>
@@ -2008,7 +2008,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementreplaceplayerpoint.cpp" line="18"/>
         <source>Place Player Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Játékos pontjának beállítása</translation>
     </message>
 </context>
 <context>
@@ -2016,7 +2016,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizeblock.cpp" line="18"/>
         <source>Resize Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blokk átméretezése</translation>
     </message>
 </context>
 <context>
@@ -2024,7 +2024,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizesection.cpp" line="17"/>
         <source>Resize Section</source>
-        <translation type="unfinished"></translation>
+        <translation>Szekció átméretezése</translation>
     </message>
 </context>
 <context>
@@ -2032,7 +2032,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_components/history/historyelementresizewater.cpp" line="18"/>
         <source>Resize Water</source>
-        <translation type="unfinished"></translation>
+        <translation>Vízterület átméretezése</translation>
     </message>
 </context>
 <context>
@@ -2041,31 +2041,31 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <location filename="../common_features/installer.cpp" line="165"/>
         <location filename="../common_features/installer.cpp" line="166"/>
         <source>Please wait...</source>
-        <translation type="unfinished"></translation>
+        <translation>Kérjük várjon...</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="256"/>
         <source>PGE Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Moondust pályaállomány</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="261"/>
         <source>PGE World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>Moondust világtérkép</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="266"/>
         <source>SMBX Level file</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX pályaállomány</translation>
     </message>
     <message>
         <location filename="../common_features/installer.cpp" line="271"/>
         <source>SMBX World Map</source>
         <comment>File Types</comment>
-        <translation type="unfinished"></translation>
+        <translation>SMBX világtérkép</translation>
     </message>
 </context>
 <context>
@@ -2073,118 +2073,118 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="81"/>
         <source>Layer: </source>
-        <translation type="unfinished"></translation>
+        <translation>Réteg: </translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="84"/>
         <source>Add to new layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Hozzáadás új réteghez</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="92"/>
         <source>[hidden]</source>
-        <translation type="unfinished"></translation>
+        <translation>[rejtett]</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="104"/>
         <source>Change Z-Offset...</source>
-        <translation type="unfinished"></translation>
+        <translation>Z küszöbérték megváltoztatása...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="106"/>
         <source>Z-Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-réteg</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="109"/>
         <source>Background-2</source>
-        <translation type="unfinished"></translation>
+        <translation>Háttér-2</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="112"/>
         <source>Background</source>
-        <translation type="unfinished"></translation>
+        <translation>Háttér</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="115"/>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation>Alapértelmezett</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="118"/>
         <source>Foreground</source>
-        <translation type="unfinished"></translation>
+        <translation>Előtér</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="121"/>
         <source>Foreground-2</source>
-        <translation type="unfinished"></translation>
+        <translation>Előtér-2</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="126"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="127"/>
         <source>Transform into</source>
-        <translation type="unfinished"></translation>
+        <translation>Átalakítás ezzé</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="128"/>
         <source>Transform all %1 in this section into</source>
-        <translation type="unfinished"></translation>
+        <translation>Átalakítás minden %1 ebben a szekcióban ezzé</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="129"/>
         <source>Transform all %1 into</source>
-        <translation type="unfinished"></translation>
+        <translation>Átakakítás minden %1 ezzé</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="133"/>
         <source>Copy preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások másolása</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="134"/>
         <source>BGO-ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Háttérelemazonosító: %1</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="135"/>
         <source>Position: X, Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Hely (X, Y):</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="136"/>
         <source>Position: X, Y, Width, Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Hely (X, Y, Szélesség, Magasság):</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="137"/>
         <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Hely (Bal, Teteje, Jobb, Alja):</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="140"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Másolás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="141"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>Kivágás</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="144"/>
         <source>Remove</source>
-        <translation type="unfinished">Törlés</translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="145"/>
         <source>Remove all %1 in this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden %1 törlése ebben a szekcióban</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="146"/>
         <source>Remove all %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Minden %1 törlése</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="149"/>
@@ -2194,13 +2194,13 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="152"/>
         <source>Properties...</source>
-        <translation type="unfinished"></translation>
+        <translation>Tulajdonságok...</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="180"/>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="331"/>
         <source>Margin of section</source>
-        <translation type="unfinished"></translation>
+        <translation>Szekciómargó</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="181"/>
@@ -2211,12 +2211,12 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="277"/>
         <source>Z-Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Z-Küszöbérték</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="278"/>
         <source>Please enter the Z-value offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Add meg a Z-küszöbértéket:</translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="402"/>
