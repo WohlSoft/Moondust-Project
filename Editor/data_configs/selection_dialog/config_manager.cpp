@@ -482,7 +482,11 @@ void ConfigManager::on_buttonBox_accepted()
 
 bool ConfigManager::isConfigured()
 {
-    QSettings settings(DataConfig::buildLocalConfigPath(m_currentConfigPath), QSettings::IniFormat);
+    QString settingsFile = DataConfig::buildLocalConfigPath(m_currentConfigPath);
+    if(!QFile::exists(settingsFile))
+        return false;
+
+    QSettings settings(settingsFile, QSettings::IniFormat);
 
     settings.beginGroup("main");
     bool ret = settings.value("application-path-configured", false).toBool();
@@ -490,8 +494,7 @@ bool ConfigManager::isConfigured()
     settings.endGroup();
 
     // When directory got moved or deleted, config pack should be marked as not configured because got broken
-    ret &= !path.isEmpty() &&
-            QFileInfo(path).isDir();
+    ret &= !path.isEmpty() && QFileInfo(path).isDir() && QDir(path).exists();
 
     return ret;
 }
