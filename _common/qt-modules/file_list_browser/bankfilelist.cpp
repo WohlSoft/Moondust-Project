@@ -26,7 +26,7 @@ BankFileList::BankFileList(QString searchDirectory, QString curFile, QWidget *pa
 {
     QStringList filters;
 
-    setIcon(QIcon(":/images/playmusic.png"));
+    setIcon(QIcon(":/moondust/playmusic.png"));
 
     switch(m_type)
     {

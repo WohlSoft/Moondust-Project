@@ -23,7 +23,7 @@
 #include <data_configs/custom_data.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <audio/music_player.h>
-#include <editing/_dialogs/musicfilelist.h>
+#include "file_list_browser/musicfilelist.h"
 
 #include <ui_mainwindow.h>
 #include <mainwindow.h>

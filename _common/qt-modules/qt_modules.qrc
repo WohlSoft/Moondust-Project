@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/moondust">
+        <file alias="playmusic.png">resources/playmusic.png</file>
+        <file alias="level16.png">resources/level16.png</file>
+        <file alias="new.png">resources/new.png</file>
+    </qresource>
+</RCC>

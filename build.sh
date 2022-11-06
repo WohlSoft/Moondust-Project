@@ -363,13 +363,24 @@ do
 
             LANGS_LIST="bg bs de en es fr hu he-il id it ja ko nl nb-no pl pt-br pt-pt ru ro sv sr uk zh"
 
+            printLine "Common Qt modules" "\E[0;42;37m" "\E[0;34m"
+            cd _common/qt-modules
+
+            find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
+            for lang in ${LANGS_LIST}; do
+                ${QT_PATH}/lupdate -no-obsolete @_lupdate_temp_list.tmp -ts languages/moondust_$lang.ts -I .
+            done
+            rm _lupdate_temp_list.tmp
+
+            cd ../..
+
             printLine "Editor" "\E[0;42;37m" "\E[0;34m"
             cd Editor
 
             find . \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%P\n" > _lupdate_temp_list.tmp
             find ../_common/ \( -name "*.h" -o -name "*.cpp" -o -name "*.ui" -o -name "*.hpp" \) -printf "%p\n" >> _lupdate_temp_list.tmp
             for lang in ${LANGS_LIST}; do
-                ${QT_PATH}/lupdate @_lupdate_temp_list.tmp -ts languages/editor_$lang.ts -I .
+                ${QT_PATH}/lupdate -no-obsolete @_lupdate_temp_list.tmp -ts languages/editor_$lang.ts -I .
             done
             rm _lupdate_temp_list.tmp
 

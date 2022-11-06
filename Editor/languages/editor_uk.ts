@@ -303,26 +303,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Файл звіту</translation>
     </message>
     <message>
-        <source>Disable logging</source>
-        <translation type="vanished">Вимкнути ведення звітів</translation>
-    </message>
-    <message>
-        <source>Fatal</source>
-        <translation type="vanished">Фатальні помилки</translation>
-    </message>
-    <message>
-        <source>Crytical</source>
-        <translation type="vanished">Критичні помилки</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="vanished">Попередження</translation>
-    </message>
-    <message>
-        <source>Debug</source>
-        <translation type="vanished">Налагодження</translation>
-    </message>
-    <message>
         <source>Set log file</source>
         <translation>Вибір файла звіту</translation>
     </message>
@@ -582,10 +562,6 @@ Please set SoX path first</source>
     <message>
         <source>Blocks per second calculator</source>
         <translation>Калькулятор блоків в секунду</translation>
-    </message>
-    <message>
-        <source>Block Size:</source>
-        <translation type="vanished">Розмір Блоків:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -858,16 +834,8 @@ File path: %3</source>
         <translation>Аварія</translation>
     </message>
     <message>
-        <source>You might want to report this data to developers or post it at:</source>
-        <translation type="vanished">Ви можете відправити ці дані розробникам, або відправити їх на:</translation>
-    </message>
-    <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation>Ой-йой, Moondust Редагувач зламався :(&lt;br&gt;Детальна інформація аварії:</translation>
-    </message>
-    <message>
-        <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="vanished">Форум PGE (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Exit from application</source>
@@ -1445,10 +1413,6 @@ therefore you can use same link to get updated version</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;З цією опцією автоматично будуть розраховані значення ширини або висоти, щоб розмір кінцевого зображення був пропорційний.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <source>Save proportion</source>
-        <translation type="vanished">Зберегти пропорції</translation>
-    </message>
-    <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Це &lt;span style=&quot; font-weight:600;&quot;&gt;Ширина&lt;/span&gt; кінцевого зображення. Розмір кінцевого зображення буде змінений до вказаного розміру.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
@@ -1843,10 +1807,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation>Додати до нового Шару...</translation>
     </message>
     <message>
-        <source> [hidden]</source>
-        <translation type="vanished"> [Прихований]</translation>
-    </message>
-    <message>
         <source>[hidden]</source>
         <translation>[прихований]</translation>
     </message>
@@ -2099,14 +2059,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Властивості скопійовані: %1</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Копіювати</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Вирізати</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2798,33 +2750,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
 </context>
 <context>
-    <name>ItemWater</name>
-    <message>
-        <source>Layer: </source>
-        <translation type="obsolete">Шар: </translation>
-    </message>
-    <message>
-        <source>Add to new layer...</source>
-        <translation type="obsolete">Додати на новий шар...</translation>
-    </message>
-    <message>
-        <source>Resize</source>
-        <translation type="obsolete">Змінити розмір</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Копіювати</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Вирізати</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Видалити</translation>
-    </message>
-</context>
-<context>
     <name>JsonSettingsWidget</name>
     <message>
         <source>Browse</source>
@@ -2851,80 +2776,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>%1 coins</source>
         <translation>%1 монет(и)</translation>
-    </message>
-</context>
-<context>
-    <name>LazyFixTool_gui</name>
-    <message>
-        <source>LazyFix tool</source>
-        <translation type="vanished">Утиліта LazyFix</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Закрити</translation>
-    </message>
-    <message>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">Папка, яка містить GIF-файли SMBX (*.gif і *m.gif)</translation>
-    </message>
-    <message>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="vanished">Вихідна папка, в яку будуть збережені виправлені зображення
-(якщо поле пусте, вихідні файли будуть перезаписані із створенням рез. копії)</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Шукати в підпапках</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Огляд</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Прапори</translation>
-    </message>
-    <message>
-        <source>Don&apos;t create back-up</source>
-        <translation type="vanished">Не створювати рез. копію</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Старт</translation>
-    </message>
-    <message>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Ця утиліта створена для того, щоб виправляти ліниво створені маски зображень/спрайтів SMBX. Ця утиліта коректує маску методом порівняння кольорів. Зображення будуть перезаписані, але при цьому завжди створюється резервна копія. Якщо конвертація закінчиться невдало, ви завжди зможете відновити вихідні зображення.</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Відкрити вихідну папку</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Відкрити цільову папку</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Вихідна папка не вказана</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Будь ласка, вкажіть вихідну папку</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Утиліта не знайдена</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Не можу запустити програму:
-%1
-Будь ласка, перевірте папку з програмою та впевніться, чи вона встановлена правильно.</translation>
     </message>
 </context>
 <context>
@@ -3303,15 +3154,6 @@ Suggested to disable this feature on slow machines or if any troubles are happen
 Бажано вимикати цю опцію на повільних комп&apos;ютерах або якщо є якісь труднощі при спробах запуску тестування.</translation>
     </message>
     <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="vanished">Перервати завислий завантажник</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="vanished">Перериває завислий потік, щоб дозволити запустити тест заново.</translation>
-    </message>
-    <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
@@ -3329,16 +3171,6 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>Launch LunaTester as a normal game.</source>
         <translation>Відкрити LunaTester як звичайну гру.</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="vanished">Ви впевнені, що хочете перервати потік завантажника?</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="vanished">Потік завантажника не запущений.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -3379,22 +3211,8 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation>Контрольні точки успішно перезавантажені!</translation>
     </message>
     <message>
-        <source>LunaTester error!</source>
-        <translation type="vanished">Помилка LunaTester!</translation>
-    </message>
-    <message>
         <source>LunaLUA tester is not started!</source>
         <translation>Тестувальник LunaLUA не запущений!</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="vanished">SMBX-тест вже запущений</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="vanished">SMBX-Двигун вже тестує інший рівень.
-Чи ви хочете перервати процес тестування?</translation>
     </message>
     <message>
         <source>Vanilla SMBX detected!</source>
@@ -3416,10 +3234,6 @@ Do you want to abort current testing process?</source>
     <message>
         <source>Select the location of LunaTester.</source>
         <translation>Вкажіть шлях до LunaTester.</translation>
-    </message>
-    <message>
-        <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
-        <translation type="vanished">Потік завантажника LunaTester зайнятий, спробуйте ще раз, або спробуйте перервати завислий завантажник!</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
@@ -3480,18 +3294,6 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <translation>&quot;%1&quot; не знайдений!
 Виявлена застаріла збірка SMBX (Vanilla)!
 Це означає, що неможливо почати тест рівня з допомогою LunaTester. LunaLua потрібен для запуску тесту рівнів з допомогою SMBX-двигуна.</translation>
-    </message>
-    <message>
-        <source>Impossible to launch LunaTester, due to %1</source>
-        <translation type="vanished">Неможливо запустити LunaTester, тому що %1</translation>
-    </message>
-    <message>
-        <source>LunaTester Directory wasn&apos;t configured right</source>
-        <translation type="vanished">Папка LunaTester невірно сконфігурована</translation>
-    </message>
-    <message>
-        <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
-        <translation type="vanished">Файл &quot;%1&quot; не знайдений! Щоб працювати з LunaTester, ви повинні вказати коректний шлях до SMBX.</translation>
     </message>
     <message>
         <source>Test saved level/world</source>
@@ -3599,45 +3401,6 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     <message>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation>Будь ласка, вкажіть ім&apos;я виконуваного PE-файлу, який буде використаним LunaTester-ом (наприклад smbx.exe)</translation>
-    </message>
-</context>
-<context>
-    <name>LvlBaseItem</name>
-    <message>
-        <source>Layer: </source>
-        <translation type="obsolete">Шар: </translation>
-    </message>
-    <message>
-        <source>Add to new layer...</source>
-        <translation type="obsolete">Додати на новий шар...</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Копіювати</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Вирізати</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Видалити</translation>
-    </message>
-    <message>
-        <source>Invisible</source>
-        <translation type="obsolete">Невидимий</translation>
-    </message>
-    <message>
-        <source>Slippery</source>
-        <translation type="obsolete">Слизький</translation>
-    </message>
-    <message>
-        <source>Resize</source>
-        <translation type="obsolete">Змінити розмір</translation>
-    </message>
-    <message>
-        <source>Change included NPC...</source>
-        <translation type="obsolete">Змінити вміст блока...</translation>
     </message>
 </context>
 <context>
@@ -4372,14 +4135,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Цей рівень має невірні файли користувацької графіки.
 Ви будете бачити &apos;привидів&apos; або інше замінне зображення замість користувацької графіки об&apos;єктів. Таке могло статися, наприклад, із-за BMP-файлу, який зберегли під розширенням GIF.
 Будь ласка, переконвертуйте ваші зображення у правильний формат та перезавантажте цей рівень.</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Видалити</translation>
-    </message>
-    <message>
-        <source>Slippery</source>
-        <translation type="obsolete">Слизький</translation>
     </message>
     <message>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
@@ -5240,28 +4995,8 @@ Please, select necessary world map in a list:</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <source>Main</source>
-        <translation type="obsolete">Основні</translation>
-    </message>
-    <message>
         <source>Layers</source>
         <translation>Шари</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Видалити</translation>
-    </message>
-    <message>
-        <source>Resize</source>
-        <translation type="obsolete">Змінити розмір</translation>
-    </message>
-    <message>
-        <source>Invisible</source>
-        <translation type="obsolete">Невидимий</translation>
-    </message>
-    <message>
-        <source>Slippery</source>
-        <translation type="obsolete">Слизький</translation>
     </message>
     <message>
         <source>Events</source>
@@ -5282,14 +5017,6 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>World map Toolbar</source>
         <translation>Панель інструментів карти світу</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="obsolete">Огляд</translation>
-    </message>
-    <message>
-        <source>Editor - Platformer Game Engine</source>
-        <translation type="vanished">Редагувач - Platformer Game Engine</translation>
     </message>
     <message>
         <source>Section modifications</source>
@@ -5781,10 +5508,6 @@ Please, select necessary world map in a list:</source>
     <message>
         <source>Wrap Vertically</source>
         <translation>З&apos;єднати вертикально</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="obsolete">Настройки</translation>
     </message>
     <message>
         <source>Fill</source>
@@ -7767,50 +7490,6 @@ The maximum number of Music Boxes is %2.</source>
     </message>
 </context>
 <context>
-    <name>QtRectFPropertyManager</name>
-    <message>
-        <source>Width</source>
-        <translation type="obsolete">Ширина</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="obsolete">Висота</translation>
-    </message>
-</context>
-<context>
-    <name>QtRectPropertyManager</name>
-    <message>
-        <source>Width</source>
-        <translation type="obsolete">Ширина</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="obsolete">Висота</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizeFPropertyManager</name>
-    <message>
-        <source>Width</source>
-        <translation type="obsolete">Ширина</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="obsolete">Висота</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePropertyManager</name>
-    <message>
-        <source>Width</source>
-        <translation type="obsolete">Ширина</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="obsolete">Висота</translation>
-    </message>
-</context>
-<context>
     <name>SanBaEiRuntimeEngine</name>
     <message>
         <source>Test level</source>
@@ -9203,21 +8882,6 @@ Data may be corrupted!</source>
     </message>
 </context>
 <context>
-    <name>WldBaseItem</name>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Копіювати</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Вирізати</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Видалити</translation>
-    </message>
-</context>
-<context>
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
@@ -9281,10 +8945,6 @@ Data may be corrupted!</source>
     <message>
         <source>Keep original aspect ratio</source>
         <translation>Зберегти пропорції</translation>
-    </message>
-    <message>
-        <source>Save proportion</source>
-        <translation type="obsolete">Зберегти пропорції</translation>
     </message>
     <message>
         <source>Export selected rectangle to image</source>
@@ -9360,10 +9020,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>Цей рівень має невірні файли користувацької графіки.
 Ви будете бачити &apos;привидів&apos; або інше замінне зображення замість користувацької графіки об&apos;єктів. Таке могло статися, наприклад, із-за поганої конвертації форматів зображень.
 Будь ласка, переконвертуйте ваші зображення у правильний формат та перезавантажте цей рівень.</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Видалити</translation>
     </message>
     <message>
         <source>Tiles:		%1
@@ -9848,207 +9504,6 @@ Do you want to save your changes?</source>
     <message>
         <source>Architecture: %1</source>
         <translation>Архітектура: %1</translation>
-    </message>
-</context>
-<context>
-    <name>g_AppSettings</name>
-    <message>
-        <source>Set log file</source>
-        <translation type="vanished">Задати файл звіту</translation>
-    </message>
-    <message>
-        <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Текстові файли (*.txt *.log)</translation>
-    </message>
-    <message>
-        <source>Success</source>
-        <translation type="vanished">Успіх</translation>
-    </message>
-    <message>
-        <source>All file associations have been set</source>
-        <translation type="vanished">Всі розширення файлів успішно встановлені</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Помилка</translation>
-    </message>
-</context>
-<context>
-    <name>gifs2png_gui</name>
-    <message>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="vanished">Конвертувати маскові GIF в PNG</translation>
-    </message>
-    <message>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Ця консольна утиліта конвертує графіку SMBX. GIF-формат з масками прозорості в PNG-формат з власною прозорістю.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Огляд</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Старт</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">Вихідна папка, в яку будуть збережені PNG-зображення
-(якщо поле пусте, кінцеві зображення будуть збережені там, де і вихідні зображення)</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Шукати в підпапках</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Закрити</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Флаги</translation>
-    </message>
-    <message>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="vanished">Помітка: якщо ви отримали пошкоджені зображення після конвертування, будь ласка, запустіть утиліту LazyFix і повторіть конвертування</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">Виберіть папку, яка містить GIF-файли у форматі SMBX (*.gif і *m.gif)</translation>
-    </message>
-    <message>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="vanished">Видалити вихідні зображення після завершення</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Відкрити вихідну папку</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Відкрити цільову папку</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Вихідна папка не вказана</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Будь ласка, вкажіть вихідну папку</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Утиліта не знайдена</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Не можу запустити програму:
-%1
-Будь ласка, перевірте папку з програмою.</translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="vanished">Не конвертувати фони (не конвертувати background2-*.gif)</translation>
-    </message>
-</context>
-<context>
-    <name>leveledit</name>
-    <message>
-        <source>Export current section to image</source>
-        <translation type="obsolete">Зробити знімок секції у файл</translation>
-    </message>
-</context>
-<context>
-    <name>npcedit</name>
-    <message>
-        <source> px</source>
-        <translation type="obsolete">px</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="obsolete">Висота</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="obsolete">Ширина</translation>
-    </message>
-</context>
-<context>
-    <name>png2gifs_gui</name>
-    <message>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="vanished">Конвертувати PNG в GIF з масками</translation>
-    </message>
-    <message>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Це консольна утиліта, яка конвертує PNG-зображення з власною прозорістю в GIF-формат з використанням маски прозорості по стандарту SMBX.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Огляд</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">Вихідна папка, в яку будуть збережені файли SMBX-GIF (*.gif і *m.gif)
-(якщо поле пусте, то кінцеві зображення будуть збережені разом з вихідними в тій же папці)</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Старт</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Шукати в підпапках</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Закрити</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Флаги</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="vanished">Вкажіть папку, яка містить PNG зображення (*.png)</translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="vanished">Видалити вихідні зображення після успішної конвертації</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Відкрити вихідну папку</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Відкрити кінцеву папку</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Вихідна папка не вказана</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Будь ласка, вкажіть вихідну папку</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Утиліта не знайдена</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Не можу запустити програму:
-%1
-Будь ласка, перевірте папку з програмою.</translation>
     </message>
 </context>
 <context>

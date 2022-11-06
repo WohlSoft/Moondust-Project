@@ -119,6 +119,8 @@ if(APPLE)
     list(APPEND PGE_MAINTAINER_SRCS
         _resources/maintainer.icns
         ${PGE_LANG_BIN_FILES}
+        ${MOONDUST_QT_LANG_BIN_FILES}
+        ${MOONDUST_QT_LANG_ICON_FILES}
     )
 endif()
 
@@ -220,6 +222,8 @@ if(APPLE)
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/maintainer.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
+    set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
+    set_source_files_properties(${MOONDUST_QT_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
 
     if(TARGET GIFs2PNG)
         add_dependencies(pge_maintainer GIFs2PNG)

@@ -34,8 +34,8 @@
 #include <audio/sdl_music_player.h>
 #endif
 
-#include <editing/_dialogs/musicfilelist.h>
-#include <editing/_dialogs/levelfilelist.h>
+#include "file_list_browser/musicfilelist.h"
+#include "file_list_browser/levelfilelist.h"
 
 #ifdef DEBUG_BUILD
 #include <QDebug>

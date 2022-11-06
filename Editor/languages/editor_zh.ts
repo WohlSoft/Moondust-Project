@@ -2,43 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN">
 <context>
-    <name></name>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="vanished">终止进程</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="vanished">非常抱歉，月尘引擎编辑器遭到异常终止。
-原因：内存溢出！
-
-为防止出现此现象，请关闭其他程序以释放内存。</translation>
-    </message>
-    <message>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash. 
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation type="vanished">发送报告之前，请简述您是如何操作造成的程序异常终止。
-- 请列出造成程序异常终止的行为。
-- 如果是编辑指定文件造成的异常终止，请附上相关文件。
-- 您使用的操作系统？</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="vanished">未找到月尘引擎管理器，无法启动工具：
-%1
-请选择月尘引擎管理器文件夹！</translation>
-    </message>
-</context>
-<context>
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
@@ -51,21 +14,6 @@ Please, choose the Moondust Maintainer application yourself!</source>
     <message>
         <source>This feature is not implemented</source>
         <translation>功能开发中，敬请期待</translation>
-    </message>
-</context>
-<context>
-    <name>AdditionalSettings</name>
-    <message>
-        <source>Additional settings</source>
-        <translation type="obsolete">其他设置</translation>
-    </message>
-    <message>
-        <source>Apply and Save</source>
-        <translation type="obsolete">应用和保存</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">取消</translation>
     </message>
 </context>
 <context>
@@ -616,10 +564,6 @@ Please set SoX path first</source>
         <translation>BPS 计算器</translation>
     </message>
     <message>
-        <source>Block Size:</source>
-        <translation type="vanished">砖块大小：</translation>
-    </message>
-    <message>
         <source> blocks</source>
         <translation> 个砖块</translation>
     </message>
@@ -889,16 +833,8 @@ File path: %3</source>
         <translation>月尘引擎崩溃</translation>
     </message>
     <message>
-        <source>You might want to report this data to developers or post it at:</source>
-        <translation type="vanished">你可能想把这份报告发给开发人员或者：</translation>
-    </message>
-    <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation>啊！月尘引擎编辑器程序异常终止！&lt;br&gt;详细信息:</translation>
-    </message>
-    <message>
-        <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="vanished">PGE 论坛 (https://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Exit from application</source>
@@ -1491,10 +1427,6 @@ therefore you can use same link to get updated version</source>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;勾选此项将会计算黑边尺寸以校正目标图片比例。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Hide invisible blocks</source>
-        <translation type="vanished">隐藏隐形砖块</translation>
     </message>
     <message>
         <source>Please, select target image size:</source>
@@ -2714,20 +2646,8 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation>分组：</translation>
     </message>
     <message>
-        <source>Text</source>
-        <translation type="vanished">文本</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="vanished">编号</translation>
-    </message>
-    <message>
         <source>[all]</source>
         <translation>[全部]</translation>
-    </message>
-    <message>
-        <source>ID (contents)</source>
-        <translation type="vanished">编号 （包含）</translation>
     </message>
     <message>
         <source>BGO</source>
@@ -2863,86 +2783,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
 </context>
 <context>
-    <name>LazyFixTool_gui</name>
-    <message>
-        <source>LazyFix tool</source>
-        <translation type="vanished">LazyFix 工具</translation>
-    </message>
-    <message>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="vanished">输出修复后 SMBX 的 GIF 图像目录。
-（留空则输出在相同目录）</translation>
-    </message>
-    <message>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">选择 SMBX 的 GIF 图像输入路径 (*.gif and *m.gif)</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">关闭</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">搜索子目录图片</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">浏览</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">其他选项</translation>
-    </message>
-    <message>
-        <source>Don&apos;t create back-up</source>
-        <translation type="vanished">不创建备份</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translatorcomment>翻译的不怎么样……</translatorcomment>
-        <translation type="vanished">此工具可以修复错误的 SMBX 影子文件的图像，可修复包含彩色的影子文件，原有的文件将被覆盖，但这将会备份到一个新文件夹以还原文件。</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">打开源文件目录</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">打开目标目录</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">源目录未设置</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">请设置源目录</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">未找到工具</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">无法运行应用程序：
-%1:
-请检查应用程序目录，并确保安装正确。</translation>
-    </message>
-</context>
-<context>
     <name>LevelEdit</name>
-    <message>
-        <source>Level edit</source>
-        <translation type="vanished">关卡编辑</translation>
-    </message>
     <message>
         <source>Export current section to image</source>
         <translation>保存当前场景为图片</translation>
@@ -3107,10 +2948,6 @@ Do you want to save your changes?</source>
         <translation>关卡文件列表</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这是当前文件所在目录中的所有关卡文件。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Please, select level file from list for use them:</source>
         <translation>请从下列关卡文件中使用：</translation>
     </message>
@@ -3118,32 +2955,12 @@ Do you want to save your changes?</source>
 <context>
     <name>LevelItemBox</name>
     <message>
-        <source>Level toolbox</source>
-        <translation type="vanished">关卡工具箱</translation>
-    </message>
-    <message>
         <source>Blocks</source>
         <translation>砖块</translation>
     </message>
     <message>
         <source>Category:</source>
         <translation>分类：</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation type="vanished">筛选：</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">文本</translation>
-    </message>
-    <message>
-        <source>ID (contents)</source>
-        <translation type="vanished">编号 （包含）</translation>
-    </message>
-    <message>
-        <source>Uniform icon size</source>
-        <translation type="vanished">图标大小</translation>
     </message>
     <message>
         <source>Group:</source>
@@ -3296,236 +3113,6 @@ Do you want to save your changes?</source>
     </message>
 </context>
 <context>
-    <name>LunaTester</name>
-    <message>
-        <source>Reset checkpoints</source>
-        <translation type="vanished">重置存档点</translation>
-    </message>
-    <message>
-        <source>Reset all checkpoint states to initial state.</source>
-        <translation type="vanished">重置所有存档点。</translation>
-    </message>
-    <message>
-        <source>LunaTester error</source>
-        <translation type="vanished">LunaTester 错误</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="vanished">结束进程以允许你再测试关卡。</translation>
-    </message>
-    <message>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translatorcomment>&quot;Terminate Frozen Loader&quot; 是什么意思？我也不知道……</translatorcomment>
-        <translation type="vanished">LunaLua 测试器进程很忙，请重试或使用“结束被冻结的进程”功能！</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="vanished">你想结束进程吗？</translation>
-    </message>
-    <message>
-        <source>Test level</source>
-        <comment>Run the LunaTester based level testing.</comment>
-        <translation type="vanished">测试关卡</translation>
-    </message>
-    <message>
-        <source>Starts level testing in the legacy engine.
-To have this feature work, latest LunaLUA must be installed.
-Otherwise, it will be very limited.</source>
-        <translation type="vanished">在 SMBX 引擎测试关卡，
-需要 LunaLua 的支持。</translation>
-    </message>
-    <message>
-        <source>Disable OpenGL</source>
-        <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="vanished">禁用 OpenGL</translation>
-    </message>
-    <message>
-        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="vanished">如果你的显卡不支持 OpenGL 渲染或 LunaLua 异常终止，可禁用 OpenGL 渲染，此时改用 GDI 渲染。</translation>
-    </message>
-    <message>
-        <source>Keep running in background</source>
-        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="vanished">后台运行</translation>
-    </message>
-    <message>
-        <source>Allows to start level testing very fast after first launch.
-Requires powerful computer, otherwise engine will freeze on next test launch.
-Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="vanished">允许启动引擎后直接测试关卡。
-需要很高的配置，否则下次执行可能将会死机。
-对于低端电脑推荐禁用此项。</translation>
-    </message>
-    <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="vanished">结束被冻结的进程</translation>
-    </message>
-    <message>
-        <source>Start Legacy Engine</source>
-        <comment>Launch legacy engine in game mode</comment>
-        <translation type="vanished">启动 SMBX 引擎</translation>
-    </message>
-    <message>
-        <source>Launch legacy engine in game mode.</source>
-        <translation type="vanished">在游戏模式里执行 SMBX 1.3 引擎。</translation>
-    </message>
-    <message>
-        <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation type="vanished">SMBX 引擎中不能直接测试大地图，因此 LunaTester 不能在大地图上使用，请从主菜单加载或者使用 PGE 引擎测试你的地图文件。</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="vanished">启动器进程未执行。</translation>
-    </message>
-    <message>
-        <source>Checkpoints successfully reseted!</source>
-        <translation type="vanished">存档点已成功重置！</translation>
-    </message>
-    <message>
-        <source>LunaTester error!</source>
-        <translation type="vanished">LunaTester 错误！</translation>
-    </message>
-    <message>
-        <source>LunaLUA tester is not started!</source>
-        <translation type="vanished">未启动 LunaLua 测试器！</translation>
-    </message>
-    <message>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="vanished">已超出 SMBX64 数量限制！</translation>
-    </message>
-    <message>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="vanished">发现超出 SMBX64 标准的元素！
-%1
-，可能会使 SMBX 1.3 引擎崩溃！
-建议移除所有已超出元素的对象。
-你还要继续测试吗？</translation>
-    </message>
-    <message>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="vanished">SMBX 目录未配置正确</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="vanished">未找到 %1！
-你必须使用 SMBX 集成配置包才能在 SMBX 上测试！</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="vanished">SMBX 测试已经执行</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="vanished">该引擎已在测试另一个关卡。
-你要取消当前的测试进度吗？</translation>
-    </message>
-    <message>
-        <source>Vanilla SMBX detected!</source>
-        <translation type="vanished">检测到 SMBX 1.3！</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="vanished">未找到 %2 ！
-你使用的是 SMBX 1.3！&lt;br&gt;
-因此不能自动执行关卡测试，此时将会产生一个空白地图以手动开始并选择它们。&lt;br&gt;
-&lt;br&gt;
-生成的地图名称： %1&lt;br&gt;
-&lt;br&gt;
-你还要这样做吗？&lt;br&gt;
-&lt;br&gt;
-请下载 LunaLua 以体验完整功能的 SMBX 关卡测试：&lt;br&gt;
-%3</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">保存文件出错</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">保存文件 %1 失败：
-%2。</translation>
-    </message>
-    <message>
-        <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="vanished">发送关卡到 LunaLua 失败！</translation>
-    </message>
-    <message>
-        <source>process execution is failed.</source>
-        <translation type="vanished">执行失败。</translation>
-    </message>
-    <message>
-        <source>patching has failed.</source>
-        <translation type="vanished">补丁导入失败。</translation>
-    </message>
-    <message>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="vanished">启动 SMBX 引擎失败，原因： %1</translation>
-    </message>
-    <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="vanished">SMBX 引擎所在目录配置错误</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="vanished">未找到 %1！
-你必须使用 SMBX 集成配置包才能在 LunaTester 上测试！</translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="vanished">启动 SMBX 引擎失败，原因： %1</translation>
-    </message>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="vanished">结束进程</translation>
-    </message>
-    <message>
-        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="vanished">结束 LunaTester 进程，使引擎重新开始。</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="vanished">你确定关闭 LunaTester 吗？这会在当你测试关卡时直接结束进程！</translation>
-    </message>
-    <message>
-        <source>LunaTester has been successfully closed.</source>
-        <translation type="vanished">LunaTester 已成功关闭。</translation>
-    </message>
-    <message>
-        <source>LunaTester is not running.</source>
-        <translation type="vanished">LunaTester 未运行。</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="vanished">没有找到 %2！
-您使用的是 SMBX 1.3！&lt;br&gt;
-因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
-    </message>
-</context>
-<context>
     <name>LunaTesterEngine</name>
     <message>
         <source>Test level</source>
@@ -3570,15 +3157,6 @@ Suggested to disable this feature on slow machines or if any troubles are happen
 对于低端电脑推荐禁用此项。</translation>
     </message>
     <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="vanished">结束被冻结的进程</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="vanished">结束进程以允许你再测试关卡。</translation>
-    </message>
-    <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>结束 LunaTester 进程，使引擎重新开始。</translation>
     </message>
@@ -3590,20 +3168,6 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <source>Launch LunaTester as a normal game.</source>
         <translation>使用 LunaTester 执行普通游戏。</translation>
-    </message>
-    <message>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="obsolete">LunaLua 测试器进程很忙，请重试或使用“结束被冻结的进程”功能！</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="vanished">你想结束进程吗？</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="vanished">启动器进程未执行。</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -3644,92 +3208,12 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation>中继点已成功重置！</translation>
     </message>
     <message>
-        <source>LunaTester error!</source>
-        <translation type="vanished">LunaTester 错误！</translation>
-    </message>
-    <message>
         <source>LunaLUA tester is not started!</source>
         <translation>未启动 LunaLua 测试器！</translation>
     </message>
     <message>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="obsolete">已超出 SMBX64 数量限制！</translation>
-    </message>
-    <message>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="obsolete">发现超出 SMBX64 标准的元素！
-%1
-，可能会使 SMBX 1.3 引擎崩溃！
-建议移除所有已超出元素的对象。
-你还要继续测试吗？</translation>
-    </message>
-    <message>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="obsolete">SMBX 目录未配置正确</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="obsolete">未找到 %1！
-你必须使用 SMBX 集成配置包才能在 SMBX 上测试！</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="vanished">SMBX 测试已经执行</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="vanished">该引擎已在测试另一个关卡。
-你要取消当前的测试进度吗？</translation>
-    </message>
-    <message>
         <source>Vanilla SMBX detected!</source>
         <translation>检测到 SMBX 1.3！</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="obsolete">未找到 %2 ！
-你使用的是 SMBX 1.3！&lt;br&gt;
-因此不能自动执行关卡测试，此时将会产生一个空白地图以手动开始并选择它们。&lt;br&gt;
-&lt;br&gt;
-生成的地图名称： %1&lt;br&gt;
-&lt;br&gt;
-你还要这样做吗？&lt;br&gt;
-&lt;br&gt;
-请下载 LunaLua 以体验完整功能的 SMBX 关卡测试：&lt;br&gt;
-%3</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="obsolete">保存文件出错</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="obsolete">保存文件 %1 失败：
-%2。</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="obsolete">没有找到 %2！
-您使用的是 SMBX 1.3！&lt;br&gt;
-因此无法在您的系统中进行关卡测试。需要 LunaLua 才能在非 Windows 系统下进行关卡测试。</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
@@ -3740,24 +3224,6 @@ That means, impossible to launch level testing on your operating operating. Luna
         <translation>LunaTester 错误</translation>
     </message>
     <message>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="obsolete">启动 SMBX 引擎失败，原因： %1</translation>
-    </message>
-    <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="obsolete">SMBX 引擎所在目录配置错误</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="obsolete">未找到 %1！
-你必须使用 SMBX 集成配置包才能在 LunaTester 上测试！</translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="obsolete">启动 SMBX 引擎失败，原因： %1</translation>
-    </message>
-    <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
         <translation>更改 LunaTester 目录……</translation>
@@ -3765,10 +3231,6 @@ To use LunaTester you should have right Integration configuration package!</sour
     <message>
         <source>Select the location of LunaTester.</source>
         <translation>选择 LunaTester 位置。</translation>
-    </message>
-    <message>
-        <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
-        <translation type="vanished">LunaTester 进程繁忙，请重试或使用“结束被冻结的进程”选项！</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
@@ -3829,18 +3291,6 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <translation>&quot;%1&quot; 未找到！
 您找到的是 SMBX 1.3！
 因此无法执行关卡测试。需要 LunaLua 的支持。</translation>
-    </message>
-    <message>
-        <source>Impossible to launch LunaTester, due to %1</source>
-        <translation type="vanished">由于 %1，无法启动 LunaTester</translation>
-    </message>
-    <message>
-        <source>LunaTester Directory wasn&apos;t configured right</source>
-        <translation type="vanished">LunaTester 路径设置错误</translation>
-    </message>
-    <message>
-        <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
-        <translation type="vanished">未找到 %1！请指定正确的 SMBX 路径以运行 LunaTester。</translation>
     </message>
     <message>
         <source>Test saved level/world</source>
@@ -4444,14 +3894,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>NPC</translation>
     </message>
     <message>
-        <source>Up</source>
-        <translation type="vanished">向上</translation>
-    </message>
-    <message>
-        <source>Down</source>
-        <translation type="vanished">向下</translation>
-    </message>
-    <message>
         <source>Death:</source>
         <translation>死亡：</translation>
     </message>
@@ -5021,23 +4463,8 @@ Please, reconvert your images to valid format and try to reload this level.</sou
         <translation>请先选择背景图片。</translation>
     </message>
     <message>
-        <source>Custom background name which will be shown in the editor</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="vanished">编辑器中自定义背景的名称</translation>
-    </message>
-    <message>
-        <source>Create your background layers setup here...</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="vanished">在这里创建你的背景图层……</translation>
-    </message>
-    <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>请先保存文件后再选择音乐。</translation>
-    </message>
-    <message>
-        <source>Default screen fill color</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="vanished">默认屏幕填充颜色</translation>
     </message>
     <message>
         <source>Name that will appear in the editor</source>
@@ -5420,14 +4847,6 @@ Please, select necessary world map in a list:</source>
         <translation>请先保存文件后再选择关卡。</translation>
     </message>
     <message>
-        <source>This warp can be entered in only condition when a player stands on the ground. This option does not affect Instant and Portal warp types.</source>
-        <translation type="vanished">此传送点只能在玩家处于站立状态时进入（瞬移和传送门传送点除外）。</translation>
-    </message>
-    <message>
-        <source>Stood required</source>
-        <translation type="vanished">需要站立</translation>
-    </message>
-    <message>
         <source>None</source>
         <comment>Transition effect type</comment>
         <translation>无</translation>
@@ -5497,10 +4916,6 @@ show the current playable character(s) and number of lives.</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Editor - Platformer Game Engine</source>
-        <translation type="vanished">编辑器 - 平台游戏引擎</translation>
-    </message>
-    <message>
         <source>File</source>
         <translation>文件</translation>
     </message>
@@ -5563,10 +4978,6 @@ show the current playable character(s) and number of lives.</source>
     <message>
         <source>Wrap Horizontally</source>
         <translation>横向循环</translation>
-    </message>
-    <message>
-        <source>Level toolbox</source>
-        <translation type="vanished">关卡工具箱</translation>
     </message>
     <message>
         <source>CommonEdit Bar</source>
@@ -5869,14 +5280,6 @@ show the current playable character(s) and number of lives.</source>
         <translation>死后重新开始关卡</translation>
     </message>
     <message>
-        <source>Level objects tool box</source>
-        <translation type="vanished">关卡对象</translation>
-    </message>
-    <message>
-        <source>World Toolbox</source>
-        <translation type="vanished">大地图工具箱</translation>
-    </message>
-    <message>
         <source>Select and Move</source>
         <translation>选择并移动</translation>
     </message>
@@ -6167,16 +5570,8 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation>大地图全局脚本，新文件名取代原来的 &quot;lunaoverworld.lua&quot;</translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="vanished">对象默认</translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation>欢迎页面</translation>
-    </message>
-    <message>
-        <source>Test world map (Alpha)</source>
-        <translation type="vanished">测试大地图 （内测）</translation>
     </message>
     <message>
         <source>Overwrite mode</source>
@@ -6191,90 +5586,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>Section 0</source>
         <translation>场景 0</translation>
-    </message>
-    <message>
-        <source>Section 0 (Ctrl+1)</source>
-        <translation type="vanished">场景 0 （Ctrl+1）</translation>
-    </message>
-    <message>
-        <source>Section 1 (Ctrl+2)</source>
-        <translation type="vanished">场景 1 （Ctrl+2）</translation>
-    </message>
-    <message>
-        <source>Section 2 (Ctrl+3)</source>
-        <translation type="vanished">场景 2 （Ctrl+3）</translation>
-    </message>
-    <message>
-        <source>Section 3 (Ctrl+4)</source>
-        <translation type="vanished">场景 3 （Ctrl+4）</translation>
-    </message>
-    <message>
-        <source>Section 4 (Ctrl+5)</source>
-        <translation type="vanished">场景 4 （Ctrl+5）</translation>
-    </message>
-    <message>
-        <source>Section 5 (Ctrl+6)</source>
-        <translation type="vanished">场景 5 （Ctrl+6）</translation>
-    </message>
-    <message>
-        <source>Section 6 (Ctrl+7)</source>
-        <translation type="vanished">场景 6 （Ctrl+7）</translation>
-    </message>
-    <message>
-        <source>Section 7 (Ctrl+8)</source>
-        <translation type="vanished">场景 7 （Ctrl+8）</translation>
-    </message>
-    <message>
-        <source>Section 8 (Ctrl+9)</source>
-        <translation type="vanished">场景 8 （Ctrl+9）</translation>
-    </message>
-    <message>
-        <source>Section 9 (Ctrl+0)</source>
-        <translation type="vanished">场景 9 （Ctrl+0）</translation>
-    </message>
-    <message>
-        <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation type="vanished">场景 10 （Ctrl+Alt+1）</translation>
-    </message>
-    <message>
-        <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation type="vanished">场景 11 （Ctrl+Alt+2）</translation>
-    </message>
-    <message>
-        <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation type="vanished">场景 12 （Ctrl+Alt+3）</translation>
-    </message>
-    <message>
-        <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation type="vanished">场景 13 （Ctrl+Alt+4）</translation>
-    </message>
-    <message>
-        <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation type="vanished">场景 14 （Ctrl+Alt+5）</translation>
-    </message>
-    <message>
-        <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation type="vanished">场景 15 （Ctrl+Alt+6）</translation>
-    </message>
-    <message>
-        <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation type="vanished">场景 16 （Ctrl+Alt+7）</translation>
-    </message>
-    <message>
-        <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation type="vanished">场景 17 （Ctrl+Alt+8）</translation>
-    </message>
-    <message>
-        <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation type="vanished">场景 18 （Ctrl+Alt+9）</translation>
-    </message>
-    <message>
-        <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation type="vanished">场景 19 （Ctrl+Alt+0）</translation>
-    </message>
-    <message>
-        <source>Section 20 (Alt+1)</source>
-        <translation type="vanished">场景 20 （Alt+1）</translation>
     </message>
     <message>
         <source>Apply (Enter)</source>
@@ -6332,10 +5643,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>Export whole level section to image</source>
         <translation>保存当前关卡场景为图片</translation>
-    </message>
-    <message>
-        <source>Test level (Alpha)</source>
-        <translation type="vanished">测试关卡 （内测）</translation>
     </message>
     <message>
         <source>Fill</source>
@@ -6406,22 +5713,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation>删除场景</translation>
     </message>
     <message>
-        <source>Additional Settings</source>
-        <translation type="vanished">其他设置</translation>
-    </message>
-    <message>
-        <source>Compile To: </source>
-        <translation type="vanished">编译到： </translation>
-    </message>
-    <message>
-        <source>Autocode [Lunadll Original Language]</source>
-        <translation type="vanished">LunaDLL 代码</translation>
-    </message>
-    <message>
-        <source>LunaLua</source>
-        <translation type="vanished">LunaLua</translation>
-    </message>
-    <message>
         <source>Don&apos;t fill out of section</source>
         <translation>不在当前场景外填充</translation>
     </message>
@@ -6442,10 +5733,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation>检查更新……</translation>
     </message>
     <message>
-        <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation type="vanished">在 SMBX 测试 （需要 LunaDLL）</translation>
-    </message>
-    <message>
         <source>Convert Audio files...</source>
         <translation>转换音频文件……</translation>
     </message>
@@ -6460,10 +5747,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>Tip of the day...</source>
         <translation>每日提示……</translation>
-    </message>
-    <message>
-        <source>Start Engine</source>
-        <translation type="vanished">启动引擎</translation>
     </message>
     <message>
         <source>Launch game engine application.</source>
@@ -6494,10 +5777,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation>[全部]</translation>
     </message>
     <message>
-        <source>[custom]</source>
-        <translation type="vanished">[自定义]</translation>
-    </message>
-    <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
         <translation>已复制 %1 个砖块对象、%2 个背景对象、%3 个 NPC 对象和 %4 个水流对象到剪贴板</translation>
     </message>
@@ -6522,10 +5801,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
         <translation>配置正在使用</translation>
     </message>
     <message>
-        <source>To reload configuration you should close all opened files first.</source>
-        <translation type="vanished">请关闭所有已打开的文件再重新加载配置包。</translation>
-    </message>
-    <message>
         <source>Reloading configuration pack</source>
         <translation>配置包重新加载中</translation>
     </message>
@@ -6540,12 +5815,6 @@ Objects will not be able to be placed on top of each other, and attempting to do
     <message>
         <source>Configuration changed</source>
         <translation>配置已更改</translation>
-    </message>
-    <message>
-        <source>The configuration pack has changed!
-To start using the new configuration pack, please restart the application.</source>
-        <translation type="vanished">配置包已更换！
-请重新启动应用以使用新配置包。</translation>
     </message>
     <message>
         <source>File open error</source>
@@ -7143,14 +6412,6 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <translation>选择自定义音乐</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;这里是文件所在路径中所有的音乐列表，包含子目录。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Please, select music file for use as custom</source>
-        <translation type="vanished">请选择音乐文件</translation>
-    </message>
-    <message>
         <source>Select SFX file</source>
         <translation>选择音效</translation>
     </message>
@@ -7165,10 +6426,6 @@ Please, choose the Moondust Maintainer application yourself!</source>
 </context>
 <context>
     <name>NpcEdit</name>
-    <message>
-        <source>NPC Configuration edit</source>
-        <translation type="vanished">编辑 NPC 配置</translation>
-    </message>
     <message>
         <source>NPC ID</source>
         <translation>NPC 编号</translation>
@@ -7804,10 +7061,6 @@ Error description:
         <translation>自定义音乐</translation>
     </message>
     <message>
-        <source>Level Name</source>
-        <translation type="vanished">关卡名</translation>
-    </message>
-    <message>
         <source>BGO Sorting Priority</source>
         <translation>背景优先级</translation>
     </message>
@@ -8203,10 +7456,6 @@ The maximum number of Music Boxes is %2.</source>
         <translation>需要站立</translation>
     </message>
     <message>
-        <source>Stood required</source>
-        <translation type="vanished">需要站立</translation>
-    </message>
-    <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 
 Reason: Out of memory!
 
@@ -8239,79 +7488,6 @@ Reason: %1
 原因：%1
 
 </translation>
-    </message>
-</context>
-<context>
-    <name>QtBoolEdit</name>
-    <message>
-        <source>True</source>
-        <translation type="vanished">真</translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation type="vanished">假</translation>
-    </message>
-</context>
-<context>
-    <name>QtBoolPropertyManager</name>
-    <message>
-        <source>True</source>
-        <translation type="vanished">真</translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation type="vanished">假</translation>
-    </message>
-</context>
-<context>
-    <name>QtCharEdit</name>
-    <message>
-        <source>Clear Char</source>
-        <translation type="vanished">清除字符</translation>
-    </message>
-</context>
-<context>
-    <name>QtColorPropertyManager</name>
-    <message>
-        <source>Red</source>
-        <translation type="vanished">红</translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="vanished">绿</translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="vanished">蓝</translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="vanished">透明</translation>
-    </message>
-</context>
-<context>
-    <name>QtKeySequenceEdit</name>
-    <message>
-        <source>Clear Shortcut</source>
-        <translation type="vanished">清除快捷键</translation>
-    </message>
-</context>
-<context>
-    <name>QtLocalePropertyManager</name>
-    <message>
-        <source>Language</source>
-        <translation type="vanished">语言</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation type="vanished">地区</translation>
-    </message>
-</context>
-<context>
-    <name>QtTreePropertyBrowser</name>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">值</translation>
     </message>
 </context>
 <context>
@@ -8568,11 +7744,6 @@ Reason: %1
         <translation>可以破坏任何对象。</translation>
     </message>
     <message>
-        <source>Chuck Norris</source>
-        <translatorcomment>不知道怎么翻译 Norris……</translatorcomment>
-        <translation type="vanished">检测 Norris</translation>
-    </message>
-    <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
         <translation>允许在大地图的任何位置行走。</translation>
     </message>
@@ -8670,11 +7841,6 @@ Reason: %1
 </context>
 <context>
     <name>TheXTechEngine</name>
-    <message>
-        <source>Custom</source>
-        <comment>Using a user selected LunaTester path</comment>
-        <translation type="obsolete">自定义</translation>
-    </message>
     <message>
         <source>Browse...</source>
         <translation>浏览……</translation>
@@ -8866,161 +8032,6 @@ Arguments: %2</source>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation>模式 2（SMBX2）</translation>
-    </message>
-</context>
-<context>
-    <name>TilesetConfigureDialog</name>
-    <message>
-        <source>Tileset Editor</source>
-        <translation type="vanished">图块组编辑器</translation>
-    </message>
-    <message>
-        <source>Items</source>
-        <translation type="vanished">对象</translation>
-    </message>
-    <message>
-        <source>Block</source>
-        <translation type="vanished">砖块</translation>
-    </message>
-    <message>
-        <source>BGO</source>
-        <translation type="vanished">背景</translation>
-    </message>
-    <message>
-        <source>NPC</source>
-        <translation type="vanished">NPC</translation>
-    </message>
-    <message>
-        <source>Terrain tile</source>
-        <translation type="vanished">地形</translation>
-    </message>
-    <message>
-        <source>Scenery</source>
-        <translation type="vanished">风景</translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation type="vanished">路线</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation type="vanished">关卡</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="vanished">类型：</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="vanished">清除</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">保存</translation>
-    </message>
-    <message>
-        <source>Tileset name:</source>
-        <translation type="vanished">图块名称：</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">打开</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">高度：</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">宽度：</translation>
-    </message>
-    <message>
-        <source>Show custom only</source>
-        <translation type="vanished">只显示自定义素材</translation>
-    </message>
-    <message>
-        <source>Current Level/World specific</source>
-        <translation type="vanished">只在当前关卡 / 世界</translation>
-    </message>
-    <message>
-        <source>Delete this tileset</source>
-        <translation type="vanished">删除此图块</translation>
-    </message>
-    <message>
-        <source>Show default only</source>
-        <translation type="vanished">只显示默认素材</translation>
-    </message>
-    <message>
-        <source>Clean tileset editor</source>
-        <translation type="vanished">清除图块组</translation>
-    </message>
-    <message>
-        <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation type="vanished">要清除图块并新建吗？未保存的数据将会丢失。</translation>
-    </message>
-    <message>
-        <source>Please enter a filename!</source>
-        <translation type="vanished">请输入文件名！</translation>
-    </message>
-    <message>
-        <source>Filename:</source>
-        <translation type="vanished">文件名：</translation>
-    </message>
-    <message>
-        <source>Open Tileset</source>
-        <translation type="vanished">打开图块组</translation>
-    </message>
-    <message>
-        <source>Failed to load tileset!</source>
-        <translation type="vanished">图块组加载失败！</translation>
-    </message>
-    <message>
-        <source>Failed to load tileset!
-Data may be corrupted!</source>
-        <translation type="vanished">图块组加载失败！
-数据可能已损坏！</translation>
-    </message>
-    <message>
-        <source>Tileset box editor</source>
-        <translation type="vanished">图块编辑器</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show this message again.</source>
-        <translation type="vanished">不再显示此信息。</translation>
-    </message>
-    <message>
-        <source>Welcome to tileset editor!
-
-This is an editor of global tilesets.
-All tilesets which made here will be saved in this folder:
-%1
-I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
-
-If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translatorcomment>Tileset 是什么意思？</translatorcomment>
-        <translation type="vanished">欢迎来到图块组编辑器！
-
-你可以使用本工具创建图块组，将会保存在下方目录：
-%1
-它们可以作为此配置包的全局图块组使用。
-
-如果你要创建的是包含自定义素材的关卡或大地图图块组，请使用打开工具箱，然后找到“自定义”标签中的“新图块组”。</translation>
-    </message>
-    <message>
-        <source>Remove tileset</source>
-        <translation type="vanished">移除图块组</translation>
-    </message>
-    <message>
-        <source>Do you want to remove this tileset?</source>
-        <translation type="vanished">要删除此图块组吗？</translation>
-    </message>
-    <message>
-        <source>Tileset removed</source>
-        <translation type="vanished">图块已移除</translation>
-    </message>
-    <message>
-        <source>Tileset has been removed!</source>
-        <translation type="vanished">图块已删除！</translation>
     </message>
 </context>
 <context>
@@ -9238,10 +8249,6 @@ If you wish to create level/world specific tilesets with using of custom graphic
     <message>
         <source>Tileset group name:</source>
         <translation>图块分组名称：</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="vanished">文本标签</translation>
     </message>
     <message>
         <source>Category:</source>
@@ -9718,28 +8725,6 @@ Data may be corrupted!</source>
         <translation>重置位置</translation>
     </message>
     <message>
-        <source>File read error</source>
-        <translation type="vanished">文件读取失败</translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">读取文件 %1 失败：
-%2.</translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="vanished">配置加载失败</translation>
-    </message>
-    <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">打开大地图文件 %1 失败：
-因为没有读取对象的设置。
-请检查是否存在 config/SMBX 目录以及是否包含 *.INI 文件和对象设置。</translation>
-    </message>
-    <message>
         <source>Loading World map data</source>
         <translation>大地图数据加载中</translation>
     </message>
@@ -10211,10 +9196,6 @@ Please, reconvert your images to valid format and try to reload this level.</sou
 <context>
     <name>WorldEdit</name>
     <message>
-        <source>World Map</source>
-        <translation type="vanished">大地图</translation>
-    </message>
-    <message>
         <source>1/%1 Loading user data</source>
         <translation>1/%1 自定义数据加载中</translation>
     </message>
@@ -10370,10 +9351,6 @@ Do you want to save your changes?</source>
 <context>
     <name>WorldItemBox</name>
     <message>
-        <source>World Map Toolbox</source>
-        <translation type="vanished">大地图道具栏</translation>
-    </message>
-    <message>
         <source>Terrain</source>
         <translation>地形</translation>
     </message>
@@ -10392,10 +9369,6 @@ Do you want to save your changes?</source>
     <message>
         <source>Music Box</source>
         <translation>音乐盒</translation>
-    </message>
-    <message>
-        <source>[Silence]</source>
-        <translation type="vanished">[无音乐]</translation>
     </message>
     <message>
         <source>Please, save file</source>
@@ -10533,214 +9506,6 @@ Do you want to save your changes?</source>
     <message>
         <source>Architecture: %1</source>
         <translation>软件架构：%1</translation>
-    </message>
-</context>
-<context>
-    <name>dataconfigs</name>
-    <message>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
-        <translation type="vanished">您的配置包版本过旧。
-&lt;br&gt;编辑器即将启动，但您会在对象和设置中遇到问题。
-&lt;br&gt;
-&lt;br&gt;请下载并安装最新版本的配置包：
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;注：部分配置包和PGE同步更新，
-&lt;br&gt;确保可以在同一链接里下载到新版本</translation>
-    </message>
-</context>
-<context>
-    <name>g_AppSettings</name>
-    <message>
-        <source>Set log file</source>
-        <translation type="vanished">设置日志文件</translation>
-    </message>
-    <message>
-        <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">文本文件 (*.txt *.log)</translation>
-    </message>
-    <message>
-        <source>Success</source>
-        <translation type="vanished">成功</translation>
-    </message>
-    <message>
-        <source>All file associations have been set</source>
-        <translation type="vanished">文件关联已设置</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">错误</translation>
-    </message>
-</context>
-<context>
-    <name>gifs2png_gui</name>
-    <message>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="vanished">将带有影子元件的 GIF 转换为 PNG</translation>
-    </message>
-    <message>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">此工具将带有影子元件的 GIF 格式图像转换为带有 Alpha 通道的 PNG 格式图像。</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">浏览</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">选择输出目录
-（留空则输出在相同文件夹）</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="vanished">跳过大背景 （由于 LunaLua 的 Bug 因此不转换 background2-*.gif）</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">搜索子目录中的图片</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">关闭</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">其他选项</translation>
-    </message>
-    <message>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="vanished">说明：如果转换后图像损坏，请使用 LazyFix 工具修复后重试</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">选择 SMBX 的 GIF 图像输入目录</translation>
-    </message>
-    <message>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="vanished">转换成功后删除源文件</translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="obsolete">转换成功后删除源图像</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">打开源目录</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">打开目标目录</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">源目录未设置</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">请设置源目录</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">工具未找到</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">无法运行应用程序：
-%1:
-请检查应用程序目录，并确保安装正确。</translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="vanished">跳过大背景 （不转换 background2-*.gif）</translation>
-    </message>
-</context>
-<context>
-    <name>png2gifs_gui</name>
-    <message>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="vanished">将 PNG 转换为带有影子元件的 GIF</translation>
-    </message>
-    <message>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">此工具将带有 Alpha 通道的 PNG 格式图像转换到带有影子元件的 GIF 格式图像。</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">浏览</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">输出 SMBX 的 GIF 图像目录（ * .gif 和 * m.gif ）
-（留空则输出在相同目录）</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">开始</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">搜索子目录中的图片</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">关闭</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">其他选项</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="vanished">其中包含了PNG图像（ * .PNG ）输入目录</translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="vanished">转换成功后删除源文件</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">打开源目录</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">打开目标目录</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">源目录未设置</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">请设置源目录</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">未找到工具</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">无法运行应用程序：
-%1:
-请检查应用程序目录，并确保安装正确。</translation>
     </message>
 </context>
 <context>

@@ -2,65 +2,6 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="fr_FR">
 <context>
-    <name></name>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="vanished">Termine le processus en cours d&apos;exécution</translation>
-    </message>
-    <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
-show the current playable character(s) and number of lives.</source>
-        <translation type="vanished">Afficher un écran vide au lieu de l&apos;écran de chargement.
-Dans l&apos;écran de chargement de l&apos;ancien moteur Legacy, il y aurait autrement
-affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start testing, engine is not found: 
-%1
-Please, choose the engine application yourself!</source>
-        <translation type="vanished">Impossible de commencer les tests, le moteur n&apos;a pas été trouvé :
-%1
-Veuillez choisir l&apos;application de moteur vous-même !</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="vanished">Nous sommes désolé, mais l&apos;éditeur PGE a planté. 
-Motif : Plus de mémoire !
-
-Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="vanished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
-Motif : Exception non gérée
-
-Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
-
-Lien du forum : wohlsoft.ru/forum</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: %1
-
-</source>
-        <translation type="vanished">Nous sommes désolés, mais l&apos;éditeur PGE à planté. 
-Motif : %1
-
-</translation>
-    </message>
-</context>
-<context>
     <name>AbstractRuntimeEngine</name>
     <message>
         <source>World map testing via IPC is not supported</source>
@@ -623,10 +564,6 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
         <translation>Calculateur de blocs par seconde</translation>
     </message>
     <message>
-        <source>Block Size:</source>
-        <translation type="vanished">Taille de bloc :</translation>
-    </message>
-    <message>
         <source> blocks</source>
         <translation> blocs</translation>
     </message>
@@ -897,16 +834,8 @@ Chemin d&apos;accès : %3</translation>
         <translation>Plantage</translation>
     </message>
     <message>
-        <source>You might want to report this data to developers or post it at:</source>
-        <translation type="vanished">Vous voudrez peut-être signaler ces données aux développeurs ou les publier sur :</translation>
-    </message>
-    <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation>Oh non, Éditeur Moondust a planté :(&lt;br&gt;Informations détaillées sur le plantage :</translation>
-    </message>
-    <message>
-        <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="vanished">Forum PGE (http://wohlsoft.ru/forum/)</translation>
     </message>
     <message>
         <source>Exit from application</source>
@@ -2847,85 +2776,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
 </context>
 <context>
-    <name>LazyFixTool_gui</name>
-    <message>
-        <source>LazyFix tool</source>
-        <translation type="vanished">Outil LazyFix</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Fermer</translation>
-    </message>
-    <message>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">Répertoire d&apos;entrée contenant les fichiers GIF SMBX (*.gif et *m.gif)</translation>
-    </message>
-    <message>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="vanished">Répertoire de destination, où les images fixes seront enregistrées.
-(Si ce champ est laissé vide, les nouvelles images seront enregistrées dans le même dossier que les images originales ainsi que les sauvegardes)</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Rechercher des images dans les sous-répertoires</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Parcourir</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Drapeaux</translation>
-    </message>
-    <message>
-        <source>Don&apos;t create back-up</source>
-        <translation type="vanished">Ne pas créer de sauvegarde</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Démarrer</translation>
-    </message>
-    <message>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Il s&apos;agit d&apos;un outil permettant de corriger les masques des images/sprites SMBX. Cet utilitaire corrige le masque par comparaison des couleurs. Les images originales seront écrasées, mais des sauvegardes seront créées dans un nouveau répertoire afin que vous puissiez restaurer les originaux en cas de problème.</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Ouvrir le répertoire source</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Ouvrir le répertoire de destination</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Le répertoire source n&apos;est pas défini</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Veuillez définir le répertoire source</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Outil introuvable</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Impossible d&apos;exécuter l&apos;application :
-%1
-Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;elle est installée correctement.</translation>
-    </message>
-</context>
-<context>
     <name>LevelEdit</name>
-    <message>
-        <source>Level edit</source>
-        <translation type="vanished">Édition de niveau</translation>
-    </message>
     <message>
         <source>Export current section to image</source>
         <translation>Exporter la section courante en tant qu&apos;image</translation>
@@ -3089,10 +2940,6 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     <message>
         <source>Level files list</source>
         <translation>Liste des fichiers de niveau</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit d&apos;une liste des fichiers de niveau situés dans le même dossier que le fichier courant.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Please, select level file from list for use them:</source>
@@ -3260,226 +3107,6 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     </message>
 </context>
 <context>
-    <name>LunaTester</name>
-    <message>
-        <source>Reset checkpoints</source>
-        <translation type="vanished">Réinitialiser les points de sauvegarde</translation>
-    </message>
-    <message>
-        <source>Reset all checkpoint states to initial state.</source>
-        <translation type="vanished">Réinitialise tous les points de sauvegarde.</translation>
-    </message>
-    <message>
-        <source>LunaTester error</source>
-        <translation type="vanished">Erreur de LunaTester</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="vanished">Met fin au fil d&apos;exécution bloqué pour vous permettre d&apos;exécuter à nouveau un test.</translation>
-    </message>
-    <message>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="vanished">Le fil d&apos;exécution du chargeur de test LunaLua est occupé, veuillez réessayer ou utiliser l&apos;option « Mettre fin au chargeur bloqué » !</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="vanished">Êtes-vous sûr de vouloir mettre fin au fil d&apos;exécution du chargeur ?</translation>
-    </message>
-    <message>
-        <source>Test level</source>
-        <comment>Run the LunaTester based level testing.</comment>
-        <translation type="vanished">Tester le niveau</translation>
-    </message>
-    <message>
-        <source>Starts level testing in the legacy engine.
-To have this feature work, latest LunaLUA must be installed.
-Otherwise, it will be very limited.</source>
-        <translation type="vanished">Lance le test du niveau dans le moteur SMBX.
-Cette fonctionnalité nécessite LunaLua.</translation>
-    </message>
-    <message>
-        <source>Disable OpenGL</source>
-        <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="vanished">Désactiver OpenGL</translation>
-    </message>
-    <message>
-        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="vanished">Désactive le moteur de rendu OpenGL et utilise GDI à la place. Utile si votre carte graphique ne prend pas en charge OpenGL ou si LunaLua plante en essayant de l&apos;utiliser. Cela se traduira par des fonctionnalités sévèrement réduites.</translation>
-    </message>
-    <message>
-        <source>Keep running in background</source>
-        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="vanished">Continuer l&apos;exécution en arrière-plan</translation>
-    </message>
-    <message>
-        <source>Allows to start level testing very fast after first launch.
-Requires powerful computer, otherwise engine will freeze on next test launch.
-Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="vanished">Permet de démarrer rapidement le test de niveau après le premier lancement.
-Nécessite un ordinateur puissant, sinon le moteur pourrait se bloquer dans le prochain lancement de test.
-Il est conseillé de désactiver cette fonctionnalité sur les ordinateurs lents ou en cas de problème lors de la tentative de test de niveau.</translation>
-    </message>
-    <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="vanished">Mettre fin au chargeur bloqué</translation>
-    </message>
-    <message>
-        <source>Start Legacy Engine</source>
-        <comment>Launch legacy engine in game mode</comment>
-        <translation type="vanished">Démarrer le moteur SMBX</translation>
-    </message>
-    <message>
-        <source>Launch legacy engine in game mode.</source>
-        <translation type="vanished">Lancer l&apos;ancien moteur en mode jeu.</translation>
-    </message>
-    <message>
-        <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation type="vanished">LunaTester ne peut pas être utilisé sur les cartes de monde car le moteur SMBX ne fourni pas la possibilité de tester les cartes de monde. Chargez directement un épisode, ou utilisez le moteur PGE pour tester votre fichier de carte de monde.</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="vanished">Le fil d&apos;exécution du chargeur n&apos;est pas en cours d&apos;exécution.</translation>
-    </message>
-    <message>
-        <source>Checkpoints successfully reseted!</source>
-        <translation type="vanished">Les points de sauvegarde ont été réinitialisés avec succès !</translation>
-    </message>
-    <message>
-        <source>LunaTester error!</source>
-        <translation type="vanished">Erreur de LunaTester !</translation>
-    </message>
-    <message>
-        <source>LunaLUA tester is not started!</source>
-        <translation type="vanished">Le testeur LunaLua n&apos;a pas été démarré !</translation>
-    </message>
-    <message>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="vanished">Limites SMBX64 dépassées !</translation>
-    </message>
-    <message>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="vanished">Des violations de la norme SMBX64 ont été trouvées !
-%1, l&apos;ancien moteur pourrait planter !
-Il est recommandé de supprimer tous les éléments en excès.
-Souhaitez-vous continuer le processus ?</translation>
-    </message>
-    <message>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="vanished">Le répertoire de SMBX n&apos;a pas été correctement configuré</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="vanished">%1 introuvable !
-Pour exécuter des tests via SMBX, vous devez utiliser le paquet de configuration de l&apos;intégration SMBX !</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="vanished">Un test de SMBX est déjà en cours d&apos;exécution</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="vanished">Le moteur SMBX teste déjà un autre niveau.
-Souhaitez-vous abandonner le processus de test en cours ?</translation>
-    </message>
-    <message>
-        <source>Vanilla SMBX detected!</source>
-        <translation type="vanished">SMBX vierge détecté !</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="vanished">%2 intouvable !
-Vous avez un SMBX vierge !&lt;br&gt;
-Cela signifie qu&apos;il est impossible de lancer automatiquement le test du niveau. Pour tester votre niveau, un épisode fictif va être généré, à partir duquel vous pouvez le sélectionner et le démarrer manuellement.&lt;br&gt;
-&lt;br&gt;
-Nom de l&apos;épisode à générer : %1&lt;br&gt;
-&lt;br&gt;
-Souhaitez-vous toujours lancer un test ?&lt;br&gt;
-&lt;br&gt;
-Si vous souhaitez avoir un test de niveau complet, veuillez installer LunaLua :&lt;br&gt;
-%3</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">Erreur d&apos;enregistrement du fichier</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">Impossible d&apos;enregistrer le fichier %1 :
-%2.</translation>
-    </message>
-    <message>
-        <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="vanished">Échec de l&apos;envoi du niveau à LunaLua !</translation>
-    </message>
-    <message>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="vanished">Impossible de lancer le moteur SMBX, en raison de %1</translation>
-    </message>
-    <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="vanished">Le répertoire du moteur SMBX n&apos;a pas été correctement configuré</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="vanished">%1 introuvable !
-Pour utiliser LunaTester, vous devez utiliser la paquet de configuration d&apos;intégration !</translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="vanished">Impossible de lancer le moteur SMBX, en raison de %1</translation>
-    </message>
-    <message>
-        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="vanished">Met fin au processus LunaTester afin que le moteur puisse être chargé à partir de zéro.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="vanished">Êtes-vous sûr de vouloir fermer LunaTester ? Si vous êtes en train de tester un niveau, cela va y mettre fin immédiatement !</translation>
-    </message>
-    <message>
-        <source>LunaTester has been successfully closed.</source>
-        <translation type="vanished">LunaTester a été fermé avec succès.</translation>
-    </message>
-    <message>
-        <source>LunaTester is not running.</source>
-        <translation type="vanished">LunaTester n&apos;est pas en cours d&apos;exécution.</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="vanished">%2 introuvable !
-Vous avez un SMBX vierge !&lt;br&gt;
-Cela signifie qu&apos;il est impossible de lancer le test de niveau sur votre système d&apos;exploitation. LunaLua est nécessaire pour lancer le test de niveau avec SMBX sur les systèmes d&apos;exploitation différents de Windows.</translation>
-    </message>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="vanished">Termine le processus en cours d&apos;exécution</translation>
-    </message>
-</context>
-<context>
     <name>LunaTesterEngine</name>
     <message>
         <source>Test level</source>
@@ -3524,15 +3151,6 @@ Nécessite un ordinateur puissant, sinon le moteur pourrait se bloquer dans le p
 Il est conseillé de désactiver cette fonctionnalité sur les ordinateurs lents ou en cas de problème lors de la tentative de test de niveau.</translation>
     </message>
     <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="vanished">Mettre fin au chargeur bloqué</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="vanished">Met fin au fil d&apos;exécution bloqué pour vous permettre d&apos;exécuter à nouveau un test.</translation>
-    </message>
-    <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
@@ -3543,15 +3161,6 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation>Met fin au processus LunaTester afin que le moteur puisse être chargé à partir de zéro.</translation>
     </message>
     <message>
-        <source>Select LunaTester path...</source>
-        <comment>Select a path to LunaTester for use.</comment>
-        <translation type="vanished">Sélectionner le chemin de LunaTester…</translation>
-    </message>
-    <message>
-        <source>Select a path to LunaTester for use.</source>
-        <translation type="vanished">Sélectionnez un chemin à utiliser pour LunaTester.</translation>
-    </message>
-    <message>
         <source>Start Game</source>
         <comment>Launch LunaTester as a normal game.</comment>
         <translation>Lancer la partie</translation>
@@ -3559,20 +3168,6 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>Launch LunaTester as a normal game.</source>
         <translation>Lancer LunaTester en tant que partie normale.</translation>
-    </message>
-    <message>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="vanished">Le fil d&apos;exécution du chargeur de test LunaLua est occupé, veuillez réessayer ou utiliser l&apos;option « Mettre fin au chargeur bloqué » !</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="vanished">Êtes-vous sûr de vouloir mettre fin au fil d&apos;exécution du chargeur ?</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="vanished">Le fil d&apos;exécution du chargeur n&apos;est pas en cours d&apos;exécution.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -3585,10 +3180,6 @@ This message is shown on request to terminate frozen LunaTester while it is not 
     <message>
         <source>LunaTester is not running.</source>
         <translation>LunaTester n&apos;est pas en cours d&apos;exécution.</translation>
-    </message>
-    <message>
-        <source>LunaTester path select</source>
-        <translation type="vanished">Sélection du chemin de LunaTester</translation>
     </message>
     <message>
         <source>Please select a path to LunaTester:</source>
@@ -3613,99 +3204,16 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation>Enregistrer</translation>
     </message>
     <message>
-        <source>Select a LunaTester path</source>
-        <translation type="vanished">Sélectionner un chemin pour LunaTester</translation>
-    </message>
-    <message>
         <source>Checkpoints successfully reseted!</source>
         <translation>Les points de sauvegarde ont été réinitialisés avec succès !</translation>
-    </message>
-    <message>
-        <source>LunaTester error!</source>
-        <translation type="vanished">Erreur de LunaTester !</translation>
     </message>
     <message>
         <source>LunaLUA tester is not started!</source>
         <translation>Le testeur LunaLua n&apos;a pas été démarré !</translation>
     </message>
     <message>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="vanished">Limites SMBX64 dépassées !</translation>
-    </message>
-    <message>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="vanished">Des violations de la norme SMBX64 ont été trouvées !
-%1, l&apos;ancien moteur pourrait planter !
-Il est recommandé de supprimer tous les éléments en excès.
-Souhaitez-vous continuer le processus ?</translation>
-    </message>
-    <message>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="vanished">Le répertoire SMBX n&apos;a pas été correctement configuré</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="vanished">%1 introuvable !
-Pour exécuter des tests via SMBX, vous devez utiliser le paquet de configuration de l&apos;intégration SMBX !</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="vanished">Un test SMBX est déjà en cours d&apos;exécution</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="vanished">Le moteur SMBX teste déjà un autre niveau.
-Souhaitez-vous abandonner le processus de test en cours ?</translation>
-    </message>
-    <message>
         <source>Vanilla SMBX detected!</source>
         <translation>SMBX vierge détecté !</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="vanished">%2 introuvable !
-Vous avez un SMBX vierge !&lt;br&gt;
-Cela signifie qu&apos;il est impossible de lancer automatiquement le test du niveau. Pour tester votre niveau, un épisode fictif va être généré, à partir duquel vous pouvez le sélectionner et le démarrer manuellement.&lt;br&gt;
-&lt;br&gt;
-Nom de l&apos;épisode à générer : %1&lt;br&gt;
-&lt;br&gt;
-Souhaitez-vous toujours lancer un test ?&lt;br&gt;
-&lt;br&gt;
-Si vous souhaitez avoir un test de niveau complet, veuillez installer LunaLua :&lt;br&gt;
-%3</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">Erreur d&apos;enregistrement du fichier</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">Impossible d&apos;enregistrer le fichier %1 :
-%2.</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="vanished">%2 introuvable !
-Vous avez un SMBX vierge !&lt;br&gt;
-Cela signifie qu&apos;il est impossible de lancer le test de niveau sur votre système d&apos;exploitation. LunaLua est nécessaire pour lancer le test de niveau avec SMBX sur les systèmes d&apos;exploitation différents de Windows.</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
@@ -3716,24 +3224,6 @@ Cela signifie qu&apos;il est impossible de lancer le test de niveau sur votre sy
         <translation>Erreur de LunaTester</translation>
     </message>
     <message>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="vanished">Impossible de lancer le moteur SMBX, en raison de %1</translation>
-    </message>
-    <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="vanished">Le répertoire du moteur SMBX n&apos;a pas été correctement configuré</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="vanished">%1 introuvable !
-Pour utiliser LunaTester, vous devez utiliser la paquet de configuration d&apos;intégration !</translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="vanished">Impossible de lancer le moteur SMBX, en raison de %1</translation>
-    </message>
-    <message>
         <source>Change the path to LunaTester...</source>
         <comment>Open a dialog to choose the location of LunaTester (aka SMBX2 data root directory).</comment>
         <translation>Modifier le chemin vers LunaTester…</translation>
@@ -3741,10 +3231,6 @@ Pour utiliser LunaTester, vous devez utiliser la paquet de configuration d&apos;
     <message>
         <source>Select the location of LunaTester.</source>
         <translation>Sélectionner l&apos;emplacement de LunaTester.</translation>
-    </message>
-    <message>
-        <source>LunaTester loader thread is busy, try again or use the &quot;terminate frozen loader&quot; option!</source>
-        <translation type="vanished">Le fil de chargement de LunaTester est occupé, réessayez ou utilisez l&apos;option « mettre fin au chargeur bloqué » !</translation>
     </message>
     <message>
         <source>Path to LunaTester</source>
@@ -3805,18 +3291,6 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
         <translation>« %1 » introuvable !
 Vous avez un SMBX vierge !
 Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec LunaTester. LunaLua est requis pour lancer les tests de niveaux avec le moteur SMBX.</translation>
-    </message>
-    <message>
-        <source>Impossible to launch LunaTester, due to %1</source>
-        <translation type="vanished">Impossible de lancer LunaTester, en raison de %1</translation>
-    </message>
-    <message>
-        <source>LunaTester Directory wasn&apos;t configured right</source>
-        <translation type="vanished">Le répertoire de LunaTester n&apos;a pas été configuré correctement</translation>
-    </message>
-    <message>
-        <source>%1 not found! To run testing with LunaTester, you should specify the right SMBX location.</source>
-        <translation type="vanished">%1 introuvable ! Pour lancer les tests avec LunaTester, vous devez spécifier le bon emplacement pour SMBX.</translation>
     </message>
     <message>
         <source>Test saved level/world</source>
@@ -4412,14 +3886,6 @@ Ceci tire avantage du rendu bugué des objet d&apos;arrière-plan de SMBX. Pour 
     <message>
         <source>NPC</source>
         <translation>PNJ</translation>
-    </message>
-    <message>
-        <source>Up</source>
-        <translation type="vanished">Haut</translation>
-    </message>
-    <message>
-        <source>Down</source>
-        <translation type="vanished">Bas</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -5549,10 +5015,6 @@ affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</transla
         <translation>Barre d&apos;outils de carte de monde</translation>
     </message>
     <message>
-        <source>Editor - Platformer Game Engine</source>
-        <translation type="vanished">Éditeur - Platformer Game Engine</translation>
-    </message>
-    <message>
         <source>Section modifications</source>
         <translation>Modifications de la section</translation>
     </message>
@@ -5943,16 +5405,8 @@ affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</transla
         <translation>Script de la carte de monde global. Nouveau nom de fichier de script pour remplacer l&apos;ancien « lunaoverworld.lua »</translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="vanished">Par défaut</translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation>Boîte de dialogue de bienvenue</translation>
-    </message>
-    <message>
-        <source>Test world map (Alpha)</source>
-        <translation type="vanished">Tester la carte de monde (Alpha)</translation>
     </message>
     <message>
         <source>Overwrite mode</source>
@@ -6030,10 +5484,6 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
         <translation>Exporte toute la section du niveau en tant qu&apos;image</translation>
     </message>
     <message>
-        <source>Test level (Alpha)</source>
-        <translation type="vanished">Tester le niveau (Alpha)</translation>
-    </message>
-    <message>
         <source>Fill</source>
         <translation>Outil Remplissage</translation>
     </message>
@@ -6102,18 +5552,6 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
         <translation>Supprimer la section</translation>
     </message>
     <message>
-        <source>Additional Settings</source>
-        <translation type="vanished">Paramètres supplémentaires</translation>
-    </message>
-    <message>
-        <source>Compile To: </source>
-        <translation type="vanished">Compiler pour : </translation>
-    </message>
-    <message>
-        <source>Autocode [Lunadll Original Language]</source>
-        <translation type="vanished">Autocode [Langage original de Lunadll]</translation>
-    </message>
-    <message>
         <source>Don&apos;t fill out of section</source>
         <translation>Ne pas remplir en dehors de la section</translation>
     </message>
@@ -6134,10 +5572,6 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
         <translation>Vérifier les mises à jour…</translation>
     </message>
     <message>
-        <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation type="vanished">Tester dans SMBX (LunaDLL requis)</translation>
-    </message>
-    <message>
         <source>Convert Audio files...</source>
         <translation>Convertir les fichiers audio…</translation>
     </message>
@@ -6152,10 +5586,6 @@ Les objets ne pourront pas être placés l&apos;un sur l&apos;autre, et si vous 
     <message>
         <source>Tip of the day...</source>
         <translation>Astuce du jour…</translation>
-    </message>
-    <message>
-        <source>Start Engine</source>
-        <translation type="vanished">Démarrer le moteur</translation>
     </message>
     <message>
         <source>Launch game engine application.</source>
@@ -6977,14 +6407,6 @@ Veuillez sélectionner l&apos;application Moondust Maintainer pat vous-même !</
         <translation>Sélectionner une musique personnalisée</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Il s&apos;agit d&apos;une liste de fichiers de musique situés dans le même dossier que le fichier courant, ainsi que dans tous les sous-dossiers.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Please, select music file for use as custom</source>
-        <translation type="vanished">Veuillez sélectionner un fichier de musique personnalisé</translation>
-    </message>
-    <message>
         <source>Select SFX file</source>
         <translation>Sélectionner un fichier SFX</translation>
     </message>
@@ -6999,10 +6421,6 @@ Veuillez sélectionner l&apos;application Moondust Maintainer pat vous-même !</
 </context>
 <context>
     <name>NpcEdit</name>
-    <message>
-        <source>NPC Configuration edit</source>
-        <translation type="vanished">Modifier la configuration du PNJ</translation>
-    </message>
     <message>
         <source>NPC ID</source>
         <translation>ID de PNJ</translation>
@@ -8419,11 +7837,6 @@ Motif : %1
 <context>
     <name>TheXTechEngine</name>
     <message>
-        <source>Custom</source>
-        <comment>Using a user selected LunaTester path</comment>
-        <translation type="obsolete">Personnalisé</translation>
-    </message>
-    <message>
         <source>Browse...</source>
         <translation>Parcourir…</translation>
     </message>
@@ -8442,22 +7855,9 @@ Motif : %1
         <translation>Tester le niveau enregistré</translation>
     </message>
     <message>
-        <source>Select TheXTech path...</source>
-        <comment>Select a path to TheXTech for use.</comment>
-        <translation type="vanished">Sélectionne le chemin TheXTech…</translation>
-    </message>
-    <message>
-        <source>Select a path to TheXTech for use.</source>
-        <translation type="vanished">Sélectionner un chemin à utiliser pour TheXTech.</translation>
-    </message>
-    <message>
         <source>Start Game</source>
         <comment>Launch TheXTech as a normal game</comment>
         <translation>Lancer la partie</translation>
-    </message>
-    <message>
-        <source>TheXTech path select</source>
-        <translation type="vanished">Sélection du chemin de TheXTech</translation>
     </message>
     <message>
         <source>Please select a path to TheXTech executable:</source>
@@ -9319,28 +8719,6 @@ Des données pourraient être corrompues !</translation>
         <translation>Réinitialiser la position de la caméra</translation>
     </message>
     <message>
-        <source>File read error</source>
-        <translation type="vanished">Erreur de lecture du fichier</translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Impossible de lire le fichier %1 :
-%2.</translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="vanished">Les configurations ne sont pas chargées</translation>
-    </message>
-    <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">Impossible d&apos;ouvrir le monde de niveaux %1 :
-car les configurations des objets ne sont pas chargées
-Veuillez vérifier que le dossier config/SMBX existe et contient les fichiers *.INI avec les paramètres des objets.</translation>
-    </message>
-    <message>
         <source>Loading World map data</source>
         <translation>Chargement des données de la carte de monde</translation>
     </message>
@@ -9812,10 +9190,6 @@ Boîtes à musique :	%5
 <context>
     <name>WorldEdit</name>
     <message>
-        <source>World Map</source>
-        <translation type="vanished">Carte de monde</translation>
-    </message>
-    <message>
         <source>1/%1 Loading user data</source>
         <translation>Chargement des données personnalisées (1/%1)</translation>
     </message>
@@ -10126,206 +9500,6 @@ Souhaitez-vous enregistrer vos modifications ?</translation>
     <message>
         <source>Architecture: %1</source>
         <translation>Architecture : %1</translation>
-    </message>
-</context>
-<context>
-    <name>dataconfigs</name>
-    <message>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
-        <translation type="vanished">Vous possédez un ancien paquet de configuration.
-&lt;br&gt;L&apos;éditeur sera lancé, mais vous pourriez rencontrer des problèmes avec les éléments ou les paramètres.
-&lt;br&gt;
-&lt;br&gt;Veuillez télécharger et installer la dernière version de votre paquet de configuration :
-&lt;br&gt;
-&lt;br&gt;Télécharger : %1
-&lt;br&gt;Remarque : La plupart des paquets de configuration sont mis à jour avec PGE.
-&lt;br&gt;Cependant vous pouvez utiliser le même lien pour obtenir une version plus récente</translation>
-    </message>
-</context>
-<context>
-    <name>g_AppSettings</name>
-    <message>
-        <source>Set log file</source>
-        <translation type="vanished">Définir le fichier de journal</translation>
-    </message>
-    <message>
-        <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Fichiers texte (*.txt *.log)</translation>
-    </message>
-    <message>
-        <source>Success</source>
-        <translation type="vanished">Succès</translation>
-    </message>
-    <message>
-        <source>All file associations have been set</source>
-        <translation type="vanished">Toutes les associations de fichiers on été définies</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Erreur</translation>
-    </message>
-</context>
-<context>
-    <name>gifs2png_gui</name>
-    <message>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="vanished">Convertir les masques de GIF en PNG</translation>
-    </message>
-    <message>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Cet outil convertit les éléments graphiques SMBX GIF en PNG en utilisant le masque comme clé de transparence.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Parcourir</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Démarrer</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">Sélectionnez l&apos;emplacement de destination de(s) image(s) PNG
-(Si aucun emplacement n&apos;est spécifié, elles seront enregistrées dans le répertoire d&apos;entrée)</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Rechercher des images dans les sous-répertoires</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Fermer</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Drapeaux</translation>
-    </message>
-    <message>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="vanished">Remarque : Si la conversion entraîne des images défectueuses, exécutez l&apos;outil LazyFix pour essayer de les corriger et réessayez</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">Sélectionnez l&apos;emplacement source des fichiers SMBX GIF (*.gif et *m.gif)</translation>
-    </message>
-    <message>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="vanished">Supprimer les images originales après la conversion si elle réussit</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Ouvrir le répertoire source</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Ouvrir le répertoire de destination</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Répertoire source non spécifié</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Veuillez spécifier le répertoire source</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Outil introuvable</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Impossible d&apos;exécuter l&apos;application :
-%1
-Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;elle est installée correctement.</translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="vanished">Passer la conversion des arrière-plans (ne pas convertir background2-*.gif)</translation>
-    </message>
-</context>
-<context>
-    <name>png2gifs_gui</name>
-    <message>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="vanished">Convertir les images PNG en masques de GIF</translation>
-    </message>
-    <message>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Cet outil convertit les images PNG avec transparence intégrée en éléments graphiques SMBX au format GIF avec un masque de transparence séparé.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Parcourir</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">Répertoire de destination, où les fichiers GIF seront enregistrés (*.gif et *m.gif)
-(Si ce champ est laissé vide, les images cibles seront enregistrées dans le répertoire d&apos;origine)</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Démarrer</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Rechercher des images dans les sous-répertoires</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Fermer</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Drapeaux</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="vanished">Dossier source contenant les images PNG (*.png)</translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="vanished">Supprimer les images source après la conversion si elle réussit</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Ouvrir le répertoire source</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Ouvrir le répertoire de destination</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Le répertoire source n&apos;est pas défini</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Veuillez définir le répertoire source</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Outil introuvable</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Impossible d&apos;exécuter l&apos;application :
-%1
-Veuillez vérifier le répertoire de l&apos;application et vous assurer qu&apos;elle est installée correctement.</translation>
     </message>
 </context>
 <context>

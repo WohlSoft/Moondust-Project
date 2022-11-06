@@ -19,10 +19,11 @@
 #include <QtConcurrent>
 #include <QDesktopWidget>
 
-#include <editing/_dialogs/levelfilelist.h>
 #include <editing/_scenes/world/wld_history_manager.h>
 #include <PGE_File_Formats/file_formats.h>
 #include <common_features/main_window_ptr.h>
+
+#include "file_list_browser/levelfilelist.h"
 
 #include <tools/async/asyncstarcounter.h>
 

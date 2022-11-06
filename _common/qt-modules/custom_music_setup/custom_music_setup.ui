@@ -14,8 +14,8 @@
    <string>Music setup</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/playmusic.png</normaloff>:/images/playmusic.png</iconset>
+   <iconset resource="../qt_modules.qrc">
+    <normaloff>:/moondust/playmusic.png</normaloff>:/moondust/playmusic.png</iconset>
   </property>
   <property name="floating" stdset="0">
    <bool>true</bool>
@@ -933,7 +933,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../qt_modules.qrc"/>
  </resources>
  <connections>
   <connection>

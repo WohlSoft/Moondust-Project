@@ -17,21 +17,6 @@
     </message>
 </context>
 <context>
-    <name>AdditionalSettings</name>
-    <message>
-        <source>Additional settings</source>
-        <translation type="vanished">Opciones adicionales</translation>
-    </message>
-    <message>
-        <source>Apply and Save</source>
-        <translation type="vanished">Aplicar y guardar</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Cancelar</translation>
-    </message>
-</context>
-<context>
     <name>AppSettings</name>
     <message>
         <source>Settings</source>
@@ -104,10 +89,6 @@
         <translation>Características del botón medio del mouse</translation>
     </message>
     <message>
-        <source>Duplicate selected items onto the mouse&apos;s position</source>
-        <translation type="vanished">Duplicar elementos seleccionados en la posición del mouse</translation>
-    </message>
-    <message>
         <source>Change the placement mode of the selected item</source>
         <translation>Cambiar modo colocación para el elemento seleccionado</translation>
     </message>
@@ -150,16 +131,8 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Pestañas de Eventos clásico auto-expandibles</translation>
     </message>
     <message>
-        <source>Autoscroll Section</source>
-        <translation type="vanished">Sección auto deslizable</translation>
-    </message>
-    <message>
         <source>Common</source>
         <translation>Común</translation>
-    </message>
-    <message>
-        <source>Layer Visibility</source>
-        <translation type="vanished">Visibilidad de capa</translation>
     </message>
     <message>
         <source>Layer movement</source>
@@ -172,10 +145,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     <message>
         <source>Hold buttons</source>
         <translation>Mantener botones</translation>
-    </message>
-    <message>
-        <source>Section Settings</source>
-        <translation type="vanished">Opciones de Sección</translation>
     </message>
     <message>
         <source>NPC settings</source>
@@ -334,52 +303,12 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Informe</translation>
     </message>
     <message>
-        <source>Disable logging</source>
-        <translation type="vanished">Deshabilitar informe</translation>
-    </message>
-    <message>
-        <source>Fatal</source>
-        <translation type="vanished">Fatal</translation>
-    </message>
-    <message>
-        <source>Crytical</source>
-        <translation type="vanished">Crítico</translation>
-    </message>
-    <message>
-        <source>Warning</source>
-        <translation type="vanished">Advertencia</translation>
-    </message>
-    <message>
-        <source>Debug</source>
-        <translation type="vanished">Depuración</translation>
-    </message>
-    <message>
         <source>Set log file</source>
         <translation>Establecer archivo</translation>
     </message>
     <message>
         <source>Text files (*.txt *.log)</source>
         <translation>Archivos de texto (*.txt *.log)</translation>
-    </message>
-    <message>
-        <source>PGE Level file</source>
-        <comment>File Types</comment>
-        <translation type="vanished">Archivo de nivel PGE</translation>
-    </message>
-    <message>
-        <source>PGE World Map</source>
-        <comment>File Types</comment>
-        <translation type="vanished">Mapa PGE</translation>
-    </message>
-    <message>
-        <source>SMBX Level file</source>
-        <comment>File Types</comment>
-        <translation type="vanished">Archivo de nivel SMBX</translation>
-    </message>
-    <message>
-        <source>SMBX World Map</source>
-        <comment>File Types</comment>
-        <translation type="vanished">Mapa SMBX</translation>
     </message>
     <message>
         <source>Success</source>
@@ -479,10 +408,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
 (abrir pestaña necesaria para elegir)</translation>
     </message>
     <message>
-        <source>44100</source>
-        <translation type="obsolete">44100</translation>
-    </message>
-    <message>
         <source>Start</source>
         <translation>Comenzar</translation>
     </message>
@@ -579,62 +504,6 @@ Por favor defínala primero</translation>
         <translation>Definir velocidad de bits</translation>
     </message>
     <message>
-        <source>32</source>
-        <translation type="obsolete">32</translation>
-    </message>
-    <message>
-        <source>40</source>
-        <translation type="obsolete">40</translation>
-    </message>
-    <message>
-        <source>48</source>
-        <translation type="obsolete">48</translation>
-    </message>
-    <message>
-        <source>56</source>
-        <translation type="obsolete">56</translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation type="obsolete">64</translation>
-    </message>
-    <message>
-        <source>80</source>
-        <translation type="obsolete">80</translation>
-    </message>
-    <message>
-        <source>96</source>
-        <translation type="obsolete">96</translation>
-    </message>
-    <message>
-        <source>112</source>
-        <translation type="obsolete">112</translation>
-    </message>
-    <message>
-        <source>128</source>
-        <translation type="obsolete">128</translation>
-    </message>
-    <message>
-        <source>160</source>
-        <translation type="obsolete">160</translation>
-    </message>
-    <message>
-        <source>192</source>
-        <translation type="obsolete">192</translation>
-    </message>
-    <message>
-        <source>224</source>
-        <translation type="obsolete">224</translation>
-    </message>
-    <message>
-        <source>256</source>
-        <translation type="obsolete">256</translation>
-    </message>
-    <message>
-        <source>320</source>
-        <translation type="obsolete">320</translation>
-    </message>
-    <message>
         <source>Files will be converted into MP3</source>
         <translation>Los archivos serán convertidos a MP3</translation>
     </message>
@@ -693,10 +562,6 @@ Por favor defínala primero</translation>
     <message>
         <source>Blocks per second calculator</source>
         <translation>Bloques por segundo calculador</translation>
-    </message>
-    <message>
-        <source>Block Size:</source>
-        <translation type="vanished">Tamaño de bloque:</translation>
     </message>
     <message>
         <source> blocks</source>
@@ -775,10 +640,6 @@ También puede hacer doble click al item para desplazar a la posición marcada.<
     <message>
         <source>Ask every startup</source>
         <translation>Preguntar al inicio</translation>
-    </message>
-    <message>
-        <source>Please, select the game configuration which defining the game settings and stuff</source>
-        <translation type="vanished">Por favor, seleccione el juego que definirá las opciones y elementos</translation>
     </message>
     <message>
         <source>No config packs were found</source>
@@ -882,58 +743,6 @@ Ruta de archivo: %3</translation>
         <translation>Errores cargando configuraciones:</translation>
     </message>
     <message>
-        <source>Level Blocks (%1/%1)</source>
-        <translation type="vanished">Bloques de nivel (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Level Background objects (%1/%1)</source>
-        <translation type="vanished">Objetos de fondo del nivel (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Level Background images (%1/%1)</source>
-        <translation type="vanished">Imágenes de fondo del nivel (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Level NPC (%1/%1)</source>
-        <translation type="vanished">PNJs del nivel (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Level NPCs (%1/%1)</source>
-        <translation type="vanished">PNJs del nivel (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Music (level) (%1/%1)</source>
-        <translation type="vanished">Música (nivel) (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Music (world) (%1/%1)</source>
-        <translation type="vanished">Música (mundo) (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Music (special) (%1/%1)</source>
-        <translation type="vanished">Música (especial) (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Sounds (%1/%1)</source>
-        <translation type="vanished">Sonidos (%1/%1)</translation>
-    </message>
-    <message>
-        <source>Level Blocks (%1/%2)</source>
-        <translation type="vanished">Bloques de nivel (%1/%2)</translation>
-    </message>
-    <message>
-        <source>Level Background objects (%1/%2)</source>
-        <translation type="vanished">Objetos de fondo del nivel (%1/%2)</translation>
-    </message>
-    <message>
-        <source>Level Background images (%1/%2)</source>
-        <translation type="vanished">Imágenes de fondo del nivel (%1/%2)</translation>
-    </message>
-    <message>
-        <source>Level NPCs (%1/%2)</source>
-        <translation type="vanished">PNJs del nivel (%1/%2)</translation>
-    </message>
-    <message>
         <source>Music (level) (%1/%2)</source>
         <translation>Música (nivel) (%1/%2)</translation>
     </message>
@@ -948,22 +757,6 @@ Ruta de archivo: %3</translation>
     <message>
         <source>Sounds (%1/%2)</source>
         <translation>Sonidos (%1/%2)</translation>
-    </message>
-    <message>
-        <source>World map Tiles (%1/%2)</source>
-        <translation type="vanished">Azulejos del mapa (%1/%2)</translation>
-    </message>
-    <message>
-        <source>World map Sceneries (%1/%2)</source>
-        <translation type="vanished">Decoraciones del mapa (%1/%2)</translation>
-    </message>
-    <message>
-        <source>World map Paths (%1/%2)</source>
-        <translation type="vanished">Caminos del mapa (%1/%2)</translation>
-    </message>
-    <message>
-        <source>World map Levels (%1/%2)</source>
-        <translation type="vanished">Niveles del mapa (%1/%2)</translation>
     </message>
     <message>
         <source>Level: Blocks (%1/%2)</source>
@@ -1041,45 +834,12 @@ Ruta de archivo: %3</translation>
         <translation>Crash</translation>
     </message>
     <message>
-        <source>You might want to report this data to developers or post it at:</source>
-        <translation type="vanished">Tal vez desee reportar esta información a los desarrolladores o publíquela en:</translation>
-    </message>
-    <message>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation type="unfinished">Uy, el editor de PGE colapsó :( &lt;br&gt;Información de colapso detallado:</translation>
     </message>
     <message>
-        <source>Ouch, PGE Editor was crashed :(&lt;br&gt;Detail crash information data:</source>
-        <translation type="vanished">Ups, el editor PGE tuvo un problema :(&lt;br&gt;Información detallada:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;You might want to post this data at:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">Querrá publicar estos datos en</translation>
-    </message>
-    <message>
-        <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="vanished">Foros de PGE: (http://wohlsoft.ru/forum/)</translation>
-    </message>
-    <message>
-        <source>Ouch, PGE crashed D:&lt;br&gt;Crash Data:</source>
-        <translation type="vanished">Ouch, PGE colapsó D: Crash Data:</translation>
-    </message>
-    <message>
-        <source>PGE Forum</source>
-        <translation type="vanished">Foro de PGE</translation>
-    </message>
-    <message>
         <source>Exit from application</source>
         <translation>Salir</translation>
-    </message>
-    <message>
-        <source>Crash recovery</source>
-        <translation type="vanished">Crash recovery</translation>
-    </message>
-    <message>
-        <source>Crash recovery</source>
-        <comment>Crash-Save - emergency file saving after crash. A title of message box.</comment>
-        <translation type="vanished">Crash recovery</translation>
     </message>
     <message>
         <source>Crash recovery</source>
@@ -1090,12 +850,6 @@ Ruta de archivo: %3</translation>
         <source>Since the last crash, the editor recovered some files.
 Please save them before doing anything else.</source>
         <translation>Desde el último colapso, el editor recuperó algunos archivos.
-Por favor guárdelos antes de hacer algo más.</translation>
-    </message>
-    <message>
-        <source>Since the last crash, the editor recorved some files.
-Please save them first before doing anything else.</source>
-        <translation type="vanished">Desde el último colapso, el editor recuperó algunos archivos.
 Por favor guárdelos antes de hacer algo más.</translation>
     </message>
     <message>
@@ -1137,10 +891,6 @@ Por favor guárdelos antes de hacer algo más.</translation>
         <translation>Contador personalizado</translation>
     </message>
     <message>
-        <source>Please add item ID&apos;s which will be in counter group</source>
-        <translation type="vanished">Por favor añada el ID del elemento que estará en el grupo</translation>
-    </message>
-    <message>
         <source>Please add the Item IDs which will be in this custom group:</source>
         <translation>Por favor añada el ID del elemento que estará en el grupo:</translation>
     </message>
@@ -1171,10 +921,6 @@ Por favor guárdelos antes de hacer algo más.</translation>
     <message>
         <source>NPC</source>
         <translation>PNJ</translation>
-    </message>
-    <message>
-        <source>Tile</source>
-        <translation type="vanished">Azulejo</translation>
     </message>
     <message>
         <source>Terrain tile</source>
@@ -1518,10 +1264,6 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada.</t
         <translation>Contenidos</translation>
     </message>
     <message>
-        <source>Items</source>
-        <translation type="vanished">Items</translation>
-    </message>
-    <message>
         <source>Custom counters</source>
         <translation>Contadores personalizados</translation>
     </message>
@@ -1555,10 +1297,6 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada.</t
     <message>
         <source>Send Command</source>
         <translation>Enviar comando</translation>
-    </message>
-    <message>
-        <source>Command: </source>
-        <translation type="vanished">Comando:</translation>
     </message>
     <message>
         <source>System</source>
@@ -1613,10 +1351,6 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada.</t
         <translation>Arg: {Ruta de archivo} probando el formato PGE-X</translation>
     </message>
     <message>
-        <source>[WIP] Attempt to test the level in the SMBX Level Editor!</source>
-        <translation type="vanished">[TEP] ¡Intentar probar en SMBX!</translation>
-    </message>
-    <message>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
         <translation>Args: {Tipo de música (lvl wld spc), ID de música} Reproducir música predeterminada por un ID específico</translation>
     </message>
@@ -1627,10 +1361,6 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada.</t
     <message>
         <source>Shows various important paths!</source>
         <translation>¡Muestra varias rutas importantes!</translation>
-    </message>
-    <message>
-        <source>Args: {String array} validating the PGE-X string array</source>
-        <translation type="vanished">Args: {String array} validando string array PGE-X</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
@@ -1664,20 +1394,12 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada.</t
         <translation> px</translation>
     </message>
     <message>
-        <source>Hide door and water markers (recommended)</source>
-        <translation type="vanished">Esconder marcadores de puerta y agua</translation>
-    </message>
-    <message>
         <source>Please, select target image size:</source>
         <translation>Por favor, seleccione un tamaño:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuando se controle, esto calculará el tamaño de la dimensión opuesta (altura o ancho) para hacer una imagen destino con las proporciones correctas.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Save proportion</source>
-        <translation type="vanished">Guardar proporción</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1708,20 +1430,12 @@ por lo tanto puede usar el mismo enlace para obtener la versión actualizada.</t
         <translation>Ocular traslados y agua (recomendado)</translation>
     </message>
     <message>
-        <source>Hide invisible blocks</source>
-        <translation type="vanished">Ocultar bloques invisibles</translation>
-    </message>
-    <message>
         <source>Hide editor-only meta-signs pictures</source>
         <translation>Ocultar meta símbolos del editor</translation>
     </message>
     <message>
         <source>Hide grid (if it is shown)</source>
         <translation>Ocultar grilla (si es visible)</translation>
-    </message>
-    <message>
-        <source>Tiled background</source>
-        <translation type="vanished">Fondo en azulejos</translation>
     </message>
     <message>
         <source>Hide invisible blocks and meta-objects</source>
@@ -2086,10 +1800,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
         <translation>Añadir a nueva capa...</translation>
     </message>
     <message>
-        <source> [hidden]</source>
-        <translation type="vanished">[oculto]</translation>
-    </message>
-    <message>
         <source>Invisible</source>
         <translation>Invisible</translation>
     </message>
@@ -2304,10 +2014,6 @@ Límites: longitud máxima de 27 caracteres</translation>
         <translation>No transporte</translation>
     </message>
     <message>
-        <source>No Yoshi</source>
-        <translation type="vanished">No yoshi</translation>
-    </message>
-    <message>
         <source>Allow NPC</source>
         <translation>Aceptar PNJ</translation>
     </message>
@@ -2468,20 +2174,8 @@ Límites: longitud máxima de 27 caracteres</translation>
 Límite: máxima longitud de 27 caracteres</translation>
     </message>
     <message>
-        <source>Please, enter NPC&apos;s talkative message
-(Max line length is 27 characters)</source>
-        <translation type="vanished">Por favor, ponga un mensaje dialogable para un PNJ.
-Límite: máxima longitud de 27 caracteres</translation>
-    </message>
-    <message>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
         <translation>Amigable (PNJs no amigables no pueden hablar)</translation>
-    </message>
-    <message>
-        <source>Please, enter NPC&apos;s talkative message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Por favor, ponga un mensaje dialogable para un PNJ.
-Límite: máxima longitud de 28 caracteres</translation>
     </message>
 </context>
 <context>
@@ -2636,10 +2330,6 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <source>Preferences have been copied: %1</source>
         <translation>Las preferencias se copiaron: %1</translation>
-    </message>
-    <message>
-        <source>Not movable</source>
-        <translation type="vanished">Inmóvil</translation>
     </message>
     <message>
         <source>Set message...</source>
@@ -2945,18 +2635,6 @@ Límite: máxima longitud de 28 caracteres</translation>
         <translation>Grupo:</translation>
     </message>
     <message>
-        <source>Text</source>
-        <translation type="vanished">Texto</translation>
-    </message>
-    <message>
-        <source>ID (contents)</source>
-        <translation type="vanished">ID (contiene)</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="vanished">ID</translation>
-    </message>
-    <message>
         <source>[all]</source>
         <translation>[todo]</translation>
     </message>
@@ -2975,10 +2653,6 @@ Límite: máxima longitud de 28 caracteres</translation>
     <message>
         <source>NPC</source>
         <translation>PNJ</translation>
-    </message>
-    <message>
-        <source>Tile</source>
-        <translation type="vanished">Bloque</translation>
     </message>
     <message>
         <source>Scenery</source>
@@ -3069,73 +2743,6 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
 </context>
 <context>
-    <name>ItemWater</name>
-    <message>
-        <source>Layer: </source>
-        <translation type="vanished">Capa:</translation>
-    </message>
-    <message>
-        <source>Add to new layer...</source>
-        <translation type="vanished">Añadir a nueva capa...</translation>
-    </message>
-    <message>
-        <source>Environment type</source>
-        <translation type="vanished">Tipo de ambiente</translation>
-    </message>
-    <message>
-        <source>Water</source>
-        <translation type="vanished">Agua</translation>
-    </message>
-    <message>
-        <source>Quicksand</source>
-        <translation type="vanished">Arenas movedizas</translation>
-    </message>
-    <message>
-        <source>Copy preferences</source>
-        <translation type="vanished">Copiar preferencias</translation>
-    </message>
-    <message>
-        <source>Position: X, Y, Width, Height</source>
-        <translation type="vanished">Posición: X, Y, Ancho, Altura</translation>
-    </message>
-    <message>
-        <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="vanished">Posición: Izquierda, Arriba, Derecha, Abajo</translation>
-    </message>
-    <message>
-        <source>Preferences have been copied: %1</source>
-        <translation type="vanished">Las preferencias se copiaron: %1</translation>
-    </message>
-    <message>
-        <source>Show zone range data</source>
-        <translation type="vanished">Mostrar zona de rango</translation>
-    </message>
-    <message>
-        <source>Resize</source>
-        <translation type="vanished">Redimensionar</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="vanished">Copiar</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="vanished">Cortar</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Remover</translation>
-    </message>
-    <message>
-        <source>Physical environment range</source>
-        <translation type="vanished">Rango de entorno físico</translation>
-    </message>
-    <message>
-        <source>Rectangle X(left), Y(top), Width, Height, Right, Bottom</source>
-        <translation type="vanished">Rectángulo X(izquierda), Y(arriba), Ancho, Alto, Derecha, Abajo</translation>
-    </message>
-</context>
-<context>
     <name>JsonSettingsWidget</name>
     <message>
         <source>Browse</source>
@@ -3165,123 +2772,7 @@ Límite: máxima longitud de 28 caracteres</translation>
     </message>
 </context>
 <context>
-    <name>LazyFixTool_gui</name>
-    <message>
-        <source>LazyFix tool</source>
-        <translation type="vanished">Herramienta &quot;LazyFix&quot;</translation>
-    </message>
-    <message>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="vanished">Directorio de salida, donde se guardarán las imágenes arregladas
-(Si este campo no se define, las imágenes serán guardadas en la misma carpeta donde están los GIFs, con creación de repuestos)</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Cerrar</translation>
-    </message>
-    <message>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">Directorio de entrada que contiene los GIFs (*.gif y *m.gif)</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Buscar imágenes en subdirectorios</translation>
-    </message>
-    <message>
-        <source>Make gray shades on masks is more dark</source>
-        <translation type="vanished">Hacer sombras grises en máscaras más oscuras</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Explorar</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Indicadores</translation>
-    </message>
-    <message>
-        <source>Don&apos;t create back-up</source>
-        <translation type="vanished">No crear repuestos</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Comenzar</translation>
-    </message>
-    <message>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Ésta es una herramienta de consola que arregla las máscaras de GIFs para SMBX malhechas. Ésta utilidad hace una máscara correcta por comparación de colores. Las imágenes se sobreescribirán, pero siempre creando directorios de repuesto y si la imágen se convierte mal, puede restaurar la vieja.</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved fixed images
-(If this field will not be defined, the new images will be saved in the same folder as where the GIF images are placed with back-up creation)</source>
-        <translation type="vanished">Directorio de salida, donde se guardarán las imágenes arregladas
-(Si este campo no se define, las imágenes serán guardadas en la misma carpeta donde están los GIFs, con creación de repuestos)</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Abrir directorio fuente</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Abrir directorio destino</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">El directorio fuente no está definido</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Por favor, elija su directorio fuente</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">No se encuentra la herramienta</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">No se puede ejecutar la aplicación:
-%1
-Por favor, controle la ruta de aplicación y asegúrese de que está instalada apropiadamente.</translation>
-    </message>
-</context>
-<context>
     <name>LevelEdit</name>
-    <message>
-        <source>Level edit</source>
-        <translation type="vanished">Edición de nivel</translation>
-    </message>
-    <message>
-        <source>1/%1 Loading user data</source>
-        <translation type="vanished">1/%1 Cargando datos de usuario</translation>
-    </message>
-    <message>
-        <source>1/%1 Applying Backgrounds</source>
-        <translation type="vanished">1/%1 Aplicando fondos</translation>
-    </message>
-    <message>
-        <source>2/%1 Applying BGOs...</source>
-        <translation type="vanished">2/%1 Aplicando OFs (objetos de fondo)...</translation>
-    </message>
-    <message>
-        <source>3/%1 Applying Blocks...</source>
-        <translation type="vanished">3/%1 Aplicando bloques...</translation>
-    </message>
-    <message>
-        <source>4/%1 Applying NPCs...</source>
-        <translation type="vanished">4/%1 Aplicando PNJs (Personajes No Jugadores)...</translation>
-    </message>
-    <message>
-        <source>5/%1 Applying Water...</source>
-        <translation type="vanished">5/%1 Aplicando agua...</translation>
-    </message>
-    <message>
-        <source>6/%1 Applying Doors...</source>
-        <translation type="vanished">6/%1 Aplicando puertas...</translation>
-    </message>
     <message>
         <source>Export current section to image</source>
         <translation>Exportar sección actual a imagen</translation>
@@ -3307,24 +2798,8 @@ Por favor, controle la ruta de aplicación y asegúrese de que está instalada a
         <translation>Sin título %1</translation>
     </message>
     <message>
-        <source>Configurations not loaded</source>
-        <translation type="vanished">Configuraciones no cargadas</translation>
-    </message>
-    <message>
-        <source>Cannot create level file:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede crear archivo:
-porque las configuraciones no están cargadas.
-Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
-    </message>
-    <message>
         <source>Please enter a level title for &apos;%1&apos;!</source>
         <translation>¡Por favor póngale título a &apos;%1&apos;!</translation>
-    </message>
-    <message>
-        <source>Saving </source>
-        <translation type="vanished">Guardando</translation>
     </message>
     <message>
         <source>Saving</source>
@@ -3367,10 +2842,6 @@ el código debe ser menor o igual al código específico)</translation>
         <translation>Versión de archivo SMBX</translation>
     </message>
     <message>
-        <source>Which version do you want to save as? (from 0 to 64)</source>
-        <translation type="vanished">¿A qué versión desea guardar? (de 0 a 64)</translation>
-    </message>
-    <message>
         <source>The SMBX64 limit has been exceeded</source>
         <translation>El límite SMBX64 ha sido excedido</translation>
     </message>
@@ -3385,76 +2856,6 @@ El exceso de los límites de SMBX64 puede colapsar el juego con el error &apos;S
 LunaLUA parcialmente extiende esos límites.</translation>
     </message>
     <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 blocks
-The maximum number of blocks is %2.
-
-Please remove excess blocks from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 bloques
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Background Objects
-The maximum number of Background Objects is %2.
-
-Please remove excess Background Objects from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Objetos de Fondo
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Non-Playable Characters
-The maximum number of Non-Playable Characters is %2.
-
-Please remove excess Non-Playable Characters from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Personajes No Jugadores (PNJ)
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Warps
-The maximum number of Warps is %2.
-
-Please remove excess Warps from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Traslados
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Water Boxes
-The maximum number of Water Boxes is %2.
-
-Please remove excess Water Boxes from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 cajas de agua
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Layers
-The maximum number of Layers is %2.
-
-Please remove excess Layers from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 capas
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Events
-The maximum number of Events is %2.
-
-Please remove excess Events from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 eventos
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
         <source>File save error</source>
         <translation>Error de escritura</translation>
     </message>
@@ -3465,16 +2866,6 @@ Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en f
 %2.</translation>
     </message>
     <message>
-        <source>Do you want to save file anyway?
-Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
-
-Installed LunaLUA partially extends than limits.</source>
-        <translation type="vanished">¿Desea guardar el archivo de todos modos?
-El exceso de los límites de SMBX64 puede causar un error &apos;overflow&apos; en SMBX.
-
-LunaLUA parcialmente extiende esos límites.</translation>
-    </message>
-    <message>
         <source>File read error</source>
         <translation>Error de lectura</translation>
     </message>
@@ -3483,14 +2874,6 @@ LunaLUA parcialmente extiende esos límites.</translation>
 %2.</source>
         <translation>No se puede leer archivo %1:
 %2.</translation>
-    </message>
-    <message>
-        <source>Cannot open level file %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede abrir archivo de nivel %1:
-porque no se cargaron las configuraciones de objetos.
-Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
     </message>
     <message>
         <source>Loading level data</source>
@@ -3555,10 +2938,6 @@ Do you want to save your changes?</source>
         <translation>Lista de archivos de nivel</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es una lista de archivos de nivel que se encuentran en la misma carpeta que el archivo.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Please, select level file from list for use them:</source>
         <translation>Por favor, seleccionar archivo de la lista para usarlo:</translation>
     </message>
@@ -3566,36 +2945,12 @@ Do you want to save your changes?</source>
 <context>
     <name>LevelItemBox</name>
     <message>
-        <source>Level toolbox</source>
-        <translation type="vanished">Herramientas de nivel</translation>
-    </message>
-    <message>
         <source>Blocks</source>
         <translation>Bloques</translation>
     </message>
     <message>
         <source>Category:</source>
         <translation>Categoría:</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation type="vanished">Filtro:</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">Texto</translation>
-    </message>
-    <message>
-        <source>ID (contents)</source>
-        <translation type="vanished">ID (contiene)</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="vanished">ID</translation>
-    </message>
-    <message>
-        <source>Uniform icon size</source>
-        <translation type="vanished">Tamaño uniforme de ícono</translation>
     </message>
     <message>
         <source>Group:</source>
@@ -3685,10 +3040,6 @@ Do you want to save your changes?</source>
         <translation>Título</translation>
     </message>
     <message>
-        <source>Level name</source>
-        <translation type="vanished">Nombre del nivel</translation>
-    </message>
-    <message>
         <source>Physics</source>
         <translation>Física</translation>
     </message>
@@ -3752,358 +3103,6 @@ Do you want to save your changes?</source>
     </message>
 </context>
 <context>
-    <name>LevelToolBox</name>
-    <message>
-        <source>Level toolbox</source>
-        <translation type="vanished">Herramientas de nivel</translation>
-    </message>
-    <message>
-        <source>Blocks</source>
-        <translation type="vanished">Bloques</translation>
-    </message>
-    <message>
-        <source>Category:</source>
-        <translation type="vanished">Categoría:</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation type="vanished">Filtro:</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">Texto</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="vanished">ID</translation>
-    </message>
-    <message>
-        <source>Uniform icon size</source>
-        <translation type="vanished">Tamaño uniforme de ícono</translation>
-    </message>
-    <message>
-        <source>Group:</source>
-        <translation type="vanished">Grupo:</translation>
-    </message>
-    <message>
-        <source>BGO</source>
-        <translation type="vanished">OF</translation>
-    </message>
-    <message>
-        <source>NPC</source>
-        <translation type="vanished">PNJ</translation>
-    </message>
-</context>
-<context>
-    <name>LunaTester</name>
-    <message>
-        <source>Run testing</source>
-        <translation type="vanished">Ejecutar pruebas</translation>
-    </message>
-    <message>
-        <source>Reset checkpoints</source>
-        <translation type="vanished">Reiniciar checkpoints</translation>
-    </message>
-    <message>
-        <source>Reset all checkpoint states to initial state.</source>
-        <translation type="vanished">Reiniciar todos los checkpoints a su estado inicial.</translation>
-    </message>
-    <message>
-        <source>LunaTester error</source>
-        <translation type="vanished">Error de LunaTester</translation>
-    </message>
-    <message>
-        <source>Starts testing in the legacy engine.
-To have this feature work, latest LunaLUA must be installed.
-Otherwise it will be very limited.</source>
-        <translation type="vanished">Ejecuta pruebas en el motor clásico.
-Para que funcione, LunaLUA debe estar actualizado.
-De otra manera será muy limitado.</translation>
-    </message>
-    <message>
-        <source>Terminate frozen loader</source>
-        <translation type="vanished">Terminar proceso congelado</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="vanished">Finaliza el proceso congelado para volver a comenzar una prueba.</translation>
-    </message>
-    <message>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="vanished">El proceso de pruebas de LunaLUA está en ejecución, ¡intente de nuevo o finalice el proceso!</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="vanished">¿De verdad quiere finalizar el proceso?</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <translation type="vanished">El proceso no se está ejecutando.</translation>
-    </message>
-    <message>
-        <source>Test level</source>
-        <comment>Run the LunaTester based level testing.</comment>
-        <translation type="vanished">Probar nivel</translation>
-    </message>
-    <message>
-        <source>Starts level testing in the legacy engine.
-To have this feature work, latest LunaLUA must be installed.
-Otherwise, it will be very limited.</source>
-        <translation type="vanished">Comienza las pruebas en el motor clásico.
-Para que funcione, LunaLUA debe estar actualizado.
-De otra manera, estará limitado.</translation>
-    </message>
-    <message>
-        <source>Disable OpenGL</source>
-        <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="vanished">Deshabilitar OpenGL</translation>
-    </message>
-    <message>
-        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="vanished">Deshabilitar OpenGL y usar GDI. Útil si su placa gráfica no soporta OpenGL o LunaLua colapsa al usarlo.</translation>
-    </message>
-    <message>
-        <source>Keep running in background</source>
-        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="vanished">Ejecutar en segundo plano</translation>
-    </message>
-    <message>
-        <source>Allows to start level testing very fast after first launch.
-Requires powerful computer, otherwise engine will freeze on next test launch.
-Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="vanished">Permite probar el nivel mucho más rapido despues de la primer ejecución.
-Requiere una poderosa computadora, de otra manera el motor se congelará en la siguiente ejecución.
-Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente algún problema al probar.</translation>
-    </message>
-    <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="vanished">Terminar proceso congelado</translation>
-    </message>
-    <message>
-        <source>Start Legacy Engine</source>
-        <comment>Launch legacy engine in game mode</comment>
-        <translation type="vanished">Lanzar motor clásico</translation>
-    </message>
-    <message>
-        <source>Launch legacy engine in game mode.</source>
-        <translation type="vanished">Lanzar el motor clásico en modo de juego.</translation>
-    </message>
-    <message>
-        <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation type="vanished">No se puede usar LunaTester en mapa porque el motor clásico no permite probar mapas. En su lugar, puede usar el motor PGE (&quot;Prueba&quot; -&gt; &quot;Probar archivo guardado&quot;) para probar el mapa sin el episodio entero.</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="vanished">El proceso no se está ejecutando.</translation>
-    </message>
-    <message>
-        <source>Checkpoints successfully reseted!</source>
-        <translation type="vanished">¡Checkpoints reiniciados!</translation>
-    </message>
-    <message>
-        <source>LunaTester error!</source>
-        <translation type="vanished">¡Error de LunaTester!</translation>
-    </message>
-    <message>
-        <source>LunaLUA tester is not started!</source>
-        <translation type="vanished">¡Las pruebas no empezaron!</translation>
-    </message>
-    <message>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="vanished">¡Los límites de SMBX64 fueron sobrepasados!</translation>
-    </message>
-    <message>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="vanished">¡Violación del formato SMBX64 fue encontrada!
-%1, el motor podría colapsar!
-Se sugiere remover los objetos en exceso.
-¿Desea continuar el proceso?</translation>
-    </message>
-    <message>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="vanished">El directorio de SMBX no fue configurado correctamente</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="vanished">¡%1 no encontrado!
-¡Para probar por SMBX debe tener el paquete SMBX Integrado!</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="vanished">La prueba de SMBX ya está en ejecución</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="vanished">El motor SMBX ya está probando otro nivel.
-¿Desea abortar el proceso de prueba actual?</translation>
-    </message>
-    <message>
-        <source>Vanilla SMBX detected!</source>
-        <translation type="vanished">¡SMBX estándar detectado!</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="vanished">¡%2 no encontrado!
-¡Usted tiene un SMBX obsoleto!&lt;br&gt;
-Eso significa, imposible ejecutar una prueba automáticamente. Para probar un nivel, se generará un episodio genérico que puede seleccionar manualmente.&lt;br&gt;
-&lt;br&gt;
-Nombre del episodio a generar: %1&lt;br&gt;
-&lt;br&gt;
-¿Aún desea ejecutar una prueba?&lt;br&gt;
-&lt;br&gt;
-Si desea tener pruebas de forma completa, necesita obtener LunaLUA de acá:&lt;br&gt;
-%3</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">Error de escritura</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">No se puede escribir archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="vanished">¡Error al enviar nivel a LunaLUA-SMBX!</translation>
-    </message>
-    <message>
-        <source>process execution is failed.</source>
-        <translation type="vanished">Proceso fallido.</translation>
-    </message>
-    <message>
-        <source>patching has failed.</source>
-        <translation type="vanished">El parcheamiento falló.</translation>
-    </message>
-    <message>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="vanished">Imposible ejecutar motor SMBX, porque %1</translation>
-    </message>
-    <message>
-        <source>Save file first</source>
-        <translation type="vanished">Guardar primero</translation>
-    </message>
-    <message>
-        <source>To run testing via SMBX file must be saved into disk first!</source>
-        <translation type="vanished">¡Para probar vía SMBX el archivo debe ser guardado!</translation>
-    </message>
-    <message>
-        <source>Incompatible file format</source>
-        <translation type="vanished">Formato incompatible</translation>
-    </message>
-    <message>
-        <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
-Will be created a temporary file. Do you want to continue?</source>
-        <translation type="vanished">¡Para probar el nivel en SMBX, el archivo debe ser guardado en el formato SMBX64!
-Será creado un archivo temporal. ¿Desea continuar?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Error</translation>
-    </message>
-    <message>
-        <source>Fail to create temp file %1</source>
-        <translation type="vanished">No se pudo crear archivo %1</translation>
-    </message>
-    <message>
-        <source>LunaLUA Level test</source>
-        <translation type="vanished">Probar nivel con LunaLUA</translation>
-    </message>
-    <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="vanished">El directorio en Motor clásico no se configuró correctamente</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="vanished">¡%1 no hallado!
-¡Para usar LunaTester debería tener un paquete de configuración de Integración correcto!</translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="vanished">Imposible lanzar el motor SMBX, porque %1</translation>
-    </message>
-    <message>
-        <source>SMBX Level test</source>
-        <translation type="obsolete">Prueba SMBX</translation>
-    </message>
-    <message>
-        <source>Do you wanna to save file before start testing?
-</source>
-        <translation type="vanished">¿Desea guardar el archivo antes de probar?
-</translation>
-    </message>
-    <message>
-        <source>SMBX with LunaDLL is not running!</source>
-        <translation type="vanished">¡SMBX con LunaDLL no está ejecutándose!</translation>
-    </message>
-    <message>
-        <source>Fail to send file patth into LunaDLL: (%1)</source>
-        <translation type="vanished">No se pudo enviar la dirección en LunaDLL: (%1)</translation>
-    </message>
-    <message>
-        <source>Could not map view of LunaLUA shared memory (%1).</source>
-        <translation type="vanished">No se puede ver mapa de memoria de LunaLUA (%1).</translation>
-    </message>
-    <message>
-        <source>Too long path: </source>
-        <translation type="vanished">Dirección muy larga: </translation>
-    </message>
-    <message>
-        <source>Failed to find SMBX Window</source>
-        <translation type="vanished">No se encontró la ventana de SMBX</translation>
-    </message>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="vanished">Terminar proceso ejecutado</translation>
-    </message>
-    <message>
-        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="vanished">Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="vanished">¿Está seguro de querer cerrar LunaTester? Si está probando un nivel, ¡esto lo terminará inmediatamente!</translation>
-    </message>
-    <message>
-        <source>LunaTester has been successfully closed.</source>
-        <translation type="vanished">Se terminó el proceso de LunaTester exitosamente.</translation>
-    </message>
-    <message>
-        <source>LunaTester is not running.</source>
-        <translation type="vanished">LunaTester no está siendo ejecutado.</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="vanished">¡%2 no encontrado!
-¡Usted tiene un SMBX obsoleto!&lt;br&gt;
-Eso significa que es imposible lanzar una prueba de nivel en su sistema operativo. LunaLua se requiere para ejecutar la prueba con SMBX en sistemas operativos no-Windows.</translation>
-    </message>
-</context>
-<context>
     <name>LunaTesterEngine</name>
     <message>
         <source>Test level</source>
@@ -4149,15 +3148,6 @@ Requiere una poderosa computadora, de otra manera el motor se congelará en la s
 Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente algún problema al probar.</translation>
     </message>
     <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="obsolete">Terminar proceso congelado</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="obsolete">Finaliza el proceso congelado para volver a comenzar una prueba.</translation>
-    </message>
-    <message>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
 the background or foreground, so the engine can be loaded from scratch.</comment>
@@ -4175,20 +3165,6 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <source>Launch LunaTester as a normal game.</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="obsolete">El proceso de pruebas de LunaLUA está en ejecución, ¡intente de nuevo o finalice el proceso!</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="obsolete">¿De verdad quiere finalizar el proceso?</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="obsolete">El proceso no se está ejecutando.</translation>
     </message>
     <message>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
@@ -4229,91 +3205,12 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation type="unfinished">¡Checkpoints reiniciados!</translation>
     </message>
     <message>
-        <source>LunaTester error!</source>
-        <translation type="obsolete">¡Error de LunaTester!</translation>
-    </message>
-    <message>
         <source>LunaLUA tester is not started!</source>
         <translation type="unfinished">¡Las pruebas no empezaron!</translation>
     </message>
     <message>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="obsolete">¡Los límites de SMBX64 fueron sobrepasados!</translation>
-    </message>
-    <message>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="obsolete">¡Violación del formato SMBX64 fue encontrada!
-%1, el motor podría colapsar!
-Se sugiere remover los objetos en exceso.
-¿Desea continuar el proceso?</translation>
-    </message>
-    <message>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="obsolete">El directorio de SMBX no fue configurado correctamente</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="obsolete">¡%1 no encontrado!
-¡Para probar por SMBX debe tener el paquete SMBX Integrado!</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="obsolete">La prueba de SMBX ya está en ejecución</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="obsolete">El motor SMBX ya está probando otro nivel.
-¿Desea abortar el proceso de prueba actual?</translation>
-    </message>
-    <message>
         <source>Vanilla SMBX detected!</source>
         <translation type="unfinished">¡SMBX estándar detectado!</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="obsolete">¡%2 no encontrado!
-¡Usted tiene un SMBX obsoleto!&lt;br&gt;
-Eso significa, imposible ejecutar una prueba automáticamente. Para probar un nivel, se generará un episodio genérico que puede seleccionar manualmente.&lt;br&gt;
-&lt;br&gt;
-Nombre del episodio a generar: %1&lt;br&gt;
-&lt;br&gt;
-¿Aún desea ejecutar una prueba?&lt;br&gt;
-&lt;br&gt;
-Si desea tener pruebas de forma completa, necesita obtener LunaLUA de acá:&lt;br&gt;
-%3</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="obsolete">Error de escritura</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="obsolete">No se puede escribir archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="obsolete">¡%2 no encontrado!
-¡Usted tiene un SMBX obsoleto!&lt;br&gt;
-Eso significa que es imposible lanzar una prueba de nivel en su sistema operativo. LunaLua se requiere para ejecutar la prueba con SMBX en sistemas operativos no-Windows.</translation>
     </message>
     <message>
         <source>Failed to send level into LunaLUA-SMBX!</source>
@@ -4322,24 +3219,6 @@ Eso significa que es imposible lanzar una prueba de nivel en su sistema operativ
     <message>
         <source>LunaTester error</source>
         <translation type="unfinished">Error de LunaTester</translation>
-    </message>
-    <message>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="obsolete">Imposible ejecutar motor SMBX, porque %1</translation>
-    </message>
-    <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="obsolete">El directorio en Motor clásico no se configuró correctamente</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="obsolete">¡%1 no hallado!
-¡Para usar LunaTester debería tener un paquete de configuración de Integración correcto!</translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="obsolete">Imposible lanzar el motor SMBX, porque %1</translation>
     </message>
     <message>
         <source>Change the path to LunaTester...</source>
@@ -4510,231 +3389,6 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
 </context>
 <context>
-    <name>LvlBaseItem</name>
-    <message>
-        <source>Layer: </source>
-        <translation type="obsolete">Capa:</translation>
-    </message>
-    <message>
-        <source>Add to new layer...</source>
-        <translation type="obsolete">Añadir a nueva capa...</translation>
-    </message>
-    <message>
-        <source>Change Z-Offset...</source>
-        <translation type="obsolete">Cambiar ubicación Z...</translation>
-    </message>
-    <message>
-        <source>Z-Layer</source>
-        <translation type="obsolete">Capa Z</translation>
-    </message>
-    <message>
-        <source>Background-2</source>
-        <translation type="obsolete">Fondo-2</translation>
-    </message>
-    <message>
-        <source>Background</source>
-        <translation type="obsolete">Fondo</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="obsolete">Predeterminado</translation>
-    </message>
-    <message>
-        <source>Foreground</source>
-        <translation type="obsolete">Primer plano</translation>
-    </message>
-    <message>
-        <source>Foreground-2</source>
-        <translation type="obsolete">Primer plano-2</translation>
-    </message>
-    <message>
-        <source>Transform into</source>
-        <translation type="obsolete">Transformar en</translation>
-    </message>
-    <message>
-        <source>Transform all %1 in this section into</source>
-        <translation type="obsolete">Transformar todo %1 en esta seccion en</translation>
-    </message>
-    <message>
-        <source>Transform all %1 into</source>
-        <translation type="obsolete">Transformar todo %1 en</translation>
-    </message>
-    <message>
-        <source>Copy preferences</source>
-        <translation type="obsolete">Copiar preferencias</translation>
-    </message>
-    <message>
-        <source>BGO-ID: %1</source>
-        <translation type="obsolete">ID de ODF: %1</translation>
-    </message>
-    <message>
-        <source>Position: X, Y</source>
-        <translation type="obsolete">Posición: X, Y</translation>
-    </message>
-    <message>
-        <source>Position: X, Y, Width, Height</source>
-        <translation type="obsolete">Posición: X, Y, Ancho, Altura</translation>
-    </message>
-    <message>
-        <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="obsolete">Posición: Izquierda, Arriba, Derecha, Abajo</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copiar</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Cortar</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Remover</translation>
-    </message>
-    <message>
-        <source>Properties...</source>
-        <translation type="obsolete">Propiedades...</translation>
-    </message>
-    <message>
-        <source>Z-Offset</source>
-        <translation type="obsolete">Ubicación Z</translation>
-    </message>
-    <message>
-        <source>Please enter the Z-value offset:</source>
-        <translation type="obsolete">Por favor diga un valor Z:</translation>
-    </message>
-    <message>
-        <source>Margin of section</source>
-        <translation type="obsolete">Margen de sección</translation>
-    </message>
-    <message>
-        <source>Please select how far items can travel beyond the section boundaries (in pixels) before they are removed.</source>
-        <translation type="obsolete">Por favor seleccionar, hasta qué punto de la sección debería removerse también (en píxeles)</translation>
-    </message>
-    <message>
-        <source>Preferences have been copied: %1</source>
-        <translation type="obsolete">Las preferencias se copiaron: %1</translation>
-    </message>
-    <message>
-        <source>Invisible</source>
-        <translation type="obsolete">Invisible</translation>
-    </message>
-    <message>
-        <source>Slippery</source>
-        <translation type="obsolete">Resbaladizo</translation>
-    </message>
-    <message>
-        <source>Change included NPC...</source>
-        <translation type="obsolete">Cambiar NPC incluído...</translation>
-    </message>
-    <message>
-        <source>Make message box...</source>
-        <translation type="obsolete">Hacer caja del mensaje...</translation>
-    </message>
-    <message>
-        <source>Block-ID: %1</source>
-        <translation type="obsolete">ID de Bloque: %1</translation>
-    </message>
-    <message>
-        <source>Event name</source>
-        <translation type="obsolete">Nombre del evento</translation>
-    </message>
-    <message>
-        <source>Please enter the name of event:</source>
-        <translation type="obsolete">Por favor defina el nombre del evento:</translation>
-    </message>
-    <message>
-        <source>Please enter the message which will be shown.
-(Max line length is 27 characters)</source>
-        <translation type="obsolete">Por favor, escriba el mensaje que se mostrará
-Límites: longitud máxima de 27 caracteres</translation>
-    </message>
-    <message>
-        <source>Hit message text</source>
-        <translation type="obsolete">Texto del mensaje</translation>
-    </message>
-    <message>
-        <source>Event created</source>
-        <translation type="obsolete">El evento fue creado</translation>
-    </message>
-    <message>
-        <source>Message event created!</source>
-        <translation type="obsolete">¡El evento mensaje ha sido creado!</translation>
-    </message>
-    <message>
-        <source>&apos;Hit&apos; event slot is used</source>
-        <translation type="obsolete">Espacio &apos;Hit&apos; está usado</translation>
-    </message>
-    <message>
-        <source>Sorry, but the &apos;Hit&apos; event slot already used by the event: &apos;%1&apos;.</source>
-        <translation type="obsolete">Disculpe, pero el espacio &apos;Hit&apos; ya está siendo usado por el evento &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>Open target level: %1</source>
-        <translation type="obsolete">Abriendo nivel destino: %1</translation>
-    </message>
-    <message>
-        <source>Jump to exit</source>
-        <translation type="obsolete">Ir a salida</translation>
-    </message>
-    <message>
-        <source>Jump to entrance</source>
-        <translation type="obsolete">Ir a entrada</translation>
-    </message>
-    <message>
-        <source>Locked</source>
-        <translation type="obsolete">Bloqueado</translation>
-    </message>
-    <message>
-        <source>Edit NPC-Configuration</source>
-        <translation type="obsolete">Editar configuración de PNJ</translation>
-    </message>
-    <message>
-        <source>New NPC-Configuration</source>
-        <translation type="obsolete">Nueva configuración PNJ</translation>
-    </message>
-    <message>
-        <source>Set %1</source>
-        <translation type="obsolete">Fijar %1</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation type="obsolete">Dirección</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="obsolete">Izquierda</translation>
-    </message>
-    <message>
-        <source>Random</source>
-        <translation type="obsolete">Aleatorio</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="obsolete">Derecha</translation>
-    </message>
-    <message>
-        <source>Friendly</source>
-        <translation type="obsolete">Amigable</translation>
-    </message>
-    <message>
-        <source>Doesn&apos;t move</source>
-        <translation type="obsolete">No se mueve</translation>
-    </message>
-    <message>
-        <source>Set message...</source>
-        <translation type="obsolete">Fijar mensaje...</translation>
-    </message>
-    <message>
-        <source>NPC-ID: %1</source>
-        <translation type="obsolete">ID de PNJ: %1</translation>
-    </message>
-    <message>
-        <source>Environment type</source>
-        <translation type="obsolete">Tipo de ambiente</translation>
-    </message>
-</context>
-<context>
     <name>LvlCloneSection</name>
     <message>
         <source>Clone section</source>
@@ -4767,10 +3421,6 @@ Límites: longitud máxima de 27 caracteres</translation>
     <message>
         <source>[Uninitialized]</source>
         <translation>[Sin iniciar]</translation>
-    </message>
-    <message>
-        <source>[Busy]</source>
-        <translation type="vanished">[Ocupado]</translation>
     </message>
     <message>
         <source>[Used]</source>
@@ -4807,26 +3457,6 @@ Por favor, seleccione otra.</translation>
 Do you want to continue?</source>
         <translation>La sección de destino está en uso, por lo que será sobreescrita removiendo todos sus objetos.
 ¿Desea continuar?</translation>
-    </message>
-    <message>
-        <source>Destination section is used!
-Please select another section, or clear
-the destination section first with &apos;Delete Section&apos;.</source>
-        <translation type="vanished">¡La sección de destino está ocupada!
-Por favor seleccione otra
-o elimínela con su respectiva opción.</translation>
-    </message>
-    <message>
-        <source>Section is busy</source>
-        <translation type="vanished">La sección está ocupada</translation>
-    </message>
-    <message>
-        <source>Destination section is busy!
-Please select another section, or clear
-the destination section first with &apos;Delete Section&apos;.</source>
-        <translation type="vanished">¡La sección de destino está ocupada!
-Por favor seleccione otra
-o elimínela con su respectiva opción.</translation>
     </message>
 </context>
 <context>
@@ -5058,12 +3688,6 @@ o elimínela con su respectiva opción.</translation>
 Límite: máxima longitud de 27 caracteres</translation>
     </message>
     <message>
-        <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Por favor, escribir mensaje
-Límite: máxima longitud de 28 caracteres</translation>
-    </message>
-    <message>
         <source>Autoscroll section (Legacy)</source>
         <translation></translation>
     </message>
@@ -5250,14 +3874,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>NPC</source>
         <translation>PNJ</translation>
-    </message>
-    <message>
-        <source>Up</source>
-        <translation type="vanished">Arriba</translation>
-    </message>
-    <message>
-        <source>Down</source>
-        <translation type="vanished">Abajo</translation>
     </message>
     <message>
         <source>Death:</source>
@@ -5506,418 +4122,6 @@ Usted verá fantasmas u otras imágenes en vez de sus gráficos o ítems persona
 Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este nivel.</translation>
     </message>
     <message>
-        <source>Undone: %1</source>
-        <translation type="vanished">Sin terminar: %1</translation>
-    </message>
-    <message>
-        <source>Redone: %1</source>
-        <translation type="vanished">Rehacer: %1</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Remover</translation>
-    </message>
-    <message>
-        <source>Place</source>
-        <translation type="vanished">Colocar</translation>
-    </message>
-    <message>
-        <source>Place &amp; Overwrite</source>
-        <translation type="vanished">Colocar y sobreescribir</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="vanished">Mover</translation>
-    </message>
-    <message>
-        <source>Transform</source>
-        <translation type="vanished">Transformar</translation>
-    </message>
-    <message>
-        <source>Changed Setting [%1]</source>
-        <translation type="vanished">Opción cambiada [%1]</translation>
-    </message>
-    <message>
-        <source>Change Layer</source>
-        <translation type="vanished">Cambiar capa</translation>
-    </message>
-    <message>
-        <source>Resize Block</source>
-        <translation type="vanished">Redimensionar Bloque</translation>
-    </message>
-    <message>
-        <source>Place Door</source>
-        <translation type="vanished">Colocar puerta</translation>
-    </message>
-    <message>
-        <source>Add Warp</source>
-        <translation type="vanished">Añadir traslado</translation>
-    </message>
-    <message>
-        <source>Remove Warp</source>
-        <translation type="vanished">Remover traslado</translation>
-    </message>
-    <message>
-        <source>Changed Warpsetting [%1]</source>
-        <translation type="vanished">Opción de traslado cambiada [%1]</translation>
-    </message>
-    <message>
-        <source>Add Event</source>
-        <translation type="vanished">Añadir Evento</translation>
-    </message>
-    <message>
-        <source>Remove Event</source>
-        <translation type="vanished">Remover Evento</translation>
-    </message>
-    <message>
-        <source>Copy Event</source>
-        <translation type="vanished">Copiar evento</translation>
-    </message>
-    <message>
-        <source>Changed Eventsetting [%1]</source>
-        <translation type="vanished">Preferencia Cambiada [%1]</translation>
-    </message>
-    <message>
-        <source>Move Items to new Layer</source>
-        <translation type="vanished">Mover ítems a nueva capa</translation>
-    </message>
-    <message>
-        <source>New Layer</source>
-        <translation type="vanished">Nueva capa</translation>
-    </message>
-    <message>
-        <source>Remove layer with items</source>
-        <translation type="vanished">Remover capa con ítems</translation>
-    </message>
-    <message>
-        <source>Rename Event</source>
-        <translation type="vanished">Renombrar evento</translation>
-    </message>
-    <message>
-        <source>Rename Layer</source>
-        <translation type="vanished">Renombrar capa</translation>
-    </message>
-    <message>
-        <source>Remove layers and save items</source>
-        <translation type="vanished">Remover capa y guardar elementos</translation>
-    </message>
-    <message>
-        <source>Merge Layer</source>
-        <translation type="vanished">Combinar capa</translation>
-    </message>
-    <message>
-        <source>Changed Sectionsetting [%1]</source>
-        <translation type="vanished">Preferencia cambiada [%1]</translation>
-    </message>
-    <message>
-        <source>Changed Levelsetting [%1]</source>
-        <translation type="vanished">Cambiada la preferencia [%1]</translation>
-    </message>
-    <message>
-        <source>Place Player Point</source>
-        <translation type="vanished">Colocar punto del jugador</translation>
-    </message>
-    <message>
-        <source>Resize Water</source>
-        <translation type="vanished">Redimensionar Agua</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="vanished">Rotar</translation>
-    </message>
-    <message>
-        <source>Flip</source>
-        <translation type="vanished">Voltear</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="vanished">Desconocido</translation>
-    </message>
-    <message>
-        <source>Slippery</source>
-        <translation type="vanished">Resbaladizo</translation>
-    </message>
-    <message>
-        <source>Friendly</source>
-        <translation type="vanished">Amigable</translation>
-    </message>
-    <message>
-        <source>Boss</source>
-        <translation type="vanished">Jefe</translation>
-    </message>
-    <message>
-        <source>Not Moveable</source>
-        <translation type="vanished">No mover</translation>
-    </message>
-    <message>
-        <source>Message</source>
-        <translation type="vanished">Mensaje</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation type="vanished">Dirección</translation>
-    </message>
-    <message>
-        <source>Included NPC</source>
-        <translation type="vanished">Cambiar NPC incluído</translation>
-    </message>
-    <message>
-        <source>Water Type</source>
-        <translation type="vanished">Tipo de ambiente</translation>
-    </message>
-    <message>
-        <source>Layer</source>
-        <translation type="vanished">Capa</translation>
-    </message>
-    <message>
-        <source>No Yoshi</source>
-        <translation type="vanished">No Yoshi</translation>
-    </message>
-    <message>
-        <source>Allow NPC</source>
-        <translation type="vanished">Habilitar PNJ</translation>
-    </message>
-    <message>
-        <source>Locked</source>
-        <translation type="vanished">Bloqueado</translation>
-    </message>
-    <message>
-        <source>Warp Type</source>
-        <translation type="vanished">Tipo de traslado</translation>
-    </message>
-    <message>
-        <source>Need Stars</source>
-        <translation type="vanished">Necesita estrellas</translation>
-    </message>
-    <message>
-        <source>Entrance Direction</source>
-        <translation type="vanished">Dirección de entrada</translation>
-    </message>
-    <message>
-        <source>Exit Direction</source>
-        <translation type="vanished">Dirección de salida</translation>
-    </message>
-    <message>
-        <source>Set Level Exit</source>
-        <translation type="vanished">Fijar Salida del nivel</translation>
-    </message>
-    <message>
-        <source>Set Level Entrance</source>
-        <translation type="vanished">Fijar entrada del nivel</translation>
-    </message>
-    <message>
-        <source>Level Warp To</source>
-        <translation type="vanished">Trasladar a</translation>
-    </message>
-    <message>
-        <source>Activate Generator</source>
-        <translation type="vanished">Activar Generador</translation>
-    </message>
-    <message>
-        <source>Generator Type</source>
-        <translation type="vanished">Tipo de generador</translation>
-    </message>
-    <message>
-        <source>Generator Direction</source>
-        <translation type="vanished">Dirección de generador</translation>
-    </message>
-    <message>
-        <source>Generator Time</source>
-        <translation type="vanished">Tiempo de generador</translation>
-    </message>
-    <message>
-        <source>Attach Layer</source>
-        <translation type="vanished">Atajar Capa</translation>
-    </message>
-    <message>
-        <source>Event Block Destroyed</source>
-        <translation type="vanished">Evento Bloque Destruído</translation>
-    </message>
-    <message>
-        <source>Event Block Hited</source>
-        <translation type="vanished">Evento Bloque Golpeado</translation>
-    </message>
-    <message>
-        <source>Event Layer Empty</source>
-        <translation type="vanished">Evento Capa Vacía</translation>
-    </message>
-    <message>
-        <source>Event NPC Activate</source>
-        <translation type="vanished">Evento PNJ Activado</translation>
-    </message>
-    <message>
-        <source>Event NPC Die</source>
-        <translation type="vanished">Evento PNJ muerto</translation>
-    </message>
-    <message>
-        <source>Event NPC Talk</source>
-        <translation type="vanished">Evento Diálogo PNJ</translation>
-    </message>
-    <message>
-        <source>NPC Special Data</source>
-        <translation type="vanished">Datos especial de PNJ</translation>
-    </message>
-    <message>
-        <source>Autostart</source>
-        <translation type="vanished">Autoinicio</translation>
-    </message>
-    <message>
-        <source>Layer Smoke Effect</source>
-        <translation type="vanished">Efecto de humo</translation>
-    </message>
-    <message>
-        <source>Add Hide Layer</source>
-        <translation type="vanished">Añadir capa oculta</translation>
-    </message>
-    <message>
-        <source>Remove Hide Layer</source>
-        <translation type="vanished">Remover capa oculta</translation>
-    </message>
-    <message>
-        <source>Add Show Layer</source>
-        <translation type="vanished">Añadir capa visible</translation>
-    </message>
-    <message>
-        <source>Remove Show Layer</source>
-        <translation type="vanished">Remover capa visible</translation>
-    </message>
-    <message>
-        <source>Add Toggle Layer</source>
-        <translation type="vanished">Añadir capa intercambiable</translation>
-    </message>
-    <message>
-        <source>Remove Toggle Layer</source>
-        <translation type="vanished">Remover capa intercambiable</translation>
-    </message>
-    <message>
-        <source>Moving Layer</source>
-        <translation type="vanished">Moviendo capa</translation>
-    </message>
-    <message>
-        <source>Layer Speed Horizontal</source>
-        <translation type="vanished">Velocidad horizontal</translation>
-    </message>
-    <message>
-        <source>Layer Speed Vertical</source>
-        <translation type="vanished">Velocidad vertical</translation>
-    </message>
-    <message>
-        <source>Autoscroll Layer</source>
-        <translation type="vanished">Autodesplazamiento</translation>
-    </message>
-    <message>
-        <source>Autoscroll Layer Speed Horizontal</source>
-        <translation type="vanished">Velocidad de Autodesplazamiento Horizontal</translation>
-    </message>
-    <message>
-        <source>Autoscroll Layer Speed Vertical</source>
-        <translation type="vanished">Velocidad de Autodesplazamiento Vertical</translation>
-    </message>
-    <message>
-        <source>Section Size</source>
-        <translation type="vanished">Tamaño de sección</translation>
-    </message>
-    <message>
-        <source>Section Music</source>
-        <translation type="vanished">Música de sección</translation>
-    </message>
-    <message>
-        <source>Section Background</source>
-        <translation type="vanished">Fondo de sección</translation>
-    </message>
-    <message>
-        <source>Sound</source>
-        <translation type="vanished">Sonido</translation>
-    </message>
-    <message>
-        <source>End Game</source>
-        <translation type="vanished">Fin del juego</translation>
-    </message>
-    <message>
-        <source>Up Key Activate</source>
-        <translation type="vanished">Activar Tecla Arriba</translation>
-    </message>
-    <message>
-        <source>Down Key Activate</source>
-        <translation type="vanished">Activar Tecla Abajo</translation>
-    </message>
-    <message>
-        <source>Left Key Activate</source>
-        <translation type="vanished">Activar Tecla Izquierda</translation>
-    </message>
-    <message>
-        <source>Right Key Activate</source>
-        <translation type="vanished">Activar Tecla Derecha</translation>
-    </message>
-    <message>
-        <source>Run Key Activate</source>
-        <translation type="vanished">Activar Tecla de Corrida</translation>
-    </message>
-    <message>
-        <source>Alt Run Key Activate</source>
-        <translation type="vanished">Activar tecla de Corrida secundaria</translation>
-    </message>
-    <message>
-        <source>Jump Key Activate</source>
-        <translation type="vanished">Activar Tecla de Salto</translation>
-    </message>
-    <message>
-        <source>Alt Jump Key Activate</source>
-        <translation type="vanished">Activar Tecla de Salto secundario</translation>
-    </message>
-    <message>
-        <source>Drop Key Activate</source>
-        <translation type="vanished">Activar tecla de Soltado</translation>
-    </message>
-    <message>
-        <source>Start Key Activate</source>
-        <translation type="vanished">Activar Tecla de Inicio</translation>
-    </message>
-    <message>
-        <source>Trigger Activate</source>
-        <translation type="vanished">Activar función</translation>
-    </message>
-    <message>
-        <source>Trigger Delay</source>
-        <translation type="vanished">Retardar Función</translation>
-    </message>
-    <message>
-        <source>Is Warp</source>
-        <translation type="vanished">Es traslado</translation>
-    </message>
-    <message>
-        <source>No Back</source>
-        <translation type="vanished">Sin Retorno</translation>
-    </message>
-    <message>
-        <source>Off Screen Exit</source>
-        <translation type="vanished">Salida fuera de pantalla</translation>
-    </message>
-    <message>
-        <source>Underwater</source>
-        <translation type="vanished">Bajo agua</translation>
-    </message>
-    <message>
-        <source>Background Image</source>
-        <translation type="vanished">Imagen de fondo</translation>
-    </message>
-    <message>
-        <source>Music</source>
-        <translation type="vanished">Música</translation>
-    </message>
-    <message>
-        <source>Custom Music</source>
-        <translation type="vanished">Música propia</translation>
-    </message>
-    <message>
-        <source>Level Name</source>
-        <translation type="vanished">Nombre del nivel</translation>
-    </message>
-    <message>
-        <source>BGO Sorting Priority</source>
-        <translation type="vanished">Prioridad de OFs</translation>
-    </message>
-    <message>
         <source>LEVELSCENE_CONTEXTMENU_SectionProperties...</source>
         <comment>Section properties...</comment>
         <translation>Propiedades de la sección...</translation>
@@ -5946,15 +4150,6 @@ Zonas físicas de ambiente:	%6
 </context>
 <context>
     <name>LvlSearchBox</name>
-    <message>
-        <source>Search</source>
-        <translation type="obsolete">Buscar</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <comment>Translate it as &quot;Search of items on level&quot;</comment>
-        <translation type="obsolete">Buscar</translation>
-    </message>
     <message>
         <source>Search of items on the level</source>
         <translation>Buscar por un elemento en el nivel</translation>
@@ -6128,10 +4323,6 @@ Zonas físicas de ambiente:	%6
         <translation>Búsqueda de PNJs completa!</translation>
     </message>
     <message>
-        <source>%1 coins</source>
-        <translation type="obsolete">%1 monedas</translation>
-    </message>
-    <message>
         <source>Search in selection group</source>
         <translation></translation>
     </message>
@@ -6159,11 +4350,6 @@ Zonas físicas de ambiente:	%6
         <translation>Pasando de la pantalla, el jugador entra a la pantalla por el otro lado</translation>
     </message>
     <message>
-        <source>Warp section</source>
-        <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="vanished">Zona de sesgo</translation>
-    </message>
-    <message>
         <source>Off screen exit</source>
         <translation>Salida fuera de la pantalla</translation>
     </message>
@@ -6180,10 +4366,6 @@ Zonas físicas de ambiente:	%6
         <source>Wrap horizontaly</source>
         <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
         <translation>Conectar lados izquierdo y derecho</translation>
-    </message>
-    <message>
-        <source>Wrap vertucally</source>
-        <translation type="vanished">Conectar lados superior e inferior</translation>
     </message>
     <message>
         <source>Wrap vertically</source>
@@ -6263,23 +4445,8 @@ Zonas físicas de ambiente:	%6
         <translation>Por favor, elija una imagen de fondo primero.</translation>
     </message>
     <message>
-        <source>Custom background name which will be shown in the editor</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="vanished">Nombre personalizado que figurará en el editor</translation>
-    </message>
-    <message>
-        <source>Create your background layers setup here...</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="vanished">Cree su organización de capas de fondo aquí...</translation>
-    </message>
-    <message>
         <source>Please, save file first, if you want to select custom music file.</source>
         <translation>Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
-    </message>
-    <message>
-        <source>Default screen fill color</source>
-        <comment>A comment in the template if Background2 INI file.</comment>
-        <translation type="vanished">Color de relleno predeterminado</translation>
     </message>
     <message>
         <source>Name that will appear in the editor</source>
@@ -6635,15 +4802,6 @@ Cada par de puntos requiere una instancia.</translation>
         <translation>Remover actual instancia de traslado con todos sus puntos puestos.</translation>
     </message>
     <message>
-        <source>Level file</source>
-        <translation type="vanished">Archivo de nivel</translation>
-    </message>
-    <message>
-        <source>Warp to</source>
-        <comment>Translate as &quot;Door #&quot;</comment>
-        <translation type="vanished">Trasladar a</translation>
-    </message>
-    <message>
         <source>World map files not found</source>
         <translation>Archivos de mapa no encontrados</translation>
     </message>
@@ -6771,10 +4929,6 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <translation>Mundo</translation>
     </message>
     <message>
-        <source>Disable characters</source>
-        <translation type="vanished">Deshabilitar personajes</translation>
-    </message>
-    <message>
         <source>View</source>
         <translation>Ver</translation>
     </message>
@@ -6811,159 +4965,12 @@ Por favor, seleccione el mapa necesario en la lista:</translation>
         <translation>General</translation>
     </message>
     <message>
-        <source>Level Tool box</source>
-        <translation type="vanished">Caja de herramientas de nivel</translation>
-    </message>
-    <message>
-        <source>Blocks</source>
-        <translation type="vanished">Bloques</translation>
-    </message>
-    <message>
-        <source>Category:</source>
-        <translation type="vanished">Categoría:</translation>
-    </message>
-    <message>
-        <source>Backgrounds</source>
-        <translation type="vanished">Fondos</translation>
-    </message>
-    <message>
-        <source>NPC</source>
-        <translation type="vanished">PNJ</translation>
-    </message>
-    <message>
-        <source>World map tool box</source>
-        <translation type="vanished">Caja de herramientas del mundo</translation>
-    </message>
-    <message>
-        <source>Tiles</source>
-        <translation type="vanished">Azulejos</translation>
-    </message>
-    <message>
-        <source>Scenery</source>
-        <translation type="vanished">Decoraciones</translation>
-    </message>
-    <message>
-        <source>Levels</source>
-        <translation type="vanished">Niveles</translation>
-    </message>
-    <message>
-        <source>Music Box</source>
-        <translation type="vanished">Cajas de música</translation>
-    </message>
-    <message>
-        <source>World music</source>
-        <translation type="vanished">Música del mundo</translation>
-    </message>
-    <message>
-        <source>Set point</source>
-        <translation type="vanished">Fijar punto
-</translation>
-    </message>
-    <message>
-        <source>0 - [silence]</source>
-        <translation type="vanished">0 - [silencio]</translation>
-    </message>
-    <message>
-        <source>Music:</source>
-        <translation type="vanished">Música:</translation>
-    </message>
-    <message>
-        <source>Play</source>
-        <translation type="vanished">Reproducir</translation>
-    </message>
-    <message>
         <source>Section Settings</source>
         <translation>Opciones de Sección</translation>
     </message>
     <message>
-        <source>Music</source>
-        <translation type="vanished">Música</translation>
-    </message>
-    <message>
-        <source>[Silence]</source>
-        <translation type="vanished">[Silencio]</translation>
-    </message>
-    <message>
-        <source>New Event %1</source>
-        <translation type="vanished">Nuevo Evento %1</translation>
-    </message>
-    <message>
-        <source>Copyed Event %1</source>
-        <translation type="vanished">Evento Copiado %1</translation>
-    </message>
-    <message>
-        <source>Get section size</source>
-        <translation type="vanished">Obtener tamaño de sección</translation>
-    </message>
-    <message>
-        <source>Please, set current section to %1 for capture data for this event</source>
-        <translation type="vanished">Por favor, fijar sección actual a %1 para capturar los datos de este evento</translation>
-    </message>
-    <message>
-        <source>Please, enter message
-Message limits: max line lenth is 28 characters</source>
-        <translation type="vanished">Por favor, escribir mensaje
-Límite: máxima longitud de 28 caracteres</translation>
-    </message>
-    <message>
-        <source>Music file:</source>
-        <translation type="vanished">Archivo de música:</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <translation type="vanished">Personalizado</translation>
-    </message>
-    <message>
-        <source>Leaving for the screen, the player enters the screen on the other side</source>
-        <translation type="vanished">Pasando de la pantalla, el jugador entra a la pantalla por el otro lado</translation>
-    </message>
-    <message>
-        <source>Warp section</source>
-        <translation type="vanished">Zona de sesgo</translation>
-    </message>
-    <message>
-        <source>Off screen exit</source>
-        <translation type="vanished">Salida fuera de la pantalla</translation>
-    </message>
-    <message>
-        <source>No turn back (disable moving to left)</source>
-        <translation type="vanished">Sin retorno (deshabilitar movimiento a izquierda)</translation>
-    </message>
-    <message>
         <source>Underwater</source>
         <translation>Bajo agua</translation>
-    </message>
-    <message>
-        <source>Style</source>
-        <translation type="vanished">Estilo</translation>
-    </message>
-    <message>
-        <source>Background image</source>
-        <translation type="vanished">Imagen de fondo</translation>
-    </message>
-    <message>
-        <source>[No image]</source>
-        <translation type="vanished">[Sin imagen]</translation>
-    </message>
-    <message>
-        <source>Please, save file</source>
-        <translation type="vanished">Por favor, guarde el archivo</translation>
-    </message>
-    <message>
-        <source>Please, save file first, if you want to select custom music file.</source>
-        <translation type="vanished">Por favor, primero guarde el archivo, si quiere seleccionar música propia.</translation>
-    </message>
-    <message>
-        <source>Current Section</source>
-        <translation type="vanished">Sección actual</translation>
-    </message>
-    <message>
-        <source>Section:</source>
-        <translation type="vanished">Sección:</translation>
-    </message>
-    <message>
-        <source>Resize section</source>
-        <translation type="vanished">Redimensionar sección</translation>
     </message>
     <message>
         <source>CommonEdit Bar</source>
@@ -6986,86 +4993,6 @@ Límite: máxima longitud de 28 caracteres</translation>
         <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
         <extracomment>Exit from the editor</extracomment>
         <translation>Salir del programa</translation>
-    </message>
-    <message>
-        <source>Section 1 (Ctrl+2)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {1 ?} {2)?}</translation>
-    </message>
-    <message>
-        <source>Section 2 (Ctrl+3)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {2 ?} {3)?}</translation>
-    </message>
-    <message>
-        <source>Section 3 (Ctrl+4)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {3 ?} {4)?}</translation>
-    </message>
-    <message>
-        <source>Section 4 (Ctrl+5)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {4 ?} {5)?}</translation>
-    </message>
-    <message>
-        <source>Section 5 (Ctrl+6)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {5 ?} {6)?}</translation>
-    </message>
-    <message>
-        <source>Section 6 (Ctrl+7)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {6 ?} {7)?}</translation>
-    </message>
-    <message>
-        <source>Section 7 (Ctrl+8)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {7 ?} {8)?}</translation>
-    </message>
-    <message>
-        <source>Section 8 (Ctrl+9)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {8 ?} {9)?}</translation>
-    </message>
-    <message>
-        <source>Section 9 (Ctrl+0)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {9 ?} {0)?}</translation>
-    </message>
-    <message>
-        <source>Section 10 (Ctrl+Alt+1)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {10 ?} {1)?}</translation>
-    </message>
-    <message>
-        <source>Section 11 (Ctrl+Alt+2)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {11 ?} {2)?}</translation>
-    </message>
-    <message>
-        <source>Section 12 (Ctrl+Alt+3)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {12 ?} {3)?}</translation>
-    </message>
-    <message>
-        <source>Section 13 (Ctrl+Alt+4)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {13 ?} {4)?}</translation>
-    </message>
-    <message>
-        <source>Section 14 (Ctrl+Alt+5)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {14 ?} {5)?}</translation>
-    </message>
-    <message>
-        <source>Section 15 (Ctrl+Alt+6)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {15 ?} {6)?}</translation>
-    </message>
-    <message>
-        <source>Section 16 (Ctrl+Alt+7)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {16 ?} {7)?}</translation>
-    </message>
-    <message>
-        <source>Section 17 (Ctrl+Alt+8)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {17 ?} {8)?}</translation>
-    </message>
-    <message>
-        <source>Section 18 (Ctrl+Alt+9)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {18 ?} {9)?}</translation>
-    </message>
-    <message>
-        <source>Section 19 (Ctrl+Alt+0)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0) {19 ?} {0)?}</translation>
-    </message>
-    <message>
-        <source>Section 20 (Alt+1)</source>
-        <translation type="vanished">Sección 21 (Alt+1) {20 ?} {1)?}</translation>
     </message>
     <message>
         <source>Prevent overlap</source>
@@ -7098,334 +5025,8 @@ Los objetos no podrán ser puestos unos sobre otros, haciéndolo de otro modo re
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Warps and doors</source>
-        <translation type="vanished">Traslados y puertas</translation>
-    </message>
-    <message>
-        <source>Warp to World map</source>
-        <translation type="vanished">Trasladar al mapa</translation>
-    </message>
-    <message>
-        <source>Set</source>
-        <translation type="vanished">Fijar</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Main</source>
-        <translation type="vanished">Principal</translation>
-    </message>
-    <message>
-        <source>0 - Instant</source>
-        <translation type="vanished">0 - Instantáneo</translation>
-    </message>
-    <message>
-        <source>1 - Pipe</source>
-        <translation type="vanished">1 - Tubo</translation>
-    </message>
-    <message>
-        <source>2 - Door</source>
-        <translation type="vanished">2 - Puerta</translation>
-    </message>
-    <message>
-        <source>Warp type</source>
-        <translation type="vanished">Tipo de traslado</translation>
-    </message>
-    <message>
-        <source>No Yoshi</source>
-        <translation type="vanished">No Yoshi</translation>
-    </message>
-    <message>
-        <source>Need stars</source>
-        <translation type="vanished">Necesita estrellas</translation>
-    </message>
-    <message>
-        <source>Locked</source>
-        <translation type="vanished">Bloqueado</translation>
-    </message>
-    <message>
-        <source>Allow NPC</source>
-        <translation type="vanished">Habilitar PNJ</translation>
-    </message>
-    <message>
-        <source>Set Entrance</source>
-        <translation type="vanished">Fijar entrada</translation>
-    </message>
-    <message>
-        <source>Set Exit</source>
-        <translation type="vanished">Fijar salida</translation>
-    </message>
-    <message>
-        <source>Warp to other level</source>
-        <translation type="vanished">Trasladar a otro nivel</translation>
-    </message>
-    <message>
-        <source>Warp to</source>
-        <translation type="vanished">Trasladar a</translation>
-    </message>
-    <message>
-        <source>Level file</source>
-        <translation type="vanished">Archivo de nivel</translation>
-    </message>
-    <message>
-        <source>Level door</source>
-        <translation type="vanished">Puerta del nivel</translation>
-    </message>
-    <message>
-        <source>Entrance</source>
-        <translation type="vanished">Entrada</translation>
-    </message>
-    <message>
-        <source>Exit</source>
-        <translation type="vanished">Salir</translation>
-    </message>
-    <message>
-        <source>Pipe direction</source>
-        <translation type="vanished">Dirección de tubo</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Izquierda</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Derecha</translation>
-    </message>
-    <message>
-        <source>Up</source>
-        <translation type="vanished">Arriba</translation>
-    </message>
-    <message>
-        <source>Down</source>
-        <translation type="vanished">Abajo</translation>
-    </message>
-    <message>
         <source>Layers</source>
         <translation>Capas</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Remover</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="vanished">Añadir</translation>
-    </message>
-    <message>
-        <source>Lock</source>
-        <translation type="vanished">Bloquear</translation>
-    </message>
-    <message>
-        <source>Item Properties</source>
-        <translation type="vanished">Propiedades de ítem</translation>
-    </message>
-    <message>
-        <source>Editor - Platformer Game Engine (Under Construction)</source>
-        <translation type="vanished">Editor - Motor de juego de plataformas (Bajo Construcción)</translation>
-    </message>
-    <message>
-        <source>Go To...</source>
-        <translation type="vanished">Ir a...</translation>
-    </message>
-    <message>
-        <source>Square fill</source>
-        <translation type="vanished">Llenar cuadrados</translation>
-    </message>
-    <message>
-        <source>SMBX64 defines:</source>
-        <translation type="vanished">SMBX64 define:</translation>
-    </message>
-    <message>
-        <source>Sort priority:</source>
-        <translation type="vanished">Sortear prioridad:</translation>
-    </message>
-    <message>
-        <source>This is a sorting array priority. With this option you can make this BGO as Foreground. (if value set to -1: will be used default value from global BGO config).
-This option using the SMBX&apos;s bug of BGO rendering. For this can be works, you need to place any Foreground BGO. This option will not be saved in LVL file, and you need set them secondary after reload of the file.</source>
-        <translation type="vanished">Ésta es una clasificación de prioridad de matrices. Con ésta opción puedes hacer un OF como uno de primer plano. (si el valor es -1: será usado como predeterminado de la configuración global del OF).
-Ésta opción usada por un error de SMBX de su renderización. Para ésto pueda funcionar, necesitas ubicar cualquier objeto de primer plano. Ésta opción no será guardada en el archivo LVL, y necesita fijarlos secundarios y después recargar el archivo.</translation>
-    </message>
-    <message>
-        <source>Talk message:</source>
-        <translation type="vanished">Mensaje:</translation>
-    </message>
-    <message>
-        <source>Contains of current NPC-Container</source>
-        <translation type="vanished">Contenidos del contenedor de PNJ actual</translation>
-    </message>
-    <message>
-        <source>Classic Events</source>
-        <translation type="vanished">Eventos clásicos</translation>
-    </message>
-    <message>
-        <source>Layer visibly</source>
-        <translation type="vanished">Visibilidad de capa</translation>
-    </message>
-    <message>
-        <source>Disable smoke effects</source>
-        <translation type="vanished">Deshabilitar efecto de humo</translation>
-    </message>
-    <message>
-        <source>Show</source>
-        <translation type="vanished">Mostrar</translation>
-    </message>
-    <message>
-        <source>Toggle</source>
-        <translation type="vanished">Intercambiar</translation>
-    </message>
-    <message>
-        <source>Hide</source>
-        <translation type="vanished">Ocultar</translation>
-    </message>
-    <message>
-        <source>Layers movement</source>
-        <translation type="vanished">Movimiento de capas</translation>
-    </message>
-    <message>
-        <source>Set moving layer</source>
-        <translation type="vanished">Fijar capa móvil</translation>
-    </message>
-    <message>
-        <source>Horisontal speed:</source>
-        <translation type="vanished">Velocidad horizontal:</translation>
-    </message>
-    <message>
-        <source>Vertical speed:</source>
-        <translation type="vanished">Velocidad vertical:</translation>
-    </message>
-    <message>
-        <source>Autoscrool section</source>
-        <translation type="vanished">Autodesplazamiento</translation>
-    </message>
-    <message>
-        <source>Section</source>
-        <translation type="vanished">Sección</translation>
-    </message>
-    <message>
-        <source>Section settings</source>
-        <translation type="vanished">Opciones de sección</translation>
-    </message>
-    <message>
-        <source>Current section:</source>
-        <translation type="vanished">Sección actual:</translation>
-    </message>
-    <message>
-        <source>Set size and position</source>
-        <translation type="vanished">Fijar tamaño y posición</translation>
-    </message>
-    <message>
-        <source>Don&apos;t change</source>
-        <translation type="vanished">No cambiar</translation>
-    </message>
-    <message>
-        <source>Capture...</source>
-        <translation type="vanished">Capturar...</translation>
-    </message>
-    <message>
-        <source>Reset to default</source>
-        <translation type="vanished">Reiniciar a predeterminado</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Arriba</translation>
-    </message>
-    <message>
-        <source>Define new:</source>
-        <translation type="vanished">Definir nuevo:</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Abajo</translation>
-    </message>
-    <message>
-        <source>Set music</source>
-        <translation type="vanished">Fijar música</translation>
-    </message>
-    <message>
-        <source>Replace music to:</source>
-        <translation type="vanished">Reemplazar música por:</translation>
-    </message>
-    <message>
-        <source>Set background</source>
-        <translation type="vanished">Fijar fondo</translation>
-    </message>
-    <message>
-        <source>Replace background to:</source>
-        <translation type="vanished">Reemplazar fondo por:</translation>
-    </message>
-    <message>
-        <source>Common</source>
-        <translation type="vanished">Común</translation>
-    </message>
-    <message>
-        <source>Display message:</source>
-        <translation type="vanished">Mostrar mensaje:</translation>
-    </message>
-    <message>
-        <source>Play sound:</source>
-        <translation type="vanished">Reproducir sonido:</translation>
-    </message>
-    <message>
-        <source>Do end game:</source>
-        <translation type="vanished">Terminar juego:</translation>
-    </message>
-    <message>
-        <source>Nothing</source>
-        <translation type="vanished">Nada</translation>
-    </message>
-    <message>
-        <source>Game end &quot;Bowser defeat&quot;</source>
-        <translation type="vanished">Final &quot;Bowser defeat&quot;</translation>
-    </message>
-    <message>
-        <source>Player Control hold keys</source>
-        <translation type="vanished">Mantener teclas de control</translation>
-    </message>
-    <message>
-        <source>Run</source>
-        <translation type="vanished">Correr</translation>
-    </message>
-    <message>
-        <source>Drop</source>
-        <translation type="vanished">Soltar</translation>
-    </message>
-    <message>
-        <source>Alt-run</source>
-        <translation type="vanished">Correr secundario</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Comenzar</translation>
-    </message>
-    <message>
-        <source>Jump</source>
-        <translation type="vanished">Salto</translation>
-    </message>
-    <message>
-        <source>Alt-jump</source>
-        <translation type="vanished">Salto secundario</translation>
-    </message>
-    <message>
-        <source>Trigger event</source>
-        <translation type="vanished">Evento seguido</translation>
-    </message>
-    <message>
-        <source>Delay</source>
-        <translation type="vanished">Retardo</translation>
-    </message>
-    <message>
-        <source>Events list</source>
-        <translation type="vanished">Lista de eventos</translation>
-    </message>
-    <message>
-        <source>Editor - Platformer Game Engine</source>
-        <translation type="vanished">Editor - Motor de juego de plataformas</translation>
     </message>
     <message>
         <source>Help</source>
@@ -7434,10 +5035,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Section modifications</source>
         <translation>Modificaciones de sección</translation>
-    </message>
-    <message>
-        <source>Global configuration</source>
-        <translation type="vanished">Configuración global</translation>
     </message>
     <message>
         <source>Palettes and tilesets</source>
@@ -7452,150 +5049,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Script</translation>
     </message>
     <message>
-        <source>Switch Compiler</source>
-        <translation type="vanished">Cambiar compilador</translation>
-    </message>
-    <message>
-        <source>Level toolbox</source>
-        <translation type="vanished">Herramientas de nivel</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation type="vanished">Filtro:</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">Texto</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="vanished">ID</translation>
-    </message>
-    <message>
-        <source>Uniform icon size</source>
-        <translation type="vanished">Tamaño uniforme de ícono</translation>
-    </message>
-    <message>
-        <source>Group:</source>
-        <translation type="vanished">Grupo:</translation>
-    </message>
-    <message>
-        <source>World Map Toolbox</source>
-        <translation type="vanished">Herramientas del mundo</translation>
-    </message>
-    <message>
-        <source>Custom</source>
-        <comment>Flag of custom music on the level</comment>
-        <translation type="vanished">Personalizado</translation>
-    </message>
-    <message>
-        <source>Warp section</source>
-        <comment>This must be translated as &quot;Connect left and right sides&quot;</comment>
-        <translation type="vanished">Zona de sesgo</translation>
-    </message>
-    <message>
-        <source>No turn back (disable moving to left)</source>
-        <comment>Please, translate as &quot;One way scrolling&quot;</comment>
-        <translation type="vanished">Sin retorno (deshabilitar movimiento a izquierda)</translation>
-    </message>
-    <message>
         <source>Warps and Doors</source>
         <translation>Traslados y puertas</translation>
     </message>
     <message>
-        <source>No Vehicles</source>
-        <comment>In the SMBX - this option named as &quot;No Yoshi&quot;</comment>
-        <translation type="vanished">Sin vehículos</translation>
-    </message>
-    <message>
-        <source>Allow NPC</source>
-        <comment>Please, translate as &quot;Allow items&quot;</comment>
-        <translation type="vanished">Habilitar PNJ</translation>
-    </message>
-    <message>
-        <source>Warp to</source>
-        <comment>Translate as &quot;Door #&quot;</comment>
-        <translation type="vanished">Trasladar a</translation>
-    </message>
-    <message>
-        <source>Z-Position</source>
-        <translation type="vanished">Posición Z</translation>
-    </message>
-    <message>
-        <source>Z-Offset:</source>
-        <translation type="vanished">Z-Offset:</translation>
-    </message>
-    <message>
-        <source>Z-Layer:</source>
-        <translation type="vanished">Capa Z:</translation>
-    </message>
-    <message>
-        <source>Background-2</source>
-        <translation type="vanished">Fondo-2</translation>
-    </message>
-    <message>
-        <source>Background</source>
-        <translation type="vanished">Fondo</translation>
-    </message>
-    <message>
-        <source>Default</source>
-        <translation type="vanished">Predeterminado</translation>
-    </message>
-    <message>
-        <source>Foreground</source>
-        <translation type="vanished">Primer plano</translation>
-    </message>
-    <message>
-        <source>Foreground-2</source>
-        <translation type="vanished">Primer plano-2</translation>
-    </message>
-    <message>
-        <source>Doesn&apos;t move</source>
-        <translation type="vanished">No se mueve</translation>
-    </message>
-    <message>
-        <source>Auto-increment</source>
-        <translation type="vanished">Auto-incremento</translation>
-    </message>
-    <message>
-        <source>bps</source>
-        <translation type="vanished">bps</translation>
-    </message>
-    <message>
-        <source>Autoscroll section</source>
-        <translation type="vanished">Autodesplazamiento</translation>
-    </message>
-    <message>
         <source>Test</source>
         <translation>Probar</translation>
-    </message>
-    <message>
-        <source>Autostart event</source>
-        <translation type="vanished">Comenzar automáticamente</translation>
-    </message>
-    <message>
-        <source>Create copy of event</source>
-        <translation type="vanished">Crear copia de evento</translation>
-    </message>
-    <message>
-        <source>Search</source>
-        <translation type="vanished">Buscar</translation>
-    </message>
-    <message>
-        <source>Search Block</source>
-        <translation type="vanished">Buscar Bloque</translation>
-    </message>
-    <message>
-        <source>Search?</source>
-        <translation type="vanished">¿Buscar?</translation>
-    </message>
-    <message>
-        <source>Reset Search Fields</source>
-        <translation type="vanished">Reiniciar Campos de búsqueda</translation>
-    </message>
-    <message>
-        <source>Pattles and tilesets</source>
-        <translation type="vanished">Pattles y baldozas</translation>
     </message>
     <message>
         <source>External tools</source>
@@ -7606,134 +5065,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Barra de herramientas de mapas</translation>
     </message>
     <message>
-        <source>Paths</source>
-        <translation type="vanished">Caminos</translation>
-    </message>
-    <message>
-        <source>No Vehicles</source>
-        <translation type="vanished">No vehículos</translation>
-    </message>
-    <message>
-        <source>Data</source>
-        <translation type="vanished">Datos</translation>
-    </message>
-    <message>
-        <source>Slippery:</source>
-        <translation type="vanished">Resbaladizo:</translation>
-    </message>
-    <message>
-        <source>Contains NPC:</source>
-        <translation type="vanished">Contiene PNJ:</translation>
-    </message>
-    <message>
-        <source>Invisible:</source>
-        <translation type="vanished">Invisible:</translation>
-    </message>
-    <message>
-        <source>Ev. Destroyed:</source>
-        <translation type="vanished">Ev. Destruído:</translation>
-    </message>
-    <message>
-        <source>Ev. Hited</source>
-        <translation type="vanished">Ev. Golpeado</translation>
-    </message>
-    <message>
-        <source>Ev. Layer Empty:</source>
-        <translation type="vanished">Ev. Capa vacía:</translation>
-    </message>
-    <message>
-        <source>Search BGO</source>
-        <translation type="vanished">Buscar OF</translation>
-    </message>
-    <message>
-        <source>Search NPC</source>
-        <translation type="vanished">Buscar PNJ</translation>
-    </message>
-    <message>
-        <source>Contains Msg:</source>
-        <translation type="vanished">Contiene Msj:</translation>
-    </message>
-    <message>
-        <source>Case Sensitive?</source>
-        <translation type="vanished">¿Sensible a las mayúsculas?</translation>
-    </message>
-    <message>
-        <source>Big path background</source>
-        <translation type="vanished">Camino grande de fondo</translation>
-    </message>
-    <message>
-        <source>Path background</source>
-        <translation type="vanished">Camino de fondo</translation>
-    </message>
-    <message>
-        <source>Game start point</source>
-        <translation type="vanished">Punto de comienzo</translation>
-    </message>
-    <message>
-        <source>Always visible</source>
-        <translation type="vanished">Siempre visible</translation>
-    </message>
-    <message>
-        <source>Level file:</source>
-        <translation type="vanished">Archivo de nivel:</translation>
-    </message>
-    <message>
-        <source>Level title</source>
-        <translation type="vanished">Título del nivel</translation>
-    </message>
-    <message>
-        <source>Enter to door ID:</source>
-        <translation type="vanished">ID de puerta:</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Explorar</translation>
-    </message>
-    <message>
-        <source>Go to coordinates:</source>
-        <translation type="vanished">Ir a coordenadas:</translation>
-    </message>
-    <message>
-        <source>Open path by exists:</source>
-        <translation type="vanished">Abrir camino por el que existe:</translation>
-    </message>
-    <message>
-        <source>World Settings</source>
-        <translation type="vanished">Opciones del mundo</translation>
-    </message>
-    <message>
-        <source>Intro level:</source>
-        <translation type="vanished">Nivel de intro:</translation>
-    </message>
-    <message>
-        <source>Disable characters:</source>
-        <translation type="vanished">Deshabilitar personajes:</translation>
-    </message>
-    <message>
-        <source>Credits of this world (SMBX allows only 5 lines):</source>
-        <translation type="vanished">Créditos para este mundo (SMBX permite sólo 5 líneas):</translation>
-    </message>
-    <message>
-        <source>World title:</source>
-        <translation type="vanished">Título del mundo:</translation>
-    </message>
-    <message>
-        <source>Count</source>
-        <translation type="vanished">Cuenta</translation>
-    </message>
-    <message>
-        <source>Total stars:</source>
-        <translation type="vanished">Total de estrellas:</translation>
-    </message>
-    <message>
-        <source>Hub-styled world (without world map)</source>
-        <translation type="vanished">Mundo sin mapa (Hub-styled)</translation>
-    </message>
-    <message>
-        <source>Restart last level after fail</source>
-        <translation type="vanished">Reiniciar último nivel después de fallar</translation>
-    </message>
-    <message>
         <source>Placing</source>
         <translation>Colocando</translation>
     </message>
@@ -7742,20 +5073,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Redimensionando</translation>
     </message>
     <message>
-        <source>Search Music</source>
-        <translation type="vanished">Buscar música</translation>
-    </message>
-    <message>
         <source>Open...</source>
         <translation>Abrir...</translation>
     </message>
     <message>
         <source>Open (Ctrl+O)</source>
         <translation>Abrir (Ctrl + O)</translation>
-    </message>
-    <message>
-        <source>Exit program</source>
-        <translation type="vanished">Salir del programa</translation>
     </message>
     <message>
         <source>Level...</source>
@@ -7814,176 +5137,84 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Sección 0</translation>
     </message>
     <message>
-        <source>Section 0 (Ctrl+1)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10) {0 ?} {1)?}</translation>
-    </message>
-    <message>
         <source>Section 1</source>
         <translation>Sección 1</translation>
-    </message>
-    <message>
-        <source>Section 1 (Ctrl+1)</source>
-        <translation type="vanished">Sección 1 (Ctrl+1)</translation>
     </message>
     <message>
         <source>Section 2</source>
         <translation>Sección 2</translation>
     </message>
     <message>
-        <source>Section 2 (Ctrl+2)</source>
-        <translation type="vanished">Sección 2 (Ctrl+2)</translation>
-    </message>
-    <message>
         <source>Section 3</source>
         <translation>Sección 3</translation>
-    </message>
-    <message>
-        <source>Section 3 (Ctrl+3)</source>
-        <translation type="vanished">Sección 3 (Ctrl+3)</translation>
     </message>
     <message>
         <source>Section 4</source>
         <translation>Sección 4</translation>
     </message>
     <message>
-        <source>Section 4 (Ctrl+4)</source>
-        <translation type="vanished">Sección 4 (Ctrl+4)</translation>
-    </message>
-    <message>
         <source>Section 5</source>
         <translation>Sección 5</translation>
-    </message>
-    <message>
-        <source>Section 5 (Ctrl+5)</source>
-        <translation type="vanished">Sección 5 (Ctrl+5)</translation>
     </message>
     <message>
         <source>Section 6</source>
         <translation>Sección 6</translation>
     </message>
     <message>
-        <source>Section 6 (Ctrl+6)</source>
-        <translation type="vanished">Sección 6 (Ctrl+6)</translation>
-    </message>
-    <message>
         <source>Section 7</source>
         <translation>Sección 7</translation>
-    </message>
-    <message>
-        <source>Section 7 (Ctrl+7)</source>
-        <translation type="vanished">Sección 7 (Ctrl+7)</translation>
     </message>
     <message>
         <source>Section 8</source>
         <translation>Sección 8</translation>
     </message>
     <message>
-        <source>Section 8 (Ctrl+8)</source>
-        <translation type="vanished">Sección 8 (Ctrl+8)</translation>
-    </message>
-    <message>
         <source>Section 9</source>
         <translation>Sección 9</translation>
-    </message>
-    <message>
-        <source>Section 9 (Ctrl+9)</source>
-        <translation type="vanished">Sección 9 (Ctrl+9)</translation>
     </message>
     <message>
         <source>Section 10</source>
         <translation>Sección 10</translation>
     </message>
     <message>
-        <source>Section 10 (Ctrl+0)</source>
-        <translation type="vanished">Sección 10 (Ctrl+10)</translation>
-    </message>
-    <message>
         <source>Section 11</source>
         <translation>Sección 11</translation>
-    </message>
-    <message>
-        <source>Section 11 (Ctrl+Alt+1)</source>
-        <translation type="vanished">Sección 11 (Ctrl+Alt+1)</translation>
     </message>
     <message>
         <source>Section 12</source>
         <translation>Sección 12</translation>
     </message>
     <message>
-        <source>Section 12 (Ctrl+Alt+2)</source>
-        <translation type="vanished">Sección 12 (Ctrl+Alt+2)</translation>
-    </message>
-    <message>
         <source>Section 13</source>
         <translation>Sección 13</translation>
-    </message>
-    <message>
-        <source>Section 13 (Ctrl+Alt+3)</source>
-        <translation type="vanished">Sección 13 (Ctrl+Alt+3)</translation>
     </message>
     <message>
         <source>Section 14</source>
         <translation>Sección 14</translation>
     </message>
     <message>
-        <source>Section 14 (Ctrl+Alt+4)</source>
-        <translation type="vanished">Sección 14 (Ctrl+Alt+4)</translation>
-    </message>
-    <message>
         <source>Section 15</source>
         <translation>Sección 15</translation>
-    </message>
-    <message>
-        <source>Section 15 (Ctrl+Alt+5)</source>
-        <translation type="vanished">Sección 15 (Ctrl+Alt+5)</translation>
     </message>
     <message>
         <source>Section 16</source>
         <translation>Sección 16</translation>
     </message>
     <message>
-        <source>Section 16 (Ctrl+Alt+6)</source>
-        <translation type="vanished">Sección 16 (Ctrl+Alt+6)</translation>
-    </message>
-    <message>
         <source>Section 17</source>
         <translation>Sección 17</translation>
-    </message>
-    <message>
-        <source>Section 17 (Ctrl+Alt+7)</source>
-        <translation type="vanished">Sección 17 (Ctrl+Alt+7)</translation>
     </message>
     <message>
         <source>Section 18</source>
         <translation>Sección 18</translation>
     </message>
     <message>
-        <source>Section 18 (Ctrl+Alt+8)</source>
-        <translation type="vanished">Sección 18 (Ctrl+Alt+8)</translation>
-    </message>
-    <message>
         <source>Section 19</source>
         <translation>Sección 19</translation>
     </message>
     <message>
-        <source>Section 19 (Ctrl+Alt+9)</source>
-        <translation type="vanished">Sección 19 (Ctrl+Alt+9)</translation>
-    </message>
-    <message>
         <source>Section 20</source>
         <translation>Sección 20</translation>
-    </message>
-    <message>
-        <source>Section 20 (Ctrl+Alt+0)</source>
-        <translation type="vanished">Sección 20 (Ctrl+Alt+0)</translation>
-    </message>
-    <message>
-        <source>Section 21</source>
-        <translation type="vanished">Sección 21</translation>
-    </message>
-    <message>
-        <source>Section 21 (Alt+1)</source>
-        <translation type="vanished">Sección 21 (Alt+1)</translation>
     </message>
     <message>
         <source>Wrap Horizontally</source>
@@ -8150,24 +5381,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Script de mapamundi global. El nuevo nombre de archivo reemplaza el viejo &quot;lunaoverworld.lua&quot;</translation>
     </message>
     <message>
-        <source>Item default</source>
-        <translation type="vanished">Item default</translation>
-    </message>
-    <message>
         <source>Welcome dialog</source>
         <translation>Diálogo de bienvenida</translation>
-    </message>
-    <message>
-        <source>Test world map (Alpha)</source>
-        <translation type="vanished">Probar mapamundi (Alfa)</translation>
-    </message>
-    <message>
-        <source>Lock tiles</source>
-        <translation type="vanished">Bloquear baldozas</translation>
-    </message>
-    <message>
-        <source>Lock Sceneries</source>
-        <translation type="vanished">Bloquear decoraciones</translation>
     </message>
     <message>
         <source>Lock Paths</source>
@@ -8180,14 +5395,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Lock Music Boxes</source>
         <translation>Bloquear cajas de música</translation>
-    </message>
-    <message>
-        <source>Square Fill</source>
-        <translation type="vanished">Relleno cuadrado</translation>
-    </message>
-    <message>
-        <source>Square Fill (Shift+S)</source>
-        <translation type="vanished">Relleno cuadrado (Shift+S)</translation>
     </message>
     <message>
         <source>Overwrite mode</source>
@@ -8251,10 +5458,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Exportar sección entera a imagen</translation>
     </message>
     <message>
-        <source>Test level (Alpha)</source>
-        <translation type="vanished">Ejecutar prueba &lt;Alpha&gt;</translation>
-    </message>
-    <message>
         <source>Testing options...</source>
         <translation>Opciones de prueba...</translation>
     </message>
@@ -8269,10 +5472,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Tip of the day...</source>
         <translation>Consejo del día...</translation>
-    </message>
-    <message>
-        <source>Start Engine</source>
-        <translation type="vanished">Iniciar motor</translation>
     </message>
     <message>
         <source>Launch game engine application.</source>
@@ -8297,10 +5496,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Wrap Vertically</source>
         <translation>Conectar verticalmente</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation type="vanished">Opciones</translation>
     </message>
     <message>
         <source>Fill</source>
@@ -8329,14 +5524,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Import</source>
         <translation>Importar</translation>
-    </message>
-    <message>
-        <source>Enable GFX fix (reload of the file required)</source>
-        <translation type="vanished">Habilitar arreglo de GFX (recargar el archivo requerido)</translation>
-    </message>
-    <message>
-        <source>This flag enable alternate mask applying algorithm to allow correctly displaying of lazily-made graphics</source>
-        <translation type="vanished">Ésta función habilita máscara alternativa aplicando un algoritmo que permite la correcta visualización de máscaras mal hechas</translation>
     </message>
     <message>
         <source>Bookmark specific camera positions. You can use these bookmarks to easily return to important places on a large map.</source>
@@ -8379,22 +5566,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Eliminar sección</translation>
     </message>
     <message>
-        <source>Additional Settings</source>
-        <translation type="vanished">Opciones adicionales</translation>
-    </message>
-    <message>
-        <source>Compile To: </source>
-        <translation type="vanished">Compilar a: </translation>
-    </message>
-    <message>
-        <source>Autocode [Lunadll Original Language]</source>
-        <translation type="vanished">Autocode [Lenguaje de Lunadll]</translation>
-    </message>
-    <message>
-        <source>LunaLua</source>
-        <translation type="vanished">LunaLua</translation>
-    </message>
-    <message>
         <source>Don&apos;t fill out of section</source>
         <translation>No llenar sección</translation>
     </message>
@@ -8415,28 +5586,8 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Buscar actualizaciones...</translation>
     </message>
     <message>
-        <source>Run testing in the SMBX (LunaDLL required)</source>
-        <translation type="vanished">Probar en SMBX (requiere LunaDLL)</translation>
-    </message>
-    <message>
         <source>Convert Audio files...</source>
         <translation>Convertir audio (SoX)...</translation>
-    </message>
-    <message>
-        <source>Restart level after player&apos;s fail</source>
-        <translation type="vanished">Recomenzar nivel después de perder</translation>
-    </message>
-    <message>
-        <source>Level tool box</source>
-        <translation type="vanished">Herramientas de nivel</translation>
-    </message>
-    <message>
-        <source>Level objects tool box</source>
-        <translation type="vanished">Herramientas de objetos de nivel</translation>
-    </message>
-    <message>
-        <source>World tool box</source>
-        <translation type="vanished">Herramientas del mundo</translation>
     </message>
     <message>
         <source>Select and Move</source>
@@ -8451,10 +5602,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Presionar botón del ratón en área y mover para dibujar la zona de arena</translation>
     </message>
     <message>
-        <source>Go to Section</source>
-        <translation type="vanished">Ir a sección</translation>
-    </message>
-    <message>
         <source>Current configuration status...</source>
         <translation>Estado actual de configuración...</translation>
     </message>
@@ -8463,217 +5610,32 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Borrador</translation>
     </message>
     <message>
-        <source>Block</source>
-        <translation type="vanished">Bloque</translation>
-    </message>
-    <message>
-        <source>Resize</source>
-        <translation type="vanished">Redimensionar</translation>
-    </message>
-    <message>
-        <source>Invisible</source>
-        <translation type="vanished">Invisible</translation>
-    </message>
-    <message>
-        <source>Slippery</source>
-        <translation type="vanished">Resbaladizo</translation>
-    </message>
-    <message>
-        <source>Block contents:</source>
-        <translation type="vanished">Contenido:</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Capa:</translation>
-    </message>
-    <message>
         <source>Events</source>
         <translation>Eventos</translation>
-    </message>
-    <message>
-        <source>Destroyed: </source>
-        <translation type="vanished">Destruído:</translation>
-    </message>
-    <message>
-        <source>Hited:</source>
-        <translation type="vanished">Golpeado:</translation>
-    </message>
-    <message>
-        <source>Layer empty:</source>
-        <translation type="vanished">Capa vacía:</translation>
-    </message>
-    <message>
-        <source>BGO</source>
-        <translation type="vanished">OF</translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation type="vanished">Dirección</translation>
-    </message>
-    <message>
-        <source>Random</source>
-        <translation type="vanished">Aleatorio</translation>
-    </message>
-    <message>
-        <source>Attach to:</source>
-        <translation type="vanished">Atajar Capa:</translation>
-    </message>
-    <message>
-        <source>Activate:</source>
-        <translation type="vanished">Activado:</translation>
-    </message>
-    <message>
-        <source>Death:</source>
-        <translation type="vanished">Muerte:</translation>
-    </message>
-    <message>
-        <source>Talk:</source>
-        <translation type="vanished">Hablar:</translation>
-    </message>
-    <message>
-        <source>Friendly</source>
-        <translation type="vanished">Amigable</translation>
-    </message>
-    <message>
-        <source>Don&apos;t move</source>
-        <translation type="vanished">No mover</translation>
-    </message>
-    <message>
-        <source>Set as Boss</source>
-        <translation type="vanished">Fijar como jefe</translation>
-    </message>
-    <message>
-        <source>Generator</source>
-        <translation type="vanished">Generador</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="vanished">Tipo:</translation>
-    </message>
-    <message>
-        <source>Warp</source>
-        <translation type="vanished">Traslado</translation>
-    </message>
-    <message>
-        <source>Projectile</source>
-        <translation type="vanished">Proyectil</translation>
-    </message>
-    <message>
-        <source>Delay (seconds):</source>
-        <translation type="vanished">Retraso:</translation>
-    </message>
-    <message>
-        <source>World map Search</source>
-        <translation type="vanished">Buscar en el mapa</translation>
-    </message>
-    <message>
-        <source>Tile</source>
-        <translation type="vanished">Azulejo</translation>
-    </message>
-    <message>
-        <source>Search Tile</source>
-        <translation type="vanished">Buscar azulejo</translation>
-    </message>
-    <message>
-        <source>Search Scenery</source>
-        <translation type="vanished">Buscar decoración</translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation type="vanished">Directorio</translation>
-    </message>
-    <message>
-        <source>Search Path</source>
-        <translation type="vanished">Buscar camino</translation>
-    </message>
-    <message>
-        <source>Big Path Background</source>
-        <translation type="vanished">Fondo de camino grande</translation>
-    </message>
-    <message>
-        <source>Always Visible</source>
-        <translation type="vanished">Siempre visible</translation>
-    </message>
-    <message>
-        <source>Contains Title</source>
-        <translation type="vanished">Contiene título</translation>
-    </message>
-    <message>
-        <source>Search Level</source>
-        <translation type="vanished">Buscar nivel</translation>
     </message>
     <message>
         <source>Tileset Item Box</source>
         <translation>Caja de tileset</translation>
     </message>
     <message>
-        <source>Search: </source>
-        <translation type="vanished">Buscar:</translation>
-    </message>
-    <message>
-        <source>New tileset</source>
-        <translation type="vanished">Nuevo tileset</translation>
-    </message>
-    <message>
         <source>Debugger</source>
         <translation>Depurador</translation>
-    </message>
-    <message>
-        <source>Mouse coordinates</source>
-        <translation type="vanished">Coordenadas del mouse</translation>
-    </message>
-    <message>
-        <source>Go to point:</source>
-        <translation type="vanished">Ir a punto:</translation>
-    </message>
-    <message>
-        <source>Go!</source>
-        <translation type="vanished">¡Ir!</translation>
-    </message>
-    <message>
-        <source>Items</source>
-        <translation type="vanished">Items</translation>
-    </message>
-    <message>
-        <source>Custom counters</source>
-        <translation type="vanished">Contadores personalizados</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="vanished">Refrescar</translation>
     </message>
     <message>
         <source>Position bookmarks</source>
         <translation>Marcadores de posición</translation>
     </message>
     <message>
-        <source>Exit program</source>
-        <comment>Because in some languages the &quot;exit from programm&quot; and &quot;exit door&quot; have diffirence words, please, translate this as &quot;Exit&quot;</comment>
-        <translation type="vanished">Salir del programa</translation>
-    </message>
-    <message>
         <source>Restart level after fail</source>
         <translation>Recomenzar nivel después de perder</translation>
-    </message>
-    <message>
-        <source>World Toolbox</source>
-        <translation type="vanished">Herramientas del mundo</translation>
     </message>
     <message>
         <source>Eriser (E)</source>
         <translation>Borrador (E)</translation>
     </message>
     <message>
-        <source>Level Section Settings</source>
-        <translation type="vanished">Opciones de sección</translation>
-    </message>
-    <message>
         <source>Reload configuration pack</source>
         <translation>Recargar configuración</translation>
-    </message>
-    <message>
-        <source>Reset position</source>
-        <translation type="vanished">Reiniciar posición</translation>
     </message>
     <message>
         <source>Attach to grid</source>
@@ -8764,10 +5726,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Copiar ítems seleccionados</translation>
     </message>
     <message>
-        <source>Collisions</source>
-        <translation type="vanished">Colisiones</translation>
-    </message>
-    <message>
         <source>Draw Water zone</source>
         <translation>Dibujar zona de agua</translation>
     </message>
@@ -8800,14 +5758,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Opciones de aplicación</translation>
     </message>
     <message>
-        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are copied in clipboard</source>
-        <translation type="vanished">%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua copiados al portapapeles</translation>
-    </message>
-    <message>
-        <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items are moved in clipboard</source>
-        <translation type="vanished">%1 bloques, %2 OF, %3 PNJ, %4 Ítems de agua movidos al portapapeles</translation>
-    </message>
-    <message>
         <source>Reloading configuration pack</source>
         <translation>Recargando configuraciones</translation>
     </message>
@@ -8820,10 +5770,6 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>La configuración está saturada</translation>
     </message>
     <message>
-        <source>To reload configuration you should close all opened files first.</source>
-        <translation type="vanished">Para recargar configuración primero debe cerrar todos los archivos.</translation>
-    </message>
-    <message>
         <source>Reloading configuration</source>
         <translation>Recargando configuraciones</translation>
     </message>
@@ -8832,48 +5778,12 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
         <translation>Configuración cambiada</translation>
     </message>
     <message>
-        <source>The configuration pack has changed!
-To start using the new configuration pack, please restart the application.</source>
-        <translation type="vanished">¡La configuración fue cambiada!
-Para trabajar con la nueva configuración, por favor reinicie la aplicación.</translation>
-    </message>
-    <message>
-        <source>Reload configuration</source>
-        <translation type="vanished">Recargar configuración</translation>
-    </message>
-    <message>
         <source>Configuration successfully reloaded!</source>
         <translation>¡Configuración recargada exitosamente!</translation>
     </message>
     <message>
-        <source>World map files not found</source>
-        <translation type="vanished">Archivos de mapa no encontrados</translation>
-    </message>
-    <message>
-        <source>You haven&apos;t available world map files with this level file.
-Please, put this level file with a world map, or create new world map in the same fomder with this level file.
-File path: %1</source>
-        <translation type="vanished">No tiene habilitados los archivos de mapa con este archivo de nivel.
-Por favor, ponga éste archivo de nivel con un mapa, o cree un nuevo mundo en la misma carpeta con éste nivel.
-Ruta de archivo: %1</translation>
-    </message>
-    <message>
-        <source>Select world map file</source>
-        <translation type="vanished">Seleccione archivo de mapa</translation>
-    </message>
-    <message>
-        <source>Found more than one world map files.
-Please, select necessary world map in a list:</source>
-        <translation type="vanished">Encontrados más de un archivo de mapa.
-Por favor, seleccione el mapa necesario en la lista:</translation>
-    </message>
-    <message>
         <source>File open error</source>
         <translation>Error al abrir archivo</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open the file!</source>
-        <translation type="vanished">No se puede abrir archivo.</translation>
     </message>
     <message>
         <source>File not saved</source>
@@ -8910,40 +5820,8 @@ El archivo no existe.</translation>
         <translation>Configuración PNJ recargada</translation>
     </message>
     <message>
-        <source>Layers merge</source>
-        <translation type="vanished">Fusión de capas</translation>
-    </message>
-    <message>
-        <source>Layer with name &apos;%1&apos; already exist, do you want to merge layers?</source>
-        <translation type="vanished">Capa con el nombre &apos;%1&apos; ya existe, ¿quiere fusionar las capas?</translation>
-    </message>
-    <message>
-        <source>New Layer %1</source>
-        <translation type="vanished">Nueva Capa %1</translation>
-    </message>
-    <message>
-        <source>Rename layer</source>
-        <translation type="vanished">Renombrar capa</translation>
-    </message>
-    <message>
-        <source>Remove layer with items</source>
-        <translation type="vanished">Remover capa con ítems</translation>
-    </message>
-    <message>
-        <source>Remove Layer and keep items</source>
-        <translation type="vanished">Remover capas y guardar ítems</translation>
-    </message>
-    <message>
         <source>Level file loaded</source>
         <translation>Nivel cargado</translation>
-    </message>
-    <message>
-        <source>Dummy</source>
-        <translation type="vanished">Muñeco</translation>
-    </message>
-    <message>
-        <source>Sorry, the World Maps support is not inplemented in this version.</source>
-        <translation type="vanished">Perdón, el soporte de mapas no está implementado en ésta versión.</translation>
     </message>
     <message>
         <source>Untitled file</source>
@@ -9014,18 +5892,6 @@ El paquete de configuración se cargó con errores.</translation>
         <translation>Abrir archivo</translation>
     </message>
     <message>
-        <source>Compile To: LunaLua</source>
-        <translation type="vanished">Compilar a: LunaLua</translation>
-    </message>
-    <message>
-        <source>Compile To: Autocode [Lunadll Original Language]</source>
-        <translation type="vanished">Compilar a: autocódigo [Lenguaje de Lunadll]</translation>
-    </message>
-    <message>
-        <source>Compile To:</source>
-        <translation type="vanished">Compilar a:</translation>
-    </message>
-    <message>
         <source>Sub-windows</source>
         <translation>Sub ventanas</translation>
     </message>
@@ -9080,44 +5946,12 @@ The configuration pack was loaded, but contains errors.</source>
 El paquete de configuración se cargó con errores.</translation>
     </message>
     <message>
-        <source>Block ID: %1, Array ID: %2</source>
-        <translation type="vanished">ID de Bloque: %1, Array ID: %2</translation>
-    </message>
-    <message>
-        <source>Position: [%1, %2]</source>
-        <translation type="vanished">Posición: [%1, %2]</translation>
-    </message>
-    <message>
-        <source>%1 coins</source>
-        <translation type="vanished">%1 monedas</translation>
-    </message>
-    <message>
-        <source>[empty]</source>
-        <translation type="vanished">[vacío]</translation>
-    </message>
-    <message>
-        <source>BGO ID: %1, Array ID: %2</source>
-        <translation type="vanished">ID de OF: %1, Array ID: %2</translation>
-    </message>
-    <message>
-        <source>NPC ID: %1, Array ID: %2</source>
-        <translation type="vanished">ID de PNJ: %1, Array ID: %2</translation>
-    </message>
-    <message>
-        <source>[none]</source>
-        <translation type="vanished">[nada]</translation>
-    </message>
-    <message>
         <source>[None]</source>
         <translation>[Nada]</translation>
     </message>
     <message>
         <source>[all]</source>
         <translation>[todo]</translation>
-    </message>
-    <message>
-        <source>[custom]</source>
-        <translation type="vanished">[personalizado]</translation>
     </message>
     <message>
         <source>%1 blocks, %2 BGO, %3 NPC, %4 Water items have been copied to clipboard</source>
@@ -9136,152 +5970,8 @@ El paquete de configuración se cargó con errores.</translation>
         <translation>%1 azulejos, %2 decoraciones, %3 caminos, %4 niveles, %5 cajas de música movidos al portapapeles</translation>
     </message>
     <message>
-        <source>Next Block</source>
-        <translation type="vanished">Siguiente bloque</translation>
-    </message>
-    <message>
-        <source>Stop Search</source>
-        <translation type="vanished">Terminar búsqueda</translation>
-    </message>
-    <message>
-        <source>Search Complete</source>
-        <translation type="vanished">Búsqueda completa</translation>
-    </message>
-    <message>
-        <source>Block search completed!</source>
-        <translation type="vanished">Búsqueda de bloques completa!</translation>
-    </message>
-    <message>
-        <source>Next BGO</source>
-        <translation type="vanished">Siguiente OF</translation>
-    </message>
-    <message>
-        <source>BGO search completed!</source>
-        <translation type="vanished">Búsqueda de OFs completa!</translation>
-    </message>
-    <message>
-        <source>Next NPC</source>
-        <translation type="vanished">Siguiente PNJ</translation>
-    </message>
-    <message>
-        <source>NPC search completed!</source>
-        <translation type="vanished">Búsqueda de PNJs completa!</translation>
-    </message>
-    <message>
-        <source>Level ID: %1, Array ID: %2</source>
-        <translation type="vanished">ID de nivel: %1, Array ID: %2</translation>
-    </message>
-    <message>
-        <source>* - Any</source>
-        <translation type="vanished">* - Cualquiera</translation>
-    </message>
-    <message>
-        <source>0 - None</source>
-        <translation type="vanished">0 - Nada</translation>
-    </message>
-    <message>
-        <source>1 - SMB3 Standard Exit</source>
-        <translation type="vanished">1 - Estilo SMB3</translation>
-    </message>
-    <message>
-        <source>2 - SMB3 Boss Exit</source>
-        <translation type="vanished">2 - Salida con Jefe SMB3</translation>
-    </message>
-    <message>
-        <source>3 - Walked Offscreen</source>
-        <translation type="vanished">4 - Salida de la pantalla</translation>
-    </message>
-    <message>
-        <source>4 - Secret Exit</source>
-        <translation type="vanished">4 - Salida secreta</translation>
-    </message>
-    <message>
-        <source>5 - SMB2 Boss Exit</source>
-        <translation type="vanished">5 - Salida con Jefe SMB2</translation>
-    </message>
-    <message>
-        <source>6 - Warp Exit</source>
-        <translation type="vanished">6 - Salida con traslado</translation>
-    </message>
-    <message>
-        <source>7 - Star Exit</source>
-        <translation type="vanished">7 - Salida con estrella SMB3</translation>
-    </message>
-    <message>
-        <source>8 - SMW Exit</source>
-        <translation type="vanished">8 - Salida estilo SMW</translation>
-    </message>
-    <message>
-        <source>Placement mode</source>
-        <translation type="vanished">Modo de colocado</translation>
-    </message>
-    <message>
-        <source>Place item on the map first and call &apos;Properties&apos; context menu item.</source>
-        <translation type="vanished">Colocar elemento en el mapa primero y vea las &apos;Propiedades&apos; en el menú contextual.</translation>
-    </message>
-    <message>
-        <source>Counting...</source>
-        <translation type="vanished">Contando...</translation>
-    </message>
-    <message>
-        <source>Calculating total star count in accessible levels</source>
-        <translation type="vanished">Contar estrellas en niveles puestos</translation>
-    </message>
-    <message>
-        <source>Counting stars...</source>
-        <translation type="vanished">Contando estrellas...</translation>
-    </message>
-    <message>
-        <source>Next Level</source>
-        <translation type="vanished">Siguiente nivel</translation>
-    </message>
-    <message>
-        <source>Level search completed!</source>
-        <translation type="vanished">¡Búsqueda de nivel completada!</translation>
-    </message>
-    <message>
-        <source>Next Tile</source>
-        <translation type="vanished">Siguiente azulejo</translation>
-    </message>
-    <message>
-        <source>Tile search completed!</source>
-        <translation type="vanished">¡Búsqueda de azulejos completada!</translation>
-    </message>
-    <message>
-        <source>Next Scenery</source>
-        <translation type="vanished">Siguiente decoración</translation>
-    </message>
-    <message>
-        <source>Scenery search completed!</source>
-        <translation type="vanished">¡Búsqueda de decoraciones completa!</translation>
-    </message>
-    <message>
-        <source>Next Path</source>
-        <translation type="vanished">Siguiente camino</translation>
-    </message>
-    <message>
-        <source>Path search completed!</source>
-        <translation type="vanished">¡Búsqueda de caminos completa!</translation>
-    </message>
-    <message>
-        <source>Next Music</source>
-        <translation type="vanished">Siguiente música</translation>
-    </message>
-    <message>
-        <source>Music search completed!</source>
-        <translation type="vanished">¡Búsqueda de música completa!</translation>
-    </message>
-    <message>
         <source>Engine is not found</source>
         <translation>El motor no se encuentra</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start testing, engine is not found: 
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">No se puede comenzar pruebas, el motor no se encuentra: 
-%1
-Por favor, compruebe el directorio de la aplicación.</translation>
     </message>
     <message>
         <source>Can&apos;t start testing, engine is not found: 
@@ -9326,14 +6016,6 @@ You can run testing without saving of file if you will use &quot;Run testing&quo
 Puede ejecutar sin guardar si usa la opción &quot;Ejecutar prueba&quot; del menú.</translation>
     </message>
     <message>
-        <source>Engine is not found: 
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">No se encontró el juego:
-%1
-Por favor, compruebe el directorio.</translation>
-    </message>
-    <message>
         <source>PGE Engine testing</source>
         <translation type="unfinished">Prueba motor PGE</translation>
     </message>
@@ -9348,84 +6030,12 @@ The PGE Engine is still at an early stage in development, and there are several 
 El motor PGE es la parte bajo desarollo del proyecto que implementa un modo de juego y modo de pruebas para niveles. Por ahora, es experimental y no se implementaron muchas cosas aún. Algunas cosas pueden estar no implementadas o no funcionan correctamente. Si está haciendo niveles o episodios para el viejo SMBX y desea probar los niveles de forma completa, por favor córralos en el motor SMBX. Use las pruebas de PGE en casos que desee probar el mismo o desee probar niveles o episodios específicos de PGE.</translation>
     </message>
     <message>
-        <source>To run testing via SMBX file must be saved into disk first!</source>
-        <translation type="vanished">¡Para probar vía SMBX el archivo debe ser guardado!</translation>
-    </message>
-    <message>
-        <source>Incompatible file format</source>
-        <translation type="vanished">Formato incompatible</translation>
-    </message>
-    <message>
-        <source>To take able to test level in the SMBX, file should be saved into SMBX64 format!
-Will be created a temporary file. Do you want to continue?</source>
-        <translation type="vanished">¡Para probar el nivel en SMBX, el archivo debe ser guardado en el formato SMBX64!
-Será creado un archivo temporal. ¿Desea continuar?</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Error</translation>
-    </message>
-    <message>
-        <source>Fail to create temp file %1</source>
-        <translation type="vanished">No se pudo crear archivo %1</translation>
-    </message>
-    <message>
-        <source>SMBX Level test</source>
-        <translation type="vanished">Prueba SMBX</translation>
-    </message>
-    <message>
-        <source>Do you wanna to save file before start testing?
-</source>
-        <translation type="vanished">¿Desea guardar el archivo antes de probar?
-</translation>
-    </message>
-    <message>
-        <source>SMBX with LunaDLL is not running!</source>
-        <translation type="vanished">¡SMBX con LunaDLL no está ejecutándose!</translation>
-    </message>
-    <message>
-        <source>Fail to send file patth into LunaDLL: (%1)</source>
-        <translation type="vanished">No se pudo enviar la dirección en LunaDLL: (%1)</translation>
-    </message>
-    <message>
-        <source>Could not map view of file (%1).</source>
-        <translation type="vanished">No se puede mapear el archivo (%1).</translation>
-    </message>
-    <message>
-        <source>Too long path: </source>
-        <translation type="vanished">Dirección muy larga: </translation>
-    </message>
-    <message>
-        <source>Failed to find SMBX Window</source>
-        <translation type="vanished">No se encontró la ventana de SMBX</translation>
-    </message>
-    <message>
-        <source>Engine is already testing another level.
-Please exit from engine and try again.</source>
-        <translation type="vanished">El motor está probando otro nivel.
-Por favor, salga del mismo e intente de nuevo.</translation>
-    </message>
-    <message>
-        <source>Sorry, the testing feature is under construction.
-Settings will available soon.</source>
-        <translation type="vanished">Perdón, la función de pruebas está desarrollándose.
-Las opciones estarán disponibles pronto.</translation>
-    </message>
-    <message>
-        <source>Rename Bookmark</source>
-        <translation type="vanished">Renombrar marcador</translation>
-    </message>
-    <message>
         <source>Clonning of section...</source>
         <translation>Clonado de la sección...</translation>
     </message>
     <message>
         <source>Section has been clonned</source>
         <translation>La sección se clonó</translation>
-    </message>
-    <message>
-        <source>Section has been successfully cloned!</source>
-        <translation type="vanished">¡La sección fue clonada exitosamente!</translation>
     </message>
     <message>
         <source>Section has been successfully cloned!
@@ -9503,44 +6113,6 @@ Please reload current file to apply result.</source>
 Por favor recargue el archivo actual para aplicar el resultado.</translation>
     </message>
     <message>
-        <source>Already exsist</source>
-        <translation type="vanished">Ya existe</translation>
-    </message>
-    <message>
-        <source>Lunadll.lua already exsist!
-Overwrite?</source>
-        <translation type="vanished">¡Lunadll.lua ya existe!
-¿Sobreescribir?</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">Error de escritura</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">No se puede escribir archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Successfully compiled!</source>
-        <translation type="vanished">¡Compilado exitosamente!</translation>
-    </message>
-    <message>
-        <source>Sucessfully compiled to %1/lunadll.lua</source>
-        <translation type="vanished">Compilado exitosamente a %1/lunadll.lua</translation>
-    </message>
-    <message>
-        <source>lunadll.txt already exsist!
-Overwrite?</source>
-        <translation type="vanished">¡lunadll.txt ya existe!
-¿Sobreescribir?</translation>
-    </message>
-    <message>
-        <source>Sucessfully compiled to %1/lunadll.txt</source>
-        <translation type="vanished">Compilado exitosamente a %1/lunadll.txt</translation>
-    </message>
-    <message>
         <source>Configuration error</source>
         <translation>Error de configuración</translation>
     </message>
@@ -9571,19 +6143,6 @@ Vea en %1 para más información.</translation>
         <translation>El paquete de configuración se cargó con errores.</translation>
     </message>
     <message>
-        <source>Configuration can&apos;t be loaded.
-See in PGE_Editor_log.txt for more information.</source>
-        <translation type="vanished">La configuración no puede ser cargada.
-Vea en PGE_Editor_log.txt para más información.</translation>
-    </message>
-    <message>
-        <source>Configuration package is loaded with errors.
-Please open the Tools/Global Configuration/Configuration Status
-to get more information.</source>
-        <translation type="vanished">El paquete de configuraciones se carga con errores.
-Por favor vea el Estado de Configuración para obtener más información.</translation>
-    </message>
-    <message>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
@@ -9594,10 +6153,6 @@ Por favor vea el Estado de Configuración para obtener más información.</trans
     <message>
         <source>NPC garbage clean-up</source>
         <translation>Limpieza de residuos</translation>
-    </message>
-    <message>
-        <source>Everything is fine, level has no NPC gargabe!</source>
-        <translation type="vanished">¡Todo está bien, el nivel no tiene PNJs residuales!</translation>
     </message>
     <message>
         <source>Everything is fine, level has no NPC garbage!</source>
@@ -9614,12 +6169,6 @@ Presionar el botón de ayuda para ver los PNJs encontrados.</translation>
 This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
         <translation>¡La basura PNJ fue removida!
 Esta operación se puede deshacer.</translation>
-    </message>
-    <message>
-        <source>NPC gargabe has been removed!
-This operation can be undone with Ctrl+Z or Edit/Undo action.</source>
-        <translation type="vanished">¡Los residuos han sido removidos!
-Esta operación puede ser deshecha con Ctrl+Z o Editar/Deshacer.</translation>
     </message>
     <message>
         <source>Section %1</source>
@@ -9839,23 +6388,6 @@ Please, choose the Moondust Maintainer application yourself!</source>
         <translation>Seleccionar música</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Esta es una lista de archivos de música localizados en la misma carpeta que el archivo actual, así como cualquier subdirectorio.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Please, select music file for use as custom</source>
-        <translation type="vanished">Por favor, seleccionar archivo para usarlo como personalizado</translation>
-    </message>
-    <message>
-        <source>Too many subfolders</source>
-        <translation type="vanished">Demasiadas subcarpetas</translation>
-    </message>
-    <message>
-        <source>If you contunue this operation, application can be frozen.
-Do you want to continue?</source>
-        <translation type="vanished">Si continúa esta operación, la aplicación se congelará. ¿Desea Continuar?</translation>
-    </message>
-    <message>
         <source>Select SFX file</source>
         <translation></translation>
     </message>
@@ -9869,57 +6401,10 @@ Do you want to continue?</source>
     </message>
 </context>
 <context>
-    <name>NpcDialog</name>
-    <message>
-        <source>NPC Select dialog</source>
-        <translation type="vanished">Selección de PNJ</translation>
-    </message>
-    <message>
-        <source>Content type</source>
-        <translation type="vanished">Tipo de contenido</translation>
-    </message>
-    <message>
-        <source>Coins</source>
-        <translation type="vanished">Monedas</translation>
-    </message>
-    <message>
-        <source>Empty</source>
-        <translation type="vanished">Vacío</translation>
-    </message>
-    <message>
-        <source>NPC from list</source>
-        <translation type="vanished">PNJ desde lista</translation>
-    </message>
-    <message>
-        <source>Filter:</source>
-        <translation type="vanished">Filtro:</translation>
-    </message>
-    <message>
-        <source>Text</source>
-        <translation type="vanished">Texto</translation>
-    </message>
-    <message>
-        <source>ID</source>
-        <translation type="vanished">ID</translation>
-    </message>
-    <message>
-        <source>Please, select NPC from list</source>
-        <translation type="vanished">Por favor, seleccione PNJ de la lista</translation>
-    </message>
-</context>
-<context>
     <name>NpcEdit</name>
-    <message>
-        <source>NPC Configuration edit</source>
-        <translation type="vanished">Editar configuración de PNJ</translation>
-    </message>
     <message>
         <source>NPC ID</source>
         <translation>PNJ ID</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
     </message>
     <message>
         <source>Physics</source>
@@ -10106,16 +6591,8 @@ Do you want to continue?</source>
         <translation>Modificado</translation>
     </message>
     <message>
-        <source>No</source>
-        <translation type="obsolete">No</translation>
-    </message>
-    <message>
         <source>Name:</source>
         <translation>Nombre:</translation>
-    </message>
-    <message>
-        <source>npc-%1.txt</source>
-        <translation type="obsolete">npc-%1.txt</translation>
     </message>
     <message>
         <source>Load file error</source>
@@ -10223,127 +6700,6 @@ Descripción del error:
     </message>
 </context>
 <context>
-    <name>QApplication</name>
-    <message>
-        <source>Loading BGOs...</source>
-        <translation type="vanished">Cargando OFs...</translation>
-    </message>
-    <message>
-        <source>Loading Backgrounds...</source>
-        <translation type="vanished">Cargando fondos...</translation>
-    </message>
-    <message>
-        <source>Loading Blocks...</source>
-        <translation type="vanished">Cargando bloques...</translation>
-    </message>
-    <message>
-        <source>Loading NPCs...</source>
-        <translation type="vanished">Cargando PNJs...</translation>
-    </message>
-    <message>
-        <source>Loading Music...</source>
-        <translation type="vanished">Cargando música...</translation>
-    </message>
-    <message>
-        <source>Loading Sound...</source>
-        <translation type="vanished">Cargando Sonido...</translation>
-    </message>
-    <message>
-        <source>Loading Level images...</source>
-        <translation type="vanished">Cargando imágenes de nivel...</translation>
-    </message>
-    <message>
-        <source>Loading Paths images...</source>
-        <translation type="vanished">Cargando imágenes de caminos...</translation>
-    </message>
-    <message>
-        <source>Loading Sceneries...</source>
-        <translation type="vanished">Cargando decoraciones...</translation>
-    </message>
-    <message>
-        <source>Loading Tiles...</source>
-        <translation type="vanished">Cargando azulejos...</translation>
-    </message>
-    <message>
-        <source>Crash</source>
-        <translation type="vanished">Crash</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE has crashed. Reason: Out of memory! :(
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="vanished">Lo sentimos, pero PGE falló. Razón: Falta de memoria. : (
-Para prevenir ésto, pruebe cerrando otros programas innecesarios para liberar memoria).</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="vanished">Lo lamentamos, pero el editor ha colapsado.
-Razón: ¡memoria insuficiente!
-
-Para prevenir esto, pruebe cerrando otras aplicaciones innecesarias para despejar más memoria.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="vanished">Lo sentimos, pero el editor PGE ha colapsado.
-Razón: Excepción descontrolada
-
-Por favor informe al personal del foro para que podamos solucionarlo. Gracias
-
-Foro: wohlsoft.ru/forum</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: %1
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="vanished">Lo lamentamos, pero el editor ha colapsado.
-Razón: %1
-
-Enlace al foro: wohlsoft.ru/forum</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Signal Segmentation Violation [SIGSERV]
-
-</source>
-        <translation type="vanished">Lo lamentamos, pero el editor ha colapsado.
-Razón: Violación de segmentación de señal [SIGSERV]
-
-</translation>
-    </message>
-    <message>
-        <source>File open error</source>
-        <translation type="obsolete">Error al abrir archivo</translation>
-    </message>
-    <message>
-        <source>File is not exist</source>
-        <translation type="obsolete">El archivo no existe</translation>
-    </message>
-    <message>
-        <source>Can&apos;t read the file</source>
-        <translation type="obsolete">No se puede leer el archivo</translation>
-    </message>
-    <message>
-        <source>Unknown values are presented</source>
-        <translation type="obsolete">Valores desconocidos están presentados</translation>
-    </message>
-    <message>
-        <source>Your file have an unknown values which will be removed
- when you will save file</source>
-        <translation type="obsolete">Su archivo tiene valores desconocidos que serán removidos
-cuando guarde su archivo</translation>
-    </message>
-</context>
-<context>
     <name>QMessageBox</name>
     <message>
         <source>File association failed.</source>
@@ -10399,10 +6755,6 @@ cuando guarde su archivo</translation>
     <message>
         <source>Layer</source>
         <translation>Capa</translation>
-    </message>
-    <message>
-        <source>No Yoshi</source>
-        <translation type="vanished">No Yoshi</translation>
     </message>
     <message>
         <source>No Vehicles</source>
@@ -10685,10 +7037,6 @@ cuando guarde su archivo</translation>
         <translation>Música propia</translation>
     </message>
     <message>
-        <source>Level Name</source>
-        <translation type="vanished">Nombre del nivel</translation>
-    </message>
-    <message>
         <source>BGO Sorting Priority</source>
         <translation>Prioridad de OFs</translation>
     </message>
@@ -10801,10 +7149,6 @@ Foro: wohlsoft.ru/forum</translation>
         <translation>Comando Salir [SIGQUIT]</translation>
     </message>
     <message>
-        <source>Editor was killed by mad maniac :-P [SIGKILL]</source>
-        <translation type="vanished">El editor fue matado por un loco maníaco :P [SIGKILL]</translation>
-    </message>
-    <message>
         <source>Editor was abourted because alarm() time out! [SIGALRM]</source>
         <translation>El editor abortó porque pasó el tiempo de alarm() [SIGALRM]</translation>
     </message>
@@ -10819,10 +7163,6 @@ Foro: wohlsoft.ru/forum</translation>
     <message>
         <source>Floating-point exception [SIGFPE]</source>
         <translation>Excepción de punto flotante [SIGFPE]</translation>
-    </message>
-    <message>
-        <source>Wrong CPU Instruction [SIGFPE]</source>
-        <translation type="vanished">Instrucción de CPU incorrecta [SIGFPE]</translation>
     </message>
     <message>
         <source>Aborted! [SIGABRT]</source>
@@ -10843,16 +7183,6 @@ Reason: %1
 </source>
         <translation type="unfinished">Lo lamentamos, pero el editor ha colapsado.
 Razón: %1
-
-</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
-Reason: Signal Segmentation Violation [SIGSERV]
-
-</source>
-        <translation type="vanished">Lo lamentamos, pero el editor ha colapsado.
-Razón: Violación de segmentación de señal [SIGSERV]
 
 </translation>
     </message>
@@ -10935,32 +7265,12 @@ File: %1</source>
  {1?}</translation>
     </message>
     <message>
-        <source>Bad file format
-File: %1
-</source>
-        <translation type="vanished">Formato de archivo corrupto: %1</translation>
-    </message>
-    <message>
-        <source>Line Number: %1
-</source>
-        <translation type="vanished">Número de línea: %1
-</translation>
-    </message>
-    <message>
         <source>Line Data: %1</source>
         <translation>Dato de línea: %1</translation>
     </message>
     <message>
         <source>File open error</source>
         <translation>Error al abrir archivo</translation>
-    </message>
-    <message>
-        <source>File is not exist</source>
-        <translation type="vanished">El archivo no existe</translation>
-    </message>
-    <message>
-        <source>Can&apos;t read the file</source>
-        <translation type="vanished">No se puede leer el archivo</translation>
     </message>
     <message>
         <source>Unknown values are presented</source>
@@ -11153,528 +7463,6 @@ El máximo es %2.</translation>
     <message>
         <source>Needs floor</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QTranslator</name>
-    <message>
-        <source>File open error</source>
-        <translation type="vanished">Error al abrir archivo</translation>
-    </message>
-    <message>
-        <source>Can&apos;t open the file!</source>
-        <translation type="vanished">No se puede abrir archivo.</translation>
-    </message>
-    <message>
-        <source>Bad File</source>
-        <translation type="vanished">Archivo Corrupto</translation>
-    </message>
-    <message>
-        <source>Bad file format
-File: %1
-</source>
-        <translation type="vanished">Formato de archivo corrupto: %1</translation>
-    </message>
-    <message>
-        <source>Line Number: %1
-</source>
-        <translation type="vanished">Número de línea: %1
-</translation>
-    </message>
-    <message>
-        <source>Line Data: %1</source>
-        <translation type="vanished">Dato de línea: %1</translation>
-    </message>
-    <message>
-        <source>Cut top here</source>
-        <translation type="vanished">Cortar arriba</translation>
-    </message>
-    <message>
-        <source>Cut bottom here</source>
-        <translation type="vanished">Cortar abajo</translation>
-    </message>
-    <message>
-        <source>Cut left here</source>
-        <translation type="vanished">Cortar izquierda</translation>
-    </message>
-    <message>
-        <source>Cut right here</source>
-        <translation type="vanished">Cortar acá</translation>
-    </message>
-    <message>
-        <source>Don&apos;t snap to grid</source>
-        <translation type="vanished">No ajustar a la grilla</translation>
-    </message>
-    <message>
-        <source>Disable minimal size limit</source>
-        <translation type="vanished">Deshabilitar límite de tamaño</translation>
-    </message>
-    <message>
-        <source>File is not exist</source>
-        <translation type="vanished">El archivo no existe</translation>
-    </message>
-    <message>
-        <source>Can&apos;t read the file</source>
-        <translation type="vanished">No se puede leer el archivo</translation>
-    </message>
-    <message>
-        <source>Unknown values are presented</source>
-        <translation type="vanished">Valores desconocidos están presentados</translation>
-    </message>
-    <message>
-        <source>Your file have an unknown values which will be removed
- when you will save file</source>
-        <translation type="vanished">Su archivo tiene valores desconocidos que serán removidos
-cuando guarde su archivo</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 section
-The maximum number of sections is %2.
-All boundaries and settings of more than 21 sections will be lost.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 secciones
-El máximo de secciones es %2
-Todos los bordes y opciones de más de 21 secciones se perderán.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 blocks
-The maximum number of blocks is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 bloques
-El máximo de bloques es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Background Objects
-The maximum number of Background Objects is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 Objetos de Fondo
-El máximo de objetos de fondo es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 NPC&apos;s
-The maximum number of NPC&apos;s is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 PNJs
-El máximo de PNJs es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Warps
-The maximum number of Warps is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 traslados
-El máximo de traslados es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Water Boxes
-The maximum number of Water Boxes is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 cajas de agua
-El máximo es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Layers
-The maximum number of Layers is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 capas
-El máximo de capas es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Events
-The maximum number of Events is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 events
-El máximo de eventos es %2.</translation>
-    </message>
-    <message>
-        <source>A some issues are found on preparing to save SMBX64 Level file format:
-
-%1Please remove excess elements (or settings) from this level or save file into LVLX format.</source>
-        <translation type="vanished">Algunos problemas fueron encontrados al guardar en formato SMBX64:
-
-%1Por favor remover exceso de elementos u opciones o guardar en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Tiles
-The maximum number of Tiles is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 azulejos
-El máximo de azulejos es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Sceneries
-The maximum number of Sceneries is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 decoraciones
-El máximo de decoraciones es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Paths
-The maximum number of Paths is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 caminos
-El máximo de caminos es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Levels
-The maximum number of Levels is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 niveles
-El máximo de niveles es %2.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allows to save %1 Music Boxes
-The maximum number of Music Boxes is %2.</source>
-        <translation type="vanished">El estándar SMBX64 no permite guardar %1 cajas de música
-El máximo es %2.</translation>
-    </message>
-    <message>
-        <source>A some issues are found on preparing to save SMBX64 World map file format:
-
-%1Please remove excess elements (or settings) from this world map or save file into WLDX format.</source>
-        <translation type="vanished">Algunos problemas fueron hallados al guardar en formato SMBX64:
-
-%1Por favor remover exceso de elementos u opciones o guarde en formato WLDX.</translation>
-    </message>
-</context>
-<context>
-    <name>QtBoolEdit</name>
-    <message>
-        <source>True</source>
-        <translation type="vanished">Verdadero</translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation type="vanished">Falso</translation>
-    </message>
-</context>
-<context>
-    <name>QtBoolPropertyManager</name>
-    <message>
-        <source>True</source>
-        <translation type="vanished">Verdadero</translation>
-    </message>
-    <message>
-        <source>False</source>
-        <translation type="vanished">Falso</translation>
-    </message>
-</context>
-<context>
-    <name>QtCharEdit</name>
-    <message>
-        <source>Clear Char</source>
-        <translation type="vanished">Limpiar Car</translation>
-    </message>
-</context>
-<context>
-    <name>QtColorEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QtColorPropertyManager</name>
-    <message>
-        <source>Red</source>
-        <translation type="vanished">Rojo</translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation type="vanished">Verde</translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation type="vanished">Azul</translation>
-    </message>
-    <message>
-        <source>Alpha</source>
-        <translation type="vanished">Alfa</translation>
-    </message>
-</context>
-<context>
-    <name>QtCursorDatabase</name>
-    <message>
-        <source>Arrow</source>
-        <translation type="vanished">Flecha</translation>
-    </message>
-    <message>
-        <source>Up Arrow</source>
-        <translation type="vanished">Flecha arriba</translation>
-    </message>
-    <message>
-        <source>Cross</source>
-        <translation type="vanished">Cruz</translation>
-    </message>
-    <message>
-        <source>Wait</source>
-        <translation type="vanished">Esperar</translation>
-    </message>
-    <message>
-        <source>IBeam</source>
-        <translation type="vanished">IBeam</translation>
-    </message>
-    <message>
-        <source>Size Vertical</source>
-        <translation type="vanished">Tamaño vertical</translation>
-    </message>
-    <message>
-        <source>Size Horizontal</source>
-        <translation type="vanished">Tamaño horizontal</translation>
-    </message>
-    <message>
-        <source>Size Backslash</source>
-        <translation type="vanished">Tamaño barra hacia atrás</translation>
-    </message>
-    <message>
-        <source>Size Slash</source>
-        <translation type="vanished">Tamaño barra hacia adelante</translation>
-    </message>
-    <message>
-        <source>Size All</source>
-        <translation type="vanished">Redimensionar todo</translation>
-    </message>
-    <message>
-        <source>Blank</source>
-        <translation type="vanished">Blanco</translation>
-    </message>
-    <message>
-        <source>Split Vertical</source>
-        <translation type="vanished">Dividir vertical</translation>
-    </message>
-    <message>
-        <source>Split Horizontal</source>
-        <translation type="vanished">Dividir horizontal</translation>
-    </message>
-    <message>
-        <source>Pointing Hand</source>
-        <translation type="vanished">Mano apuntando</translation>
-    </message>
-    <message>
-        <source>Forbidden</source>
-        <translation type="vanished">Prohibido</translation>
-    </message>
-    <message>
-        <source>Open Hand</source>
-        <translation type="vanished">Mano abierta</translation>
-    </message>
-    <message>
-        <source>Closed Hand</source>
-        <translation type="vanished">Mano cerrada</translation>
-    </message>
-    <message>
-        <source>What&apos;s This</source>
-        <translation type="vanished">Qué es esto</translation>
-    </message>
-    <message>
-        <source>Busy</source>
-        <translation type="vanished">Ocupado</translation>
-    </message>
-</context>
-<context>
-    <name>QtFontEditWidget</name>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Select Font</source>
-        <translation type="vanished">Seleccionar fuente</translation>
-    </message>
-</context>
-<context>
-    <name>QtFontPropertyManager</name>
-    <message>
-        <source>Family</source>
-        <translation type="vanished">Familia</translation>
-    </message>
-    <message>
-        <source>Point Size</source>
-        <translation type="vanished">Tamaño puntual</translation>
-    </message>
-    <message>
-        <source>Bold</source>
-        <translation type="vanished">Negrita</translation>
-    </message>
-    <message>
-        <source>Italic</source>
-        <translation type="vanished">Cursiva</translation>
-    </message>
-    <message>
-        <source>Underline</source>
-        <translation type="vanished">Subrayado</translation>
-    </message>
-    <message>
-        <source>Strikeout</source>
-        <translation type="vanished">Tachado</translation>
-    </message>
-    <message>
-        <source>Kerning</source>
-        <translation type="vanished">Interletraje</translation>
-    </message>
-</context>
-<context>
-    <name>QtKeySequenceEdit</name>
-    <message>
-        <source>Clear Shortcut</source>
-        <translation type="vanished">Limpiar acceso directo</translation>
-    </message>
-</context>
-<context>
-    <name>QtLocalePropertyManager</name>
-    <message>
-        <source>%1, %2</source>
-        <translation type="vanished">%1, %2</translation>
-    </message>
-    <message>
-        <source>Language</source>
-        <translation type="vanished">Idioma</translation>
-    </message>
-    <message>
-        <source>Country</source>
-        <translation type="vanished">País</translation>
-    </message>
-</context>
-<context>
-    <name>QtPointFPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="vanished">(%1, %2)</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QtPointPropertyManager</name>
-    <message>
-        <source>(%1, %2)</source>
-        <translation type="vanished">(%1, %2)</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QtPropertyBrowserUtils</name>
-    <message>
-        <source>[%1, %2, %3] (%4)</source>
-        <translation type="vanished">[%1, %2, %3] (%4)</translation>
-    </message>
-    <message>
-        <source>[%1, %2]</source>
-        <translation type="vanished">[%1, %2]</translation>
-    </message>
-</context>
-<context>
-    <name>QtRectFPropertyManager</name>
-    <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">Ancho</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Altura</translation>
-    </message>
-</context>
-<context>
-    <name>QtRectPropertyManager</name>
-    <message>
-        <source>[(%1, %2), %3 x %4]</source>
-        <translation type="vanished">[(%1, %2), %3 x %4]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">Ancho</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Altura</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizeFPropertyManager</name>
-    <message>
-        <source>%1 x %2</source>
-        <translation type="vanished">%1 x %2</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">Ancho</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Altura</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePolicyPropertyManager</name>
-    <message>
-        <source>&lt;Invalid&gt;</source>
-        <translation type="vanished">&lt;Invalido&gt;</translation>
-    </message>
-    <message>
-        <source>[%1, %2, %3, %4]</source>
-        <translation type="vanished">[%1, %2, %3, %4]</translation>
-    </message>
-    <message>
-        <source>Horizontal Policy</source>
-        <translation type="vanished">Política horizontal</translation>
-    </message>
-    <message>
-        <source>Vertical Policy</source>
-        <translation type="vanished">Política vertical</translation>
-    </message>
-    <message>
-        <source>Horizontal Stretch</source>
-        <translation type="vanished">Estiramiento horizontal</translation>
-    </message>
-    <message>
-        <source>Vertical Stretch</source>
-        <translation type="vanished">Estiramiento vertical</translation>
-    </message>
-</context>
-<context>
-    <name>QtSizePropertyManager</name>
-    <message>
-        <source>%1 x %2</source>
-        <translation type="vanished">%1 x %2</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">Ancho</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Altura</translation>
-    </message>
-</context>
-<context>
-    <name>QtTreePropertyBrowser</name>
-    <message>
-        <source>Property</source>
-        <translation type="vanished">Propiedad</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Valor</translation>
     </message>
 </context>
 <context>
@@ -11904,10 +7692,6 @@ El máximo es %2.</translation>
 <context>
     <name>TestingSettings</name>
     <message>
-        <source>Testing options...</source>
-        <translation type="vanished">Opciones de prueba</translation>
-    </message>
-    <message>
         <source>2 Player settings</source>
         <translation>Opciones de 2do jugador</translation>
     </message>
@@ -11933,10 +7717,6 @@ El máximo es %2.</translation>
     <message>
         <source>Allows you to destroy any objects with no exceptions.</source>
         <translation>Permite destruir objetos sin excepciones.</translation>
-    </message>
-    <message>
-        <source>Chuck Norris</source>
-        <translation type="vanished">Chuck Norris</translation>
     </message>
     <message>
         <source>Allows you to walk everywhere on the world map without limiting by paths.</source>
@@ -12002,18 +7782,6 @@ El máximo es %2.</translation>
         <translation>Opciones de 1er jugador</translation>
     </message>
     <message>
-        <source>WIP</source>
-        <translation type="vanished">WIP</translation>
-    </message>
-    <message>
-        <source>Hello!
-This dialog is not finished yet.
-Those preferences will makes no effect on a testing process before it will be fininshed. Sorry.</source>
-        <translation type="vanished">¡Hola!
-Este diálogo aún no se ha terminado.
-Esas preferencias no van a tener efecto en un proceso de prueba hasta que se terminen. Disculpe.</translation>
-    </message>
-    <message>
         <source>Bulldozer mode</source>
         <translation>Modo Bulldozer</translation>
     </message>
@@ -12048,11 +7816,6 @@ Esas preferencias no van a tener efecto en un proceso de prueba hasta que se ter
 </context>
 <context>
     <name>TheXTechEngine</name>
-    <message>
-        <source>Custom</source>
-        <comment>Using a user selected LunaTester path</comment>
-        <translation type="obsolete">Personalizado</translation>
-    </message>
     <message>
         <source>Browse...</source>
         <translation type="unfinished">Explorar...</translation>
@@ -12240,177 +8003,6 @@ Arguments: %2</source>
         <source>Mode 2 (X2)</source>
         <comment>Enable speedrun with mode 2 (X2 compatibility level)</comment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TilesetConfigureDialog</name>
-    <message>
-        <source>Configure Tileset [Work in Progress]</source>
-        <translation type="vanished">Configure baldozas [Trabajo en progreso]</translation>
-    </message>
-    <message>
-        <source>Tileset name:</source>
-        <translation type="vanished">Nombre del conjunto:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Altura:</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Ancho:</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Guardar</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="vanished">Abrir</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="vanished">Limpiar</translation>
-    </message>
-    <message>
-        <source>Terrain tile</source>
-        <translation type="vanished">Azulejo de Terreno</translation>
-    </message>
-    <message>
-        <source>Type:</source>
-        <translation type="vanished">Tipo:</translation>
-    </message>
-    <message>
-        <source>Block</source>
-        <translation type="vanished">Bloque</translation>
-    </message>
-    <message>
-        <source>Tileset Editor</source>
-        <translation type="vanished">Editor de conjuntos de bloques</translation>
-    </message>
-    <message>
-        <source>BGO</source>
-        <translation type="vanished">OF</translation>
-    </message>
-    <message>
-        <source>NPC</source>
-        <translation type="vanished">PNJ</translation>
-    </message>
-    <message>
-        <source>Show default only</source>
-        <translation type="vanished">Mostrar solo predeterminado</translation>
-    </message>
-    <message>
-        <source>Tile</source>
-        <translation type="vanished">Azulejo</translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation type="vanished">Directorio</translation>
-    </message>
-    <message>
-        <source>Show custom only</source>
-        <translation type="vanished">Mostrar sólo personalizados</translation>
-    </message>
-    <message>
-        <source>Current Level/World specific</source>
-        <translation type="vanished">Específico de mundo/nivel actual</translation>
-    </message>
-    <message>
-        <source>Delete this tileset</source>
-        <translation type="vanished">Eliminar el tileset</translation>
-    </message>
-    <message>
-        <source>Scenery</source>
-        <translation type="vanished">Decoraciones</translation>
-    </message>
-    <message>
-        <source>Level</source>
-        <translation type="vanished">Nivel</translation>
-    </message>
-    <message>
-        <source>Tiles</source>
-        <translation type="vanished">Azulejos</translation>
-    </message>
-    <message>
-        <source>Items</source>
-        <translation type="vanished">Items</translation>
-    </message>
-    <message>
-        <source>Save Tileset</source>
-        <translation type="vanished">Guardar baldozas</translation>
-    </message>
-    <message>
-        <source>Clean tileset editor</source>
-        <translation type="vanished">Limpiar editor de tilesets</translation>
-    </message>
-    <message>
-        <source>Do you want to clean tileset editor to create a new tileset?</source>
-        <translation type="vanished">¿Desea limpiar el editor para crear un nuevo tileset?</translation>
-    </message>
-    <message>
-        <source>Please enter a filename!</source>
-        <translation type="vanished">¡Por favor ponga un nombre!</translation>
-    </message>
-    <message>
-        <source>Filename:</source>
-        <translation type="vanished">Nombre de archivo:</translation>
-    </message>
-    <message>
-        <source>Open Tileset</source>
-        <translation type="vanished">Abrir baldosas</translation>
-    </message>
-    <message>
-        <source>Failed to load tileset!</source>
-        <translation type="vanished">¡Falló la carga de baldozas!</translation>
-    </message>
-    <message>
-        <source>Failed to load tileset!
-Data may be corrupted!</source>
-        <translation type="vanished">¡Falló la carga de baldosas!
-¡Los datos pueden estar corruptos!</translation>
-    </message>
-    <message>
-        <source>Tileset box editor</source>
-        <translation type="vanished">Editor de cajas de tilesets</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show this message again.</source>
-        <translation type="vanished">No mostrar este mensaje otra vez.</translation>
-    </message>
-    <message>
-        <source>Welcome to tileset editor!
-
-This is an editor of global tilesets.
-All tilesets which made here will be saved in this folder:
-%1
-I.e. there are will work globally for this configuration package and can be used in the gropus of tilesets.
-
-If you wish to create level/world specific tilesets with using of custom graphics, please open the Tileset Item Box and find the button &quot;New Tileset&quot; in the &quot;Custom&quot; tab.</source>
-        <translation type="vanished">¡Bienvenido al editor de tilesets!
-
-Éste es un editor de tilesets globales.
-Todos los tilesets que se harán aquí serán guardados en ésta carpeta:
-%1
-Por ej. Éstos funcionarán globalmente para éste pack de configuraciones y pueden ser usados en los grupos de tilesets.
-
-Si desea crear tilesets específicos para niveles/mapas con gráficos personalizados, por favor abra la &apos;Caja de tilesets&apos; y busque el botón &apos;Nuevo tileset&apos; en la pestaña &apos;Custom&apos;.</translation>
-    </message>
-    <message>
-        <source>Remove tileset</source>
-        <translation type="vanished">Remover</translation>
-    </message>
-    <message>
-        <source>Do you want to remove this tileset?</source>
-        <translation type="vanished">¿Desea remover este tileset?</translation>
-    </message>
-    <message>
-        <source>Tileset removed</source>
-        <translation type="vanished">Tileset removido</translation>
-    </message>
-    <message>
-        <source>Tileset has been removed!</source>
-        <translation type="vanished">¡El tileset fue removido!</translation>
     </message>
 </context>
 <context>
@@ -12630,10 +8222,6 @@ Si desea crear tilesets específicos para niveles/mapas con gráficos personaliz
         <translation>Nombre de grupo:</translation>
     </message>
     <message>
-        <source>TextLabel</source>
-        <translation type="vanished">EtiquetadeTexto</translation>
-    </message>
-    <message>
         <source>Category:</source>
         <translation>Categoría:</translation>
     </message>
@@ -12753,10 +8341,6 @@ Data may be corrupted!</source>
         <source>Tip of day</source>
         <translatorcomment>tcvicio is the new account of hacheipe399. I&apos;ve lost my access to the github and e-mail account, so I can&apos;t recover my password for github :/</translatorcomment>
         <translation>Consejo del día</translation>
-    </message>
-    <message>
-        <source>Did you know...</source>
-        <translation type="vanished">Sabías que...</translation>
     </message>
     <message>
         <source>Did you know?</source>
@@ -13113,28 +8697,6 @@ Data may be corrupted!</source>
         <translation>Reiniciar posición</translation>
     </message>
     <message>
-        <source>File read error</source>
-        <translation type="vanished">Error de lectura</translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">No se puede leer archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="vanished">Configuraciones no cargadas</translation>
-    </message>
-    <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede abrir nivel %1:
-porque las configuraciones no están cargadas. 
-Por favor vea que config/SMBX realmente existe y contiene los archivos INI con objetos.</translation>
-    </message>
-    <message>
         <source>Loading World map data</source>
         <translation>Cargando datos del mapa</translation>
     </message>
@@ -13294,97 +8856,6 @@ Por favor vea que config/SMBX realmente existe y contiene los archivos INI con o
     </message>
 </context>
 <context>
-    <name>WldBaseItem</name>
-    <message>
-        <source>Open target file: %1</source>
-        <translation type="obsolete">Abrir archivo destino: %1</translation>
-    </message>
-    <message>
-        <source>Path background</source>
-        <translation type="obsolete">Camino de fondo</translation>
-    </message>
-    <message>
-        <source>Big Path background</source>
-        <translation type="obsolete">Gran camino de fondo</translation>
-    </message>
-    <message>
-        <source>Always Visible</source>
-        <translation type="obsolete">Siempre visible</translation>
-    </message>
-    <message>
-        <source>Copy preferences</source>
-        <translation type="obsolete">Copiar preferencias</translation>
-    </message>
-    <message>
-        <source>Level-ID: %1</source>
-        <translation type="obsolete">ID de nivel: %1</translation>
-    </message>
-    <message>
-        <source>Position: X, Y</source>
-        <translation type="obsolete">Posición: X, Y</translation>
-    </message>
-    <message>
-        <source>Position: X, Y, Width, Height</source>
-        <translation type="obsolete">Posición: X, Y, Ancho, Altura</translation>
-    </message>
-    <message>
-        <source>Position: Left, Top, Right, Bottom</source>
-        <translation type="obsolete">Posición: Izquierda, Arriba, Derecha, Abajo</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="obsolete">Copiar</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Cortar</translation>
-    </message>
-    <message>
-        <source>Transform into</source>
-        <translation type="obsolete">Transformar en</translation>
-    </message>
-    <message>
-        <source>Transform all %1 into</source>
-        <translation type="obsolete">Transformar todo %1 en</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="obsolete">Remover</translation>
-    </message>
-    <message>
-        <source>Properties...</source>
-        <translation type="obsolete">Propiedades...</translation>
-    </message>
-    <message>
-        <source>Preferences have been copied: %1</source>
-        <translation type="obsolete">Las preferencias se copiaron: %1</translation>
-    </message>
-    <message>
-        <source>&lt;Silence&gt;</source>
-        <translation type="obsolete">&lt;Silencio&gt;</translation>
-    </message>
-    <message>
-        <source>Play this</source>
-        <translation type="obsolete">Reproducir esto</translation>
-    </message>
-    <message>
-        <source>World-Music-ID: %1</source>
-        <translation type="obsolete">ID de música: %1</translation>
-    </message>
-    <message>
-        <source>Path-ID: %1</source>
-        <translation type="obsolete">Ruta de ID: %1</translation>
-    </message>
-    <message>
-        <source>Scenery-ID: %1</source>
-        <translation type="obsolete">ID de Decoración: %1</translation>
-    </message>
-    <message>
-        <source>Tile-ID: %1</source>
-        <translation type="obsolete">ID de azulejo: %1</translation>
-    </message>
-</context>
-<context>
     <name>WldHistoryManager</name>
     <message>
         <source>Remove</source>
@@ -13450,16 +8921,8 @@ Por favor vea que config/SMBX realmente existe y contiene los archivos INI con o
         <translation>Mantener proporción original</translation>
     </message>
     <message>
-        <source>Save proportion</source>
-        <translation type="vanished">Guardar proporción</translation>
-    </message>
-    <message>
         <source>Export selected rectangle to image</source>
         <translation>Exportar rectángulo seleccionado</translation>
-    </message>
-    <message>
-        <source>2x</source>
-        <translation type="obsolete">2x</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a &lt;span style=&quot; font-weight:600;&quot;&gt;Width&lt;/span&gt; of target image. Target image will be scaled to this width.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -13533,126 +8996,6 @@ Usted verá fantasmas u otras imágenes en vez de sus gráficos o ítems persona
 Por favor, reconvierta sus imágenes a formatos válidos e intente recargar este nivel.</translation>
     </message>
     <message>
-        <source>Undone: %1</source>
-        <translation type="vanished">Sin terminar: %1</translation>
-    </message>
-    <message>
-        <source>Redone: %1</source>
-        <translation type="vanished">Rehacer: %1</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">Remover</translation>
-    </message>
-    <message>
-        <source>Place</source>
-        <translation type="vanished">Colocar</translation>
-    </message>
-    <message>
-        <source>Place &amp; Overwrite</source>
-        <translation type="vanished">Colocar y sobreescribir</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="vanished">Mover</translation>
-    </message>
-    <message>
-        <source>Transform</source>
-        <translation type="vanished">Transformar</translation>
-    </message>
-    <message>
-        <source>Changed Worldsetting [%1]</source>
-        <translation type="vanished">Cambiada la opción [%1]</translation>
-    </message>
-    <message>
-        <source>Changed Itemsetting [%1]</source>
-        <translation type="vanished">Cambiada la opción [%1]</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="vanished">Rotar</translation>
-    </message>
-    <message>
-        <source>Flip</source>
-        <translation type="vanished">Voltear</translation>
-    </message>
-    <message>
-        <source>Unknown</source>
-        <translation type="vanished">Desconocido</translation>
-    </message>
-    <message>
-        <source>Always Visible</source>
-        <translation type="vanished">Siempre visible</translation>
-    </message>
-    <message>
-        <source>Big Path Background</source>
-        <translation type="vanished">Fondo de camino grande</translation>
-    </message>
-    <message>
-        <source>Character</source>
-        <translation type="vanished">Personaje</translation>
-    </message>
-    <message>
-        <source>Door ID</source>
-        <translation type="vanished">ID de puerta</translation>
-    </message>
-    <message>
-        <source>Game start point</source>
-        <translation type="vanished">Punto de comienzo</translation>
-    </message>
-    <message>
-        <source>Goto X</source>
-        <translation type="vanished">Ir a X</translation>
-    </message>
-    <message>
-        <source>Goto Y</source>
-        <translation type="vanished">Ir a Y</translation>
-    </message>
-    <message>
-        <source>Hub styled world</source>
-        <translation type="vanished">Mundo con Hub</translation>
-    </message>
-    <message>
-        <source>Intro Level</source>
-        <translation type="vanished">Nivel de introducción</translation>
-    </message>
-    <message>
-        <source>Level file</source>
-        <translation type="vanished">Archivo de nivel</translation>
-    </message>
-    <message>
-        <source>Level title</source>
-        <translation type="vanished">Título del nivel</translation>
-    </message>
-    <message>
-        <source>Path Background</source>
-        <translation type="vanished">Fondo de camino</translation>
-    </message>
-    <message>
-        <source>Exit at bottom</source>
-        <translation type="vanished">Salir abajo</translation>
-    </message>
-    <message>
-        <source>Exit at left</source>
-        <translation type="vanished">Salir a la izquierda</translation>
-    </message>
-    <message>
-        <source>Exit at right</source>
-        <translation type="vanished">Salir a la derecha</translation>
-    </message>
-    <message>
-        <source>Exit at top</source>
-        <translation type="vanished">Salir arriba</translation>
-    </message>
-    <message>
-        <source>Restart after fail</source>
-        <translation type="vanished">Reiniciar luego de perder</translation>
-    </message>
-    <message>
-        <source>Total stars</source>
-        <translation type="vanished">Total de estrellas</translation>
-    </message>
-    <message>
         <source>Tiles:		%1
 Sceneries:			%2
 Paths:	%3
@@ -13670,21 +9013,8 @@ Cajas de música:		%5
 <context>
     <name>WldSearchBox</name>
     <message>
-        <source>World map Search</source>
-        <translation type="obsolete">Buscar en el mapa</translation>
-    </message>
-    <message>
-        <source>World map Search</source>
-        <comment>Translate it as &quot;Search of items on world map&quot;</comment>
-        <translation type="obsolete">Buscar en el mapa</translation>
-    </message>
-    <message>
         <source>Search of items on the World Map</source>
         <translation>Seleccionar punto en el mapa</translation>
-    </message>
-    <message>
-        <source>Tile</source>
-        <translation type="vanished">Azulejo</translation>
     </message>
     <message>
         <source>Search?</source>
@@ -13771,10 +9101,6 @@ Cajas de música:		%5
         <translation>Caja de música</translation>
     </message>
     <message>
-        <source>Music</source>
-        <translation type="vanished">Música</translation>
-    </message>
-    <message>
         <source>Search Music</source>
         <translation>Buscar música</translation>
     </message>
@@ -13842,10 +9168,6 @@ Cajas de música:		%5
 <context>
     <name>WorldEdit</name>
     <message>
-        <source>World Map</source>
-        <translation type="vanished">Mapa</translation>
-    </message>
-    <message>
         <source>1/%1 Loading user data</source>
         <translation>1/%1 Cargando datos de usuario</translation>
     </message>
@@ -13866,24 +9188,12 @@ Cajas de música:		%5
         <translation>4/%1 Aplicando niveles...</translation>
     </message>
     <message>
-        <source>4/%1 Applying Leves...</source>
-        <translation type="vanished">4/%1 Aplicando niveles...</translation>
-    </message>
-    <message>
         <source>5/%1 Applying Musics...</source>
         <translation>5/%1 Aplicando músicas...</translation>
     </message>
     <message>
         <source>Untitled %1</source>
         <translation>Sin título %1</translation>
-    </message>
-    <message>
-        <source>Cannot create world file:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede archivo:
-porque las configuraciones del proyecto no están cargadas.
-Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.</translation>
     </message>
     <message>
         <source>Saving</source>
@@ -13922,56 +9232,6 @@ Por favor, controle que config/SMBX existe y tiene los archivos INI con objetos.
         <translation>El límite SMBX64 fue excedido</translation>
     </message>
     <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Tiles
-The maximum number of Tiles is %2.
-
-Please remove excess Tiles from this world map or save file into WLDX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 azulejos
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Sceneries
-The maximum number of Sceneries is %2.
-
-Please remove excess Sceneries from this world map or save file into WLDX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 decoraciones
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Paths
-The maximum number of Paths is %2.
-
-Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 caminos
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Levels
-The maximum number of Levels is %2.
-
-Please remove excess Paths from this world map or save file into WLDX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 niveles
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Music Boxes
-The maximum number of Music Boxes is %2.
-
-Please remove excess Music Boxes from this world map or save file into WLDX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 cajas de música
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste mapa para guardar archivo en formato WLDX.</translation>
-    </message>
-    <message>
         <source>Do you want to save file anyway?
 Exciting of SMBX64 limits may crash SMBX with &apos;overflow&apos; error.
 
@@ -14002,10 +9262,6 @@ LunaLUA parcialmente extiende esos límites.</translation>
 %2.</translation>
     </message>
     <message>
-        <source>Configurations not loaded</source>
-        <translation type="vanished">Configuraciones no cargadas</translation>
-    </message>
-    <message>
         <source>Export selected area to image</source>
         <translation>Exportar área seleccionada a imagen</translation>
     </message>
@@ -14026,20 +9282,8 @@ LunaLUA parcialmente extiende esos límites.</translation>
         <translation>¡Por favor póngale título a &apos;%1&apos;!</translation>
     </message>
     <message>
-        <source>Saving </source>
-        <translation type="vanished">Guardando</translation>
-    </message>
-    <message>
         <source>Episode Title: </source>
         <translation>Título: </translation>
-    </message>
-    <message>
-        <source>Cannot open level file %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede abrir archivo de nivel %1:
-porque no se cargaron las configuraciones de objetos.
-Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
     </message>
     <message>
         <source>Loading World map data</source>
@@ -14066,14 +9310,6 @@ Por favor, compruebe que la configuración/directorio SMBX realmente existen y c
         <translation>Abortar</translation>
     </message>
     <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede abrir archivo %1:
-porque las configuraciones no están cargadas.
-Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
-    </message>
-    <message>
         <source> not saved</source>
         <translation> no guardado</translation>
     </message>
@@ -14086,14 +9322,6 @@ Do you want to save your changes?</source>
 </context>
 <context>
     <name>WorldItemBox</name>
-    <message>
-        <source>World Map Toolbox</source>
-        <translation type="vanished">Herramientas del mundo</translation>
-    </message>
-    <message>
-        <source>Tiles</source>
-        <translation type="vanished">Azulejos</translation>
-    </message>
     <message>
         <source>Terrain</source>
         <translation>Terreno</translation>
@@ -14113,10 +9341,6 @@ Do you want to save your changes?</source>
     <message>
         <source>Music Box</source>
         <translation>Cajas de música</translation>
-    </message>
-    <message>
-        <source>[Silence]</source>
-        <translation type="vanished">[Silencio]</translation>
     </message>
     <message>
         <source>Please, save file</source>
@@ -14177,14 +9401,6 @@ Do you want to save your changes?</source>
         <translation>Título:</translation>
     </message>
     <message>
-        <source>Credits of this world (SMBX allows only 5 lines):</source>
-        <translation type="vanished">Créditos para este mundo (SMBX permite sólo 5 líneas):</translation>
-    </message>
-    <message>
-        <source>World title:</source>
-        <translation type="vanished">Título del mundo:</translation>
-    </message>
-    <message>
         <source>Restart last level after fail</source>
         <translation>Reiniciar último nivel después de fallar</translation>
     </message>
@@ -14226,37 +9442,6 @@ Do you want to save your changes?</source>
     </message>
 </context>
 <context>
-    <name>WorldToolBox</name>
-    <message>
-        <source>World Map Toolbox</source>
-        <translation type="vanished">Herramientas del mundo</translation>
-    </message>
-    <message>
-        <source>Tiles</source>
-        <translation type="vanished">Azulejos</translation>
-    </message>
-    <message>
-        <source>Scenery</source>
-        <translation type="vanished">Decoraciones</translation>
-    </message>
-    <message>
-        <source>Paths</source>
-        <translation type="vanished">Caminos</translation>
-    </message>
-    <message>
-        <source>Levels</source>
-        <translation type="vanished">Niveles</translation>
-    </message>
-    <message>
-        <source>Music Box</source>
-        <translation type="vanished">Cajas de música</translation>
-    </message>
-    <message>
-        <source>[Silence]</source>
-        <translation type="vanished">[Silencio]</translation>
-    </message>
-</context>
-<context>
     <name>aboutDialog</name>
     <message>
         <source>About</source>
@@ -14293,723 +9478,6 @@ Do you want to save your changes?</source>
     <message>
         <source>Architecture: %1</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>dataconfigs</name>
-    <message>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
-        <translation type="vanished">Tiene un paquete de configuración viejo.
-El editor va a iniciarse, pero tal vez tenga algunos problemas con objetos u opciones.
-
-Por favor descargue e instale la última versión del paquete:
-
-Descargar: %1
-Nota: la mayoría de los paquetes se actualizan junto a PGE,
-por lo tanto puede usar el mismo enlace para obtener la versión actualizada</translation>
-    </message>
-</context>
-<context>
-    <name>g_AppSettings</name>
-    <message>
-        <source>Set log file</source>
-        <translation type="vanished">Establecer archivo</translation>
-    </message>
-    <message>
-        <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Archivos de texto (*.txt *.log)</translation>
-    </message>
-    <message>
-        <source>Success</source>
-        <translation type="vanished">Éxito</translation>
-    </message>
-    <message>
-        <source>All file associations have been set</source>
-        <translation type="vanished">Todas las asociaciones se hicieron</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Error</translation>
-    </message>
-</context>
-<context>
-    <name>gifs2png_gui</name>
-    <message>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="vanished">Convertir de GIFs a PNG</translation>
-    </message>
-    <message>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Ésta es una herramienta de consola que convierte gráficos SMBX con formato GIF con máscara en PNG con transparencia propia.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Explorar</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Comenzar</translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif due bug in the LunaLua)</source>
-        <translation type="vanished">Saltar conversión de archivos (no convertir background2-*.gif por un bug en LunaLua)</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">Dirección de salida, donde se guardarán las imágenes PNG
-(si este campo no está definido, las imágenes se guardarán en el mismo directorio)</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Buscar imágenes en subdirectorios</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Cerrar</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Indicadores</translation>
-    </message>
-    <message>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="vanished">Nota: Si tiene imágenes corruptas luego de la conversión, por favor ejecute LazyFix y reintente la conversión</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">El directorio de entrada que contiene los archivos GIF (*.gif y *m.gif)</translation>
-    </message>
-    <message>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="vanished">Remover imágenes originales luego de la conversión</translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="vanished">Remover imágenes originales luego de la conversión</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Abrir directorio fuente</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Abrir directorio destino</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">El directorio fuente no está definido</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Por favor, defina el directorio fuente</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">No se encuentra la herramienta</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">No se puede ejecutar la aplicación:
-%1
-Compruebe el directorio de la aplicación y asegúrese de que está instalado correctamente.</translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="vanished">Saltar conversión de archivos (no convertir background2-*.gif)</translation>
-    </message>
-</context>
-<context>
-    <name>leveledit</name>
-    <message>
-        <source>Level edit</source>
-        <translation type="vanished">Edición de nivel</translation>
-    </message>
-    <message>
-        <source>Untitled %1</source>
-        <translation type="vanished">Sin título %1</translation>
-    </message>
-    <message>
-        <source>Export current section to image</source>
-        <translation type="vanished">Exportar sección actual a imagen</translation>
-    </message>
-    <message>
-        <source>PNG Image (*.png)</source>
-        <translation type="vanished">Imagen PNG (*.png)</translation>
-    </message>
-    <message>
-        <source>Saving section image...</source>
-        <translation type="vanished">Guardar sección en imagen...</translation>
-    </message>
-    <message>
-        <source>Abort</source>
-        <translation type="vanished">Abortar</translation>
-    </message>
-    <message>
-        <source>Please wait...</source>
-        <translation type="vanished">Por favor, espere...</translation>
-    </message>
-    <message>
-        <source>Cannot create level file:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede crear archivo:
-porque las configuraciones no están cargadas.
-Por favor controle que config/SMBX existe y contiene los archivos INI con objetos.</translation>
-    </message>
-    <message>
-        <source>Please enter a level title for &apos;%1&apos;!</source>
-        <translation type="vanished">¡Por favor póngale título a &apos;%1&apos;!</translation>
-    </message>
-    <message>
-        <source>Saving </source>
-        <translation type="vanished">Guardando</translation>
-    </message>
-    <message>
-        <source>Level title: </source>
-        <translation type="vanished">Título:</translation>
-    </message>
-    <message>
-        <source>Make custom folder</source>
-        <translation type="vanished">Hacer carpeta personalizada</translation>
-    </message>
-    <message>
-        <source>Extension is not set</source>
-        <translation type="vanished">La extensión no está definida</translation>
-    </message>
-    <message>
-        <source>File Extension isn&apos;t defined, please enter file extension!</source>
-        <translation type="vanished">¡La extensión no está definida, por favor indique una extensión!</translation>
-    </message>
-    <message>
-        <source>The SMBX64 limit has been exceeded</source>
-        <translation type="vanished">El límite de SMBX64 ha sido excedido</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 blocks
-The maximum number of blocks is %2.
-
-Please remove excess blocks from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 bloques
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Background Objects
-The maximum number of Background Objects is %2.
-
-Please remove excess Background Objects from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Objetos de Fondo
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Non-Playable Characters
-The maximum number of Non-Playable Characters is %2.
-
-Please remove excess Non-Playable Characters from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Personajes No Jugadores (PNJ)
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Warps
-The maximum number of Warps is %2.
-
-Please remove excess Warps from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 Traslados
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Water Boxes
-The maximum number of Water Boxes is %2.
-
-Please remove excess Water Boxes from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 cajas de agua
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Layers
-The maximum number of Layers is %2.
-
-Please remove excess Layers from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 capas
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>SMBX64 standard isn&apos;t allow to save %1 Events
-The maximum number of Events is %2.
-
-Please remove excess Events from this level or save file into LVLX format.</source>
-        <translation type="vanished">SMBX64 standar no ésta habilitado para guardar %1 eventos
-El número máximo de objetos es %2.
-
-Por favor, remueva el exceso de objetos de éste nivel para guardar archivo en formato LVLX.</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">Error de escritura</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">No se puede escribir archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Cannot open level file %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede abrir archivo de nivel %1:
-porque no se cargaron las configuraciones de objetos.
-Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
-    </message>
-    <message>
-        <source>Please, wait...</source>
-        <translation type="vanished">Por favor, espere...</translation>
-    </message>
-    <message>
-        <source>File read error</source>
-        <translation type="vanished">Error de lectura</translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">No se puede leer archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="vanished">Configuraciones no cargadas</translation>
-    </message>
-    <message>
-        <source>Cannot open level file %1:
-because object configurations not loaded
-.Please, check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">No se puede abrir archivo de nivel %1:
-porque no se cargaron las configuraciones de objetos.
-Por favor, compruebe que la configuración/directorio SMBX realmente existen y contienen los archivos INI con las opciones de objetos.</translation>
-    </message>
-    <message>
-        <source>1/%1 Loading user data</source>
-        <translation type="vanished">1/%1 Cargando datos de usuario</translation>
-    </message>
-    <message>
-        <source>1/%1 Applying Backgrounds</source>
-        <translation type="vanished">1/%1 Aplicando fondos</translation>
-    </message>
-    <message>
-        <source>2/%1 Applying BGOs...</source>
-        <translation type="vanished">2/%1 Aplicando OFs (objetos de fondo)...</translation>
-    </message>
-    <message>
-        <source>3/%1 Applying Blocks...</source>
-        <translation type="vanished">3/%1 Aplicando bloques...</translation>
-    </message>
-    <message>
-        <source>4/%1 Applying NPCs...</source>
-        <translation type="vanished">4/%1 Aplicando PNJs (Personajes No Jugadores)...</translation>
-    </message>
-    <message>
-        <source>5/%1 Applying Water...</source>
-        <translation type="vanished">5/%1 Aplicando agua...</translation>
-    </message>
-    <message>
-        <source>5/%1 Applying Waters...</source>
-        <translation type="vanished">5/%1 Aplicando agua...</translation>
-    </message>
-    <message>
-        <source>6/%1 Applying Doors...</source>
-        <translation type="vanished">6/%1 Aplicando puertas...</translation>
-    </message>
-    <message>
-        <source>Save As</source>
-        <translation type="vanished">Guardar como</translation>
-    </message>
-    <message>
-        <source>Write file error</source>
-        <translation type="vanished">Error de escritura</translation>
-    </message>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="vanished">No se puede escribir archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Loading level data</source>
-        <translation type="vanished">Cargando datos de nivel</translation>
-    </message>
-    <message>
-        <source> not saved</source>
-        <translation type="vanished">No guardado</translation>
-    </message>
-    <message>
-        <source>&apos;%1&apos; has been modified.
-Do you want to save your changes?</source>
-        <translation type="vanished">&apos;%1&apos; fue modificado.
-¿Querés guardar tus cambios?</translation>
-    </message>
-</context>
-<context>
-    <name>npcedit</name>
-    <message>
-        <source>NPC Configuration edit</source>
-        <translation type="vanished">Editar configuración de PNJ</translation>
-    </message>
-    <message>
-        <source>Graphics</source>
-        <translation type="vanished">Gráficos</translation>
-    </message>
-    <message>
-        <source>offset y</source>
-        <translation type="vanished">Compensación Y</translation>
-    </message>
-    <message>
-        <source>offset x</source>
-        <translation type="vanished">Compensación X</translation>
-    </message>
-    <message>
-        <source> px</source>
-        <translation type="vanished">px</translation>
-    </message>
-    <message>
-        <source>Height</source>
-        <translation type="vanished">Altura</translation>
-    </message>
-    <message>
-        <source>Width</source>
-        <translation type="vanished">Ancho</translation>
-    </message>
-    <message>
-        <source>Frame style</source>
-        <translation type="vanished">Estilo de cuadro</translation>
-    </message>
-    <message>
-        <source>Frames</source>
-        <translation type="vanished">Cuadros</translation>
-    </message>
-    <message>
-        <source>Frame speed multiplier</source>
-        <translation type="vanished">Velocidad de cuadros</translation>
-    </message>
-    <message>
-        <source>Single sprite</source>
-        <translation type="vanished">Un sprite</translation>
-    </message>
-    <message>
-        <source>Left-Right direction</source>
-        <translation type="vanished">Izquierda-Derecha</translation>
-    </message>
-    <message>
-        <source>Left-Right-Grabbed</source>
-        <translation type="vanished">Izquierda-Derecha-Agarrado</translation>
-    </message>
-    <message>
-        <source>Foreground</source>
-        <translation type="vanished">Primer plano</translation>
-    </message>
-    <message>
-        <source>Physics</source>
-        <translation type="vanished">Física</translation>
-    </message>
-    <message>
-        <source>Speed multiplier</source>
-        <translation type="vanished">Velocidad</translation>
-    </message>
-    <message>
-        <source>Player collision top</source>
-        <translation type="vanished">Colisión superior con jugador</translation>
-    </message>
-    <message>
-        <source>Player collision</source>
-        <translation type="vanished">Colisión con jugador</translation>
-    </message>
-    <message>
-        <source>NPC collision top</source>
-        <translation type="vanished">Colisión superior con PNJ</translation>
-    </message>
-    <message>
-        <source>NPC collision</source>
-        <translation type="vanished">Colisión con PNJ</translation>
-    </message>
-    <message>
-        <source>Disable Gravity</source>
-        <translation type="vanished">Deshabilitar gravedad</translation>
-    </message>
-    <message>
-        <source>Turn on cliff</source>
-        <translation type="vanished">Regresar por precipicio</translation>
-    </message>
-    <message>
-        <source>Disable Block collision</source>
-        <translation type="vanished">Deshabilitar colisión con bloque</translation>
-    </message>
-    <message>
-        <source>In game</source>
-        <translation type="vanished">Juego</translation>
-    </message>
-    <message>
-        <source>Grab side</source>
-        <translation type="vanished">Agarrar de lado</translation>
-    </message>
-    <message>
-        <source>Don&apos;t kill on fireball</source>
-        <translation type="vanished">No morir con fuego</translation>
-    </message>
-    <message>
-        <source>Score</source>
-        <translation type="vanished">Puntuación</translation>
-    </message>
-    <message>
-        <source>Can&apos;t be eaten</source>
-        <translation type="vanished">No puede ser comido</translation>
-    </message>
-    <message>
-        <source>Jump hurt</source>
-        <translation type="vanished">Daño al saltar</translation>
-    </message>
-    <message>
-        <source>Don&apos;t hurt</source>
-        <translation type="vanished">No hacer daño</translation>
-    </message>
-    <message>
-        <source>[none]</source>
-        <translation type="vanished">[ninguno]</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">Nombre:</translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="vanished">10</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="vanished">100</translation>
-    </message>
-    <message>
-        <source>200</source>
-        <translation type="vanished">200</translation>
-    </message>
-    <message>
-        <source>400</source>
-        <translation type="vanished">400</translation>
-    </message>
-    <message>
-        <source>800</source>
-        <translation type="vanished">800</translation>
-    </message>
-    <message>
-        <source>1000</source>
-        <translation type="vanished">1000</translation>
-    </message>
-    <message>
-        <source>2000</source>
-        <translation type="vanished">2000</translation>
-    </message>
-    <message>
-        <source>4000</source>
-        <translation type="vanished">4000</translation>
-    </message>
-    <message>
-        <source>8000</source>
-        <translation type="vanished">8000</translation>
-    </message>
-    <message>
-        <source>1up</source>
-        <translation type="vanished">1 vida</translation>
-    </message>
-    <message>
-        <source>2up</source>
-        <translation type="vanished">2 vidas</translation>
-    </message>
-    <message>
-        <source>5up</source>
-        <translation type="vanished">5 vidas</translation>
-    </message>
-    <message>
-        <source>Don&apos;t freeze on fireball</source>
-        <translation type="vanished">No congelar con nieve</translation>
-    </message>
-    <message>
-        <source>Grab top</source>
-        <translation type="vanished">Agarrar de arriba</translation>
-    </message>
-    <message>
-        <source>Don&apos;t kill on hammer</source>
-        <translation type="vanished">No morir con martillo</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation type="vanished">Previsualización</translation>
-    </message>
-    <message>
-        <source>Reset</source>
-        <translation type="vanished">Reiniciar</translation>
-    </message>
-    <message>
-        <source>NPC ID</source>
-        <translation type="vanished">PNJ ID</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation type="vanished">0</translation>
-    </message>
-    <message>
-        <source>Don&apos;t kill by other NPC&apos;s</source>
-        <translation type="vanished">No matar por otros PNJs</translation>
-    </message>
-    <message>
-        <source>Modyfied</source>
-        <translation type="vanished">Modificado</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="vanished">No</translation>
-    </message>
-    <message>
-        <source>npc-%1.txt</source>
-        <translation type="vanished">npc-%1.txt</translation>
-    </message>
-    <message>
-        <source>Load file error</source>
-        <translation type="vanished">Cargar archivo de error</translation>
-    </message>
-    <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">No se puede abrir archivo %1: %2.</translation>
-    </message>
-    <message>
-        <source>Save As</source>
-        <translation type="vanished">Guardar como</translation>
-    </message>
-    <message>
-        <source>SMBX custom NPC config file (npc-*.txt)</source>
-        <translation type="vanished">SMBX archivo de config. de PNJ (npc-*.txt)</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">Error de escritura</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">No se puede escribir archivo %1:
-%2.</translation>
-    </message>
-    <message>
-        <source>Write file error</source>
-        <translation type="vanished">Escribir informe de errores</translation>
-    </message>
-    <message>
-        <source>Cannot write file %1:
-%2.</source>
-        <translation type="vanished">No se puede escribir archivo %1: %2.</translation>
-    </message>
-    <message>
-        <source> not saved</source>
-        <translation type="vanished">No guardado</translation>
-    </message>
-    <message>
-        <source>&apos;%1&apos; has been modified.
-Do you want to save your changes?</source>
-        <translation type="vanished">&apos;%1&apos; fue modificado. ¿Querés que se guarden tus cambios?</translation>
-    </message>
-</context>
-<context>
-    <name>png2gifs_gui</name>
-    <message>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="vanished">Convertir PNG en masked GIFs</translation>
-    </message>
-    <message>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Ésta es una herramienta de consola que convierte imágenes PNG con transparencia propia en gráficos SMBX que contienen formato GIF con máscara de transparencia.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Explorar</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">Directorio de salida, donde será guardado el archivo GIF (*.gif y *m.gif)
-(si este campo no se define, las imágenes serán guardadas en el mismo directorio)</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Comenzar</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Buscar imágenes en subdirectorios</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Cerrar</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Opciones</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="vanished">Directorio de entrada que contiene las imágenes PNG con transparencia propia.(*.png)</translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="vanished">Remover imágenes fuente luego de la conversión</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Abrir directorio fuente</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Abrir directorio destino</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">El directorio fuente no fue fijado</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Por favor elija su directorio fuente</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">La herramienta no se encuentra</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">No se puede ejecutar la aplicación:
-%1
-Compruebe el directorio de la aplicación y asegúrese de que está instalado correctamente.</translation>
     </message>
 </context>
 <context>

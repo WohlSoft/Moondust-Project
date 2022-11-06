@@ -21,7 +21,6 @@
 
 #include <QDialog>
 
-class MainWindow;
 namespace Ui {
 class CustomMusicSetup;
 }

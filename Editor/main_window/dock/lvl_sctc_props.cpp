@@ -17,7 +17,7 @@
  */
 
 #include <audio/music_player.h>
-#include <editing/_dialogs/musicfilelist.h>
+#include "file_list_browser/musicfilelist.h"
 #include <editing/_scenes/level/lvl_history_manager.h>
 #include <common_features/json_settings_widget.h>
 #include <main_window/dock/lvl_events_box.h>
@@ -30,7 +30,7 @@
 #include <QMutexLocker>
 #include <QListView>
 
-#include "custom_music_setup.h"
+#include "custom_music_setup/custom_music_setup.h"
 #include "lvl_sctc_props.h"
 #include "ui_lvl_sctc_props.h"
 

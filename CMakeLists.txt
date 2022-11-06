@@ -151,6 +151,7 @@ if(NOT EMSCRIPTEN AND NOT ANDROID)
 endif()
 
 if(PGE_ENABLE_QT AND NOT ANDROID AND NOT EMSCRIPTEN)
+    include(_common/qt-modules/qt_modules_langs.cmake)
 
     option(PGE_BUILD_EDITOR "Build the PGE Editor component (Qt5 required)" ON)
     if(PGE_BUILD_EDITOR)

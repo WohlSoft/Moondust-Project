@@ -20,8 +20,8 @@
    <string>Files list</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../_resources/editor.qrc">
-    <normaloff>:/images/new.png</normaloff>:/images/new.png</iconset>
+   <iconset resource="../qt_modules.qrc">
+    <normaloff>:/moondust/new.png</normaloff>:/moondust/new.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -66,7 +66,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../_resources/editor.qrc"/>
+  <include location="../qt_modules.qrc"/>
  </resources>
  <connections>
   <connection>

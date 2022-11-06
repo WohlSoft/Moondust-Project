@@ -48,6 +48,11 @@ static QString makeQtLangFilePath(const QString &langPath, const QString &lang)
     return langPath + QString("/qt_%1.qm").arg(lang);
 }
 
+static QString makeMoondustCommonFilePath(const QString &langPath, const QString &lang)
+{
+    return langPath + QString("/moondust_%1.qm").arg(lang);
+}
+
 static bool langFileExists(const QString &langPath, const QString &lang)
 {
     QString p = makeLangFilePath(langPath, lang);
@@ -124,7 +129,12 @@ void MainWindow::setDefLang()
 
         langListSync();
     }
-    qDebug() << "Common Translation: " << ok;
+    qDebug() << "Editor Translation: " << ok;
+
+    ok = m_translatorQt.load(makeMoondustCommonFilePath(m_langPath, m_currLang));
+    LogDebug(QString("Common modules translation: %1").arg((int)ok));
+    if(ok)
+        qApp->installTranslator(&m_translatorCommon);
 
     ok = m_translatorQt.load(makeQtLangFilePath(m_langPath, m_currLang));
     LogDebug(QString("Qt Translation: %1").arg((int)ok));
@@ -263,8 +273,14 @@ void MainWindow::loadLanguage(const QString &rLanguage)
         if(ok)
             qApp->installTranslator(&m_translatorQt);
         qDebug() << "Qt Translation: " << ok;
+
+        ok  = switchTranslator(m_translatorCommon, makeMoondustCommonFilePath(m_langPath, m_currLang));
+        if(ok)
+            qApp->installTranslator(&m_translatorCommon);
+        qDebug() << "Common modules translation: " << ok;
+
         ok  = switchTranslator(m_translator, makeLangFilePath(m_langPath, m_currLang));
-        qDebug() << "Common Translation: " << ok;
+        qDebug() << "Editor translation: " << ok;
 
         LogDebug(QString("Translation-> try to retranslate"));
 

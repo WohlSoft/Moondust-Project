@@ -449,6 +449,8 @@ public:
         void langListSync();
         //! contains the translations for this application
         QTranslator     m_translator;
+        //! contains the translations for common modules
+        QTranslator     m_translatorCommon;
         //! contains the translations for qt
         QTranslator     m_translatorQt;
         //! contains the currently loaded language

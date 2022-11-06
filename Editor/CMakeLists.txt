@@ -50,6 +50,7 @@ include(../_common/tclap/tclap.cmake)
 include(../_common/Utils/Utils.cmake)
 include(../_common/Utils/UtilsQt.cmake)
 include(../_common/Graphics/bitmask2rgba.cmake)
+include(../_common/qt-modules/qt_modules.cmake)
 if(WIN32)
     include(../_common/StackWalker/StackWalker.cmake)
 endif()
@@ -79,17 +80,14 @@ set(_LANGAUGES_TEMP_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/languages")
 set(PGE_LANG_OUTPUT_DIR "${CMAKE_BINARY_DIR}/bin/languages")
 
 FILE(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
-FILE(GLOB PGE_LANG_ICON_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.png")
 
 set_source_files_properties(${PGE_LANG_SRC_FILES} PROPERTIES OUTPUT_LOCATION ${PGE_LANG_OUTPUT_DIR})
 set(PGE_LANG_BIN_FILES)
 qt5_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
-add_custom_target(editor_translations DEPENDS ${PGE_LANG_BIN_FILES})
+add_custom_target(editor_translations ALL DEPENDS ${PGE_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
-    file(COPY ${PGE_LANG_ICON_FILES} DESTINATION "${CMAKE_BINARY_DIR}/bin/languages")
     install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
-    install(FILES ${PGE_LANG_ICON_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
 endif()
 # ===========================================
 
@@ -113,7 +111,6 @@ list(APPEND PGE_EDITOR_UI
     data_configs/selection_dialog/config_manager.ui
     dev_console/devconsole.ui
     editing/_dialogs/itemselectdialog.ui
-    editing/_dialogs/file_list_browser.ui
     editing/_dialogs/savingnotificationdialog.ui
     editing/_dialogs/user_data_edit.ui
     editing/_dialogs/wld_setpoint.ui
@@ -141,7 +138,6 @@ list(APPEND PGE_EDITOR_UI
     main_window/dock/wld_musicbox_itemset.ui
     main_window/dock/wld_search_box.ui
     main_window/dock/wld_settings_box.ui
-    main_window/dock/custom_music_setup.ui
     main_window/file/lvl_export_image.ui
     main_window/file/wld_export_image.ui
     main_window/greeting_dialog/greeting_dialog.ui
@@ -157,10 +153,14 @@ list(APPEND PGE_EDITOR_UI
     tools/math/blocksperseconddialog.ui
     tools/tilesets/tileset_editor.ui
     tools/tilesets/tilesetgroupeditor.ui
+    ${MOONDUST_QT_MODULES_UI}
 )
 
 set(RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/_resources/editor.qrc)
-qt5_add_resources(RESOURCE_ADDED ${RESOURCE})
+qt5_add_resources(RESOURCE_ADDED
+    ${RESOURCE}
+    ${MOONDUST_QT_MODULES_QRC}
+)
 
 if(QT_IMPORT_PLUGINS_MODULE)
     set(QT_PLUGINS_CPP "${CMAKE_BINARY_DIR}/pge_editor_plugins.cpp")
@@ -248,10 +248,6 @@ list(APPEND PGE_EDITOR_SRCS
     editing/_components/history/ihistoryelement.cpp
     editing/_components/history/itemsearcher.cpp
     editing/_dialogs/itemselectdialog.cpp
-    editing/_dialogs/file_list_browser.cpp
-    editing/_dialogs/levelfilelist.cpp
-    editing/_dialogs/musicfilelist.cpp
-    editing/_dialogs/bankfilelist.cpp
     editing/_dialogs/savingnotificationdialog.cpp
     editing/_dialogs/user_data_edit.cpp
     editing/_dialogs/wld_setpoint.cpp
@@ -369,7 +365,6 @@ list(APPEND PGE_EDITOR_SRCS
     main_window/dock/wld_musicbox_itemset.cpp
     main_window/dock/wld_search_box.cpp
     main_window/dock/wld_settings_box.cpp
-    main_window/dock/custom_music_setup.cpp
     main_window/edit/edit_clipboard.cpp
     main_window/edit/edit_history.cpp
     main_window/edit/edit_items.cpp
@@ -443,6 +438,7 @@ list(APPEND PGE_EDITOR_SRCS
     tools/tilesets/tileset.cpp
     tools/tilesets/tilesetgroupeditor.cpp
     tools/tilesets/tilesetitembutton.cpp
+    ${MOONDUST_QT_MODULES_SRC}
 )
 
 file(GLOB MOONDUST_EDITOR_HEADS_SRC
@@ -526,7 +522,8 @@ if(APPLE)
     list(APPEND PGE_EDITOR_SRCS
         _resources/cat_builder.icns
         ${PGE_LANG_BIN_FILES}
-        ${PGE_LANG_ICON_FILES}
+        ${MOONDUST_QT_LANG_BIN_FILES}
+        ${MOONDUST_QT_LANG_ICON_FILES}
         ${PGE_FILE_ICONS}
     )
 endif()
@@ -770,7 +767,8 @@ if(APPLE)
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/cat_builder.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
-    set_source_files_properties(${PGE_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
+    set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
+    set_source_files_properties(${MOONDUST_QT_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
     set_source_files_properties(${PGE_FILE_ICONS} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties("${38A_IPC_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")
     set_source_files_properties("${LUNA_HWND_SHOW_BRIDGE_BIN}" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/ipc")

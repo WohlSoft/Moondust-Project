@@ -22,7 +22,7 @@
 LevelFileList::LevelFileList(QString searchDirectory, QString currentFile, QWidget *parent) :
     FileListBrowser(searchDirectory, currentFile, parent)
 {
-    setIcon(QIcon(":/lvl16.png"));
+    setIcon(QIcon(":/moondust/level16.png"));
     setWindowTitle(tr("Level files list"));
     setDescription(tr("Please, select level file from list for use them:"));
 

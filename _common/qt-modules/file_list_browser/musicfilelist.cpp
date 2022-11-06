@@ -26,7 +26,7 @@ MusicFileList::MusicFileList(QString searchDirectory, QString curFile, QWidget *
 {
     QStringList filters;
 
-    setIcon(QIcon(":/images/playmusic.png"));
+    setIcon(QIcon(":/moondust/playmusic.png"));
 
     if(m_sfxMode)
     {

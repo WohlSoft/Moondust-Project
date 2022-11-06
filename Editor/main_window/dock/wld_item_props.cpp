@@ -20,8 +20,8 @@
 #include <editing/_scenes/world/wld_history_manager.h>
 #include <editing/_dialogs/itemselectdialog.h>
 #include <editing/_scenes/world/items/item_level.h>
-#include <editing/_dialogs/levelfilelist.h>
 #include <PGE_File_Formats/file_formats.h>
+#include "file_list_browser/levelfilelist.h"
 
 #include <defines.h>
 

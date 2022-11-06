@@ -563,10 +563,6 @@ Vänligen ange sökvägen för SoX först</translation>
         <translation>Block per sekund kalkylator</translation>
     </message>
     <message>
-        <source>Block Size:</source>
-        <translation type="vanished">Blockstorlek:</translation>
-    </message>
-    <message>
         <source> blocks</source>
         <translation> block</translation>
     </message>
@@ -2749,17 +2745,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <source>%1 coins</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>LazyFixTool_gui</name>
-    <message>
-        <source>Browse</source>
-        <translation type="obsolete">Bläddra</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Start</translation>
     </message>
 </context>
 <context>
@@ -9318,28 +9303,6 @@ Do you want to save your changes?</source>
     <message>
         <source>Architecture: %1</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>gifs2png_gui</name>
-    <message>
-        <source>Browse</source>
-        <translation type="obsolete">Bläddra</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Start</translation>
-    </message>
-</context>
-<context>
-    <name>png2gifs_gui</name>
-    <message>
-        <source>Browse</source>
-        <translation type="obsolete">Bläddra</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Start</translation>
     </message>
 </context>
 <context>

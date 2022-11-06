@@ -20,7 +20,7 @@
 #include <QFileInfo>
 #include <cstdlib>
 
-#include <editing/_dialogs/bankfilelist.h>
+#include "file_list_browser/bankfilelist.h"
 
 #include "custom_music_setup.h"
 #include "ui_custom_music_setup.h"

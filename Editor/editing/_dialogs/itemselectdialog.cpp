@@ -22,7 +22,7 @@
 #include <common_features/data_array.h>
 #include <common_features/items.h>
 
-#include <editing/_dialogs/musicfilelist.h>
+#include "file_list_browser/musicfilelist.h"
 
 #include "itemselectdialog.h"
 #include <ui_itemselectdialog.h>

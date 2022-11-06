@@ -52,10 +52,6 @@
         <translation>Muziekspeler</translation>
     </message>
     <message>
-        <source>Autoplay music on file open</source>
-        <translation type="vanished">Muziek automatisch afspelen bij open bestand</translation>
-    </message>
-    <message>
         <location filename="../main_window/tools/app_settings.ui" line="239"/>
         <source>Performance</source>
         <translation>Performantie</translation>
@@ -66,35 +62,9 @@
         <translation>Animatie</translation>
     </message>
     <message>
-        <source>Animation Items limit</source>
-        <translation type="vanished">Animatie voorwerpen limiet</translation>
-    </message>
-    <message>
         <location filename="../main_window/tools/app_settings.ui" line="298"/>
         <source>Collision detection</source>
         <translation>Botsingsdetectie</translation>
-    </message>
-    <message>
-        <source>Document view</source>
-        <translation type="vanished">Document beeld</translation>
-    </message>
-    <message>
-        <source>Sub Windows</source>
-        <translation type="vanished">Neven Vensters</translation>
-    </message>
-    <message>
-        <source>Tabs</source>
-        <translation type="vanished">Tabs</translation>
-    </message>
-    <message>
-        <source>Music will be automatically launched when you will open file</source>
-        <comment>Pop-up hint text</comment>
-        <translation type="vanished">De muziek zal automatisch starten wanneer je het bestand opent</translation>
-    </message>
-    <message>
-        <source>Maximal number of elements which allow animation for items. If limit will be exided, animation will be paused while you will not remove outed of range elements.</source>
-        <comment>Pop-up hint text</comment>
-        <translation type="vanished">Maximaal aantal elementen die geanimeerd kunnen zijn. Als de limiet wordt overschreden zal de animatie worden stopgezet tot je elementen terug verwijdert.</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="83"/>
@@ -112,42 +82,9 @@
         <translation>Bewerker</translation>
     </message>
     <message>
-        <source>Middle mouse button features</source>
-        <translation type="vanished">Middelste muisknop functies</translation>
-    </message>
-    <message>
-        <source>Switch placing mode of the selected item</source>
-        <translation type="vanished">Plaatsingsmodus van het geselecteerde voorwerp wisselen</translation>
-    </message>
-    <message>
-        <source>Switch to drag scroll without selection</source>
-        <translation type="vanished">Wissel naar sleep-scrollen zonder selectie</translation>
-    </message>
-    <message>
-        <source>Placing mode</source>
-        <translation type="vanished">Plaatsing modus</translation>
-    </message>
-    <message>
-        <source>Properties box will not be shown atomatically when you will take item to place. For example, you clicked item from item toolbox or from tileset item box.</source>
-        <comment>Pop-up hint</comment>
-        <translation type="vanished">Het eigenschapsbalk zal niet automatisch openen wanneer je een voorwerp kiest.</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show properties box on taking item to place</source>
-        <translation type="vanished">Het eigenschapsbalk niet openen bij het kiezen van een voorwerp</translation>
-    </message>
-    <message>
         <location filename="../main_window/tools/app_settings.ui" line="446"/>
         <source>History</source>
         <translation>Geschiedenis</translation>
-    </message>
-    <message>
-        <source>Max history entries limit:</source>
-        <translation type="vanished">Maximum aantal items in werkgeschiedenis:</translation>
-    </message>
-    <message>
-        <source>Maximal number of remembered history actions.</source>
-        <translation type="vanished">Maximum aantal onthoude werkgeschiedenis acties</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="481"/>
@@ -178,10 +115,6 @@
         <location filename="../main_window/tools/app_settings.ui" line="608"/>
         <source>Defaults</source>
         <translation>Standaardinstellingen</translation>
-    </message>
-    <message>
-        <source>Classic Events tabs auto-expending</source>
-        <translation type="vanished">Klasieke eventbalk automatisch uitzetten</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="623"/>
@@ -227,10 +160,6 @@
         <location filename="../main_window/tools/app_settings.ui" line="758"/>
         <source>Projectile</source>
         <translation>Projectiel</translation>
-    </message>
-    <message>
-        <source>Delay:</source>
-        <translation type="vanished">Vertraging:</translation>
     </message>
     <message>
         <location filename="../main_window/tools/app_settings.ui" line="203"/>
@@ -443,26 +372,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Activeer automatische schaalvergroting op hoge-DPI-monitoren</translation>
     </message>
     <message>
-        <source>Level item Toolbox</source>
-        <translation type="vanished">Niveau gereedschap</translation>
-    </message>
-    <message>
-        <source>Display tabs horizontal</source>
-        <translation type="vanished">Tabs horizontaal tonen</translation>
-    </message>
-    <message>
-        <source>Display tabs vertical</source>
-        <translation type="vanished">Tabs vertikaal tonen</translation>
-    </message>
-    <message>
-        <source>World item Toolbox</source>
-        <translation type="vanished">Wereldmap gereedschap</translation>
-    </message>
-    <message>
-        <source>Duplicate selected items onto cursor&apos;s position</source>
-        <translation type="vanished">Het geslecteerde voorwerp op de positie van de muis kopiëren</translation>
-    </message>
-    <message>
         <location filename="../main_window/tools/app_settings.ui" line="651"/>
         <source>Autoscroll section</source>
         <translation>Autoscroll sectie</translation>
@@ -508,15 +417,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Thema</translation>
     </message>
     <message>
-        <source>Tilesets Item Toolbox</source>
-        <translatorcomment>Tileset may not have a Dutch translation, if people think the current word is confusing feel free to change &quot;Tegelset&quot; to &quot;Tileset&quot;</translatorcomment>
-        <translation type="vanished">Tegelset Voorwerpvak</translation>
-    </message>
-    <message>
-        <source>Loging</source>
-        <translation type="vanished">Loggen</translation>
-    </message>
-    <message>
         <location filename="../main_window/tools/app_settings.ui" line="1073"/>
         <source>Log level</source>
         <translation>Niveau loggen</translation>
@@ -560,10 +460,6 @@ like when choosing an item from the item toolbox or from the tileset item box.</
 <context>
     <name>AsyncStarCounter</name>
     <message>
-        <source>Counting stars of placed levels</source>
-        <translation type="vanished">Sterren aan het tellen van geplaatste niveaus</translation>
-    </message>
-    <message>
         <location filename="../tools/async/asyncstarcounter.cpp" line="45"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
@@ -587,17 +483,9 @@ like when choosing an item from the item toolbox or from the tileset item box.</
         <translation>Audio Converteren (SoX)</translation>
     </message>
     <message>
-        <source>Sox binary path:</source>
-        <translation type="vanished">Sox binaire pad:</translation>
-    </message>
-    <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="31"/>
         <source>Browse...</source>
         <translation>Bladeren...</translation>
-    </message>
-    <message>
-        <source>make backup</source>
-        <translation type="vanished">backup maken</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="52"/>
@@ -677,22 +565,6 @@ Kies eerst het SoX-pad</translation>
         <translation>Kies een bestand om om te zetten</translation>
     </message>
     <message>
-        <source>SoX binary path is not defined.
-Please set SoX path first</source>
-        <translation type="vanished">SoX binair pad niet opgegeven.
-Gelieve een SoX pad aan te maken</translation>
-    </message>
-    <message>
-        <source>SoX binary path is wrong.
-Please set SoX path first</source>
-        <translation type="vanished">SoX binair pad is fout.
-Gelieve eerst een SoX pad aan te maken</translation>
-    </message>
-    <message>
-        <source>Nothing to do</source>
-        <translation type="vanished">Niets te doen</translation>
-    </message>
-    <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="156"/>
         <source>No files to convert</source>
         <translation>Geen bestanden om om te zetten</translation>
@@ -703,41 +575,11 @@ Gelieve eerst een SoX pad aan te maken</translation>
         <translation>Stop</translation>
     </message>
     <message>
-        <source>Operation cancaled</source>
-        <translation type="vanished">Operatie stopgezet</translation>
-    </message>
-    <message>
-        <source>SoX was crashed</source>
-        <translation type="vanished">SoX is gercashed</translation>
-    </message>
-    <message>
-        <source>SoX returned non-zero code: %1
-%2</source>
-        <translation type="vanished">SoX gaf een non-zero code:%1
-%2</translation>
-    </message>
-    <message>
-        <source>All works completed</source>
-        <translation type="vanished">Operatie voltoid</translation>
-    </message>
-    <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.cpp" line="297"/>
         <source>All files successfully converted!
 %1</source>
         <translation>Al de bestanden zijn succesvol gewijzigd!
 %1</translation>
-    </message>
-    <message>
-        <source>Tasks are not defined. Nothing to do.</source>
-        <translation type="vanished">Opdracht is niet gedefiniëerd. Geen verichtbaar werk.</translation>
-    </message>
-    <message>
-        <source>Open SoX binary path</source>
-        <translation type="vanished">SoX binair pad openen</translation>
-    </message>
-    <message>
-        <source>Add file to convert</source>
-        <translation type="vanished">Bestand toevoegen om te wijzigen</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="126"/>
@@ -760,19 +602,9 @@ Gelieve eerst een SoX pad aan te maken</translation>
         <translation>Gespecifieerde bestanden wijzigen</translation>
     </message>
     <message>
-        <source>Convert into new format
-(open necessary tab to choice target format)</source>
-        <translation type="vanished">Naar een nieuw formaat wijzigen
-(open de nodige werkbalk om het gewenste formaat te krijgen)</translation>
-    </message>
-    <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="202"/>
         <source>Don&apos;t change format</source>
         <translation>Formaat onveranderd laten</translation>
-    </message>
-    <message>
-        <source>Files will be in same format</source>
-        <translation type="vanished">Bestanden zullen in hetzelfde formaat zijn</translation>
     </message>
     <message>
         <location filename="../tools/external_tools/audiocvt_sox_gui.ui" line="24"/>
@@ -833,40 +665,36 @@ Gelieve eerst een SoX pad aan te maken</translation>
         <translation>Omzetten naar een nieuw formaat
 (selecteer een tabblad om het doelformaat te kiezen)</translation>
     </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which has wrong preferences.&lt;/p&gt;&lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hier kan je snel je muziek-of-geluidbestanden naar andere extensies wijzigen.&lt;/p&gt;&lt;p&gt;Deze functie gebruikt de &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio omzetter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
 </context>
 <context>
     <name>BankFileList</name>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="35"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="36"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="36"/>
         <source>Please select the WOPL instruments bank file to use</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="41"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="41"/>
         <source>Select WOPN bank file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="42"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="42"/>
         <source>Please select the WOPN instruments bank file to use</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="47"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="48"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="48"/>
         <source>Please select the SoundFont bank file to add</source>
         <translation></translation>
     </message>
@@ -877,14 +705,6 @@ Gelieve eerst een SoX pad aan te maken</translation>
         <location filename="../tools/math/blocksperseconddialog.ui" line="14"/>
         <source>Blocks per second calculator</source>
         <translation>Blok per seconde teller</translation>
-    </message>
-    <message>
-        <source>Block Size: </source>
-        <translation type="vanished">Blokgrootte: </translation>
-    </message>
-    <message>
-        <source>Block Size:</source>
-        <translation type="vanished">Blok grootte:</translation>
     </message>
     <message>
         <location filename="../tools/math/blocksperseconddialog.ui" line="34"/>
@@ -949,21 +769,9 @@ You also can double-click an item to scroll to its bookmarked position.</source>
 Je kan ook een voorwerp dubbelklikken om naar de bladwijzerpositie te scrollen.</translation>
     </message>
     <message>
-        <source>Remember current screen position on the level map or on the world map
-and store bookmark.</source>
-        <translation type="vanished">De huidige schermpositie op de wereldmap of het niveau bijhouden
-en bewaar als bladwijzer.</translation>
-    </message>
-    <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="80"/>
         <source>Add</source>
         <translation>Toevoegen</translation>
-    </message>
-    <message>
-        <source>Scroll to remembered position in selected item back.
-You also can double-click to item to scroll to bookmarked position.</source>
-        <translation type="vanished">Scroll terug naar de bijgehouden positie van het gekozen voorwerp.
-Je kan ook het voorwerp dubbelklikken om terug naar de bladwijzer te gaan.</translation>
     </message>
     <message>
         <location filename="../main_window/dock/bookmarks_box.ui" line="97"/>
@@ -994,32 +802,6 @@ Je kan ook het voorwerp dubbelklikken om terug naar de bladwijzer te gaan.</tran
         <translation>Bij elke opstarting vragen</translation>
     </message>
     <message>
-        <source>Please select the game configuration with which you wish to start the Editor with </source>
-        <translation type="vanished">Gelieve een spelconfiguratie te selecteren waarmee u het programma wilt openen</translation>
-    </message>
-    <message>
-        <source>Ask every Startup</source>
-        <translation type="vanished">Altijd vragen bij opstarten</translation>
-    </message>
-    <message>
-        <source>Config packs are not found</source>
-        <translation type="vanished">Config pakket niet gevonden</translation>
-    </message>
-    <message>
-        <source>Available configuration packages are not found!&lt;br&gt;
-Please download and install them into directory&lt;br&gt;
-&lt;br&gt;
-%1&lt;br&gt;
-&lt;br&gt;
-You can take any configuration package here:&lt;br&gt;%2</source>
-        <translation type="vanished">Beschikbare configuratiepakketten niet gevonden!&lt;br&gt;
-Gelieve deze te downloaded en instaleren in deze directory&lt;br&gt;
-&lt;br&gt;
-%1&lt;br&gt;
-&lt;br&gt;
-U kunt hier configuratiepakketten vinden:&lt;br&gt;%2</translation>
-    </message>
-    <message>
         <location filename="../data_configs/selection_dialog/config_manager.cpp" line="359"/>
         <source>No config packs were found</source>
         <translation>Geen configuratiepakket gevonden</translation>
@@ -1040,60 +822,46 @@ Gelieve er te downloaden en instaleren in deze map&lt;br&gt;
 Je kan de volgende pakketten gebruiken:&lt;br&gt;</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="518"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="521"/>
         <source>Integrational configuration package is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="519"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="522"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="529"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="532"/>
         <source>Configuration package is not configured!</source>
         <translation>Configuratiepakket is niet geconfigureerd!</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="530"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="533"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>Het &quot;%1&quot; configuratiepakket is nog niet geconfigureerd.
 Wilt u het nu configureren?</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="584"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="587"/>
         <source>Configuration script failed</source>
         <translation>Het configuratiescript is mislukt</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="585"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="588"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>Het configuratieprogramma heeft een fout aangetroffen: %1 op regel %2.
 Bestandspad: %3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="597"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="600"/>
         <source>No configuration needed</source>
         <translation>Geen configuratie nodig</translation>
     </message>
     <message>
-        <source>Error of the configuring script</source>
-        <translation type="vanished">Configuratie script fout</translation>
-    </message>
-    <message>
-        <source>Configuring tool has error: %1 at line %2.
-File path: %3</source>
-        <translation type="vanished">Configuratie-instrument heeft een fout: %1 op de %2de regel
-Bestandspad:%3</translation>
-    </message>
-    <message>
-        <source>Configuring is not needed</source>
-        <translation type="vanished">Configureren niet nodig</translation>
-    </message>
-    <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="598"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="601"/>
         <source>This config pack has no configuring tool.</source>
         <translation>Dit configuratiepakket heeft geen configuratieprogramma.</translation>
     </message>
@@ -1111,25 +879,9 @@ Bestandspad:%3</translation>
         <translation>Status</translation>
     </message>
     <message>
-        <source>Item types:</source>
-        <translation type="vanished">Voorwerp types:</translation>
-    </message>
-    <message>
-        <source>Config name:</source>
-        <translation type="vanished">Configuratie naam:</translation>
-    </message>
-    <message>
-        <source>Config path:</source>
-        <translation type="vanished">Configuratie pad:</translation>
-    </message>
-    <message>
         <location filename="../data_configs/config_status/config_status.ui" line="128"/>
         <source>Directories</source>
         <translation>Mappen</translation>
-    </message>
-    <message>
-        <source>Config directories:</source>
-        <translation type="vanished">COnfiguratie directory&apos;s:</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.ui" line="49"/>
@@ -1172,17 +924,9 @@ Bestandspad:%3</translation>
         <translation>Fouten bij het laden van de configuratie:</translation>
     </message>
     <message>
-        <source>Errors of configuration loading:</source>
-        <translation type="vanished">Configuratie ladingsfouten:</translation>
-    </message>
-    <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="117"/>
         <source>Music (level) (%1/%2)</source>
         <translation>Muziek (niveau) (%1/%2)</translation>
-    </message>
-    <message>
-        <source>Music (world) (%1/%2)</source>
-        <translation type="vanished">Muziek (wereld) (%1/%2)</translation>
     </message>
     <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="119"/>
@@ -1260,10 +1004,6 @@ Bestandspad:%3</translation>
         <translation>[Het foutenlijst is leeg, gefeliciteerd!]</translation>
     </message>
     <message>
-        <source>World data</source>
-        <translation type="vanished">Wereld data</translation>
-    </message>
-    <message>
         <location filename="../data_configs/config_status/config_status.cpp" line="137"/>
         <source>Characters</source>
         <translation>Personages</translation>
@@ -1287,10 +1027,6 @@ Bestandspad:%3</translation>
         <location filename="../data_configs/config_status/config_status.cpp" line="141"/>
         <source>Custom data</source>
         <translation>Eigen data</translation>
-    </message>
-    <message>
-        <source>[Error list is empty]</source>
-        <translation type="vanished">[Foutenlijst is leeg]</translation>
     </message>
 </context>
 <context>
@@ -1334,38 +1070,14 @@ Bestandspad:%3</translation>
         <translation></translation>
     </message>
     <message>
-        <source>You might want to report this data to developers or post it at:</source>
-        <translation type="vanished">U zou best deze data naar de ontwikkelaars rapporteren of hier posten:</translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation type="unfinished">Oh nee, het PGE bewerkingsprogramma is gecrasht :(&lt;br&gt;Gedetailleerde crashrapport:</translation>
     </message>
     <message>
-        <source>PGE Forum (http://wohlsoft.ru/forum/)</source>
-        <translation type="vanished">PGE Forum (http://wohlsoft.ru/forum/)</translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.ui" line="107"/>
         <source>Exit from application</source>
         <translation>Applicatie sluiten</translation>
-    </message>
-    <message>
-        <source>Ouch, PGE Editor has crashed :(&lt;br&gt;Detailed crash information data:</source>
-        <translation type="vanished">Ouch, PGE programma  is gecrashed :( &lt;br&gt; Gedetailleerde crash informatie:</translation>
-    </message>
-    <message>
-        <source>PGE Forum (http://engine.wohlnet.ru/forum/)</source>
-        <translation type="vanished">PGE Forum (http://engine.wohlnet.ru/forum/)</translation>
-    </message>
-    <message>
-        <source>Exit Application</source>
-        <translation type="vanished">Applicatie Sluiten</translation>
-    </message>
-    <message>
-        <source>Crashsave</source>
-        <translation type="vanished">Crashbestand</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="438"/>
@@ -1394,17 +1106,9 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <translation>Eigen Teller</translation>
     </message>
     <message>
-        <source>Please add the Item&apos;s ID which will be in this custom group:</source>
-        <translation type="vanished">Gelieve de ID&apos;s van de voorwerpen toe te voegen voor dit aangepaste groep:</translation>
-    </message>
-    <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="71"/>
         <source>Item type:</source>
         <translation>Voorwerp type:</translation>
-    </message>
-    <message>
-        <source>Name of counter</source>
-        <translation type="vanished">Naam teller</translation>
     </message>
     <message>
         <location filename="../tools/debugger/custom_counter_gui.ui" line="42"/>
@@ -1476,127 +1180,127 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
 <context>
     <name>CustomMusicSetup</name>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="14"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="14"/>
         <source>Music setup</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="34"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="34"/>
         <source>Play music</source>
         <translation type="unfinished">Muziek afspelen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="220"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="220"/>
         <source>Synthesizer type:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="433"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="764"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="433"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="764"/>
         <source>Gain:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="227"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="278"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="771"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="846"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="227"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="278"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="771"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="846"/>
         <source>Reset</source>
         <translation type="unfinished">Resetten</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="440"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="863"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="440"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="863"/>
         <source>Tempo:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="67"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="285"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="447"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="67"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="285"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="447"/>
         <source>Extra settings</source>
         <translation type="unfinished">Extra instellingen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="126"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="317"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="126"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="317"/>
         <source>Custom bank:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="192"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="357"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="192"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="357"/>
         <source>Volume model:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="110"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="110"/>
         <source>Deep vibrato</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="76"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="76"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="172"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="172"/>
         <source>Deep tremolo</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="86"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="297"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="86"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="297"/>
         <source>Browse...</source>
         <translation type="unfinished">Bladeren...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="100"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="100"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="133"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="304"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="133"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="304"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="146"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="341"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="146"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="341"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="162"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="331"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="162"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="331"/>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="165"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="334"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="165"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="334"/>
         <source>Automatic arpeggio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="185"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="324"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="185"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="324"/>
         <source>Chips number:</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="199"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="374"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="199"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="374"/>
         <source>Channel allocation mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="206"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="381"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="206"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="381"/>
         <source>Select one of the channel allocation algorithms:
 - [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
 - Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
@@ -1606,226 +1310,226 @@ Gelieve ze eerst op te slaan alvorens werk voort te zetten.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="456"/>
         <source>Remove</source>
         <translation type="unfinished">Verwijderen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="463"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="463"/>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
         <translation type="unfinished">Algemeen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="469"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="512"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="512"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="522"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="522"/>
         <source>Add</source>
         <translation type="unfinished">Toevoegen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="542"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="542"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="554"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="554"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="574"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="574"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="581"/>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished">Breedte</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="614"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="614"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished">Niveau</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="637"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="637"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="649"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="649"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation type="unfinished">Niveau</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="656"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="656"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="692"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="692"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="699"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="699"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="722"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="722"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="739"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="624"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="739"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="624"/>
         <source>Chiptune</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="806"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="806"/>
         <source>Track number</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="815"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="815"/>
         <source>To begin</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="829"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="829"/>
         <source>Previous</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="836"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="836"/>
         <source>Next</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="853"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="853"/>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="856"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="856"/>
         <source>Disable SPC echo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="926"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="926"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="622"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="622"/>
         <source>MIDI</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="830"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="830"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="831"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="831"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="832"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="832"/>
         <source>Timidity (needed a bank)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="833"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="833"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="834"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="834"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="839"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="847"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="855"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="871"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="839"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="847"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="855"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="871"/>
         <source>[Auto]</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="840"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="848"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="840"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="848"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="841"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="849"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="841"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="849"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="842"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="850"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="842"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="850"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="856"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="872"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="856"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="872"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="857"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="857"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="873"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="873"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="881"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="881"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="882"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="882"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation></translation>
@@ -1909,14 +1613,6 @@ therefore you can use same link to get updated version</source>
 <context>
     <name>DevConsole</name>
     <message>
-        <source>Development Console</source>
-        <translation type="vanished">Opdrachtprompt</translation>
-    </message>
-    <message>
-        <source>Type command here...</source>
-        <translation type="vanished">Typ hier een opdracht...</translation>
-    </message>
-    <message>
         <location filename="../dev_console/devconsole.ui" line="14"/>
         <source>Developer Console</source>
         <translation>Ontwikkelaarsconsole</translation>
@@ -1952,17 +1648,9 @@ therefore you can use same link to get updated version</source>
         <translation>Maak Log %1 Leeg</translation>
     </message>
     <message>
-        <source>Prints the command help</source>
-        <translation type="vanished">Print de opdrachtenhelp</translation>
-    </message>
-    <message>
         <location filename="../dev_console/devconsole.cpp" line="279"/>
         <source>Prints a test command</source>
         <translation>Drukt een test-opdracht</translation>
-    </message>
-    <message>
-        <source>Prints the version</source>
-        <translation type="vanished">Print de versie</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="281"/>
@@ -1975,25 +1663,9 @@ therefore you can use same link to get updated version</source>
         <translation>Applicatie instellingen opslaan</translation>
     </message>
     <message>
-        <source>Args: {SomeString} Calculating MD5 hash of string</source>
-        <translation type="vanished">Args: {SomeString} Rekent de MD 5 has van de tekst</translation>
-    </message>
-    <message>
-        <source>Arg: {String array} validating the PGE-X string array</source>
-        <translation type="vanished">Arg: {}String array} valideert de OGE-X tekstreeks</translation>
-    </message>
-    <message>
-        <source>Arg: {Path to file} testing of PGE-X file format</source>
-        <translation type="vanished">Arg: { Bestandspad}  testen van PGE-X bestandsformaat</translation>
-    </message>
-    <message>
         <location filename="../dev_console/devconsole.cpp" line="294"/>
         <source>Args: {Music type (lvl wld spc), Music ID} Play default music by specific ID</source>
         <translation>Args: {Muziek type (lvl wld spc), Muziek ID} Speel standaard ingestelde muziek voor specifieke ID</translation>
-    </message>
-    <message>
-        <source>Args: {engine commands} Send command or message into running engine</source>
-        <translation type="vanished">Args: {motor opdrachten} Zend een opdracht of bericht in het programma</translation>
     </message>
     <message>
         <location filename="../dev_console/devconsole.cpp" line="296"/>
@@ -2080,10 +1752,6 @@ therefore you can use same link to get updated version</source>
         <translation> px</translation>
     </message>
     <message>
-        <source>Hide door and water marking</source>
-        <translation type="vanished">Deur-en-watermarkering verstoppen</translation>
-    </message>
-    <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="65"/>
         <source>Please, select target image size:</source>
         <translation>Gelieve de grootte te selecteren voor de gekozen afbeelding:</translation>
@@ -2092,10 +1760,6 @@ therefore you can use same link to get updated version</source>
         <location filename="../main_window/file/lvl_export_image.ui" line="169"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;With this option will be calculated opposite value for height or width for make target image with correct proportions.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Als dit aangevinkt is, zal dit de grootte van de omgekeerde dimensies verekenen om een afbeelding met correcte proporties te maken.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Save proportion</source>
-        <translation type="vanished">Proporties opslaan</translation>
     </message>
     <message>
         <location filename="../main_window/file/lvl_export_image.ui" line="129"/>
@@ -2142,26 +1806,22 @@ therefore you can use same link to get updated version</source>
         <source>Hide invisible blocks and meta-objects</source>
         <translation>Onzichtbare blokken en meta objecten verbergen</translation>
     </message>
-    <message>
-        <source>Tiled background</source>
-        <translation type="vanished">Getegelde achtergrond</translation>
-    </message>
 </context>
 <context>
     <name>FileListBrowser</name>
     <message>
-        <location filename="../editing/_dialogs/file_list_browser.ui" line="20"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="20"/>
         <source>Files list</source>
         <translation>Bestandslijst</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/file_list_browser.ui" line="30"/>
-        <location filename="../editing/_dialogs/file_list_browser.ui" line="49"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="30"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt;Dit is een lijst met niveau-bestanden die in dezelfde map zitten als het huidige bestand. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/file_list_browser.ui" line="33"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="33"/>
         <source>Please select a file from the list:</source>
         <translation>Gelieve een bestand te kiezen uit de lijst:</translation>
     </message>
@@ -2315,11 +1975,6 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
 </context>
 <context>
     <name>HistoryElementRemoveLayerAndSave</name>
-    <message>
-        <source>Remove layer and save items</source>
-        <translatorcomment>Guess on use of save in this context</translatorcomment>
-        <translation type="vanished">Laag verwijderen en voorwerpen bijhouden</translation>
-    </message>
     <message>
         <location filename="../editing/_components/history/historyelementremovelayerandsave.cpp" line="26"/>
         <source>Remove Layer and keep items</source>
@@ -2572,14 +2227,6 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/items/item_bgo.cpp" line="331"/>
         <source>Margin of section</source>
         <translation>Sectiemarge</translation>
-    </message>
-    <message>
-        <source>Please select, how far items out of section should be removed too (in pixels)</source>
-        <translation type="vanished">Gelieve te kiezen hoe ver voorwerpen over de sectielimiet kunnen alvorens verwijderd te worden (in pixels)</translation>
-    </message>
-    <message>
-        <source>Preferences has been copied: %1</source>
-        <translation type="vanished">Voorkeursinstellingen werden gekopiëerd:%1</translation>
     </message>
 </context>
 <context>
@@ -3070,10 +2717,6 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
         <location filename="../editing/_scenes/level/itemmsgbox.ui" line="90"/>
         <source>Friendly (Non-friendly NPCs can&apos;t be talked to)</source>
         <translation>Vriendelijk (Vijandige NPCs kunnen niet worden aangesproken)</translation>
-    </message>
-    <message>
-        <source>Friendly (Non-friendly npc&apos;s can&apos;t be talked to)</source>
-        <translation type="vanished">Vriendelijk (Met niet-vriendelijke NPC&apos;s kan niet gepraat worden)</translation>
     </message>
 </context>
 <context>
@@ -3878,80 +3521,6 @@ evenals is er gereedschap in balken en menu&apos;s. Met dit programma kan je ook
     </message>
 </context>
 <context>
-    <name>LazyFixTool_gui</name>
-    <message>
-        <source>LazyFix tool</source>
-        <translation type="vanished">LazyFix hulpprogramma</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sluiten</translation>
-    </message>
-    <message>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">Invoermap die de SMBX GIF-bestanden bevatten (*. gif en * m. gif)</translation>
-    </message>
-    <message>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="vanished">Uitvoermap, waar de herstelde afbeeldingen worden opgeslagen.
-(Als dit veld leeg bijft, worden de afbeeldingen samen met hun back-ups  in de map van de oorspronkelijke afbeeldingen opgeslagen)</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Zoeken naar afbeeldingen in submappen</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Bladeren</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Vlaggen</translation>
-    </message>
-    <message>
-        <source>Don&apos;t create back-up</source>
-        <translation type="vanished">Geen back-up aanmaken</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Starten</translation>
-    </message>
-    <message>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Dit hulpprogramma dient om slordig gemaakte SMBX afbeelding/maskers te herstellen. Dit wordt gedaan via kleurvergelijking. De oorspronkelijke afbeeldingen worden overschreven, maar back-ups zullen worden aangemaakt in een nieuwe map in het geval dat er iets fout loopt.</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Invoermap openen</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Uitvoermap openen</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Invoermap is niet ingesteld</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Gelieve de invoermap in te stellen</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Hulpprogramma niet gevonden</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Kan deze applicatie niet opstarten:
-%1
-Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
-    </message>
-</context>
-<context>
     <name>LevelEdit</name>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="136"/>
@@ -4156,16 +3725,12 @@ Wilt u uw wijzigingen opslaan?</translation>
 <context>
     <name>LevelFileList</name>
     <message>
-        <location filename="../editing/_dialogs/levelfilelist.cpp" line="26"/>
+        <location filename="../../_common/qt-modules/file_list_browser/levelfilelist.cpp" line="26"/>
         <source>Level files list</source>
         <translation>Niveau-bestandenlijst</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met niveau-bestanden die in dezelfde map zitten als het huidige bestand. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location filename="../editing/_dialogs/levelfilelist.cpp" line="27"/>
+        <location filename="../../_common/qt-modules/file_list_browser/levelfilelist.cpp" line="27"/>
         <source>Please, select level file from list for use them:</source>
         <translation>Gelieve een niveau-bestand te kiezen uit deze lijst:</translation>
     </message>
@@ -4381,226 +3946,6 @@ Wilt u uw wijzigingen opslaan?</translation>
     </message>
 </context>
 <context>
-    <name>LunaTester</name>
-    <message>
-        <source>Reset checkpoints</source>
-        <translation type="vanished">Herstartpunten resetten</translation>
-    </message>
-    <message>
-        <source>Reset all checkpoint states to initial state.</source>
-        <translation type="vanished">Alle herstartpunten resetten.</translation>
-    </message>
-    <message>
-        <source>LunaTester error</source>
-        <translation type="vanished">LunaTester fout</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="vanished">Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
-    </message>
-    <message>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="vanished">LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
-    </message>
-    <message>
-        <source>Test level</source>
-        <comment>Run the LunaTester based level testing.</comment>
-        <translation type="vanished">Niveau Testen</translation>
-    </message>
-    <message>
-        <source>Starts level testing in the legacy engine.
-To have this feature work, latest LunaLUA must be installed.
-Otherwise, it will be very limited.</source>
-        <translation type="vanished">Start het niveau in het SMBX programma.
-Deze functie vereist LunaLua.</translation>
-    </message>
-    <message>
-        <source>Disable OpenGL</source>
-        <comment>Disable OpenGL on LunaTester side</comment>
-        <translation type="vanished">OpenGL uitschakelen</translation>
-    </message>
-    <message>
-        <source>Disable OpenGL rendering engine and use the GDI. Useful if your video card does not support OpenGL or LunaLua is crashing on the attempt to use it.</source>
-        <translation type="vanished">Schakel het OpenGL beeldenprogramma uit en gebruik GDI in plaats daarvan. Handig als uw grafische kaart geen ondersteuning biedt voor OpenGL of LunaLua crasht bij elke poging tot gebruik. Dit zal in sterk verminderde functies resulteren.</translation>
-    </message>
-    <message>
-        <source>Keep running in background</source>
-        <comment>Keep Legacy Engine be running in background to speed-up testing starts after first launch.</comment>
-        <translation type="vanished">In de achtergrond blijven draaien</translation>
-    </message>
-    <message>
-        <source>Allows to start level testing very fast after first launch.
-Requires powerful computer, otherwise engine will freeze on next test launch.
-Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="vanished">Dit laat toe om niveaus sneller te openen na de eerste opstarting.
-Dit veriest een krachtige computer, anders kan het programma hangen bij de volgende test start.
-Het is aanbevolen om deze functie uit te schakelen op tragere machines of wanneer er problemen voorkomen bij het opnieuw testen van niveaus.</translation>
-    </message>
-    <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="vanished">Hangende lader beïndigen</translation>
-    </message>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="vanished">Lopend proces beëindigen</translation>
-    </message>
-    <message>
-        <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
-        <translation type="vanished">Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
-    </message>
-    <message>
-        <source>Start Legacy Engine</source>
-        <comment>Launch legacy engine in game mode</comment>
-        <translation type="vanished">SMBX programma opstarten</translation>
-    </message>
-    <message>
-        <source>Launch legacy engine in game mode.</source>
-        <translation type="vanished">Oud SMBX programma in spelmodus gebruiken.</translation>
-    </message>
-    <message>
-        <source>LunaTester can&apos;t be used on world map because the legacy engine doesn&apos;t provide ability to run testing of world maps. Instead, you can use PGE Engine (&quot;Test&quot; -&gt; &quot;Test saved file&quot; menu item) to test your world map file in action without episode running.</source>
-        <translation type="vanished">LunaTester kan niet gebruikt worden op de wereldkaart omdat het SMBX programma niet toelaat om mappen te testen. Laad de map in de episode zelf, of gebruik het PGE programma om je wereldkaart bestand te testen.</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="vanished">Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="vanished">Laad-draad (thread) is niet actief.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
-        <translation type="vanished">Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
-    </message>
-    <message>
-        <source>LunaTester has been successfully closed.</source>
-        <translation type="vanished">LunaTester is succesvol afgesloten.</translation>
-    </message>
-    <message>
-        <source>LunaTester is not running.</source>
-        <translation type="vanished">LuneTester is niet actief.</translation>
-    </message>
-    <message>
-        <source>Checkpoints successfully reseted!</source>
-        <translation type="vanished">Herstartpunten succesvol gereset!</translation>
-    </message>
-    <message>
-        <source>LunaTester error!</source>
-        <translation type="vanished">LunaTester fout!</translation>
-    </message>
-    <message>
-        <source>LunaLUA tester is not started!</source>
-        <translation type="vanished">LunaTester kon niet gestart worden!</translation>
-    </message>
-    <message>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="vanished">SMBX64 limieten overschreden!</translation>
-    </message>
-    <message>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="vanished">Er is een overtreding van SMBX64 standaard gebeurd!
-%1, oorspronkelijke programma kan vastlopen!
-Het is aanbevolen om alle overtollige elementen te verwijderen.
-Wilt u doorgaan met het proces?</translation>
-    </message>
-    <message>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="vanished">SMBX map was niet correct geconfigureerd</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="vanished">%1 niet gevonden!
-Voor het uitvoeren van testen in SMBX moet u het SMBX-integratie configuratiepakket gebruiken!</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="vanished">SMBX-test is al actief</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="vanished">Het SMBX programma is al een ander niveau aan het testen.
-Wilt u het huidige testproces sluiten?</translation>
-    </message>
-    <message>
-        <source>Vanilla SMBX detected!</source>
-        <translation type="vanished">Vanilla SMBX gedetecteerd!</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="vanished">%2 niet gevonden!
-Je hebt een vanilla SMBX! &lt;br&gt;
-Dat betekent dat het onmogelijk is om het testen niveaus automatisch te starten. Om uw niveau te testen, wordt een dummy episode gegenereerd, die u handmatig starten en selecteren. &lt;br&gt;
-&lt;br&gt;
-Naam van de te genereren episode: %1 &lt;br&gt;
-&lt;br&gt;
-Wilt u nog een test lanceren? &lt;br&gt;
-&lt;br&gt;
-Als u een volledige testomgeving wilt hebben, installeer dan LunaLua: &lt;br&gt;
-%3</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">Fout bij het opslaan van het bestand</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">Kan %1 bestand niet opslaan:
-%2.</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="vanished">%2 niet gevonden!
-Je hebt een vanilla SMBX! &lt;br&gt;
-Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
-    </message>
-    <message>
-        <source>Failed to send level into LunaLUA-SMBX!</source>
-        <translation type="vanished">Kon niveau niet naar LunaLua sturen!</translation>
-    </message>
-    <message>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="vanished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
-    </message>
-    <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="vanished">SMBX programma-map was niet correct geconfigureerd</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="vanished">%1 niet gevonden!
-Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!</translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="vanished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
-    </message>
-</context>
-<context>
     <name>LunaTesterEngine</name>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="397"/>
@@ -4659,15 +4004,6 @@ Dit veriest een krachtige computer, anders kan het programma hangen bij de volge
 Het is aanbevolen om deze functie uit te schakelen op tragere machines of wanneer er problemen voorkomen bij het opnieuw testen van niveaus.</translation>
     </message>
     <message>
-        <source>Terminate frozen loader</source>
-        <comment>Terminite frozen LunaTester on the attempt to send any command to LunaLua.</comment>
-        <translation type="vanished">Hangende lader beïndigen</translation>
-    </message>
-    <message>
-        <source>Termiates frozen thread to allow you to run a test again.</source>
-        <translation type="vanished">Hiermee beëindigt u de hangende laad-draad (thread) om een test opnieuw uit te kunnen voeren.</translation>
-    </message>
-    <message>
         <location filename="../testing/luna_tester_engine.cpp" line="430"/>
         <source>Terminate running process</source>
         <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
@@ -4691,49 +4027,49 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation type="unfinished">Selecteer een pad naar LunaTester voor gebruik.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1133"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1138"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1142"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1147"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1202"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1207"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
         <translation type="unfinished">Gelieve een pad te selecteren naar LunaTester</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1539"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1544"/>
         <source>Incompatible LunaDll found</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1540"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1545"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1549"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1554"/>
         <source>Incompatible LunaLua</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1550"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1555"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1619"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1624"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation>SMBX64 limieten overschreden!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1620"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1625"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -4745,7 +4081,7 @@ Het is aanbevolen om alle overtollige elementen te verwijderen.
 Wilt u doorgaan met het proces?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1475"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1480"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation></translation>
@@ -4808,45 +4144,45 @@ Wilt u doorgaan met het proces?</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1132"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1231"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1272"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1137"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1236"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1277"/>
         <source>LunaTester is still active</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1220"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1225"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1232"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1237"/>
         <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1253"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1258"/>
         <source>Change the executable name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1254"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1259"/>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1273"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1278"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1477"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1482"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1481"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1486"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -4854,14 +4190,14 @@ Wilt u doorgaan met het proces?</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1488"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1493"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1526"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1531"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
@@ -4870,32 +4206,19 @@ U hebt een vanilla SMBX! &lt;br&gt;
 Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1761"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1766"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1796"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1801"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1752"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1757"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Impossible to launch LunaTester, due to %1</source>
-        <translation type="vanished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
-    </message>
-    <message>
-        <source>Select LunaTester path...</source>
-        <comment>Select a path to LunaTester for use.</comment>
-        <translation type="vanished">Selecteer het LunaTester pad...</translation>
-    </message>
-    <message>
-        <source>Select a path to LunaTester for use.</source>
-        <translation type="vanished">Selecteer een pad naar LunaTester voor gebruik.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="457"/>
@@ -4909,68 +4232,46 @@ Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) 
         <translation>LunaTester als een normaal spel lanceren.</translation>
     </message>
     <message>
-        <source>LunaLUA test loader thread is busy, try again or try termiate frozen loader!</source>
-        <translation type="vanished">LunaLua test laad-draad (thread) is in gebruik, probeer opnieuw of gebruik de &quot;beïndig hangende lader&quot; optie!</translation>
-    </message>
-    <message>
-        <source>Are you really want to terminate loader thread?</source>
-        <translation type="vanished">Bent u zeker dat u de laad-draad (thread) wilt beïndigen?</translation>
-    </message>
-    <message>
-        <source>Loader thread is not running.</source>
-        <comment>LunaTester thread now doing nothing.
-This message is shown on request to terminate frozen LunaTester while it is not actually frozen and responds.</comment>
-        <translation type="vanished">Laad-draad (thread) is niet actief.</translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1106"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1111"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation>Bent u zeker dat u LunaTester wilt sluiten? Als u een niveau aan het testen bent, zal dit onmiddelijk sluiten!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1114"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1119"/>
         <source>LunaTester has been successfully closed.</source>
         <translation>LunaTester is succesvol afgesloten.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1122"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1127"/>
         <source>LunaTester is not running.</source>
         <translation>LunaTester is niet actief.</translation>
     </message>
     <message>
-        <source>LunaTester path select</source>
-        <translation type="vanished">LunaTester pad selectie</translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1149"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1154"/>
         <source>Please select a path to LunaTester:</source>
         <translation>Gelieve een pad te selecteren naar LunaTester:</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1158"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1163"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
         <translation>Standaardinstellingen gebruiken</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1161"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1166"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
         <translation>Eigen</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1165"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1170"/>
         <source>Browse...</source>
         <translation>Bladeren...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1189"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1194"/>
         <source>Save</source>
         <translation>Opslaan</translation>
-    </message>
-    <message>
-        <source>Select a LunaTester path</source>
-        <translation type="vanished">Selecteer het LunaTester pad</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="733"/>
@@ -4978,93 +4279,14 @@ This message is shown on request to terminate frozen LunaTester while it is not 
         <translation>Herstartpunten succesvol gereset!</translation>
     </message>
     <message>
-        <source>LunaTester error!</source>
-        <translation type="vanished">LunaTester fout!</translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1093"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1098"/>
         <source>LunaLUA tester is not started!</source>
         <translation>LunaTester kon niet gestart worden!</translation>
     </message>
     <message>
-        <source>SMBX64 limits are excited!</source>
-        <translation type="vanished">SMBX64 limieten overschreden!</translation>
-    </message>
-    <message>
-        <source>Violation of SMBX64 standard has been found!
-%1
-, legacy engine may crash!
-Suggested to remove all excess elements.
-Are you want continue process?</source>
-        <translation type="vanished">Er werd een overtreding van de SMBX64 standaard gevonden!
-%1, oorspronkelijke programma kan vastlopen!
-Het is aanbevolen om alle overtollige elementen te verwijderen.
-Wilt u doorgaan met het proces?</translation>
-    </message>
-    <message>
-        <source>SMBX Directory wasn&apos;t configured right</source>
-        <translation type="vanished">SMBX map was niet correct geconfigureerd</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To run testing via SMBX you should have right SMBX Integration configuration package!</source>
-        <translation type="vanished">%1 niet gevonden!
-Voor het uitvoeren van testen in SMBX moet u het SMBX-integratie configuratiepakket gebruiken!</translation>
-    </message>
-    <message>
-        <source>SMBX Test is already runned</source>
-        <translation type="vanished">SMBX-test is al actief</translation>
-    </message>
-    <message>
-        <source>SMBX Engine is already testing another level.
-Do you want to abort current testing process?</source>
-        <translation type="vanished">Het SMBX programma is al een ander niveau aan het testen.
-Wilt u het huidige testproces sluiten?</translation>
-    </message>
-    <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1525"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1530"/>
         <source>Vanilla SMBX detected!</source>
         <translation>Vanilla SMBX gedetecteerd!</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing automatically. To launch a level testing, will be generated a dummy episode which you can start and select manually.&lt;br&gt;
-&lt;br&gt;
-Name of episode to generate: %1&lt;br&gt;
-&lt;br&gt;
-Are you still want to launch a test?&lt;br&gt;
-&lt;br&gt;
-If you want to have a full featured level testing, you need to get a LunaLUA here:&lt;br&gt;
-%3</source>
-        <translation type="vanished">%2 niet gevonden!
-U hebt een vanilla SMBX! &lt;br&gt;
-Dat betekent dat het onmogelijk is om het testen van niveaus automatisch te starten. Om uw niveau te testen, wordt een dummy episode gegenereerd, die u handmatig kan starten en selecteren. &lt;br&gt;
-&lt;br&gt;
-Naam van de te genereren episode: %1 &lt;br&gt;
-&lt;br&gt;
-Wilt u nog een test lanceren? &lt;br&gt;
-&lt;br&gt;
-Als u een volledige testomgeving wilt hebben, installeer dan LunaLua: &lt;br&gt;
-%3</translation>
-    </message>
-    <message>
-        <source>File save error</source>
-        <translation type="vanished">Fout bij het opslaan van het bestand</translation>
-    </message>
-    <message>
-        <source>Cannot save file %1:
-%2.</source>
-        <translation type="vanished">Kan %1 bestand niet opslaan:
-%2.</translation>
-    </message>
-    <message>
-        <source>%2 not found!
-You have a Vanilla SMBX!&lt;br&gt;
-That means, impossible to launch level testing on your operating operating. LunaLua is required to run level testing with SMBX on a non-Windows operating systems.</source>
-        <translation type="vanished">%2 niet gevonden!
-U hebt een vanilla SMBX! &lt;br&gt;
-Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) te starten. LunaLua is vereist om niveautesten uit te voeren met SMBX op niet-Windows-besturingssystemen.</translation>
     </message>
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="510"/>
@@ -5074,27 +4296,9 @@ Dat betekent dat het onmogelijk is om niveautesten op uw besturingssysteem (OS) 
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="466"/>
         <location filename="../testing/luna_tester_engine.cpp" line="509"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1219"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1224"/>
         <source>LunaTester error</source>
         <translation>LunaTester fout</translation>
-    </message>
-    <message>
-        <source>Impossible to launch SMBX Engine, because %1</source>
-        <translation type="vanished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
-    </message>
-    <message>
-        <source>Directory of Legacy Engine wasn&apos;t configured right</source>
-        <translation type="vanished">SMBX programma-map was niet correct geconfigureerd</translation>
-    </message>
-    <message>
-        <source>%1 not found!
-To use LunaTester you should have right Integration configuration package!</source>
-        <translation type="vanished">%1 niet gevonden!
-Om LunaTester te gebruiken moet je het integratie configuratiepakket gebruiken!</translation>
-    </message>
-    <message>
-        <source>Impossible to launch Legacy Engine, because %1</source>
-        <translation type="vanished">Kon het SMBX programma niet opstarten, vanwege: %1</translation>
     </message>
 </context>
 <context>
@@ -5736,14 +4940,6 @@ Dit maakt gebruik van de buggy BGO-rendering van SMBX. Om dit te doen werken, pl
         <location filename="../main_window/dock/lvl_item_properties.ui" line="924"/>
         <source>Delay (seconds):</source>
         <translation>Vertraging (seconden):</translation>
-    </message>
-    <message>
-        <source>Up</source>
-        <translation type="vanished">Boven</translation>
-    </message>
-    <message>
-        <source>Down</source>
-        <translation type="vanished">Onder</translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_item_properties.ui" line="886"/>
@@ -7252,10 +6448,6 @@ Selecteer de wereldkaart die u wilt gebruiken:</translation>
         <translation>Wereldkaart werkbalk</translation>
     </message>
     <message>
-        <source>Editor - Platformer Game Engine</source>
-        <translation type="vanished">Bewerkingsprogramma - Platformer Gamer Engine</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="217"/>
         <source>Section modifications</source>
         <translation>Sectie wijzigingen</translation>
@@ -7897,10 +7089,6 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Test level (Alpha)</source>
-        <translation type="vanished">Niveau testen (Alpha)</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="2474"/>
         <location filename="../mainwindow.ui" line="2477"/>
         <source>Testing options...</source>
@@ -7990,10 +7178,6 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <location filename="../mainwindow.ui" line="2937"/>
         <source>Welcome dialog</source>
         <translation>Welkom dialoog</translation>
-    </message>
-    <message>
-        <source>Test world map (Alpha)</source>
-        <translation type="vanished">Test wereldkaart (Alpha)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2963"/>
@@ -8231,10 +7415,6 @@ Objecten kunnen niet op elkaar worden geplaatst, het proberen zal ertoe leiden d
         <location filename="../mainwindow.ui" line="2744"/>
         <source>Tip of the day...</source>
         <translation>Tip van de dag...</translation>
-    </message>
-    <message>
-        <source>Start Engine</source>
-        <translation type="vanished">Programma Opstarten</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="2755"/>
@@ -8515,7 +7695,7 @@ Het configuratiepakket was geladen, maar bevat fouten.</translation>
         <translation>Bestand openen</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="291"/>
+        <location filename="../main_window/translator.cpp" line="307"/>
         <source>Current Language changed to %1</source>
         <translation>Huidige taal gewijzigd naar %1</translation>
     </message>
@@ -9040,32 +8220,24 @@ Please, choose the Moondust Maintainer application yourself!</source>
 <context>
     <name>MusicFileList</name>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.cpp" line="33"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="33"/>
         <source>Select SFX file</source>
         <translation>Selecteer een SFX bestand</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.cpp" line="34"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="34"/>
         <source>Please select SFX file to use</source>
         <translation>Gelieve een SFX file te selecteren voor gebruik</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.cpp" line="47"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="47"/>
         <source>Select Custom music</source>
         <translation>Selecteer eigen muziek</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.cpp" line="48"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="48"/>
         <source>Please select music file to use as custom</source>
         <translation>Gelieve een muziekbestand te selecteren om als eigen muziek te gebruiken</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of music files, what placed with your current file in the same folder and all music files from subdirectories from this directory.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt; &lt;head/&gt; &lt;body&gt; &lt;p&gt; Dit is een lijst met muziekbestanden die zich in dezelfde map bevinden als het huidige bestand, evenals eventuele submappen. &lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Please, select music file for use as custom</source>
-        <translation type="vanished">Gelieve uw muziekbestand te selecteren</translation>
     </message>
 </context>
 <context>
@@ -10356,7 +9528,7 @@ Het maximum aantal muziekdozen is %2.</translation>
         <translation>Debuggen</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="136"/>
+        <location filename="../main_window/translator.cpp" line="146"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
@@ -10831,11 +10003,6 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
 <context>
     <name>TheXTechEngine</name>
     <message>
-        <source>Custom</source>
-        <comment>Using a user selected LunaTester path</comment>
-        <translation type="obsolete">Eigen</translation>
-    </message>
-    <message>
         <location filename="../testing/thextech_engine.cpp" line="187"/>
         <source>Browse...</source>
         <translation>Bladeren...</translation>
@@ -10844,10 +10011,6 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
         <location filename="../testing/thextech_engine.cpp" line="211"/>
         <source>Save</source>
         <translation>Opslaan</translation>
-    </message>
-    <message>
-        <source>TheXTech path select</source>
-        <translation type="vanished">TheXTech pad selectie</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="164"/>
@@ -11060,15 +10223,6 @@ Werkt niet wanneer ee test of een opgeslagen bestand is geopend.</translation>
 Command: &quot;%1&quot;
 Arguments: %2</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>Select TheXTech path...</source>
-        <comment>Select a path to TheXTech for use.</comment>
-        <translation type="vanished">Selecteer het TheXTech pad...</translation>
-    </message>
-    <message>
-        <source>Select a path to TheXTech for use.</source>
-        <translation type="vanished">Selecteer het pad naa TheXTech voor gebruik.</translation>
     </message>
     <message>
         <location filename="../testing/thextech_engine.cpp" line="779"/>
@@ -11932,23 +11086,6 @@ Data zou corrupt kunnen zijn!</translation>
         <translation>Camerapositie resetten</translation>
     </message>
     <message>
-        <source>Cannot read file %1:
-%2.</source>
-        <translation type="vanished">Kan bestand %1 niet lezen:
-%2.</translation>
-    </message>
-    <message>
-        <source>Configurations not loaded</source>
-        <translation type="vanished">Configuraties niet geladen</translation>
-    </message>
-    <message>
-        <source>Cannot open level world %1:
-because object configurations are not loaded
-.Please check that the config/SMBX directory exists and contains the *.INI files with object settings.</source>
-        <translation type="vanished">Kan niveau-wereld %1 niet openen want voorwerpenconfiguraties zijn niet geladen
-Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.INI bestanden met objectinstellingen bezit.</translation>
-    </message>
-    <message>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="174"/>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="175"/>
         <source>Loading World map data</source>
@@ -11958,10 +11095,6 @@ Gelieve te controleren dat het configuratiepakkettenmap bestaat en de nodige *.I
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="174"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
-    </message>
-    <message>
-        <source>File read error</source>
-        <translation type="vanished">Fout bij het lezen van het bestand</translation>
     </message>
     <message>
         <location filename="../editing/_dialogs/wld_setpoint.cpp" line="136"/>
@@ -12909,7 +12042,7 @@ Wilt u uw wijzigingen opslaan?</translation>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="79"/>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="214"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="215"/>
         <source>Intro level:</source>
         <translation>Intro Niveau:</translation>
     </message>
@@ -12949,27 +12082,27 @@ Wilt u uw wijzigingen opslaan?</translation>
         <translation>Bladeren</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="553"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="554"/>
         <source>Counting...</source>
         <translation>Aan het tellen...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="214"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="215"/>
         <source>Main hub level:</source>
         <translation>Main hub niveau:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="558"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
         <source>Calculating total star count in accessible levels</source>
         <translation>Aantal sterren in geplaatste niveaus aan het berekenen</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="560"/>
         <source>Abort</source>
         <translation>Beëindig</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="563"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="564"/>
         <source>Counting stars...</source>
         <translation>Sterren aan het tellen...</translation>
     </message>
@@ -13023,213 +12156,7 @@ Wilt u uw wijzigingen opslaan?</translation>
     </message>
 </context>
 <context>
-    <name>dataconfigs</name>
-    <message>
-        <source>You have a legacy configuration package.
-&lt;br&gt;Editor will be started, but you may have a some problems with items or settings.
-&lt;br&gt;
-&lt;br&gt;Please download and install latest version of a configuration package:
-&lt;br&gt;
-&lt;br&gt;Download: %1
-&lt;br&gt;Note: most of config packs are updates togeter with PGE,&lt;br&gt;
-therefore you can use same link to get updated version</source>
-        <translation type="vanished">U heeft een verouderd configuratiepakket.
-&lt;br&gt; Bewerkignsprogramma zal gestart worden, maar u kunt problemen ondervinden met voorwerpen of instellingen.
-&lt;br&gt;
-&lt;br&gt; Download en installeer de nieuwste versie van uw configuratiepakket:
-&lt;br&gt;
-&lt;br&gt; Download: %1
-&lt;br&gt; Opmerking: de meeste configuratiepakketten worden samen bijgewerkt met PGE,
-&lt;br&gt; daarom kunt u dezelfde link gebruiken om een bijgewerkte versie te krijgen van PGE</translation>
-    </message>
-</context>
-<context>
-    <name>g_AppSettings</name>
-    <message>
-        <source>Set log file</source>
-        <translation type="vanished">Logboekbestand instellen</translation>
-    </message>
-    <message>
-        <source>Text files (*.txt *.log)</source>
-        <translation type="vanished">Tekstbestanden (*. txt *. log)</translation>
-    </message>
-    <message>
-        <source>Success</source>
-        <translation type="vanished">Succes</translation>
-    </message>
-    <message>
-        <source>All file associations have been set</source>
-        <translation type="vanished">Alle bestandsassociaties zijn ingesteld</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Fout</translation>
-    </message>
-</context>
-<context>
-    <name>gifs2png_gui</name>
-    <message>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="vanished">Converteer GIF&apos;s met maskers tot PNG&apos;s</translation>
-    </message>
-    <message>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="vanished">Opmerking: als de conversie resulteert in gebroken afbeeldingen, voer dan het hulpprogramma LazyFix uit omdit proberen op te lossen, en probeer opnieuw</translation>
-    </message>
-    <message>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Met dit hulpprogramma kunt u SMBX graphics converteren van GIF naar PNG door gebruik te maken van transparantiesleutels van maskers.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Bladeren</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Starten</translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="vanished">Conversie van achtergronden overslaan (background2-*. gif niet converteren)</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">Selecteer de uitvoerlocatie van de PNG afbeelding(en)
-(Als er geen uitvoerlocatie gespecifieerd is, word(en) de afbeelding(en) opgeslagen in het invoermap)</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Zoeken naar afbeeldingen in submappen</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sluiten</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Vlaggen</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">Selecteer de invoermap van de SMBX GIF-bestanden (*. gif en * m. gif)</translation>
-    </message>
-    <message>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="vanished">De originele afbeeldingen verwijderen na een succesvolle conversie</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Invoermap openen</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Uitvoermap openen</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Invoermap niet gespecifieerd</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Gelieve de invoermap in te stellen</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Hulpprogramma niet gevonden</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Kan deze applicatie niet opstarten:
-%1
-Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
-    </message>
-</context>
-<context>
-    <name>png2gifs_gui</name>
-    <message>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="vanished">Converteer PNG naar GIF&apos;s met maskers</translation>
-    </message>
-    <message>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">Met dit hulpprogramma converteert u PNG-afbeeldingen met ingebouwde transparantie naar SMBX-afbeeldingen die het GIF-formaat hebben met een afzonderlijke transparantiemasker afbeelding.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">Bladeren</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">Uitvoermap, waar de GIF-bestanden zullen worden opgeslagen (*. gif en * m. gif)
-(als dit veld leeg blijft, worden de doelafbeeldingen opgeslagen in de oorspronkelijke map)</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Starten</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">Zoeken naar afbeeldingen in submappen</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sluiten</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">Vlaggen</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="vanished">Invoermap die de PNG-afbeeldingen (*. png) bevat</translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="vanished">Bronafbeeldingen verwijderen na succesvolle conversie</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">Invoermap openen</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">Uitvoermap openen</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">Invoermap is niet ingesteld</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">Gelieve de invoermap in te stellen</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">Hulpprogramma niet gevonden</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">Kan deze applicatie niet opstarten:
-%1
-Gelieve te kijken in de applicatiemap om te zien of het correct geïnstalleerd is.</translation>
-    </message>
-</context>
-<context>
     <name>tileset</name>
-    <message>
-        <source>Drag &amp; Drop items to this box!
-Rightclick to remove!</source>
-        <translation type="vanished">Sleep voorwerpen naar dit vak!
-Rechtermuisknop om te verwijderen!</translation>
-    </message>
     <message>
         <location filename="../tools/tilesets/tileset.cpp" line="98"/>
         <source>Drag &amp; Drop items into this box!

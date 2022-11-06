@@ -669,32 +669,32 @@ Please set SoX path first</source>
 <context>
     <name>BankFileList</name>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="35"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="36"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="36"/>
         <source>Please select the WOPL instruments bank file to use</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="41"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="41"/>
         <source>Select WOPN bank file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="42"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="42"/>
         <source>Please select the WOPN instruments bank file to use</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="47"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/bankfilelist.cpp" line="48"/>
+        <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="48"/>
         <source>Please select the SoundFont bank file to add</source>
         <translation></translation>
     </message>
@@ -821,46 +821,46 @@ You can use any configuration package here:&lt;br&gt;%2</source>
  여기에서 구성 패키지를 사용할 수 있습니다. &lt;br&gt; % 2</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="518"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="521"/>
         <source>Integrational configuration package is incompatible</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="519"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="522"/>
         <source>This integrational configuration package is older than API version 42 and it is no longer compatible with thi version of Moondust Devkit. Since API 42, integrational configuration packages must use the local settings file instead the main.ini overriding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="529"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="532"/>
         <source>Configuration package is not configured!</source>
         <translation>구성 패키지가 구성되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="530"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="533"/>
         <source>&quot;%1&quot; configuration package is not configured yet.
 Do you want to configure it?</source>
         <translation>&quot;% 1&quot;구성 패키지가 아직 구성되지 않았습니다.
 구성 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="584"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="587"/>
         <source>Configuration script failed</source>
         <translation>구성 스크립트 실패</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="585"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="588"/>
         <source>Configuring tool encountered an error: %1 at line %2.
 File path: %3</source>
         <translation>구성 도구에서 오류가 발생했습니다 : % 2 줄에 % 1.
 파일 경로 : % 3</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="597"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="600"/>
         <source>No configuration needed</source>
         <translation>구성이 필요하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="598"/>
+        <location filename="../data_configs/selection_dialog/config_manager.cpp" line="601"/>
         <source>This config pack has no configuring tool.</source>
         <translation>이 구성 팩에는 구성 도구가 없습니다.</translation>
     </message>
@@ -1182,127 +1182,127 @@ Please save them before doing anything else.</source>
 <context>
     <name>CustomMusicSetup</name>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="14"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="14"/>
         <source>Music setup</source>
         <translation>음악 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="34"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="34"/>
         <source>Play music</source>
         <translation>음악을 재생</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="220"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="220"/>
         <source>Synthesizer type:</source>
         <translation>신디사이저 유형 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="433"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="764"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="433"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="764"/>
         <source>Gain:</source>
         <translation>이득:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="227"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="278"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="771"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="846"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="227"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="278"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="771"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="846"/>
         <source>Reset</source>
         <translation>초기화</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="440"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="863"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="440"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="863"/>
         <source>Tempo:</source>
         <translation>속도:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="67"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="285"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="447"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="67"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="285"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="447"/>
         <source>Extra settings</source>
         <translation>추가 설정</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="126"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="317"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="126"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="317"/>
         <source>Custom bank:</source>
         <translation>맞춤 은행 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="192"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="357"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="192"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="357"/>
         <source>Volume model:</source>
         <translation>볼륨 모델 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="110"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="110"/>
         <source>Deep vibrato</source>
         <translation>깊은 비브라토</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="76"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="76"/>
         <source>Bank:</source>
         <comment>The OPL3 timbre/instruments bank to change the MIDI music sounding.</comment>
         <translation>은행:</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="172"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="172"/>
         <source>Deep tremolo</source>
         <translation>깊은 트레몰로</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="86"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="297"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="86"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="297"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="100"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="100"/>
         <source>The timbre bank declares the sounding of MIDI music. Use different banks to compare the sounding difference.</source>
         <translation>팀버 뱅크는 MIDI 음악의 소리를 선언합니다. 다른 뱅크를 사용하여 소리의 차이를 비교하십시오.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="133"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="304"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="133"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="304"/>
         <source>Volume model declares how music volumes, note velocities and expression will be scaled.</source>
         <translation>볼륨 모델은 음악 볼륨, 음표 속도 및 표현이 어떻게 조정되는지 선언합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="146"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="341"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="146"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="341"/>
         <source>The number of emulated OPL3 chips. Increase the count of chips to get wider polyphony (18 of two-operator voices per chip, or 6 four-operator voices per chip), or decrease it if you have the choppy music playback.</source>
         <translation>에뮬레이트 된 OPL3 칩 수입니다. 더 넓은 동시 발음 수 (칩당 2 개 연산자 음성 중 18 개 또는 칩당 4 개 연산자 음성 6 개)를 얻으려면 칩 수를 늘리거나 음악 재생이 고르지 않으면 줄입니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="162"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="331"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="162"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="331"/>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
         <comment>Tool tip for the &quot;Automatic arpeggio&quot; checkbox</comment>
         <extracomment>There is a term of the sound generator chip that has limited polyphony: each channel of chip is able to play only one parallel note. So, if one chip supports 6 channels, you can play 6 notes at the same time.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="165"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="334"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="165"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="334"/>
         <source>Automatic arpeggio</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="185"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="324"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="185"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="324"/>
         <source>Chips number:</source>
         <translation>칩 번호 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="199"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="374"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="199"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="374"/>
         <source>Channel allocation mode:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="206"/>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="381"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="206"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="381"/>
         <source>Select one of the channel allocation algorithms:
 - [Auto]: The algorithm will be selected automatically depending on the bank or currently playing music format.
 - Sounding off delay based: The channel will be allocated regarding the remaining delay of releasing sound left to play (Shorted remaing delay will have the highest priority).
@@ -1312,226 +1312,226 @@ Please save them before doing anything else.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="456"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="456"/>
         <source>Remove</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="463"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="463"/>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
         <translation type="unfinished">일반</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="469"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="512"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="512"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="522"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="522"/>
         <source>Add</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="542"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="542"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="554"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="554"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="574"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="574"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="581"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="581"/>
         <source>Width</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation type="unfinished">폭</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="614"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="614"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="637"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="637"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="649"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="649"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="656"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="656"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="692"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="692"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="699"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="699"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="722"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="722"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="739"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="624"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="739"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="624"/>
         <source>Chiptune</source>
         <translation>칩툰</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="806"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="806"/>
         <source>Track number</source>
         <translation>트랙 번호</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="815"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="815"/>
         <source>To begin</source>
         <translation>시작하려면</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="829"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="829"/>
         <source>Previous</source>
         <translation>이전</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="836"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="836"/>
         <source>Next</source>
         <translation>다음</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="853"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="853"/>
         <source>Disable the echo effect while playing files of SPC format</source>
         <comment>Tooltip for the &quot;Disable SPC echo&quot; checkbox</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="856"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="856"/>
         <source>Disable SPC echo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.ui" line="926"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="926"/>
         <source>Tip: to preview the settings result, enable music playing, please. (Look for the play/stop note icon on the main window toolbar).</source>
         <translation>팁 : 설정 결과를 미리 보려면 음악 재생을 활성화하십시오. (메인 창 도구 모음에서 노트 재생 / 중지 아이콘을 찾으십시오).</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="622"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="622"/>
         <source>MIDI</source>
         <translation>엠아이디아이</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="830"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="830"/>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
         <translation>libADLMIDI (OPL3 합성 에뮬레이션)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="831"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="831"/>
         <source>libOPNMIDI (YM2612 Synth emulation)</source>
         <translation>libOPNMIDI (YM2612 합성 에뮬레이션)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="832"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="832"/>
         <source>Timidity (needed a bank)</source>
         <translation>소심함 (은행 필요)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="833"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="833"/>
         <source>Native MIDI (Not recommended, buggy)</source>
         <translation>네이티브 MIDI (권장되지 않음, 버그가 있음)</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="834"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="834"/>
         <source>FluidSynth (needed an SF2-bank)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="839"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="847"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="855"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="871"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="839"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="847"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="855"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="871"/>
         <source>[Auto]</source>
         <translation>[자동]</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="840"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="848"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="840"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="848"/>
         <source>Sounding off delay based</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="841"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="849"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="841"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="849"/>
         <source>Same instrument</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="842"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="850"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="842"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="850"/>
         <source>Any free released</source>
         <comment>Channel allocation mode</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="856"/>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="872"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="856"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="872"/>
         <source>Generic</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>일반적인</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="857"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="857"/>
         <source>Native OPL3</source>
         <comment>Volume model for libADLMIDI</comment>
         <translation>네이티브 OPL3</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="873"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="873"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="881"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="881"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/custom_music_setup.cpp" line="882"/>
+        <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="882"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
         <translation></translation>
@@ -1812,18 +1812,18 @@ therefore you can use same link to get updated version</source>
 <context>
     <name>FileListBrowser</name>
     <message>
-        <location filename="../editing/_dialogs/file_list_browser.ui" line="20"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="20"/>
         <source>Files list</source>
         <translation>파일 목록</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/file_list_browser.ui" line="30"/>
-        <location filename="../editing/_dialogs/file_list_browser.ui" line="49"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="30"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="49"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a list of level files, what placed with your current file in the same folder.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;이것은 현재 파일과 같은 폴더에있는 레벨 파일 목록입니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/file_list_browser.ui" line="33"/>
+        <location filename="../../_common/qt-modules/file_list_browser/file_list_browser.ui" line="33"/>
         <source>Please select a file from the list:</source>
         <translation>목록에서 파일을 선택하십시오 :</translation>
     </message>
@@ -3523,80 +3523,6 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     </message>
 </context>
 <context>
-    <name>LazyFixTool_gui</name>
-    <message>
-        <source>LazyFix tool</source>
-        <translation type="vanished">레이지픽스 도구</translation>
-    </message>
-    <message>
-        <source>Output directory, where the fixed images will be saved.
-(If this field is left empty, the new images will be saved in the same folder as the original images, along with the backups)</source>
-        <translation type="vanished">고친 이미지가 저장될 출력 디렉토리.
-(이 필드를 비우면, 새로운 이미지는 백업으로 원래 이미지가 저장된 폴더에 저장됩니다)</translation>
-    </message>
-    <message>
-        <source>Input directory which contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">SMBX GIF파일(*.gif와 *m.gif)를 포함하는 입력 디렉토리</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">닫기</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">하위디렉토리에서 이미지 검색</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">탐색</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">플래그</translation>
-    </message>
-    <message>
-        <source>Don&apos;t create back-up</source>
-        <translation type="vanished">백업을 생성하지 않음</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">시작</translation>
-    </message>
-    <message>
-        <source>This is a console tool which fixing the lazily made masks for using inside SMBX. This utility make a correct mask by color comparation. Images will be overwritten, but always creating the back up directories and if image converted wrongly, you can restore old.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">이것은 SMBX 이미지 / 스프라이트에서 느리게 만들어진 마스크를 수정하는 도구입니다. 이 유틸리티는 색상 비교를 통해 마스크를 수정합니다. 원본 이미지를 덮어 쓰지만 백업이 새 디렉토리에 생성되므로 문제가 발생하면 원본을 복원 할 수 있습니다.</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">오픈소스 디렉토리</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">타겟 디렉토리 열기</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">소스 디렉토리가 설정되지 않음</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">소스 디렉토리를 설정해주세요</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">툴이 발견되지 않음</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">응용 프로그램을 실행할 수 없음:
-%1
-응용 프로그램 디렉토리를 확인하고 올바르게 설치되었는지 확인하십시오.</translation>
-    </message>
-</context>
-<context>
     <name>LevelEdit</name>
     <message>
         <location filename="../main_window/file/lvl_export_image.cpp" line="136"/>
@@ -3802,12 +3728,12 @@ Do you want to save your changes?</source>
 <context>
     <name>LevelFileList</name>
     <message>
-        <location filename="../editing/_dialogs/levelfilelist.cpp" line="26"/>
+        <location filename="../../_common/qt-modules/file_list_browser/levelfilelist.cpp" line="26"/>
         <source>Level files list</source>
         <translation>레벨 파일 목록</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/levelfilelist.cpp" line="27"/>
+        <location filename="../../_common/qt-modules/file_list_browser/levelfilelist.cpp" line="27"/>
         <source>Please, select level file from list for use them:</source>
         <translation>목록에서 사용할 레벨 파일을 선택하십시오:</translation>
     </message>
@@ -4139,7 +4065,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="466"/>
         <location filename="../testing/luna_tester_engine.cpp" line="509"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1219"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1224"/>
         <source>LunaTester error</source>
         <translation>LunaTester 에러</translation>
     </message>
@@ -4189,115 +4115,115 @@ the background or foreground, so the engine can be loaded from scratch.</comment
         <translation>체크 포인트가 성공적으로 재설정되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1093"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1098"/>
         <source>LunaLUA tester is not started!</source>
         <translation>LunaLua 테스터가 시작되지 않았습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1106"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1111"/>
         <source>Are you sure you want to close LunaTester? If you are testing a level, this will immediately end it!</source>
         <translation>LunaTester를 종료 하시겠습니까? 레벨을 테스트하는 중이라면, 즉시 종료됩니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1114"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1119"/>
         <source>LunaTester has been successfully closed.</source>
         <translation>LunaTester가 성공적으로 종료되었습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1122"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1127"/>
         <source>LunaTester is not running.</source>
         <translation>LunaTester가 실행되고 있지 않습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1132"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1231"/>
-        <location filename="../testing/luna_tester_engine.cpp" line="1272"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1137"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1236"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1277"/>
         <source>LunaTester is still active</source>
         <translation>LunaTester는 여전히 활성 상태입니다</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1133"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1138"/>
         <source>To change a path to LunaTester, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation>LunaTester의 경로를 변경하려면 현재 실행중인 게임을 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1142"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1147"/>
         <source>Path to LunaTester</source>
         <comment>Title of dialog</comment>
         <translation>LunaTester 경로</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1149"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1154"/>
         <source>Please select a path to LunaTester:</source>
         <translation>LunaTester의 경로를 선택하십시오 :</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1158"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1163"/>
         <source>Use default</source>
         <comment>Using default LunaTester path, specified by a config pack</comment>
         <translation>기본값 사용</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1161"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1166"/>
         <source>Custom</source>
         <comment>Using a user selected LunaTester path</comment>
         <translation>커스텀</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1165"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1170"/>
         <source>Browse...</source>
         <translation>검색...</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1189"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1194"/>
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1202"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1207"/>
         <source>Select a location of LunaTester</source>
         <comment>Directory select dialog title</comment>
         <translation>LunaTester 위치 선택</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1220"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1225"/>
         <source>Unable to recognize capabilities of selected LunaLua path, game may not work. Please select a different path.</source>
         <translation>선택한 LunaLua 경로의 기능을 인식하지 못하여, 게임이 작동하지 않을 수 있습니다. 다른 경로를 선택하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1232"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1237"/>
         <source>To change an executable name, you will need to shut down a currently running game. Do you want to shut down LunaTester now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1253"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1258"/>
         <source>Change the executable name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1254"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1259"/>
         <source>Please type the PE executable name to be used with LunaTester (for example, smbx.exe)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1273"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1278"/>
         <source>To change a setup of Wine, you will need to shut down a currently working LunaTester. Do you want to shut down the LunaTester now?</source>
         <translation>Wine 설정을 변경하려면 현재 작동중인 LunaTester를 종료해야합니다. 지금 LunaTester를 종료 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1475"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1480"/>
         <source>LunaTester directory check failed</source>
         <comment>A title of a message box that shows when some of the files or directories not exist.</comment>
         <translation>LunaTester 디렉터리 체크 실패</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1477"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1482"/>
         <source>Can&apos;t start LunaTester because &quot;%1&quot; is not found! That might happen due to any of the following reasons:</source>
         <comment>A text of a message box that shows when some of the files or directories not exist.</comment>
         <translation>&quot;% 1&quot;을 (를) 찾을 수 없기 때문에 LunaTester를 시작할 수 없습니다! 다음 이유 중 하나로 인해 발생할 수 있습니다:</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1481"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1486"/>
         <source>- Incorrect location of LunaTester (or SMBX2 data root) was specified, please check the LunaTester location setup.
 - Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
@@ -4307,7 +4233,7 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1488"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1493"/>
         <source>- Possible removal of files by your antivirus (false positive or an infection of the file), please check your antivirus&apos; quarantine or report of recently removed threats.
 - Incorrect installation of SMBX2 has caused missing files, please reinstall SMBX2 to fix your problem.</source>
         <comment>Description of a problem, showing when LunaTester is a default engine in a current config pack.</comment>
@@ -4315,12 +4241,12 @@ the background or foreground, so the engine can be loaded from scratch.</comment
 -잘못된 SMBX2 설치로 인해 파일이 누락되었습니다. 문제를 해결하려면 SMBX2를 다시 설치하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1525"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1530"/>
         <source>Vanilla SMBX detected!</source>
         <translation>바닐라 SMBX가 감지되었습니다!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1526"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1531"/>
         <source>&quot;%1&quot; not found!
 You have a Vanilla SMBX!
 That means, impossible to launch level testing with a LunaTester. LunaLua is required to run level testing with SMBX Engine.</source>
@@ -4329,32 +4255,32 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
 즉, LunaTester로 레벨 테스트를 시작할 수 없습니다. SMBX Engine으로 레벨 테스트를 실행하려면 LunaLua가 필요합니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1539"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1544"/>
         <source>Incompatible LunaDll found</source>
         <translation>호환되지 않는 LunaDll 발견</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1540"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1545"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaDll.dll module found in the path: %1</source>
         <translation>경로에서 발견 된 호환되지 않는 LunaDll.dll 모듈로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1549"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1554"/>
         <source>Incompatible LunaLua</source>
         <translation>호환되지 않는 LunaLua</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1550"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1555"/>
         <source>Impossible to start a LunaTester due to an incompatible LunaLua in the path: %1</source>
         <translation>경로에 호환되지 않는 LunaLua로 인해 LunaTester를 시작할 수 없습니다 : % 1</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1619"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1624"/>
         <source>SMBX64 limits are exceeded!</source>
         <translation>SMBX64 한도 초과!</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1620"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1625"/>
         <source>Violation of SMBX64 standard has been found!
 %1
 , legacy engine may crash!
@@ -4367,17 +4293,17 @@ Do you want to continue the process?</source>
 프로세스를 계속 하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1752"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1757"/>
         <source>Impossible to launch an episode because of an invalid world file.</source>
         <translation>잘못된 월드 파일로 인해 에피소드를 시작할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1761"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1766"/>
         <source>Cannot launch the episode because the world map file is saved in an unsupported format. Please save the world map in the SMBX64-WLD format.</source>
         <translation>세계지도 파일이 지원되지 않는 형식으로 저장되어있어 에피소드를 시작할 수 없습니다. SMBX64-WLD 형식으로 세계지도를 저장하십시오.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="1796"/>
+        <location filename="../testing/luna_tester_engine.cpp" line="1801"/>
         <source>Impossible to launch an episode out of LunaTester worlds root.</source>
         <translation>LunaTester 월드 루트에서 에피소드를 시작할 수 없습니다.</translation>
     </message>
@@ -6359,10 +6285,6 @@ Please, select necessary world map in a list:</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Editor - Platformer Game Engine</source>
-        <translation type="vanished">편집자-플랫 포머 게임 엔진</translation>
-    </message>
-    <message>
         <location filename="../mainwindow.ui" line="105"/>
         <source>File</source>
         <translation>파일</translation>
@@ -8195,7 +8117,7 @@ Do you want to clone another section?</source>
         <translation>로드 된 파일이 없습니다!</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="291"/>
+        <location filename="../main_window/translator.cpp" line="307"/>
         <source>Current Language changed to %1</source>
         <translation>현재 언어가 % 1로 변경되었습니다</translation>
     </message>
@@ -8314,22 +8236,22 @@ Please, choose the Moondust Maintainer application yourself!</source>
 <context>
     <name>MusicFileList</name>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.cpp" line="33"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="33"/>
         <source>Select SFX file</source>
         <translation>SFX 파일 선택</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.cpp" line="34"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="34"/>
         <source>Please select SFX file to use</source>
         <translation>사용할 SFX 파일을 선택하십시오</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.cpp" line="47"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="47"/>
         <source>Select Custom music</source>
         <translation>맞춤 음악 선택</translation>
     </message>
     <message>
-        <location filename="../editing/_dialogs/musicfilelist.cpp" line="48"/>
+        <location filename="../../_common/qt-modules/file_list_browser/musicfilelist.cpp" line="48"/>
         <source>Please select music file to use as custom</source>
         <translation>사용자 정의로 사용할 음악 파일을 선택하십시오</translation>
     </message>
@@ -9522,7 +9444,7 @@ File: %1</source>
 파일을 저장하면</translation>
     </message>
     <message>
-        <location filename="../main_window/translator.cpp" line="136"/>
+        <location filename="../main_window/translator.cpp" line="146"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="98"/>
         <location filename="../../_common/translator-qt/translator.cpp" line="249"/>
         <source>LTR</source>
@@ -12139,7 +12061,7 @@ Do you want to save your changes?</source>
     </message>
     <message>
         <location filename="../main_window/dock/wld_settings_box.ui" line="79"/>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="214"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="215"/>
         <source>Intro level:</source>
         <translation>소개 수준 :</translation>
     </message>
@@ -12179,27 +12101,27 @@ Do you want to save your changes?</source>
         <translation>검색</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="214"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="215"/>
         <source>Main hub level:</source>
         <translation>주요 허브 수준 :</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="553"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="554"/>
         <source>Counting...</source>
         <translation>계산 중 ...</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="558"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
         <source>Calculating total star count in accessible levels</source>
         <translation>배치 된 레벨에서 별 세기</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="559"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="560"/>
         <source>Abort</source>
         <translation>중단</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/wld_settings_box.cpp" line="563"/>
+        <location filename="../main_window/dock/wld_settings_box.cpp" line="564"/>
         <source>Counting stars...</source>
         <translation>별을 세는 중 ...</translation>
     </message>
@@ -12250,162 +12172,6 @@ Do you want to save your changes?</source>
         <location filename="../main_window/about_dialog/aboutdialog.cpp" line="98"/>
         <source>This program is distributed under %1</source>
         <translation>이 프로그램은 % 1에 배포됩니다</translation>
-    </message>
-</context>
-<context>
-    <name>gifs2png_gui</name>
-    <message>
-        <source>Convert masked GIFs into the PNG</source>
-        <translation type="vanished">마스크 된 GIF를 PNG로 변환</translation>
-    </message>
-    <message>
-        <source>Note: If the conversion results in broken images, run the LazyFix tool to attempt a fix and try again</source>
-        <translation type="vanished">참고 : 변환으로 인해 이미지가 손상된 경우 LazyFix 도구를 실행하여 수정을 시도하고 다시 시도하십시오</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">닫기</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the SMBX GIF files (*.gif and *m.gif)</source>
-        <translation type="vanished">SMBX GIF 파일 (* .gif 및 * m.gif)의 입력 위치를 선택합니다</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">하위 디렉토리에서 이미지 찾기</translation>
-    </message>
-    <message>
-        <source>This is a console tool which convert the SMBX graphics which have a gif format with transparence mask into PNG format with own transparence.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">이 도구는 마스크를 투명 키로 사용하여 SMBX 그래픽을 GIF에서 PNG로 변환합니다.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">검색</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">플래그</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a PNG images
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">PNG 이미지의 출력 위치 선택
-(출력 위치를 지정하지 않으면 이미지가 입력 디렉터리에 저장됩니다.)</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">스타트</translation>
-    </message>
-    <message>
-        <source>Remove the original images after a successful conversion</source>
-        <translation type="vanished">성공적인 변환 후 원본 이미지 제거</translation>
-    </message>
-    <message>
-        <source>Skip conversion of backgrounds (don&apos;t convert background2-*.gif)</source>
-        <translation type="vanished">배경 변환 건너 뛰기 (background2-*. gif는 변환하지 않음)</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">오픈 소스 디렉토리</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">대상 디렉토리 열기</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">입력 디렉토리가 지정되지 않았습니다</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">입력 디렉토리를 지정하십시오</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">도구를 찾을 수 없습니다</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">응용 프로그램을 실행할 수 없습니다.
-%1
-응용 프로그램 디렉토리를 확인하고 올바르게 설치되었는지 확인하십시오.</translation>
-    </message>
-</context>
-<context>
-    <name>png2gifs_gui</name>
-    <message>
-        <source>Convert PNG into the masked GIFs</source>
-        <translation type="vanished">PNG를 마스크 된 GIF로 변환</translation>
-    </message>
-    <message>
-        <source>This tool converts the PNG images with built-in transparency into SMBX graphics which are in the GIF format with a separate transparency mask image.</source>
-        <comment>About GIFs2PNG tool</comment>
-        <translation type="vanished">이 도구는 투명도가 내장 된 PNG 이미지를 별도의 투명 마스크 이미지가있는 GIF 형식의 SMBX 그래픽으로 변환합니다.</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation type="vanished">검색</translation>
-    </message>
-    <message>
-        <source>Output dir, where will be saved a SMBX GIF files (*.gif and *m.gif)
-(if this field will not be set, target images will be stored into the same directory)</source>
-        <translation type="vanished">GIF 파일이 저장 될 출력 디렉토리 (* .gif 및 * m.gif)
-(이 필드를 비워두면 대상 이미지가 원래 디렉토리에 저장됩니다)</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">스타트</translation>
-    </message>
-    <message>
-        <source>Look for images in subdirectories</source>
-        <translation type="vanished">하위 디렉토리에서 이미지 찾기</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">닫기</translation>
-    </message>
-    <message>
-        <source>Flags</source>
-        <translation type="vanished">플래그</translation>
-    </message>
-    <message>
-        <source>Input directory wich contains the PNG Images with own transparency (*.png)</source>
-        <translation type="vanished">PNG 이미지 (* .png)가 포함 된 입력 디렉토리</translation>
-    </message>
-    <message>
-        <source>Remove source images after successful conversion</source>
-        <translation type="vanished">성공적인 변환 후 소스 이미지 제거</translation>
-    </message>
-    <message>
-        <source>Open Source Directory</source>
-        <translation type="vanished">오픈 소스 디렉토리</translation>
-    </message>
-    <message>
-        <source>Open Target Directory</source>
-        <translation type="vanished">대상 디렉토리 열기</translation>
-    </message>
-    <message>
-        <source>Source directory is not set</source>
-        <translation type="vanished">소스 디렉토리가 설정되지 않았습니다</translation>
-    </message>
-    <message>
-        <source>Please, set the source directory</source>
-        <translation type="vanished">소스 디렉토리를 설정하십시오</translation>
-    </message>
-    <message>
-        <source>Tool not found</source>
-        <translation type="vanished">도구를 찾을 수 없습니다</translation>
-    </message>
-    <message>
-        <source>Can&apos;t run application:
-%1
-Please, check the application directory and make sure it is installed properly.</source>
-        <translation type="vanished">응용 프로그램을 실행할 수 없습니다.
-%1
-응용 프로그램 디렉토리를 확인하고 올바르게 설치되었는지 확인하십시오.</translation>
     </message>
 </context>
 <context>

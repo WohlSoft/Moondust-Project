@@ -115,6 +115,8 @@ if(APPLE)
     list(APPEND PGE_CALIBRATOR_SRCS
         _resources/calibrator.icns
         ${PGE_LANG_BIN_FILES}
+        ${MOONDUST_QT_LANG_BIN_FILES}
+        ${MOONDUST_QT_LANG_ICON_FILES}
     )
 endif()
 
@@ -221,6 +223,8 @@ if(APPLE)
     )
     set_source_files_properties("${CMAKE_CURRENT_SOURCE_DIR}/_resources/calibrator.icns" PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
     set_source_files_properties(${PGE_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
+    set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
+    set_source_files_properties(${MOONDUST_QT_LANG_ICON_FILES} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/languages")
 
     find_library(COREFOUNDATION_LIBRARY CoreFoundation)
     list(APPEND PGE_CALIBRATOR_LINK_LIBS ${COREFOUNDATION_LIBRARY})
