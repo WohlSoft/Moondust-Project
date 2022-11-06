@@ -112,6 +112,7 @@ list(APPEND PGE_CALIBRATOR_SRCS
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
+    set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES GENERATED TRUE) # WORKAROUND
     list(APPEND PGE_CALIBRATOR_SRCS
         _resources/calibrator.icns
         ${PGE_LANG_BIN_FILES}
@@ -165,6 +166,7 @@ add_dependencies(pge_calibrator
     libpng_Local
     FREETYPE_Local
     calibrator_translations
+    moondust_translations
 )
 
 set(PGE_CALIBRATOR_LINK_LIBS)

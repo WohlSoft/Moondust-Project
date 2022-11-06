@@ -84,7 +84,7 @@ FILE(GLOB PGE_LANG_SRC_FILES "${CMAKE_CURRENT_SOURCE_DIR}/languages/*.ts")
 set_source_files_properties(${PGE_LANG_SRC_FILES} PROPERTIES OUTPUT_LOCATION ${PGE_LANG_OUTPUT_DIR})
 set(PGE_LANG_BIN_FILES)
 qt5_add_translation(PGE_LANG_BIN_FILES ${PGE_LANG_SRC_FILES})
-add_custom_target(editor_translations ALL DEPENDS ${PGE_LANG_BIN_FILES})
+add_custom_target(editor_translations ALL DEPENDS ${PGE_LANG_BIN_FILES} ${MOONDUST_QT_LANG_BIN_FILES})
 
 if(NOT APPLE AND NOT EMSCRIPTEN)
     install(FILES ${PGE_LANG_BIN_FILES} DESTINATION "${PGE_INSTALL_DIRECTORY}/languages")
@@ -518,7 +518,8 @@ endif()
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
-    FILE(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_*.icns")
+    file(GLOB PGE_FILE_ICONS "${CMAKE_CURRENT_SOURCE_DIR}/_resources/file_*.icns")
+    set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES GENERATED TRUE) # WORKAROUND
     list(APPEND PGE_EDITOR_SRCS
         _resources/cat_builder.icns
         ${PGE_LANG_BIN_FILES}
@@ -713,6 +714,7 @@ add_dependencies(pge_editor
     libpng_Local
     FREETYPE_Local
     PGE_FileFormatsQt
+    moondust_translations
     editor_translations
 )
 

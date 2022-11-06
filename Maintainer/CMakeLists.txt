@@ -116,6 +116,7 @@ list(APPEND PGE_MAINTAINER_SRCS
 
 if(APPLE)
     add_definitions(-DQ_OS_MACX) # Workaround for MOC
+    set_source_files_properties(${MOONDUST_QT_LANG_BIN_FILES} PROPERTIES GENERATED TRUE) # WORKAROUND
     list(APPEND PGE_MAINTAINER_SRCS
         _resources/maintainer.icns
         ${PGE_LANG_BIN_FILES}
@@ -137,6 +138,7 @@ add_dependencies(pge_maintainer
     FREETYPE_Local
     PGE_FileFormatsQt
     maintainer_translations
+    moondust_translations
 ) # Needed for Qt to be linked
 
 add_library(PGE_Maintainer_QtLibs INTERFACE)
