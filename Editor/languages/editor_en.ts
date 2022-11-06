@@ -537,7 +537,7 @@ Please set SoX path first</translation>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation>Select WOPL bank file</translation>
+        <translation>Select a WOPL bank file</translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
