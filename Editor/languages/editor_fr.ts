@@ -870,7 +870,7 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash. 
+- Please give a list of actions you did to cause a crash.
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
         <translation>Lors de l&apos;envoi d&apos;un rapport, veuillez expliquer ce qui a causé le plantage.
@@ -3152,7 +3152,7 @@ Il est conseillé de désactiver cette fonctionnalité sur les ordinateurs lents
     </message>
     <message>
         <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>Met fin au processus en cours d&apos;exécution</translation>
     </message>
@@ -3701,12 +3701,12 @@ Souhaitez-vous continuer ?</translation>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
@@ -4843,7 +4843,7 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     </message>
     <message>
         <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
+In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
         <translation>Afficher un écran vide au lieu de l&apos;écran de chargement.
 Dans l&apos;écran de chargement de l&apos;ancien moteur, il y aurait autrement
@@ -6284,7 +6284,7 @@ See %2 for more information.</source>
 Voir %2 pour plus d&apos;information.</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
         <translation>Impossible de commencer les tests, moteur introuvable :
@@ -6360,10 +6360,10 @@ Identifiant de paquet de configuration attendu : %4</translation>
         <translation>Moondust Maintainer est introuvable</translation>
     </message>
     <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation>Impossible de lancer l&apos;utilitaire, Moondust Maintainer est introuvable : 
+        <translation>Impossible de lancer l&apos;utilitaire, Moondust Maintainer est introuvable :
 %1
 Veuillez sélectionner l&apos;application Moondust Maintainer pat vous-même !</translation>
     </message>
@@ -7433,23 +7433,23 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
         <translation>Paramètres supplémentaires de section</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Nous sommes désolé, mais l&apos;éditeur Moondust a planté. 
+        <translation>Nous sommes désolé, mais l&apos;éditeur Moondust a planté.
 Motif : Dépassement de mémoire !
 
 Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté. 
+        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté.
 Motif : Exception non gérée
 
 Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
@@ -7457,11 +7457,11 @@ Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions
 Lien du forum : wohlsoft.ru/forum</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté. 
+        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté.
 Motif : %1
 
 </translation>

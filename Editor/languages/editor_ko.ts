@@ -671,32 +671,32 @@ Please set SoX path first</source>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="36"/>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="41"/>
         <source>Select WOPN bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="42"/>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/file_list_browser/bankfilelist.cpp" line="48"/>
         <source>Please select the SoundFont bank file to add</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -815,7 +815,7 @@ Please download and install them into this directory&lt;br&gt;
 &lt;br&gt;
 You can use any configuration package here:&lt;br&gt;%2</source>
         <translation>ConfigManager 구성 패키지를 찾을 수 없습니다! &lt;br&gt;이 디렉토리에 다운로드하여 설치하십시오. &lt;br&gt;
- &lt;br&gt; 
+ &lt;br&gt;
 % 1 &lt;br&gt;
  &lt;br&gt;
  여기에서 구성 패키지를 사용할 수 있습니다. &lt;br&gt; % 2</translation>
@@ -1058,7 +1058,7 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="127"/>
         <source>Join the official Moondust Discord server to submit the report</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.ui" line="24"/>
@@ -1073,7 +1073,7 @@ File path: %3</source>
     <message>
         <location filename="../common_features/crashhandler.ui" line="94"/>
         <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash. 
+- Please give a list of actions you did to cause a crash.
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
         <translation>신고하는 동안 충돌 오류를 발생시키기 위해 무엇을했는지 설명해주세요.
@@ -1314,7 +1314,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="456"/>
         <source>Remove</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="463"/>
@@ -1326,35 +1326,35 @@ Please save them before doing anything else.</source>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="469"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="512"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="522"/>
         <source>Add</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="542"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="554"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="574"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="581"/>
@@ -1366,43 +1366,43 @@ Please save them before doing anything else.</source>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="614"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="637"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="649"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="656"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="692"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="699"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="722"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.ui" line="739"/>
@@ -1474,7 +1474,7 @@ Please save them before doing anything else.</source>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="834"/>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="839"/>
@@ -1522,19 +1522,19 @@ Please save them before doing anything else.</source>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="873"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="881"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../_common/qt-modules/custom_music_setup/custom_music_setup.cpp" line="882"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3190,7 +3190,7 @@ as well as toolboxes in toolbars and menus. This editor also allows you to selec
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="88"/>
         <source>Direction</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../editing/_scenes/level/items/item_playerpoint.cpp" line="91"/>
@@ -4009,7 +4009,7 @@ Suggested to disable this feature on slow machines or if any troubles are happen
     <message>
         <location filename="../testing/luna_tester_engine.cpp" line="430"/>
         <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>실행중인 프로세스 종료</translation>
     </message>
@@ -4486,7 +4486,7 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="637"/>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="580"/>
         <source>Autoscroll section (Legacy)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="665"/>
@@ -4498,7 +4498,7 @@ Do you want to continue?</source>
         <location filename="../main_window/dock/lvl_events_box.ui" line="754"/>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="777"/>
@@ -4588,30 +4588,30 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1093"/>
         <source>Change the autoscroll speed</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1102"/>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1110"/>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1115"/>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1231"/>
         <source>Not implemented yet, sorry</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.ui" line="1257"/>
@@ -4717,7 +4717,7 @@ Do you want to continue?</source>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="575"/>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/dock/lvl_events_box.cpp" line="1129"/>
@@ -6137,7 +6137,7 @@ If set to zero, the player will start at the pre-defined level start point.</sou
     <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="209"/>
         <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
+In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
         <translation>로딩 화면 대신 빈 화면을 표시합니다.
 그렇지 않으면 Legacy Engine 레벨 로딩 화면에서,
@@ -7474,7 +7474,7 @@ PGE 엔진은 아직 개발 초기 단계에 있으며 누락되거나 올바르
     </message>
     <message>
         <location filename="../testing/pge_engine.cpp" line="129"/>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
         <translation>테스트를 시작할 수 없습니다. 엔진을 찾을 수 없습니다.
@@ -7591,13 +7591,13 @@ See %1 for more information.</source>
         <location filename="../main_window/view/view.cpp" line="136"/>
         <location filename="../main_window/view/view.cpp" line="149"/>
         <source>Grid size: changed into %1x%1</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/view/view.cpp" line="122"/>
         <location filename="../main_window/view/view.cpp" line="144"/>
         <source>Grid size: restored default</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/tools/main_clean_npc_gargage.cpp" line="61"/>
@@ -8146,12 +8146,12 @@ Please save the file first.</source>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="256"/>
         <source>Next grid size</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="261"/>
         <source>Previous grid size</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/_settings/defaults.cpp" line="273"/>
@@ -8218,19 +8218,19 @@ Please save the file first.</source>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="92"/>
         <source>Moondust Maintainer is not found</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="93"/>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="98"/>
         <source>Choose the Moondust Maintainer application</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8684,7 +8684,7 @@ Error description:
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="204"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
@@ -8695,7 +8695,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="210"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -8755,7 +8755,7 @@ Forum link: wohlsoft.ru/forum</source>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="267"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </source>
@@ -9960,17 +9960,17 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="30"/>
         <source>Cheats</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="92"/>
         <source>Initial state</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="98"/>
         <source>Start with stars:</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="143"/>
@@ -9995,7 +9995,7 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="225"/>
         <source>Player settings</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../main_window/testing/testing_settings.ui" line="237"/>

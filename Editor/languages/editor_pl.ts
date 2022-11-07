@@ -534,27 +534,27 @@ Ustaw ścieżkę ponownie</translation>
     <name>BankFileList</name>
     <message>
         <source>Select WOPL bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select SoundFont bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please select the SoundFont bank file to add</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -870,7 +870,7 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash. 
+- Please give a list of actions you did to cause a crash.
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
         <translation>Podczas tworzenia raportu, wyjaśnij proszę co było przyczyną błędu.
@@ -1086,16 +1086,16 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
     <message>
         <source>General</source>
         <comment>FluidSynth general options group</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add</source>
@@ -1104,17 +1104,17 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
     <message>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Width</source>
@@ -1129,7 +1129,7 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
     <message>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Level</source>
@@ -1139,41 +1139,41 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
     <message>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>When there are not enough free voice channels of chips, some chords will squash into arpeggio that will use only one channel. However, this method may cause a dirty and glitchy sounding. So, use this feature at your own risk.</source>
@@ -3152,7 +3152,7 @@ Zaleca się wyłączenie tej funkcji na wolnych komputerach lub w przypadku wyst
     </message>
     <message>
         <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>Zakończ proces uruchamiania</translation>
     </message>
@@ -3702,39 +3702,39 @@ Limity: 27 znaków w jedej linii</translation>
     </message>
     <message>
         <source>Autoscroll section (Legacy)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>There legacy section auto-scroll settings used in the old SMBX64 level files or used in levels converted from legacy format into modern. Use these settings at level files targeted to run on the SMBX64 and older engines. These settings also can be used in any newer engine such as TheXTech and Moondust Engine. However, if your level uses the modern way for section-autoscrolling, legacy settings are ignored. Also, the level saved into SMBX-38A format will cause these settings to be lost. You can find the modern auto-scroll settings in the &quot;Section settings&quot;.</source>
         <extracomment>An explanaition message why these autoscroll settings legacy</extracomment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Change the autoscroll speed</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type:</source>
         <comment>Autoscroll type</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Simple</source>
         <comment>Simple autoscrolling</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Advanced</source>
         <comment>Advanced autoscrolling (draw custom path)</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Not implemented yet, sorry</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Disabled by the strict SMBX64 mode</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4075,7 +4075,7 @@ This option using the SMBX&apos;s bug of BGO rendering. For this can be works, y
     <message>
         <source>Are you sure you want to remove this layer?
 All objects on this layer will be moved to the &apos;Default&apos; layer.</source>
-        <translation>Czy chcesz usunąć tą warstwę? 
+        <translation>Czy chcesz usunąć tą warstwę?
 Wszystkie obiekty zostaną przeniesione do warstwy &quot;Default&quot;.</translation>
     </message>
     <message>
@@ -4093,13 +4093,13 @@ Wszystkie obiekty zostaną przeniesione do warstwy &quot;Default&quot;.</transla
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be moved to the &apos;Default&apos; layer!</source>
-        <translation>Czy chcesz usunąć tą warstwę? 
+        <translation>Czy chcesz usunąć tą warstwę?
 Wszystkie obiekty zostaną przeniesione do warstwy &quot;Default&quot;!</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this layer?
 All elements of this layer will be removed too!</source>
-        <translation>Czy chcesz usunąć tą warstwę? 
+        <translation>Czy chcesz usunąć tą warstwę?
 Wszystkie obiekty związane z tą warstwą zostaną usunięte!</translation>
     </message>
 </context>
@@ -4776,7 +4776,7 @@ Jeżeli wartość jest zerem, wystartuje poziom w ustawionym punkcie startowym.<
     </message>
     <message>
         <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
+In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
         <translation>Pokaż pusty ekran zamiast ekranu łaodwania.
 W SMBX pokaże się ekran ładowania
@@ -5988,7 +5988,7 @@ Paczka konfiguracyjna ma błędy.</translation>
         <translation>PGE Engine nie znaleziony</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
         <translation>Nie można zacząć testów, nie znaleziono silnika:
@@ -6362,33 +6362,33 @@ Oczekiwany Indetyfikator pakietu konfiguracji: %4</translation>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Grid size: changed into %1x%1</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Grid size: restored default</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Next grid size</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Previous grid size</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
@@ -7141,7 +7141,7 @@ Opis błędu:
         <translation>Ilość gwiazdek</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
@@ -7151,16 +7151,16 @@ Powód: Brak pamięci!
 Zamknij inne programy, aby uniknąć tego błędu i zwolnić trochę pamięci.</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
 
 Forum link: wohlsoft.ru/forum</source>
-        <translation>Przepraszamy, Edytor Moondust się uszkodził. 
+        <translation>Przepraszamy, Edytor Moondust się uszkodził.
 Powód: Nieobsługiwany Wyjątek
 
-Prosimy o kontakt z nami, aby naprawić ten problem, Dziękujemy. 
+Prosimy o kontakt z nami, aby naprawić ten problem, Dziękujemy.
 
 Link do forum: wohlsoft.ru/forum</translation>
     </message>
@@ -7201,7 +7201,7 @@ Link do forum: wohlsoft.ru/forum</translation>
         <translation>Przerwany! [SIGINT]</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </source>
@@ -7813,15 +7813,15 @@ Nie działa podczas przeprowadzania testu zapisanego pliku.</translation>
     </message>
     <message>
         <source>Cheats</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Initial state</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Start with stars:</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Debug</source>
@@ -7829,7 +7829,7 @@ Nie działa podczas przeprowadzania testu zapisanego pliku.</translation>
     </message>
     <message>
         <source>Player settings</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>[No vehicle]</source>

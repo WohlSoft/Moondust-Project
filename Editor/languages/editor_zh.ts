@@ -877,7 +877,7 @@ Please save them before doing anything else.</source>
     </message>
     <message>
         <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash. 
+- Please give a list of actions you did to cause a crash.
 - If a crash happened with editing a specific file, please attach it to the report.
 - What operating system you are using?</source>
         <translation>发送报告之前，请简述您是如何操作造成的程序异常终止。
@@ -3401,7 +3401,7 @@ That means, impossible to launch level testing with a LunaTester. LunaLua is req
     </message>
     <message>
         <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in 
+        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
 the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation>结束进程</translation>
     </message>
@@ -4890,7 +4890,7 @@ Please, select necessary world map in a list:</source>
     </message>
     <message>
         <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise 
+In the Legacy Engine level loading screen, it would otherwise
 show the current playable character(s) and number of lives.</source>
         <translation>显示黑屏而非加载关卡时的界面。
 在老旧的 SMBX 1.3 引擎中，加载关卡时的界面将
@@ -6377,15 +6377,15 @@ Expected config pack ID: %4</source>
         <translation>上一网格大小</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found: 
+        <source>Can&apos;t start testing, engine is not found:
 %1
 Please, choose the engine application yourself!</source>
-        <translation>未找到引擎，无法测试： 
+        <translation>未找到引擎，无法测试：
 %1
 请选择引擎！</translation>
     </message>
     <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found: 
+        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
 %1
 Please, choose the Moondust Maintainer application yourself!</source>
         <translation>未找到月尘引擎管理器，无法启动工具：
@@ -7456,7 +7456,7 @@ The maximum number of Music Boxes is %2.</source>
         <translation>需要站立</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Out of memory!
 
 To prevent this, try closing other uneccessary programs to free up more memory.</source>
@@ -7466,7 +7466,7 @@ To prevent this, try closing other uneccessary programs to free up more memory.<
 为防止出现此现象，请关闭其他程序以释放内存。</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -7480,7 +7480,7 @@ Forum link: wohlsoft.ru/forum</source>
 论坛链接: wohlsoft.ru/forum（需要英文）</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed. 
+        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: %1
 
 </source>
