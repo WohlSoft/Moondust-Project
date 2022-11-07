@@ -545,7 +545,7 @@ Please set SoX path first</translation>
     </message>
     <message>
         <source>Select WOPN bank file</source>
-        <translation>Select WOPN bank file</translation>
+        <translation>Select a WOPN bank file</translation>
     </message>
     <message>
         <source>Please select the WOPN instruments bank file to use</source>
