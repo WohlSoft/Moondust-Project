@@ -125,7 +125,7 @@
     </message>
     <message>
         <source>MIDI</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>libADLMIDI (OPL3 Synth emulation)</source>
@@ -331,19 +331,19 @@
     <name>MusicFileList</name>
     <message>
         <source>Select Custom music</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select SFX file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please select SFX file to use</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please select music file to use as custom</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

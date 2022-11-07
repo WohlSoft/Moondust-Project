@@ -6,32 +6,32 @@
     <message>
         <location filename="../file_list_browser/bankfilelist.cpp" line="35"/>
         <source>Select WOPL bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../file_list_browser/bankfilelist.cpp" line="36"/>
         <source>Please select the WOPL instruments bank file to use</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../file_list_browser/bankfilelist.cpp" line="41"/>
         <source>Select WOPN bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../file_list_browser/bankfilelist.cpp" line="42"/>
         <source>Please select the WOPN instruments bank file to use</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../file_list_browser/bankfilelist.cpp" line="47"/>
         <source>Select SoundFont bank file</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../file_list_browser/bankfilelist.cpp" line="48"/>
         <source>Please select the SoundFont bank file to add</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -169,7 +169,7 @@
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="456"/>
         <source>Remove</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="463"/>
@@ -181,35 +181,35 @@
         <location filename="../custom_music_setup/custom_music_setup.ui" line="469"/>
         <source>Max polyphony</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="512"/>
         <source>SoundFont banks list (can be re-ordered by drag &amp; drop)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="522"/>
         <source>Add</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="542"/>
         <source>Reverb</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="554"/>
         <source>Room size</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="574"/>
         <source>Damping</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="581"/>
@@ -221,43 +221,43 @@
         <location filename="../custom_music_setup/custom_music_setup.ui" line="614"/>
         <source>Level</source>
         <comment>FluidSynth: Reverb effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="637"/>
         <source>Chorus</source>
         <comment>FluidSynth option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="649"/>
         <source>Level</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="656"/>
         <source>Speed</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="692"/>
         <source>Depth (ms)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="699"/>
         <source>Voice count (N)</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="722"/>
         <source>Type</source>
         <comment>FluidSynth: Chorus effect option</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.ui" line="739"/>
@@ -329,7 +329,7 @@
     <message>
         <location filename="../custom_music_setup/custom_music_setup.cpp" line="834"/>
         <source>FluidSynth (needed an SF2-bank)</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.cpp" line="839"/>
@@ -377,19 +377,19 @@
         <location filename="../custom_music_setup/custom_music_setup.cpp" line="873"/>
         <source>Native OPN2</source>
         <comment>Volume model for libOPNMIDI</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.cpp" line="881"/>
         <source>Sine wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../custom_music_setup/custom_music_setup.cpp" line="882"/>
         <source>Triangle wave</source>
         <comment>FluidSynth Chorus type value</comment>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
