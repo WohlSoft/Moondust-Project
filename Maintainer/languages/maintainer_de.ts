@@ -131,7 +131,7 @@
         <location filename="../Music/audiocvt_sox_gui.cpp" line="137"/>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="230"/>
         <source>SoX error</source>
-        <translation type="unfinished"></translation>
+        <translation>SoX-Fehler</translation>
     </message>
     <message>
         <location filename="../Music/audiocvt_sox_gui.cpp" line="131"/>
