@@ -869,13 +869,6 @@ Por favor guárdelos antes de hacer algo más.</translation>
         <translation type="unfinished">Señalar un problema en el repositorio de GitHub (WohlSoft/PGE-Project)</translation>
     </message>
     <message>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copied!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3148,12 +3141,6 @@ Requiere una poderosa computadora, de otra manera el motor se congelará en la s
 Se sugiere deshabilitar esto en máquinas lentas o en caso de que se presente algún problema al probar.</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished">Terminar proceso ejecutado</translation>
-    </message>
-    <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation type="unfinished">Termina el proceso del LunaTester para que el motor pueda ejecutarse de nuevo.</translation>
     </message>
@@ -4762,14 +4749,6 @@ Si el valor es cero, el nivel comenzará en el punto de comienzo pre-declarado.<
         <translation>Explorar otro archivo</translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation>Muestra pantalla vacía en lugar de la pantalla de carga.
-En el motor SMBX la pantalla de carga mostrando
-los jugadores actuales y el número de vidas.</translation>
-    </message>
-    <message>
         <source>Hide level enter screen</source>
         <translation>Ocultar pantalla de entrada al nivel</translation>
     </message>
@@ -5974,14 +5953,6 @@ El paquete de configuración se cargó con errores.</translation>
         <translation>El motor no se encuentra</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation>No se puede probar, no se encuentra el motor:
-%1
-¡Por favor elija la aplicación por usted mismo!</translation>
-    </message>
-    <message>
         <source>Choose the Engine application</source>
         <translation>Elegir el programa de Motor</translation>
     </message>
@@ -6340,12 +6311,6 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7118,16 +7083,6 @@ Descripción del error:
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished">Lo lamentamos, pero el editor ha colapsado.
-Razón: ¡memoria insuficiente!
-
-Para prevenir esto, pruebe cerrando otras aplicaciones innecesarias para despejar más memoria.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -7175,16 +7130,6 @@ Foro: wohlsoft.ru/forum</translation>
     <message>
         <source>Interrupted! [SIGINT]</source>
         <translation>¡Interrumpido! [SIGINT]</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
-        <translation type="unfinished">Lo lamentamos, pero el editor ha colapsado.
-Razón: %1
-
-</translation>
     </message>
     <message>
         <source>Cut top here</source>

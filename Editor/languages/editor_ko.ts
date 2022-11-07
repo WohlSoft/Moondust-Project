@@ -1071,17 +1071,6 @@ File path: %3</source>
         <translation type="unfinished">GitHub 저장소 (WohlSoft / PGE-Project)에서 문제 제기</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="94"/>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation>신고하는 동안 충돌 오류를 발생시키기 위해 무엇을했는지 설명해주세요.
--충돌을 유발하기 위해 수행 한 작업 목록을 제공하십시오.
--특정 파일 수정시 충돌이 발생한 경우 보고서에 첨부 해 주시기 바랍니다.
--사용중인 운영 체제는 무엇입니까?</translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.cpp" line="438"/>
         <source>Crash recovery</source>
         <comment>Crash recovery - emergency file saving after crash. A title of message box.</comment>
@@ -4007,13 +3996,6 @@ Suggested to disable this feature on slow machines or if any troubles are happen
 느린 시스템에서 또는 레벨 테스트를 시도하는 동안 문제가 발생하는 경우이 기능을 비활성화하는 것이 좋습니다.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="430"/>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>실행중인 프로세스 종료</translation>
-    </message>
-    <message>
         <location filename="../testing/luna_tester_engine.cpp" line="433"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>LunaTester 프로세스를 종료하여 엔진을 처음부터로드 할 수 있습니다.</translation>
@@ -6135,15 +6117,6 @@ If set to zero, the player will start at the pre-defined level start point.</sou
 0으로 설정하면 플레이어는 미리 정의 된 레벨 시작 지점에서 시작합니다.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="209"/>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation>로딩 화면 대신 빈 화면을 표시합니다.
-그렇지 않으면 Legacy Engine 레벨 로딩 화면에서,
-현재 플레이 가능한 캐릭터와 생명 수를 보여줍니다.</translation>
-    </message>
-    <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="214"/>
         <source>Hide level enter screen</source>
         <translation>레벨 입구 스크린 숨김</translation>
@@ -7473,15 +7446,6 @@ PGE 엔진은 아직 개발 초기 단계에 있으며 누락되거나 올바르
         <translation>엔진을 찾을 수 없습니다</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="129"/>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation>테스트를 시작할 수 없습니다. 엔진을 찾을 수 없습니다.
-%1
-엔진 응용 프로그램을 직접 선택하십시오!</translation>
-    </message>
-    <message>
         <location filename="../testing/pge_engine.cpp" line="133"/>
         <source>Choose the Engine application</source>
         <translation>엔진 애플리케이션 선택</translation>
@@ -8221,13 +8185,6 @@ Please save the file first.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/tools_menu.cpp" line="93"/>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/tools_menu.cpp" line="98"/>
         <source>Choose the Moondust Maintainer application</source>
         <translation type="unfinished"></translation>
@@ -8683,17 +8640,6 @@ Error description:
         <translation>진한 파란색</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="204"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
-이유 : 메모리 부족!
-
-이를 방지하려면 다른 불필요한 프로그램을 닫아 더 많은 메모리를 확보하십시오.</translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.cpp" line="210"/>
         <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
@@ -8752,17 +8698,6 @@ Forum link: wohlsoft.ru/forum</source>
         <location filename="../common_features/crashhandler.cpp" line="260"/>
         <source>Interrupted! [SIGINT]</source>
         <translation>중단되었습니다! [SIGINT]</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="267"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
-        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
-이유 : % 1
-
-</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="352"/>
