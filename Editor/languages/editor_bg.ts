@@ -869,16 +869,6 @@ Please save them before doing anything else.</source>
         <translation>Съобщете проблем в хранилището на GitHub (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation>При подаването на доклад обяснете какво сте направили, за да предизвикате грешка, която предизвика срив.
-- Моля, дайте списък на действията, които сте извършили, за да предизвикате срив.
-- Ако сривът се е случил при редактиране на конкретен файл, моля, приложете го към доклада.
-- Каква операционна система използвате?</translation>
-    </message>
-    <message>
         <source>Copied!</source>
         <translation>Копирано!</translation>
     </message>
@@ -3151,12 +3141,6 @@ Suggested to disable this feature on slow machines or if any troubles are happen
 Препоръчва се тази функция да се деактивира на бавни машини или ако възникнат проблеми при опит за тестване на ниво.</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Прекратяване на работещ процес</translation>
-    </message>
-    <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>Завършва процеса на LunaTester, за да може двигателят да бъде зареден от нулата.</translation>
     </message>
@@ -4734,12 +4718,6 @@ If set to zero, the player will start at the pre-defined level start point.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hide level enter screen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5904,12 +5882,6 @@ The configuration pack was loaded, but contains errors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Choose the Engine application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6281,12 +6253,6 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7053,13 +7019,6 @@ Error description:
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -7101,13 +7060,6 @@ Forum link: wohlsoft.ru/forum</source>
     </message>
     <message>
         <source>Interrupted! [SIGINT]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

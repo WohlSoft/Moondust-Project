@@ -869,16 +869,6 @@ Proszę zapisz je przed zrobieniem czegokolwiek innego.</translation>
         <translation>Zgłoś problem w repozytorium GitHub&apos;a (WohlSoft/Moondust-Project)</translation>
     </message>
     <message>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation>Podczas tworzenia raportu, wyjaśnij proszę co było przyczyną błędu.
-- Proszę opisz zachowania, które doprowadziły do błędu.
-- Jeżeli błąd ukazał się wraz z edycją specyficzngo plik, proszę załącz go do raportu.
-- Z jakiego systemu operacyjnego korzystasz?</translation>
-    </message>
-    <message>
         <source>Copied!</source>
         <translation>Skopiowano!</translation>
     </message>
@@ -3151,12 +3141,6 @@ Wymaga wydajnego komputera, w przeciwnym razie silnik może zawiesić się przy 
 Zaleca się wyłączenie tej funkcji na wolnych komputerach lub w przypadku wystąpienia jakichkolwiek problemów podczas próby przetestowania poziomu.</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Zakończ proces uruchamiania</translation>
-    </message>
-    <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>Kończy proces LunaTester, aby silnik mógł zostać załadowany od zera.</translation>
     </message>
@@ -4775,14 +4759,6 @@ Jeżeli wartość jest zerem, wystartuje poziom w ustawionym punkcie startowym.<
         <translation>Przeglądaj do innego poziomu</translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation>Pokaż pusty ekran zamiast ekranu łaodwania.
-W SMBX pokaże się ekran ładowania
-obecny gracz i liczba żyć.</translation>
-    </message>
-    <message>
         <source>Hide level enter screen</source>
         <translation>Ukryj ekran wejścia do poziomu</translation>
     </message>
@@ -5988,14 +5964,6 @@ Paczka konfiguracyjna ma błędy.</translation>
         <translation>PGE Engine nie znaleziony</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation>Nie można zacząć testów, nie znaleziono silnika:
-%1
-Proszę wybierz swoją aplikację silnika!</translation>
-    </message>
-    <message>
         <source>Choose the Engine application</source>
         <translation>Wybierz aplikację Silnika</translation>
     </message>
@@ -6362,12 +6330,6 @@ Oczekiwany Indetyfikator pakietu konfiguracji: %4</translation>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7142,16 +7104,6 @@ Opis błędu:
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Przepraszamy, Edytor Moondust się uszkodził.
-Powód: Brak pamięci!
-
-Zamknij inne programy, aby uniknąć tego błędu i zwolnić trochę pamięci.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -7199,16 +7151,6 @@ Link do forum: wohlsoft.ru/forum</translation>
     <message>
         <source>Interrupted! [SIGINT]</source>
         <translation>Przerwany! [SIGINT]</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
-        <translation>Przepraszamy, Edytor Moondust się uszkodził.
-Powód: %1
-
-</translation>
     </message>
     <message>
         <source>Cut top here</source>

@@ -1047,14 +1047,6 @@ File path: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="94"/>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation type="unfinished"></translation>
@@ -3959,13 +3951,6 @@ Suggested to disable this feature on slow machines or if any troubles are happen
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="430"/>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../testing/luna_tester_engine.cpp" line="433"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation type="unfinished"></translation>
@@ -6073,13 +6058,6 @@ If set to zero, the player will start at the pre-defined level start point.</sou
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="209"/>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="214"/>
         <source>Hide level enter screen</source>
         <translation type="unfinished"></translation>
@@ -7587,13 +7565,6 @@ The PGE Engine is still at an early stage in development, and there are several 
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="129"/>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../testing/pge_engine.cpp" line="133"/>
         <source>Choose the Engine application</source>
         <translation type="unfinished"></translation>
@@ -8090,13 +8061,6 @@ File not exist.</source>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="92"/>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools_menu.cpp" line="93"/>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9236,14 +9200,6 @@ File: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="204"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.cpp" line="210"/>
         <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
@@ -9296,14 +9252,6 @@ Forum link: wohlsoft.ru/forum</source>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="260"/>
         <source>Interrupted! [SIGINT]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="267"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

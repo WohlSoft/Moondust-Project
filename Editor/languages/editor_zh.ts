@@ -6377,14 +6377,6 @@ Expected config pack ID: %4</source>
         <translation>上一网格大小</translation>
     </message>
     <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
-        <translation>未找到月尘引擎管理器，无法启动工具：
-%1
-请选择月尘引擎管理器文件夹！</translation>
-    </message>
-    <message>
         <source>The current configuration package needs to reload to apply recent changes. Do you want to proceed with it?</source>
         <translation>当前配置包需要刷新以应用最近的更改，您要继续吗？</translation>
     </message>
@@ -7462,20 +7454,6 @@ The maximum number of Music Boxes is %2.</source>
     <message>
         <source>Needs floor</source>
         <translation>需要站立</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation>非常抱歉，月尘引擎编辑器遭到异常终止。
-原因：未处理异常
-
-请将错误报告发送给论坛管理员，以便于我们处理问题，谢谢。
-
-论坛链接: wohlsoft.ru/forum（需要英文）</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed. 

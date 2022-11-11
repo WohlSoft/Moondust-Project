@@ -527,7 +527,7 @@ Veuillez d&apos;abord définir le chemin de SoX</translation>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Here you can quickly convert your music or SFX files which have been&lt;br&gt;formatted incorrectly (wrong sample rate, bad codec, etc.).&lt;/p&gt;
 &lt;p&gt;This feature uses the &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt; audio converter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ici vous pouvez rapidement convertir vos musiques ou fichiers SFX qui &lt;br&gt;n&apos;ont pas été formatés correctement (mauvais taux d&apos;échantillonnage, mauvais codec, etc.).&lt;/p&gt;
-&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration&#x202f;: underline&#x202f;; color&#x202f;:#0000ff&#x202f;;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p&gt;Cette fonctionnalité utilise le convertisseur audio &lt;a href=&quot;http://sox.sourceforge.net/&quot;&gt;&lt;span style=&quot; text-decoration : underline ; color :#0000ff ;&quot;&gt;SoX&lt;/span&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -712,7 +712,7 @@ Chemin d&apos;accès : %3</translation>
     </message>
     <message>
         <source>Configuration name:</source>
-        <translation>Nom de la configuration&#x202f;:</translation>
+        <translation>Nom de la configuration :</translation>
     </message>
     <message>
         <source>Configuration path:</source>
@@ -867,16 +867,6 @@ Veuillez les enregistrer avant de faire quoi que ce soit d&apos;autre.</translat
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
         <translation>Déposer un ticket sur le dépôt GitHub (WohlSoft/Moondust-Project)</translation>
-    </message>
-    <message>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation>Lors de l&apos;envoi d&apos;un rapport, veuillez expliquer ce qui a causé le plantage.
-- Veuillez donner une liste d&apos;étapes que vous avez effectuez pour causer le plantage.
-- Si le plantage a eu lieu lors de la modification d&apos;un fichier en particulier, veuillez le joindre au rapport.
-- Quel système d&apos;exploitation utilisez-vous ?</translation>
     </message>
     <message>
         <source>Copied!</source>
@@ -1363,7 +1353,7 @@ therefore you can use same link to get updated version</source>
     </message>
     <message>
         <source>Shows various important paths!</source>
-        <translation>Affiche divers chemins importants&#x202f;!</translation>
+        <translation>Affiche divers chemins importants !</translation>
     </message>
     <message>
         <source>Args: {[Number] Gigabytes} | Floods the memory with megabytes</source>
@@ -2325,7 +2315,7 @@ ainsi que des boîtes d&apos;outils dans les barres et menus d&apos;outils. Cet 
     </message>
     <message>
         <source>Position: X, Y</source>
-        <translation>Position&#x202f;: X, Y</translation>
+        <translation>Position : X, Y</translation>
     </message>
     <message>
         <source>Position: X, Y, Width, Height</source>
@@ -3151,12 +3141,6 @@ Nécessite un ordinateur puissant, sinon le moteur pourrait se bloquer dans le p
 Il est conseillé de désactiver cette fonctionnalité sur les ordinateurs lents ou en cas de problème lors de la tentative de test de niveau.</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Met fin au processus en cours d&apos;exécution</translation>
-    </message>
-    <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>Met fin au processus LunaTester afin que le moteur puisse être chargé à partir de zéro.</translation>
     </message>
@@ -3416,7 +3400,7 @@ Cela signifie qu&apos;il est impossible de lancer le test d&apos;un niveau avec 
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Note:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8...64&lt;/span&gt; and &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; formats are not supported by more than 21 sections.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1...7&lt;/span&gt; formats are not supported by more than 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque&#x202f;:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Remarque :&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-8…64&lt;/span&gt; et &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-38A&lt;/span&gt; ne supportent pas plus de 21 sections.&lt;/p&gt;&lt;p&gt;Les formats &lt;span style=&quot; text-decoration: underline;&quot;&gt;SMBX-1…7&lt;/span&gt; ne supportent pas plus de 6 sections.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Destiation</source>
@@ -4840,14 +4824,6 @@ Veuillez sélectionner la carte que vous souhaitez utiliser :</translation>
     <message>
         <source>Please save the file before selecting levels.</source>
         <translation>Veuillez enregistrer le fichier avant de sélectionner les niveaux.</translation>
-    </message>
-    <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation>Afficher un écran vide au lieu de l&apos;écran de chargement.
-Dans l&apos;écran de chargement de l&apos;ancien moteur, il y aurait autrement
-affiché le(s) personnage(s) jouable(s) actuel(s) et le nombre de vies.</translation>
     </message>
     <message>
         <source>None</source>
@@ -6284,14 +6260,6 @@ See %2 for more information.</source>
 Voir %2 pour plus d&apos;information.</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation>Impossible de commencer les tests, moteur introuvable :
-%1
-Veuillez choisir l&apos;application de moteur vous-même !</translation>
-    </message>
-    <message>
         <source>Test level</source>
         <translation>Tester le niveau</translation>
     </message>
@@ -6358,14 +6326,6 @@ Identifiant de paquet de configuration attendu : %4</translation>
     <message>
         <source>Moondust Maintainer is not found</source>
         <translation>Moondust Maintainer est introuvable</translation>
-    </message>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
-        <translation>Impossible de lancer l&apos;utilitaire, Moondust Maintainer est introuvable :
-%1
-Veuillez sélectionner l&apos;application Moondust Maintainer pat vous-même !</translation>
     </message>
     <message>
         <source>Choose the Moondust Maintainer application</source>
@@ -7434,16 +7394,6 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation>Nous sommes désolé, mais l&apos;éditeur Moondust a planté.
-Motif : Dépassement de mémoire !
-
-Pour éviter ceci, essayez de fermer d&apos;autres programmes non nécessaires pour libérer de la mémoire.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -7455,16 +7405,6 @@ Motif : Exception non gérée
 Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
 
 Lien du forum : wohlsoft.ru/forum</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté.
-Motif : %1
-
-</translation>
     </message>
     <message>
         <source>Default</source>
