@@ -248,7 +248,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Level Item toolbox</source>
-        <translation>Level Item Toolbox</translation>
+        <translation></translation>
     </message>
     <message>
         <source>Display tabs horizontally</source>
@@ -288,7 +288,7 @@ like when choosing an item from the item toolbox or from the tileset item box.</
     </message>
     <message>
         <source>Logging</source>
-        <translation>Logging</translation>
+        <translation>Protokollierung</translation>
     </message>
     <message>
         <source>Log level</source>
@@ -413,7 +413,7 @@ Wähle zutreffendes zu</translation>
     </message>
     <message>
         <source>SoX error</source>
-        <translation>SoX error</translation>
+        <translation>SoX-Fehler</translation>
     </message>
     <message>
         <source>SoX executable path is not defined.
@@ -861,13 +861,6 @@ Bitte speichere sie sofort ab!.</translation>
     </message>
     <message>
         <source>Make an issue at GitHub repository (WohlSoft/PGE-Project)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2431,7 +2424,7 @@ Maximale Länge: 27 Zeichen pro Zeile</translation>
     </message>
     <message>
         <source>Quicksand</source>
-        <translation type="unfinished">Quicksand</translation>
+        <translation>Treibsand</translation>
     </message>
     <message>
         <source>Custom liquid</source>
@@ -3115,12 +3108,6 @@ Otherwise, it will be very limited.</source>
         <source>Allows to start level testing very fast after first launch.
 Requires powerful computer, otherwise engine will freeze on next test launch.
 Suggested to disable this feature on slow machines or if any troubles are happens while attempts to run a testing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4589,12 +4576,6 @@ The special state is defined by the active configuration pack.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cannon shoot exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5914,12 +5895,6 @@ Konfigurationspacket hat Fehler.</translation>
         <translation>Engine nicht gefunden</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Choose the Engine application</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6267,12 +6242,6 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7042,13 +7011,6 @@ Error description:
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -7090,13 +7052,6 @@ Forum link: wohlsoft.ru/forum</source>
     </message>
     <message>
         <source>Interrupted! [SIGINT]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
