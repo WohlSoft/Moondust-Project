@@ -868,16 +868,6 @@ Salvali prima di fare qualsiasi altra cosa.</translation>
         <translation type="unfinished">Segnala un errore al deposito di GitHub (WohlSoft/PGE-Project)</translation>
     </message>
     <message>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation>Quando stai scrivendo una segnalazione, cerca di spiegare cosa hai fatto per causare l&apos;errore che ha causato il crash.
--Scrivici una lista di azioni che hai fatto prima dell&apos;avvenimento del crash
--Se il crash è accaduto mentre stavi modificando un file specifico, allegalo nella segnalazione
--Quale sistema operativo stavi usando?</translation>
-    </message>
-    <message>
         <source>Copied!</source>
         <translation>Copiato!</translation>
     </message>
@@ -3147,12 +3137,6 @@ Richiede un computer potente, altrimenti il sistema si bloccherà al prossimo la
 E&apos; consigliato disattivare questa funzione su sistemi lenti o se si riscontrano problemi quando si prova a testare.</translation>
     </message>
     <message>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Termina il processo in corso</translation>
-    </message>
-    <message>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>Termina il processo &quot;Lunatester&quot; per far in modo che l&apos;engine possa essere caricato dalla base.</translation>
     </message>
@@ -4760,14 +4744,6 @@ Se impostato a zero, il giocatore comincerà dal punto di partenza del livello.<
         <translation>Cerca un altro file livello</translation>
     </message>
     <message>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation>Mostra uno schermo vuoto anziché la schermata di caricamento.
-Nella schermata di caricamento del vecchio sistema, mostrerebbe
-il personaggio attuale e il numero di vite.</translation>
-    </message>
-    <message>
         <source>Hide level enter screen</source>
         <translation>Nascondi schermata di entrata del livello</translation>
     </message>
@@ -5972,14 +5948,6 @@ Il pacchetto di configurazione è stato caricato, ma contiene degli errori.</tra
         <translation>Il sistema non è stato trovato</translation>
     </message>
     <message>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation type="unfinished">Impossibile iniziare test, il sistema non è stato trovato:
-%1
-Scegli il sistema dell&apos;applicazione manualmente!</translation>
-    </message>
-    <message>
         <source>Choose the Engine application</source>
         <translation>Scegli il sistema dell&apos;applicazione</translation>
     </message>
@@ -6334,12 +6302,6 @@ Expected config pack ID: %4</source>
     </message>
     <message>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7112,16 +7074,6 @@ Descrizione errore:
     </message>
     <message>
         <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished">Siamo spiacenti, PGE Editor è crashato.
-Motivo: Memoria insufficiente!
-
-Per risolvere il problema, prova a chiudere altri programmi inutili per liberare memoria.</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
 Reason: Unhandled Exception
 
 Please inform our forum staff so we can try to fix this problem, Thank you
@@ -7169,16 +7121,6 @@ Link forum: wohlsoft.ru/forum</translation>
     <message>
         <source>Interrupted! [SIGINT]</source>
         <translation>Interrotto! [SIGINT]</translation>
-    </message>
-    <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
-        <translation type="unfinished">Siamo spiacenti, ma PGE Editor è crashato.
-Motivo: %1
-
-</translation>
     </message>
     <message>
         <source>Cut top here</source>

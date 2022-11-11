@@ -1062,14 +1062,6 @@ Bestandspad: %3</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.ui" line="94"/>
-        <source>While making a report, please explain what you did to cause a crash error.
-- Please give a list of actions you did to cause a crash.
-- If a crash happened with editing a specific file, please attach it to the report.
-- What operating system you are using?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.ui" line="64"/>
         <source>Uh-oh, PGE Editor has crashed :(&lt;br&gt;Detailed crash information:</source>
         <translation type="unfinished">Oh nee, het PGE bewerkingsprogramma is gecrasht :(&lt;br&gt;Gedetailleerde crashrapport:</translation>
@@ -4004,13 +3996,6 @@ Dit veriest een krachtige computer, anders kan het programma hangen bij de volge
 Het is aanbevolen om deze functie uit te schakelen op tragere machines of wanneer er problemen voorkomen bij het opnieuw testen van niveaus.</translation>
     </message>
     <message>
-        <location filename="../testing/luna_tester_engine.cpp" line="430"/>
-        <source>Terminate running process</source>
-        <comment>Ends the LunaTester process, regardless of whether it&apos;s in
-the background or foreground, so the engine can be loaded from scratch.</comment>
-        <translation>Lopend proces beëindigen</translation>
-    </message>
-    <message>
         <location filename="../testing/luna_tester_engine.cpp" line="433"/>
         <source>Ends the LunaTester process so the engine can be loaded from scratch.</source>
         <translation>Beïndigt het LunaTester proces zodat het programma van nul kan herladen.</translation>
@@ -6024,15 +6009,6 @@ If set to zero, the player will start at the pre-defined level start point.</sou
 Op nul zal de speler beginnen op het gedifinieerde beginpunt.</translation>
     </message>
     <message>
-        <location filename="../main_window/dock/lvl_warp_props.ui" line="209"/>
-        <source>Show a blank screen instead of loading screen.
-In the Legacy Engine level loading screen, it would otherwise
-show the current playable character(s) and number of lives.</source>
-        <translation>Toont een lege scherm in plaats van een laadscherm.
-In het oorspronkelijk programma, toonde de laadscherm
-de huidige speelbare personage(s) en het aantal levens.</translation>
-    </message>
-    <message>
         <location filename="../main_window/dock/lvl_warp_props.ui" line="234"/>
         <source>Brings the player&apos;s held item to the target level of this warp.</source>
         <translation>Brengt meegenomen voorwerpen mee naar het portaal bestemmingsniveau.</translation>
@@ -7803,15 +7779,6 @@ The PGE Engine is still at an early stage in development, and there are several 
 Het PGE Programma is nog steeds vrij vroeg in de ntwikkelingsstadium, en er zullen vele functie missen of niet correct werken. Als u een niveau of episode aan het maken bent in het oorspronkelijk SMBX programma die je wilt uittesten met een compleet werkend programma, gelieve dan SMBX zelf te gebruiken. Gebruik PGE Testen voor gevallen waarbij je het PGE Programma zelf of componenten van het programma wilt testen.</translation>
     </message>
     <message>
-        <location filename="../testing/pge_engine.cpp" line="129"/>
-        <source>Can&apos;t start testing, engine is not found:
-%1
-Please, choose the engine application yourself!</source>
-        <translation>Kan het testen niet beginnen, het programma is niet gevonden:
-%1
-Gelieve de de applicatie te kiezen!</translation>
-    </message>
-    <message>
         <location filename="../testing/pge_engine.cpp" line="133"/>
         <source>Choose the Engine application</source>
         <translation>Kies het Programma applicatie</translation>
@@ -8202,13 +8169,6 @@ Gelieve het bestand eerst op te slagen.</translation>
     <message>
         <location filename="../main_window/tools_menu.cpp" line="92"/>
         <source>Moondust Maintainer is not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../main_window/tools_menu.cpp" line="93"/>
-        <source>Can&apos;t start the utility, Moondust Maintainer is not found:
-%1
-Please, choose the Moondust Maintainer application yourself!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9159,17 +9119,6 @@ Foutbeschrijving:
         <translation>Totaal aantal sterren</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="204"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Out of memory!
-
-To prevent this, try closing other uneccessary programs to free up more memory.</source>
-        <translation type="unfinished">Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
-Reden: Geheugentekort!
-
-Om dit te voorkomen, probeer om andere, onbelangrijke programma&apos;s te sluiten om meer geheugen vrij te maken.</translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.cpp" line="222"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation>Terminaal was gesloten [SIGHUP]</translation>
@@ -9178,21 +9127,6 @@ Om dit te voorkomen, probeer om andere, onbelangrijke programma&apos;s te sluite
         <location filename="../common_features/crashhandler.cpp" line="226"/>
         <source>Quit command [SIGQUIT]</source>
         <translation>Afsluit opdracht [SIGQUIT]</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="210"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished">Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
-Reden: Onbehandelde exceptie!
-
-Gelieve de makers te contacteren op de forum om dit probleem op te lossen, met dank
-
-Forum link: wohlsoft.ru/forum</translation>
     </message>
     <message>
         <location filename="../common_features/crashhandler.cpp" line="230"/>
@@ -9228,17 +9162,6 @@ Forum link: wohlsoft.ru/forum</translation>
         <location filename="../common_features/crashhandler.cpp" line="260"/>
         <source>Interrupted! [SIGINT]</source>
         <translation>Onderbroken! [SIGINT]</translation>
-    </message>
-    <message>
-        <location filename="../common_features/crashhandler.cpp" line="267"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: %1
-
-</source>
-        <translation type="unfinished">Het spijt ons, maar het PGE bewerkingsprogramma is gecrasht.
-Reden: %1
-
-</translation>
     </message>
     <message>
         <location filename="../common_features/resizer/item_resizer.cpp" line="352"/>
