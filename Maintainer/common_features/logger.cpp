@@ -116,11 +116,15 @@ void LogWriter::WriteToLog(QtMsgType type, QString msg)
         txt = QString("Info: %1").arg(msg);
     }
 
-QFile outFile(DebugLogFile);
-outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-QTextStream ts(&outFile);
-ts << txt << endl;
-outFile.close();
+    QFile outFile(DebugLogFile);
+    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+    QTextStream ts(&outFile);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    ts << txt << Qt::endl;
+#else
+    ts << txt << endl;
+#endif
+    outFile.close();
 }
 
 void LogWriter::logMessageHandler(QtMsgType type,
@@ -184,7 +188,11 @@ void LogWriter::logMessageHandler(QtMsgType type,
     QFile outFile(DebugLogFile);
     outFile.open(QIODevice::WriteOnly | QIODevice::Append);
     QTextStream ts(&outFile);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    ts << txt << Qt::endl;
+#else
     ts << txt << endl;
+#endif
     outFile.close();
 }
 
