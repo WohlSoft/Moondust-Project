@@ -52,6 +52,9 @@ static QString getDefaultEnginePath(const QString &executableName)
     QString pathConfig = ConfStatus::configDataPath + executableName;
     QString pathApp = ApplicationPath + "/" + executableName;
 
+    if(QFileInfo(executableName).isAbsolute())
+        pathConfig = executableName;
+
     if(QFile::exists(pathConfig))
         return pathConfig;
     else

@@ -85,6 +85,12 @@ bool PGE_JS_File::isDirExists(QString dirPath)
     return QDir(dirPath).exists();
 }
 
+QString PGE_JS_File::getBundleName(QString appPath)
+{
+    QFileInfo f(appPath);
+    return f.bundleName();
+}
+
 bool PGE_JS_File::copy(QString source, QString target, bool override)
 {
     if(QFile::exists(source))
