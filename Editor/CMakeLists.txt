@@ -343,6 +343,7 @@ list(APPEND PGE_EDITOR_SRCS
     js_engine/proxies/js_file.cpp
     js_engine/proxies/js_ini.cpp
     js_engine/proxies/js_lua_preproc.cpp
+    js_engine/proxies/js_system.cpp
     main.cpp
     main_window/about_dialog/aboutdialog.cpp
     mainwindow.cpp

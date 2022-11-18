@@ -16,24 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-#ifndef PGE_JS_COMMON_H
-#define PGE_JS_COMMON_H
+#include "js_system.h"
 
-#include "js_file.h"
-#include <QObject>
+PGE_JS_System::PGE_JS_System(QObject *parent)
+    : QObject{parent}
+{}
 
-class PGE_JS_Common : public QObject
+PGE_JS_System::~PGE_JS_System()
+{}
+
+QString PGE_JS_System::osName()
 {
-    Q_OBJECT
-public:
-    explicit PGE_JS_Common(QObject *parent = nullptr);
-    virtual ~PGE_JS_Common();
-
-    Q_INVOKABLE int msgBoxInfo(QString title, QString message);
-    Q_INVOKABLE int msgBoxWarning(QString title, QString message);
-    Q_INVOKABLE int msgBoxError(QString title, QString message);
-    Q_INVOKABLE bool msgBoxQuestionYesNo(QString title, QString message);
-};
-
-#endif // PGE_JS_COMMON_H
+#if defined(Q_OS_LINUX)
+    return "linux";
+#elif defined(Q_OS_WIN)
+    return "windows";
+#elif defined(Q_OS_HAIKU)
+    return "haiku";
+#elif defined(Q_OS_FREEBSD)
+    return "freebsd";
+#elif defined(Q_OS_OPENBSD)
+    return "openbsd";
+#elif defined(Q_OS_NETBSD)
+    return "netbsd";
+#elif defined(Q_OS_MAC)
+    return "macos";
+#elif defined(Q_OS_UNIX)
+    return "unix";
+#else
+    return "unknown";
+#endif
+}

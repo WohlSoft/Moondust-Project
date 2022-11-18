@@ -41,6 +41,7 @@
 #include <js_engine/proxies/js_common.h>
 #include <js_engine/proxies/js_file.h>
 #include <js_engine/proxies/js_ini.h>
+#include <js_engine/proxies/js_system.h>
 
 #include "../data_configs.h"
 
@@ -564,6 +565,7 @@ bool ConfigManager::runConfigureTool()
         js.bindProxy(new PGE_JS_Common(parentW), "PGE");
         js.bindProxy(new PGE_JS_File(m_currentConfigPath, cpSetupFile, parentW), "FileIO");
         js.bindProxy(new PGE_JS_INI(parentW), "INI");
+        js.bindProxy(new PGE_JS_System(parentW), "System");
 
         bool successfulLoaded = false;
         js.loadFileByExpcetedResult<void>(ConfStatus::configConfigureTool, &successfulLoaded);

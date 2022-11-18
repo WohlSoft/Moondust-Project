@@ -1,6 +1,6 @@
 /*
  * Platformer Game Engine by Wohlstand, a free platform for game making
- * Copyright (c) 2014-2022 Vitaly Novichkov <admin@wohlnet.ru>
+ * Copyright (c) 2014-2021 Vitaly Novichkov <admin@wohlnet.ru>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,23 @@
  */
 
 #pragma once
-#ifndef PGE_JS_COMMON_H
-#define PGE_JS_COMMON_H
+#ifndef PGE_JS_SYSTEM_H
+#define PGE_JS_SYSTEM_H
 
 #include "js_file.h"
 #include <QObject>
 
-class PGE_JS_Common : public QObject
+class PGE_JS_System : public QObject
 {
     Q_OBJECT
 public:
-    explicit PGE_JS_Common(QObject *parent = nullptr);
-    virtual ~PGE_JS_Common();
+    explicit PGE_JS_System(QObject *parent = nullptr);
+    virtual ~PGE_JS_System();
 
-    Q_INVOKABLE int msgBoxInfo(QString title, QString message);
-    Q_INVOKABLE int msgBoxWarning(QString title, QString message);
-    Q_INVOKABLE int msgBoxError(QString title, QString message);
-    Q_INVOKABLE bool msgBoxQuestionYesNo(QString title, QString message);
+    Q_INVOKABLE QString osName();
+
+signals:
+
 };
 
-#endif // PGE_JS_COMMON_H
+#endif // PGE_JS_SYSTEM_H

@@ -42,3 +42,8 @@ int PGE_JS_Common::msgBoxError(QString title, QString message)
     return static_cast<int>(QMessageBox::critical(getWidgetParentOrNullptr(this), title, message));
 }
 
+bool PGE_JS_Common::msgBoxQuestionYesNo(QString title, QString message)
+{
+    auto ret = QMessageBox::question(getWidgetParentOrNullptr(this), title, message, QMessageBox::Yes|QMessageBox::No);
+    return (ret == QMessageBox::Yes);
+}
