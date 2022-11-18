@@ -1012,7 +1012,7 @@ bool TheXTechEngine::runNormalGame()
 //    QStringList args;
 //    args << "--config=\"" + m_w->configs.config_dir + "\"";
 
-    QProcess::startDetached(command/*, args*/);
+    QProcess::startDetached(command, QStringList());
 
     //Stop music playback in the PGE Editor!
     m_w->setMusicButton(false);
