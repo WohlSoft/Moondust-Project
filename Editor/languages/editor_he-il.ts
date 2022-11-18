@@ -6560,15 +6560,6 @@ Error description:
 <context>
     <name>QObject</name>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Terminal was closed [SIGHUP]</source>
         <translation type="unfinished"></translation>
     </message>

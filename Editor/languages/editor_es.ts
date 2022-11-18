@@ -7082,20 +7082,6 @@ Descripción del error:
         <translation>Total de estrellas</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished">Lo sentimos, pero el editor PGE ha colapsado.
-Razón: Excepción descontrolada
-
-Por favor informe al personal del foro para que podamos solucionarlo. Gracias
-
-Foro: wohlsoft.ru/forum</translation>
-    </message>
-    <message>
         <source>Terminal was closed [SIGHUP]</source>
         <translation>La terminal se cerró [SIGHUP]</translation>
     </message>

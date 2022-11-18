@@ -8501,16 +8501,6 @@ Error description:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="210"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.cpp" line="222"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation type="unfinished"></translation>
