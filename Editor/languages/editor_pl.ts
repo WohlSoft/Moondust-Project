@@ -7103,20 +7103,6 @@ Opis błędu:
         <translation>Ilość gwiazdek</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation>Przepraszamy, Edytor Moondust się uszkodził.
-Powód: Nieobsługiwany Wyjątek
-
-Prosimy o kontakt z nami, aby naprawić ten problem, Dziękujemy.
-
-Link do forum: wohlsoft.ru/forum</translation>
-    </message>
-    <message>
         <source>Terminal was closed [SIGHUP]</source>
         <translation>Terminal został zamknięty [SIGHUP]</translation>
     </message>

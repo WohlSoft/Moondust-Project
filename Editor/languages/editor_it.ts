@@ -7073,20 +7073,6 @@ Descrizione errore:
         <translation>Stelle totali</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished">Siamo spiacenti, PGE Editor è crashato.
-Motivo: Eccezione sconosciuta
-
-Informa il nostro staff del forum così possiamo provare a risolvere questo problema. Grazie
-
-Link forum: wohlsoft.ru/forum</translation>
-    </message>
-    <message>
         <source>Terminal was closed [SIGHUP]</source>
         <translation>Terminale chiuso [SIGHUP]</translation>
     </message>

@@ -7393,20 +7393,6 @@ Le nombre maximum de boîtes à musique est de %2.</translation>
         <translation>Paramètres supplémentaires de section</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation>Nous sommes désolés, mais l&apos;éditeur Moondust à planté.
-Motif : Exception non gérée
-
-Veuillez nous en informer sur le forum de l&apos;équipe afin que nous puissions corriger ce problème, merci
-
-Lien du forum : wohlsoft.ru/forum</translation>
-    </message>
-    <message>
         <source>Default</source>
         <comment>Name of pallete</comment>
         <translation>Par défaut</translation>

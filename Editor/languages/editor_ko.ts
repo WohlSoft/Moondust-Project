@@ -8640,21 +8640,6 @@ Error description:
         <translation>진한 파란색</translation>
     </message>
     <message>
-        <location filename="../common_features/crashhandler.cpp" line="210"/>
-        <source>We&apos;re sorry, but PGE Editor has crashed.
-Reason: Unhandled Exception
-
-Please inform our forum staff so we can try to fix this problem, Thank you
-
-Forum link: wohlsoft.ru/forum</source>
-        <translation type="unfinished">죄송합니다. PGE Editor가 다운되었습니다.
-이유 : 처리되지 않은 예외
-
-이 문제를 해결할 수 있도록 포럼 직원에게 알려주십시오. 감사합니다.
-
-포럼 링크 : wohlsoft.ru/forum</translation>
-    </message>
-    <message>
         <location filename="../common_features/crashhandler.cpp" line="222"/>
         <source>Terminal was closed [SIGHUP]</source>
         <translation>터미널이 폐쇄 됨 [SIGHUP]</translation>
