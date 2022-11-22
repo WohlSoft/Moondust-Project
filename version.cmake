@@ -1,7 +1,7 @@
 set(Moondust_MAJOR_VERSION 0)
 set(Moondust_MINOR_VERSION 4)
 set(Moondust_PATCH_VERSION 3)
-set(Moondust_TWEAK_VERSION 1)
+set(Moondust_TWEAK_VERSION 2)
 
 # Major
 add_definitions(-DPGE_TOOLCHAIN_VERSION_1=${Moondust_MAJOR_VERSION})
@@ -16,4 +16,4 @@ add_definitions(-DPGE_TOOLCHAIN_VERSION_4=${Moondust_TWEAK_VERSION})
 add_definitions(-DPGE_CONFIG_PACK_API_VERSION=42)
 
 # Type of version: "-alpha","-beta","-dev", or "" aka "release"
-add_definitions(-DPGE_TOOLCHAIN_VERSION_REL="")
+add_definitions(-DPGE_TOOLCHAIN_VERSION_REL="-beta")

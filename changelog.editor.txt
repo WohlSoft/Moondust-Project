@@ -1,4 +1,4 @@
-﻿Editor 0.3.2.1
+﻿Editor 0.3.2.2-beta
 - Fixed the inproper file dialog on Windows
 - Fixed the unwanted music file locking on Windows
 - Default audio output format has been changed into float32 to improve the quality and prevent any possible clipping distortions

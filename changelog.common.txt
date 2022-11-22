@@ -1,4 +1,4 @@
-0.4.3.1
+0.4.3.2-beta
 - Fixed GIFs2PNG algorithm that may produce dirt or improper transparency when mask image is smaller than front
 - Added the support for custom WOPL bank files at libADLMIDI synthesizer
 - Added the support for custom WOPN bank files at libOPNMIDI synthesizer
