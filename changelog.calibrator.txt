@@ -1,10 +1,10 @@
 3.0-beta:
-* Fixed the frames data compatibility with SMBX2 that requires all frames presented at the calibration file
+* Fixed the frames data compatibility with SMBX2 which requires all frames presented at the calibration file
 * Added the mount displaying to help calibrate the mount-riding frames
-* Turned the frame selection dialog into non-modal to simplify the general workflow
-* Added mouse support for the coarse movement of hitbox at the preview box directly
+* Turned the frame selection dialogue into non-modal to simplify the general workflow
+* Added mouse support for the coarse movement of the hitbox at the preview box directly
 * Majorly reworked the main window
-* Added the compatibility mode to target calibrations for different engine and provide relevant hint for every option
+* Added the compatibility mode to target calibrations for different engines and provide a relevant hint for every option
 * Fixed the accuracy of the grabbed item rendering, compared with the SMBX code
 
 2.3
