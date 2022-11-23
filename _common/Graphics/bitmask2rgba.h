@@ -28,6 +28,8 @@
 extern "C" {
 #endif
 
+#include <stdint.h>
+
 typedef struct FIBITMAP FIBITMAP;
 
 /**
@@ -43,6 +45,19 @@ extern void bitmask_to_rgba(FIBITMAP *front, FIBITMAP *mask);
  * @param [Out] outmask Output mask image
  */
 extern void bitmask_get_mask_from_rgba(FIBITMAP *image, FIBITMAP **outmask);
+
+/**
+ * @brief Sets the pseudo-background colour for the bitmask to RGBA converter algorithm
+ * @param red Sets the red channel of the pseudo-background colour: 0...255
+ * @param green Sets the green channel of the pseudo-background colour: 0...255
+ * @param blue Sets the blue channel of the pseudo-background colour: 0...255
+ */
+extern void bitmask_set_bitblit_bg(uint8_t red, uint8_t green, uint8_t blue);
+
+/**
+ * @brief Restore the default pseudo-background colour
+ */
+extern void bitmask_reset_bitblit_bg();
 
 #ifdef __cplusplus
 }
