@@ -62,11 +62,11 @@
     <message>
         <source>Maximum number of elements which can be animated at any given time. If this limit is exceeded, animation will be paused until you raise the limit or remove excess elements.</source>
         <comment>Pop-up hint text</comment>
-        <translation>单关卡中最多的动画对象数量，若超出上限，将会暂停。</translation>
+        <translation>单关卡中的动画对象上限。若超出上限，将会暂停。</translation>
     </message>
     <message>
         <source>Animation items limit</source>
-        <translation>动画最大数量</translation>
+        <translation>动画上限</translation>
     </message>
     <message>
         <source>Collision detection</source>
